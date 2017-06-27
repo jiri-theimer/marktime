@@ -80,6 +80,8 @@ Public Class x25_framework
                     .Add("x25_framework-filter_setting-" & strX18ID)
                     .Add("x25_framework-filter_sql-" & strX18ID)
                     .Add("x25_framework-filter_validity-" & strX18ID)
+                    .Add("x25_framework-filter_b02id-" & strX18ID)
+                    .Add("x25_framework-filter_myrole-" & strX18ID)
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
@@ -101,6 +103,10 @@ Public Class x25_framework
                     If Me.cbxPeriodType.SelectedIndex > 0 Then
                         period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                         period1.SelectedValue = .GetUserParam("x25_framework-period-" & strX18ID)
+                    End If
+                    If panWorkflow.Visible Then
+                        basUI.SelectDropdownlistValue(Me.cbxQueryB02ID, .GetUserParam("x25_framework-filter_b02id-" & strX18ID))
+                        basUI.SelectDropdownlistValue(Me.cbxMyRole, .GetUserParam("x25_framework-filter_myrole-" & strX18ID))
                     End If
                 End With
             End With
@@ -237,6 +243,17 @@ Public Class x25_framework
     Private Sub InhaleMyQuery(ByRef mq As BO.myQueryX25)
         With mq
             .x23ID = Me.CurrentX23ID
+            If panWorkflow.Visible Then
+                If cbxQueryB02ID.SelectedIndex > 0 Then .b02IDs = BO.BAS.ConvertPIDs2List(cbxQueryB02ID.SelectedValue)
+                If cbxMyRole.SelectedIndex > 0 Then
+                    If cbxMyRole.SelectedValue = "-1" Then
+                        .Owners = BO.BAS.ConvertInt2List(Master.Factory.SysUser.j02ID)
+                    Else
+                        .x67ID_MyRole = BO.BAS.IsNullInt(Me.cbxMyRole.SelectedValue)
+                    End If
+
+                End If
+            End If
 
             .MyRecordsDisponible = True
             .MG_GridSqlColumns = Me.hidCols.Value
@@ -346,7 +363,17 @@ Public Class x25_framework
             menu1.FindItemByValue("cmdWorkflow").Text = "Posunout stav/doplnit"
             menu1.FindItemByValue("cmdWorkflow").ImageUrl = "Images/workflow.png"
             menu1.FindItemByValue("cmdWorkflow").NavigateUrl = "javascript:workflow()"
+
+            panWorkflow.Visible = True
+            cbxQueryB02ID.DataSource = Master.Factory.b02WorkflowStatusBL.GetList(c.b01ID)
+            cbxQueryB02ID.DataBind()
+            cbxQueryB02ID.Items.Insert(0, New ListItem("--Filtrovat aktuální stav--", ""))
+            cbxMyRole.DataSource = Master.Factory.x67EntityRoleBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = BO.x29IdEnum.x25EntityField_ComboValue)
+            cbxMyRole.DataBind()
+            cbxMyRole.Items.Insert(0, New ListItem("--Filtrovat mojí roli--", ""))
+            cbxMyRole.Items.Add(New ListItem("Jsem vlastník (zakladatel) záznamu", "-1"))
         Else
+            panWorkflow.Visible = False
             hidB01ID.Value = ""
             menu1.FindItemByValue("cmdWorkflow").Text = "Doplnit komentář nebo přílohu"
             menu1.FindItemByValue("cmdWorkflow").ImageUrl = "Images/comment.png"
@@ -366,7 +393,6 @@ Public Class x25_framework
     End Sub
 
     Private Sub x25_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-       
         If cbxPeriodType.SelectedIndex > 0 Then
             With Me.period1
                 .Visible = True
@@ -396,6 +422,10 @@ Public Class x25_framework
         Me.CurrentQuery.Text = ""
         If Me.cbxX25Validity.SelectedIndex > 0 Then
             Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/>" & Me.cbxX25Validity.SelectedItem.Text
+        End If
+        If panWorkflow.Visible Then
+            basUIMT.RenderQueryCombo(Me.cbxQueryB02ID)
+            basUIMT.RenderQueryCombo(Me.cbxMyRole)
         End If
     End Sub
 
@@ -498,5 +528,19 @@ Public Class x25_framework
     Private Sub cbxX25Validity_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxX25Validity.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("x25_framework-filter_validity-" & Me.CurrentX18ID.ToString, Me.cbxX25Validity.SelectedValue)
         ReloadPage()
+    End Sub
+
+    Private Sub cbxQueryB02ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxQueryB02ID.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("x25_framework-filter_b02id-" & Me.CurrentX18ID.ToString, Me.cbxQueryB02ID.SelectedValue)
+        RecalcVirtualRowCount()
+        grid1.Rebind(False)
+
+    End Sub
+
+    Private Sub cbxMyRole_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxMyRole.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("x25_framework-filter_myrole-" & Me.CurrentX18ID.ToString, Me.cbxMyRole.SelectedValue)
+        RecalcVirtualRowCount()
+        grid1.Rebind(False)
+
     End Sub
 End Class

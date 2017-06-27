@@ -2,7 +2,8 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="myscheduler" Src="~/myscheduler.ascx" %>
-
+<%@ Register TagPrefix="uc" TagName="x25_record_readonly" Src="~/x25_record_readonly.ascx" %>
+<%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
@@ -69,7 +70,13 @@
 
             sw_master("x25_record.aspx?pid=0&x18id=" + x18id, "Images/label.png")
         }
+        function b07_reaction(b07id) {
+            sw_everywhere("b07_create.aspx?parentpid=" + b07id + "&masterprefix=x25&masterpid=<%=rec1.pid%>", "Images/comment.png", true)
 
+        }
+        function x25_fullscreen() {
+            location.replace("x25_framework.aspx?pid=<%=rec1.pid%>");
+        }
     </script>
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
@@ -92,7 +99,7 @@
         <div style="clear: both;"></div>
         <asp:PlaceHolder ID="place_j04DashboardHtml" runat="server"></asp:PlaceHolder>
 
-        
+
 
 
         <div style="min-height: 430px;">
@@ -153,39 +160,79 @@
             </div>
 
             <asp:Panel ID="panX18" runat="server" CssClass="content-box1">
-            <div class="title">
-                <img src="Images/label.png" />
-                Vybrané agendy štítků
-            </div>
-            <div class="content">
-                <table cellpadding="6">
-                <asp:Repeater ID="rpX18" runat="server">
-                    <ItemTemplate>
-                        <tr class="trHover">
-                            <td style="width:33px;">
-                                <asp:Image ID="img1" runat="server" />
+                <div class="title">
+                    <img src="Images/label.png" />
+                    Vybrané agendy štítků
+                </div>
+                <div class="content">
+                    <table cellpadding="6">
+                        <asp:Repeater ID="rpX18" runat="server">
+                            <ItemTemplate>
+                                <tr class="trHover">
+                                    <td style="width: 33px;">
+                                        <asp:Image ID="img1" runat="server" />
+                                    </td>
+                                    <td>
+                                        <asp:Label ID="x18Name" runat="server" CssClass="val" Font-Italic="true"></asp:Label>
+                                    </td>
+                                    <td>
+                                        <button type="button" runat="server" id="cmdNew">
+                                            <img src="Images/new.png" />Nový</button>
+                                    </td>
+                                    <td>
+                                        <asp:HyperLink ID="linkFramework" runat="server" text="Přehled" NavigateUrl="#"></asp:HyperLink>
+                                    </td>
+                                    <td>
+                                        <asp:HyperLink ID="linkCalendar" runat="server" Text="Kalendář" NavigateUrl="#"></asp:HyperLink>
+                                    </td>
+                                </tr>
+
+                                </div>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </table>
+                </div>
+            </asp:Panel>
+
+            <asp:Panel ID="panNoticeBoard" runat="server" CssClass="content-box1" Visible="false">
+                <div class="title">
+                    <img src="Images/article.png" />
+                    <asp:Label ID="lblNoticeBoardHeader" runat="server"></asp:Label>
+
+                </div>
+                <div class="content" style="">
+                    <table>
+                        <tr valign="top">
+                            <td style="max-width: 300px;">
+                                <asp:Repeater ID="rpArticle" runat="server">
+                                    <ItemTemplate>
+                                        <div>
+                                            <div>
+                                                <asp:Label ID="timestamp" runat="server" CssClass="timestamp"></asp:Label>
+                                            </div>
+                                            <asp:LinkButton ID="link1" runat="server"></asp:LinkButton>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:Repeater>
                             </td>
-                            <td>
-                                <asp:Label ID="x18Name" runat="server" CssClass="val" Font-Italic="true"></asp:Label>
-                            </td>
-                            <td>
-                                <button type="button" runat="server" id="cmdNew"><img src="Images/new.png" />Nový</button>
-                            </td>
-                            <td>
-                                <asp:HyperLink ID="linkFramework" runat="server" Text="Přehled" NavigateUrl="#"></asp:HyperLink>
-                            </td>
-                            <td>
-                                <asp:HyperLink ID="linkCalendar" runat="server" Text="Kalendář" NavigateUrl="#"></asp:HyperLink>
+                            <td style="max-width: 600px;" id="tdRecX25" runat="server" visible="false">
+                                <div style="overflow: auto; max-height: 300px;">
+                                    <div style="float:right;">
+                                        <button type="button" title="Plný detail" class="button-link"><img src="Images/fullscreen.png" onclick="x25_fullscreen()" /></button>
+                                    </div>
+                                    <uc:x25_record_readonly ID="rec1" runat="server" />
+
+                                    <uc:b07_list ID="comments1" runat="server" JS_Create="b07_create()" JS_Reaction="b07_reaction" ShowInsertButton="false" />
+
+                                </div>
+
                             </td>
                         </tr>
-                            
-                        </div>
-                    </ItemTemplate>
-                </asp:Repeater>
-                </table>
-            </div>
-        </asp:Panel>
+                    </table>
 
+
+                </div>
+            </asp:Panel>
 
             <asp:Panel ID="panO23" runat="server" CssClass="content-box1">
                 <div class="title">
@@ -373,22 +420,7 @@
                 <asp:Image runat="server" ID="imgWelcome" ImageUrl="Images/welcome/start.jpg" Visible="false" />
             </div>
 
-            <asp:Repeater ID="rpNoticeBoard" runat="server">
-                <ItemTemplate>
-                    <div class="noticeboard-box" style="margin-top: 20px;">
-                        <div class="title">
-                            <img src="Images/article.png" />
-                            <span style="font-weight: bold; font-variant: small-caps; font-size: 120%;"><%#Eval("o10Name")%></span>
 
-
-                            <span style="font-style: italic; float: right;"><%#Eval("ValidFrom")%> | <%#Eval("Owner") %></span>
-                        </div>
-                        <div class="content" style="color: black; background-color: <%#Eval("o10BackColor")%>;">
-                            <%#Eval("o10BodyHtml")%>
-                        </div>
-                    </div>
-                </ItemTemplate>
-            </asp:Repeater>
 
             <div style="clear: both;"></div>
 

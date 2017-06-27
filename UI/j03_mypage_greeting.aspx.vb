@@ -2,7 +2,7 @@
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
 
-
+    
     Private Sub Page_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
     End Sub
@@ -11,7 +11,7 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         cal1.factory = Master.Factory
-
+        rec1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             lblBuild.Text = "Verze: " & BO.ASS.GetUIVersion()
 
@@ -84,38 +84,34 @@
 
             End With
 
-            RefreshNoticeBoard()
-            If rpNoticeBoard.Items.Count <= 1 Then  'pokud je na nástěnce 1 nebo žádný článek, pak zobrazovat grafy obrázky
-                With Master.Factory.j03UserBL
-                    Select Case .GetUserParam("j03_mypage_greeting-last_step", "0")
-                        Case "0"
-                            ShowImage()
-                            .SetUserParam("j03_mypage_greeting-last_step", "1")
-                        Case "1"
-                            ShowChart1("1")
-                            .SetUserParam("j03_mypage_greeting-last_step", "2")
-                        Case "2"
-                            ShowChart2("2")
-                            .SetUserParam("j03_mypage_greeting-last_step", "3")
-                        Case "3"
-                            ShowChart2("3")
-                            .SetUserParam("j03_mypage_greeting-last_step", "4")
-                        Case "4"
-                            ShowChart2("4")
-                            .SetUserParam("j03_mypage_greeting-last_step", "5")
-                        Case "5"
-                            ShowChart1("3")
-                            .SetUserParam("j03_mypage_greeting-last_step", "6")
-                        Case "6"
-                            ShowChart2("5")
-                            .SetUserParam("j03_mypage_greeting-last_step", "0")
-                    End Select
+            With Master.Factory.j03UserBL
+                Select Case .GetUserParam("j03_mypage_greeting-last_step", "0")
+                    Case "0"
+                        ShowImage()
+                        .SetUserParam("j03_mypage_greeting-last_step", "1")
+                    Case "1"
+                        ShowChart1("1")
+                        .SetUserParam("j03_mypage_greeting-last_step", "2")
+                    Case "2"
+                        ShowChart2("2")
+                        .SetUserParam("j03_mypage_greeting-last_step", "3")
+                    Case "3"
+                        ShowChart2("3")
+                        .SetUserParam("j03_mypage_greeting-last_step", "4")
+                    Case "4"
+                        ShowChart2("4")
+                        .SetUserParam("j03_mypage_greeting-last_step", "5")
+                    Case "5"
+                        ShowChart1("3")
+                        .SetUserParam("j03_mypage_greeting-last_step", "6")
+                    Case "6"
+                        ShowChart2("5")
+                        .SetUserParam("j03_mypage_greeting-last_step", "0")
+                End Select
 
-                End With
-            Else
-                chkShowCharts.Visible = False
-            End If
+            End With
 
+            
             RefreshBoxes()
 
             RefreshX47Log()
@@ -129,7 +125,7 @@
                 cal1.RefreshTasksWithoutDate(True)
             End If
 
-            RefreshX18()
+
         Else
             If chkScheduler.Checked Then cal1.RecordPID = Master.Factory.SysUser.j02ID
         End If
@@ -138,6 +134,8 @@
         If Len(cJ04.j04DashboardHtml) > 0 Then
             place_j04DashboardHtml.Controls.Add(New LiteralControl(cJ04.j04DashboardHtml))
         End If
+
+        RefreshX18()
     End Sub
 
     Private Sub ShowImage()
@@ -374,14 +372,7 @@
 
     End Sub
 
-    Private Sub RefreshNoticeBoard()
-        Dim mq As New BO.myQuery
-        mq.Closed = BO.BooleanQueryMode.FalseQuery
-        Dim lis As IEnumerable(Of BO.o10NoticeBoard) = Master.Factory.o10NoticeBoardBL.GetList(mq).Where(Function(p) p.o10Locality = BO.NoticeBoardLocality.WelcomePage)
-        
-        rpNoticeBoard.DataSource = lis
-        rpNoticeBoard.DataBind()
-    End Sub
+    
     Private Sub RefreshX47Log()
         With Master.Factory
             If Not (.SysUser.j04IsMenu_Project Or .SysUser.j04IsMenu_Contact Or .SysUser.j04IsMenu_Invoice Or .TestPermission(BO.x53PermValEnum.GR_Admin)) Then
@@ -547,10 +538,19 @@
             Else
                 c.x18ReportCodes = "0"
             End If
-            If (cDisp.ReadItems Or cDisp.OwnerItems) And (c.x18DashboardFlag = BO.x18DashboardENUM.LinkOnly Or c.x18DashboardFlag = BO.x18DashboardENUM.CreateLinkAndGrid) Then
+            If (cDisp.ReadItems Or cDisp.OwnerItems) And (c.x18DashboardFlag = BO.x18DashboardENUM.LinkOnly Or c.x18DashboardFlag = BO.x18DashboardENUM.CreateLinkAndGrid Or c.x18DashboardFlag = BO.x18DashboardENUM.ShowItemsLikeNoticeboard) Then
                 c.x18ReportCodes += "1"
             Else
                 c.x18ReportCodes += "0"
+            End If
+            If c.x18DashboardFlag = BO.x18DashboardENUM.ShowItemsLikeNoticeboard Then
+                panNoticeBoard.Visible = True
+                Dim mq As New BO.myQueryX25(c.x23ID)
+                mq.Closed = BO.BooleanQueryMode.FalseQuery
+                Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = Master.Factory.x25EntityField_ComboValueBL.GetList(mq)
+                rpArticle.DataSource = lis
+                rpArticle.DataBind()
+                lblNoticeBoardHeader.Text = c.x18Name
             End If
         Next
         lisX18 = lisX18.Where(Function(p) p.x18ReportCodes <> "")
@@ -586,7 +586,7 @@
                 .Attributes.Item("onclick") = "x25_create(" & cRec.PID.ToString & ")"
             End With
         End If
-        If (cRec.x18DashboardFlag = BO.x18DashboardENUM.CreateLinkAndGrid Or cRec.x18DashboardFlag = BO.x18DashboardENUM.LinkOnly) And Right(cRec.x18ReportCodes, 1) = "1" Then
+        If (cRec.x18DashboardFlag = BO.x18DashboardENUM.CreateLinkAndGrid Or cRec.x18DashboardFlag = BO.x18DashboardENUM.LinkOnly Or cRec.x18DashboardFlag = BO.x18DashboardENUM.ShowItemsLikeNoticeboard) And Right(cRec.x18ReportCodes, 1) = "1" Then
             With CType(e.Item.FindControl("linkFramework"), HyperLink)
                 .Visible = True
                 .NavigateUrl = "x25_framework.aspx?x18id=" & cRec.PID.ToString
@@ -606,5 +606,31 @@
         Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkX18", BO.BAS.GB(Me.chkX18.Checked))
         ReloadPage()
 
+    End Sub
+
+    Private Sub rpArticle_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rpArticle.ItemCommand
+        Dim intX25ID As Integer = e.CommandArgument
+        Dim cRec As BO.x25EntityField_ComboValue = Master.Factory.x25EntityField_ComboValueBL.Load(intX25ID)
+        tdRecX25.Visible = True
+
+        rec1.FillData(cRec, Master.Factory.x18EntityCategoryBL.LoadByX23ID(cRec.x23ID))
+        comments1.RefreshData(Master.Factory, BO.x29IdEnum.x25EntityField_ComboValue, cRec.PID)
+    End Sub
+
+    
+    Private Sub rpArticle_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpArticle.ItemDataBound
+        Dim cRec As BO.x25EntityField_ComboValue = CType(e.Item.DataItem, BO.x25EntityField_ComboValue)
+        With CType(e.Item.FindControl("link1"), LinkButton)
+            .CommandArgument = cRec.PID
+            .Text = BO.BAS.OM3(cRec.x25Name, 30)
+            
+        End With
+        With CType(e.Item.FindControl("timestamp"), Label)
+            If Not cRec.x25FreeDate01 Is Nothing Then
+                .Text = BO.BAS.FD(cRec.x25FreeDate01, True, True) & " " & .Text
+            Else
+                .Visible = False
+            End If
+        End With
     End Sub
 End Class

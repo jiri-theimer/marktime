@@ -176,6 +176,33 @@ Partial Public Class x25_framework
     Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''panWorkflow control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panWorkflow As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''cbxQueryB02ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxQueryB02ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cbxMyRole control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxMyRole As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''MasterEntity control.
     '''</summary>
     '''<remarks>

@@ -111,6 +111,9 @@ Public Class x25_record
 
             
         End If
+        If Not panHtmlEditor.Visible Then
+            panHtmlEditor.Controls.Clear()
+        End If
     End Sub
 
     Private Sub Handle_Permissions(c As BO.x18EntityCategory)
@@ -203,7 +206,7 @@ Public Class x25_record
                 
             End If
 
-            Return
+            Return      'konec pro režim nového záznamu
         End If
 
         _curRec = Master.Factory.x25EntityField_ComboValueBL.Load(Master.DataPID)
@@ -257,7 +260,9 @@ Public Class x25_record
             RefreshTempX19()
         End If
         
-        
+        If panHtmlEditor.Visible Then
+            Me.x25HtmlContent.Content = Master.Factory.x25EntityField_ComboValueBL.LoadHtmlContent(Master.DataPID)
+        End If
 
 
     End Sub
@@ -267,6 +272,12 @@ Public Class x25_record
     End Sub
     Private Sub RefreshUserFields()
         Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Master.Factory.x18EntityCategoryBL.GetList_x16(Me.CurrentX18ID)
+        Dim bolHTML As Boolean = False
+        If lisX16.Where(Function(p) p.x16Field = "x25HtmlContent").Count > 0 Then
+            bolHTML = True
+            lisX16 = lisX16.Where(Function(p) p.x16Field <> "x25HtmlContent")
+        End If
+
         If lisX16.Count > 0 Then
             If lisX16.Where(Function(p) LCase(p.x16Field).IndexOf("date") > 0).Count = 0 Then
                 Me.SharedCalendar.Visible = False
@@ -278,6 +289,9 @@ Public Class x25_record
             panX16.Visible = False
             Me.SharedCalendar.Visible = False
         End If
+
+        panHtmlEditor.Visible = bolHTML
+        
     End Sub
     Private Sub _MasterPage_Master_OnDelete() Handles _MasterPage.Master_OnDelete
         With Master.Factory.x25EntityField_ComboValueBL
@@ -328,7 +342,9 @@ Public Class x25_record
 
             If .Save(cRec, Me.CurrentX18ID, Nothing, lisX19, GetX20IDs()) Then
                 Master.DataPID = .LastSavedPID
-
+                If panHtmlEditor.Visible Then
+                    .SaveHtmlContent(Master.DataPID, Me.x25HtmlContent.Content)
+                End If
                 Master.CloseAndRefreshParent("x25-save")
             Else
                 Master.Notify(.ErrorMessage, 2)

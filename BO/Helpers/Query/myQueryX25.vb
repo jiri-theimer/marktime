@@ -2,6 +2,7 @@
 Public Class myQueryX25
     Inherits myQuery
     Public Property x23ID As Integer
+    Public Property b02IDs As List(Of Integer)
     Public Property p41IDs As List(Of Integer)
     Public Property j02IDs As List(Of Integer)
     Public Property Owners As List(Of Integer)
@@ -15,6 +16,7 @@ Public Class myQueryX25
 
     Public Property CalendarDateFieldStart As String
     Public Property CalendarDateFieldEnd As String
+    Public Property x67ID_MyRole As Integer
 
 
 

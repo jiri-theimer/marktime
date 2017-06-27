@@ -293,12 +293,19 @@
             <div style="clear: both;"></div>
 
 
-            <div>
+            <div style="text-align:center;margin-top:40px;">
                 <button type="button" onclick="switch2grid()"><img src="Images/grid.png" />Přepnout do přehledu</button>
             </div>
 
+            <asp:Panel ID="panResources" runat="server" CssClass="div6">
+                <asp:DropDownList ID="cbxResourceView" runat="server" AutoPostBack="true">
+                    <asp:ListItem Text="Bez členění podle zdrojů (osob)" Value=""></asp:ListItem>
+                    <asp:ListItem Text="Naplánované zdroje (osoby) v řádcích" Value="1"></asp:ListItem>
+                    <asp:ListItem Text="Všechny zdroje (osoby) v řádcích" Value="2"></asp:ListItem>                    
+                </asp:DropDownList>
+            </asp:Panel>
 
-            <div style="clear: both;"></div>
+            <div style="clear: both;margin-top:40px;"></div>
             <asp:Panel ID="panPersons" runat="server" style="display:none;">
                 <div class="show_hide2" style="float: left; margin-top: 8px;">
                     <button type="button">
@@ -330,13 +337,16 @@
                 </div>
             </asp:Panel>
 
-            <asp:Panel ID="panResources" runat="server" CssClass="div6">
-                <asp:DropDownList ID="cbxResourceView" runat="server" AutoPostBack="true">
-                    <asp:ListItem Text="Bez členění podle zdrojů (osob)" Value=""></asp:ListItem>
-                    <asp:ListItem Text="Zobrazovat podle naplánovaných zdrojů (osob)" Value="1"></asp:ListItem>
-                    <asp:ListItem Text="Zobrazovat podle všech zdrojů (osob)" Value="2"></asp:ListItem>                    
-                </asp:DropDownList>
-            </asp:Panel>
+            
+
+            <asp:Panel ID="panWorkflow" runat="server" style="margin-top:20px;" Visible="false">
+                    <div class="div6">
+                    <asp:DropDownList ID="cbxQueryB02ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="b02Name" style="width:180px;" ToolTip="Filtrovat podle aktuálního workflow stavu"></asp:DropDownList>
+                    </div>
+                    <div class="div6">
+                        <asp:DropDownList ID="cbxMyRole" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="x67Name" style="width:180px;" ToolTip="Filtrovat podle mé role v záznamu"></asp:DropDownList>
+                    </div>
+                </asp:Panel>
 
             <div style="clear: both;"></div>
             <div class="show_hide1" style="float: left; margin-top: 50px;">
@@ -508,5 +518,6 @@
     <asp:HiddenField ID="hidCalendarFieldEnd" runat="server" />
     <asp:HiddenField ID="hidCalendarFieldSubject" runat="server" />
     <asp:HiddenField ID="hidx18CalendarResourceField" runat="server" />
+    <asp:HiddenField ID="hidB01ID" runat="server" />
 </asp:Content>
 

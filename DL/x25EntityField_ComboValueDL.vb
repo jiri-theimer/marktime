@@ -16,6 +16,11 @@
         Dim s As String = "SELECT " & GetSQLPart1(0) & " WHERE a.x23ID=@x23id AND a.x25Code=@code"
         Return _cDB.GetRecord(Of BO.x25EntityField_ComboValue)(s, pars)
     End Function
+    Public Function LoadHtmlContent(intPID As Integer) As String
+        Dim pars As New DbParameters
+        pars.Add("pid", intPID, DbType.Int32)
+        Return _cDB.GetRecord(Of BO.GetString)("SELECT x25HtmlContent as Value FROM x25BigData WHERE x25ID=@pid", pars).Value
+    End Function
     Private Function GetSQLPart1(intTopRecs As Integer) As String
         Dim s As String = ""
         If intTopRecs > 0 Then s += " TOP " & intTopRecs.ToString
@@ -49,6 +54,17 @@
             Return True
         Else
             Return False
+        End If
+    End Function
+
+    Public Function SaveHtmlContent(intPID As Integer, strHtmlContent As String) As Boolean
+        Dim pars As New DbParameters()
+        pars.Add("pid", intPID, DbType.Int32)
+        pars.Add("s", strHtmlContent, DbType.String)
+        If _cDB.GetIntegerValueFROMSQL("select x25ID FROM x25BigData WHERE x25ID=" & intPID.ToString) = 0 Then
+            Return _cDB.RunSQL("INSERT INTO x25BigData(x25ID,x25HtmlContent) VALUES(@pid,@s)", pars)
+        Else
+            Return _cDB.RunSQL("UPDATE x25BigData set x25HtmlContent=@s WHERE x25ID=@pid", pars)
         End If
     End Function
     Public Function Save(cRec As BO.x25EntityField_ComboValue, lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
@@ -145,69 +161,85 @@
     End Function
 
     Private Function GetSQLWHERE(myQuery As BO.myQueryX25, ByRef pars As DL.DbParameters) As String
-        Dim strW As String = bas.ParseWhereMultiPIDs("a.x25ID", myQuery)
-        strW += bas.ParseWhereValidity("x25", "a", myQuery)
+        Dim s As New System.Text.StringBuilder
+        pars.Add("j02id_query", _curUser.j02ID, DbType.Int32)
+        s.Append(bas.ParseWhereMultiPIDs("a.x25ID", myQuery))
+        s.Append(bas.ParseWhereValidity("x25", "a", myQuery))
+
         With myQuery
             If Not BO.BAS.IsNullDBDate(.DateFrom) Is Nothing Then
 
                 pars.Add("d1", .DateFrom, DbType.DateTime) : pars.Add("d2", .DateUntil, DbType.DateTime)
                 If .DateQueryFieldBy <> "" Then
-                    strW += " AND " & .DateQueryFieldBy & " BETWEEN @d1 AND @d2"
+                    s.Append(" AND " & .DateQueryFieldBy & " BETWEEN @d1 AND @d2")
                 End If
                 If .CalendarDateFieldStart <> "" And .CalendarDateFieldEnd <> "" Then
                     ''strW += " AND " & .CalendarDateFieldStart & " IS NOT NULL"
                     ''If .CalendarDateFieldStart <> .CalendarDateFieldEnd Then
                     ''    strW += " AND " & .CalendarDateFieldEnd & " IS NOT NULL"
                     ''End If
-                    strW += " AND (" & .CalendarDateFieldStart & " BETWEEN @d1 AND @d2 OR " & .CalendarDateFieldEnd & " BETWEEN @d1 AND @d2 OR (" & .CalendarDateFieldStart & "<@d1 AND " & .CalendarDateFieldEnd & ">@d2))"
+                    s.Append(" AND (" & .CalendarDateFieldStart & " BETWEEN @d1 AND @d2 OR " & .CalendarDateFieldEnd & " BETWEEN @d1 AND @d2 OR (" & .CalendarDateFieldStart & "<@d1 AND " & .CalendarDateFieldEnd & ">@d2))")
                 End If
             End If
-            
+
             If Not .DateInsertFrom Is Nothing Then
                 If Year(.DateInsertFrom) > 1900 Then
                     pars.Add("d1", .DateInsertFrom) : pars.Add("d2", .DateInsertUntil)
-                    strW += " AND a.x25DateInsert BETWEEN @d1 AND @d2"
+                    s.Append(" AND a.x25DateInsert BETWEEN @d1 AND @d2")
                 End If
             End If
             If .x23ID <> 0 Then
-                strW += " AND  a.x23ID=@x23id"
+                s.Append(" AND  a.x23ID=@x23id")
                 pars.Add("x23id", .x23ID, DbType.Int32)
             End If
             If .RecordPID <> 0 And .Record_x29ID > BO.x29IdEnum._NotSpecified Then
                 pars.Add("recordpid", .RecordPID, DbType.Int32)
                 pars.Add("x29id", CInt(.Record_x29ID), DbType.Int32)
-                strW += " AND a.x25ID IN (select xa.x25ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=@x29id AND xa.x19RecordPID=@recordpid)"
+                s.Append(" AND a.x25ID IN (select xa.x25ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=@x29id AND xa.x19RecordPID=@recordpid)")
 
             End If
             If Not .p41IDs Is Nothing Then
-                If .p41IDs.Count > 0 Then strW += " AND a.x25ID IN (select xa.x25ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=141 AND xa.x19RecordPID IN (" & String.Join(",", .p41IDs) & "))"
+                If .p41IDs.Count > 0 Then s.Append(" AND a.x25ID IN (select xa.x25ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=141 AND xa.x19RecordPID IN (" & String.Join(",", .p41IDs) & "))")
             End If
             If Not .j02IDs Is Nothing Then
-                If .j02IDs.Count > 0 Then strW += " AND a.x25ID IN (select xa.x25ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=102 AND xa.x19RecordPID IN (" & String.Join(",", .j02IDs) & "))"
+                If .j02IDs.Count > 0 Then s.Append(" AND a.x25ID IN (select xa.x25ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=102 AND xa.x19RecordPID IN (" & String.Join(",", .j02IDs) & "))")
             End If
             If Not .Owners Is Nothing Then
-                If .Owners.Count > 0 Then strW += " AND a.j02ID_Owner IN (" & String.Join(",", .Owners) & ")"
+                If .Owners.Count > 0 Then s.Append(" AND a.j02ID_Owner IN (" & String.Join(",", .Owners) & ")")
             End If
             If Not .p28IDs Is Nothing Then
-                If .p28IDs.Count > 0 Then strW += " AND a.x25ID IN (select xa.x25ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=328 AND xa.x19RecordPID IN (" & String.Join(",", .p28IDs) & "))"
+                If .p28IDs.Count > 0 Then s.Append(" AND a.x25ID IN (select xa.x25ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=328 AND xa.x19RecordPID IN (" & String.Join(",", .p28IDs) & "))")
             End If
             If Not .p56IDs Is Nothing Then
-                If .p56IDs.Count > 0 Then strW += " AND a.x25ID IN (select xa.x25ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=356 AND xa.x19RecordPID IN (" & String.Join(",", .p56IDs) & "))"
+                If .p56IDs.Count > 0 Then s.Append(" AND a.x25ID IN (select xa.x25ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=356 AND xa.x19RecordPID IN (" & String.Join(",", .p56IDs) & "))")
+            End If
+            If Not .b02IDs Is Nothing Then
+                If .b02IDs.Count > 0 Then s.Append(" AND a.b02ID IN (" & String.Join(",", .b02IDs) & ")")
             End If
 
             If .ColumnFilteringExpression <> "" Then
-                strW += " AND " & .ColumnFilteringExpression
+                s.Append(" AND " & .ColumnFilteringExpression)
             End If
             If .SearchExpression <> "" Then
-                strW += " AND ("
+                s.Append(" AND (")
                 'něco jako fulltext
-                strW += "a.x25Name LIKE '%'+@expr+'%' OR a.x25Code LIKE '%'+@expr+'%' OR a.x25FreeText01 LIKE '%'+@expr+'%' OR a.x25FreeText02 LIKE '%'+@expr+'%' OR a.x25FreeText03 LIKE '%'+@expr+'%' OR a.x25FreeText04 LIKE '%'+@expr+'%' OR a.x25FreeText05 LIKE '%'+@expr+'%' OR a.x25BigText LIKE '%'+@expr+'%'"
-                strW += ")"
+                s.Append("a.x25Name LIKE '%'+@expr+'%' OR a.x25Code LIKE '%'+@expr+'%' OR a.x25FreeText01 LIKE '%'+@expr+'%' OR a.x25FreeText02 LIKE '%'+@expr+'%' OR a.x25FreeText03 LIKE '%'+@expr+'%' OR a.x25FreeText04 LIKE '%'+@expr+'%' OR a.x25FreeText05 LIKE '%'+@expr+'%' OR a.x25BigText LIKE '%'+@expr+'%'")
+                s.Append(")")
                 pars.Add("expr", .SearchExpression, DbType.String)
             End If
+            If .x67ID_MyRole > 0 Then
+
+                Dim strJ11IDs As String = ""
+                If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
+                pars.Add("x67id", .x67ID_MyRole, DbType.Int32)
+                s.Append(" AND a.x25ID IN (")
+                s.Append("SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID")
+                s.Append(" WHERE x69.x67ID=@x67id AND x67.x29ID=925 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")")
+                s.Append(")")
+            End If
         End With
-        strW += bas.ParseWhereValidity("x25", "a", myQuery)
-        Return bas.TrimWHERE(strW)
+        s.Append(bas.ParseWhereValidity("x25", "a", myQuery))
+        Return bas.TrimWHERE(s.ToString)
     End Function
     Public Function GetVirtualCount(myQuery As BO.myQueryX25) As Integer
         Dim s As String = "SELECT count(a.x25ID) as Value " & GetSQLPart2_From()

@@ -82,6 +82,9 @@ Class x18EntityCategoryBL
             Next
             
             For Each c In lisX16
+                If c.x16Field = "x25HtmlContent" Or c.x16Field = "x25HtmlContent" Then
+                    c.x16IsGridField = False
+                End If
                 If Trim(c.x16Name) = "" Then
                     _Error = "V nastavení uživatelských polí štítku chybí název." : Return False
                 End If

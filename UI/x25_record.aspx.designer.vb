@@ -203,6 +203,24 @@ Partial Public Class x25_record
     Protected WithEvents x25ForeColor As Global.Telerik.Web.UI.RadColorPicker
 
     '''<summary>
+    '''panHtmlEditor control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panHtmlEditor As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''x25HtmlContent control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x25HtmlContent As Global.Telerik.Web.UI.RadEditor
+
+    '''<summary>
     '''lblOwner control.
     '''</summary>
     '''<remarks>

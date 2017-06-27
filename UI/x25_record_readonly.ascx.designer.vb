@@ -95,6 +95,24 @@ Partial Public Class x25_record_readonly
     Protected WithEvents Timestamp As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''panHtml control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panHtml As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''place1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents place1 As Global.System.Web.UI.WebControls.PlaceHolder
+
+    '''<summary>
     '''hidX18ID control.
     '''</summary>
     '''<remarks>

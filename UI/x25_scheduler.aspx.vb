@@ -62,6 +62,8 @@ Public Class x25_scheduler
                     .Add("entity_scheduler-timelinedays")
                     .Add("entity_scheduler-include_childs")
                     .Add("entity_scheduler-resourceview-" & strX18ID)
+                    .Add("x25_framework-filter_b02id-" & strX18ID)
+                    .Add("x25_framework-filter_myrole-" & strX18ID)
                 End With
 
                 With .Factory.j03UserBL
@@ -85,7 +87,10 @@ Public Class x25_scheduler
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_agendadays, .GetUserParam("entity_scheduler-agendadays", "20"))
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_timelinedays, .GetUserParam("entity_scheduler-timelinedays", "10"))
                     basUI.SelectDropdownlistValue(Me.cbxResourceView, .GetUserParam("entity_scheduler-resourceview-" & strX18ID, "1"))
-                    
+                    If panWorkflow.Visible Then
+                        basUI.SelectDropdownlistValue(Me.cbxQueryB02ID, .GetUserParam("x25_framework-filter_b02id-" & strX18ID))
+                        basUI.SelectDropdownlistValue(Me.cbxMyRole, .GetUserParam("x25_framework-filter_myrole-" & strX18ID))
+                    End If
                 End With
             End With
 
@@ -154,6 +159,20 @@ Public Class x25_scheduler
         hidCalendarFieldSubject.Value = c.x18CalendarFieldSubject
         hidx18CalendarResourceField.Value = c.x18CalendarResourceField
 
+        If c.b01ID <> 0 Then
+            hidB01ID.Value = c.b01ID.ToString
+            panWorkflow.Visible = True
+            cbxQueryB02ID.DataSource = Master.Factory.b02WorkflowStatusBL.GetList(c.b01ID)
+            cbxQueryB02ID.DataBind()
+            cbxQueryB02ID.Items.Insert(0, New ListItem("--Filtrovat aktuální stav--", ""))
+            cbxMyRole.DataSource = Master.Factory.x67EntityRoleBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = BO.x29IdEnum.x25EntityField_ComboValue)
+            cbxMyRole.DataBind()
+            cbxMyRole.Items.Insert(0, New ListItem("--Filtrovat mojí roli--", ""))
+            cbxMyRole.Items.Add(New ListItem("Jsem vlastník (zakladatel) záznamu", "-1"))
+        Else
+            hidB01ID.Value = ""
+        End If
+
         Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
         ''menu1.FindItemByValue("cmdNew").Visible = cDisp.CreateItem
 
@@ -193,22 +212,7 @@ Public Class x25_scheduler
         Dim d1 As Date = scheduler1.VisibleRangeStart.AddDays(-1), d2 As Date = scheduler1.VisibleRangeEnd.AddDays(1)
 
         Dim mq As New BO.myQueryX25(BO.BAS.IsNullInt(hidX23ID.Value))
-        If panPersons.Visible Then
-            If persons1.CurrentPersonsRole = "-1" Then
-                mq.Owners = persons1.CurrentJ02IDs
-            Else
-                mq.j02IDs = persons1.CurrentJ02IDs
-            End If
-        End If
-        If panProjects.Visible Then
-            mq.p41IDs = projects1.CurrentP41IDs
-        End If
-
-
-        mq.CalendarDateFieldStart = hidCalendarFieldStart.Value
-        mq.CalendarDateFieldEnd = hidCalendarFieldEnd.Value
-        mq.DateFrom = d1
-        mq.DateUntil = d2
+        InhaleMyQuery(mq, d1, d2)
 
 
 
@@ -383,6 +387,10 @@ Public Class x25_scheduler
         Else
             scheduler1.TimeSlotContextMenus(0).FindItemByValue("x25").NavigateUrl = ""
         End If
+        If panWorkflow.Visible Then
+            basUIMT.RenderQueryCombo(Me.cbxQueryB02ID)
+            basUIMT.RenderQueryCombo(Me.cbxMyRole)
+        End If
     End Sub
 
     
@@ -419,6 +427,57 @@ Public Class x25_scheduler
     Private Sub cbxResourceView_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxResourceView.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-resourceview-" & Me.CurrentX18ID.ToString, cbxResourceView.SelectedValue)
 
+        RefreshData(False)
+
+    End Sub
+
+    Private Sub InhaleMyQuery(ByRef mq As BO.myQueryX25, d1 As Date, d2 As Date)
+        With mq
+            .x23ID = BO.BAS.IsNullInt(hidX23ID.Value)
+            If panWorkflow.Visible Then
+                If cbxQueryB02ID.SelectedIndex > 0 Then .b02IDs = BO.BAS.ConvertPIDs2List(cbxQueryB02ID.SelectedValue)
+                If cbxMyRole.SelectedIndex > 0 Then
+                    If cbxMyRole.SelectedValue = "-1" Then
+                        .Owners = BO.BAS.ConvertInt2List(Master.Factory.SysUser.j02ID)
+                    Else
+                        .x67ID_MyRole = BO.BAS.IsNullInt(Me.cbxMyRole.SelectedValue)
+                    End If
+
+                End If
+            End If
+
+            .MyRecordsDisponible = True
+
+            If panPersons.Visible Then
+                If persons1.CurrentPersonsRole = "-1" Then
+                    .Owners = persons1.CurrentJ02IDs
+                Else
+                    .j02IDs = persons1.CurrentJ02IDs
+                End If
+            End If
+            If panProjects.Visible Then
+                .p41IDs = projects1.CurrentP41IDs
+            End If
+
+
+            .CalendarDateFieldStart = hidCalendarFieldStart.Value
+            .CalendarDateFieldEnd = hidCalendarFieldEnd.Value
+            .DateFrom = d1
+            .DateUntil = d2
+
+
+
+        End With
+
+    End Sub
+    Private Sub cbxQueryB02ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxQueryB02ID.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("x25_framework-filter_b02id-" & Me.CurrentX18ID.ToString, Me.cbxQueryB02ID.SelectedValue)
+        RefreshData(False)
+
+    End Sub
+
+    Private Sub cbxMyRole_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxMyRole.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("x25_framework-filter_myrole-" & Me.CurrentX18ID.ToString, Me.cbxMyRole.SelectedValue)
         RefreshData(False)
 
     End Sub

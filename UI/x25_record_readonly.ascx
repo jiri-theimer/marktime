@@ -76,6 +76,9 @@
 <div class="div6">
     <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
 </div>
+<asp:Panel ID="panHtml" runat="server" CssClass="div6" style="border-top:dashed 1px silver;">
+    <asp:PlaceHolder ID="place1" runat="server"></asp:PlaceHolder>
+</asp:Panel>
 
 <asp:HiddenField ID="hidX18ID" runat="server" />
 <asp:HiddenField ID="hidPID" runat="server" />

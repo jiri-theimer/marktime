@@ -23,6 +23,24 @@ Partial Public Class x25_scheduler
     Protected WithEvents x18ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''panResources control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panResources As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''cbxResourceView control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxResourceView As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''panPersons control.
     '''</summary>
     '''<remarks>
@@ -77,22 +95,31 @@ Partial Public Class x25_scheduler
     Protected WithEvents projects1 As Global.UI.projects
 
     '''<summary>
-    '''panResources control.
+    '''panWorkflow control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panResources As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents panWorkflow As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''cbxResourceView control.
+    '''cbxQueryB02ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cbxResourceView As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cbxQueryB02ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cbxMyRole control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxMyRole As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''entity_scheduler_daystarttime control.
@@ -273,6 +300,15 @@ Partial Public Class x25_scheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidx18CalendarResourceField As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidB01ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidB01ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

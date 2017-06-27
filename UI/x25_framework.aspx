@@ -237,7 +237,7 @@
                     <asp:Label ID="lblVirtualCount" runat="server" ToolTip="Počet záznamů v aktuálním přehledu"></asp:Label>
                 </div>
                 <div class="commandcell">
-                    <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="false" BackColor="Yellow" onchange="x18id_onchange(this)" DataTextField="x18Name" DataValueField="pid" Style="width: 220px;" ToolTip="Štítek"></asp:DropDownList>
+                    <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="false" BackColor="Yellow" onchange="x18id_onchange(this)" DataTextField="x18Name" DataValueField="pid" Style="max-width: 220px;" ToolTip="Štítek"></asp:DropDownList>
 
                 </div>
                 <div class="commandcell" style="padding-left: 10px;">
@@ -353,7 +353,14 @@
 
                 </div>
 
-
+                <asp:Panel ID="panWorkflow" runat="server" CssClass="commandcell">
+                    <div>
+                    <asp:DropDownList ID="cbxQueryB02ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="b02Name" style="width:180px;" ToolTip="Filtrovat podle aktuálního workflow stavu"></asp:DropDownList>
+                    </div>
+                    <div>
+                        <asp:DropDownList ID="cbxMyRole" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="x67Name" style="width:180px;" ToolTip="Filtrovat podle mé role v záznamu"></asp:DropDownList>
+                    </div>
+                </asp:Panel>
 
 
 

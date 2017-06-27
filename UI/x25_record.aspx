@@ -30,6 +30,7 @@
             context["j02id_explicit"] = "<%=Master.Factory.SysUser.j02ID%>";
             <%End If%>
         }
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -51,24 +52,24 @@
 
     </asp:Panel>
 
-    <div style="overflow:auto;max-height:200px;width:700px;">
-    <table cellpadding="5" cellspacing="2">
-    <asp:Repeater ID="rpX19" runat="server">
-        <ItemTemplate>
-            <tr class="trHover">
-                <td style="width: 140px;">
-                    <asp:Label ID="Entity" runat="server" CssClass="lbl"></asp:Label>
-                </td>
-                <td>
-                    <asp:Label ID="RecordAlias" runat="server" CssClass="valbold"></asp:Label>
-                    <asp:ImageButton ID="del" runat="server" CommandName="delete" ImageUrl="Images/delete.png" ToolTip="Odstranit vazbu" CssClass="button-link" />
-                    <asp:HiddenField ID="p85id" runat="server" />
-                </td>
-            </tr>
+    <div style="overflow: auto; max-height: 200px; width: 700px;">
+        <table cellpadding="5" cellspacing="2">
+            <asp:Repeater ID="rpX19" runat="server">
+                <ItemTemplate>
+                    <tr class="trHover">
+                        <td style="width: 140px;">
+                            <asp:Label ID="Entity" runat="server" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:Label ID="RecordAlias" runat="server" CssClass="valbold"></asp:Label>
+                            <asp:ImageButton ID="del" runat="server" CommandName="delete" ImageUrl="Images/delete.png" ToolTip="Odstranit vazbu" CssClass="button-link" />
+                            <asp:HiddenField ID="p85id" runat="server" />
+                        </td>
+                    </tr>
 
-        </ItemTemplate>
-    </asp:Repeater>
-    </table>
+                </ItemTemplate>
+            </asp:Repeater>
+        </table>
     </div>
 
     <table cellpadding="5" cellspacing="2">
@@ -139,7 +140,7 @@
             </asp:Repeater>
 
         </table>
-        
+
     </asp:Panel>
 
     <asp:Panel ID="panColors" runat="server">
@@ -184,6 +185,69 @@
         </table>
     </asp:Panel>
 
+    <asp:Panel ID="panHtmlEditor" runat="server" Visible="false">
+        
+        <telerik:RadEditor ID="x25HtmlContent" ForeColor="Black" Font-Names="Verdana" runat="server" Width="98%" Height="500px" ToolbarMode="Default" Language="cs-CZ" NewLineMode="Br" ContentAreaMode="Div">
+            <Content>
+     Obsah článku
+            </Content>
+            <Tools>
+                <telerik:EditorToolGroup>
+                    <telerik:EditorTool Name="Print" />
+                    <telerik:EditorTool Name="ToggleScreenMode" />
+                    <telerik:EditorSeparator />
+
+                    <telerik:EditorTool Name="Undo" />
+                    <telerik:EditorTool Name="Redo" />
+                    <telerik:EditorSeparator />
+
+                    <telerik:EditorTool Name="Cut" />
+                    <telerik:EditorTool Name="Copy" />
+                    <telerik:EditorTool Name="Paste" />
+                    <telerik:EditorSeparator />
+
+                    <telerik:EditorTool Name="FontName" />
+                    <telerik:EditorTool Name="FontSize" />
+
+                    <telerik:EditorTool Name="Underline" />
+                    <telerik:EditorTool Name="Bold" />
+                    <telerik:EditorTool Name="Italic" />
+                    <telerik:EditorTool Name="ForeColor" />
+                    <telerik:EditorTool Name="BackColor" />
+                    <telerik:EditorSeparator />
+
+                    <telerik:EditorTool Name="FormatBlock" />
+                    <telerik:EditorTool Name="JustifyLeft" />
+                    <telerik:EditorTool Name="JustifyCenter" />
+                    <telerik:EditorTool Name="JustifyRight" />
+                    <telerik:EditorTool Name="JustifyFull" />
+                    <telerik:EditorTool Name="JustifyNone" />
+
+                    <telerik:EditorTool Name="InsertUnorderedList" />
+                    <telerik:EditorTool Name="InsertOrderedList" />
+
+                    <telerik:EditorTool Name="InsertParagraph" />
+                    <telerik:EditorTool Name="Indent" />
+                    <telerik:EditorTool Name="Outdent" />
+
+
+                    <telerik:EditorTool Name="InsertHorizontalRule" />
+
+                    <telerik:EditorTool Name="InsertTable" />
+                    <telerik:EditorTool Name="InsertLink" />
+
+                    <telerik:EditorSeparator />
+                    <telerik:EditorTool Name="PasteFromWord" />
+                    <telerik:EditorTool Name="PasteFromWordNoFontsNoSizes" />
+                    <telerik:EditorTool Name="PasteHtml" />
+
+
+                </telerik:EditorToolGroup>
+            </Tools>
+
+        </telerik:RadEditor>
+    </asp:Panel>
+
     <div class="div6" style="clear: both; margin-top: 20px;">
         <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu:" CssClass="lblReq" Style="padding-right: 30px;"></asp:Label>
         <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
@@ -193,13 +257,13 @@
     <asp:HiddenField ID="hidGUID_x19" runat="server" />
 
     <telerik:RadCalendar ID="SharedCalendar" runat="server" EnableMultiSelect="False" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
-            <SpecialDays>
-                <telerik:RadCalendarDay Repeatable="Today" ItemStyle-BackColor="SkyBlue"></telerik:RadCalendarDay>
-            </SpecialDays>
-        </telerik:RadCalendar>
+        <SpecialDays>
+            <telerik:RadCalendarDay Repeatable="Today" ItemStyle-BackColor="SkyBlue"></telerik:RadCalendarDay>
+        </SpecialDays>
+    </telerik:RadCalendar>
 
     <asp:HiddenField ID="hidx18CalendarFieldStart" runat="server" />
-    
+
     <asp:HiddenField ID="hidx18CalendarFieldEnd" runat="server" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">

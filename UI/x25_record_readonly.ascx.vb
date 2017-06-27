@@ -19,6 +19,12 @@
             hidX18ID.Value = value.ToString
         End Set
     End Property
+    Public ReadOnly Property PID As Integer
+        Get
+            Return BO.BAS.IsNullInt(hidPID.Value)
+        End Get
+    End Property
+
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
@@ -57,7 +63,7 @@
             End If
             Me.Timestamp.Text = .Timestamp
         End With
-        
+
 
         Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Me.Factory.x18EntityCategoryBL.GetList_x20_join_x18(Me.X18ID).Where(Function(p) p.x20EntryModeFlag = BO.x20EntryModeENUM.InsertUpdateWithoutCombo)
         Dim x20IDs As List(Of Integer) = lisX20X18.Where(Function(p) p.x29ID <> 331).Select(Function(p) p.x20ID).ToList
@@ -68,16 +74,22 @@
 
         RefreshUserFields()
     End Sub
-    
+
     Private Sub RefreshUserFields()
         Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Me.Factory.x18EntityCategoryBL.GetList_x16(Me.X18ID)
+        Dim bolHTML As Boolean = False
+        If lisX16.Where(Function(p) p.x16Field = "x25HtmlContent").Count > 0 Then
+            bolHTML = True
+            lisX16 = lisX16.Where(Function(p) p.x16Field <> "x25HtmlContent")
+        End If
         If lisX16.Count > 0 Then
-          
+
             rpFF.DataSource = lisX16
             rpFF.DataBind()
 
-        
         End If
+
+        panHtml.Visible = bolHTML
     End Sub
 
     Private Sub rpFF_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpFF.ItemDataBound
@@ -91,7 +103,7 @@
                 Case Else : .Text = "<img src='Images/type_text.png'/> "
             End Select
             .Text += cRec.x16Name & ":"
-            
+
         End With
 
 
@@ -109,7 +121,7 @@
                             .Text = curValue
                         End If
                     End With
-                    
+
 
 
                 Case BO.x24IdENUM.tDecimal
@@ -133,7 +145,7 @@
 
             End Select
         End If
-        
+
     End Sub
 
     Private Sub rpX19_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpX19.ItemDataBound
@@ -170,5 +182,12 @@
             If .Text = "" Then .Text = cRec.RecordAlias
         End With
 
+    End Sub
+
+    Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
+        If panHtml.Visible And hidPID.Value <> "" Then
+
+            place1.Controls.Add(New LiteralControl(Me.Factory.x25EntityField_ComboValueBL.LoadHtmlContent(CInt(hidPID.Value))))
+        End If
     End Sub
 End Class

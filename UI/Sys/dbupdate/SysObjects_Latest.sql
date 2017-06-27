@@ -15433,6 +15433,9 @@ if isnull(@err_ret,'')<>''
 BEGIN TRANSACTION
 
 BEGIN TRY	
+    if exists(select x25ID FROM x25BigData WHERE x25ID=@pid)
+	 DELETE FROM x25BigData WHERE x25ID=@pid
+
 	delete from x19EntityCategory_Binding WHERE x25ID=@pid
 
 	delete from x25EntityField_ComboValue where x25ID=@pid

@@ -212,6 +212,60 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents rpX18 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
+    '''panNoticeBoard control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panNoticeBoard As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''lblNoticeBoardHeader control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblNoticeBoardHeader As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''rpArticle control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rpArticle As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
+    '''tdRecX25 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tdRecX25 As Global.System.Web.UI.HtmlControls.HtmlTableCell
+
+    '''<summary>
+    '''rec1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rec1 As Global.UI.x25_record_readonly
+
+    '''<summary>
+    '''comments1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents comments1 As Global.UI.b07_list
+
+    '''<summary>
     '''panO23 control.
     '''</summary>
     '''<remarks>
@@ -426,15 +480,6 @@ Partial Public Class j03_mypage_greeting
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents imgWelcome As Global.System.Web.UI.WebControls.Image
-
-    '''<summary>
-    '''rpNoticeBoard control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rpNoticeBoard As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''lblBuild control.

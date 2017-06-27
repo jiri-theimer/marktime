@@ -3,6 +3,8 @@
     Function Save(cRec As BO.x25EntityField_ComboValue, intX18ID As Integer, lisX69 As List(Of BO.x69EntityRole_Assign), lisX19 As List(Of BO.x19EntityCategory_Binding), x20IDs As List(Of Integer)) As Boolean
     Function Load(intPID As Integer) As BO.x25EntityField_ComboValue
     Function LoadByCode(strCode As String, intX23ID As Integer) As BO.x25EntityField_ComboValue
+    Function LoadHtmlContent(intPID As Integer) As String
+    Function SaveHtmlContent(intPID As Integer, strHtmlContent As String) As Boolean
     Function Delete(intPID As Integer) As Boolean
     Function GetList(myQuery As BO.myQueryX25) As IEnumerable(Of BO.x25EntityField_ComboValue)
     Function GetDataTable4Grid(myQuery As BO.myQueryX25) As DataTable
@@ -135,5 +137,11 @@ Class x25EntityField_ComboValueBL
     End Sub
     Public Function GetRolesInline(intPID As Integer) As String Implements Ix25EntityField_ComboValueBL.GetRolesInline
         Return _cDL.GetRolesInline(intPID)
+    End Function
+    Public Function LoadHtmlContent(intPID As Integer) As String Implements Ix25EntityField_ComboValueBL.LoadHtmlContent
+        Return _cDL.LoadHtmlContent(intPID)
+    End Function
+    Public Function SaveHtmlContent(intPID As Integer, strHtmlContent As String) As Boolean Implements Ix25EntityField_ComboValueBL.SaveHtmlContent
+        Return _cDL.SaveHtmlContent(intPID, strHtmlContent)
     End Function
 End Class

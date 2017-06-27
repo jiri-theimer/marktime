@@ -218,7 +218,8 @@
                                             <asp:ListItem Text="Text 8" Value="x25FreeText08"></asp:ListItem>
                                             <asp:ListItem Text="Text 9" Value="x25FreeText09"></asp:ListItem>
                                             <asp:ListItem Text="Text 10" Value="x25FreeText10"></asp:ListItem>
-                                            <asp:ListItem Text="Velký text" Value="x25BigText"></asp:ListItem>
+                                            <asp:ListItem Text="Velký text (1000)" Value="x25BigText"></asp:ListItem>
+                                            <asp:ListItem Text="Html editor" Value="x25HtmlContent"></asp:ListItem>
                                             <asp:ListItem Text="Číslo 1" Value="x25FreeNumber01"></asp:ListItem>
                                             <asp:ListItem Text="Číslo 2" Value="x25FreeNumber02"></asp:ListItem>
                                             <asp:ListItem Text="Číslo 3" Value="x25FreeNumber03"></asp:ListItem>
@@ -234,6 +235,7 @@
                                             <asp:ListItem Text="ANO/NE 3" Value="x25FreeBoolean03"></asp:ListItem>
                                             <asp:ListItem Text="ANO/NE 4" Value="x25FreeBoolean04"></asp:ListItem>
                                             <asp:ListItem Text="ANO/NE 5" Value="x25FreeBoolean05"></asp:ListItem>
+                                                                                       
                                         </asp:DropDownList>
                                     </td>
                                     <td>
