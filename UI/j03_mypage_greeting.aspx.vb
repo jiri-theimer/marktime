@@ -35,6 +35,7 @@
                 .Add("j03_mypage_greeting-cbxP56Types")
                 .Add("j03_mypage_greeting-chkLog")
                 .Add("j03_mypage_greeting-chkScheduler")
+                .Add("j03_mypage_greeting-chkX18")
                 .Add("myscheduler-maxtoprecs-j02")
                 .Add("myscheduler-numberofdays-j02")
                 .Add("myscheduler-firstday")
@@ -57,7 +58,7 @@
                 cal1.MaxTopRecs = BO.BAS.IsNullInt(.j03UserBL.GetUserParam("myscheduler-maxtoprecs-j02", "10"))
                 cal1.NumberOfDays = BO.BAS.IsNullInt(.j03UserBL.GetUserParam("myscheduler-numberofdays-j02", "10"))
                 cal1.FirstDayMinus = BO.BAS.IsNullInt(.j03UserBL.GetUserParam("myscheduler-firstday", "-1"))
-
+                chkX18.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkX18", "1"))
              
 
                 panSearch_j02.Visible = .SysUser.j04IsMenu_People
@@ -539,19 +540,30 @@
         If lisX18.Count = 0 Then Return
 
         For Each c In lisX18
-            Select Case c.x18DashboardFlag
-                Case BO.x18DashboardENUM.CreateLinkAndGrid, BO.x18DashboardENUM.CreateLinkOnly
-                    Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
-                    If cDisp.CreateItem Then
-                        c.x18ReportCodes = "1"
-                    End If
-            End Select
+            c.x18ReportCodes = ""
+            Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
+            If cDisp.CreateItem And (c.x18DashboardFlag = BO.x18DashboardENUM.CreateLinkAndGrid Or c.x18DashboardFlag = BO.x18DashboardENUM.CreateLinkOnly) Then
+                c.x18ReportCodes = "1"
+            Else
+                c.x18ReportCodes = "0"
+            End If
+            If (cDisp.ReadItems Or cDisp.OwnerItems) And (c.x18DashboardFlag = BO.x18DashboardENUM.LinkOnly Or c.x18DashboardFlag = BO.x18DashboardENUM.CreateLinkAndGrid) Then
+                c.x18ReportCodes += "1"
+            Else
+                c.x18ReportCodes += "0"
+            End If
         Next
-        lisX18 = lisX18.Where(Function(p) p.x18ReportCodes = "1")
+        lisX18 = lisX18.Where(Function(p) p.x18ReportCodes <> "")
         If lisX18.Count > 0 Then
-            panX18.Visible = True
-            rpX18.DataSource = lisX18
-            rpX18.DataBind()
+            chkX18.Visible = True
+            If chkX18.Checked Then
+                panX18.Visible = True
+                rpX18.DataSource = lisX18
+                rpX18.DataBind()
+            End If
+            
+        Else
+            chkX18.Visible = False
         End If
     End Sub
 
@@ -565,9 +577,34 @@
             End If
         End With
         CType(e.Item.FindControl("x18Name"), Label).Text = cRec.x18Name
-        With CType(e.Item.FindControl("cmdNew"), HtmlButton)
-            .InnerHtml = "<img src='Images/new.png' />Nový"
-            .Attributes.Item("onclick") = "x25_create(" & cRec.PID.ToString & ")"
-        End With
+        e.Item.FindControl("cmdNew").Visible = False : e.Item.FindControl("linkFramework").Visible = False : e.Item.FindControl("linkCalendar").Visible = False
+
+        If (cRec.x18DashboardFlag = BO.x18DashboardENUM.CreateLinkAndGrid Or cRec.x18DashboardFlag = BO.x18DashboardENUM.CreateLinkOnly) And Left(cRec.x18ReportCodes, 1) = "1" Then
+            With CType(e.Item.FindControl("cmdNew"), HtmlButton)
+                .Visible = True
+                .InnerHtml = "<img src='Images/new.png' />Nový"
+                .Attributes.Item("onclick") = "x25_create(" & cRec.PID.ToString & ")"
+            End With
+        End If
+        If (cRec.x18DashboardFlag = BO.x18DashboardENUM.CreateLinkAndGrid Or cRec.x18DashboardFlag = BO.x18DashboardENUM.LinkOnly) And Right(cRec.x18ReportCodes, 1) = "1" Then
+            With CType(e.Item.FindControl("linkFramework"), HyperLink)
+                .Visible = True
+                .NavigateUrl = "x25_framework.aspx?x18id=" & cRec.PID.ToString
+            End With
+            With CType(e.Item.FindControl("linkCalendar"), HyperLink)
+                If cRec.x18IsCalendar Then
+                    .Visible = True
+                    .NavigateUrl = "x25_scheduler.aspx?x18id=" & cRec.PID.ToString
+                End If
+            End With
+        End If
+        
+        
+    End Sub
+
+    Private Sub chkX18_CheckedChanged(sender As Object, e As EventArgs) Handles chkX18.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkX18", BO.BAS.GB(Me.chkX18.Checked))
+        ReloadPage()
+
     End Sub
 End Class

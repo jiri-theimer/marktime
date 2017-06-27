@@ -35,7 +35,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Panel ID="panX20" runat="server" CssClass="content-box2">
         <div class="title">
-            Vazby štítku [<asp:Label ID="x18Name" runat="server"></asp:Label>]
+            Vazby [<asp:Label ID="x18Name" runat="server"></asp:Label>]
         </div>
         <div class="content">
             <div>

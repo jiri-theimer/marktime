@@ -74,7 +74,12 @@ Public Class x25_record
                         Case BO.x18EntryCodeENUM.NotUsed
                             lblx25Code.Visible = False : Me.x25Code.Visible = False
                         Case BO.x18EntryCodeENUM.AutoP41, BO.x18EntryCodeENUM.AutoX18
-                            Me.x25Code.Enabled = False
+                            If Master.DataPID = 0 Then
+                                Me.x25Code.Visible = False : lblx25Code.Visible = False
+                            Else
+                                Me.x25Code.Enabled = False
+                            End If
+
                     End Select
                     If c.x18EntryOrdinaryFlag = BO.x18EntryOrdinaryENUM.NotUsed Then
                         lblOrdinary.Visible = False : x25Ordinary.Visible = False
@@ -125,6 +130,15 @@ Public Class x25_record
                         Else
                             Master.StopPage("Nemáte oprávnění číst tento záznam v rámci štítku [{0}].", True)
 
+                        End If
+                    Else
+                        'je vlastníkem
+                        Dim bolTested As Boolean = False
+                        If cRec.b02ID <> 0 Then
+                            Dim cB02 As BO.b02WorkflowStatus = Master.Factory.b02WorkflowStatusBL.Load(cRec.b02ID)
+                            If cB02.b02IsRecordReadOnly4Owner Then  'aktuální workflow status má nastaveno, že vlastník záznam má pouze readonly přístup
+                                Server.Transfer("x25_record_readonly.aspx?pid=" & Master.DataPID.ToString, True)
+                            End If
                         End If
                     End If
                 End If

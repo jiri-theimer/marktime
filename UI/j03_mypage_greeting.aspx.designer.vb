@@ -23,6 +23,15 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents lblHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''chkX18 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkX18 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''chkScheduler control.
     '''</summary>
     '''<remarks>

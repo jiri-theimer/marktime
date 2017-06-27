@@ -26,7 +26,9 @@ Public Enum x18DashboardENUM
     NotUsed = 0
     CreateLinkAndGrid = 1
     CreateLinkOnly = 2
-    ShowItemsLikeNoticeboard = 3
+    LinkOnly = 3
+    ShowItemsLikeNoticeboard = 4
+
 End Enum
 
 Public Class x18EntityCategory

@@ -61,6 +61,10 @@
                 location.replace("p56_framework.aspx?pid=" + pid);
 
         }
+        function x25_create(x18id) {
+
+            sw_master("x25_record.aspx?pid=0&x18id=" + x18id, "Images/label.png")
+        }
 
     </script>
 </asp:Content>
@@ -75,6 +79,7 @@
             <img src="Images/logo_transparent.png" />
         </div>
         <div style="float: right;">
+            <asp:CheckBox ID="chkX18" runat="server" Text="Vybrané agendy štítků" AutoPostBack="true" CssClass="chk" Checked="true" Visible="false" />
             <asp:CheckBox ID="chkScheduler" runat="server" Text="Úkoly a termíny" AutoPostBack="true" CssClass="chk" Checked="true" />
             <asp:CheckBox ID="chkSearch" runat="server" Text="Vyhledávání" AutoPostBack="true" CssClass="chk" Checked="false" />
             <asp:CheckBox ID="chkLog" runat="server" Text="Poslední významnější akce" AutoPostBack="true" CssClass="chk" Checked="true" Style="margin-left: 20px;" />
@@ -157,7 +162,7 @@
                                 <asp:Image ID="img1" runat="server" />
                             </td>
                             <td>
-                                <asp:Label ID="x18Name" runat="server" CssClass="val"></asp:Label>
+                                <asp:Label ID="x18Name" runat="server" CssClass="val" Font-Italic="true"></asp:Label>
                             </td>
                             <td>
                                 <button type="button" runat="server" id="cmdNew"><img src="Images/new.png" />Nový</button>
