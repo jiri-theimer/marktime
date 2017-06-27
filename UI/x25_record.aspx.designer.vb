@@ -257,6 +257,24 @@ Partial Public Class x25_record
     Protected WithEvents SharedCalendar As Global.Telerik.Web.UI.RadCalendar
 
     '''<summary>
+    '''hidx18CalendarFieldStart control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidx18CalendarFieldStart As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidx18CalendarFieldEnd control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidx18CalendarFieldEnd As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

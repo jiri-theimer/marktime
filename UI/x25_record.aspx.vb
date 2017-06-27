@@ -49,6 +49,8 @@ Public Class x25_record
                     hidX18ID.Value = Request.Item("x18id")
                     Dim c As BO.x18EntityCategory = .Factory.x18EntityCategoryBL.Load(Me.CurrentX18ID)
                     Me.x23ID.SelectedValue = c.x23ID.ToString
+                    Me.hidx18CalendarFieldStart.Value = c.x18CalendarFieldStart
+                    Me.hidx18CalendarFieldEnd.Value = c.x18CalendarFieldEnd
 
                     .HeaderText = c.x18Name
                     If c.x18Icon32 <> "" Then .HeaderIcon = c.x18Icon32
@@ -69,7 +71,7 @@ Public Class x25_record
                         Case BO.x18EntryCodeENUM.NotUsed
                             lblx25Code.Visible = False : Me.x25Code.Visible = False
                         Case BO.x18EntryCodeENUM.AutoP41, BO.x18EntryCodeENUM.AutoX18
-                            Me.x25Code.Enabled = False                            
+                            Me.x25Code.Enabled = False
                     End Select
                     If c.x18EntryOrdinaryFlag = BO.x18EntryOrdinaryENUM.NotUsed Then
                         lblOrdinary.Visible = False : x25Ordinary.Visible = False
@@ -137,7 +139,23 @@ Public Class x25_record
             Me.j02ID_Owner.Text = Master.Factory.SysUser.PersonDesc
             _curRec = New BO.x25EntityField_ComboValue
             RefreshUserFields()
-            
+
+            If Request.Item("t1") <> "" And Request.Item("t2") <> "" Then
+                Dim dt1 As New BO.DateTimeByQuerystring(Request.Item("t1")), dt2 As New BO.DateTimeByQuerystring(Request.Item("t2"))
+                If hidx18CalendarFieldStart.Value <> "" Then
+                    For Each ri As RepeaterItem In rpX16.Items
+                        Dim strF As String = CType(ri.FindControl("x16Field"), HiddenField).Value
+                        If strF = hidx18CalendarFieldStart.Value Then
+                            CType(ri.FindControl("txtFF_Date"), Telerik.Web.UI.RadDatePicker).SelectedDate = dt1.DateOnly
+                        End If
+                        If strF = hidx18CalendarFieldEnd.Value Then
+                            CType(ri.FindControl("txtFF_Date"), Telerik.Web.UI.RadDatePicker).SelectedDate = dt2.DateOnly
+                        End If
+                    Next
+                End If
+                
+            End If
+
             Return
         End If
 

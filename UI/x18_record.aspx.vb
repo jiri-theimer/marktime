@@ -80,6 +80,7 @@
             basUI.SelectDropdownlistValue(Me.x18CalendarFieldStart, .x18CalendarFieldStart)
             basUI.SelectDropdownlistValue(Me.x18CalendarFieldEnd, .x18CalendarFieldEnd)
             basUI.SelectDropdownlistValue(Me.x18CalendarFieldSubject, .x18CalendarFieldSubject)
+            basUI.SelectDropdownlistValue(Me.x18CalendarResourceField, .x18CalendarResourceField)
             Master.Timestamp = .Timestamp
 
            
@@ -87,6 +88,7 @@
             basUI.SelectDropdownlistValue(Me.x18EntryNameFlag, CInt(.x18EntryNameFlag).ToString)
             basUI.SelectDropdownlistValue(Me.x18EntryCodeFlag, CInt(.x18EntryCodeFlag).ToString)
             basUI.SelectDropdownlistValue(Me.x18EntryOrdinaryFlag, CInt(.x18EntryOrdinaryFlag).ToString)
+
 
             roles1.InhaleInitialData(.PID)
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -240,6 +242,7 @@
             cRec.x18CalendarFieldStart = Me.x18CalendarFieldStart.SelectedValue
             cRec.x18CalendarFieldEnd = Me.x18CalendarFieldEnd.SelectedValue
             cRec.x18CalendarFieldSubject = Me.x18CalendarFieldSubject.SelectedValue
+            cRec.x18CalendarResourceField = Me.x18CalendarResourceField.SelectedValue
 
             If .Save(cRec, lisX20, lisX69, lisX16) Then
                 Master.DataPID = .LastSavedPID
@@ -275,6 +278,8 @@
         Me.x18CalendarFieldEnd.Visible = Me.x18IsCalendar.Checked
         Me.x18CalendarFieldSubject.Visible = Me.x18IsCalendar.Checked
         Me.lblx18CalendarFieldSubject.Visible = Me.x18IsCalendar.Checked
+        Me.x18CalendarResourceField.Visible = Me.x18IsCalendar.Checked
+        Me.lblx18CalendarResourceField.Visible = Me.x18IsCalendar.Checked
         If Me.x29ID_addX20.SelectedValue = "" Then
             Me.x20EntityTypePID_addX20.Visible = False
         Else

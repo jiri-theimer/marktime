@@ -144,6 +144,7 @@
     <Compile Include="Helpers\p56TaskSum.vb" />
     <Compile Include="Helpers\PersonOrTeam.vb" />
     <Compile Include="Helpers\Query\myQueryX25.vb" />
+    <Compile Include="Helpers\SchedulerItem.vb" />
     <Compile Include="Helpers\SearchBoxItem.vb" />
     <Compile Include="Helpers\SubjectMonitoring.vb" />
     <Compile Include="Helpers\j02PersonSum.vb" />

@@ -137,7 +137,7 @@
                 d2.setDate(d2.getDate() - 1);
             }
 
-
+            
             var url = "x25_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&x18id=<%=Me.CurrentX18ID%>";
 
 
@@ -330,6 +330,14 @@
                 </div>
             </asp:Panel>
 
+            <asp:Panel ID="panResources" runat="server" CssClass="div6">
+                <asp:DropDownList ID="cbxResourceView" runat="server" AutoPostBack="true">
+                    <asp:ListItem Text="Bez členění na řádky zdrojů" Value=""></asp:ListItem>
+                    <asp:ListItem Text="Pouze naplánované osoby (zdroje)" Value="1"></asp:ListItem>
+                    <asp:ListItem Text="Včetně nenaplánovaných osob (zdrojů)" Value="2"></asp:ListItem>                    
+                </asp:DropDownList>
+            </asp:Panel>
+
             <div style="clear: both;"></div>
             <div class="show_hide1" style="float: left; margin-top: 50px;">
                 <button type="button">
@@ -435,31 +443,40 @@
                 Culture="cs-CZ" AllowEdit="false" AllowDelete="false" AllowInsert="false"
                 OnClientAppointmentEditing="OnClientAppointmentEditing" OnClientTimeSlotClick="record_create"
                 HoursPanelTimeFormat="HH:mm" ShowNavigationPane="true" OnClientAppointmentMoveEnd="OnClientAppointmentMoveEnd" OnClientNavigationCommand="OnSchedulerCommand" OnClientTimeSlotContextMenuItemClicked="record_create_contextmenu"
-                DataSubjectField="o22Name" DataStartField="o22DateFrom" DataEndField="o22DateUntil" DataKeyField="pid">
+                DataSubjectField="Subject" DataStartField="DateStart" DataEndField="DateEnd" DataKeyField="ID" DataDescriptionField="Description">
                 <Localization HeaderAgendaDate="Datum" AllDay="Bez času od/do" HeaderMonth="Měsíc" HeaderDay="Den" HeaderMultiDay="Multi-den" HeaderWeek="Týden" ShowMore="více..." HeaderToday="Dnes" HeaderAgendaAppointment="Událost" HeaderAgendaTime="Čas" />
                 <DayView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" ShowInsertArea="true" />
                 <WeekView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" ShowInsertArea="true" />
                 <MultiDayView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" NumberOfDays="10" />
-                <TimelineView UserSelectable="true" NumberOfSlots="14" ColumnHeaderDateFormat="ddd d.M." />
+                <TimelineView UserSelectable="true" NumberOfSlots="14" ColumnHeaderDateFormat="ddd d.M." ShowResourceHeaders="true" GroupingDirection="Vertical" GroupBy="resource1" />
                 <AgendaView UserSelectable="true" NumberOfDays="20" />
                 <MonthView UserSelectable="true" VisibleAppointmentsPerDay="4" />
+               <ResourceTypes>
+                   <telerik:ResourceType Name="resource1" ForeignKeyField="ResourceID" AllowMultipleValues="true" />
+               </ResourceTypes>
+                <ResourceHeaderTemplate>
+                    
+                    <span><%# Eval("Text")%></span>
+                </ResourceHeaderTemplate>
                 
                 <AppointmentTemplate>
+                   
                     <a class="reczoom" rel="<%# Eval("Description")%>">i</a>
                     <a href="javascript:re(<%# Eval("ID")%>)"><%# Eval("Subject")%></a>
-
+                    
 
                 </AppointmentTemplate>
 
                 <TimeSlotContextMenus>
                     <telerik:RadSchedulerContextMenu>
                         <Items>
-                            <telerik:RadMenuItem Text="Nový záznam" ImageUrl="Images/label.png" NavigateUrl="javascript:x25_record(0)" Value="x25"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Nový záznam" ImageUrl="Images/new.png"  Value="x25"></telerik:RadMenuItem>
                             <telerik:RadMenuItem IsSeparator="true" Text="."></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Jdi na DNES" Value="CommandGoToToday" />
                         </Items>
                     </telerik:RadSchedulerContextMenu>
                 </TimeSlotContextMenus>
+                
                 <ExportSettings OpenInNewWindow="true" FileName="MARKTIME_EXPORT">
                     <Pdf Author="MARKTIME" Creator="MARKITME" PaperSize="A4" />
                 </ExportSettings>
@@ -473,8 +490,7 @@
         </div>
 
     </div>
-
-
+    
     <asp:HiddenField ID="hidx18IsColors" runat="server" />
     <asp:HiddenField ID="hidX23ID" runat="server" />
 
@@ -491,5 +507,6 @@
     <asp:HiddenField ID="hidCalendarFieldStart" runat="server" />
     <asp:HiddenField ID="hidCalendarFieldEnd" runat="server" />
     <asp:HiddenField ID="hidCalendarFieldSubject" runat="server" />
+    <asp:HiddenField ID="hidx18CalendarResourceField" runat="server" />
 </asp:Content>
 

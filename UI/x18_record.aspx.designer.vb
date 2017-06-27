@@ -374,6 +374,24 @@ Partial Public Class x18_record
     Protected WithEvents x18CalendarFieldSubject As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''lblx18CalendarResourceField control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblx18CalendarResourceField As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x18CalendarResourceField control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18CalendarResourceField As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''x18Icon control.
     '''</summary>
     '''<remarks>

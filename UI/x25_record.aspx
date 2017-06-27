@@ -194,6 +194,10 @@
                 <telerik:RadCalendarDay Repeatable="Today" ItemStyle-BackColor="SkyBlue"></telerik:RadCalendarDay>
             </SpecialDays>
         </telerik:RadCalendar>
+
+    <asp:HiddenField ID="hidx18CalendarFieldStart" runat="server" />
+    
+    <asp:HiddenField ID="hidx18CalendarFieldEnd" runat="server" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

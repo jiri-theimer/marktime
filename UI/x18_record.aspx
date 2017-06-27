@@ -418,6 +418,18 @@
                         </tr>
                         <tr>
                             <td>
+                                <asp:Label ID="lblx18CalendarResourceField" runat="server" Text="Zdroj v timeline kalendáři:"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="x18CalendarResourceField" runat="server">
+                                    <asp:ListItem Text="--Zdroje nevyužívat--" Value=""></asp:ListItem>
+                                    <asp:ListItem Text="Osoba" Value="j02ID"></asp:ListItem>
+                                    
+                                </asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
                                 <span>Grafická ikona (16px):</span>
                             </td>
                             <td>

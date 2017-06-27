@@ -49,7 +49,7 @@ Public Class x25_scheduler
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add("x25_framework-x18id")
-                    .Add("entity_scheduler-view")
+                    .Add("entity_scheduler-view-" & strX18ID)
                     .Add("entity_scheduler-daystarttime")
                     .Add("entity_scheduler-dayendtime")
                     .Add("entity_scheduler-multidays")
@@ -61,12 +61,12 @@ Public Class x25_scheduler
                     .Add("entity_scheduler-agendadays")
                     .Add("entity_scheduler-timelinedays")
                     .Add("entity_scheduler-include_childs")
-
+                    .Add("entity_scheduler-resourceview-" & strX18ID)
                 End With
 
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
-                    Me.CurrentView = .GetUserParam("entity_scheduler-view", "1")
+                    Me.CurrentView = .GetUserParam("entity_scheduler-view-" & strX18ID, "1")
 
                     Me.persons1.CurrentScope = .GetUserParam("entity_scheduler-persons1-scope", "4")
                     Me.persons1.CurrentValue = .GetUserParam("entity_scheduler-persons1-value")
@@ -84,7 +84,7 @@ Public Class x25_scheduler
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_multidays, .GetUserParam("entity_scheduler-multidays", "2"))
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_agendadays, .GetUserParam("entity_scheduler-agendadays", "20"))
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_timelinedays, .GetUserParam("entity_scheduler-timelinedays", "10"))
-
+                    basUI.SelectDropdownlistValue(Me.cbxResourceView, .GetUserParam("entity_scheduler-resourceview-" & strX18ID, "1"))
                     
                 End With
             End With
@@ -125,6 +125,8 @@ Public Class x25_scheduler
         persons1.CurrentPersonsRole = strDef
     End Sub
 
+    
+
     Private Sub scheduler1_NavigationComplete(sender As Object, e As SchedulerNavigationCompleteEventArgs) Handles scheduler1.NavigationComplete
         Dim bolChangeView As Boolean = False
         Select Case e.Command
@@ -132,7 +134,7 @@ Public Class x25_scheduler
                 bolChangeView = True
         End Select
         If bolChangeView Then
-            Master.Factory.j03UserBL.SetUserParam("entity_scheduler-view", CInt(Me.CurrentView).ToString)
+            Master.Factory.j03UserBL.SetUserParam("entity_scheduler-view-" & Me.CurrentX18ID.ToString, CInt(Me.CurrentView).ToString)
         End If
         RefreshData(False)
     End Sub
@@ -150,6 +152,7 @@ Public Class x25_scheduler
         hidCalendarFieldStart.Value = c.x18CalendarFieldStart
         hidCalendarFieldEnd.Value = c.x18CalendarFieldEnd
         hidCalendarFieldSubject.Value = c.x18CalendarFieldSubject
+        hidx18CalendarResourceField.Value = c.x18CalendarResourceField
 
         Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
         ''menu1.FindItemByValue("cmdNew").Visible = cDisp.CreateItem
@@ -165,6 +168,9 @@ Public Class x25_scheduler
     End Sub
 
     Private Sub RefreshData(bolData4Export As Boolean)
+        Dim bolResources As Boolean = False
+        If Me.hidx18CalendarResourceField.Value <> "" And cbxResourceView.SelectedValue <> "" And scheduler1.SelectedView = SchedulerViewType.TimelineView Then bolResources = True
+
         With Me.scheduler1
             .Appointments.Clear()
             .DayView.DayStartTime = System.TimeSpan.FromHours(CDbl(Me.entity_scheduler_daystarttime.SelectedValue))
@@ -177,6 +183,12 @@ Public Class x25_scheduler
             .Localization.HeaderMultiDay = "Multi-den (" & .MultiDayView.NumberOfDays.ToString & ")"
             .AgendaView.NumberOfDays = BO.BAS.IsNullInt(Me.entity_scheduler_agendadays.SelectedValue)
             .TimelineView.NumberOfSlots = BO.BAS.IsNullInt(Me.entity_scheduler_timelinedays.SelectedValue)
+            If bolResources Then
+                .TimelineView.GroupBy = "resource1"
+            Else
+                .TimelineView.GroupBy = ""
+            End If
+
         End With
         Dim d1 As Date = scheduler1.VisibleRangeStart.AddDays(-1), d2 As Date = scheduler1.VisibleRangeEnd.AddDays(1)
 
@@ -198,8 +210,13 @@ Public Class x25_scheduler
         mq.DateFrom = d1
         mq.DateUntil = d2
 
+
+
         Master.Factory.x25EntityField_ComboValueBL.SetCalendarDateFields(hidCalendarFieldStart.Value, hidCalendarFieldEnd.Value)
         Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = Master.Factory.x25EntityField_ComboValueBL.GetList(mq)
+
+        Dim lisItems As New List(Of BO.SchedulerItem), res_foud As New List(Of Integer)
+
 
         Dim lisX20 As IEnumerable(Of BO.x20EntiyToCategory) = Nothing, x20ids As List(Of Integer) = Nothing, lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Nothing
         Select Case hidCalendarFieldSubject.Value
@@ -216,13 +233,15 @@ Public Class x25_scheduler
                 x20ids = lisX20.Select(Function(p) p.x20ID).ToList
                 lisX19 = Master.Factory.x18EntityCategoryBL.GetList_X19(x20ids, True)
         End Select
-        
-       
+
+
         For Each cRec In lis
-            Dim c As New Appointment()
+            Dim c As New BO.SchedulerItem
+
             With cRec
                 c.ID = .PID.ToString & ",'x25'"
                 c.Description = "clue_x25_record.aspx?pid=" & .PID.ToString
+
                 Select Case hidCalendarFieldSubject.Value
                     Case "x25Name"
                         c.Subject = .x25Name
@@ -233,56 +252,93 @@ Public Class x25_scheduler
                             Dim cX19 As BO.x19EntityCategory_Binding = lisX19.First(Function(p) p.x25ID = cRec.PID)
                             If Not cX19 Is Nothing Then
                                 c.Subject = cX19.RecordAlias
+                                If bolResources Then
+                                    Dim res As New Resource("resource1", cX19.x19RecordPID, cX19.RecordAlias)
+                                    c.ResourceID = cX19.x19RecordPID
+                                    c.ResourceName = cX19.RecordAlias
+                                    res_foud.Add(cX19.x19RecordPID)
+                                End If
+                                
+
+
                             End If
                         End If
                 End Select
 
-                c.Start = .CalendarDateStart
-                c.End = .CalendarDateEnd
 
-                If c.End > c.Start And c.Subject.Length > 0 Then
-                    c.Subject += " " & BO.BAS.FD(c.Start, True, False) & " - " & BO.BAS.FD(c.End, True, False)
+                c.DateStart = .CalendarDateStart
+                c.DateEnd = .CalendarDateEnd
+
+                If c.DateEnd > c.DateStart Then
+                    If Month(c.DateStart) = Month(c.DateEnd) Then
+                        c.Subject += " " & Format(c.DateStart, "d.") & "-" & Format(c.DateEnd, "d.M.")
+                    Else
+                        c.Subject += " " & Format(c.DateStart, "d.M.") & "-" & Format(c.DateEnd, "d.M.")
+                    End If
+                Else
+                    c.Subject += " " & Format(c.DateEnd, "d.M.")
                 End If
-                c.ForeColor = Drawing.Color.Black
+
                 If .b02ID <> 0 Then
                     If .b02Color <> "" Then
-                        c.BackColor = Drawing.Color.FromName(.b02Color)
+                        c.BackgroundColorString = .b02Color
                     End If
                 Else
                     If .x25BackColor <> "" Then
-                        c.BackColor = Drawing.Color.FromName(.x25BackColor)
-                        If .x25ForeColor <> "" Then c.ForeColor = Drawing.Color.FromName(.x25ForeColor)
+                        c.BackgroundColorString = .x25BackColor
+
+                        If .x25ForeColor <> "" Then
+                            c.ForeColorString = .x25ForeColor
+                        End If
                     End If
                 End If
 
 
-                If (c.End.Hour = 23 And c.End.Minute = 59) Or (c.End.Hour = 0 And c.End.Minute = 0 And c.End.Second = 0) Then
-                    c.Start = DateSerial(Year(c.Start), Month(c.Start), Day(c.Start))
-                    c.End = DateSerial(Year(c.End), Month(c.End), Day(c.End)).AddDays(1)
+                If (c.DateEnd.Hour = 23 And c.DateEnd.Minute = 59) Or (c.DateEnd.Hour = 0 And c.DateEnd.Minute = 0 And c.DateEnd.Second = 0) Then
+                    c.DateStart = DateSerial(Year(c.DateStart), Month(c.DateStart), Day(c.DateStart))
+                    c.DateEnd = DateSerial(Year(c.DateEnd), Month(c.DateEnd), Day(c.DateEnd)).AddDays(1)
                 End If
 
-                
+                Dim intLeft As Integer = 20
+                Dim lngDiff As Long = DateDiff(DateInterval.Day, c.DateStart, c.DateEnd, Microsoft.VisualBasic.FirstDayOfWeek.Monday, FirstWeekOfYear.System)
                 Select Case Me.CurrentView
-                    Case SchedulerViewType.MonthView, SchedulerViewType.TimelineView, SchedulerViewType.WeekView
-                        If Len(c.Subject) > 15 Then
-                            If DateDiff(DateInterval.Day, c.Start, c.End, Microsoft.VisualBasic.FirstDayOfWeek.Monday, FirstWeekOfYear.System) > 2 Then
-                                If Len(c.Subject) > 50 Then
-                                    c.ToolTip = c.Subject
-                                    c.Subject = Left(c.Subject, 50) & "..."
-                                End If
-
-                            Else
-                                c.ToolTip = c.Subject
-                                c.Subject = Left(c.Subject, 15) & "..."
-                            End If
-                        End If
-                        
-
+                    Case SchedulerViewType.MonthView, SchedulerViewType.WeekView
+                        If lngDiff >= 1 Then intLeft = 50
+                        If lngDiff >= 2 Then intLeft = 90
+                    Case SchedulerViewType.TimelineView
+                        If lngDiff >= 1 Then intLeft = 35
+                        If lngDiff >= 2 Then intLeft = 50
+                    Case Else
+                        intLeft = 100
                 End Select
+                If Len(c.Subject) >= intLeft Then
+                    c.Tooltip = c.Subject
+                    c.Subject = Left(c.Subject, intLeft) & "..."
+
+                End If
+
             End With
 
-            scheduler1.InsertAppointment(c)
+            lisItems.Add(c)
+
         Next
+        If bolResources Then
+            Dim mqJ02 As New BO.myQueryJ02
+            If Me.cbxResourceView.SelectedValue = "1" Then
+                If res_foud.Count = 0 Then res_foud.Add(-1)
+                mqJ02.PIDs = res_foud
+
+            End If
+
+            Dim lisJ02I As IEnumerable(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList(mqJ02)
+            For Each c In lisJ02I
+                scheduler1.Resources.Add(New Resource("resource1", c.PID, c.FullNameDesc))
+            Next
+        End If
+
+
+        scheduler1.DataSource = lisItems
+
     End Sub
 
     Private Sub persons1_OnChange() Handles persons1.OnChange
@@ -317,6 +373,16 @@ Public Class x25_scheduler
             End If
             
         End With
+        If scheduler1.SelectedView = SchedulerViewType.TimelineView And Me.hidx18CalendarResourceField.Value <> "" Then
+            Me.panResources.Visible = True
+        Else
+            Me.panResources.Visible = False
+        End If
+        If scheduler1.SelectedView = SchedulerViewType.TimelineView Then
+            scheduler1.TimeSlotContextMenus(0).FindItemByValue("x25").NavigateUrl = "javascript:x25_record(0)"
+        Else
+            scheduler1.TimeSlotContextMenus(0).FindItemByValue("x25").NavigateUrl = ""
+        End If
     End Sub
 
     
@@ -339,5 +405,21 @@ Public Class x25_scheduler
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-timelinedays", Me.entity_scheduler_timelinedays.SelectedValue)
         RefreshData(False)
         hidIsLoadingSetting.Value = "1"
+    End Sub
+
+    Private Sub scheduler1_AppointmentDataBound(sender As Object, e As SchedulerEventArgs) Handles scheduler1.AppointmentDataBound
+        Dim cRec As BO.SchedulerItem = CType(e.Appointment.DataItem, BO.SchedulerItem)
+        With cRec
+            If .BackgroundColorString = "" Then e.Appointment.BackColor = Drawing.Color.Khaki Else e.Appointment.BackColor = Drawing.Color.FromName(.BackgroundColorString)
+            If .ForeColorString = "" Then e.Appointment.ForeColor = Drawing.Color.Black Else e.Appointment.ForeColor = Drawing.Color.FromName(.ForeColorString)
+            e.Appointment.ToolTip = .Tooltip
+        End With
+    End Sub
+
+    Private Sub cbxResourceView_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxResourceView.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-resourceview-" & Me.CurrentX18ID.ToString, cbxResourceView.SelectedValue)
+
+        RefreshData(False)
+
     End Sub
 End Class

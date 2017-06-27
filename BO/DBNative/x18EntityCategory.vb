@@ -51,6 +51,7 @@ Public Class x18EntityCategory
     Public Property x18CalendarFieldStart As String
     Public Property x18CalendarFieldEnd As String
     Public Property x18CalendarFieldSubject As String
+    Public Property x18CalendarResourceField As String
 
 
     Public ReadOnly Property x23Name As String

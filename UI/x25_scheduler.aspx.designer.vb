@@ -77,6 +77,24 @@ Partial Public Class x25_scheduler
     Protected WithEvents projects1 As Global.UI.projects
 
     '''<summary>
+    '''panResources control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panResources As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''cbxResourceView control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxResourceView As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''entity_scheduler_daystarttime control.
     '''</summary>
     '''<remarks>
@@ -246,6 +264,15 @@ Partial Public Class x25_scheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidCalendarFieldSubject As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidx18CalendarResourceField control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidx18CalendarResourceField As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.
