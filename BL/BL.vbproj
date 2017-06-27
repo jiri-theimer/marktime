@@ -131,7 +131,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="o10NoticeBoardBL.vb" />
     <Compile Include="o13AttachmentTypeBL.vb" />
     <Compile Include="o21MilestoneTypeBL.vb" />
     <Compile Include="o22MilestoneBL.vb" />

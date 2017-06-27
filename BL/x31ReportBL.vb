@@ -186,8 +186,8 @@ Class x31ReportBL
             lisX31.Add(GPPS(-998, "[Ceníky sazeb]", "p51_framework.aspx", -30, BO.x29IdEnum.p51PriceList, "p51_framework"))
         End If
         
-        lisX31.Add(GPPS(-998, "[Nástěnka]", "o10_framework.aspx", -30, BO.x29IdEnum.o10NoticeBoard, "o10_framework"))
-        lisX31.Add(GPPS(-998, "[Operativní plánování]", "p48_framework.aspx", -30, BO.x29IdEnum.p48OperativePlan, "p48_framework"))
+
+        ''lisX31.Add(GPPS(-998, "[Operativní plánování]", "p48_framework.aspx", -30, BO.x29IdEnum.p48OperativePlan, "p48_framework"))
 
        
 
