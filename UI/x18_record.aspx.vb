@@ -25,11 +25,12 @@
                 .HeaderText = "Nastavení štítku"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If Not .Factory.TestPermission(BO.x53PermValEnum.GR_X18_Admin) Then
-                    If .DataPID <> 0 Then
-                        Server.Transfer("x18_items.aspx?pid=" & .DataPID.ToString, False)
-                    Else
-                        .StopPage("Pro správu štítků nemáte oprávnění.")
-                    End If
+                    .StopPage("Pro správu štítků nemáte oprávnění.")
+                    'If .DataPID <> 0 Then
+                    '    Server.Transfer("x18_items.aspx?pid=" & .DataPID.ToString, False)
+                    'Else
+
+                    'End If
                 End If
                 .neededPermission = BO.x53PermValEnum.GR_X18_Admin
 
@@ -88,7 +89,7 @@
             basUI.SelectDropdownlistValue(Me.x18EntryNameFlag, CInt(.x18EntryNameFlag).ToString)
             basUI.SelectDropdownlistValue(Me.x18EntryCodeFlag, CInt(.x18EntryCodeFlag).ToString)
             basUI.SelectDropdownlistValue(Me.x18EntryOrdinaryFlag, CInt(.x18EntryOrdinaryFlag).ToString)
-
+            basUI.SelectDropdownlistValue(Me.x18DashboardFlag, CInt(.x18DashboardFlag).ToString)
 
             roles1.InhaleInitialData(.PID)
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -243,6 +244,7 @@
             cRec.x18CalendarFieldEnd = Me.x18CalendarFieldEnd.SelectedValue
             cRec.x18CalendarFieldSubject = Me.x18CalendarFieldSubject.SelectedValue
             cRec.x18CalendarResourceField = Me.x18CalendarResourceField.SelectedValue
+            cRec.x18DashboardFlag = CType(x18DashboardFlag.SelectedValue, BO.x18DashboardENUM)
 
             If .Save(cRec, lisX20, lisX69, lisX16) Then
                 Master.DataPID = .LastSavedPID

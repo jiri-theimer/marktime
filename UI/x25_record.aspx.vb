@@ -48,6 +48,9 @@ Public Class x25_record
                 If Request.Item("x18id") <> "" Then
                     hidX18ID.Value = Request.Item("x18id")
                     Dim c As BO.x18EntityCategory = .Factory.x18EntityCategoryBL.Load(Me.CurrentX18ID)
+
+                    Handle_Permissions(c)
+
                     Me.x23ID.SelectedValue = c.x23ID.ToString
                     Me.hidx18CalendarFieldStart.Value = c.x18CalendarFieldStart
                     Me.hidx18CalendarFieldEnd.Value = c.x18CalendarFieldEnd
@@ -76,15 +79,19 @@ Public Class x25_record
                     If c.x18EntryOrdinaryFlag = BO.x18EntryOrdinaryENUM.NotUsed Then
                         lblOrdinary.Visible = False : x25Ordinary.Visible = False
                     End If
+                Else
+                    If Not (Request.Item("source") = "x18_items" Or Request.Item("source") = "x18_record") Then
+                        .neededPermission = BO.x53PermValEnum.GR_Admin
+                    End If
                 End If
                 If Me.x23ID.SelectedIndex > 0 Then
                     lblX23ID.Visible = False
                     Me.x23ID.Visible = False
                 End If
 
-                If Not (Request.Item("source") = "x18_items" Or Request.Item("source") = "x18_record") Then
-                    .neededPermission = BO.x53PermValEnum.GR_Admin
-                End If
+
+
+                
             End With
 
 
@@ -99,6 +106,32 @@ Public Class x25_record
 
             
         End If
+    End Sub
+
+    Private Sub Handle_Permissions(c As BO.x18EntityCategory)
+        Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
+        With cDisp
+            If Master.DataPID = 0 Then
+                If Not .CreateItem Then
+                    Master.StopPage(String.Format("Nemáte oprávnění zakládat nové záznamy do štítku [{0}].", c.x18Name), True)                    
+                End If
+            Else
+                If Not .OwnerItems Then
+                    Dim cRec As BO.x25EntityField_ComboValue = Master.Factory.x25EntityField_ComboValueBL.Load(Master.DataPID)
+                    If cRec.j02ID_Owner <> Master.Factory.SysUser.j02ID Then
+                        'není vlastníkem záznamu
+                        If .ReadItems Then
+                            Server.Transfer("x25_record_readonly.aspx?pid=" & Master.DataPID.ToString, True)
+                        Else
+                            Master.StopPage("Nemáte oprávnění číst tento záznam v rámci štítku [{0}].", True)
+
+                        End If
+                    End If
+                End If
+            End If
+           
+           
+        End With
     End Sub
     
     Private Sub RefreshRecord()

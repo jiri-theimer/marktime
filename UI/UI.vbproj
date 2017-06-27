@@ -541,6 +541,7 @@
     <Content Include="x25_framework_detail.aspx" />
     <Content Include="x25_record.aspx" />
     <Content Include="x25_record_readonly.ascx" />
+    <Content Include="x25_record_readonly.aspx" />
     <Content Include="x25_scheduler.aspx" />
     <Content Include="x27_record.aspx" />
     <Content Include="x28_record.aspx" />
@@ -3138,6 +3139,13 @@
     <Compile Include="x25_record_readonly.ascx.vb">
       <DependentUpon>x25_record_readonly.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="x25_record_readonly.aspx.designer.vb">
+      <DependentUpon>x25_record_readonly.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x25_record_readonly.aspx.vb">
+      <DependentUpon>x25_record_readonly.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="x25_scheduler.aspx.designer.vb">
       <DependentUpon>x25_scheduler.aspx</DependentUpon>

@@ -4,7 +4,7 @@
     <table cellpadding="5" cellspacing="2" style="width: 100%;" id="responsive">    
         <tr class="trHover" id="trB02Name" runat="server">
             <td style="width:140px;">
-                <span class="lbl"><img src="Images/workflow.png" /> Aktuální stav (workflow):</span>
+                <span class="lbl"><img src="Images/workflow.png" /> Aktuální stav:</span>
             </td>
             <td>
                 <asp:Label ID="b02Name" runat="server" CssClass="valbold"></asp:Label>
@@ -82,9 +82,13 @@
 
 <script type="text/javascript">
     function workflow() {
-        
+       
+        if (parent == null) {
             sw_everywhere("workflow_dialog.aspx?prefix=x25&pid=<%=hidPID.Value%>", "Images/workflow.png", true);
-
+        }
+        else {
+            window.parent.sw_everywhere("workflow_dialog.aspx?prefix=x25&pid=<%=hidPID.Value%>", "Images/workflow.png", true);
+        }
        
     }
 </script>

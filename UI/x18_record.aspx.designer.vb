@@ -410,6 +410,15 @@ Partial Public Class x18_record
     Protected WithEvents x18Icon32 As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''x18DashboardFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18DashboardFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''x18IsClueTip control.
     '''</summary>
     '''<remarks>

@@ -38,7 +38,7 @@
         }
         function wd(pid) {
 
-            sw_master("workflow_dialog.aspx?pid="+pid+"&prefix=p56", "Images/workflow.png")
+            sw_master("workflow_dialog.aspx?pid=" + pid + "&prefix=p56", "Images/workflow.png")
         }
         function ew(p56id) {
 
@@ -55,13 +55,13 @@
         function re(pid, prefix) {
             if (prefix == 'o22')
                 sw_master("o22_record.aspx?pid=" + pid, "Images/event.png")
-           
+
 
             if (prefix == 'p56')
                 location.replace("p56_framework.aspx?pid=" + pid);
-            
+
         }
-       
+
     </script>
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
@@ -69,77 +69,115 @@
         <div style="float: left;">
             <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span" Style="font-size: 200%;" Text="Vítejte v systému"></asp:Label>
 
-            
+
         </div>
         <div style="float: left; margin-top: 7px; padding-left: 10px;">
             <img src="Images/logo_transparent.png" />
         </div>
-        <div style="float:right;">
+        <div style="float: right;">
             <asp:CheckBox ID="chkScheduler" runat="server" Text="Úkoly a termíny" AutoPostBack="true" CssClass="chk" Checked="true" />
             <asp:CheckBox ID="chkSearch" runat="server" Text="Vyhledávání" AutoPostBack="true" CssClass="chk" Checked="false" />
-            <asp:CheckBox ID="chkLog" runat="server" Text="Poslední významnější akce" AutoPostBack="true" CssClass="chk" Checked="true" style="margin-left:20px;" />
-            <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Grafy z mých hodin" Checked="true" CssClass="chk" style="margin-left:20px;" />
+            <asp:CheckBox ID="chkLog" runat="server" Text="Poslední významnější akce" AutoPostBack="true" CssClass="chk" Checked="true" Style="margin-left: 20px;" />
+            <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Grafy z mých hodin" Checked="true" CssClass="chk" Style="margin-left: 20px;" />
         </div>
         <div style="clear: both;"></div>
         <asp:PlaceHolder ID="place_j04DashboardHtml" runat="server"></asp:PlaceHolder>
+
+        
+
 
         <div style="min-height: 430px;">
             <div style="float: left;">
                 <asp:Panel ID="panSearch" runat="server" CssClass="content-box2">
                     <div class="title">
                         <img src="Images/search.png" />
-                        
+
                     </div>
                     <div class="content">
                         <asp:Panel ID="panSearch_P41" runat="server" Visible="false">
-                           
+
                             <telerik:RadComboBox ID="search_p41" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat projekt..." Width="250px" OnClientSelectedIndexChanged="project_OnClientSelectedIndexChanged" OnClientItemsRequesting="project_OnClientItemsRequesting">
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/project_service.asmx" UseHttpGet="false" />
                             </telerik:RadComboBox>
                         </asp:Panel>
                         <asp:Panel ID="panSearch_p28" runat="server" Style="margin-top: 6px;" Visible="false">
-                            
+
                             <telerik:RadComboBox ID="search_p28" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat klienta..." Width="250px" OnClientSelectedIndexChanged="contact_OnClientSelectedIndexChanged" OnClientItemsRequesting="contact_OnClientItemsRequesting">
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/contact_service.asmx" UseHttpGet="false" />
                             </telerik:RadComboBox>
                         </asp:Panel>
                         <asp:Panel ID="panSearch_p91" runat="server" Style="margin-top: 6px;" Visible="false">
-                            
+
                             <telerik:RadComboBox ID="search_p91" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat fakturu..." Width="250px" OnClientSelectedIndexChanged="invoice_OnClientSelectedIndexChanged" OnClientItemsRequesting="invoice_OnClientItemsRequesting">
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/invoice_service.asmx" UseHttpGet="false" />
                             </telerik:RadComboBox>
                         </asp:Panel>
                         <asp:Panel ID="panSearch_p56" runat="server" Style="margin-top: 6px;" Visible="false">
-                            
+
                             <telerik:RadComboBox ID="search_p56" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat úkol..." Width="250px" OnClientSelectedIndexChanged="task_OnClientSelectedIndexChanged" OnClientItemsRequesting="task_OnClientItemsRequesting">
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/task_service.asmx" UseHttpGet="false" />
                             </telerik:RadComboBox>
                         </asp:Panel>
                         <asp:Panel ID="panSearch_j02" runat="server" Style="margin-top: 6px;" Visible="false">
-                            
+
                             <telerik:RadComboBox ID="search_j02" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat osobu..." Width="250px" OnClientSelectedIndexChanged="person_OnClientSelectedIndexChanged" OnClientItemsRequesting="person_OnClientItemsRequesting">
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/person_service.asmx" UseHttpGet="false" />
                             </telerik:RadComboBox>
                         </asp:Panel>
                         <div class="div6">
                             <button id="linkFulltext" runat="server" type="button" onclick="fulltext2()" visible="false">FULL-TEXT hledání</button>
-                            
+
                         </div>
-                        
+
                     </div>
                 </asp:Panel>
 
-              
+
 
             </div>
-            <div style="float:left;">    
-                
-            <uc:myscheduler ID="cal1" runat="server" Prefix="j02" />
-            
-                
-            
+            <div style="float: left;">
+
+                <uc:myscheduler ID="cal1" runat="server" Prefix="j02" />
+
+
+
             </div>
-            
+
+            <asp:Panel ID="panX18" runat="server" CssClass="content-box1">
+            <div class="title">
+                <img src="Images/label.png" />
+                Vybrané agendy štítků
+            </div>
+            <div class="content">
+                <table cellpadding="6">
+                <asp:Repeater ID="rpX18" runat="server">
+                    <ItemTemplate>
+                        <tr class="trHover">
+                            <td style="width:33px;">
+                                <asp:Image ID="img1" runat="server" />
+                            </td>
+                            <td>
+                                <asp:Label ID="x18Name" runat="server" CssClass="val"></asp:Label>
+                            </td>
+                            <td>
+                                <button type="button" runat="server" id="cmdNew"><img src="Images/new.png" />Nový</button>
+                            </td>
+                            <td>
+                                <asp:HyperLink ID="linkFramework" runat="server" Text="Přehled" NavigateUrl="#"></asp:HyperLink>
+                            </td>
+                            <td>
+                                <asp:HyperLink ID="linkCalendar" runat="server" Text="Kalendář" NavigateUrl="#"></asp:HyperLink>
+                            </td>
+                        </tr>
+                            
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+                </table>
+            </div>
+        </asp:Panel>
+
+
             <asp:Panel ID="panO23" runat="server" CssClass="content-box1">
                 <div class="title">
                     <img src="Images/notepad.png" alt="Dokument" />
@@ -356,7 +394,7 @@
 
                 <a href="log_app_update.aspx">Historie novinek a změn v systému</a>
 
-                
+
             </div>
         </div>
 
@@ -369,7 +407,7 @@
 
             });
 
-           
+
 
             function contact_OnClientSelectedIndexChanged(sender, eventArgs) {
                 var combo = sender;

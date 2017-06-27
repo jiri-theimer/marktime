@@ -332,9 +332,9 @@
 
             <asp:Panel ID="panResources" runat="server" CssClass="div6">
                 <asp:DropDownList ID="cbxResourceView" runat="server" AutoPostBack="true">
-                    <asp:ListItem Text="Bez členění na řádky zdrojů" Value=""></asp:ListItem>
-                    <asp:ListItem Text="Pouze naplánované osoby (zdroje)" Value="1"></asp:ListItem>
-                    <asp:ListItem Text="Včetně nenaplánovaných osob (zdrojů)" Value="2"></asp:ListItem>                    
+                    <asp:ListItem Text="Bez členění podle zdrojů (osob)" Value=""></asp:ListItem>
+                    <asp:ListItem Text="Zobrazovat podle naplánovaných zdrojů (osob)" Value="1"></asp:ListItem>
+                    <asp:ListItem Text="Zobrazovat podle všech zdrojů (osob)" Value="2"></asp:ListItem>                    
                 </asp:DropDownList>
             </asp:Panel>
 

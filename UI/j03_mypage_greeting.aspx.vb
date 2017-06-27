@@ -118,6 +118,7 @@
             RefreshBoxes()
 
             RefreshX47Log()
+
             'If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
             '    menu1.Visible = False
             'End If
@@ -127,6 +128,7 @@
                 cal1.RefreshTasksWithoutDate(True)
             End If
 
+            RefreshX18()
         Else
             If chkScheduler.Checked Then cal1.RecordPID = Master.Factory.SysUser.j02ID
         End If
@@ -529,5 +531,43 @@
     Private Sub chkScheduler_CheckedChanged(sender As Object, e As EventArgs) Handles chkScheduler.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkScheduler", BO.BAS.GB(Me.chkScheduler.Checked))
         ReloadPage()
+    End Sub
+
+    Private Sub RefreshX18()
+        panX18.Visible = False
+        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(New BO.myQuery).Where(Function(p) p.x18DashboardFlag > BO.x18DashboardENUM.NotUsed)
+        If lisX18.Count = 0 Then Return
+
+        For Each c In lisX18
+            Select Case c.x18DashboardFlag
+                Case BO.x18DashboardENUM.CreateLinkAndGrid, BO.x18DashboardENUM.CreateLinkOnly
+                    Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
+                    If cDisp.CreateItem Then
+                        c.x18ReportCodes = "1"
+                    End If
+            End Select
+        Next
+        lisX18 = lisX18.Where(Function(p) p.x18ReportCodes = "1")
+        If lisX18.Count > 0 Then
+            panX18.Visible = True
+            rpX18.DataSource = lisX18
+            rpX18.DataBind()
+        End If
+    End Sub
+
+    Private Sub rpX18_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpX18.ItemDataBound
+        Dim cRec As BO.x18EntityCategory = CType(e.Item.DataItem, BO.x18EntityCategory)
+        With CType(e.Item.FindControl("img1"), Image)
+            If cRec.x18Icon32 <> "" Then
+                .ImageUrl = cRec.x18Icon32
+            Else
+                .Visible = False
+            End If
+        End With
+        CType(e.Item.FindControl("x18Name"), Label).Text = cRec.x18Name
+        With CType(e.Item.FindControl("cmdNew"), HtmlButton)
+            .InnerHtml = "<img src='Images/new.png' />Nový"
+            .Attributes.Item("onclick") = "x25_create(" & cRec.PID.ToString & ")"
+        End With
     End Sub
 End Class

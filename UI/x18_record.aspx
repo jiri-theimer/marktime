@@ -445,8 +445,21 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>
+                                Vztah k úvodní (dashboard) stránce:
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="x18DashboardFlag" runat="server">
+                                    <asp:ListItem Text="--Žádný vztah--" Value="0"></asp:ListItem>
+                                    <asp:ListItem Text="Tlačítko pro založení nového záznamu + odkaz na přehled" Value="1"></asp:ListItem>
+                                    <asp:ListItem Text="Pouze tlačítko pro založení nového záznamu" Value="2"></asp:ListItem>
+                                    <asp:ListItem Text="Zobrazovat položky jako nástěnku" Value="3"></asp:ListItem>
+                                </asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr>
                             <td colspan="2">
-                                <asp:CheckBox ID="x18IsClueTip" runat="server" Text="U přiřazené položky zobrazovat info-bublinu" />
+                                <asp:CheckBox ID="x18IsClueTip" runat="server" Text="U přiřazené položky zobrazovat info-bublinu" Visible="false" />
                             </td>
                         </tr>
                         <tr>

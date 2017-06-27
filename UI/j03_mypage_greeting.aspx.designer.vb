@@ -185,6 +185,24 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents cal1 As Global.UI.myscheduler
 
     '''<summary>
+    '''panX18 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panX18 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''rpX18 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rpX18 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
     '''panO23 control.
     '''</summary>
     '''<remarks>

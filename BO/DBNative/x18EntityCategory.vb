@@ -22,7 +22,12 @@ Public Enum x18EntryOrdinaryENUM
     Manual = 1      '1-pořadí zadávat ručně
     NotUsed = 2     '2-nepracovat s pořadím
 End Enum
-
+Public Enum x18DashboardENUM
+    NotUsed = 0
+    CreateLinkAndGrid = 1
+    CreateLinkOnly = 2
+    ShowItemsLikeNoticeboard = 3
+End Enum
 
 Public Class x18EntityCategory
     Inherits BOMother
@@ -52,7 +57,7 @@ Public Class x18EntityCategory
     Public Property x18CalendarFieldEnd As String
     Public Property x18CalendarFieldSubject As String
     Public Property x18CalendarResourceField As String
-
+    Public Property x18DashboardFlag As x18DashboardENUM = x18DashboardENUM.NotUsed
 
     Public ReadOnly Property x23Name As String
         Get

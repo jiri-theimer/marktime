@@ -23,6 +23,9 @@
 
             context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
             context["flag"] = "searchbox";
+            <%If Me.CurrentX29ID = BO.x29IdEnum.j02Person Then%>
+            context["flag"] = "all2";
+            <%End If%>
             <%If Me.CurrentX29ID = BO.x29IdEnum.p41Project Then%>
             context["j02id_explicit"] = "<%=Master.Factory.SysUser.j02ID%>";
             <%End If%>

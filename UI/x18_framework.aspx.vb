@@ -13,9 +13,12 @@ Public Class x18_framework
             With Master
                 .PageTitle = "Správa štítků"
                 .SiteMenuValue = "x25_framework"
-                If Request.UrlReferrer.AbsolutePath.IndexOf("admin") > 0 Or Request.Item("source") = "admin" Then
-                    hidSource.Value = "admin"
+                If Not Request.UrlReferrer Is Nothing Then
+                    If Request.UrlReferrer.AbsolutePath.IndexOf("admin") > 0 Or Request.Item("source") = "admin" Then
+                        hidSource.Value = "admin"
+                    End If
                 End If
+                
 
                 Dim lisPars As New List(Of String)
                 With lisPars

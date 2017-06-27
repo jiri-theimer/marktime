@@ -14,6 +14,7 @@
     Public Property FormatString As String
     Public Property x16IsReportField As Boolean
     Public Property x16FieldGroup As String
+    Public Property x16Format As String
 
 
     Public ReadOnly Property FieldType As BO.x24IdENUM
