@@ -46,6 +46,10 @@
         }
 
         function hardrefresh(pid, flag) {
+            if (flag == "x25-save") {
+                location.replace("x25_framework.aspx?pid=" + pid);
+                return;
+            }
             location.replace("default.aspx");
         }
         function fulltext2() {

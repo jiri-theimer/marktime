@@ -152,6 +152,8 @@ Public Class x25_framework
             Next
             If hidB01ID.Value <> "" Then
                 .AddColumn("b02Name", "Stav", BO.cfENUM.AnyString, True, , "b02Name", , False, True)
+                .AddColumn("Receiver", "Řeší", BO.cfENUM.AnyString, True, True, "dbo.x25_getroles_inline(a.x25ID)")
+                lisSqlSEL.Add("dbo.x25_getroles_inline(a.x25ID) as Receiver")
             End If
             Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Master.Factory.x18EntityCategoryBL.GetList_x16(Me.CurrentX18ID).Where(Function(p) p.x16IsGridField = True)
             If lisX16.Count = 0 Then
