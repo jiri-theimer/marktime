@@ -239,6 +239,15 @@ Partial Public Class x25_scheduler
     Protected WithEvents hidCalendarFieldEnd As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidCalendarFieldSubject control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidCalendarFieldSubject As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

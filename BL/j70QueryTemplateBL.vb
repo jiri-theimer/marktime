@@ -23,7 +23,7 @@ Class j70QueryTemplateBL
     Implements Ij70QueryTemplateBL
     Private WithEvents _cDL As DL.j70QueryTemplateDL
     Private _x29id As BO.x29IdEnum
-    Private _lisX67 As IEnumerable(Of BO.x67EntityRole)
+    Private _lisX67 As IEnumerable(Of BO.x67EntityRole) = Nothing
 
     Private Sub _cDL_OnError(strError As String) Handles _cDL.OnError
         _Error = strError
@@ -384,9 +384,8 @@ Class j70QueryTemplateBL
     Private Sub AppendRoles(x29id As BO.x29IdEnum, strRefField As String, strTreeGroup As String, ByRef lis As List(Of BO.GridColumn))
         Dim mq As New BO.myQuery
 
-        Dim lisX67 As IEnumerable(Of BO.x67EntityRole) = _lisX67
-        If _lisX67 Is Nothing Then lisX67 = Factory.x67EntityRoleBL.GetList(mq)
-        lisX67 = lisX67.Where(Function(p) p.x29ID = x29id)
+        If _lisX67 Is Nothing Then _lisX67 = Factory.x67EntityRoleBL.GetList(mq)
+        Dim lisX67 As IEnumerable(Of BO.x67EntityRole) = _lisX67.Where(Function(p) p.x29ID = x29id)
 
         For Each c In lisX67
             Select Case x29id

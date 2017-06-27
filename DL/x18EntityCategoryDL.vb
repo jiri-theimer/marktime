@@ -125,6 +125,7 @@
                 pars.Add("x18IsCalendar", .x18IsCalendar, DbType.Boolean)
                 pars.Add("x18CalendarFieldStart", .x18CalendarFieldStart, DbType.String)
                 pars.Add("x18CalendarFieldEnd", .x18CalendarFieldEnd, DbType.String)
+                pars.Add("x18CalendarFieldSubject", .x18CalendarFieldSubject, DbType.String)
             End With
 
             If _cDB.SaveRecord("x18EntityCategory", pars, bolINSERT, strW, True, _curUser.j03Login) Then
@@ -204,11 +205,12 @@
         Dim strW As String = bas.ParseWhereMultiPIDs("a.x18ID", myQuery)
         strW += bas.ParseWhereValidity("x18", "a", myQuery)
         If x29ID > BO.x29IdEnum._NotSpecified Then
-            strW += " AND a.x18ID IN (SELECT x18ID FROM x20EntiyToCategory WHERE x29ID=" & CInt(x29ID).ToString & ")"
+            pars.Add("x29id", CInt(x29ID), DbType.Int32)
+            strW += " AND a.x18ID IN (SELECT x18ID FROM x20EntiyToCategory WHERE x29ID=@x29id)"
         End If
         If intEntityType > 0 Then
             s += " AND (a.x18ID IN (select x18ID FROM x20EntiyToCategory WHERE x29ID=" & CInt(x29ID).ToString & " AND x20EntityTypePID=" & intEntityType.ToString & " AND x29ID_EntityType=" & GetEntityTypeX29ID(x29ID).ToString & ")"
-            s += " OR a.x18ID IN (select x18ID FROM x20EntiyToCategory WHERE x29ID=" & CInt(x29ID).ToString & " AND x20EntityTypePID IS NULL))"
+            s += " OR a.x18ID IN (select x18ID FROM x20EntiyToCategory WHERE x29ID=@x29id AND x20EntityTypePID IS NULL))"
         End If
         If Not myQuery Is Nothing Then
             If myQuery.MyRecordsDisponible Then
@@ -221,7 +223,7 @@
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
 
         s += " ORDER BY a.x18Ordinary,a.x18Name"
-        Return _cDB.GetList(Of BO.x18EntityCategory)(s)
+        Return _cDB.GetList(Of BO.x18EntityCategory)(s, pars)
 
     End Function
     Private Function GetEntityTypeX29ID(x29id As BO.x29IdEnum) As Integer

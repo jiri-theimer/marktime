@@ -149,6 +149,7 @@ Public Class x25_scheduler
         hidx18IsColors.Value = BO.BAS.GB(c.x18IsColors)
         hidCalendarFieldStart.Value = c.x18CalendarFieldStart
         hidCalendarFieldEnd.Value = c.x18CalendarFieldEnd
+        hidCalendarFieldSubject.Value = c.x18CalendarFieldSubject
 
         Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
         ''menu1.FindItemByValue("cmdNew").Visible = cDisp.CreateItem
@@ -199,15 +200,49 @@ Public Class x25_scheduler
 
         Master.Factory.x25EntityField_ComboValueBL.SetCalendarDateFields(hidCalendarFieldStart.Value, hidCalendarFieldEnd.Value)
         Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = Master.Factory.x25EntityField_ComboValueBL.GetList(mq)
+
+        Dim lisX20 As IEnumerable(Of BO.x20EntiyToCategory) = Nothing, x20ids As List(Of Integer) = Nothing, lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Nothing
+        Select Case hidCalendarFieldSubject.Value
+            Case "j02_alias", "p41_alias", "p28_alias"
+                lisX20 = Master.Factory.x18EntityCategoryBL.GetList_x20(Me.CurrentX18ID)
+                Select Case hidCalendarFieldSubject.Value
+                    Case "j02_alias"
+                        lisX20 = lisX20.Where(Function(p) p.x29ID = 102)
+                    Case "p41_alias"
+                        lisX20 = lisX20.Where(Function(p) p.x29ID = 141)
+                    Case "p28_alias"
+                        lisX20 = lisX20.Where(Function(p) p.x29ID = 328)
+                End Select
+                x20ids = lisX20.Select(Function(p) p.x20ID).ToList
+                lisX19 = Master.Factory.x18EntityCategoryBL.GetList_X19(x20ids, True)
+        End Select
+        
+       
         For Each cRec In lis
             Dim c As New Appointment()
             With cRec
                 c.ID = .PID.ToString & ",'x25'"
                 c.Description = "clue_x25_record.aspx?pid=" & .PID.ToString
-                c.Subject = .x25Name
-                If c.Subject = "" Then c.Subject = .x25Code
+                Select Case hidCalendarFieldSubject.Value
+                    Case "x25Name"
+                        c.Subject = .x25Name
+                    Case "x25Code"
+                        c.Subject = .x25Code
+                    Case Else
+                        If Not lisX19 Is Nothing Then
+                            Dim cX19 As BO.x19EntityCategory_Binding = lisX19.First(Function(p) p.x25ID = cRec.PID)
+                            If Not cX19 Is Nothing Then
+                                c.Subject = cX19.RecordAlias
+                            End If
+                        End If
+                End Select
+
                 c.Start = .CalendarDateStart
                 c.End = .CalendarDateEnd
+
+                If c.End > c.Start And c.Subject.Length > 0 Then
+                    c.Subject += " " & BO.BAS.FD(c.Start, True, False) & " - " & BO.BAS.FD(c.End, True, False)
+                End If
                 c.ForeColor = Drawing.Color.Black
                 If .b02ID <> 0 Then
                     If .b02Color <> "" Then
@@ -226,10 +261,22 @@ Public Class x25_scheduler
                     c.End = DateSerial(Year(c.End), Month(c.End), Day(c.End)).AddDays(1)
                 End If
 
+                
                 Select Case Me.CurrentView
                     Case SchedulerViewType.MonthView, SchedulerViewType.TimelineView, SchedulerViewType.WeekView
-                        If Len(c.Subject) > 0 Then c.Subject = BO.BAS.OM3(c.Subject, 15)
+                        If Len(c.Subject) > 15 Then
+                            If DateDiff(DateInterval.Day, c.Start, c.End, Microsoft.VisualBasic.FirstDayOfWeek.Monday, FirstWeekOfYear.System) > 2 Then
+                                If Len(c.Subject) > 50 Then
+                                    c.ToolTip = c.Subject
+                                    c.Subject = Left(c.Subject, 50) & "..."
+                                End If
 
+                            Else
+                                c.ToolTip = c.Subject
+                                c.Subject = Left(c.Subject, 15) & "..."
+                            End If
+                        End If
+                        
 
                 End Select
             End With

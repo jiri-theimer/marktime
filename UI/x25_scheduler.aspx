@@ -490,5 +490,6 @@
     <asp:HiddenField ID="hidIsProjectsChange" runat="server" Value="" />
     <asp:HiddenField ID="hidCalendarFieldStart" runat="server" />
     <asp:HiddenField ID="hidCalendarFieldEnd" runat="server" />
+    <asp:HiddenField ID="hidCalendarFieldSubject" runat="server" />
 </asp:Content>
 

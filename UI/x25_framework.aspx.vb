@@ -199,7 +199,7 @@ Public Class x25_framework
             If Master.Factory.TestPermission(BO.x53PermValEnum.GR_X18_Admin) Then
                 Response.Redirect("x18_framework.aspx", True)
             Else
-                menu1.Visible = False
+                Master.StopPage("V databázi ani jeden mně dostupný štítek.", False)
             End If
         Else
             If strDef <> "" Then basUI.SelectDropdownlistValue(Me.x18ID, strDef)

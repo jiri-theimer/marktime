@@ -185,15 +185,6 @@ Partial Public Class x18_record
     Protected WithEvents rpX16 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
-    '''x18GridColsFlag control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x18GridColsFlag As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''other control.
     '''</summary>
     '''<remarks>
@@ -246,6 +237,15 @@ Partial Public Class x18_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j02ID_Owner As Global.UI.person
+
+    '''<summary>
+    '''x18GridColsFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18GridColsFlag As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''x18IsColors control.
@@ -354,6 +354,24 @@ Partial Public Class x18_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x18CalendarFieldEnd As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''lblx18CalendarFieldSubject control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblx18CalendarFieldSubject As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x18CalendarFieldSubject control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18CalendarFieldSubject As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''x18Icon control.

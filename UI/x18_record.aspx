@@ -276,14 +276,7 @@
                     </table>
                 </div>
             </div>
-            <div class="div6">
-                <asp:DropDownList ID="x18GridColsFlag" runat="server">
-                    <asp:ListItem Text="Jako sloupce v přehledu zobrazovat i [Název] a [Kód]" Value="1"></asp:ListItem>
-                    <asp:ListItem Text="Jako sloupce v přehledu zobrazovat i [Kód]" Value="2"></asp:ListItem>
-                    <asp:ListItem Text="Jako sloupce v přehledu zobrazovat i [Název]" Value="3"></asp:ListItem>
-                    <asp:ListItem Text="Nezobrazovat ani [Název] ani [Kód]" Value="4"></asp:ListItem>
-                </asp:DropDownList>
-            </div>
+            
         </telerik:RadPageView>
 
         <telerik:RadPageView ID="other" runat="server" Style="margin-top: 10px;">
@@ -303,11 +296,19 @@
             </div>
 
 
-
+            
 
             <div class="content-box2" style="margin-top: 60px;">
                 <div class="title">Různé</div>
                 <div class="content">
+                    <div class="div6">
+                <asp:DropDownList ID="x18GridColsFlag" runat="server">
+                    <asp:ListItem Text="Jako sloupce v přehledu zobrazovat i [Název] a [Kód]" Value="1"></asp:ListItem>
+                    <asp:ListItem Text="Jako sloupce v přehledu zobrazovat i [Kód]" Value="2"></asp:ListItem>
+                    <asp:ListItem Text="Jako sloupce v přehledu zobrazovat i [Název]" Value="3"></asp:ListItem>
+                    <asp:ListItem Text="Nezobrazovat ani [Název] ani [Kód]" Value="4"></asp:ListItem>
+                </asp:DropDownList>
+            </div>
                     <table cellpadding="5" cellspacing="2">
                         <tr>
                             <td colspan="2">
@@ -397,6 +398,21 @@
                                     <asp:ListItem Text="Datum 3" Value="x25FreeDate03"></asp:ListItem>
                                     <asp:ListItem Text="Datum 4" Value="x25FreeDate04"></asp:ListItem>
                                     <asp:ListItem Text="Datum 5" Value="x25FreeDate05"></asp:ListItem>
+                                </asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblx18CalendarFieldSubject" runat="server" Text="Pole pro název události v kalendáři:"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="x18CalendarFieldSubject" runat="server">
+                                    <asp:ListItem Text="--Prázdné--" Value=""></asp:ListItem>
+                                    <asp:ListItem Text="Název záznamu" Value="x25Name"></asp:ListItem>
+                                    <asp:ListItem Text="Kód záznamu" Value="x25Code"></asp:ListItem>
+                                    <asp:ListItem Text="Osoba" Value="j02_alias"></asp:ListItem>
+                                    <asp:ListItem Text="Projekt" Value="p41_alias"></asp:ListItem>
+                                    <asp:ListItem Text="Klient" Value="p28_alias"></asp:ListItem>
                                 </asp:DropDownList>
                             </td>
                         </tr>

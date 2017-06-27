@@ -781,13 +781,17 @@
         s.Append(" INNER JOIN o28ProjectRole_Workload zo28 ON zx67.x67ID=zo28.x67ID")
         s.Append(" WHERE zx67.x29ID=141 AND " & strPermFlagSqlWhere & " AND (zx69.j02ID=@j02id_query")
         If _curUser.j11IDs <> "" Then s.Append(" OR zx69.j11ID IN (" & _curUser.j11IDs & ")")
-        s.Append(")")
-        s.Append(" UNION select za.p41ID,zo28.p34ID")
-        s.Append(" FROM p41Project za INNER JOIN j18Region zj18 ON za.j18ID=zj18.j18ID")
-        s.Append(" INNER JOIN x69EntityRole_Assign zx69 ON zj18.j18ID=zx69.x69RecordPID")
-        s.Append(" INNER JOIN x67EntityRole zx67 ON zx69.x67ID=zx67.x67ID INNER JOIN o28ProjectRole_Workload zo28 ON zx67.x67ID=zo28.x67ID")
-        s.Append(" WHERE zx67.x29ID=118 AND " & strPermFlagSqlWhere & " AND (zx69.j02ID=@j02id_query")
-        If _curUser.j11IDs <> "" Then s.Append(" OR zx69.j11ID IN (" & _curUser.j11IDs & ")")
+
+        If 1 = 1 Then   'někdy se bude muset řešit kvůli výkonu
+            s.Append(")")
+            s.Append(" UNION select za.p41ID,zo28.p34ID")
+            s.Append(" FROM p41Project za INNER JOIN j18Region zj18 ON za.j18ID=zj18.j18ID")
+            s.Append(" INNER JOIN x69EntityRole_Assign zx69 ON zj18.j18ID=zx69.x69RecordPID")
+            s.Append(" INNER JOIN x67EntityRole zx67 ON zx69.x67ID=zx67.x67ID INNER JOIN o28ProjectRole_Workload zo28 ON zx67.x67ID=zo28.x67ID")
+            s.Append(" WHERE zx67.x29ID=118 AND " & strPermFlagSqlWhere & " AND (zx69.j02ID=@j02id_query")
+            If _curUser.j11IDs <> "" Then s.Append(" OR zx69.j11ID IN (" & _curUser.j11IDs & ")")
+
+        End If
         s.Append(")")
         s.Append(") scope ON a.p41ID=scope.p41ID AND p32.p34ID=scope.p34ID")
     End Sub
