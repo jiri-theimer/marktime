@@ -319,6 +319,10 @@ Public Class x25_framework
             If grid1.GetSelectedPIDs.Count > 0 Then
                 Me.hidContentPaneDefUrl.Value = "x25_framework_detail.aspx?pid=" & intSelPID.ToString & "&x18id=" & Me.CurrentX18ID.ToString
                 hiddatapid.Value = intSelPID.ToString
+            Else
+                If Request.Item("pid") <> "" Then
+                    Me.hidContentPaneDefUrl.Value = "x25_framework_detail.aspx?pid=" & intSelPID.ToString & "&x18id=" & Me.CurrentX18ID.ToString
+                End If
             End If
             
         End If

@@ -34,6 +34,7 @@
                         strPage += "&pid=" & strPID
                         Response.Redirect(strPage)
                     Case "x25"
+
                         If bolNeedMobileUI Then
                             Response.Redirect("clue_x25_record.aspx?dr=1&pid=" & strPID)
                         Else
