@@ -266,7 +266,7 @@
                 <telerik:NavigationNode id="reload" ImageUrl="Images/refresh.png" Text=" " ToolTip="Obnovit stránku"></telerik:NavigationNode>
 
             
-            <telerik:NavigationNode Text="ZÁZNAM FAKTURY" ImageUrl="Images/arrow_down_menu.png" id="record">
+            <telerik:NavigationNode Text="ZÁZNAM FAKTURY" id="record">
                     <Nodes>
                         <telerik:NavigationNode id="cmdEdit" Text="Upravit kartu faktury" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění."></telerik:NavigationNode>
                         <telerik:NavigationNode id="cmdCreateInvoice" Text="Vystavit novou fakturu" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:NavigationNode>
@@ -285,7 +285,7 @@
                     </Nodes>
 
                 </telerik:NavigationNode>
-                <telerik:NavigationNode Text="DALŠÍ" ImageUrl="Images/menuarrow.png" id="more">                    
+                <telerik:NavigationNode Text="DALŠÍ" id="more">                    
                     <Nodes>
                         <telerik:NavigationNode id="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()">
                         </telerik:NavigationNode>

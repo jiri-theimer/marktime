@@ -93,7 +93,7 @@ Public Class p91_framework_detail
             .EnableTextSelection = True
             .MarkFirstMatch = True
             .EnableLoadOnDemand = True
-            .Width = Unit.Parse("100px")
+            .Width = Unit.Parse("200px")
             .Style.Item("margin-top") = "5px"
             .OnClientItemsRequesting = "cbxSearch_OnClientItemsRequesting"
             .OnClientSelectedIndexChanged = "cbxSearch_OnClientSelectedIndexChanged"
@@ -106,7 +106,7 @@ Public Class p91_framework_detail
         If hidSource.Value = "2" Then
 
             menu1.Skin = "Metro"
-            
+            imgIcon32.Visible = False
             
 
             FNO("reload").Visible = False
@@ -116,7 +116,7 @@ Public Class p91_framework_detail
         End If
         If hidSource.Value = "3" Then
             FNO("searchbox").Controls.Add(cbx)
-
+            imgIcon32.Style.Item("top") = "44px"
         Else
             FNO("searchbox").Visible = False
         End If
