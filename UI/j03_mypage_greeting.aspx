@@ -29,14 +29,7 @@
 
 
 
-        function p48_record(pid) {
-
-            sw_master("p48_multiple_edit_delete.aspx?p48ids=" + pid, "Images/oplan.png")
-        }
-        function p48_convert(pid) {
-
-            sw_master("p31_record.aspx?pid=0&p48id=" + pid, "Images/worksheet.png")
-        }
+       
         function wd(pid) {
 
             sw_master("workflow_dialog.aspx?pid=" + pid + "&prefix=p56", "Images/workflow.png")
@@ -325,28 +318,7 @@
                 </div>
             </asp:Panel>
 
-            <asp:Panel ID="panP48" runat="server" CssClass="content-box1">
-                <div class="title">
-                    <img src="Images/oplan.png" alt="Plán" />
-                    Operativní plán (čeká na překlopení)
-                    <asp:Label ID="p48Count" runat="server" CssClass="badge1"></asp:Label>
-                    <a href="entity_scheduler.aspx">Kalendář</a>
-                </div>
-                <div class="content">
-                    <asp:Repeater ID="rpP48" runat="server">
-                        <ItemTemplate>
-                            <div class="div6">
-                                <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" title="Detail plánu"></asp:HyperLink>
-                                <asp:Label ID="p48Date" runat="server" ForeColor="green"></asp:Label>
-                                <asp:Label ID="p48Hours" runat="server" CssClass="valboldblue"></asp:Label>
-                                <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
-                                <asp:HyperLink ID="convert1" runat="server" Text="Překlopit" ForeColor="green"></asp:HyperLink>
-
-                            </div>
-                        </ItemTemplate>
-                    </asp:Repeater>
-                </div>
-            </asp:Panel>
+           
 
             <asp:Panel ID="panChart1" runat="server" Style="float: right;" Visible="false">
                 <telerik:RadHtmlChart runat="server" ID="chart1" Width="600px" Font-Size="Small">
