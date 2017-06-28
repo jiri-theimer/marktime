@@ -17,9 +17,7 @@ div.right_panel {
 }
 
 
-a:link, a:visited {
-    color: #034af3;
-}
+
 
 a:hover {
     color: #1d60ff;
@@ -509,11 +507,6 @@ TH {
 
 
 
-/* Kvůli RadMenu, aby se zobrazoval hand cursor u hover položky  
-----------------------------------------------------------*/
-.RadMenu .rmLink:hover {
-    cursor: pointer;
-}
 
 .RadToolBar .rtbText:hover {
     cursor: pointer;
@@ -1010,6 +1003,12 @@ div.commandcell {
 }
 
 
+
+/* Kvůli RadMenu, aby se zobrazoval hand cursor u hover položky  
+----------------------------------------------------------*/
+.RadMenu .rmLink:hover {
+    cursor: pointer;
+}
 
 /* Responsivní styly pro šířku menší než 600px
 ----------------------------------------------------------*/

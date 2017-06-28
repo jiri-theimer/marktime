@@ -57,7 +57,7 @@
                     End Select
                     menu1.TabSkin = .GetUserParam("p56_menu-tabskin")
                     menu1.MenuSkin = .GetUserParam("p56_menu-menuskin")
-                    menu1.ShowLevel1 = BO.BAS.BG(.GetUserParam("p56_menu-show-level1", "0"))
+                    ''menu1.ShowLevel1 = BO.BAS.BG(.GetUserParam("p56_menu-show-level1", "0"))
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p56_framework_detail-chkFFShowFilledOnly", "0"))
 
                 End With

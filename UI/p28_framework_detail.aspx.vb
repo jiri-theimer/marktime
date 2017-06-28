@@ -72,7 +72,7 @@
                     menu1.TabSkin = .GetUserParam("p28_menu-tabskin")
                     menu1.MenuSkin = .GetUserParam("p28_menu-menuskin")
                     menu1.x31ID_Plugin = .GetUserParam("p28_menu-x31id-plugin")
-                    menu1.ShowLevel1 = BO.BAS.BG(.GetUserParam("p28_menu-show-level1", "0"))
+                    ''menu1.ShowLevel1 = BO.BAS.BG(.GetUserParam("p28_menu-show-level1", "0"))
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p28_framework_detail-chkFFShowFilledOnly", "0"))
                 End With
                 Master.DataPID = intPID

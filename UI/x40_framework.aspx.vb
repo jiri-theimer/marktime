@@ -31,7 +31,7 @@ Public Class x40_framework
             Me.CurrentMasterPrefix = Request.Item("masterprefix")
             With Master
                 .PageTitle = "Odeslané poštovní zprávy"
-                .SiteMenuValue = "x40"
+                .SiteMenuValue = "x40_framework"
 
                 Dim lisPars As New List(Of String)
                 With lisPars

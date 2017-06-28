@@ -25,19 +25,6 @@
                     .StopPage("")
                 End If
 
-
-                'Dim lisPars As New List(Of String)
-                'With lisPars
-
-                'End With
-                'With .Factory.j03UserBL
-                '    .InhaleUserParams(lisPars)
-                'End With
-                'With .Factory.j03UserBL
-
-
-                'End With
-
             End With
 
             RefreshRecord()
@@ -45,35 +32,36 @@
 
 
     End Sub
-
+    Private Function FNO(strValue As String) As Telerik.Web.UI.NavigationNode
+        Return menu1.GetAllNodes.First(Function(p) p.ID = strValue)
+    End Function
     Private Sub RefreshRecord()
-        menu1.FindItemByValue("begin").Controls.Add(New LiteralControl("<img src='Images/label_32.png'/>"))
-
+        
         If Master.DataPID = 0 Then Return
         Dim cRec As BO.x25EntityField_ComboValue = Master.Factory.x25EntityField_ComboValueBL.Load(Master.DataPID)
         If cRec Is Nothing Then Return
 
         Dim cX18 As BO.x18EntityCategory = Master.Factory.x18EntityCategoryBL.Load(Me.CurrentX18ID)
         If cX18.x18Icon32 <> "" Then
-            menu1.FindItemByValue("begin").Controls.Clear()
-            menu1.FindItemByValue("begin").Controls.Add(New LiteralControl("<img src='" & cX18.x18Icon32 & "'/>"))
+
+            imgIcon32.ImageUrl = cX18.x18Icon32
         End If
         If cX18.b01ID <> 0 Then
             hidB01ID.Value = cX18.b01ID.ToString
-            menu1.FindItemByValue("cmdWorkflow").Text = "Posunout stav/doplnit"
-            menu1.FindItemByValue("cmdWorkflow").ImageUrl = "Images/workflow.png"
-            menu1.FindItemByValue("cmdWorkflow").NavigateUrl = "javascript:workflow()"
+            FNO("cmdWorkflow").Text = "Posunout stav/doplnit"
+            FNO("cmdWorkflow").ImageUrl = "Images/workflow.png"
+            FNO("cmdWorkflow").NavigateUrl = "javascript:workflow()"
         Else
             hidB01ID.Value = ""
-            menu1.FindItemByValue("cmdWorkflow").Text = "Doplnit poznámku, komentář, přílohu"
-            menu1.FindItemByValue("cmdWorkflow").ImageUrl = "Images/comment.png"
-            menu1.FindItemByValue("cmdWorkflow").NavigateUrl = "javascript:b07_create()"
+            FNO("cmdWorkflow").Text = "Doplnit poznámku, komentář, přílohu"
+            FNO("cmdWorkflow").ImageUrl = "Images/comment.png"
+            FNO("cmdWorkflow").NavigateUrl = "javascript:b07_create()"
         End If
 
 
         Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(cX18)
-        menu1.FindItemByValue("cmdNew").Visible = cDisp.CreateItem
-        menu1.FindItemByValue("cmdClone").Visible = cDisp.CreateItem
+        FNO("cmdNew").Visible = cDisp.CreateItem
+        FNO("cmdClone").Visible = cDisp.CreateItem
         If cRec.IsClosed Then menu1.Skin = "Black"
 
         rec1.FillData(cRec, cX18)
@@ -82,30 +70,8 @@
         roles1.RefreshData(lisX69, cRec.PID)
         comments1.RefreshData(Master.Factory, BO.x29IdEnum.x25EntityField_ComboValue, Master.DataPID)
 
-        menu1.FindItemByValue("reload").NavigateUrl = "x25_framework_detail.aspx?pid=" & Master.DataPID.ToString & "&x18id=" & Me.CurrentX18ID.ToString
+        FNO("reload").NavigateUrl = "x25_framework_detail.aspx?pid=" & Master.DataPID.ToString & "&x18id=" & Me.CurrentX18ID.ToString
     End Sub
 
-    Private Sub Handle_ChangeX18ID()
-
-        
-        'If c.b01ID <> 0 Then
-        '    hidB01ID.Value = c.b01ID.ToString
-        '    menu1.FindItemByValue("cmdWorkflow").Text = "Posunout stav/doplnit"
-        '    menu1.FindItemByValue("cmdWorkflow").ImageUrl = "Images/workflow.png"
-        '    menu1.FindItemByValue("cmdWorkflow").NavigateUrl = "javascript:workflow()"
-        'Else
-        '    hidB01ID.Value = ""
-        '    menu1.FindItemByValue("cmdWorkflow").Text = "Doplnit komentář nebo přílohu"
-        '    menu1.FindItemByValue("cmdWorkflow").ImageUrl = "Images/comment.png"
-        '    menu1.FindItemByValue("cmdWorkflow").NavigateUrl = "javascript:b07_create()"
-        'End If
-        'With menu1.FindItemByValue("scheduler")
-        '    .Visible = c.x18IsCalendar
-        '    If .Visible Then .NavigateUrl = "x25_scheduler.aspx?x18id=" & Me.CurrentX18ID.ToString
-        'End With
-
-        'Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
-        'menu1.FindItemByValue("cmdNew").Visible = cDisp.CreateItem
-
-    End Sub
+   
 End Class

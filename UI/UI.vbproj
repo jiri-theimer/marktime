@@ -219,6 +219,7 @@
     <Content Include="log_app_update.aspx" />
     <Content Include="m62_import_setting.aspx" />
     <Content Include="main_menu.ascx" />
+    <Content Include="main_menu_old.ascx" />
     <Content Include="mobile_changepassword.aspx" />
     <Content Include="mobile_grid.aspx" />
     <Content Include="mobile_j02_framework.aspx" />
@@ -1015,6 +1016,13 @@
     </Compile>
     <Compile Include="main_menu.ascx.vb">
       <DependentUpon>main_menu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="main_menu_old.ascx.designer.vb">
+      <DependentUpon>main_menu_old.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="main_menu_old.ascx.vb">
+      <DependentUpon>main_menu_old.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="mobile_changepassword.aspx.designer.vb">

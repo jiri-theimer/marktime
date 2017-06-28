@@ -1,22 +1,27 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="entity_menu.ascx.vb" Inherits="UI.entity_menu" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<asp:Panel ID="panMenuContainer" runat="server" Style="height:43px;border-bottom: solid 1px gray;background-color:#E8E8E8;">
 
-    <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" EnableViewState="false" runat="server" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true" Width="100%">
-        <Items>
-            <telerik:RadMenuItem Value="begin"></telerik:RadMenuItem>
-            <telerik:RadMenuItem Value="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/open_in_new_window.png" Text=" " Width="28px"></telerik:RadMenuItem>
-            <telerik:RadMenuItem Value="reload" ImageUrl="Images/refresh.png" Text=" " ToolTip="Obnovit stránku" Width="28px"></telerik:RadMenuItem>
-            <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="280px" Visible="false"></telerik:RadMenuItem>
-               
-            <telerik:RadMenuItem Text="ZÁZNAM PROJEKTU" ImageUrl="Images/arrow_down_menu.png" Value="record"></telerik:RadMenuItem>      
-            
-            <telerik:RadMenuItem Value="searchbox"></telerik:RadMenuItem>
-            
-        </Items>
-    </telerik:RadMenu>
 
-</asp:Panel>
+    <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">
+        <CollapseAnimation Type="None" />
+        <ExpandAnimation Type="None" />
+        <Nodes>
+            <telerik:NavigationNode id="begin" Width="40px" Enabled="false" Visible="true"  >  
+                           
+            </telerik:NavigationNode>
+            <telerik:NavigationNode ID="fs"  NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/open_in_new_window.png" ToolTip="Otevřít stránku v nové záložce prohlížeče"></telerik:NavigationNode>
+            <telerik:NavigationNode ID="reload" ImageUrl="Images/refresh.png" Text=" " ToolTip="Obnovit stránku"></telerik:NavigationNode>
+                                   
+            <telerik:NavigationNode ID="record"></telerik:NavigationNode>
+            
+            <telerik:NavigationNode ID="searchbox">
+                <NodeTemplate>
+                </NodeTemplate>
+            </telerik:NavigationNode>
+        </Nodes>
+    </telerik:RadNavigation>
+
+<asp:PlaceHolder ID="place0" runat="server" Visible="true"></asp:PlaceHolder>
 <asp:PlaceHolder ID="place1" runat="server" Visible="true"></asp:PlaceHolder>
 
 <telerik:RadTabStrip ID="tabs1" runat="server" Skin="Default" Width="100%" AutoPostBack="false" ShowBaseLine="true" EnableViewState="false">              

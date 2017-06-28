@@ -1,34 +1,56 @@
 ﻿Imports Telerik.Web.UI
-
-Public Class main_menu
+Public Class main_menu_old
     Inherits System.Web.UI.UserControl
 
-    
+
+    Class TextBoxTemplate
+        ''Public Sub InstantiateIn(ByVal container As Control)
+        ''    Dim txt1 As New TextBox()
+        ''    txt1.ID = "search1"
+        ''    txt1.Text = Resources.Site.NajitProjekt
+        ''    txt1.ToolTip = Resources.Site.NajitProjekt
+        ''    txt1.Style.Item("width") = "110px"
+        ''    txt1.Attributes.Item("onfocus") = "search1Focus()"
+        ''    txt1.Attributes.Item("onblur") = "search1Blur()"
+
+        ''    AddHandler txt1.DataBinding, AddressOf txt1_DataBinding
+        ''    container.Controls.Add(txt1)
+
+        ''    Dim link1 As New HyperLink()
+        ''    With link1
+        ''        .CssClass = "button-reczoom"
+        ''        .Attributes.Item("rel") = "clue_search.aspx"
+        ''        .Attributes.Item("dialogheight") = "600"
+        ''        .Attributes.Item("title") = "Více hledání"
+        ''        ''.Style.Item("background-color") = "#25a0da"
+        ''        .Style.Item("padding-left") = "2px"
+        ''        .Style.Item("padding-bottom") = "0px"
+        ''        .Style.Item("padding-top") = "2px"
+        ''        .ImageUrl = "Images/menuarrow.png"
+
+        ''        .ToolTip = "Více hledání"
+
+        ''    End With
+
+        ''    container.Controls.Add(link1)
+        ''End Sub
+
+        Private Sub txt1_DataBinding(ByVal sender As Object, ByVal e As EventArgs)
+            ''Dim target As TextBox = DirectCast(sender, TextBox)
+            ''Dim item As RadMenuItem = DirectCast(target.BindingContainer, RadMenuItem)
+            ''Dim itemText As String = DirectCast(DataBinder.Eval(item, "Text"), String)
+            ''target.Text = itemText
+        End Sub
+    End Class
     Public Property SelectedValue As String
         Get
-            Dim n As NavigationNode = menu1.GetAllNodes.First(Function(p) p.Selected = True)
-            If Not n Is Nothing Then
-                Return n.ID
-            Else
-                Return ""
-            End If
+            Return menu1.SelectedValue
         End Get
         Set(value As String)
             If value = "" Then Return
-            Try
-                Dim n As NavigationNode = menu1.GetAllNodes.First(Function(p) p.ID = value)
-                If Not n Is Nothing Then
-
-                    n.Selected = True
-                    If TypeOf n.Parent Is NavigationNode Then
-                        CType(n.Parent, NavigationNode).Selected = True
-                    End If
-                End If
-            Catch ex As Exception
-
-            End Try
-            
-            
+            If Not menu1.FindItemByValue(value) Is Nothing Then
+                menu1.FindItemByValue(value).HighlightPath()
+            End If
         End Set
     End Property
     Public Property MasterPageName As String
@@ -42,13 +64,13 @@ Public Class main_menu
     Public ReadOnly Property ItemsCount As Integer
         Get
             If Not panContainer.Visible Then Return 0
-            Return menu1.Nodes.Count
+            Return menu1.Items.Count
         End Get
     End Property
 
-   
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        
+
     End Sub
 
     Public Sub ClearAll()
@@ -57,22 +79,22 @@ Public Class main_menu
     End Sub
     Public Sub RefreshData(factory As BL.Factory, strCurrentHelpID As String, strCurrentSiteMenuValue As String)
         Dim strLang As String = basUI.GetCookieValue(Request, "MT50-CultureInfo")
-        
-        Me.panContainer.Visible = True
-        Dim bolAdmin As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_Admin), n As NavigationNode
-        With factory.SysUser
 
+        Me.panContainer.Visible = True
+        Dim bolAdmin As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_Admin), n As RadMenuItem
+        With factory.SysUser
+            menu1.ClickToOpen = .j03IsSiteMenuOnClick
             If .j03SiteMenuSkin > "" Then menu1.Skin = .j03SiteMenuSkin
-            'If menu1.Nodes.Count > 0 Then menu1.Nodes.Clear()
+            If menu1.Items.Count > 0 Then menu1.Items.Clear()
 
             ai("", "begin", "", "")
             If .j04IsMenu_Project Or .j04IsMenu_Contact Or .j04IsMenu_Invoice Or .j04IsMenu_People Then
-
-                ai("", "searchbox", "javascript:mysearch()", "Images/search_silver.png", , "Najít projekt, klienta, fakturu, osobu nebo fulltext")
+                Me.hidAllowSearch1.Value = "1"
+                ai("", "searchbox", "", "")
             End If
 
-            n = ai("", "new", "", "Images/new_menu.png", , "Nový")
-
+            n = ai("", "new", "", "Images/new_menu.png", )
+            n.SelectedCssClass = ""
             n.ToolTip = Resources.common.Novy
             Dim b As Boolean = False
             If .j04IsMenu_Worksheet Then
@@ -84,7 +106,7 @@ Public Class main_menu
             If .j04IsMenu_Project Then
                 If factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then ai(Resources.common.Projekt, "", "javascript:p41_create()", "", n) : b = True
             End If
-            
+
             'If factory.TestPermission(BO.x53PermValEnum.GR_P56_Creator) Then
 
             'End If
@@ -97,13 +119,13 @@ Public Class main_menu
             If factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator) Then
                 ai(Resources.common.Dokument, "", "javascript:o23_create()", "", n) : b = True
             End If
-            If Not b Then menu1.Nodes.Remove(n)
+            If Not b Then menu1.Items.Remove(n)
         End With
 
         RenderDbMenu(factory, strLang)
 
         With factory.SysUser
-            n = ai(.Person, "me", "", "")
+            n = ai(.Person, "me", "", "~/Images/menuarrow.png")
             If .Person = "" Then n.Text = .j03Login
             If .j04IsMenu_MyProfile Then ai(Resources.Site.MujProfil, "cmdMyProfile", "j03_myprofile.aspx", "", n)
             ai(Resources.Site.ZmenitHeslo, "cmdChangePassword", "changepassword.aspx", "", n)
@@ -113,7 +135,7 @@ Public Class main_menu
                 n = ai("<img src='Images/globe.png'/>" + .MessagesCount.ToString, "messages", "javascript:messages()", "")
                 n.ToolTip = "Zprávy a upozornění ze systému"
             End If
-           
+
 
             Select Case strLang
                 Case "en-US"
@@ -121,7 +143,7 @@ Public Class main_menu
                 Case "-"
                     n = ai("<img src='Images/Flags/menu_czech.gif'/>", "lang", "", "")
                 Case Else
-                    n = ai("", "lang", "", "")
+                    n = ai("", "lang", "", "~/Images/menuarrow.png")
             End Select
             ai("Česky", "", "javascript:setlang('-')", "Images/Flags/menu_czech.gif", n)
             ai("English", "", "javascript:setlang('en-US')", "Images/Flags/menu_uk.gif", n)
@@ -135,46 +157,54 @@ Public Class main_menu
         End With
         Me.SelectedValue = strCurrentSiteMenuValue
 
-        
+
     End Sub
-    
 
-    Private Function ai(strText As String, strValue As String, strURL As String, strImg As String, Optional nParent As NavigationNode = Nothing, Optional strTooltip As String = "") As NavigationNode
 
-        Dim n As New NavigationNode(strText, strURL)
+    Private Function ai(strText As String, strValue As String, strURL As String, strImg As String, Optional nParent As RadMenuItem = Nothing) As RadMenuItem
+
+        Dim n As New RadMenuItem(strText, strURL)
         n.ImageUrl = strImg
-        n.ID = strValue
-        n.ToolTip = strTooltip
+        n.Value = strValue
         If Not nParent Is Nothing Then
-            nParent.Nodes.Add(n)
+            nParent.Items.Add(n)
         Else
-            menu1.Nodes.Add(n)
+            menu1.Items.Add(n)
         End If
         Return n
 
     End Function
 
-    ''Private Sub menu1_ItemCreated(sender As Object, e As RadMenuEventArgs) Handles menu1.ItemCreated
-    ''    If Not TypeOf (e.Item) Is RadMenuItem Then Return
-    ''    Select Case e.Item.Value
-    ''        Case "begin"
-    ''            e.Item.Controls.Add(New LiteralControl("<a href='default.aspx' title='ÚVOD'><img src='Images/logo_transparent.png' style='border:0px;' /></a>"))
-    ''        Case "searchbox"
-    ''            ''e.Item.Controls.Add(New LiteralControl("<a class='button-reczoom' rel='clue_search.aspx' dialogheight='600' title='Hledat' style='cursor:pointer;cursor:hand;padding-bottom:2px;padding-top:2px;border:0px;background-color:transparent;'><img src='Images/search_silver.png' style='border:0px;' title='Najít projekt/klienta/fakturu/osobu/fulltext'/></a>"))
-    ''            e.Item.Controls.Add(New LiteralControl("<a href='javascript:mysearch()' style='cursor:pointer;cursor:hand;padding-bottom:2px;padding-top:2px;border:0px;background-color:transparent;'><img src='Images/search_silver.png' style='border:0px;' title='Najít projekt, klienta, fakturu, osobu nebo fulltext'/></a>"))
-    ''    End Select
+    Private Sub menu1_ItemCreated(sender As Object, e As RadMenuEventArgs) Handles menu1.ItemCreated
+        If Not TypeOf (e.Item) Is RadMenuItem Then Return
+        Select Case e.Item.Value
+            Case "begin"
+                e.Item.Controls.Add(New LiteralControl("<a href='default.aspx' title='ÚVOD'><img src='Images/logo_transparent.png' style='border:0px;' /></a>"))
+            Case "searchbox"
+                ''e.Item.Controls.Add(New LiteralControl("<a class='button-reczoom' rel='clue_search.aspx' dialogheight='600' title='Hledat' style='cursor:pointer;cursor:hand;padding-bottom:2px;padding-top:2px;border:0px;background-color:transparent;'><img src='Images/search_silver.png' style='border:0px;' title='Najít projekt/klienta/fakturu/osobu/fulltext'/></a>"))
+                e.Item.Controls.Add(New LiteralControl("<a href='javascript:mysearch()' style='cursor:pointer;cursor:hand;padding-bottom:2px;padding-top:2px;border:0px;background-color:transparent;'><img src='Images/search_silver.png' style='border:0px;' title='Najít projekt, klienta, fakturu, osobu nebo fulltext'/></a>"))
+        End Select
 
 
+    End Sub
+
+    ''Private Sub SetupSearchbox()
+    ''    Dim c As Control = menu1.FindItemByValue("searchbox1")
+    ''    If c Is Nothing Then Return
+    ''    Dim template As New TextBoxTemplate()
+    ''    template.InstantiateIn(c)
+    ''    menu1.DataBind()
+
+    ''    Dim mi As RadMenuItem = CType(c, RadMenuItem)
+    ''    hidSearch1.Value = DirectCast(mi.FindControl("search1"), TextBox).ClientID
     ''End Sub
-
-    
 
 
     Private Sub RenderDbMenu(factory As BL.Factory, strLang As String)
         Dim mq As New BO.myQuery
         mq.MG_GridSqlColumns = "a.x29ID,j62Name,a.j62Name_ENG,a.j62ParentID,a.j74ID,a.j70ID,a.j62Url,a.j62Target,a.j62ImageUrl,a.j62Tag,a.j62TreeLevel as _j62TreeLevel"    'kvůli co nejvyšší rychlosti
         Dim lisJ62 As IEnumerable(Of BO.j62MenuHome) = factory.j62MenuHomeBL.GetList(factory.SysUser.j60ID, mq)
-        Dim ns As New Dictionary(Of Integer, NavigationNode), bolGO As Boolean = False
+        Dim ns As New Dictionary(Of Integer, RadMenuItem), bolGO As Boolean = False
 
         For Each c In lisJ62
             bolGO = True
@@ -208,17 +238,18 @@ Public Class main_menu
 
             If Not bolGO Then Continue For 'skočit na další c v cyklu
 
-            Dim n As New NavigationNode(c.j62Name)
+            Dim n As New RadMenuItem(c.j62Name)
             If strLang = "en-US" And c.j62Name_ENG <> "" Then n.Text = c.j62Name_ENG 'menu v angličtině
             n.ImageUrl = c.j62ImageUrl
-            n.ID = c.j62Tag
+            n.Value = c.j62Tag
 
             If c.j62IsSeparator Then
                 If c.j62ParentID = 0 Then
                     n.NavigateUrl = ""
-                
+                Else
+                    n.IsSeparator = True
+
                 End If
-                n.Enabled = False
             Else
                 n.NavigateUrl = c.j62Url
                 If c.j70ID > 0 Or c.j74ID > 0 Then
@@ -227,14 +258,14 @@ Public Class main_menu
                     Else
                         n.NavigateUrl += "?j62id=" & c.PID.ToString
                     End If
-                    n.ID = "hm" & c.PID.ToString
+                    n.Value = "hm" & c.PID.ToString
                 End If
                 n.Target = c.j62Target
             End If
 
 
 
-            Dim nParent As NavigationNode = Nothing
+            Dim nParent As RadMenuItem = Nothing
             If c.j62ParentID > 0 Then
                 Try
                     nParent = ns.First(Function(p) p.Key = c.j62ParentID).Value()
@@ -242,18 +273,18 @@ Public Class main_menu
                 End Try
             End If
             If nParent Is Nothing Then
-                menu1.Nodes.Add(n)
+                menu1.Items.Add(n)
             Else
                 With nParent
-                    .Nodes.Add(n)
-                    ''If .Level = 0 Then
-                    ''    .ImageUrl = "~/Images/menuarrow.png"
-                    ''    If menu1.ClickToOpen Then .NavigateUrl = ""
-                    ''    If .Items.Count > 8 Then
-                    ''        .GroupSettings.RepeatColumns = 2
-                    ''        .GroupSettings.RepeatDirection = MenuRepeatDirection.Vertical
-                    ''    End If
-                    ''End If
+                    .Items.Add(n)
+                    If .Level = 0 Then
+                        .ImageUrl = "~/Images/menuarrow.png"
+                        If menu1.ClickToOpen Then .NavigateUrl = ""
+                        If .Items.Count > 8 Then
+                            .GroupSettings.RepeatColumns = 2
+                            .GroupSettings.RepeatDirection = MenuRepeatDirection.Vertical
+                        End If
+                    End If
                 End With
 
             End If
@@ -265,4 +296,5 @@ Public Class main_menu
     ''Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
     ''    If panContainer.Visible Then SetupSearchbox()
     ''End Sub
+
 End Class

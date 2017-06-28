@@ -23,6 +23,15 @@ Partial Public Class pokus
     Protected WithEvents nav1 As Global.Telerik.Web.UI.RadNavigation
 
     '''<summary>
+    '''Posledni control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Posledni As Global.Telerik.Web.UI.NavigationNode
+
+    '''<summary>
     '''txtHours control.
     '''</summary>
     '''<remarks>

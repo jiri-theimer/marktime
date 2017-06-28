@@ -142,7 +142,7 @@
                     <asp:CheckBox ID="j03IsLiveChatSupport" runat="server" Text="Zapnutá Live chat MARKTIME podpora" CssClass="chk" />
 
                 </div>
-                <div class="div6">
+                <div class="div6" style="display:none;">
                     <asp:CheckBox ID="j03IsSiteMenuOnClick" runat="server" Text="Hlavní aplikační menu se otevírá až na click myši" CssClass="chk" />
                 </div>
 

@@ -9,14 +9,12 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <div class="div6">
-        <asp:CheckBox ID="chkShowLevel1" runat="server" Text="Zobrazovat v menu výrazný odkaz (název) vybraného záznamu" CssClass="chk" />
+        <asp:CheckBox ID="chkShowLevel1" runat="server" Text="Zobrazovat v menu výrazný odkaz (název) vybraného záznamu" CssClass="chk" Visible="false" />
     </div>
     <div class="div6">
         <span>Vzhled (Skin) kontextového menu stránky:</span>
         <asp:DropDownList ID="skin0" runat="server">
-            <asp:ListItem Text="--Výchozí--" Value="Default" Selected="true"></asp:ListItem>
-            <asp:ListItem Text="Metro" Value="Metro"></asp:ListItem>
-            
+            <asp:ListItem Text="--Výchozí--" Value="Metro" Selected="true"></asp:ListItem>                      
 
             
             <asp:ListItem Text="WebBlue" Value="WebBlue"></asp:ListItem>

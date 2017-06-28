@@ -3,6 +3,7 @@
 Public Class p91_framework_detail
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As SubForm
+    Private _allNodes
 
     Private Sub p91_framework_detail_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
@@ -35,7 +36,7 @@ Public Class p91_framework_detail
                     .Add("p91_menu-tabskin")
                     .Add("p91_menu-menuskin")
                     .Add("p91_framework_detail-searchbox")
-                    .Add("p91_menu-show-level1")
+
                 End With
 
                 With .Factory.j03UserBL
@@ -44,8 +45,8 @@ Public Class p91_framework_detail
                     basUI.SelectRadiolistValue(Me.opgGroupBy, .GetUserParam("p91_framework_detail-group", "flat"))
                     basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("p91_framework_detail-pagesize", "20"))
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p91_framework_detail-chkFFShowFilledOnly", "0"))
-                    menu1.FindItemByValue("searchbox").Visible = BO.BAS.BG(.GetUserParam("p91_framework_detail-searchbox", "1"))
-                    menu1.FindItemByValue("level1").Visible = BO.BAS.BG(.GetUserParam("p91_menu-show-level1", "0"))
+                    FNO("searchbox").Visible = BO.BAS.BG(.GetUserParam("p91_framework_detail-searchbox", "1"))
+
                 End With
 
                 If .DataPID = 0 Then
@@ -76,11 +77,11 @@ Public Class p91_framework_detail
                 End Select
             End With
 
-            
+
             tabs1.Skin = Master.Factory.j03UserBL.GetUserParam("p91_menu-tabskin", "Default")
             menu1.Skin = Master.Factory.j03UserBL.GetUserParam("p91_menu-menuskin", "Default")
         End If
-        
+
         AdaptMenu()
     End Sub
 
@@ -103,40 +104,34 @@ Public Class p91_framework_detail
             .Text = "Hledat..."
         End With
         If hidSource.Value = "2" Then
-            panMenuContainer.Style.Item("height") = ""
-            menu1.Skin = "Metro"
-            menu1.FindItemByValue("begin").Controls.Add(New LiteralControl("<img src='Images/invoice.png'/>"))
 
-            menu1.FindItemByValue("record").GroupSettings.RepeatColumns = 4
-            menu1.FindItemByValue("more").GroupSettings.RepeatColumns = 3
-            menu1.FindItemByValue("level1").Visible = False
-            menu1.FindItemByValue("reload").Visible = False
+            menu1.Skin = "Metro"
+            
+            
+
+            FNO("reload").Visible = False
         Else
-            menu1.FindItemByValue("begin").Controls.Add(New LiteralControl("<img src='Images/invoice_32.png'/>"))
-            menu1.FindItemByValue("reload").Visible = Not menu1.FindItemByValue("level1").Visible
+
+            FNO("reload").Visible = True
         End If
         If hidSource.Value = "3" Then
-            menu1.FindItemByValue("searchbox").Controls.Add(cbx)
+            FNO("searchbox").Controls.Add(cbx)
 
         Else
-            menu1.FindItemByValue("searchbox").Visible = False
+            FNO("searchbox").Visible = False
         End If
     End Sub
 
-   
+
     Private Sub RefreshRecord()
         Dim cRec As BO.p91Invoice = Master.Factory.p91InvoiceBL.Load(Master.DataPID)
         If cRec Is Nothing Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=p91")
         Handle_Permissions(cRec)
         With cRec
-            basUIMT.RenderHeaderMenu(.IsClosed, Me.panMenuContainer, menu1)
+            'basUIMT.RenderHeaderMenu(.IsClosed, Me.panMenuContainer, menu1)
             Me.p91Code.Text = .p91Code
-            If menu1.FindItemByValue("level1").Visible Then
-                basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), .p92Name & ": " & .p91Code, "p91_framework_detail.aspx?pid=" & .PID.ToString & "&source=" & Me.hidSource.Value, .IsClosed)
-            Else
-                Me.tabs1.Tabs(0).Text = .p92Name & ": " & .p91Code
-                menu1.FindItemByValue("reload").NavigateUrl = "p91_framework_detail.aspx?pid=" & .PID.ToString & "&source=" & Me.hidSource.Value
-            End If
+            Me.tabs1.Tabs(0).Text = .p92Name & ": " & .p91Code
+            FNO("reload").NavigateUrl = "p91_framework_detail.aspx?pid=" & .PID.ToString & "&source=" & Me.hidSource.Value
 
             If .IsClosed Then menu1.Skin = "Black"
 
@@ -212,7 +207,7 @@ Public Class p91_framework_detail
             HandleBankAccount(.p93ID, .j27ID)
 
             Me.p91RoundFitAmount.Text = BO.BAS.FN(.p91RoundFitAmount)
-           
+
             HandleDirectReports(.p92ID)
 
             Me.lblExchangeRate.Visible = False : cmdRecalcExchangeRate.Visible = False
@@ -314,30 +309,30 @@ Public Class p91_framework_detail
 
 
     Private Sub Handle_Permissions(cRec As BO.p91Invoice)
-        menu1.FindItemByValue("cmdAboImport").Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P91_Owner)
-        menu1.FindItemByValue("cmdPohoda").Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P91_Reader)
+        FNO("cmdAboImport").Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P91_Owner)
+        FNO("cmdPohoda").Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P91_Reader)
 
-        menu1.FindItemByValue("cmdX40").NavigateUrl = "x40_framework.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString
+        FNO("cmdX40").NavigateUrl = "x40_framework.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString
         Dim cDisp As BO.p91RecordDisposition = Master.Factory.p91InvoiceBL.InhaleRecordDisposition(cRec)
 
         With Master.Factory
-            menu1.FindItemByValue("cmdCreateInvoice").Visible = .TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)
-            menu1.FindItemByValue("cmdO23").Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator)
-            menu1.FindItemByValue("cmdO22").Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator)
-            menu1.FindItemByValue("cmdPivot").Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
-            menu1.FindItemByValue("cmdPivot").NavigateUrl = "p31_sumgrid.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString
+            FNO("cmdCreateInvoice").Visible = .TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)
+            FNO("cmdO23").Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator)
+            FNO("cmdO22").Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator)
+            FNO("cmdPivot").Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
+            FNO("cmdPivot").NavigateUrl = "p31_sumgrid.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString
             recmenu1.FindItemByValue("fullscreen").Visible = .SysUser.j04IsMenu_Worksheet
         End With
         With cDisp
-            menu1.FindItemByValue("cmdPay").Visible = .OwnerAccess
-            menu1.FindItemByValue("cmdEdit").Visible = .OwnerAccess
-            menu1.FindItemByValue("cmdCreateInvoice").Visible = .OwnerAccess
-            menu1.FindItemByValue("cmdPay").Visible = .OwnerAccess
-            menu1.FindItemByValue("cmdAppendWorksheet").Visible = .OwnerAccess
-            menu1.FindItemByValue("cmdChangeCurrency").Visible = .OwnerAccess
-            menu1.FindItemByValue("cmdChangeVat").Visible = .OwnerAccess
-            menu1.FindItemByValue("cmdProforma").Visible = .OwnerAccess
-            menu1.FindItemByValue("cmdCreditNote").Visible = .OwnerAccess
+            FNO("cmdPay").Visible = .OwnerAccess
+            FNO("cmdEdit").Visible = .OwnerAccess
+            FNO("cmdCreateInvoice").Visible = .OwnerAccess
+            FNO("cmdPay").Visible = .OwnerAccess
+            FNO("cmdAppendWorksheet").Visible = .OwnerAccess
+            FNO("cmdChangeCurrency").Visible = .OwnerAccess
+            FNO("cmdChangeVat").Visible = .OwnerAccess
+            FNO("cmdProforma").Visible = .OwnerAccess
+            FNO("cmdCreditNote").Visible = .OwnerAccess
             recmenu1.FindItemByValue("edit").Visible = .OwnerAccess
             recmenu1.FindItemByValue("new").Visible = .OwnerAccess
             recmenu1.FindItemByValue("akce").Visible = .OwnerAccess
@@ -345,17 +340,17 @@ Public Class p91_framework_detail
 
 
         If cRec.p92InvoiceType = BO.p92InvoiceTypeENUM.CreditNote Then
-            menu1.FindItemByValue("cmdPay").Visible = False
-            menu1.FindItemByValue("cmdProforma").Visible = False
-            menu1.FindItemByValue("cmdCreditNote").Visible = False
-            menu1.FindItemByValue("record").Text = "ZÁZNAM DOKLADU"
+            FNO("cmdPay").Visible = False
+            FNO("cmdProforma").Visible = False
+            FNO("cmdCreditNote").Visible = False
+            FNO("record").Text = "ZÁZNAM DOKLADU"
             lblp91DateBilled.Visible = False
             p91DateMaturity.Visible = False
             imgRecord.Visible = True : imgRecord.ImageUrl = "Images\correction_down.gif"
             lblExchangeRate.Visible = False : p91ExchangeRate.Visible = False
         End If
     End Sub
-    
+
 
 
     Private Sub SetupGrid()
@@ -548,7 +543,7 @@ Public Class p91_framework_detail
                 Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
             End If
         End With
-        
+
     End Sub
     Private Sub ReloadPage()
         Response.Redirect(GetReloadedUrl())
@@ -556,7 +551,7 @@ Public Class p91_framework_detail
     Private Function GetReloadedUrl() As String
         Return "p91_framework_detail.aspx?pid=" & Master.DataPID.ToString & "&source=" & Me.hidSource.Value
     End Function
-  
+
     Private Sub chkFFShowFilledOnly_CheckedChanged(sender As Object, e As EventArgs) Handles chkFFShowFilledOnly.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("p91_framework_detail-chkFFShowFilledOnly", BO.BAS.GB(Me.chkFFShowFilledOnly.Checked))
         ReloadPage()
@@ -572,7 +567,7 @@ Public Class p91_framework_detail
             .Text = a(1)
             .NavigateUrl = "p41_framework.aspx?pid=" & a(0)
         End With
-        
+
     End Sub
 
     Private Sub p91_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
@@ -581,7 +576,7 @@ Public Class p91_framework_detail
             .AddDbParameter("pid", Master.DataPID)
             .GenerateTable(Master.Factory, "exec dbo.p91_get_cenovy_rozpis @pid,1,1,0")
         End With
-        With menu1.FindItemByValue("fs")
+        With FNO("fs")
             If hidSource.Value = "3" Then
                 .ImageUrl = "Images/fullscreen.png"
                 .ToolTip = "Přepnout do datového přehledu"
@@ -592,7 +587,7 @@ Public Class p91_framework_detail
                 .ToolTip = "Otevřít v nové záložce"
                 .Text = " "
             End If
-           
+
         End With
         designer1.ReloadUrl = GetReloadedUrl()
     End Sub
@@ -601,4 +596,15 @@ Public Class p91_framework_detail
         Master.Factory.p91InvoiceBL.ClearExchangeDateAndRecalc(Master.DataPID)
         ReloadPage()
     End Sub
+
+    Private Function FNO(strValue As String) As Telerik.Web.UI.NavigationNode
+        Return menu1.GetAllNodes.First(Function(p) p.ID = strValue)
+        'If menu1.GetAllNodes.Where(Function(p) p.ID = strValue).Count > 0 Then
+
+        'Else
+        '    Master.Notify(strValue)
+        '    Return Nothing
+        'End If
+
+    End Function
 End Class

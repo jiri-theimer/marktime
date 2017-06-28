@@ -42,7 +42,7 @@
                     </Items>
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Text="Další akce" ImageUrl="Images/menuarrow.png">
-                    <GroupSettings OffsetX="-200" />
+                    
                     <ContentTemplate>
 
                         <div class="content-box3">

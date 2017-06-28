@@ -439,6 +439,7 @@ Public Class basUIMT
         End If
 
     End Sub
+    
     Public Shared Sub RenderHeaderMenu(bolRecordIsClosed As Boolean, panMenuContainer As Panel, menu As Telerik.Web.UI.RadMenu)
         If bolRecordIsClosed Then
 
@@ -501,6 +502,29 @@ Public Class basUIMT
         End With
 
     End Sub
+    Public Overloads Shared Sub RenderLevelLink(menuLevel1 As Telerik.Web.UI.NavigationNode, strText As String, strURL As String, bolIsClosed As Boolean)
+        With menuLevel1
+            .Font.Underline = True
+            .Font.Bold = True
+            If bolIsClosed Then
+                .Font.Strikeout = True
+
+            Else
+
+            End If
+            If strText.Length > 40 Then
+                .Text = Left(strText, 40) & "..."
+                .ToolTip = strText
+
+            Else
+                .Text = strText
+            End If
+
+            .NavigateUrl = strURL
+        End With
+
+    End Sub
+
 
     Public Shared Sub RenderQueryCombo(cbx As DropDownList)
         With cbx

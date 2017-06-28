@@ -20,7 +20,28 @@
     <script type="text/javascript" src="Scripts/jquery.qtip.min.js"></script>
     
 
-    <style type="text/css">       
+    <style type="text/css"> 
+         html .RadNavigation_Windows7 .rnvRootGroupWrapper {
+            background-color: #25a0da;
+            background-image: none;
+            color: white;
+            
+        }
+
+         html .RadNavigation .rnvMore,
+        html .RadNavigation .rnvRootLink {
+            
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right:10px;
+            padding-left: 10px;
+            
+        }
+        
+
+        
+       
+              
         html .RadMenu_Metro .rmRootGroup {
             background-image: none;
             color:white;            
@@ -36,7 +57,7 @@
         html .RadMenu_Default .rmRootGroup {
             border: 0 !important;
             border-style: none;
-           
+            
         }
 
         html .RadMenu_Default .rmItem {
@@ -47,7 +68,9 @@
 
 
         .RadMenu_Default .rmLink {
-            margin-top: 8px;            
+             
+            margin-top:8px;
+                     
         }
 
          html .RadMenu_Windows7 .rmRootGroup {

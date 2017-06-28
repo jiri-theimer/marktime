@@ -14,22 +14,67 @@ Option Explicit On
 Partial Public Class entity_menu
 
     '''<summary>
-    '''panMenuContainer control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panMenuContainer As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
     '''menu1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
+    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadNavigation
+
+    '''<summary>
+    '''begin control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents begin As Global.Telerik.Web.UI.NavigationNode
+
+    '''<summary>
+    '''fs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents fs As Global.Telerik.Web.UI.NavigationNode
+
+    '''<summary>
+    '''reload control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents reload As Global.Telerik.Web.UI.NavigationNode
+
+    '''<summary>
+    '''record control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents record As Global.Telerik.Web.UI.NavigationNode
+
+    '''<summary>
+    '''searchbox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents searchbox As Global.Telerik.Web.UI.NavigationNode
+
+    '''<summary>
+    '''place0 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents place0 As Global.System.Web.UI.WebControls.PlaceHolder
 
     '''<summary>
     '''place1 control.

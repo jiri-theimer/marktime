@@ -22,6 +22,25 @@
 
 
     <style type="text/css">
+        html .RadNavigation_Windows7 .rnvRootGroupWrapper {
+            background-color: #25a0da;
+            background-image: none;
+            color: white;
+            
+        }
+
+        html .RadNavigation .rnvMore,
+        html .RadNavigation .rnvRootLink {
+            
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-right:10px;
+            padding-left: 10px;
+            
+        }
+
+
+
         html .RadMenu_Windows7 .rmRootGroup {
             background-image: none;
             color: white;
@@ -30,18 +49,16 @@
         html .RadMenu_Windows7 ul.rmRootGroup {
             background-color: #25a0da;
         }
+
         html .RadMenu_Metro .rmRootGroup {
             background-image: none;
-            color:white;            
-        }
- 
-        html .RadMenu_Metro ul.rmRootGroup {
-            background-color: #25a0da;
-            color:white;
-            
+            color: white;
         }
 
-        
+        html .RadMenu_Metro ul.rmRootGroup {
+            background-color: #25a0da;
+            color: white;
+        }
     </style>
 
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
@@ -104,7 +121,7 @@
             return null;
         }
 
-       
+
     </script>
 
 </head>
@@ -132,7 +149,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            
+
             var iframeWidth = '100%';
             var iframeHeight = '270';
 
@@ -221,7 +238,7 @@
                 });
             });
 
-            
+
 
 
 
@@ -230,11 +247,11 @@
 
         $(window).load(function () {
             if (window.innerWidth < 768) {   //extra malá šířka -> mobilní zařízení
-                
-                sw_master("alertbox.aspx?a=" + encodeURI("mobile_start.aspx") + "&q=" + encodeURI("Chcete se přepnout do rozhraní pro mobilní zařízení?"), "Images/mobile.png",true);
+
+                sw_master("alertbox.aspx?a=" + encodeURI("mobile_start.aspx") + "&q=" + encodeURI("Chcete se přepnout do rozhraní pro mobilní zařízení?"), "Images/mobile.png", true);
 
             }
-            
+
 
         });
 
@@ -254,7 +271,7 @@
 
         }
 
-        function sw_master_more(url,iconUrl, window_width, window_height,is_modal) {
+        function sw_master_more(url, iconUrl, window_width, window_height, is_modal) {
             var wnd = $find("<%=okno1.ClientID%>");
             wnd.setUrl(url);
             if (iconUrl != null)
@@ -267,7 +284,7 @@
             if (is_modal == true) {
                 wnd.set_modal(true);
             }
-            
+
             wnd.show();
             wnd.center();
 

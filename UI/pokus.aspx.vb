@@ -1,5 +1,6 @@
 ﻿
 
+Imports Telerik.Web.UI
 
 'Imports Aspose.Words
 
@@ -15,6 +16,7 @@ Public Class pokus
     Private Sub pokus_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
 
+       
     End Sub
     
 
@@ -22,7 +24,21 @@ Public Class pokus
     Private Sub pokus_Load(sender As Object, e As EventArgs) Handles Me.Load
         
 
+        Dim cbx As New RadComboBox()
+        With cbx
+            .DropDownWidth = Unit.Parse("400px")
+            .RenderMode = RenderMode.Auto
+            .EnableTextSelection = True
+            .MarkFirstMatch = True
+            .EnableLoadOnDemand = True
+            .Width = Unit.Parse("200px")
+            .Style.Item("margin-top") = "5px"
 
+            .Text = "Hledat..."
+            ''.OnClientFocus = "cbxSearch_OnClientFocus"
+        End With
+
+        nav1.GetAllNodes.First(Function(p) p.ID = "Posledni").Controls.Add(cbx)
 
         If Not Page.IsPostBack Then
             Dim c As New Telerik.Web.UI.Appointment

@@ -72,40 +72,35 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Panel ID="panMenuContainer" runat="server" Style="height: 43px; border-bottom: solid 1px gray; background-color: #E8E8E8;">
+    
+       
 
-        <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" runat="server" Width="100%" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true">
-            <Items>
-                <telerik:RadMenuItem Value="begin"></telerik:RadMenuItem>
+        <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">
+        <CollapseAnimation Type="None" />
+        <ExpandAnimation Type="None" />
+        <Nodes>
+            <telerik:NavigationNode id="begin" Width="50px" Enabled="false" Visible="true"  >                             
+            </telerik:NavigationNode>
 
-                <telerik:RadMenuItem Value="reload" ImageUrl="Images/refresh.png" Text=" " ToolTip="Obnovit stránku" Width="28px"></telerik:RadMenuItem>
+            <telerik:NavigationNode ID="reload" ImageUrl="Images/refresh.png" Text=" " ToolTip="Obnovit stránku"></telerik:NavigationNode>
+           
+            <telerik:NavigationNode ID="record" Text="ZÁZNAM">
+                <Nodes>
+                    <telerik:NavigationNode ID="cmdNew" Text="Nový" NavigateUrl="javascript:record_create();" ImageUrl="Images/new.png"></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="cmdEdit" Text="Upravit" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png"></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="cmdClone" Text="Kopírovat"  NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" Visible="false"></telerik:NavigationNode>
 
+                    <telerik:NavigationNode ID="cmdWorkflow" Text="Zapsat komentář/souborovou přílohu" NavigateUrl="javascript:b07_create();" ImageUrl="Images/comment.png"></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report();" ImageUrl="Images/report.png"></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="cmdEmail" Text="Odeslat e-mail" NavigateUrl="javascript:sendmail();" ImageUrl="Images/email.png"></telerik:NavigationNode>
+                </Nodes>
+            </telerik:NavigationNode>
+            
+            
+        </Nodes>
+    </telerik:RadNavigation>
 
-
-                <telerik:RadMenuItem Text="ZÁZNAM" ImageUrl="Images/arrow_down_menu.png" Value="record">
-                    <Items>
-                        <telerik:RadMenuItem Value="cmdNew" Text="Nový" NavigateUrl="javascript:record_create();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" Visible="false"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>                        
-                        <telerik:RadMenuItem Value="cmdWorkflow" Text="Zapsat komentář/souborovou přílohu" NavigateUrl="javascript:b07_create();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report();" ImageUrl="Images/report.png"></telerik:RadMenuItem>                        
-                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdEmail" Text="Odeslat e-mail" NavigateUrl="javascript:sendmail();" ImageUrl="Images/email.png"></telerik:RadMenuItem>
-                    </Items>
-
-                </telerik:RadMenuItem>
-
-
-
-
-
-
-            </Items>
-        </telerik:RadMenu>
-
-    </asp:Panel>
+   <asp:image ID="imgIcon32" runat="server" ImageUrl="Images/label_32.png" style="position:absolute;top:5px;left:5px;"/>
 
 
     <div style="clear: both;"></div>

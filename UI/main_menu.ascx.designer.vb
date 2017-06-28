@@ -29,16 +29,7 @@ Partial Public Class main_menu
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
-
-    '''<summary>
-    '''hidSearch1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidSearch1 As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadNavigation
 
     '''<summary>
     '''hidAllowSearch1 control.

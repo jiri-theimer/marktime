@@ -1,37 +1,28 @@
-﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="main_menu.ascx.vb" Inherits="UI.main_menu" %>
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="main_menu_old.ascx.vb" Inherits="UI.main_menu_old" %>
+%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 
-<asp:Panel runat="server" ID="panContainer" Style="height: 34px;" Visible="false">
-    <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Windows7" EnableViewState="false">
-        <CollapseAnimation Type="None" />
-        <ExpandAnimation Type="None" />
-        <Nodes>
-            <telerik:NavigationNode Text="" width="160px" Enabled="false">  
-                <NodeTemplate>
-                    <a href="Default.aspx" title="ÚVOD"><img src="Images/logo_transparent.png" border="0" />
-                </NodeTemplate>              
-            </telerik:NavigationNode>
-        </Nodes>
-    </telerik:RadNavigation>
+        <asp:panel runat="server" ID="panContainer" style="background-color: #25a0da;height:32px;" Visible="false">
 
-    
-</asp:Panel>
+            <telerik:RadMenu ID="menu1" runat="server" Width="100%" EnableViewState="false" RenderMode="Auto" ShowToggleHandle="false" Skin="Windows7" ClickToOpen="true" EnableRoundedCorners="true" EnableShadows="true" ExpandDelay="0" ExpandAnimation-Duration="0" ExpandAnimation-Type="None" CollapseDelay="0" CollapseAnimation-Duration="0" CollapseAnimation-Type="None" Style="z-index: 2901;background-color:blue !important;">                            
+            </telerik:RadMenu>
 
-
-<asp:HiddenField ID="hidAllowSearch1" runat="server" Value="0" />
-<asp:HiddenField ID="hidMasterPageName" runat="server" Value="Site" />
+        </asp:panel>
+        <div id="search1_result" style="position:relative;z-index:9000;"></div>
+       <asp:HiddenField ID="hidSearch1" runat="server" />
+        <asp:HiddenField ID="hidAllowSearch1" runat="server" Value="0" />
+        <asp:HiddenField ID="hidMasterPageName" runat="server" Value="Site" />
 
 <script type="text/javascript">
-    <%If panContainer.Visible Then%>
-
-
+    <%If panContainer.Visible Then%>    
+   
+    
 
     function help(page) {
         window.open("help.aspx?page=" + page, "_blank");
     }
 
-    function sw_menu_decide(url, img, is_max) {
+    function sw_menu_decide(url,img,is_max){        
         try {
             sw_master(url, img, is_max)
         }
@@ -41,11 +32,11 @@
     }
 
     function messages() {
-        sw_menu_decide("j03_messages.aspx", "Images/globe.png", false);
+        sw_menu_decide("j03_messages.aspx","Images/globe.png",false);       
     }
 
     function p28_create() {
-
+        
         sw_menu_decide("p28_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/contact.png", false);
     }
     function p41_create() {
@@ -82,7 +73,7 @@
         sw_menu_decide("clue_search.aspx", "Images/search.png")
 
     }
-
+    
 
     function setlang(value) {
 
@@ -111,16 +102,16 @@
         return null;
     }
 
+    
 
 
-
-    function hardrefresh_menu(pid, flag) {
+    function hardrefresh_menu(pid, flag) {        
         if (flag == "p41-create" || flag == "p41-save") {
             location.replace("p41_framework.aspx?pid=" + pid);
             return;
         }
         if (flag == "p56-save" || flag == "p56-create") {
-            location.replace("p56_framework.aspx?pid=" + pid);
+            location.replace("p56_framework.aspx?pid="+pid);
             return;
         }
         if (flag == "p91-create" || flag == "p91-save") {
@@ -130,37 +121,32 @@
 
         if (flag == "p28-save" || flag == "p28-create") {
             location.replace("p28_framework.aspx?pid=" + pid);
-
+            
         }
         if (flag == "o23-save" || flag == "o23-create") {
             location.replace("o23_framework.aspx?pid=" + pid);
-
+            
         }
         if (flag == "j03_myprofile_defaultpage") {
             location.replace("default.aspx");
-
+            
         }
         if (flag == "o22-save" || flag == "o22-create") {
             location.replace("entity_scheduler.aspx");
-
+            
         }
-
+        
 
     }
 
+    
 
-
-    <%End If%>
+    <%end if %>
 
     function MainMenuClose() {
-        <%If panContainer.Visible Then%>
+        <%If panContainer.Visible Then%>    
         var menu = $find("<%= menu1.ClientID%>");
-        var n = menu.get_expandedNode();
-        if (n != null) {
-            n.collapse();
-        }
-        
-        
-        <%End If%>
+        menu.close();
+        <%end if%>
     }
 </script>
