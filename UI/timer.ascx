@@ -129,12 +129,12 @@
     function p31_save(p85id) {
         <%If Me.IsIFrame = False Then%>
         ///volá se z p31_subgrid
-        sw_master("p31_record.aspx?p85id="+p85id,"Images/worksheet_32.png",false);
+        sw_master("p31_record.aspx?tabqueryflag=time&p85id="+p85id,"Images/worksheet_32.png",false);
         return(false);
         <%end if%>
         <%If Me.IsIFrame = True Then%>
         ///volá se z p31_framework.aspx
-        window.parent.sw_local("p31_record.aspx?p85id="+p85id,"Images/worksheet_32.png",false);
+        window.parent.sw_local("p31_record.aspx?tabqueryflag=time&p85id="+p85id,"Images/worksheet_32.png",false);
         return(false);
         <%end if%>
     }

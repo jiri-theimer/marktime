@@ -538,16 +538,17 @@
             Else
                 c.x18ReportCodes = "0"
             End If
-            If (cDisp.ReadItems Or cDisp.OwnerItems) And (c.x18DashboardFlag = BO.x18DashboardENUM.LinkOnly Or c.x18DashboardFlag = BO.x18DashboardENUM.CreateLinkAndGrid Or c.x18DashboardFlag = BO.x18DashboardENUM.ShowItemsLikeNoticeboard) Then
+            If (cDisp.ReadItems Or cDisp.OwnerItems) And (c.x18DashboardFlag = BO.x18DashboardENUM.LinkOnly Or c.x18DashboardFlag = BO.x18DashboardENUM.CreateLinkAndGrid) Then
                 c.x18ReportCodes += "1"
             Else
                 c.x18ReportCodes += "0"
             End If
             If c.x18DashboardFlag = BO.x18DashboardENUM.ShowItemsLikeNoticeboard Then
+                c.x18ReportCodes = ""
                 panNoticeBoard.Visible = True
                 Dim mq As New BO.myQueryX25(c.x23ID)
                 mq.Closed = BO.BooleanQueryMode.FalseQuery
-                Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = Master.Factory.x25EntityField_ComboValueBL.GetList(mq)
+                Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = Master.Factory.x25EntityField_ComboValueBL.GetList(mq).OrderBy(Function(p) p.x25Ordinary).OrderByDescending(Function(p) p.x25FreeDate01).ThenByDescending(Function(p) p.DateInsert)
                 rpArticle.DataSource = lis
                 rpArticle.DataBind()
                 lblNoticeBoardHeader.Text = c.x18Name
@@ -633,10 +634,11 @@
         End With
         With CType(e.Item.FindControl("timestamp"), Label)
             If Not cRec.x25FreeDate01 Is Nothing Then
-                .Text = BO.BAS.FD(cRec.x25FreeDate01, True, True) & " " & .Text
+                .Text = BO.BAS.FD(cRec.x25FreeDate01, True, True) & " " & cRec.UserInsert
             Else
-                .Visible = False
+                .Text = BO.BAS.FD(cRec.DateInsert, True, True) & " " & cRec.UserInsert
             End If
+
         End With
     End Sub
 End Class

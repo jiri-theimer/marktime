@@ -191,15 +191,17 @@
                 <div class="title">
                     <img src="Images/article.png" />
                     <asp:Label ID="lblNoticeBoardHeader" runat="server"></asp:Label>
-
+                    
                 </div>
                 <div class="content" style="">
+                    
+                    <div style="clear:both;"></div>
                     <table>
                         <tr valign="top">
-                            <td style="max-width: 300px;">
+                            <td style="max-width: 250px;">
                                 <asp:Repeater ID="rpArticle" runat="server">
                                     <ItemTemplate>
-                                        <div>
+                                        <div style="width:200px;" class="badge_label">
                                             <div>
                                                 <asp:Label ID="timestamp" runat="server" CssClass="timestamp"></asp:Label>
                                             </div>

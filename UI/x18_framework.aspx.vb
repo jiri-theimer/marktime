@@ -12,7 +12,7 @@ Public Class x18_framework
         If Not Page.IsPostBack Then
             With Master
                 .PageTitle = "Správa štítků"
-                .SiteMenuValue = "x25_framework"
+                .SiteMenuValue = "x18_framework"
                 If Not Request.UrlReferrer Is Nothing Then
                     If Request.UrlReferrer.AbsolutePath.IndexOf("admin") > 0 Or Request.Item("source") = "admin" Then
                         hidSource.Value = "admin"

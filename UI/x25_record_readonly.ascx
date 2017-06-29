@@ -65,7 +65,7 @@
                     </td>
                     <td>
 
-                        <asp:Label ID="BindValue" runat="server" CssClass="valbold"></asp:Label>
+                        <asp:Label ID="BindValue" runat="server" CssClass="val"></asp:Label>
 
                         
                     </td>

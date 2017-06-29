@@ -394,16 +394,16 @@
                                     <div class="content-box3" style="margin-top: 20px;">
                                         <div class="title">
                                             <img src="Images/griddesigner.png" />
-                                            <span>Sloupce v přehledu</span>
+                                            <span>Nastavení přehledu</span>
 
                                         </div>
                                         <div class="content">
-
+                                            <div class="div6">
                                             <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField">
                                             </asp:DropDownList>
 
-
-
+                                            
+                                            </div>
 
                                             <div class="div6">
                                                 <span class="val">Stránkování přehledu:</span>

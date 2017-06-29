@@ -334,7 +334,8 @@ Public Class entity_menu
             ''sep.IsSeparator = True
             ''miParent.Nodes.Add(sep)
         End If
-        Dim mi As New NavigationNode(strText, strURL)
+        Dim mi As New NavigationNode(strText)
+        mi.NavigateUrl = strURL
         mi.ID = strValue
         mi.ImageUrl = strImg
         mi.ToolTip = strToolTip

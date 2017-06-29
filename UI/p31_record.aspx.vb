@@ -322,6 +322,7 @@
                 Me.p31Value_Orig.Text = cT.GetTimeFromSeconds(.p85FreeNumber01 / 100)
                 Me.MyDefault_p31Date = .p85FreeDate05
                 Me.p31Date.SelectedDate = .p85FreeDate05
+
             End With
         End If
         If Request.Item("p49id") <> "" Then

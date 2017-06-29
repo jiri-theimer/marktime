@@ -34,7 +34,7 @@
     GR_P28_Draft_Creator = 32                'Vytvářet DRAFT klienty
     GR_O23_Draft_Creator = 33                'Vytvářet DRAFT dokumenty
     GR_P91_Draft_Creator = 34                'Oprávnění vystavovat DRAFT faktury za všechny projekty
-    GR_O10_Creator = 35                   'Zapisovat články na nástěnku
+    ''GR_O10_Creator = 35                   'Zapisovat články na nástěnku
     GR_X31_Personal = 36                  'Přístup k osobním tiskovým sestavám
     GR_GridTools = 37                   'Pokročilé nástroje v datových přehledech (vytvářet pojmenované filtry/návrhář sloupců/export do XLS/PDF/DOC)
     GR_Navigator = 38                     'Přístup do nástroje NAVIGATOR

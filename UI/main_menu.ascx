@@ -7,15 +7,13 @@
         <CollapseAnimation Type="None" />
         <ExpandAnimation Type="None" />
         <Nodes>
-            <telerik:NavigationNode Text="" width="160px" Enabled="false">  
-                <NodeTemplate>
-                    <a href="Default.aspx" title="ÚVOD"><img src="Images/logo_transparent.png" border="0" />
-                </NodeTemplate>              
+            <telerik:NavigationNode Text="" width="165px" Enabled="false" ID="logo">                 
             </telerik:NavigationNode>
+           
         </Nodes>
     </telerik:RadNavigation>
 
-    
+    <a href="Default.aspx" title="MARKTIME" style="position:absolute;top:5px;left:4px;"><img src="Images/logo_transparent.png" border="0" /></a>
 </asp:Panel>
 
 

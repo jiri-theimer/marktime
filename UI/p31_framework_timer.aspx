@@ -19,6 +19,13 @@
 
     <script type="text/javascript">
        
+        function hardrefresh(pid, flag) {
+            
+            location.replace("p31_framework_timer.aspx");
+
+        }
+
+       
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">

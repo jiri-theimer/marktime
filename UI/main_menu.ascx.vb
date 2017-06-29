@@ -48,7 +48,7 @@ Public Class main_menu
 
    
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        
+
     End Sub
 
     Public Sub ClearAll()
@@ -65,39 +65,38 @@ Public Class main_menu
             If .j03SiteMenuSkin > "" Then menu1.Skin = .j03SiteMenuSkin
             'If menu1.Nodes.Count > 0 Then menu1.Nodes.Clear()
 
-            ai("", "begin", "", "")
+            ''ai("", "begin", "", "")
             If .j04IsMenu_Project Or .j04IsMenu_Contact Or .j04IsMenu_Invoice Or .j04IsMenu_People Then
 
                 ai("", "searchbox", "javascript:mysearch()", "Images/search_silver.png", , "Najít projekt, klienta, fakturu, osobu nebo fulltext")
             End If
 
-            n = ai("", "new", "", "Images/new_menu.png", , "Nový")
+            n = ai("", "new", "", "Images/new_menu.png", , Resources.common.Novy)
 
-            n.ToolTip = Resources.common.Novy
             Dim b As Boolean = False
             If .j04IsMenu_Worksheet Then
-                ai("Worksheet úkon", "", "javascript:p31_create()", "", n) : b = True
+                ai("Worksheet úkon", "new_p31", "javascript:p31_create()", "", n) : b = True
             End If
             If .j04IsMenu_Contact Then
-                If factory.TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator) Then ai(Resources.common.Klient, "", "javascript:p28_create()", "", n) : b = True
+                If factory.TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator) Then ai(Resources.common.Klient, "new_p28", "javascript:p28_create()", "", n) : b = True
             End If
             If .j04IsMenu_Project Then
-                If factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then ai(Resources.common.Projekt, "", "javascript:p41_create()", "", n) : b = True
+                If factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then ai(Resources.common.Projekt, "new_p41", "javascript:p41_create()", "", n) : b = True
             End If
             
             'If factory.TestPermission(BO.x53PermValEnum.GR_P56_Creator) Then
 
             'End If
-            ai(Resources.common.Ukol, "", "javascript:p56_create()", "", n)
-            ai("Událost v kalendáři", "", "javascript:o22_create()", "", n)
+            ai(Resources.common.Ukol, "new_p56", "javascript:p56_create()", "", n)
+            ai("Událost v kalendáři", "new_o22", "javascript:o22_create()", "", n)
             If .j04IsMenu_Invoice Then
                 If factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator) Then ai(Resources.common.Faktura, "", "javascript:p91_create()", "", n) : b = True
             End If
-            If factory.TestPermission(BO.x53PermValEnum.GR_P90_Create) Then ai(Resources.common.ZalohovaFaktura, "", "javascript:p90_create()", "", n)
+            If factory.TestPermission(BO.x53PermValEnum.GR_P90_Create) Then ai(Resources.common.ZalohovaFaktura, "new_p90", "javascript:p90_create()", "", n)
             If factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator) Then
-                ai(Resources.common.Dokument, "", "javascript:o23_create()", "", n) : b = True
+                ai(Resources.common.Dokument, "new_o23", "javascript:o23_create()", "", n) : b = True
             End If
-            If Not b Then menu1.Nodes.Remove(n)
+            ''If Not b Then menu1.Nodes.Remove(n)
         End With
 
         RenderDbMenu(factory, strLang)
@@ -141,7 +140,8 @@ Public Class main_menu
 
     Private Function ai(strText As String, strValue As String, strURL As String, strImg As String, Optional nParent As NavigationNode = Nothing, Optional strTooltip As String = "") As NavigationNode
 
-        Dim n As New NavigationNode(strText, strURL)
+        Dim n As New NavigationNode(strText)
+        n.NavigateUrl = strURL
         n.ImageUrl = strImg
         n.ID = strValue
         n.ToolTip = strTooltip
