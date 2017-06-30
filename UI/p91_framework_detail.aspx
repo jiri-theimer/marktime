@@ -256,7 +256,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     
-        <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">
+        <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false" SkinID="Metro">
         <CollapseAnimation Type="None" />
         <ExpandAnimation Type="None" />
         <Nodes>

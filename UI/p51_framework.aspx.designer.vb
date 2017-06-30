@@ -32,33 +32,6 @@ Partial Public Class p51_framework
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
-    '''cmdNew control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdNew As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''cmdEdit control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdEdit As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''cmdClone control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdClone As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''cbxValidity control.
     '''</summary>
     '''<remarks>
