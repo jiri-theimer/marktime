@@ -192,7 +192,7 @@
                 _cDB.RunSQL(prikaz.b09SQL, pars)
             End If
             If prikaz.b09Code = "p31_create" Then   'generovat worksheet záznam
-                
+                'komplet přes SQL proceduru
             End If
         Next
 
