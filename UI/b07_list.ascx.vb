@@ -86,6 +86,11 @@
         With CType(e.Item.FindControl("Author"), Label)
             .Text = cRec.Author
         End With
+        If cRec.Avatar <> "" Then
+            With CType(e.Item.FindControl("imgPhoto"), Image)
+                .ImageUrl = "Plugins/Avatar/" & cRec.Avatar
+            End With
+        End If
         CType(e.Item.FindControl("b07WorkflowInfo"), Label).Text = cRec.b07WorkflowInfo
 
         With CType(e.Item.FindControl("aAnswer"), HyperLink)

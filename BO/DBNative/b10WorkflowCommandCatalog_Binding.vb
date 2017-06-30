@@ -15,6 +15,11 @@ Public Enum b10Worksheet_DateENUM
     DateContext = 2
     Today = 3
 End Enum
+Public Enum b10Worksheet_HoursENUM
+    _None = 0
+    HoursInTemplate = 1     'výše hodin podle vzorového úkonu
+    HoursPerFund = 2      'výše hodin počítat podle pracovního fondu osoby
+End Enum
 
 Public Class b10WorkflowCommandCatalog_Binding
     Public Property b10ID As Integer
@@ -31,6 +36,7 @@ Public Class b10WorkflowCommandCatalog_Binding
     Public Property b10Worksheet_DateFlag As b10Worksheet_DateENUM = b10Worksheet_DateENUM._None
     Public Property b10Worksheet_p72ID As Integer
     Public Property b10Worksheet_Text As String     'text nového worksheet záznamu
+    Public Property b10Worksheet_HoursFlag As b10Worksheet_HoursENUM = b10Worksheet_HoursENUM._None
     Public ReadOnly Property b09Name As String
         Get
             Return _b09Name

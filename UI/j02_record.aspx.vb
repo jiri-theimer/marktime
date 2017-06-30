@@ -93,7 +93,7 @@
             End If
             basUI.SelectDropdownlistValue(Me.j02WorksheetAccessFlag, CInt(.j02WorksheetAccessFlag).ToString)
             basUI.SelectDropdownlistValue(Me.p72ID_NonBillable, CInt(.p72ID_NonBillable).ToString)
-
+            Me.j02AvatarImage.Value = .j02AvatarImage
             Master.Timestamp = .Timestamp
 
             If .j02SmtpServer <> "" Then
@@ -163,6 +163,7 @@
                 .j02TimesheetEntryDaysBackLimit_p34IDs = String.Join(",", Me.j02TimesheetEntryDaysBackLimit_p34IDs.GetAllCheckedValues)
                 .j02WorksheetAccessFlag = BO.BAS.IsNullInt(Me.j02WorksheetAccessFlag.SelectedValue)
                 .p72ID_NonBillable = BO.BAS.IsNullInt(Me.p72ID_NonBillable.SelectedValue)
+                .j02AvatarImage = Me.j02AvatarImage.Value
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil
                 If chkIsSmtp.Checked Then
@@ -258,5 +259,33 @@
             RadTabStrip1.Tabs.FindTabByValue("smtp").Style.Item("display") = "none"
             RadTabStrip1.Tabs.FindTabByValue("other").Style.Item("display") = "none"
         End If
+        If Me.j02AvatarImage.Value <> "" Then
+            imgAvatar.ImageUrl = "Plugins/Avatar/" & Me.j02AvatarImage.Value
+            cmdDeleteAvatar.Visible = True
+        Else
+            imgAvatar.ImageUrl = "Images/nophoto.png"
+            cmdDeleteAvatar.Visible = False
+        End If
+        cmdUploadAvatar.Visible = Not cmdDeleteAvatar.Visible
+
+    End Sub
+
+    Private Sub cmdUploadAvatar_Click(sender As Object, e As EventArgs) Handles cmdUploadAvatar.Click
+        Dim strErr As String = ""
+        Dim strJ02AvatarImage As String = basUIMT.UploadAvatarImage(upload1, Master.Factory.SysUser.j02ID, strErr)
+        If strJ02AvatarImage = "" Then
+            Master.Notify(strErr, NotifyLevel.ErrorMessage)
+        Else
+            Me.j02AvatarImage.Value = strJ02AvatarImage
+            Master.Notify("Obrázek se uloží do osobního profilu až stisknutím tlačítka [Uložit změny].")
+        End If
+
+        
+
+    End Sub
+
+    Private Sub cmdDeleteAvatar_Click(sender As Object, e As EventArgs) Handles cmdDeleteAvatar.Click
+        Me.j02AvatarImage.Value = ""
+        Master.Notify("Změna se uloží do osobního profilu až stisknutím tlačítka [Uložit změny].")
     End Sub
 End Class

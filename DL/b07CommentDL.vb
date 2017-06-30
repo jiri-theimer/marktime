@@ -51,7 +51,7 @@
     End Function
 
     Private Function GetSQLPart1() As String
-        Dim s As String = "select a.*,b07TreeOrder as _b07TreeOrder,b07TreeLevel as _b07TreeLevel,b07TreePrev as _b07TreePrev,b07TreeNext as _b07TreeNext,j02owner.j02FirstName+' '+j02owner.j02LastName as _Author," & bas.RecTail("b07", "a")
+        Dim s As String = "select a.*,b07TreeOrder as _b07TreeOrder,b07TreeLevel as _b07TreeLevel,b07TreePrev as _b07TreePrev,b07TreeNext as _b07TreeNext,j02owner.j02FirstName+' '+j02owner.j02LastName as _Author,j02owner.j02AvatarImage as _Avatar," & bas.RecTail("b07", "a")
         s += ",o27.o27OriginalFileName as _o27OriginalFileName,o27.o27ID as _o27ID"
         s += " FROM b07Comment a INNER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
         s += " LEFT OUTER JOIN o27Attachment o27 ON a.b07ID=o27.b07ID"

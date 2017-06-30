@@ -182,6 +182,10 @@
             End If
             Me.TeamsInLine.Text = Master.Factory.j02PersonBL.GetTeamsInLine(.PID)
             If Me.TeamsInLine.Text = "" Then lblTeams.Visible = False
+            If .j02AvatarImage <> "" Then
+                imgAvatar.Visible = True
+                imgAvatar.ImageUrl = "Plugins/Avatar/" & .j02AvatarImage
+            End If
         End With
 
 
@@ -245,7 +249,7 @@
         Else
             cal1.Visible = False
         End If
-        
+
     End Sub
 
     Private Sub Handle_Permissions(cRec As BO.j02Person)

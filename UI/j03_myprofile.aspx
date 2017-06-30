@@ -47,6 +47,16 @@
         function sweep() {
             hardrefresh("", "sweep");
         }
+        function trydelavatar() {
+
+            if (confirm("Opravdu odstranit obrázek?")) {
+
+                return (true);
+            }
+            else {
+                return (false);
+            }
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -249,9 +259,25 @@
 
 
                 </table>
-            </div>
+
+               
+            
         </asp:Panel>
         
+        <div class="content-box2" style="margin-top:20px;">
+            <div class="title"><img src="Images/avatar.png" /> Avatar obrázek
+                <span class="timestamp" style="float:right;">Maximální velikost 40kB, vhodná velikost 50-80 pixelů</span>
+            </div>
+            <div class="content">
+                <telerik:RadUpload ID="upload1" runat="server" InputSize="30" InitialFileInputsCount="0" RenderMode="Auto" Skin="Default" AllowedFileExtensions="png,gif,jpg,bmp" MaxFileInputsCount="1" MaxFileSize="40000">   
+                        <Localization Add="Přidat" Delete="Odstranit" Select="Vybrat" Remove="Odstranit" />
+                    </telerik:RadUpload>
+                    <asp:Button ID="cmdUploadAvatar" runat="server" Text="Nahrát na server" CssClass="cmd" />
+                <asp:Button ID="cmdDeleteAvatar" runat="server" CssClass="cmd" Text="Odstranit obrázek" Visible="false" OnClientClick="return trydelavatar();" />
+                    <asp:Image ID="imgAvatar" runat="server" ImageUrl="Images/nophoto.png" />
+                    <asp:HiddenField ID="j02AvatarImage" runat="server" />
+            </div>
+        </div>
 
     </div>
     <asp:HiddenField ID="hiddatapid" runat="server" />

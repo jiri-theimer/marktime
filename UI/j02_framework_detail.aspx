@@ -134,7 +134,9 @@
             <div>
                 <asp:Label ID="Correspondence" runat="server"></asp:Label>
             </div>
-
+            <div>
+                <asp:Image ID="imgAvatar" runat="server" Visible="false" ToolTip="Avatar obrázek" />
+            </div>
         </div>
     </div>
     <asp:Panel ID="panIntraPerson" runat="server" CssClass="content-box1">

@@ -26,29 +26,25 @@
             background-color: #25a0da;
             background-image: none;
             color: white;
-            
         }
 
         html .RadNavigation .rnvMore,
-        html .RadNavigation .rnvRootLink {
-            
+        html .RadNavigation .rnvRootLink  {
             padding-top: 5px;
             padding-bottom: 5px;
-            padding-right:10px;
+            padding-right: 10px;
             padding-left: 10px;
-            
         }
 
-
-
-        html .RadMenu_Windows7 .rmRootGroup {
-            background-image: none;
-            color: white;
+        
+        .rnvPopup {            
+            border-bottom-right-radius: 8px !important;
+        border-bottom-left-radius: 8px !important;
+        box-shadow: 3px 2px 10px silver;
+        
         }
+        
 
-        html .RadMenu_Windows7 ul.rmRootGroup {
-            background-color: #25a0da;
-        }
 
         html .RadMenu_Metro .rmRootGroup {
             background-image: none;
@@ -58,6 +54,11 @@
         html .RadMenu_Metro ul.rmRootGroup {
             background-color: #25a0da;
             color: white;
+        }
+
+        html .RadMenu_Metro .rmGroup {
+            background-color: #F0F8FF !important;
+            border-color: #A9A9A9 !important;
         }
     </style>
 

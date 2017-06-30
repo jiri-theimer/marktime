@@ -226,6 +226,13 @@
                             </asp:DropDownList>
                         </div>
                         <div>
+                            <asp:DropDownList ID="b10Worksheet_HoursFlag" runat="server">
+                                <asp:ListItem Text="Hodiny nebo peníze úkonu přesně podle vzoru" Value="1"></asp:ListItem>
+                                <asp:ListItem Text="Hodiny počítat podle pracovního kalendáře osoby" Value="2"></asp:ListItem>
+                            </asp:DropDownList>
+                            
+                        </div>
+                        <div>
                             <asp:DropDownList ID="b10Worksheet_p72ID" runat="server">
                                 <asp:ListItem Text="--Automaticky schválit úkon statusem--" Value=""></asp:ListItem>
                                 <asp:ListItem Text="Fakturovat" Value="4"></asp:ListItem>

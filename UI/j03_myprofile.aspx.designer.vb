@@ -338,6 +338,51 @@ Partial Public Class j03_myprofile
     Protected WithEvents j02Office As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''upload1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents upload1 As Global.Telerik.Web.UI.RadUpload
+
+    '''<summary>
+    '''cmdUploadAvatar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdUploadAvatar As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdDeleteAvatar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdDeleteAvatar As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''imgAvatar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents imgAvatar As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
+    '''j02AvatarImage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j02AvatarImage As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''hiddatapid control.
     '''</summary>
     '''<remarks>

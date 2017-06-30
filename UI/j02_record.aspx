@@ -8,7 +8,7 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-        <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
+    <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
     <script src="Scripts/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -28,7 +28,7 @@
             <div class="content-box2">
                 <div class="title">
                     Typ osobního profilu
-                    <asp:CheckBox ID="chkWhisper" runat="server" Text="Zapnutý našeptávač podobných osob" AutoPostBack="true" Checked="true" style="float:right;" />
+                    <asp:CheckBox ID="chkWhisper" runat="server" Text="Zapnutý našeptávač podobných osob" AutoPostBack="true" Checked="true" Style="float: right;" />
                 </div>
                 <div class="content">
                     <asp:RadioButtonList ID="j02IsIntraPerson" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
@@ -53,8 +53,8 @@
                         <asp:Label ID="lblLastName" Text="Příjmení:" runat="server" CssClass="lblReq" AssociatedControlID="j02LastName" meta:resourcekey="lblLastName"></asp:Label>
                         <asp:TextBox ID="j02LastName" runat="server" Style="width: 160px;"></asp:TextBox>
                         <uc:datacombo ID="j02TitleAfterName" runat="server" Width="70px" AllowCustomText="true" ShowToggleImage="false" Filter="Contains" DefaultValues="CSc.;DrSc.;dr. h. c.;DiS."></uc:datacombo>
-                        
-                        
+
+
                     </td>
                 </tr>
                 <tr>
@@ -63,7 +63,7 @@
                     </td>
                     <td>
                         <asp:TextBox ID="j02Email" runat="server" Style="width: 300px;"></asp:TextBox>
-                        
+
 
 
                     </td>
@@ -78,7 +78,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <div id="search_dupl_result" style="position:relative;left:0px;top:0px;z-index:1000px;"></div>
+                        <div id="search_dupl_result" style="position: relative; left: 0px; top: 0px; z-index: 1000px;"></div>
                     </td>
                 </tr>
                 <tr>
@@ -209,41 +209,50 @@
             </asp:Panel>
         </telerik:RadPageView>
         <telerik:RadPageView ID="other" runat="server">
-            <fieldset>
-                <legend>Omezení přístupu k úkonům, které prošli fakturací</legend>
-                <asp:DropDownList ID="j02WorksheetAccessFlag" runat="server">
-                    <asp:ListItem Text="" Value=""></asp:ListItem>
-                    <asp:ListItem Text="Nemá přístup k úkonům, které prošli fakturací (vč. vlastních úkonů)" Value="1"></asp:ListItem>
-                </asp:DropDownList>
-            </fieldset>
-            <fieldset>
-                <legend>Omezení zpětně zapisovat hodiny</legend>
-
-                <asp:Label ID="lblj02TimesheetEntryDaysBackLimit" runat="server" Text="Omezení zpětně zapisovat hodiny:" CssClass="lbl"></asp:Label>
-                <asp:DropDownList ID="j02TimesheetEntryDaysBackLimit" runat="server">
-                    <asp:ListItem Value="" Text="Bez omezení"></asp:ListItem>
-                    <asp:ListItem Value="999" Text="Povolen pouze aktuální týden"></asp:ListItem>
-                    <asp:ListItem Value="1" Text="-1 den"></asp:ListItem>
-                    <asp:ListItem Value="2" Text="-2 dny"></asp:ListItem>
-                    <asp:ListItem Value="3" Text="-3 dny"></asp:ListItem>
-                    <asp:ListItem Value="4" Text="-4 dny"></asp:ListItem>
-                    <asp:ListItem Value="5" Text="-5 dní"></asp:ListItem>
-                    <asp:ListItem Value="6" Text="-6 dní"></asp:ListItem>
-                    <asp:ListItem Value="7" Text="-7 dní"></asp:ListItem>
-                    <asp:ListItem Value="8" Text="-8 dní"></asp:ListItem>
-                    <asp:ListItem Value="9" Text="-9 dní"></asp:ListItem>
-                    <asp:ListItem Value="10" Text="-10 dní"></asp:ListItem>
-                    <asp:ListItem Value="14" Text="-14 dní"></asp:ListItem>
-                    <asp:ListItem Value="20" Text="-20 dní"></asp:ListItem>
-                    <asp:ListItem Value="30" Text="-30 dní"></asp:ListItem>
-                </asp:DropDownList>
-                <div style="margin-top: 10px;">
-                    <label class="lbl">Výběr časových sešitů</label>
-                    <uc:datacombo ID="j02TimesheetEntryDaysBackLimit_p34IDs" DataValueField="pid" DataTextField="p34Name" runat="server" AllowCheckboxes="true" Width="200px" />
+            
+           
+            <div class="content-box2" >
+                <div class="title">
+                    Omezení zpětně zapisovat hodiny
                 </div>
-                <br />
-                <span class="infoInForm">Počet dní, za které osoba může zpětně zapisovat časové úkony. Omezení se vztahuje na osobu zapisovače úkonu, nikoliv na osobu záznamu úkonu.</span>
-            </fieldset>
+                <div class="content">
+                    <asp:Label ID="lblj02TimesheetEntryDaysBackLimit" runat="server" Text="Omezení zpětně zapisovat hodiny:" CssClass="lbl"></asp:Label>
+                    <asp:DropDownList ID="j02TimesheetEntryDaysBackLimit" runat="server">
+                        <asp:ListItem Value="" Text="Bez omezení"></asp:ListItem>
+                        <asp:ListItem Value="999" Text="Povolen pouze aktuální týden"></asp:ListItem>
+                        <asp:ListItem Value="1" Text="-1 den"></asp:ListItem>
+                        <asp:ListItem Value="2" Text="-2 dny"></asp:ListItem>
+                        <asp:ListItem Value="3" Text="-3 dny"></asp:ListItem>
+                        <asp:ListItem Value="4" Text="-4 dny"></asp:ListItem>
+                        <asp:ListItem Value="5" Text="-5 dní"></asp:ListItem>
+                        <asp:ListItem Value="6" Text="-6 dní"></asp:ListItem>
+                        <asp:ListItem Value="7" Text="-7 dní"></asp:ListItem>
+                        <asp:ListItem Value="8" Text="-8 dní"></asp:ListItem>
+                        <asp:ListItem Value="9" Text="-9 dní"></asp:ListItem>
+                        <asp:ListItem Value="10" Text="-10 dní"></asp:ListItem>
+                        <asp:ListItem Value="14" Text="-14 dní"></asp:ListItem>
+                        <asp:ListItem Value="20" Text="-20 dní"></asp:ListItem>
+                        <asp:ListItem Value="30" Text="-30 dní"></asp:ListItem>
+                    </asp:DropDownList>
+                    <div style="margin-top: 10px;">
+                        <label class="lbl">Výběr časových sešitů</label>
+                        <uc:datacombo ID="j02TimesheetEntryDaysBackLimit_p34IDs" DataValueField="pid" DataTextField="p34Name" runat="server" AllowCheckboxes="true" Width="200px" />
+                    </div>
+                    <br />
+                    <span class="infoInForm">Počet dní, za které osoba může zpětně zapisovat časové úkony. Omezení se vztahuje na osobu zapisovače úkonu, nikoliv na osobu záznamu úkonu.</span>
+                </div>
+            </div>
+
+            <div class="div6" style="margin-top:20px;">
+                <span class="lbl">
+                    Omezení přístupu k úkonům, které prošli fakturací:
+                </span>
+                <asp:DropDownList ID="j02WorksheetAccessFlag" runat="server">
+                        <asp:ListItem Text="" Value=""></asp:ListItem>
+                        <asp:ListItem Text="Nemá přístup k úkonům, které prošli fakturací (vč. vlastních úkonů)" Value="1"></asp:ListItem>
+                    </asp:DropDownList>
+            </div>
+
             <table cellpadding="5" cellspacing="2">
                 <tr>
                     <td>
@@ -281,6 +290,19 @@
                     </td>
                 </tr>
             </table>
+
+            <div class="content-box2">
+                <div class="title">Avatar obrázek</div>
+                <div class="content">
+                    <telerik:RadUpload ID="upload1" runat="server" InputSize="30" InitialFileInputsCount="0" RenderMode="Auto" Skin="Default" AllowedFileExtensions="png,gif,jpg,bmp" MaxFileInputsCount="1" MaxFileSize="40000">   
+                        <Localization Add="Přidat" Delete="Odstranit" Select="Vybrat" Remove="Odstranit" />
+                    </telerik:RadUpload>
+                    <asp:Button ID="cmdUploadAvatar" runat="server" Text="Nahrát na server" CssClass="cmd" />
+                    <asp:Button ID="cmdDeleteAvatar" runat="server" CssClass="cmd" Text="Odstranit obrázek" Visible="false" />
+                    <asp:Image ID="imgAvatar" runat="server" ImageUrl="Images/nophoto.png" />
+                    <asp:HiddenField ID="j02AvatarImage" runat="server" />
+                </div>
+            </div>
         </telerik:RadPageView>
     </telerik:RadMultiPage>
 </asp:Content>
@@ -295,7 +317,7 @@
                 select: function (event, ui) {
                     if (ui.item) {
                         if (ui.item.PID != null)
-                        dialog_master("clue_j02_record.aspx?pid=" + ui.item.PID, false)
+                            dialog_master("clue_j02_record.aspx?pid=" + ui.item.PID, false)
                         return false;
                     }
                 },
@@ -336,9 +358,9 @@
             };
         });
 
-        
-        
-       
+
+
+
 
         function __highlight(s, t) {
             var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
@@ -346,6 +368,6 @@
         }
 
 
-       <%end if%>
+        <%End If%>
     </script>
 </asp:Content>

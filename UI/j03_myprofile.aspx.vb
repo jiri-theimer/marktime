@@ -63,6 +63,14 @@
                 Me.j02Phone.Text = .j02Phone
                 Me.j02Office.Text = .j02Office
                 Me.j02EmailSignature.Text = .j02EmailSignature
+                If .j02AvatarImage <> "" Then                    
+                    imgAvatar.ImageUrl = "Plugins/Avatar/" & .j02AvatarImage
+                    cmdDeleteAvatar.Visible = True
+                Else
+                    imgAvatar.ImageUrl = "Images/nophoto.png"
+                    cmdDeleteAvatar.Visible = False
+                End If
+                cmdUploadAvatar.Visible = Not cmdDeleteAvatar.Visible
             End With
         Else
             Me.panJ02Update.Visible = False
@@ -146,4 +154,29 @@
   
    
     
+    Private Sub cmdUploadAvatar_Click(sender As Object, e As EventArgs) Handles cmdUploadAvatar.Click
+        Dim strErr As String = ""
+        Dim strJ02AvatarImage As String = basUIMT.UploadAvatarImage(upload1, Master.Factory.SysUser.j02ID, strErr)
+        If strJ02AvatarImage = "" Then
+            Master.Notify(strErr, NotifyLevel.ErrorMessage)
+        Else
+            Dim cRec As BO.j02Person = Master.Factory.j02PersonBL.Load(Master.Factory.SysUser.j02ID)
+            cRec.j02AvatarImage = strJ02AvatarImage
+            If Master.Factory.j02PersonBL.Save(cRec, Nothing) Then
+                RefreshRecord()
+                Master.Notify("Obrázek byl uložen do vašeho osobního profilu.")
+            End If
+
+        End If
+        
+    End Sub
+
+    Private Sub cmdDeleteAvatar_Click(sender As Object, e As EventArgs) Handles cmdDeleteAvatar.Click
+        Dim cRec As BO.j02Person = Master.Factory.j02PersonBL.Load(Master.Factory.SysUser.j02ID)
+        cRec.j02AvatarImage = ""
+        If Master.Factory.j02PersonBL.Save(cRec, Nothing) Then
+            RefreshRecord()
+            Master.Notify("Obrázek byl odstraněn z vašeho osobního profilu.")
+        End If
+    End Sub
 End Class

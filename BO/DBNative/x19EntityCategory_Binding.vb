@@ -45,7 +45,11 @@
     Private Property _NameWithCode As String
     Public ReadOnly Property NameWithCode As String
         Get
-            Return _NameWithCode
+            If _NameWithCode = "" Then
+                Return _x18Name
+            Else
+                Return _NameWithCode
+            End If
         End Get
     End Property
     Private Property _BackColor As String

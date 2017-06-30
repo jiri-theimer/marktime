@@ -509,15 +509,6 @@ Partial Public Class j02_record
     Protected WithEvents other As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
-    '''j02WorksheetAccessFlag control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j02WorksheetAccessFlag As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''lblj02TimesheetEntryDaysBackLimit control.
     '''</summary>
     '''<remarks>
@@ -543,6 +534,15 @@ Partial Public Class j02_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j02TimesheetEntryDaysBackLimit_p34IDs As Global.UI.datacombo
+
+    '''<summary>
+    '''j02WorksheetAccessFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j02WorksheetAccessFlag As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''Label2 control.
@@ -597,6 +597,51 @@ Partial Public Class j02_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j02ExternalPID As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''upload1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents upload1 As Global.Telerik.Web.UI.RadUpload
+
+    '''<summary>
+    '''cmdUploadAvatar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdUploadAvatar As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdDeleteAvatar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdDeleteAvatar As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''imgAvatar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents imgAvatar As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
+    '''j02AvatarImage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j02AvatarImage As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

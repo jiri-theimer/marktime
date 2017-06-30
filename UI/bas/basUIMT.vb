@@ -663,5 +663,38 @@ Public Class basUIMT
             
         End With
     End Sub
+    Public Shared Function UploadAvatarImage(upl1 As Telerik.Web.UI.RadUpload, intJ02ID As Integer, ByRef strRetErr As String) As String
+        strRetErr = ""
+        For Each invalidFile As Telerik.Web.UI.UploadedFile In upl1.InvalidFiles
+            strRetErr = "Nevhodný Avatar soubor: " & invalidFile.FileName
+            Return ""
+        Next
+        If upl1.UploadedFiles.Count = 0 Then
+            strRetErr = "Musíte vybrat soubor obrázku na vašem PC."
+            Return ""
+        End If
+        If Not System.IO.Directory.Exists(BO.ASS.GetApplicationRootFolder & "\Plugins\Avatar") Then
+            Try
+                System.IO.Directory.CreateDirectory(BO.ASS.GetApplicationRootFolder & "\Plugins\Avatar")
+            Catch ex As Exception
+                strRetErr = ex.Message
+                Return False
+            End Try
+        End If
+        For Each validFile As Telerik.Web.UI.UploadedFile In upl1.UploadedFiles
+            Try
+                Dim strFile As String = BO.ASS.GetApplicationRootFolder & "\Plugins\Avatar\" & intJ02ID.ToString & "_" & validFile.FileName
 
+                validFile.SaveAs(strFile, True)
+                Return intJ02ID.ToString & "_" & validFile.FileName
+
+            Catch ex As Exception
+                strRetErr = ex.Message
+                Return ""
+            End Try
+
+        Next
+        
+        Return ""
+    End Function
 End Class

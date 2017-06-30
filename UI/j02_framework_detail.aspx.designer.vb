@@ -167,6 +167,15 @@ Partial Public Class j02_framework_detail
     Protected WithEvents Correspondence As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''imgAvatar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents imgAvatar As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
     '''panIntraPerson control.
     '''</summary>
     '''<remarks>

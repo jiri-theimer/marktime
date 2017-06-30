@@ -175,6 +175,7 @@
                     .p85FreeNumber02 = CInt(c.b10Worksheet_PersonFlag)
                     .p85FreeNumber03 = CInt(c.b10Worksheet_DateFlag)
                     .p85FreeText01 = c.b10Worksheet_Text
+                    .p85OtherKey4 = CInt(c.b10Worksheet_HoursFlag)
                 End If
 
             End With
@@ -302,6 +303,7 @@
                 c.b10Worksheet_DateFlag = CInt(cTMP.p85FreeNumber03)
                 c.b10Worksheet_p72ID = cTMP.p85OtherKey3
                 c.b10Worksheet_Text = cTMP.p85FreeText01
+                c.b10Worksheet_HoursFlag = CInt(cTMP.p85OtherKey4)
                 lisB10.Add(c)
             Next
 
@@ -493,6 +495,12 @@
                         Case BO.b10Worksheet_DateENUM.Today
                             .Text += "<br>Datum úkonu bude TODAY."
                     End Select
+                    Select Case CType(cRec.p85OtherKey4, BO.b10Worksheet_HoursENUM)
+                        Case BO.b10Worksheet_HoursENUM.HoursInTemplate
+                            .Text += "<br>Hodiny nebo peníze úkonu přesně podle vzoru"
+                        Case BO.b10Worksheet_HoursENUM.HoursPerFund
+                            .Text += "<br>Hodiny odvodit podle pracovního kalendáře (pouze pro pracovní dny)"
+                    End Select
                     If cRec.p85FreeText01 <> "" Then
                         .Text += "<br>Text úkonu bude: <i>" & cRec.p85FreeText01 & "</i></b>"
                     End If
@@ -548,6 +556,7 @@
             cTMP.p85FreeNumber02 = CInt(b10Worksheet_PersonFlag.SelectedValue)
             cTMP.p85FreeNumber03 = CInt(b10Worksheet_DateFlag.SelectedValue)
             cTMP.p85OtherKey3 = BO.BAS.IsNullInt(Me.b10Worksheet_p72ID.SelectedValue)
+            cTMP.p85OtherKey4 = BO.BAS.IsNullInt(Me.b10Worksheet_HoursFlag.SelectedValue)
             cTMP.p85FreeText01 = b10Worksheet_Text.Text
         End If
 

@@ -40,6 +40,12 @@
             Return _Author
         End Get
     End Property
+    Private Property _Avatar As String
+    Public ReadOnly Property Avatar As String
+        Get
+            Return _Avatar
+        End Get
+    End Property
 
     Private Property _o27ID As Integer
     Public ReadOnly Property o27ID As Integer

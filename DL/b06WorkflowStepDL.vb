@@ -104,6 +104,7 @@
                     pars.Add("b10Worksheet_DateFlag", CInt(c.b10Worksheet_DateFlag), DbType.Int32)
                     pars.Add("b10Worksheet_p72ID", BO.BAS.IsNullDBKey(c.b10Worksheet_p72ID), DbType.Int32)
                     pars.Add("b10Worksheet_Text", c.b10Worksheet_Text, DbType.String)
+                    pars.Add("b10Worksheet_HoursFlag", CInt(c.b10Worksheet_HoursFlag), DbType.Int32)
                     If Not _cDB.SaveRecord("b10WorkflowCommandCatalog_Binding", pars, True) Then
                         _Error = _cDB.ErrorMessage : Return False
                     End If

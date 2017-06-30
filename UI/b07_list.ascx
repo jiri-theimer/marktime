@@ -11,13 +11,13 @@
             <table cellpadding="10" cellspacing="2">
                 <tr valign="top">
                     <td style="border-right:solid 1px silver;">
-                        <asp:Image ID="imgPhoto" src="Images/nophoto.png" runat="server" />
+                        <asp:Image ID="imgPhoto" ImageUrl="Images/nophoto.png" runat="server" style="max-height:80px;max-width:80px;" />
                     </td>
                     <td>
 
-                        <asp:Label ID="Author" runat="server" CssClass="valbold"></asp:Label>
+                        <asp:Label ID="Author" runat="server" CssClass="timestamp"></asp:Label>
                         <div>
-                        <asp:Label ID="b07WorkflowInfo" runat="server" CssClass="valboldred"></asp:Label>
+                        <asp:Label ID="b07WorkflowInfo" runat="server" CssClass="val"></asp:Label>
                         </div>
                         <div style="padding-top: 4px;">
                             <asp:Label ID="b07Value" runat="server" Style="font-style: italic; font-size: 110%;"></asp:Label>

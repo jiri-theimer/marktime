@@ -81,6 +81,7 @@
             pars.Add("j02TimesheetEntryDaysBackLimit", .j02TimesheetEntryDaysBackLimit, DbType.Int32)
             pars.Add("j02TimesheetEntryDaysBackLimit_p34IDs", .j02TimesheetEntryDaysBackLimit_p34IDs, DbType.String)
             pars.Add("j02Salutation", .j02Salutation, DbType.String, , , True, "Oslovení")
+            pars.Add("j02AvatarImage", .j02AvatarImage, DbType.String)
             pars.Add("j02validfrom", .ValidFrom, DbType.DateTime)
             pars.Add("j02validuntil", .ValidUntil, DbType.DateTime)
 
