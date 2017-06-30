@@ -164,9 +164,20 @@
         Dim lisB10 As IEnumerable(Of BO.b10WorkflowCommandCatalog_Binding) = Master.Factory.b06WorkflowStepBL.GetList_B10(Master.DataPID)
         For Each c In lisB10
             Dim cTMP As New BO.p85TempBox
-            cTMP.p85GUID = ViewState("guid_b10")
-            cTMP.p85OtherKey1 = c.b09ID
-            cTMP.p85FreeText01 = c.b09Name
+            With cTMP
+                .p85GUID = ViewState("guid_b10")
+                .p85OtherKey1 = c.b09ID
+                .p85FreeText01 = c.b09Name
+                If c.p31ID_Template <> 0 Then
+                    .p85OtherKey2 = c.p31ID_Template
+                    .p85FreeNumber01 = CInt(c.b10Worksheet_ProjectFlag)
+                    .p85FreeNumber02 = CInt(c.b10Worksheet_PersonFlag)
+                    .p85FreeNumber03 = CInt(c.b10Worksheet_DateFlag)
+                End If
+
+            End With
+            
+
 
             cTMP.p85DataPID = c.b10ID
             Master.Factory.p85TempBoxBL.Save(cTMP)
@@ -283,7 +294,10 @@
             For Each cTMP In Master.Factory.p85TempBoxBL.GetList(ViewState("guid_b10"))
                 Dim c As New BO.b10WorkflowCommandCatalog_Binding
                 c.b09ID = cTMP.p85OtherKey1
-
+                c.p31ID_Template = cTMP.p85OtherKey2
+                c.b10Worksheet_ProjectFlag = CInt(cTMP.p85FreeNumber01)
+                c.b10Worksheet_PersonFlag = CInt(cTMP.p85FreeNumber02)
+                c.b10Worksheet_DateFlag = CInt(cTMP.p85FreeNumber03)
                 lisB10.Add(c)
             Next
 
@@ -417,23 +431,7 @@
 
     End Sub
 
-    Private Sub cmdAddB09_Click(sender As Object, e As System.EventArgs) Handles cmdAddB09.Click
-        Dim intB09ID As Integer = BO.BAS.IsNullInt(Me.cbxAddB09ID.SelectedValue)
-        If intB09ID = 0 Then
-            Master.Notify("Musíte vybrat příkaz z nabídky.", 2) : Return
-        End If
-        
-        Dim cRec As BO.b09WorkflowCommandCatalog = Master.Factory.b06WorkflowStepBL.GetList_Allb09IDs().Where(Function(p) p.b09ID = intB09ID)(0)
-        
-        Dim cTMP As New BO.p85TempBox
-        cTMP.p85GUID = ViewState("guid_b10")
-        cTMP.p85OtherKey1 = intB09ID
-        cTMP.p85FreeText01 = cRec.b09Name
-        
-        Master.Factory.p85TempBoxBL.Save(cTMP)
-        RefreshTempListB10()
-    End Sub
-
+   
    
 
     Private Sub b06_record_LoadComplete(sender As Object, e As System.EventArgs) Handles Me.LoadComplete
@@ -449,11 +447,14 @@
 
     Private Sub rpB10_ItemCommand(source As Object, e As System.Web.UI.WebControls.RepeaterCommandEventArgs) Handles rpB10.ItemCommand
         Dim strP85ID As String = CType(e.Item.FindControl("p85id"), HiddenField).Value
-
-        Dim cRec As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(CInt(strP85ID))
-        If Master.Factory.p85TempBoxBL.Delete(cRec) Then
-            RefreshTempListB10()
+        If e.CommandName = "delete" Then
+            Dim cRec As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(CInt(strP85ID))
+            If Master.Factory.p85TempBoxBL.Delete(cRec) Then
+                RefreshTempListB10()
+            End If
+        
         End If
+        
     End Sub
 
     Private Sub rpB10_ItemDataBound(sender As Object, e As System.Web.UI.WebControls.RepeaterItemEventArgs) Handles rpB10.ItemDataBound
@@ -462,9 +463,83 @@
             CType(e.Item.FindControl("p85id"), HiddenField).Value = .PID.ToString
             CType(e.Item.FindControl("b09id"), HiddenField).Value = .p85OtherKey1.ToString
             CType(e.Item.FindControl("b09Name"), Label).Text = .p85FreeText01
+            If cRec.p85OtherKey2 <> 0 Then
+                'vzorový worksheet záznam
+                With CType(e.Item.FindControl("WorksheetTemplate"), Label)
+                    .Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p31Worksheet, cRec.p85OtherKey2, False)
+                    Select Case CType(cRec.p85FreeNumber01, BO.b10Worksheet_ProjectENUM)
+                        Case BO.b10Worksheet_ProjectENUM.ProjectInTemplate
+                            .Text += "<br>Projekt úkonu převzít ze vzoru."
+                        Case BO.b10Worksheet_ProjectENUM.WorkflowContext
+                            .Text += "<br>Projekt úkonu odvodit z workflow záznamu."
+                    End Select
+                    Select Case CType(cRec.p85FreeNumber02, BO.b10Worksheet_PersonENUM)
+                        Case BO.b10Worksheet_PersonENUM.PersonInTemplate
+                            .Text += "<br>Osobu úkonu převzít ze vzoru."
+                        Case BO.b10Worksheet_PersonENUM.WorkflowContext
+                            .Text += "<br>Osobu úkonu odvodit z workflow záznamu."
+                        Case BO.b10Worksheet_PersonENUM.WorkflowCreator
+                            .Text += "<br>Osoba úkonu bude autor workflow záznamu."
+                    End Select
+                    Select Case CType(cRec.p85FreeNumber03, BO.b10Worksheet_DateENUM)
+                        Case BO.b10Worksheet_DateENUM.DateInTemplate
+                            .Text += "<br>Datum úkonu převzít ze vzoru."
+                        Case BO.b10Worksheet_DateENUM.DateContext
+                            .Text += "<br>Datum úkonu odvodit z workflow záznamu."
+                        Case BO.b10Worksheet_DateENUM.Today
+                            .Text += "<br>Datum úkonu bude TODAY."
+                    End Select
+                End With
+                
+            End If
 
         End With
     End Sub
 
    
+    Private Sub cbxAddB09ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxAddB09ID.SelectedIndexChanged
+        panWorksheetTemplate.Visible = False
+
+        Dim intB09ID As Integer = BO.BAS.IsNullInt(Me.cbxAddB09ID.SelectedValue)
+        If intB09ID = 0 Then
+            Return
+        End If
+
+        Dim cRec As BO.b09WorkflowCommandCatalog = Master.Factory.b06WorkflowStepBL.GetList_Allb09IDs().Where(Function(p) p.b09ID = intB09ID)(0)
+        Select Case cRec.b09Code
+            Case "p31_create"
+                panWorksheetTemplate.Visible = True
+                'Select Case Me.CurrentX29ID
+                '    Case BO.x29IdEnum.p56Task
+                '        b10Worksheet_ProjectFlag.Items.FindByValue("2").Text=
+                'End Select
+        End Select
+    End Sub
+    Private Sub cmdAddB09_Click(sender As Object, e As System.EventArgs) Handles cmdAddB09.Click
+        Dim intB09ID As Integer = BO.BAS.IsNullInt(Me.cbxAddB09ID.SelectedValue)
+        If intB09ID = 0 Then
+            Master.Notify("Musíte vybrat příkaz z nabídky.", 2) : Return
+        End If
+        If panWorksheetTemplate.Visible And BO.BAS.IsNullInt(Me.p31ID_Template.SelectedValue) = 0 Then
+            Master.Notify("Musíte vybrat vzorový worksheet záznam.")
+            Return
+        End If
+
+        Dim cRec As BO.b09WorkflowCommandCatalog = Master.Factory.b06WorkflowStepBL.GetList_Allb09IDs().Where(Function(p) p.b09ID = intB09ID)(0)
+
+        Dim cTMP As New BO.p85TempBox
+        cTMP.p85GUID = ViewState("guid_b10")
+        cTMP.p85OtherKey1 = intB09ID
+        cTMP.p85FreeText01 = cRec.b09Name
+        If panWorksheetTemplate.Visible Then
+            cTMP.p85OtherKey2 = BO.BAS.IsNullInt(Me.p31ID_Template.SelectedValue)
+            cTMP.p85FreeNumber01 = CInt(b10Worksheet_ProjectFlag.SelectedValue)
+            cTMP.p85FreeNumber02 = CInt(b10Worksheet_PersonFlag.SelectedValue)
+            cTMP.p85FreeNumber03 = CInt(b10Worksheet_DateFlag.SelectedValue)
+        End If
+
+        Master.Factory.p85TempBoxBL.Save(cTMP)
+        RefreshTempListB10()
+    End Sub
+
 End Class

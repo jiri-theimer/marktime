@@ -214,10 +214,8 @@ Public Class main_menu
             n.ID = c.j62Tag
 
             If c.j62IsSeparator Then
-                If c.j62ParentID = 0 Then
-                    n.NavigateUrl = ""
+                n.NavigateUrl = ""
                 
-                End If
                 n.Enabled = False
             Else
                 n.NavigateUrl = c.j62Url

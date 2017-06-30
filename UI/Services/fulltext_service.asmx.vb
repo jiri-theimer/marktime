@@ -18,7 +18,7 @@ Public Class fulltext_service
         Dim filterString As String = (DirectCast(contextDictionary("filterstring"), String))
         filterString = Trim(filterString)
         If filterString.IndexOf("...") > 0 Then filterString = "" 'pokud jsou uvedeny 3 tečky, pak bráno jako nápovědný text pro hledání
-        ''Dim strFlag As String = (DirectCast(contextDictionary("flag"), String))
+        Dim strFlag As String = (DirectCast(contextDictionary("flag"), String))
         If Len(filterString) > 15 Then filterString = ""
 
         Dim factory As BL.Factory = Nothing
@@ -35,25 +35,31 @@ Public Class fulltext_service
             Return nic.ToArray
         End If
 
-        Dim lisPars As New List(Of String)
-        lisPars.Add("handler_search_fulltext-main")
-        lisPars.Add("handler_search_fulltext-invoice")
-        lisPars.Add("handler_search_fulltext-task")
-        lisPars.Add("handler_search_fulltext-worksheet")
-        lisPars.Add("handler_search_fulltext-doc")
+        
 
         Dim result As List(Of RadComboBoxItemData) = Nothing
 
         Dim input As New BO.FullTextQueryInput
         input.SearchExpression = filterString
-        With factory.j03UserBL
-            .InhaleUserParams(lisPars)
-            input.IncludeMain = BO.BAS.BG(.GetUserParam("handler_search_fulltext-main", "1"))
-            input.IncludeInvoice = BO.BAS.BG(.GetUserParam("handler_search_fulltext-invoice", "1"))
-            input.IncludeDocument = BO.BAS.BG(.GetUserParam("handler_search_fulltext-doc", "0"))
-            input.IncludeWorksheet = BO.BAS.BG(.GetUserParam("handler_search_fulltext-worksheet", "1"))
-            input.IncludeTask = BO.BAS.BG(.GetUserParam("handler_search_fulltext-task", "0"))
-        End With
+        If strFlag = "p31" Then
+            input.IncludeWorksheet = True
+        Else
+            Dim lisPars As New List(Of String)
+            lisPars.Add("handler_search_fulltext-main")
+            lisPars.Add("handler_search_fulltext-invoice")
+            lisPars.Add("handler_search_fulltext-task")
+            lisPars.Add("handler_search_fulltext-worksheet")
+            lisPars.Add("handler_search_fulltext-doc")
+            With factory.j03UserBL
+                .InhaleUserParams(lisPars)
+                input.IncludeMain = BO.BAS.BG(.GetUserParam("handler_search_fulltext-main", "1"))
+                input.IncludeInvoice = BO.BAS.BG(.GetUserParam("handler_search_fulltext-invoice", "1"))
+                input.IncludeDocument = BO.BAS.BG(.GetUserParam("handler_search_fulltext-doc", "0"))
+                input.IncludeWorksheet = BO.BAS.BG(.GetUserParam("handler_search_fulltext-worksheet", "1"))
+                input.IncludeTask = BO.BAS.BG(.GetUserParam("handler_search_fulltext-task", "0"))
+            End With
+        End If
+        
         Dim id As New RadComboBoxItemData()
         id.Enabled = False
 
@@ -85,29 +91,34 @@ Public Class fulltext_service
             Dim bolNameIsValue As Boolean = False
             If c.RecValue = c.RecName Then bolNameIsValue = True
 
-            c.RecValue = Replace(c.RecValue, filterString, "<span style='background-color:yellow;'>" & filterString & "</span>", , , CompareMethod.Text)
-            If c.RecComment <> "" Then c.RecValue += "<br>" & Replace(c.RecComment, filterString, "<span style='background-color:yellow;'>" & c.RecComment & "</span>", , , CompareMethod.Text)
-
-            If c.Prefix = "p31" Then
-                id.Text = "Worksheet úkon: " & c.RecName
-                id.Text += "<br><i>" & c.RecValue & "</i>"
-
+            If strFlag = "p31" Then
+                'vyčistit html kvůli autopostback=true
+                id.Text = "Worksheet úkon: " & c.RecName & " | " & c.RecValue
+                id.Value = c.RecPid.ToString
             Else
-                If Not bolNameIsValue Then
-                    id.Text = BO.BAS.GetX29EntityAlias(BO.BAS.GetX29FromPrefix(c.Prefix), False) & ": " & c.RecName
-                    id.Text += "<br>" & c.Field & ": " & c.RecValue
+                'standardní fulltext hledání
+                c.RecValue = Replace(c.RecValue, filterString, "<span style='background-color:yellow;'>" & filterString & "</span>", , , CompareMethod.Text)
+                If c.RecComment <> "" Then c.RecValue += "<br>" & Replace(c.RecComment, filterString, "<span style='background-color:yellow;'>" & c.RecComment & "</span>", , , CompareMethod.Text)
+
+                If c.Prefix = "p31" Then
+                    id.Text = "Worksheet úkon: " & c.RecName
+                    id.Text += "<br><i>" & c.RecValue & "</i>"
+
                 Else
-                    id.Text += c.Field & ": " & c.RecValue
+                    If Not bolNameIsValue Then
+                        id.Text = BO.BAS.GetX29EntityAlias(BO.BAS.GetX29FromPrefix(c.Prefix), False) & ": " & c.RecName
+                        id.Text += "<br>" & c.Field & ": " & c.RecValue
+                    Else
+                        id.Text += c.Field & ": " & c.RecValue
+                    End If
+
                 End If
+                id.Text += "<span style='color:red;margin-left:7px;'>" & BO.BAS.FD(c.RecDateInsert, True, True) & "</span><hr>"
 
+                id.Value = c.Prefix & "|" & c.RecPid.ToString
             End If
-            id.Text += "<span style='color:red;margin-left:7px;'>" & BO.BAS.FD(c.RecDateInsert, True, True) & "</span><hr>"
 
-
-
-
-
-            id.Value = c.Prefix & "|" & c.RecPid.ToString
+            
             result.Add(id)
         Next
         Return result.ToArray

@@ -50,6 +50,7 @@
             End If
             If .x25Code <> "" Then
                 Me.x25Code.Text = .x25Code
+                Me.x25Code.ToolTip = .x25ArabicCode
             Else
                 trCode.Visible = False
             End If

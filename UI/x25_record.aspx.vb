@@ -217,6 +217,7 @@ Public Class x25_record
             Me.x25Name.Text = .x25Name
             Me.x25Ordinary.Value = .x25Ordinary
             Me.x25Code.Text = .x25Code
+            Me.x25ArabicCode.Text = .x25ArabicCode
             Master.Timestamp = .Timestamp
             If panColors.Visible Then
                 basUI.SetColorToPicker(Me.x25BackColor, .x25BackColor)
@@ -315,6 +316,7 @@ Public Class x25_record
             cRec.x25Ordinary = BO.BAS.IsNullInt(Me.x25Ordinary.Value)
             cRec.x23ID = BO.BAS.IsNullInt(Me.x23ID.SelectedValue)
             cRec.x25Code = Me.x25Code.Text
+            cRec.x25ArabicCode = Me.x25ArabicCode.Text
             cRec.ValidFrom = Master.RecordValidFrom
             cRec.ValidUntil = Master.RecordValidUntil
             cRec.j02ID_Owner = BO.BAS.IsNullInt(Me.j02ID_Owner.Value)
@@ -671,5 +673,6 @@ Public Class x25_record
         Me.x25Code.Enabled = True
         Me.x25Code.Focus()
         Master.Notify("Hodnota kódu se uloží až po uložení celého záznamu tlačítkem [Uložit změny].")
+        Me.x25ArabicCode.Text = ""
     End Sub
 End Class

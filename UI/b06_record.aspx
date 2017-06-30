@@ -9,7 +9,27 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 
     <script type="text/javascript">
-   
+
+        function p31ID_Template_OnClientItemsRequesting(sender, eventArgs) {
+            var context = eventArgs.get_context();
+            var combo = sender;
+
+            if (combo.get_value() == "")
+                context["filterstring"] = eventArgs.get_text();
+            else
+                context["filterstring"] = "";
+
+            context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
+            context["flag"] = "p31";
+
+
+        }
+        function p31ID_Template_OnClientFocus(sender, args) {
+            var combo = sender;
+            var s = combo.get_text();
+            if (s.indexOf("...") > 0)
+                combo.set_text("");
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -95,7 +115,7 @@
                     <asp:DropDownList ID="x67ID_Direct" runat="server" DataTextField="x67Name" DataValueField="pid"></asp:DropDownList>
                     <span>Obsazení přes tým osob:</span>
                     <asp:DropDownList ID="j11ID_Direct" runat="server" DataTextField="j11Name" DataValueField="pid"></asp:DropDownList>
-                    <span style="padding-left:20px;">nebo změnit na řešitele posledního statusu:</span>
+                    <span style="padding-left: 20px;">nebo změnit na řešitele posledního statusu:</span>
                     <asp:DropDownList ID="b02ID_LastReceiver_ReturnTo" runat="server" DataTextField="b02Name" DataValueField="pid"></asp:DropDownList>
                 </fieldset>
             </asp:Panel>
@@ -168,38 +188,85 @@
 
         <telerik:RadPageView ID="RadPageView4" runat="server">
             <p></p>
-            <div class="innerform">
-                <asp:DropDownList ID="cbxAddB09ID" runat="server" DataTextField="b09Name" DataValueField="b09ID" AutoPostBack="true"></asp:DropDownList>
-                <asp:Button ID="cmdAddB09" runat="server" Text="Vložit vybraný příkaz" CssClass="cmd" />
+            <div class="content-box2">
+                <div class="title">
+                    Vyberte příkaz, který se má provést
+                </div>
+                <div class="content">
+                    <asp:DropDownList ID="cbxAddB09ID" runat="server" DataTextField="b09Name" DataValueField="b09ID" AutoPostBack="true" Width="300px"></asp:DropDownList>
+                    <p></p>
 
+                    <asp:Panel ID="panWorksheetTemplate" runat="server" Visible="false">
+                        <span>Najít vzorový worksheet úkon:</span>
+                        <telerik:RadComboBox ID="p31ID_Template" runat="server" RenderMode="Auto" DropDownWidth="600px" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" ShowToggleImage="false" Text="Hledat text úkonu..." Width="500px" OnClientItemsRequesting="p31ID_Template_OnClientItemsRequesting" AutoPostBack="false">
+                            <WebServiceSettings Method="LoadComboData" UseHttpGet="false" Path="~/Services/fulltext_service.asmx" />
+                        </telerik:RadComboBox>
+                        <div>
+                            <asp:DropDownList ID="b10Worksheet_ProjectFlag" runat="server">
+                                <asp:ListItem Text="Projekt úkonu převzít ze vzoru" Value="1"></asp:ListItem>
+                                <asp:ListItem Text="Projekt úkonu převzít z workflow záznamu" Value="2"></asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                        <div>
+                            <asp:DropDownList ID="b10Worksheet_PersonFlag" runat="server">
+                                <asp:ListItem Text="Osobu úkonu převzít ze vzoru" Value="1"></asp:ListItem>
+                                <asp:ListItem Text="Osobu úkonu převzít z workflow záznamu" Value="2"></asp:ListItem>
+                                <asp:ListItem Text="Osoba úkonu bude zakladatel workflow záznamu" Value="3"></asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                        <div>
+                            <asp:DropDownList ID="b10Worksheet_DateFlag" runat="server">
+                                <asp:ListItem Text="Datum úkonu převzít ze vzoru" Value="1"></asp:ListItem>
+                                <asp:ListItem Text="Datum úkonu převzít z workflow záznamu" Value="2"></asp:ListItem>
+                                <asp:ListItem Text="Datum úkonu bude TODAY" Value="3"></asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                    </asp:Panel>
+                    <p></p>
+                    <div>
+                        <asp:Button ID="cmdAddB09" runat="server" Text="Vložit vybraný příkaz" CssClass="cmd" />
+                    </div>
+                </div>
             </div>
+
             <table cellpadding="6" cellspacing="3">
                 <asp:Repeater ID="rpB10" runat="server">
                     <ItemTemplate>
                         <tr>
                             <td>
                                 <b>
-                                    <asp:Label ID="b09Name" runat="server"></asp:Label></b>
+                                    <asp:Label ID="b09Name" runat="server"></asp:Label>
+                                </b>
                                 <asp:HiddenField ID="p85id" runat="server" />
                                 <asp:HiddenField ID="b09id" runat="server" />
+                                <div>
+                                    <asp:Label ID="WorksheetTemplate" runat="server"></asp:Label>
+                                </div>
                             </td>
 
                             <td>
-                                <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete.png" />
+                                <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete.png" CommandName="delete" CssClass="button-link" ToolTip="Odstranit řádek" />
                             </td>
                         </tr>
                     </ItemTemplate>
                 </asp:Repeater>
             </table>
-            <hr />
-            <div class="div6">
-            <span>Založit file-system složku:</span>
-            <asp:textbox ID="b06CreateDirectory" runat="server" Width="400px"></asp:textbox>
+            <div class="content-box2">
+                <div class="title">
+                    <img src="Images/folder.png" />
+                    Krok zakládá file-system složky
+                </div>
+                <div class="content">
+                    <div class="div6">
+                        <span>Hlavní složka:</span>
+                        <asp:TextBox ID="b06CreateDirectory" runat="server" Width="400px"></asp:TextBox>
+                    <span>Pod-složky v rámci hlavní složky:</span>
+                        <asp:TextBox ID="b06CreateSubdirectory" runat="server" Width="400px"></asp:TextBox>(oddělovač je středník)
+                        
+                    </div>
+                </div>
             </div>
-            <div class="div6">
-            <span>Založit file-system pod-složky:</span>
-            <asp:textbox ID="b06CreateSubdirectory" runat="server" Width="400px"></asp:textbox>
-            </div>
+
 
         </telerik:RadPageView>
 

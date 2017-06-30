@@ -140,6 +140,15 @@ Partial Public Class x25_record
     Protected WithEvents cmdChangeCode As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''x25ArabicCode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x25ArabicCode As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''panX16 control.
     '''</summary>
     '''<remarks>

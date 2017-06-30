@@ -98,6 +98,10 @@
                     pars = New DbParameters
                     pars.Add("b09ID", c.b09ID, DbType.Int32)
                     pars.Add("b06ID", intLastSavedPID, DbType.Int32)
+                    pars.Add("p31ID_Template", BO.BAS.IsNullDBKey(c.p31ID_Template), DbType.Int32)
+                    pars.Add("b10Worksheet_ProjectFlag", CInt(c.b10Worksheet_ProjectFlag), DbType.Int32)
+                    pars.Add("b10Worksheet_PersonFlag", CInt(c.b10Worksheet_PersonFlag), DbType.Int32)
+                    pars.Add("b10Worksheet_DateFlag", CInt(c.b10Worksheet_DateFlag), DbType.Int32)
                     If Not _cDB.SaveRecord("b10WorkflowCommandCatalog_Binding", pars, True) Then
                         _Error = _cDB.ErrorMessage : Return False
                     End If
@@ -157,7 +161,7 @@
         Return _cDB.GetList(Of BO.b09WorkflowCommandCatalog)(s)
     End Function
     Public Function GetList_B10(intPID As Integer) As IEnumerable(Of BO.b10WorkflowCommandCatalog_Binding)
-        Dim s As String = "select a.*,b09.b09Name as _b09Name,b09.b09SQL as _b09SQL,b09.b09Ordinary as _b09Ordinary FROM b10WorkflowCommandCatalog_Binding a INNER JOIN b09WorkflowCommandCatalog b09 ON a.b09id=b09.b09id WHERE a.b06id=@b06id ORDER BY b09Ordinary"
+        Dim s As String = "select a.*,b09.b09Name as _b09Name,b09.b09Code as _b09Code,b09.b09SQL as _b09SQL,b09.b09Ordinary as _b09Ordinary FROM b10WorkflowCommandCatalog_Binding a INNER JOIN b09WorkflowCommandCatalog b09 ON a.b09id=b09.b09id WHERE a.b06id=@b06id ORDER BY b09Ordinary"
         Return _cDB.GetList(Of BO.b10WorkflowCommandCatalog_Binding)(s, New With {.b06id = intPID})
     End Function
     Public Function GetList_B08(intPID As Integer) As IEnumerable(Of BO.b08WorkflowReceiverToStep)
@@ -186,6 +190,9 @@
                 pars.Add("pid", intRecordPID, DbType.Int32)
                 pars.Add("j03id_sys", _curUser.PID, DbType.Int32)
                 _cDB.RunSQL(prikaz.b09SQL, pars)
+            End If
+            If prikaz.b09Code = "p31_create" Then   'generovat worksheet záznam
+                
             End If
         Next
 

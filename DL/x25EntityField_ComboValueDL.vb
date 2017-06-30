@@ -80,15 +80,11 @@
                 pars.Add("j02ID_Owner", BO.BAS.IsNullDBKey(.j02ID_Owner), DbType.Int32)
                 pars.Add("x25Name", .x25Name, DbType.String, , , True, "Název")
                 pars.Add("x25Code", .x25Code, DbType.String)
+                pars.Add("x25ArabicCode", .x25ArabicCode, DbType.String)
                 pars.Add("x25ForeColor", .x25ForeColor, DbType.String)
                 pars.Add("x25BackColor", .x25BackColor, DbType.String)
                 pars.Add("x25Ordinary", .x25Ordinary, DbType.Int32)
-                If .x25Ordinary > 0 Then
-                    Dim cAra As New BO.clsArabicNumber
-                    pars.Add("x25ArabicCode", cAra.NumberToRoman(.x25Ordinary), DbType.String)
-                Else
-                    pars.Add("x25ArabicCode", "", DbType.String)
-                End If
+                
                 pars.Add("x25ValidFrom", .ValidFrom, DbType.DateTime)
                 pars.Add("x25ValidUntil", .ValidUntil, DbType.DateTime)
 
@@ -126,7 +122,10 @@
                 If Not lisX69 Is Nothing Then   'přiřazení rolí v samotném záznamu štítku
                     bas.SaveX69(_cDB, BO.x29IdEnum.x25EntityField_ComboValue, intX25ID, lisX69, bolINSERT)
                 End If
+
+                
                 sc.Complete()
+
                 Return True
 
             Else
