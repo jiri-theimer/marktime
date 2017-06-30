@@ -1,6 +1,7 @@
 ﻿Public Enum x20EntryModeENUM
     Combo = 1
     InsertUpdateWithoutCombo = 2
+    ExternalByWorkflow = 3
 End Enum
 Public Enum x20GridColumnENUM
     EntityColumn = 1

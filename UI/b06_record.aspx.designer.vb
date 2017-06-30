@@ -329,6 +329,15 @@ Partial Public Class b06_record
     Protected WithEvents p31ID_Template As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
+    '''b10Worksheet_Text control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents b10Worksheet_Text As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''b10Worksheet_ProjectFlag control.
     '''</summary>
     '''<remarks>
@@ -354,6 +363,15 @@ Partial Public Class b06_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents b10Worksheet_DateFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''b10Worksheet_p72ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents b10Worksheet_p72ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''cmdAddB09 control.

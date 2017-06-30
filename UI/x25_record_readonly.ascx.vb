@@ -66,8 +66,9 @@
         End With
 
 
-        Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Me.Factory.x18EntityCategoryBL.GetList_x20_join_x18(Me.X18ID).Where(Function(p) p.x20EntryModeFlag = BO.x20EntryModeENUM.InsertUpdateWithoutCombo)
-        Dim x20IDs As List(Of Integer) = lisX20X18.Where(Function(p) p.x29ID <> 331).Select(Function(p) p.x20ID).ToList
+        Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Me.Factory.x18EntityCategoryBL.GetList_x20_join_x18(Me.X18ID).Where(Function(p) p.x20EntryModeFlag = BO.x20EntryModeENUM.InsertUpdateWithoutCombo Or p.x20EntryModeFlag = BO.x20EntryModeENUM.ExternalByWorkflow)
+        'Dim x20IDs As List(Of Integer) = lisX20X18.Where(Function(p) p.x29ID <> 331).Select(Function(p) p.x20ID).ToList
+        Dim x20IDs As List(Of Integer) = lisX20X18.Select(Function(p) p.x20ID).ToList
         Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Me.Factory.x18EntityCategoryBL.GetList_X19(cRec.PID, x20IDs, True).OrderBy(Function(p) p.x20IsMultiselect).ThenBy(Function(p) p.x20ID).ThenBy(Function(p) p.RecordAlias)
 
         rpX19.DataSource = lisX19
@@ -157,6 +158,7 @@
                 Case 141 : .Text = "<img src='Images/project.png'/> "
                 Case 328 : .Text = "<img src='Images/contact.png'/> "
                 Case 391 : .Text = "<img src='Images/invoice.png'/> "
+                Case 331 : .Text = "<img src='Images/worksheet.png'/> "
                 Case Else : .Text = "<img src='Images/record.png'/> "
             End Select
             If cRec.x20Name <> "" Then

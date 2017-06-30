@@ -29,6 +29,8 @@ Public Class b10WorkflowCommandCatalog_Binding
     Public Property b10Worksheet_ProjectFlag As b10Worksheet_ProjectENUM = b10Worksheet_ProjectENUM._None
     Public Property b10Worksheet_PersonFlag As b10Worksheet_PersonENUM = b10Worksheet_PersonENUM._None
     Public Property b10Worksheet_DateFlag As b10Worksheet_DateENUM = b10Worksheet_DateENUM._None
+    Public Property b10Worksheet_p72ID As Integer
+    Public Property b10Worksheet_Text As String     'text nového worksheet záznamu
     Public ReadOnly Property b09Name As String
         Get
             Return _b09Name

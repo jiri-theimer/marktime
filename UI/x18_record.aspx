@@ -131,6 +131,7 @@
                                             <asp:DropDownList ID="x20EntryModeFlag" runat="server">
                                                 <asp:ListItem Text="Vazbu vyplňovat odkazem na položku štítku (combo-list v záznamu entity)" Value="1"></asp:ListItem>
                                                 <asp:ListItem Text="Vazbu vyplňovat odkazem na záznam entity (přímo v záznamu položky štítku)" Value="2"></asp:ListItem>
+                                                <asp:ListItem Text="Vazbu generuje workflow stavový mechanismus" Value="3"></asp:ListItem>
                                             </asp:DropDownList>
                                         </div>
                                         <div>

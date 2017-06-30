@@ -202,6 +202,10 @@
                             <WebServiceSettings Method="LoadComboData" UseHttpGet="false" Path="~/Services/fulltext_service.asmx" />
                         </telerik:RadComboBox>
                         <div>
+                            <span>Text úkonu:</span>
+                            <asp:TextBox ID="b10Worksheet_Text" runat="server" Width="200px"></asp:TextBox>
+                        </div>
+                        <div>
                             <asp:DropDownList ID="b10Worksheet_ProjectFlag" runat="server">
                                 <asp:ListItem Text="Projekt úkonu převzít ze vzoru" Value="1"></asp:ListItem>
                                 <asp:ListItem Text="Projekt úkonu převzít z workflow záznamu" Value="2"></asp:ListItem>
@@ -221,18 +225,30 @@
                                 <asp:ListItem Text="Datum úkonu bude TODAY" Value="3"></asp:ListItem>
                             </asp:DropDownList>
                         </div>
+                        <div>
+                            <asp:DropDownList ID="b10Worksheet_p72ID" runat="server">
+                                <asp:ListItem Text="--Automaticky schválit úkon statusem--" Value=""></asp:ListItem>
+                                <asp:ListItem Text="Fakturovat" Value="4"></asp:ListItem>
+                                <asp:ListItem Text="Zahrnout do paušálu" Value="6"></asp:ListItem>
+                                <asp:ListItem Text="Viditelný odpis" Value="2"></asp:ListItem>
+                                <asp:ListItem Text="Skrytý odpis" Value="3"></asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
                     </asp:Panel>
                     <p></p>
                     <div>
-                        <asp:Button ID="cmdAddB09" runat="server" Text="Vložit vybraný příkaz" CssClass="cmd" />
+                        <asp:Button ID="cmdAddB09" runat="server" Text="Přidat vybraný příkaz do seznamu" CssClass="cmd" />
                     </div>
                 </div>
             </div>
 
-            <table cellpadding="6" cellspacing="3">
+            <div class="content-box2">
+                <div class="title">Seznam příkazů v tomto kroku</div>
+                <div class="content">
+                    <table cellpadding="6" cellspacing="3">
                 <asp:Repeater ID="rpB10" runat="server">
                     <ItemTemplate>
-                        <tr>
+                        <tr class="trHover">
                             <td>
                                 <b>
                                     <asp:Label ID="b09Name" runat="server"></asp:Label>
@@ -251,7 +267,10 @@
                     </ItemTemplate>
                 </asp:Repeater>
             </table>
-            <div class="content-box2">
+                </div>
+            </div>
+            
+            <div class="content-box2" style="margin-top:40px;">
                 <div class="title">
                     <img src="Images/folder.png" />
                     Krok zakládá file-system složky

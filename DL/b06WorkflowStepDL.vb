@@ -102,6 +102,8 @@
                     pars.Add("b10Worksheet_ProjectFlag", CInt(c.b10Worksheet_ProjectFlag), DbType.Int32)
                     pars.Add("b10Worksheet_PersonFlag", CInt(c.b10Worksheet_PersonFlag), DbType.Int32)
                     pars.Add("b10Worksheet_DateFlag", CInt(c.b10Worksheet_DateFlag), DbType.Int32)
+                    pars.Add("b10Worksheet_p72ID", BO.BAS.IsNullDBKey(c.b10Worksheet_p72ID), DbType.Int32)
+                    pars.Add("b10Worksheet_Text", c.b10Worksheet_Text, DbType.String)
                     If Not _cDB.SaveRecord("b10WorkflowCommandCatalog_Binding", pars, True) Then
                         _Error = _cDB.ErrorMessage : Return False
                     End If
@@ -183,6 +185,7 @@
     Public Sub RunB09Commands(intRecordPID As Integer, x29id As BO.x29IdEnum, intB06ID As Integer)
         If intB06ID = 0 Or intRecordPID = 0 Then Return
         'spuštění případných příkazů spojených s krokem
+
         For Each prikaz As BO.b10WorkflowCommandCatalog_Binding In GetList_B10(intB06ID)
             'spouštění pevných SQL příkazů
             If prikaz.b09SQL <> "" Then
@@ -193,6 +196,14 @@
             End If
             If prikaz.b09Code = "p31_create" Then   'generovat worksheet záznam
                 'komplet přes SQL proceduru
+                Dim pars As New DbParameters
+                pars.Add("record_prefix", BO.BAS.GetDataPrefix(x29id), DbType.String)
+                pars.Add("record_pid", intRecordPID, DbType.Int32)
+                pars.Add("b10id", prikaz.b10ID, DbType.Int32)
+                pars.Add("j03id_sys", _curUser.PID, DbType.Int32)
+                pars.Add("err_ret", , DbType.String, ParameterDirection.Output, 500)
+                _cDB.RunSP("p31_create_from_workflow", pars)
+
             End If
         Next
 

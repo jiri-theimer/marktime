@@ -170,9 +170,11 @@
                 .p85FreeText01 = c.b09Name
                 If c.p31ID_Template <> 0 Then
                     .p85OtherKey2 = c.p31ID_Template
+                    .p85OtherKey3 = c.b10Worksheet_p72ID
                     .p85FreeNumber01 = CInt(c.b10Worksheet_ProjectFlag)
                     .p85FreeNumber02 = CInt(c.b10Worksheet_PersonFlag)
                     .p85FreeNumber03 = CInt(c.b10Worksheet_DateFlag)
+                    .p85FreeText01 = c.b10Worksheet_Text
                 End If
 
             End With
@@ -298,6 +300,8 @@
                 c.b10Worksheet_ProjectFlag = CInt(cTMP.p85FreeNumber01)
                 c.b10Worksheet_PersonFlag = CInt(cTMP.p85FreeNumber02)
                 c.b10Worksheet_DateFlag = CInt(cTMP.p85FreeNumber03)
+                c.b10Worksheet_p72ID = cTMP.p85OtherKey3
+                c.b10Worksheet_Text = cTMP.p85FreeText01
                 lisB10.Add(c)
             Next
 
@@ -489,9 +493,16 @@
                         Case BO.b10Worksheet_DateENUM.Today
                             .Text += "<br>Datum úkonu bude TODAY."
                     End Select
+                    If cRec.p85FreeText01 <> "" Then
+                        .Text += "<br>Text úkonu bude: <i>" & cRec.p85FreeText01 & "</i></b>"
+                    End If
+                    If cRec.p85OtherKey3 <> 0 Then
+                        .Text += "<br>Schválit statusem: " & Master.Factory.ftBL.GetList_P72().Where(Function(p) p.PID = cRec.p85OtherKey3)(0).p72Name
+                    End If
                 End With
                 
             End If
+            
 
         End With
     End Sub
@@ -536,6 +547,8 @@
             cTMP.p85FreeNumber01 = CInt(b10Worksheet_ProjectFlag.SelectedValue)
             cTMP.p85FreeNumber02 = CInt(b10Worksheet_PersonFlag.SelectedValue)
             cTMP.p85FreeNumber03 = CInt(b10Worksheet_DateFlag.SelectedValue)
+            cTMP.p85OtherKey3 = BO.BAS.IsNullInt(Me.b10Worksheet_p72ID.SelectedValue)
+            cTMP.p85FreeText01 = b10Worksheet_Text.Text
         End If
 
         Master.Factory.p85TempBoxBL.Save(cTMP)

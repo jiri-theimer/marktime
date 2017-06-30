@@ -8,7 +8,7 @@
             </td>
             <td>
                 <asp:Label ID="b02Name" runat="server" CssClass="valbold"></asp:Label>
-                <a href="javascript:workflow()">Posunout/doplnit</a>
+                <button type="button" onclick="workflow()">Posunout/doplnit</button>
                 
             </td>
         </tr>
