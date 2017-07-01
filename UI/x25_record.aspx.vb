@@ -371,6 +371,11 @@ Public Class x25_record
             Me.x23ID.Enabled = True
             cmdChangeCode.Visible = False
         End If
+        If Me.cbxType.SelectedValue = "" Then
+            Me.cbxType.BackgroundColor = ""
+        Else
+            Me.cbxType.BackgroundColor = basUI.ColorQueryCSS
+        End If
     End Sub
 
     Private Function InhaleUserFieldValues(ByRef cRec As BO.x25EntityField_ComboValue) As Boolean
@@ -557,23 +562,36 @@ Public Class x25_record
     Private Sub Handle_Changex20ID()
         If Me.opgX20ID.SelectedItem Is Nothing Then Return
 
-        Dim cX20 As BO.x20EntiyToCategory = LoadX20Record()
+        Dim cX20 As BO.x20EntiyToCategory = LoadX20Record(), sT As String = "--Všechny typy--"
         If cX20 Is Nothing Then Return
         hidX29ID.Value = cX20.x29ID.ToString
-        
+        Dim lisPars As New List(Of String)
+
         cbx1.Visible = True
         Select Case Me.CurrentX29ID
             Case BO.x29IdEnum.p41Project
+                cbxType.DataTextField = "p42Name" : sT = "--Všechny typy projektů--"
+                cbxType.DataSource = Master.Factory.p42ProjectTypeBL.GetList(New BO.myQuery)
                 cbx1.WebServiceSettings.Path = "~/Services/project_service.asmx" : cbx1.Text = "Hledat projekt..."
             Case BO.x29IdEnum.p28Contact
+                cbxType.DataTextField = "p29Name" : sT = "--Všechny typy klientů--"
+                cbxType.DataSource = Master.Factory.p29ContactTypeBL.GetList(New BO.myQuery)
                 cbx1.WebServiceSettings.Path = "~/Services/contact_service.asmx" : cbx1.Text = "Hledat klienta..."
             Case BO.x29IdEnum.p91Invoice
+                cbxType.DataTextField = "p92Name" : sT = "--Všechny typy faktur--"
+                cbxType.DataSource = Master.Factory.p92InvoiceTypeBL.GetList(New BO.myQuery)
                 cbx1.WebServiceSettings.Path = "~/Services/invoice_service.asmx" : cbx1.Text = "Hledat fakturu..."
             Case BO.x29IdEnum.p56Task
+                cbxType.DataTextField = "p57Name" : sT = "--Všechny typy úkolů--"
+                cbxType.DataSource = Master.Factory.p57TaskTypeBL.GetList(New BO.myQuery)
                 cbx1.WebServiceSettings.Path = "~/Services/task_service.asmx" : cbx1.Text = "Hledat úkol..."
             Case BO.x29IdEnum.j02Person
+                cbxType.DataTextField = "j07Name" : sT = "--Všichni vč.kontaktních osob--"
+                cbxType.DataSource = Master.Factory.j07PersonPositionBL.GetList(New BO.myQuery)
                 cbx1.WebServiceSettings.Path = "~/Services/person_service.asmx" : cbx1.Text = "Hledat osobu..."
             Case BO.x29IdEnum.o23Notepad
+                cbxType.DataTextField = "o24Name" : sT = "--Všechny typy dokumentů--"
+                cbxType.DataSource = Master.Factory.o24NotepadTypeBL.GetList(New BO.myQuery)
                 cbx1.WebServiceSettings.Path = "~/Services/notepad_service.asmx" : cbx1.Text = "Hledat dokument..."
             Case Else
                 Me.cbx1.Visible = False
@@ -581,6 +599,18 @@ Public Class x25_record
         End Select
         If cX20.x20Name <> "" Then
             cbx1.Text = String.Format("Hledat [{0}]...", cX20.x20Name)
+        End If
+        If cbxType.DataTextField <> "" Then
+            Dim strKey As String = Me.hidX18ID.Value & "-cbxType-" & Me.cbxType.DataTextField
+            lisPars.Add(strKey)
+            Master.Factory.j03UserBL.InhaleUserParams(lisPars)
+
+            cbxType.Visible = True
+            cbxType.DataBind()
+            cbxType.ChangeItemText("", sT)
+            If Me.CurrentX29ID = BO.x29IdEnum.j02Person Then cbxType.AddOneComboItem("-1", "--Pouze interní osoby--", 0)
+            cbxType.SelectedValue = Master.Factory.j03UserBL.GetUserParam(strKey)
+
         End If
     End Sub
 
@@ -674,5 +704,10 @@ Public Class x25_record
         Me.x25Code.Focus()
         Master.Notify("Hodnota kódu se uloží až po uložení celého záznamu tlačítkem [Uložit změny].")
         Me.x25ArabicCode.Text = ""
+    End Sub
+
+    Private Sub cbxType_SelectedIndexChanged(OldValue As String, OldText As String, CurValue As String, CurText As String) Handles cbxType.SelectedIndexChanged
+        Dim strKey As String = Me.hidX18ID.Value & "-cbxType-" & Me.cbxType.DataTextField
+        Master.Factory.j03UserBL.SetUserParam(strKey, cbxType.SelectedValue)
     End Sub
 End Class

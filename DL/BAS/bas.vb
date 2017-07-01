@@ -587,6 +587,9 @@
                 Return "a.p31ID IS NOT NULL"
             Case BO.myQueryO23_QuickQuery.Bind2WorksheetWait
                 Return "a.p31ID IS NULL AND o24.x29ID=331"
+            Case BO.myQueryO23_QuickQuery.Bind2x25Wait
+                Return "a.o23ID NOT IN (select xa.x19RecordPID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=223)"
+
             Case Else
                 Return ""
         End Select

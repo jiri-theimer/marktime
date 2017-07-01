@@ -17,7 +17,10 @@ Public Class user_service
         Dim filterString As String = (DirectCast(contextDictionary("filterstring"), String)).ToLower()
         Dim strFlag As String = (DirectCast(contextDictionary("flag"), String))
         If filterString.IndexOf("...") > 0 Then filterString = "" 'pokud jsou uvedeny 3 tečky, pak bráno jako nápovědný text pro hledání
-
+        Dim strQryField As String = (DirectCast(contextDictionary("qry_field"), String)).ToLower(), strQryValue As String = ""
+        If strQryField <> "" Then
+            strQryValue = DirectCast(contextDictionary("qry_value"), String)
+        End If
         Dim factory As BL.Factory = Nothing
 
         If HttpContext.Current.User.Identity.IsAuthenticated Then
@@ -60,6 +63,20 @@ Public Class user_service
                 mq.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
             Case "intra"
                 mq.IntraPersons = BO.myQueryJ02_IntraPersons.IntraOnly
+            Case "search4x25"
+                mq.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
+                mq.Closed = BO.BooleanQueryMode.FalseQuery
+                If strQryField = "j07id" Then
+                    Select Case strQryValue
+                        Case "-1"
+                            mq.IntraPersons = BO.myQueryJ02_IntraPersons.IntraOnly  'pouze interní osoby
+                        Case ""
+                            mq.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
+                        Case Else
+                            mq.j07ID = BO.BAS.IsNullInt(strQryValue)
+                    End Select
+
+                End If
             Case "all"
                 'bez omezení - všechny osoby
 
@@ -78,7 +95,7 @@ Public Class user_service
             Case Else
                 mq.SpecificQuery = BO.myQueryJ02_SpecificQuery.AllowedForRead
         End Select
-
+        
 
         Dim lis As IEnumerable(Of BO.j02Person) = factory.j02PersonBL.GetList(mq)
 

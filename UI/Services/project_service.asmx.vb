@@ -18,7 +18,10 @@ Public Class project_service
         Dim strFlag As String = (DirectCast(contextDictionary("flag"), String))
         Dim strJ02ID_Explicit As String = (DirectCast(contextDictionary("j02id_explicit"), String))
         If filterString.IndexOf("...") > 0 Then filterString = "" 'pokud jsou uvedeny 3 tečky, pak bráno jako nápovědný text pro hledání
-        
+        Dim strQryField As String = (DirectCast(contextDictionary("qry_field"), String)).ToLower(), strQryValue As String = ""
+        If strQryField <> "" Then
+            strQryValue = DirectCast(contextDictionary("qry_value"), String)
+        End If
         Dim factory As BL.Factory = Nothing
 
         If HttpContext.Current.User.Identity.IsAuthenticated Then
@@ -57,6 +60,9 @@ Public Class project_service
             Case "p31_entry"
                 'omezit pouze na projekty, ke kterým má osoba oprávnění zapisovat worksheet
                 mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForWorksheetEntry
+            Case "search4x25"
+                mq.Closed = BO.BooleanQueryMode.FalseQuery
+                mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
             Case "p48"
                 'zapisovat operativní plán
                 mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForOperPlanEntry
@@ -74,6 +80,9 @@ Public Class project_service
                 mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
 
         End Select
+        If strQryField = "p42id" Then
+            mq.p42ID = BO.BAS.IsNullInt(strQryValue)
+        End If
 
         Dim lis As IEnumerable(Of BO.p41Project) = factory.p41ProjectBL.GetList(mq)
 
@@ -85,7 +94,7 @@ Public Class project_service
         itemData.Enabled = False
         Select Case lis.Count
             Case 0
-                If Len(filterString) > 0 And Len(filterString) < 15 Then itemData.Text = "Ani jeden projekt pro zadanou podmínku."
+                If (Len(filterString) > 0 And Len(filterString) < 15) Or strQryField <> "" Then itemData.Text = "Ani jeden projekt pro zadanou podmínku."
             Case Is >= mq.TopRecordsOnly
                 itemData.Text = String.Format("Nalezeno více než {0} projektů. Je třeba zpřesnit hledání nebo si zvýšit počet vypisovaných projektů.", mq.TopRecordsOnly.ToString)
             Case Else

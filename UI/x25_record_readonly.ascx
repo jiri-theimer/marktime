@@ -64,7 +64,7 @@
 
                     </td>
                     <td>
-
+                        <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" title="Náhled"></asp:HyperLink>
                         <asp:Label ID="BindValue" runat="server" CssClass="val"></asp:Label>
 
                         

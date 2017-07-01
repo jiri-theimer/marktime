@@ -241,7 +241,7 @@
 
                 </div>
                 <div class="commandcell" style="padding-left: 10px;">
-                    <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 3000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true">
+                    <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 3000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true" CollapseAnimation-Type="None">
                         <Items>
 
                             <telerik:RadMenuItem Text="ZÁZNAM" Value="record" PostBack="false" ImageUrl="Images/arrow_down_menu.png">
@@ -262,7 +262,7 @@
                             <telerik:RadMenuItem Text="DALŠÍ AKCE" Value="more" ImageUrl="Images/arrow_down_menu.png" >
                                 <GroupSettings OffsetX="-150"/>
                                 <ContentTemplate>
-                                    <div style="padding:10px;background-color:#f0f8ff;border:solid 1px black;">
+                                    <div style="padding:10px;background-color:#f0f8ff;">
                                     <div class="content-box3">
                                        
                                         <div class="content">

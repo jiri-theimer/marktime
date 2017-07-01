@@ -17,6 +17,7 @@ Public Enum myQueryO23_QuickQuery
     Bind2WorksheetWait = 10
     Bind2PersonExist = 11
     Bind2PersonWait = 12
+    Bind2x25Wait = 13
 End Enum
 Public Class myQueryO23
     Inherits myQuery

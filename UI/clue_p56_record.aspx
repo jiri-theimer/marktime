@@ -35,7 +35,7 @@
         <div class="content-box2">
             <div class="title">
                 
-                <a  href="javascript:go2module()">Skočit na detail úkolu</a>
+                <a  href="javascript:go2module()">Přejít na stránku úkolu</a>
                 <a style="margin-left: 50px;" href="javascript:go2workflow()">Posunout/doplnit</a>
             </div>
             <div class="content">

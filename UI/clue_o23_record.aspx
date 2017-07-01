@@ -42,7 +42,7 @@
                 Záznam dokumentu
                
                 
-                 <a style="margin-left:20px;" href="javascript:go2module()">Skočit na detail dokumentu</a>
+                 <a style="margin-left:20px;" href="javascript:go2module()">Přejít na stránku dokumentu</a>
             </div>
             <div class="content">
                 <table cellpadding="6" id="responsive">

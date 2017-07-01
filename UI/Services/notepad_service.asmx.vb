@@ -18,7 +18,10 @@ Public Class notepad_service
         Dim filterString As String = (DirectCast(contextDictionary("filterstring"), String)).ToLower()
         Dim strFlag As String = (DirectCast(contextDictionary("flag"), String))
         If filterString.IndexOf("...") > 0 Then filterString = "" 'pokud jsou uvedeny 3 tečky, pak bráno jako nápovědný text pro hledání
-
+        Dim strQryField As String = (DirectCast(contextDictionary("qry_field"), String)).ToLower(), strQryValue As String = ""
+        If strQryField <> "" Then
+            strQryValue = DirectCast(contextDictionary("qry_value"), String)
+        End If
         Dim factory As BL.Factory = Nothing
 
         If HttpContext.Current.User.Identity.IsAuthenticated Then
@@ -41,12 +44,18 @@ Public Class notepad_service
         mq.SearchExpression = filterString
         mq.Closed = BO.BooleanQueryMode.FalseQuery
         mq.TopRecordsOnly = BO.BAS.IsNullInt(factory.j03UserBL.GetUserParam("handler_search_notepad-toprecs", "40"))
-
-        If factory.j03UserBL.GetUserParam("handler_search_notepad-bin", "1") = "1" Then
-            mq.Closed = BO.BooleanQueryMode.NoQuery
+        If strQryField = "o24id" Then
+            mq.o24ID = BO.BAS.IsNullInt(strQryValue)
         End If
+
+        ''If factory.j03UserBL.GetUserParam("handler_search_notepad-bin", "1") = "1" Then
+        ''    mq.Closed = BO.BooleanQueryMode.NoQuery
+        ''End If
         Select Case strFlag
             Case "searchbox"
+                mq.SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
+            Case "search4x25"
+                mq.QuickQuery = BO.myQueryO23_QuickQuery.Bind2x25Wait
                 mq.SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
 
             Case Else
@@ -60,7 +69,7 @@ Public Class notepad_service
         itemData.Enabled = False
         Select Case lis.Count
             Case 0
-                If Len(filterString) > 0 And Len(filterString) < 15 Then itemData.Text = "Ani jeden dokument pro zadanou podmínku."
+                If (Len(filterString) > 0 And Len(filterString) < 15) Or strQryField <> "" Then itemData.Text = "Ani jeden dokument pro zadanou podmínku."
             Case Is >= mq.TopRecordsOnly
                 itemData.Text = String.Format("Nalezeno více než {0} dokumentů. Je třeba zpřesnit podmínku hledání.", mq.TopRecordsOnly.ToString)
             Case Else

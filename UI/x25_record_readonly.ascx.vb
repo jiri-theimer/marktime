@@ -152,13 +152,26 @@
 
     Private Sub rpX19_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpX19.ItemDataBound
         Dim cRec As BO.x19EntityCategory_Binding = CType(e.Item.DataItem, BO.x19EntityCategory_Binding)
+        Dim strClue As String = ""
         With CType(e.Item.FindControl("BindName"), Label)
             Select Case cRec.x29ID
-                Case 102 : .Text = "<img src='Images/person.png'/> "
-                Case 141 : .Text = "<img src='Images/project.png'/> "
-                Case 328 : .Text = "<img src='Images/contact.png'/> "
-                Case 391 : .Text = "<img src='Images/invoice.png'/> "
-                Case 331 : .Text = "<img src='Images/worksheet.png'/> "
+                Case 102
+                    .Text = "<img src='Images/person.png'/> "
+                    strClue = "clue_j02_record.aspx?pid=" & cRec.x19RecordPID.ToString
+                Case 141
+                    .Text = "<img src='Images/project.png'/> "
+                    strClue = "clue_p41_record.aspx?pid=" & cRec.x19RecordPID.ToString
+                Case 328
+                    .Text = "<img src='Images/contact.png'/> "
+                    strClue = "clue_p28_record.aspx?pid=" & cRec.x19RecordPID.ToString
+                Case 391
+                    .Text = "<img src='Images/invoice.png'/> "
+                    strClue = "clue_p91_record.aspx?pid=" & cRec.x19RecordPID.ToString
+                Case 331
+                    .Text = "<img src='Images/worksheet.png'/> "
+                Case 223
+                    .Text = "<img src='Images/notepad.png'/> "
+                    strClue = "clue_o23_record.aspx?pid=" & cRec.x19RecordPID.ToString
                 Case Else : .Text = "<img src='Images/record.png'/> "
             End Select
             If cRec.x20Name <> "" Then
@@ -169,6 +182,7 @@
 
 
         End With
+        
         With CType(e.Item.FindControl("BindValue"), Label)
             Select Case cRec.x29ID
                 Case 102 And Factory.SysUser.j04IsMenu_People = True
@@ -181,9 +195,20 @@
                     .Text = "<a href='p56_framework.aspx?pid=" & cRec.x19RecordPID.ToString & "' target='_top'>" & cRec.RecordAlias & "</a>"
                 Case 391 And Factory.SysUser.j04IsMenu_Invoice = True
                     .Text = "<a href='p91_framework.aspx?pid=" & cRec.x19RecordPID.ToString & "' target='_top'>" & cRec.RecordAlias & "</a>"
+                Case 223 And Factory.SysUser.j04IsMenu_Notepad
+                    .Text = "<a href='o23_framework.aspx?pid=" & cRec.x19RecordPID.ToString & "' target='_top'>" & cRec.RecordAlias & "</a>"
             End Select
             If .Text = "" Then .Text = cRec.RecordAlias
         End With
+
+        If strClue <> "" Then
+            With CType(e.Item.FindControl("clue1"), HyperLink)
+                .Attributes("rel") = strClue
+
+            End With
+        Else
+            e.Item.FindControl("clue1").Visible = False
+        End If
 
     End Sub
 

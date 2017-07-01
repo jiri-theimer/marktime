@@ -21,11 +21,11 @@
             else
                 context["filterstring"] = "";
 
+            context["qry_value"] = "<%=Me.cbxType.SelectedValue%>";
+            context["qry_field"] = "<%=Left(Me.cbxType.DataTextField, 3) + "id"%>";
             context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
-            context["flag"] = "searchbox";
-            <%If Me.CurrentX29ID = BO.x29IdEnum.j02Person Then%>
-            context["flag"] = "all2";
-            <%End If%>
+            context["flag"] = "search4x25";
+           
             <%If Me.CurrentX29ID = BO.x29IdEnum.p41Project Then%>
             context["j02id_explicit"] = "<%=Master.Factory.SysUser.j02ID%>";
             <%End If%>
@@ -43,9 +43,11 @@
                 <asp:RadioButtonList ID="opgX20ID" runat="server" AutoPostBack="true" RepeatDirection="Horizontal" DataValueField="x20ID" DataTextField="BindName"></asp:RadioButtonList>
             </div>
             <div>
-                <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="600px" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="600px" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="true">
+                <uc:datacombo ID="cbxType" runat="server" DataValueField="pid" AutoPostBack="true" IsFirstEmptyRow="true" Width="200px" Visible="false"></uc:datacombo>
+                <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="600px" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="500px" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="true">
                     <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
                 </telerik:RadComboBox>
+
             </div>
         </div>
 
