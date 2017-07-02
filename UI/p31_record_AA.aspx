@@ -6,7 +6,7 @@
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 <%@ Register TagPrefix="uc" TagName="p31_approve_onerec" Src="~/p31_approve_onerec.ascx" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
-<%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
+
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
 
@@ -306,18 +306,7 @@
     </div>
     
     
-    <asp:Panel ID="boxO23" runat="server" CssClass="content-box1">
-        <div class="title">
-            <img src="Images/notepad.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxO23Title" runat="server" Text="Dokumenty"></asp:Label>
-        </div>
-        <div class="content" style="overflow: auto; max-height: 200px;">
-            <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p31Worksheet"></uc:o23_list>
-            
-
-        </div>
-    </asp:Panel>
-
+    
     <div style="padding-top:30px;clear:both;"></div>
     
 

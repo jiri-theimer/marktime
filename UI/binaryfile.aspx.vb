@@ -69,7 +69,7 @@ Public Class binaryfile
 
                             strDestFileName = ""
                             If cRec.p56ID <> 0 Then strDestFileName = factory.GetRecordCaption(BO.x29IdEnum.p56Task, cRec.p56ID)
-                            If cRec.o23ID <> 0 Then strDestFileName = factory.GetRecordCaption(BO.x29IdEnum.o23Notepad, cRec.o23ID)
+                            If cRec.o23ID <> 0 Then strDestFileName = factory.GetRecordCaption(BO.x29IdEnum.o23Doc, cRec.o23ID)
                             strDestFileName = Left(BO.BAS.Prepare4FileName(strDestFileName), 80) & "." & Request.Item("format")
                         End If
                         

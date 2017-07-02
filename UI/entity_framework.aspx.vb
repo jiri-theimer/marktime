@@ -247,9 +247,9 @@ Public Class entity_framework
                     .Add(New ListItem("Založení úkolu", "DateInsert"))
                     .Add(New ListItem("Plánované zahájení", "p56PlanFrom"))
                     .Add(New ListItem("Termín dokončení", "p56PlanUntil"))
-                Case BO.x29IdEnum.o23Notepad
+                Case BO.x29IdEnum.o23Doc
                     .Add(New ListItem("Založení dokumentu", "DateInsert"))
-                    .Add(New ListItem("Datum dokumentu", "o23Date"))
+                    .Add(New ListItem("Datum dokumentu", "o23FreeDate01"))
                 Case BO.x29IdEnum.p91Invoice
                     .Add(New ListItem("Založení faktury", "DateInsert"))
                     .Add(New ListItem("Datum plnění", "p91DateSupply"))
@@ -287,7 +287,7 @@ Public Class entity_framework
                     cmdApprove.Visible = bolCanApprove
                     cmdInvoice.Visible = bolCanInvoice
                     ''menu1.FindItemByValue("more").Text = "Akce nad klienty"
-                Case BO.x29IdEnum.o23Notepad
+                Case BO.x29IdEnum.o23Doc
                     img1.ImageUrl = "Images/notepad_32.png"
                     ''menu1.FindItemByValue("more").Text = "Akce nad dokumenty"
                     cmdSummary.Visible = False
@@ -353,7 +353,7 @@ Public Class entity_framework
                 basUIMT.p41_grid_Handle_ItemDataBound(sender, e, True)
             Case BO.x29IdEnum.p28Contact
                 basUIMT.p28_grid_Handle_ItemDataBound(sender, e, True)
-            Case BO.x29IdEnum.o23Notepad
+            Case BO.x29IdEnum.o23Doc
                 basUIMT.o23_grid_Handle_ItemDataBound(sender, e, False)
             Case BO.x29IdEnum.p56Task
                 basUIMT.p56_grid_Handle_ItemDataBound(sender, e, False, True)
@@ -433,8 +433,8 @@ Public Class entity_framework
                 Else
                     grid1.DataSourceDataTable = dt
                 End If
-            Case BO.x29IdEnum.o23Notepad
-                Dim mq As New BO.myQueryO23
+            Case BO.x29IdEnum.o23Doc
+                Dim mq As New BO.myQueryO23(0)
                 With mq
                     .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
@@ -443,9 +443,9 @@ Public Class entity_framework
 
                 If _curIsExport Then mq.MG_PageSize = 2000
 
-                Dim dt As DataTable = Master.Factory.o23NotepadBL.GetGridDataSource(mq)
+                Dim dt As DataTable = Master.Factory.o23DocBL.GetDataTable4Grid(mq)
                 If dt Is Nothing Then
-                    Master.Notify(Master.Factory.o23NotepadBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                    Master.Notify(Master.Factory.o23DocBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else
                     grid1.DataSourceDataTable = dt
                 End If
@@ -549,10 +549,10 @@ Public Class entity_framework
             .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             Select Case Me.CurrentMasterPrefix
-                Case "p41" : .p41ID = Me.CurrentMasterPID
-                Case "j02" : .j02ID = Me.CurrentMasterPID
-                Case "p28" : .p28ID = Me.CurrentMasterPID
-                Case "p56" : .p56ID = Me.CurrentMasterPID
+                Case "p41" : .p41IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
+                Case "j02" : .j02IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
+                Case "p28" : .p28IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
+                Case "p56" : .p56IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
             End Select
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             If Me.hidDefaultSorting.Value <> "" Then
@@ -812,15 +812,15 @@ Public Class entity_framework
                             Master.Notify(Master.Factory.p56TaskBL.ErrorMessage, NotifyLevel.ErrorMessage)
                             Return
                         End If
-                    Case BO.x29IdEnum.o23Notepad
-                        Dim mq As New BO.myQueryO23
+                    Case BO.x29IdEnum.o23Doc
+                        Dim mq As New BO.myQueryO23(0)
                         InhaleMyQuery_o23(mq)
                         mq.MG_SelectPidFieldOnly = True
                         mq.TopRecordsOnly = 0
 
-                        dt = Master.Factory.o23NotepadBL.GetGridDataSource(mq)
+                        dt = Master.Factory.o23DocBL.GetDataTable4Grid(mq)
                         If dt Is Nothing Then
-                            Master.Notify(Master.Factory.o23NotepadBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                            Master.Notify(Master.Factory.o23DocBL.ErrorMessage, NotifyLevel.ErrorMessage)
                             Return
                         End If
                     Case BO.x29IdEnum.j02Person
@@ -961,10 +961,10 @@ Public Class entity_framework
                 Dim mq As New BO.myQueryP56
                 InhaleMyQuery_p56(mq)
                 dtSum = Master.Factory.p56TaskBL.GetGridFooterSums(mq, Me.hidSumCols.Value)
-            Case BO.x29IdEnum.o23Notepad
-                Dim mq As New BO.myQueryO23
+            Case BO.x29IdEnum.o23Doc
+                Dim mq As New BO.myQueryO23(0)
                 InhaleMyQuery_o23(mq)
-                grid1.VirtualRowCount = Master.Factory.o23NotepadBL.GetVirtualCount(mq)
+                grid1.VirtualRowCount = Master.Factory.o23DocBL.GetVirtualCount(mq)
             Case BO.x29IdEnum.p91Invoice
                 Dim mq As New BO.myQueryP91
                 InhaleMyQuery_p91(mq)
@@ -1021,12 +1021,12 @@ Public Class entity_framework
                 mq.MG_GridGroupByField = ""
                 ''lis = Master.Factory.p56TaskBL.GetList(mq)
                 dt = Master.Factory.p56TaskBL.GetGridDataSource(mq)
-            Case BO.x29IdEnum.o23Notepad
-                Dim mq As New BO.myQueryO23
+            Case BO.x29IdEnum.o23Doc
+                Dim mq As New BO.myQueryO23(0)
                 InhaleMyQuery_o23(mq)
                 mq.MG_GridGroupByField = ""
-                ''lis = Master.Factory.o23NotepadBL.GetList4Grid(mq)
-                dt = Master.Factory.o23NotepadBL.GetGridDataSource(mq)
+
+                dt = Master.Factory.o23DocBL.GetDataTable4Grid(mq)
             Case BO.x29IdEnum.j02Person
                 Dim mq As New BO.myQueryJ02
                 InhaleMyQuery_j02(mq)
@@ -1157,7 +1157,7 @@ Public Class entity_framework
                 Case "j02"
                     cbx1.WebServiceSettings.Path = "~/Services/person_service.asmx"
                 Case "o23"
-                    cbx1.WebServiceSettings.Path = "~/Services/notepad_service.asmx"
+                    cbx1.WebServiceSettings.Path = "~/Services/doc_service.asmx"
             End Select
         End If
     End Sub

@@ -48,7 +48,7 @@ Public Class invoice_service
             Case "searchbox"
                 mq.SpecificQuery = BO.myQueryP91_SpecificQuery.AllowedForRead
                 mq.Closed = BO.BooleanQueryMode.NoQuery
-            Case "search4x25"
+            Case "search4o23"
                 mq.Closed = BO.BooleanQueryMode.FalseQuery
                 mq.SpecificQuery = BO.myQueryP91_SpecificQuery.AllowedForRead
             Case Else

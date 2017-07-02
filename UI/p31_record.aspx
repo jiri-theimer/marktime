@@ -8,7 +8,7 @@
 <%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
 <%@ Register TagPrefix="uc" TagName="project" Src="~/project.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
-<%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
@@ -508,16 +508,7 @@
             <asp:DropDownList ID="j02ID_ContactPerson" runat="server" Visible="false" DataValueField="pid" DataTextField="FullNameDescWithEmail"></asp:DropDownList>
         </div>
     </div>
-    <asp:panel ID="panO23" runat="server" CssClass="content-box1" style="min-width:170px;">
-        <div class="title">
-            <img src="Images/notepad.png" alt="Dokument" /><asp:Label ID="lblDokumenty" runat="server" Text="Dokumenty" meta:resourcekey="lblDokumenty"></asp:Label>
-            
-        </div>
-        <div class="content">
-            <div><asp:HyperLink ID="cmdDoc" runat="server" Text="Nahrát/Spárovat dokument" NavigateUrl="javascript:o23_record()" meta:resourcekey="cmdDoc"></asp:HyperLink></div>
-            <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p31Worksheet"></uc:o23_list>
-        </div>
-    </asp:panel>
+    <button type="button" id="cmdDoc" runat="server"><img src="Images/notepad.png" /> Nahrát nebo přiřadit dokument</button>
 
     <asp:panel ID="panP49" runat="server" cssclass="content-box1" style="min-width:170px;" Visible="false">
         <div class="title">

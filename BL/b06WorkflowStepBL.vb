@@ -218,26 +218,20 @@ Class b06WorkflowStepBL
                 If Not lisNominee Is Nothing Then
                     Me.Factory.p28ContactBL.Save(cRec, Nothing, Nothing, Nothing, lisNominee, Nothing)
                 End If
-            Case BO.x29IdEnum.o23Notepad
-                Dim cRec As BO.o23Notepad = Me.Factory.o23NotepadBL.Load(intRecordPID)
-                intCurB02ID = cRec.b02ID
-                intJ02ID_Owner = cRec.j02ID_Owner : intP41ID_Ref = cRec.p41ID
-                If Not lisNominee Is Nothing Then
-                    Me.Factory.o23NotepadBL.Save(cRec, "", lisNominee, Nothing)
-                End If
-            Case BO.x29IdEnum.x25EntityField_ComboValue
-                Dim cRec As BO.x25EntityField_ComboValue = Me.Factory.x25EntityField_ComboValueBL.Load(intRecordPID)
+            
+            Case BO.x29IdEnum.o23Doc
+                Dim cRec As BO.o23Doc = Me.Factory.o23DocBL.Load(intRecordPID)
                 intCurB02ID = cRec.b02ID
                 intJ02ID_Owner = cRec.j02ID_Owner
                 If Not lisNominee Is Nothing Then
-                    Me.Factory.x25EntityField_ComboValueBL.Save(cRec, 0, lisNominee, Nothing, Nothing)
+                    Me.Factory.o23DocBL.Save(cRec, 0, lisNominee, Nothing, Nothing, "")
                 End If
         End Select
 
         If cB06.b02ID_Target <> 0 Then
             _cDL.SaveStatusMove(intRecordPID, x29id, cB06, cB06.b02ID_Target, bolManualStep, strComment)
         End If
-        
+
 
         Dim intB07ID As Integer = 0
         Dim c As New BO.b07Comment
@@ -275,19 +269,7 @@ Class b06WorkflowStepBL
         If Not bolStopAutoNotification Then
             'test případné mailové notifikace
             Dim objects As List(Of Object) = GetObjects(intRecordPID, x29id, intP41ID_Ref)
-            ''Select Case x29id
-            ''    Case BO.x29IdEnum.p56Task
-            ''        objects.Add(Factory.p56TaskBL.Load(intRecordPID))
-            ''    Case BO.x29IdEnum.p41Project
-            ''        objects.Add(Factory.p41ProjectBL.Load(intRecordPID))
-            ''    Case BO.x29IdEnum.p28Contact
-            ''        objects.Add(Factory.p28ContactBL.Load(intRecordPID))
-            ''    Case BO.x29IdEnum.p91Invoice
-            ''        objects.Add(Factory.p91InvoiceBL.Load(intRecordPID))
-            ''    Case BO.x29IdEnum.o23Notepad
-            ''        objects.Add(Factory.o23NotepadBL.Load(intRecordPID))
-            ''End Select
-            ''If intP41ID_Ref <> 0 Then objects.Add(Factory.p41ProjectBL.Load(intP41ID_Ref))
+           
 
             Handle_Notification(cB06, intRecordPID, x29id, intJ02ID_Owner, objects, intP41ID_Ref, strComment)
         End If
@@ -305,10 +287,9 @@ Class b06WorkflowStepBL
                 objects.Add(Factory.p28ContactBL.Load(intRecordPID))
             Case BO.x29IdEnum.p91Invoice
                 objects.Add(Factory.p91InvoiceBL.Load(intRecordPID))
-            Case BO.x29IdEnum.o23Notepad
-                objects.Add(Factory.o23NotepadBL.Load(intRecordPID))
-            Case BO.x29IdEnum.x25EntityField_ComboValue
-                objects.Add(Factory.x25EntityField_ComboValueBL.Load(intRecordPID))
+            
+            Case BO.x29IdEnum.o23Doc
+                objects.Add(Factory.o23DocBL.Load(intRecordPID))
         End Select
         If intP41ID_Ref <> 0 Then objects.Add(Factory.p41ProjectBL.Load(intP41ID_Ref))
         Return objects
@@ -401,8 +382,8 @@ Class b06WorkflowStepBL
                         Select Case x29id
                             Case BO.x29IdEnum.p56Task
                                 mes.Body = Replace(mes.Body, "#RolesInline#", Factory.p56TaskBL.GetRolesInline(intRecordPID))
-                            Case BO.x29IdEnum.x25EntityField_ComboValue
-                                mes.Body = Replace(mes.Body, "#RolesInline#", Factory.x25EntityField_ComboValueBL.GetRolesInline(intRecordPID))
+                            Case BO.x29IdEnum.o23Doc
+                                mes.Body = Replace(mes.Body, "#RolesInline#", Factory.o23DocBL.GetRolesInline(intRecordPID))
                             Case BO.x29IdEnum.p41Project
                                 mes.Body = Replace(mes.Body, "#RolesInline#", Factory.p41ProjectBL.GetRolesInline(intRecordPID))
                         End Select
@@ -454,17 +435,15 @@ Class b06WorkflowStepBL
             Case "p56"
                 Dim cRec As BO.p56Task = Factory.p56TaskBL.Load(intRecordPID)
                 intCurB02ID = cRec.b02ID : intP41ID = cRec.p41ID : intRecOwnerID = cRec.j02ID_Owner : strRecUserInsert = cRec.UserInsert
-            Case "o23"
-                Dim cRec As BO.o23Notepad = Factory.o23NotepadBL.Load(intRecordPID)
-                intCurB02ID = cRec.b02ID : intP41ID = cRec.p41ID : intRecOwnerID = cRec.j02ID_Owner : strRecUserInsert = cRec.UserInsert
+            
             Case "p28"
                 Dim cRec As BO.p28Contact = Factory.p28ContactBL.Load(intRecordPID)
                 intCurB02ID = cRec.b02ID : intRecOwnerID = cRec.j02ID_Owner : strRecUserInsert = cRec.UserInsert
             Case "p91"
                 Dim cRec As BO.p91Invoice = Factory.p91InvoiceBL.Load(intRecordPID)
                 intCurB02ID = cRec.b02ID : intRecOwnerID = cRec.j02ID_Owner : strRecUserInsert = cRec.UserInsert
-            Case "x25"
-                Dim cRec As BO.x25EntityField_ComboValue = Factory.x25EntityField_ComboValueBL.Load(intRecordPID)
+            Case "o23"
+                Dim cRec As BO.o23Doc = Factory.o23DocBL.Load(intRecordPID)
                 intCurB02ID = cRec.b02ID : intRecOwnerID = cRec.j02ID_Owner : strRecUserInsert = cRec.UserInsert
         End Select
 

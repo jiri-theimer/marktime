@@ -2,7 +2,7 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="myscheduler" Src="~/myscheduler.ascx" %>
-<%@ Register TagPrefix="uc" TagName="x25_record_readonly" Src="~/x25_record_readonly.ascx" %>
+<%@ Register TagPrefix="uc" TagName="o23_record_readonly" Src="~/o23_record_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
@@ -40,8 +40,8 @@
         }
 
         function hardrefresh(pid, flag) {
-            if (flag == "x25-save") {
-                location.replace("x25_framework.aspx?pid=" + pid);
+            if (flag == "o23-save") {
+                location.replace("o23_framework.aspx?pid=" + pid);
                 return;
             }
             location.replace("default.aspx");
@@ -59,16 +59,16 @@
                 location.replace("p56_framework.aspx?pid=" + pid);
 
         }
-        function x25_create(x18id) {
+        function o23_create(x18id) {
 
-            sw_master("x25_record.aspx?pid=0&x18id=" + x18id, "Images/label.png")
+            sw_master("o23_record.aspx?pid=0&x18id=" + x18id, "Images/label.png")
         }
         function b07_reaction(b07id) {
-            sw_everywhere("b07_create.aspx?parentpid=" + b07id + "&masterprefix=x25&masterpid=<%=rec1.pid%>", "Images/comment.png", true)
+            sw_everywhere("b07_create.aspx?parentpid=" + b07id + "&masterprefix=o23&masterpid=<%=rec1.pid%>", "Images/comment.png", true)
 
         }
-        function x25_fullscreen() {
-            location.replace("x25_framework.aspx?pid=<%=rec1.pid%>");
+        function o23_fullscreen() {
+            location.replace("o23_framework.aspx?pid=<%=rec1.pid%>");
         }
     </script>
 </asp:Content>
@@ -83,7 +83,7 @@
             <img src="Images/logo_transparent.png" />
         </div>
         <div style="float: right;">
-            <asp:CheckBox ID="chkX18" runat="server" Text="Vybrané agendy štítků" AutoPostBack="true" CssClass="chk" Checked="true" Visible="false" />
+            <asp:CheckBox ID="chkX18" runat="server" Text="Vybrané typy dokumentů" AutoPostBack="true" CssClass="chk" Checked="true" Visible="false" />
             <asp:CheckBox ID="chkScheduler" runat="server" Text="Úkoly a termíny" AutoPostBack="true" CssClass="chk" Checked="true" />
             <asp:CheckBox ID="chkSearch" runat="server" Text="Vyhledávání" AutoPostBack="true" CssClass="chk" Checked="false" />
             <asp:CheckBox ID="chkLog" runat="server" Text="Poslední významnější akce" AutoPostBack="true" CssClass="chk" Checked="true" Style="margin-left: 20px;" />
@@ -154,8 +154,8 @@
 
             <asp:Panel ID="panX18" runat="server" CssClass="content-box1">
                 <div class="title">
-                    <img src="Images/label.png" />
-                    Vybrané agendy štítků
+                    <img src="Images/notepad.png" />
+                    Vybrané typy dokumentů
                 </div>
                 <div class="content">
                     <table cellpadding="6">
@@ -210,12 +210,12 @@
                                     </ItemTemplate>
                                 </asp:Repeater>
                             </td>
-                            <td style="max-width: 600px;" id="tdRecX25" runat="server" visible="false">
+                            <td style="max-width: 600px;" id="tdRecO23" runat="server" visible="false">
                                 <div style="overflow: auto; max-height: 300px;">
                                     <div style="float:right;">
-                                        <button type="button" title="Plný detail" class="button-link"><img src="Images/fullscreen.png" onclick="x25_fullscreen()" /></button>
+                                        <button type="button" title="Plný detail" class="button-link"><img src="Images/fullscreen.png" onclick="o23_fullscreen()" /></button>
                                     </div>
-                                    <uc:x25_record_readonly ID="rec1" runat="server" />
+                                    <uc:o23_record_readonly ID="rec1" runat="server" />
 
                                     <uc:b07_list ID="comments1" runat="server" JS_Create="b07_create()" JS_Reaction="b07_reaction" ShowInsertButton="false" />
 

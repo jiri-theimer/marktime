@@ -16,7 +16,7 @@
     p45Budget = 345
 
     o22Milestone = 222
-    o23Notepad = 223
+    o23Doc = 223
     o24NotepadType = 224
     o27Attachment = 227
     p28Contact = 328
@@ -61,7 +61,7 @@
     j75DrillDownTemplate = 175
     j77WorksheetStatTemplate = 177
     x18EntityCategory = 918
-    x25EntityField_ComboValue = 925
+
     x48SqlTask = 948
     Approving = 999
     _NotSpecified = 0

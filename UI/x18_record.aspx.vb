@@ -15,14 +15,14 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         roles1.Factory = Master.Factory
         If Not Page.IsPostBack Then
-            Me.b01ID.DataSource = Master.Factory.b01WorkflowTemplateBL.GetList().Where(Function(p) p.x29ID = BO.x29IdEnum.x25EntityField_ComboValue)
+            Me.b01ID.DataSource = Master.Factory.b01WorkflowTemplateBL.GetList().Where(Function(p) p.x29ID = BO.x29IdEnum.o23Doc)
             Me.b01ID.DataBind()
 
             hidGUID_x16.Value = BO.BAS.GetGUID()
             hidGUID_x20.Value = BO.BAS.GetGUID()
             With Master
                 .HeaderIcon = "Images/label_32.png"
-                .HeaderText = "Nastavení štítku"
+                .HeaderText = "Typ dokumentu"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If Not .Factory.TestPermission(BO.x53PermValEnum.GR_X18_Admin) Then
                     .StopPage("Pro správu štítků nemáte oprávnění.")
@@ -493,7 +493,7 @@
                     cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky položek [{0}] v kartě úkolu", strName)
                     cbx1.Items.FindByValue("2").Text = String.Format("Vazbu vyplňovat vyhledavačem úkolu v záznamu položky [{0}]", strName)
                     cbx2.Items.FindByValue("1").Text = String.Format("Sloupec [{0}] v přehledu úkolů", strName)
-                Case BO.x29IdEnum.o23Notepad
+                Case BO.x29IdEnum.o23Doc
                     cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky položek [{0}] v kartě dokumentu", strName)
                     cbx1.Items.FindByValue("2").Text = String.Format("Vazbu vyplňovat vyhledavačem dokumentu v záznamu položky [{0}]", strName)
                     cbx2.Items.FindByValue("1").Text = String.Format("Sloupec [{0}] v přehledu dokumentů", strName)
@@ -595,9 +595,9 @@
                     lis.Add(New ListItem(c.j07Name, c.PID.ToString))
                 Next
                 hidx29ID_EntityType.Value = "107"
-            Case BO.x29IdEnum.o23Notepad
-                For Each c In Master.Factory.o24NotepadTypeBL.GetList(mq)
-                    lis.Add(New ListItem(c.o24Name, c.PID.ToString))
+            Case BO.x29IdEnum.o23Doc
+                For Each c In Master.Factory.x18EntityCategoryBL.GetList(mq)
+                    lis.Add(New ListItem(c.x18Name, c.PID.ToString))
                 Next
                 hidx29ID_EntityType.Value = "224"
             Case BO.x29IdEnum.p91Invoice
@@ -620,11 +620,11 @@
                     lis.Add(New ListItem(c.o21Name, c.PID.ToString))
                 Next
                 hidx29ID_EntityType.Value = "221"
-            Case BO.x29IdEnum.x25EntityField_ComboValue
+            Case BO.x29IdEnum.o23Doc
                 For Each c In Master.Factory.x18EntityCategoryBL.GetList(mq).Where(Function(p) p.PID <> Master.DataPID)
                     lis.Add(New ListItem(c.x18Name, c.PID.ToString))
                 Next
-                hidx29ID_EntityType.Value = "925"
+                hidx29ID_EntityType.Value = "223"
             Case Else
         End Select
 

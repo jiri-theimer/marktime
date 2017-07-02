@@ -53,8 +53,8 @@
             Me.Timestamp.Text = .Timestamp
         End With
         If cRec.o23ID_First <> 0 Then
-            Dim cDoc As BO.o23Notepad = Master.Factory.o23NotepadBL.Load(cRec.o23ID_First)
-            Me.o23Name.Text = cDoc.o24Name & ": " & cDoc.o23Code & " - " & cDoc.o23Name
+            Dim cDoc As BO.o23Doc = Master.Factory.o23DocBL.Load(cRec.o23ID_First)
+            Me.o23Name.Text = cDoc.x23Name & ": " & cDoc.o23Code & " - " & cDoc.o23Name
             Me.files1.RefreshData_O23(cDoc.PID)
         Else
             panFiles.Visible = False

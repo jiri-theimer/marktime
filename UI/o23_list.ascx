@@ -5,7 +5,7 @@
         <div style="float: left; padding: 5px;">
             <asp:HyperLink ID="clue_o23" runat="server" CssClass="reczoom" Text="i" title="Detail dokumentu"></asp:HyperLink>
 
-            <asp:Label ID="o24Name" runat="server" CssClass="valbold"></asp:Label>
+            <asp:Label ID="x18Name" runat="server" CssClass="valbold"></asp:Label>
 
             <asp:Image ID="img1" runat="server" ImageUrl="Images/notepad.png" />
 
@@ -16,6 +16,6 @@
     </ItemTemplate>
 </asp:Repeater>
 
-<asp:HiddenField ID="hidX29ID" runat="server" />
+
 <asp:HiddenField ID="hidInhaledDataPID" runat="server" />
 <asp:HiddenField ID="hidIsShowClueTip" runat="server" Value="1" />

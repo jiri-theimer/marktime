@@ -1,4 +1,4 @@
-﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="x25_record_readonly.ascx.vb" Inherits="UI.x25_record_readonly" %>
+﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="o23_record_readonly.ascx.vb" Inherits="UI.o23_record_readonly" %>
 
     
     <table cellpadding="5" cellspacing="2" style="width: 100%;" id="responsive">    
@@ -17,7 +17,7 @@
                 <span class="lbl"><img src="Images/type_text.png" /> Kód:</span>
             </td>
             <td>
-                <asp:Label ID="x25Code" runat="server" CssClass="valbold"></asp:Label>
+                <asp:Label ID="o23Code" runat="server" CssClass="valbold"></asp:Label>
             </td>
         </tr>
         <tr class="trHover" id="trName" runat="server">
@@ -25,7 +25,7 @@
                 <span class="lbl"><img src="Images/type_text.png" /> Název:</span>
             </td>
             <td>
-                <asp:Label ID="x25Name" runat="server" CssClass="valbold"></asp:Label>
+                <asp:Label ID="o23Name" runat="server" CssClass="valbold"></asp:Label>
             </td>
         </tr>
         
@@ -87,10 +87,10 @@
     function workflow() {
        
         if (parent == null) {
-            sw_everywhere("workflow_dialog.aspx?prefix=x25&pid=<%=hidPID.Value%>", "Images/workflow.png", true);
+            sw_everywhere("workflow_dialog.aspx?prefix=o23&pid=<%=hidPID.Value%>", "Images/workflow.png", true);
         }
         else {
-            window.parent.sw_everywhere("workflow_dialog.aspx?prefix=x25&pid=<%=hidPID.Value%>", "Images/workflow.png", true);
+            window.parent.sw_everywhere("workflow_dialog.aspx?prefix=o23&pid=<%=hidPID.Value%>", "Images/workflow.png", true);
         }
        
     }

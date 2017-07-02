@@ -23,13 +23,13 @@ Partial Public Class x18_items
     Protected WithEvents x18Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''rpX25 control.
+    '''rpO23 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rpX25 As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents rpO23 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''hidX23ID control.

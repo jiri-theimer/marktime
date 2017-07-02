@@ -1,6 +1,6 @@
 ﻿Imports Telerik.Web.UI
 
-Public Class x25_scheduler
+Public Class o23_scheduler
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
     Private Property _curD1 As Date
@@ -20,7 +20,7 @@ Public Class x25_scheduler
         End Set
     End Property
 
-    Private Sub x25_scheduler_Init(sender As Object, e As EventArgs) Handles Me.Init
+    Private Sub o23_scheduler_Init(sender As Object, e As EventArgs) Handles Me.Init
         persons1.Factory = Master.Factory
         projects1.Factory = Master.Factory
     End Sub
@@ -28,14 +28,14 @@ Public Class x25_scheduler
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
-                .SiteMenuValue = "x25_framework"
+                .SiteMenuValue = "o23_framework"
                 ViewState("loading_setting") = "0"
 
                 Dim strX18ID As String = Request.Item("x18id")
                 With Master.Factory.j03UserBL
                     If strX18ID = "" Then
-                        .InhaleUserParams("x25_framework-x18id")
-                        strX18ID = .GetUserParam("x25_framework-x18id")
+                        .InhaleUserParams("o23_framework-x18id")
+                        strX18ID = .GetUserParam("o23_framework-x18id")
                     End If
                 End With
                 SetupX18Combo(strX18ID)
@@ -48,7 +48,7 @@ Public Class x25_scheduler
 
                 Dim lisPars As New List(Of String)
                 With lisPars
-                    .Add("x25_framework-x18id")
+                    .Add("o23_framework-x18id")
                     .Add("entity_scheduler-view-" & strX18ID)
                     .Add("entity_scheduler-daystarttime")
                     .Add("entity_scheduler-dayendtime")
@@ -62,8 +62,8 @@ Public Class x25_scheduler
                     .Add("entity_scheduler-timelinedays")
                     .Add("entity_scheduler-include_childs")
                     .Add("entity_scheduler-resourceview-" & strX18ID)
-                    .Add("x25_framework-filter_b02id-" & strX18ID)
-                    .Add("x25_framework-filter_myrole-" & strX18ID)
+                    .Add("o23_framework-filter_b02id-" & strX18ID)
+                    .Add("o23_framework-filter_myrole-" & strX18ID)
                 End With
 
                 With .Factory.j03UserBL
@@ -88,8 +88,8 @@ Public Class x25_scheduler
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_timelinedays, .GetUserParam("entity_scheduler-timelinedays", "10"))
                     basUI.SelectDropdownlistValue(Me.cbxResourceView, .GetUserParam("entity_scheduler-resourceview-" & strX18ID, "1"))
                     If panWorkflow.Visible Then
-                        basUI.SelectDropdownlistValue(Me.cbxQueryB02ID, .GetUserParam("x25_framework-filter_b02id-" & strX18ID))
-                        basUI.SelectDropdownlistValue(Me.cbxMyRole, .GetUserParam("x25_framework-filter_myrole-" & strX18ID))
+                        basUI.SelectDropdownlistValue(Me.cbxQueryB02ID, .GetUserParam("o23_framework-filter_b02id-" & strX18ID))
+                        basUI.SelectDropdownlistValue(Me.cbxMyRole, .GetUserParam("o23_framework-filter_myrole-" & strX18ID))
                     End If
                 End With
             End With
@@ -110,7 +110,7 @@ Public Class x25_scheduler
         Me.x18ID.DataSource = lis
         Me.x18ID.DataBind()
         If lis.Count = 0 Then
-            Master.Notify("V databázi zatím neexistuje štítek pro kalendářové rozhraní.", NotifyLevel.InfoMessage)
+            Master.Notify("V databázi zatím neexistuje typ dokumentu pro kalendářové rozhraní.", NotifyLevel.InfoMessage)
         Else
             If strDef <> "" Then basUI.SelectDropdownlistValue(Me.x18ID, strDef)
         End If
@@ -130,7 +130,7 @@ Public Class x25_scheduler
         persons1.CurrentPersonsRole = strDef
     End Sub
 
-    
+
 
     Private Sub scheduler1_NavigationComplete(sender As Object, e As SchedulerNavigationCompleteEventArgs) Handles scheduler1.NavigationComplete
         Dim bolChangeView As Boolean = False
@@ -145,7 +145,7 @@ Public Class x25_scheduler
     End Sub
 
     Private Sub ReloadPage()
-        Response.Redirect("x25_scheduler.aspx?x18id=" & Me.CurrentX18ID.ToString)
+        Response.Redirect("o23_scheduler.aspx?x18id=" & Me.CurrentX18ID.ToString)
 
     End Sub
 
@@ -165,7 +165,7 @@ Public Class x25_scheduler
             cbxQueryB02ID.DataSource = Master.Factory.b02WorkflowStatusBL.GetList(c.b01ID)
             cbxQueryB02ID.DataBind()
             cbxQueryB02ID.Items.Insert(0, New ListItem("--Filtrovat aktuální stav--", ""))
-            cbxMyRole.DataSource = Master.Factory.x67EntityRoleBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = BO.x29IdEnum.x25EntityField_ComboValue)
+            cbxMyRole.DataSource = Master.Factory.x67EntityRoleBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = BO.x29IdEnum.o23Doc)
             cbxMyRole.DataBind()
             cbxMyRole.Items.Insert(0, New ListItem("--Filtrovat mojí roli--", ""))
             cbxMyRole.Items.Add(New ListItem("Jsem vlastník (zakladatel) záznamu", "-1"))
@@ -211,13 +211,13 @@ Public Class x25_scheduler
         End With
         Dim d1 As Date = scheduler1.VisibleRangeStart.AddDays(-1), d2 As Date = scheduler1.VisibleRangeEnd.AddDays(1)
 
-        Dim mq As New BO.myQueryX25(BO.BAS.IsNullInt(hidX23ID.Value))
+        Dim mq As New BO.myQueryO23(BO.BAS.IsNullInt(hidX23ID.Value))
         InhaleMyQuery(mq, d1, d2)
 
 
 
-        Master.Factory.x25EntityField_ComboValueBL.SetCalendarDateFields(hidCalendarFieldStart.Value, hidCalendarFieldEnd.Value)
-        Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = Master.Factory.x25EntityField_ComboValueBL.GetList(mq)
+        Master.Factory.o23DocBL.SetCalendarDateFields(hidCalendarFieldStart.Value, hidCalendarFieldEnd.Value)
+        Dim lis As IEnumerable(Of BO.o23Doc) = Master.Factory.o23DocBL.GetList(mq)
 
         Dim lisItems As New List(Of BO.SchedulerItem), res_foud As New List(Of Integer)
 
@@ -243,17 +243,17 @@ Public Class x25_scheduler
             Dim c As New BO.SchedulerItem
 
             With cRec
-                c.ID = .PID.ToString & ",'x25'"
-                c.Description = "clue_x25_record.aspx?pid=" & .PID.ToString
+                c.ID = .PID.ToString & ",'o23'"
+                c.Description = "clue_o23_record.aspx?pid=" & .PID.ToString
 
                 Select Case hidCalendarFieldSubject.Value
-                    Case "x25Name"
-                        c.Subject = .x25Name
-                    Case "x25Code"
-                        c.Subject = .x25Code
+                    Case "o23Name"
+                        c.Subject = .o23Name
+                    Case "o23Code"
+                        c.Subject = .o23Code
                     Case Else
                         If Not lisX19 Is Nothing Then
-                            Dim cX19 As BO.x19EntityCategory_Binding = lisX19.First(Function(p) p.x25ID = cRec.PID)
+                            Dim cX19 As BO.x19EntityCategory_Binding = lisX19.First(Function(p) p.o23ID = cRec.PID)
                             If Not cX19 Is Nothing Then
                                 c.Subject = cX19.RecordAlias
                                 If bolResources Then
@@ -262,7 +262,7 @@ Public Class x25_scheduler
                                     c.ResourceName = cX19.RecordAlias
                                     res_foud.Add(cX19.x19RecordPID)
                                 End If
-                                
+
 
 
                             End If
@@ -288,11 +288,11 @@ Public Class x25_scheduler
                         c.BackgroundColorString = .b02Color
                     End If
                 Else
-                    If .x25BackColor <> "" Then
-                        c.BackgroundColorString = .x25BackColor
+                    If .o23BackColor <> "" Then
+                        c.BackgroundColorString = .o23BackColor
 
-                        If .x25ForeColor <> "" Then
-                            c.ForeColorString = .x25ForeColor
+                        If .o23ForeColor <> "" Then
+                            c.ForeColorString = .o23ForeColor
                         End If
                     End If
                 End If
@@ -360,7 +360,7 @@ Public Class x25_scheduler
         hidIsProjectsChange.Value = "1"
     End Sub
 
-    Private Sub x25_scheduler_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+    Private Sub o23_scheduler_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         PersonsHeader.Text = persons1.CurrentHeader
         ProjectsHeader.Text = projects1.CurrentHeader
         With scheduler1.TimelineView
@@ -375,7 +375,7 @@ Public Class x25_scheduler
             If .NumberOfSlots >= 50 Then
                 .ColumnHeaderDateFormat = "d.M."
             End If
-            
+
         End With
         If scheduler1.SelectedView = SchedulerViewType.TimelineView And Me.hidx18CalendarResourceField.Value <> "" Then
             Me.panResources.Visible = True
@@ -383,9 +383,9 @@ Public Class x25_scheduler
             Me.panResources.Visible = False
         End If
         If scheduler1.SelectedView = SchedulerViewType.TimelineView Then
-            scheduler1.TimeSlotContextMenus(0).FindItemByValue("x25").NavigateUrl = "javascript:x25_record(0)"
+            scheduler1.TimeSlotContextMenus(0).FindItemByValue("o23").NavigateUrl = "javascript:o23_record(0)"
         Else
-            scheduler1.TimeSlotContextMenus(0).FindItemByValue("x25").NavigateUrl = ""
+            scheduler1.TimeSlotContextMenus(0).FindItemByValue("o23").NavigateUrl = ""
         End If
         If panWorkflow.Visible Then
             basUIMT.RenderQueryCombo(Me.cbxQueryB02ID)
@@ -393,7 +393,7 @@ Public Class x25_scheduler
         End If
     End Sub
 
-    
+
     Private Sub entity_scheduler_daystarttime_SelectedIndexChanged(sender As Object, e As EventArgs) Handles entity_scheduler_daystarttime.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-daystarttime", Me.entity_scheduler_daystarttime.SelectedValue)
         RefreshData(False)
@@ -431,7 +431,7 @@ Public Class x25_scheduler
 
     End Sub
 
-    Private Sub InhaleMyQuery(ByRef mq As BO.myQueryX25, d1 As Date, d2 As Date)
+    Private Sub InhaleMyQuery(ByRef mq As BO.myQueryO23, d1 As Date, d2 As Date)
         With mq
             .x23ID = BO.BAS.IsNullInt(hidX23ID.Value)
             If panWorkflow.Visible Then
@@ -471,13 +471,13 @@ Public Class x25_scheduler
 
     End Sub
     Private Sub cbxQueryB02ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxQueryB02ID.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam("x25_framework-filter_b02id-" & Me.CurrentX18ID.ToString, Me.cbxQueryB02ID.SelectedValue)
+        Master.Factory.j03UserBL.SetUserParam("o23_framework-filter_b02id-" & Me.CurrentX18ID.ToString, Me.cbxQueryB02ID.SelectedValue)
         RefreshData(False)
 
     End Sub
 
     Private Sub cbxMyRole_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxMyRole.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam("x25_framework-filter_myrole-" & Me.CurrentX18ID.ToString, Me.cbxMyRole.SelectedValue)
+        Master.Factory.j03UserBL.SetUserParam("o23_framework-filter_myrole-" & Me.CurrentX18ID.ToString, Me.cbxMyRole.SelectedValue)
         RefreshData(False)
 
     End Sub

@@ -88,12 +88,7 @@
             End If
         End With
         
-        'Dim intX18ID As Integer = CType(e.Item.DataItem, Integer)
-        'CType(e.Item.FindControl("x18Name"), Label).Text = _lisX19.Where(Function(p) p.x18ID = intX18ID).First.x18Name & ":"
-        'For Each c In _lisX19.Where(Function(p) p.x18ID = intX18ID)
-
-        'Next
-        'CType(e.Item.FindControl("items"), Label).Text = String.Join(", ", _lisX19.Where(Function(p) p.x18ID = intX18ID).Select(Function(p) p.x25Name))
+       
         CType(e.Item.FindControl("rpItems"), Repeater).DataSource = _lisX19.Where(Function(p) p.x18ID = c.x18ID And (p.x20EntityPageFlag = BO.x20EntityPageENUM.Hyperlink Or p.x20EntityPageFlag = BO.x20EntityPageENUM.HyperlinkPlusNew))
         CType(e.Item.FindControl("rpItems"), Repeater).DataBind()
         CType(e.Item.FindControl("rpLabels"), Repeater).DataSource = _lisX19.Where(Function(p) p.x18ID = c.x18ID And p.x20EntityPageFlag = BO.x20EntityPageENUM.Label)

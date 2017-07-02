@@ -37,7 +37,7 @@ Class o25DmsBindingBL
         Return _cDL.Load(intPID)
     End Function
     Public Function Delete(intPID As Integer) As Boolean Implements Io25DmsBindingBL.Delete
-        Dim s As String = Me.Factory.GetRecordCaption(BO.x29IdEnum.o23Notepad, intPID)
+        Dim s As String = Me.Factory.GetRecordCaption(BO.x29IdEnum.o23Doc, intPID)
         If _cDL.Delete(intPID) Then
             Return True
         Else

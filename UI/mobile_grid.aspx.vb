@@ -152,7 +152,7 @@
                 basUIMT.p41_grid_Handle_ItemDataBound(sender, e, True, Me.hidFirstLinkCol.Value)
             Case BO.x29IdEnum.p28Contact
                 basUIMT.p28_grid_Handle_ItemDataBound(sender, e, True, Me.hidFirstLinkCol.Value)
-            Case BO.x29IdEnum.o23Notepad
+            Case BO.x29IdEnum.o23Doc
                 basUIMT.o23_grid_Handle_ItemDataBound(sender, e, False, Me.hidFirstLinkCol.Value)
             Case BO.x29IdEnum.p56Task
                 basUIMT.p56_grid_Handle_ItemDataBound(sender, e, False, True, Me.hidFirstLinkCol.Value)
@@ -242,17 +242,17 @@
                 Else
                     grid1.DataSourceDataTable = dt
                 End If
-            Case BO.x29IdEnum.o23Notepad
-                Dim mq As New BO.myQueryO23
+            Case BO.x29IdEnum.o23Doc
+                Dim mq As New BO.myQueryO23(0)
                 With mq
                     .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
                 End With
                 InhaleMyQuery_o23(mq)
 
-                Dim dt As DataTable = Master.Factory.o23NotepadBL.GetGridDataSource(mq)
+                Dim dt As DataTable = Master.Factory.o23DocBL.GetDataTable4Grid(mq)
                 If dt Is Nothing Then
-                    Master.Notify(Master.Factory.o23NotepadBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                    Master.Notify(Master.Factory.o23DocBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else
                     grid1.DataSourceDataTable = dt
                 End If
@@ -279,10 +279,10 @@
                 Dim mq As New BO.myQueryP56
                 InhaleMyQuery_p56(mq)
                 grid1.VirtualRowCount = Master.Factory.p56TaskBL.GetVirtualCount(mq)
-            Case BO.x29IdEnum.o23Notepad
-                Dim mq As New BO.myQueryO23
+            Case BO.x29IdEnum.o23Doc
+                Dim mq As New BO.myQueryO23(0)
                 InhaleMyQuery_o23(mq)
-                grid1.VirtualRowCount = Master.Factory.o23NotepadBL.GetVirtualCount(mq)
+                grid1.VirtualRowCount = Master.Factory.o23DocBL.GetVirtualCount(mq)
             Case BO.x29IdEnum.p91Invoice
                 Dim mq As New BO.myQueryP91
                 InhaleMyQuery_p91(mq)
@@ -445,10 +445,10 @@
             .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             Select Case Me.CurrentMasterPrefix
-                Case "p41" : .p41ID = Me.CurrentMasterPID
-                Case "j02" : .j02ID = Me.CurrentMasterPID
-                Case "p28" : .p28ID = Me.CurrentMasterPID
-                Case "p56" : .p56ID = Me.CurrentMasterPID
+                Case "p41" : .p41IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
+                Case "j02" : .j02IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
+                Case "p28" : .p28IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
+                Case "p56" : .p56IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
             End Select
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             If Me.hidDefaultSorting.Value <> "" Then

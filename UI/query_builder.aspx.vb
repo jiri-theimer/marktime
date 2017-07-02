@@ -190,11 +190,11 @@
                 lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id_owner", "Vlastník/autor úkolu"))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p56DateInsert", "Datum založení úkolu", BO.x24IdENUM.tDateTime))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p56ExternalPID", "Externí kód úkolu", BO.x24IdENUM.tString))
-            Case BO.x29IdEnum.o23Notepad
+            Case BO.x29IdEnum.o23Doc
                 ph1.Text = "Přehled dokumentů"
 
                 lis.Add(New myItem(BO.x29IdEnum._NotSpecified, "_other", "Různé"))
-                lis.Add(New myItem(BO.x29IdEnum.o24NotepadType, "o24ID", "Typ dokumentu"))
+                lis.Add(New myItem(BO.x29IdEnum.x18EntityCategory, "x18ID", "Typ dokumentu"))
                 lis.Add(New myItem(BO.x29IdEnum.b02WorkflowStatus, "b02id", "Aktuální workflow stav"))
                 lis.Add(New myItem(BO.x29IdEnum.x67EntityRole, "x67id", "Role příjemce (čtenáře) dokumentu"))
                 lis.Add(New myItem(BO.x29IdEnum.x67EntityRole, "x67id-j11id", "Obsazení role přes tým"))
@@ -280,7 +280,7 @@
                 lis.Add(New myItem(BO.x29IdEnum.System, "p91.p91Date", "Datum faktury", BO.x24IdENUM.tDateTime))
         End Select
 
-        lis.Add(New myItem(BO.x29IdEnum.x25EntityField_ComboValue, "x25id", "Štítky"))
+        lis.Add(New myItem(BO.x29IdEnum.o23Doc, "o23id", "Štítky (vybrané typy dokumentů)"))
 
         Dim lisFF As IEnumerable(Of BO.x28EntityField) = Master.Factory.x28EntityFieldBL.GetList(Me.CurrentX29ID, -1, True).Where(Function(p) p.x28Flag = BO.x28FlagENUM.UserField Or p.x28Query_Field <> "")
         For Each cField In lisFF
@@ -325,8 +325,8 @@
                 If cField.x23ID <> 0 Or cField.x24ID = BO.x24IdENUM.tBoolean Then
                     'číselníkové (combo) pole
                     If cField.x23ID <> 0 Then
-                        Me.cbxItems.DataTextField = "x25Name"
-                        Me.cbxItems.DataSource = Master.Factory.x25EntityField_ComboValueBL.GetList(New BO.myQueryX25(cField.x23ID))
+                        Me.cbxItems.DataTextField = "o23Name"
+                        Me.cbxItems.DataSource = Master.Factory.o23DocBL.GetList(New BO.myQueryO23(cField.x23ID))
                     Else
                         Me.cbxItems.Clear()
                         Me.cbxItems.AddOneComboItem("1", "ANO")
@@ -372,9 +372,9 @@
                 Me.cbxItems.DataTextField = "p57Name"
                 Me.cbxItems.DataSource = Master.Factory.p57TaskTypeBL.GetList(mq)
             
-            Case BO.x29IdEnum.o24NotepadType
-                Me.cbxItems.DataTextField = "o24Name"
-                Me.cbxItems.DataSource = Master.Factory.o24NotepadTypeBL.GetList(mq)
+            Case BO.x29IdEnum.x18EntityCategory
+                Me.cbxItems.DataTextField = "x18Name"
+                Me.cbxItems.DataSource = Master.Factory.x18EntityCategoryBL.GetList(mq)
             Case BO.x29IdEnum.b02WorkflowStatus
                 Me.cbxItems.DataTextField = "NameWithb01Name"
                 Me.cbxItems.DataSource = Master.Factory.b02WorkflowStatusBL.GetList(0).Where(Function(p) p.x29ID = Me.CurrentX29ID)
@@ -459,9 +459,9 @@
                         mqP28.QuickQuery = BO.myQueryP28_QuickQuery.ProjectInvoiceReceiver
                 End Select
                 Me.cbxItems.DataSource = Master.Factory.p28ContactBL.GetList(mqP28)
-            Case BO.x29IdEnum.x25EntityField_ComboValue 'štítky
+            Case BO.x29IdEnum.o23Doc 'štítky
                 Me.cbxItems.DataTextField = "NameWithComboName"
-                Me.cbxItems.DataSource = Master.Factory.x18EntityCategoryBL.GetList_X25(Me.CurrentX29ID)
+                Me.cbxItems.DataSource = Master.Factory.x18EntityCategoryBL.GetList_O23(Me.CurrentX29ID)
             Case Else
                 Me.cbxItems.DataSource = Nothing
         End Select

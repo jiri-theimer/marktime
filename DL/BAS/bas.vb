@@ -98,8 +98,8 @@
                 intB02ID = cDB.GetIntegerValueFROMSQL("select b02ID FROM p41Project WHERE p41ID=" & intDataRecord.ToString)
             Case BO.x29IdEnum.p28Contact
                 intB02ID = cDB.GetIntegerValueFROMSQL("select b02ID FROM p28Contact WHERE p28ID=" & intDataRecord.ToString)
-            Case BO.x29IdEnum.o23Notepad
-                intB02ID = cDB.GetIntegerValueFROMSQL("select b02ID FROM o23Notepad WHERE o23ID=" & intDataRecord.ToString)
+            Case BO.x29IdEnum.o23Doc
+                intB02ID = cDB.GetIntegerValueFROMSQL("select b02ID FROM o23Doc WHERE o23ID=" & intDataRecord.ToString)
             Case BO.x29IdEnum.p91Invoice
                 intB02ID = cDB.GetIntegerValueFROMSQL("select b02ID FROM p91Invoice WHERE p91ID=" & intDataRecord.ToString)
         End Select
@@ -200,7 +200,7 @@
     Shared Function CompleteX18QuerySql(strMasterPrefix As String, strX18Value As String) As String
         Dim lis As List(Of String) = BO.BAS.ConvertDelimitedString2List(strX18Value, "|")
         Dim sql As New System.Text.StringBuilder
-        'sql.Append(" AND " & strFK & " IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=" & CInt(cRec.x29ID).ToString & " AND x25ID IN (" & strIN & "))")
+
         Select Case strMasterPrefix
             Case "p28"
                 Dim s As String = parse_ids_getsql(lis, strX18Value, "p28", "a.p28ID", "328")
@@ -270,7 +270,7 @@
                 ids.Add(a(2))
             Next
             If ids.Count > 0 Then
-                strRet += " AND " & strKeyField & " IN (SELECT ta.x19RecordPID FROM x19EntityCategory_Binding ta INNER JOIN x20EntiyToCategory tb ON ta.x20ID=tb.x20ID WHERE tb.x29ID=" & strX29ID & " AND tb.x18ID=" & intX18ID.ToString & " AND ta.x25ID IN (" & String.Join(",", ids) & "))"
+                strRet += " AND " & strKeyField & " IN (SELECT ta.x19RecordPID FROM x19EntityCategory_Binding ta INNER JOIN x20EntiyToCategory tb ON ta.x20ID=tb.x20ID WHERE tb.x29ID=" & strX29ID & " AND tb.x18ID=" & intX18ID.ToString & " AND ta.o23ID IN (" & String.Join(",", ids) & "))"
             End If
         Next
         Return strRet
@@ -285,7 +285,7 @@
             Case BO.x29IdEnum.p28Contact : strFK = "a.p28ID"
             Case BO.x29IdEnum.p91Invoice : strFK = "a.p91ID"
             Case BO.x29IdEnum.p56Task : strFK = "a.p56ID"
-            Case BO.x29IdEnum.o23Notepad : strFK = "a.o23ID"
+            Case BO.x29IdEnum.o23Doc : strFK = "a.o23ID"
             Case BO.x29IdEnum.j02Person : strFK = "a.j02ID"
             Case BO.x29IdEnum.j19PaymentType : strFK = "a.j19ID"
         End Select
@@ -304,8 +304,8 @@
                         sql.Append(" AND NOT " & GetQuickQuerySQL_p31(BO.myQueryP31_QuickQuery.MovedToBin))
                     Case BO.x29IdEnum.p56Task
                         sql.Append(" AND " & GetQuickQuerySQL_p56(BO.myQueryP56_QuickQuery.OpenTasks))
-                    Case BO.x29IdEnum.o23Notepad
-                        sql.Append(" AND " & GetQuickQuerySQL_o23(BO.myQueryO23_QuickQuery.OpenNotepads))
+                    Case BO.x29IdEnum.o23Doc
+                        sql.Append(" AND " & GetQuickQuerySQL_o23(BO.myQueryO23_QuickQuery.OpenDocs))
                 End Select
             Case 2  'záznamy v koši
                 Select Case cRec.x29ID
@@ -321,7 +321,7 @@
                         sql.Append(" AND " & GetQuickQuerySQL_p31(BO.myQueryP31_QuickQuery.MovedToBin))
                     Case BO.x29IdEnum.p56Task
                         sql.Append(" AND " & GetQuickQuerySQL_p56(BO.myQueryP56_QuickQuery.Removed2Bin))
-                    Case BO.x29IdEnum.o23Notepad
+                    Case BO.x29IdEnum.o23Doc
                         sql.Append(" AND " & GetQuickQuerySQL_o23(BO.myQueryO23_QuickQuery.Removed2Bin))
                 End Select
         End Select
@@ -341,8 +341,8 @@
                 Case "j11id"
                     sql.Append(" AND a.j02ID IN (SELECT j02ID FROM j12Team_Person WHERE j11ID IN (" & strIN & "))")
 
-                Case "x25id"    'štítky
-                    sql.Append(" AND " & strFK & " IN (SELECT ta.x19RecordPID FROM x19EntityCategory_Binding ta INNER JOIN x20EntiyToCategory tb ON ta.x20ID=tb.x20ID WHERE tb.x29ID=" & CInt(cRec.x29ID).ToString & " AND ta.x25ID IN (" & strIN & "))")
+                Case "o23id"    'štítky
+                    sql.Append(" AND " & strFK & " IN (SELECT ta.x19RecordPID FROM x19EntityCategory_Binding ta INNER JOIN x20EntiyToCategory tb ON ta.x20ID=tb.x20ID WHERE tb.x29ID=" & CInt(cRec.x29ID).ToString & " AND ta.o23ID IN (" & strIN & "))")
                 Case "p34id"
                     sql.Append(" AND p32.p34ID IN (" & strIN & ")")
                 Case "p95id"
@@ -423,8 +423,8 @@
                                     sql.Append(" AND a.j02ID IN (SELECT j02ID FROM j02Person_FreeField WHERE " & strW & ")")
                                 Case BO.x29IdEnum.p56Task
                                     sql.Append(" AND a.p56ID IN (SELECT p56ID FROM p56Task_FreeField WHERE " & strW & ")")
-                                Case BO.x29IdEnum.o23Notepad
-                                    sql.Append(" AND a.o23ID IN (SELECT o23ID FROM o23Notepad_FreeField WHERE " & strW & ")")
+                                Case BO.x29IdEnum.o23Doc
+                                    sql.Append(" AND " & strW)
                                 Case BO.x29IdEnum.p31Worksheet
                                     sql.Append(" AND a.p31ID IN (SELECT p31ID FROM p31WorkSheet_FreeField WHERE " & strW & ")")
                                 Case Else
@@ -458,7 +458,7 @@
                         sql.Append("a.p41ID IN (SELECT x69RecordPID FROM x69EntityRole_Assign WHERE x67ID=" & c.j71RecordPID.ToString)
                     Case BO.x29IdEnum.p56Task
                         sql.Append("a.p56ID IN (SELECT x69RecordPID FROM x69EntityRole_Assign WHERE x67ID=" & c.j71RecordPID.ToString)
-                    Case BO.x29IdEnum.o23Notepad
+                    Case BO.x29IdEnum.o23Doc
                         sql.Append("a.o23ID IN (SELECT x69RecordPID FROM x69EntityRole_Assign WHERE x67ID=" & c.j71RecordPID.ToString)
                     Case BO.x29IdEnum.p28Contact
                         sql.Append("a.p28ID IN (SELECT x69RecordPID FROM x69EntityRole_Assign WHERE x67ID=" & c.j71RecordPID.ToString)
@@ -487,7 +487,7 @@
                         sql.Append("a.p41ID IN (SELECT x69RecordPID FROM x69EntityRole_Assign WHERE x67ID=" & c.j71RecordPID.ToString)
                     Case BO.x29IdEnum.p56Task
                         sql.Append("a.p56ID IN (SELECT x69RecordPID FROM x69EntityRole_Assign WHERE x67ID=" & c.j71RecordPID.ToString)
-                    Case BO.x29IdEnum.o23Notepad
+                    Case BO.x29IdEnum.o23Doc
                         sql.Append("a.o23ID IN (SELECT x69RecordPID FROM x69EntityRole_Assign WHERE x67ID=" & c.j71RecordPID.ToString)
                 End Select
                 If c.j71RecordPID_Extension > 0 Then
@@ -517,7 +517,7 @@
                         sql.Append(GetQuickQuerySQL_p31(CType(c.j71RecordPID, BO.myQueryP31_QuickQuery)))
                     Case BO.x29IdEnum.p56Task
                         sql.Append(GetQuickQuerySQL_p56(CType(c.j71RecordPID, BO.myQueryP56_QuickQuery)))
-                    Case BO.x29IdEnum.o23Notepad
+                    Case BO.x29IdEnum.o23Doc
                         sql.Append(GetQuickQuerySQL_o23(CType(c.j71RecordPID, BO.myQueryO23_QuickQuery)))
                 End Select
 
@@ -562,33 +562,34 @@
         End Select
     End Function
     Shared Function GetQuickQuerySQL_o23(quickQueryFlag As BO.myQueryO23_QuickQuery) As String
+        Dim strWait As String = "x23.x18ID IN (select x18ID x20EntiyToCategory WHERE x29ID={0}) AND a.o23ID NOT IN (select xa.o23ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID={0})"
+        Dim strExist As String = "a.o23ID IN (select xa.o23ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID={0})"
+
         Select Case quickQueryFlag
-            Case BO.myQueryO23_QuickQuery.OpenNotepads
+            Case BO.myQueryO23_QuickQuery.OpenDocs
                 Return "getdate() BETWEEN a.o23ValidFrom AND a.o23ValidUntil"
             Case BO.myQueryO23_QuickQuery.Removed2Bin
                 Return "getdate() NOT BETWEEN a.o23ValidFrom AND a.o23ValidUntil"
             Case BO.myQueryO23_QuickQuery.Bind2ClientExist
-                Return "a.p28ID IS NOT NULL"
+                Return String.Format(strExist, 328)
             Case BO.myQueryO23_QuickQuery.Bind2ClientWait
-                Return "a.p28ID IS NULL AND o24.x29ID=328"
+                Return String.Format(strWait, 328)
             Case BO.myQueryO23_QuickQuery.Bind2InvoiceExist
-                Return "a.p91ID IS NOT NULL"
+                Return String.Format(strExist, 391)
             Case BO.myQueryO23_QuickQuery.Bind2InvoiceWait
-                Return "a.p91ID IS NULL AND o24.x29ID=391"
+                Return String.Format(strWait, 391)
             Case BO.myQueryO23_QuickQuery.Bind2PersonExist
-                Return "a.j02ID IS NOT NULL"
+                Return String.Format(strExist, 102)
             Case BO.myQueryO23_QuickQuery.Bind2PersonWait
-                Return "a.j02ID IS NULL AND o24.x29ID=102"
+                Return String.Format(strWait, 102)
             Case BO.myQueryO23_QuickQuery.Bind2ProjectExist
-                Return "a.p41ID IS NOT NULL"
+                Return String.Format(strExist, 141)
             Case BO.myQueryO23_QuickQuery.Bind2ProjectWait
-                Return "a.p41ID IS NULL AND o24.x29ID=141"
+                Return String.Format(strWait, 141)
             Case BO.myQueryO23_QuickQuery.Bind2WorksheetExist
-                Return "a.p31ID IS NOT NULL"
+                Return String.Format(strExist, 331)
             Case BO.myQueryO23_QuickQuery.Bind2WorksheetWait
-                Return "a.p31ID IS NULL AND o24.x29ID=331"
-            Case BO.myQueryO23_QuickQuery.Bind2x25Wait
-                Return "a.o23ID NOT IN (select xa.x19RecordPID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=223)"
+                Return String.Format(strWait, 331)
 
             Case Else
                 Return ""

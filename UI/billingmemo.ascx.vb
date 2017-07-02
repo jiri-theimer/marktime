@@ -5,52 +5,23 @@
 
     End Sub
 
-    Public Sub HideTogleButton()
-        Me.panO23.Visible = False
-    End Sub
-    Public Function o23Rows() As Integer
-        Return notepad1.RowsCount
-    End Function
+   
+    
     Public ReadOnly Property IsEmpty As Boolean
         Get
-            If notepad1.RowsCount > 0 Or Me.BillingMemo.Text <> "" Then Return False Else Return True
+            If Me.BillingMemo.Text = "" Then Return True Else Return False
         End Get
     End Property
     Public Sub RefreshData(factory As BL.Factory, strPrefix As String, intRecordPID As Integer)
         If intRecordPID = 0 Or strPrefix = "" Then Return
 
-        Dim mq As New BO.myQueryP31
-        Dim mqO23 As New BO.myQueryO23
-        notepad1.EntityX29ID = BO.BAS.GetX29FromPrefix(strPrefix)
-
-        panO23.Visible = True
-        Select Case strPrefix
+        Select strPrefix
             Case "p28"
-                mqO23.p28ID = intRecordPID
                 Me.BillingMemo.Text = LoadTheRightBillingMemo(factory, strPrefix, intRecordPID)
             Case "p41"
-                mqO23.p41ID = intRecordPID
                 Me.BillingMemo.Text = LoadTheRightBillingMemo(factory, strPrefix, intRecordPID)
             Case "j02"
-                mqO23.j02ID = intRecordPID
-            Case Else
-                panO23.Visible = False
         End Select
-        If Me.BillingMemo.Text <> "" Then
-            img1.Visible = True
-        Else
-            img1.Visible = False
-        End If
-        If panO23.Visible Then
-            Dim lisO23 As IEnumerable(Of BO.o23Notepad) = factory.o23NotepadBL.GetList(mqO23).Where(Function(p) p.o24IsBillingMemo = True)
-            If lisO23.Count > 0 Then
-                panO23.Visible = True
-                notepad1.RefreshData(lisO23, intRecordPID)
-                Me.lblO23.Text += " (" & notepad1.RowsCount.ToString & ")"
-            Else
-                panO23.Visible = False
-            End If
-        End If
 
     End Sub
 

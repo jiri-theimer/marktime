@@ -7,10 +7,10 @@ Public Class freefields
     Private _Error As String
     Private _dataprefix As String
     Private _lastX27ID As Integer
-    Private _lisX25 As IEnumerable(Of BO.x25EntityField_ComboValue)
+    Private _lisO23 As IEnumerable(Of BO.o23Doc)
     Public Factory As BL.Factory
 
-    
+
     Public Function IsEmpty() As Boolean
         If rpFF.Items.Count > 0 Then
             Return False
@@ -88,9 +88,9 @@ Public Class freefields
                 End If
                 For Each ri As RepeaterItem In rp1.Items
                     Dim intX20ID As Integer = CInt(CType(ri.FindControl("x20ID"), HiddenField).Value)
-                    Dim lis As List(Of String) = lisX19.Where(Function(p) p.x20ID = intX20ID).Select(Function(p) p.x25ID.ToString).ToList
+                    Dim lis As List(Of String) = lisX19.Where(Function(p) p.x20ID = intX20ID).Select(Function(p) p.o23ID.ToString).ToList
                     If lis.Count > 0 Then
-                        With CType(ri.FindControl("x25IDs"), UI.datacombo)
+                        With CType(ri.FindControl("o23IDs"), UI.datacombo)
                             If .AllowCheckboxes Then
                                 .SelectCheckboxItems(lis)
                             Else
@@ -121,14 +121,14 @@ Public Class freefields
             End If
         End With
 
-        Dim lisX25 As IEnumerable(Of BO.x25EntityField_ComboValue) = Me.Factory.x25EntityField_ComboValueBL.GetList(New BO.myQueryX25(cRec.x23ID)).Where(Function(p) p.IsClosed = False)
-        With CType(e.Item.FindControl("x25IDs"), UI.datacombo)
+        Dim lisO23 As IEnumerable(Of BO.o23Doc) = Me.Factory.o23DocBL.GetList(New BO.myQueryO23(cRec.x23ID)).Where(Function(p) p.IsClosed = False)
+        With CType(e.Item.FindControl("o23IDs"), UI.datacombo)
             If Not cRec.x20IsMultiSelect Then
                 .AllowCheckboxes = False
                 .IsFirstEmptyRow = True
-                If lisX25.Count > 30 Then .Filter = datacombo.FilterMode.Contains
+                If lisO23.Count > 30 Then .Filter = datacombo.FilterMode.Contains
             End If
-            .DataSource = lisX25
+            .DataSource = lisO23
             .DataBind()
         End With
         CType(e.Item.FindControl("x18ID"), HiddenField).Value = cRec.x18ID.ToString
@@ -170,7 +170,7 @@ Public Class freefields
             e.Item.FindControl("clue_help").Visible = True
             CType(e.Item.FindControl("clue_help"), HyperLink).Attributes.Item("rel") = "clue_help.aspx?prefix=x28&pid=" & cRec.PID.ToString
         End If
-       
+
         Select Case cRec.TypeName
             Case "string"
                 If cRec.x28DataSource <> "" Then
@@ -222,22 +222,22 @@ Public Class freefields
                 If cRec.x23ID <> 0 Then
                     If cRec.x23DataSource = "" Then
                         'combo seznam bez externího datového zdroje
-                        If _lisX25 Is Nothing Then _lisX25 = Me.Factory.x25EntityField_ComboValueBL.GetList(New BO.myQueryX25(cRec.x23ID))
+                        If _lisO23 Is Nothing Then _lisO23 = Me.Factory.o23DocBL.GetList(New BO.myQueryO23(cRec.x23ID))
                         With CType(e.Item.FindControl("cbxFF"), RadComboBox)
                             .Visible = True
                             .AllowCustomText = False
                             .ShowToggleImage = True
                             .Items.Add(New RadComboBoxItem(""))
-                            For Each c In _lisX25.Where(Function(p) p.IsClosed = False And p.x23ID = cRec.x23ID)
+                            For Each c In _lisO23.Where(Function(p) p.IsClosed = False And p.x23ID = cRec.x23ID)
                                 .Items.Add(New RadComboBoxItem(c.NameWithCode, c.PID.ToString))
                             Next
                             If Not (cRec.DBValue Is Nothing Or cRec.DBValue Is System.DBNull.Value) Then
                                 .SelectedValue = cRec.DBValue.ToString
                                 If .SelectedValue = "" Then
                                     'najít uzavřenou položku
-                                    Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = _lisX25.Where(Function(p) p.PID = CInt(cRec.DBValue))
+                                    Dim lis As IEnumerable(Of BO.o23Doc) = _lisO23.Where(Function(p) p.PID = CInt(cRec.DBValue))
                                     If lis.Count > 0 Then
-                                        Dim cItem As BO.x25EntityField_ComboValue = lis(0)
+                                        Dim cItem As BO.o23Doc = lis(0)
                                         If Not cItem Is Nothing Then
                                             Dim cbxItem As RadComboBoxItem = New RadComboBoxItem(cItem.NameWithCode, cItem.PID.ToString)
                                             cbxItem.Font.Strikeout = cItem.IsClosed
@@ -322,18 +322,18 @@ Public Class freefields
         Dim lis As New List(Of BO.x19EntityCategory_Binding), intDataPID As Integer = BO.BAS.IsNullInt(Me.hidDataPID.Value)
         For Each ri As RepeaterItem In rp1.Items
             Dim intX20ID As Integer = CInt(CType(ri.FindControl("x20ID"), HiddenField).Value)
-            Dim x25IDs As New List(Of Integer)
-            With CType(ri.FindControl("x25IDs"), UI.datacombo)
+            Dim o23IDs As New List(Of Integer)
+            With CType(ri.FindControl("o23IDs"), UI.datacombo)
                 If .AllowCheckboxes Then
-                    x25IDs = .GetAllCheckedIntegerValues
+                    o23IDs = .GetAllCheckedIntegerValues
                 Else
-                    If .SelectedValue <> "" Then x25IDs.Add(CInt(.SelectedValue))
+                    If .SelectedValue <> "" Then o23IDs.Add(CInt(.SelectedValue))
                 End If
             End With
-            For Each intX25ID As Integer In x25IDs
+            For Each into23ID As Integer In o23IDs
                 Dim c As New BO.x19EntityCategory_Binding
                 c.x20ID = intX20ID
-                c.x25ID = intX25ID
+                c.o23ID = into23ID
                 c.x19RecordPID = intDataPID
                 lis.Add(c)
             Next

@@ -74,8 +74,8 @@
 
 
         Dim lisX67 As IEnumerable(Of BO.x67EntityRole) = Master.Factory.x67EntityRoleBL.GetList().Where(Function(p) p.x29ID = BO.x29IdEnum.p41Project Or p.x29ID = Me.CurrentX29ID).OrderBy(Function(p) p.x29ID)
-        If Me.CurrentX29ID = BO.x29IdEnum.x25EntityField_ComboValue Then
-            lisX67 = lisX67.Where(Function(p) p.x29ID = Me.CurrentX29ID)    'pro štítky nenabízet projektové role
+        If Me.CurrentX29ID = BO.x29IdEnum.o23Doc Then
+            lisX67 = lisX67.Where(Function(p) p.x29ID = Me.CurrentX29ID)    'pro dokumenty nenabízet projektové role
         End If
         chklX67IDs_B08.DataSource = lisX67
         chklX67IDs_B08.DataBind()

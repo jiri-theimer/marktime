@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class x25_record_readonly1
+Partial Public Class o23_record_readonly1
 
     '''<summary>
     '''rec1 control.
@@ -20,7 +20,7 @@ Partial Public Class x25_record_readonly1
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rec1 As Global.UI.x25_record_readonly
+    Protected WithEvents rec1 As Global.UI.o23_record_readonly
 
     '''<summary>
     '''roles1 control.

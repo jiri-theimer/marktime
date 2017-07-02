@@ -1,4 +1,4 @@
-﻿Public Class x25_record_readonly1
+﻿Public Class o23_record_readonly1
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -12,14 +12,14 @@
 
 
     Private Sub RefreshRecord()
-        Dim cRec As BO.x25EntityField_ComboValue = Master.Factory.x25EntityField_ComboValueBL.Load(Master.DataPID)
+        Dim cRec As BO.o23Doc = Master.Factory.o23DocBL.Load(Master.DataPID)
         Dim cX18 As BO.x18EntityCategory = Master.Factory.x18EntityCategoryBL.LoadByX23ID(cRec.x23ID)
 
 
         rec1.FillData(cRec, cX18)
 
-        Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.x25EntityField_ComboValue, cRec.PID)
+        Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.o23Doc, cRec.PID)
         roles1.RefreshData(lisX69, cRec.PID)
-        comments1.RefreshData(Master.Factory, BO.x29IdEnum.x25EntityField_ComboValue, cRec.PID)
+        comments1.RefreshData(Master.Factory, BO.x29IdEnum.o23Doc, cRec.PID)
     End Sub
 End Class

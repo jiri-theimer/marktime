@@ -68,7 +68,7 @@
         <asp:DataList ID="rp1" runat="server" RepeatColumns="3" RepeatDirection="Horizontal" CellPadding="5">
             <ItemTemplate>
                 
-                <asp:HyperLink ID="x25Name" runat="server"></asp:HyperLink>
+                <asp:HyperLink ID="o23Name" runat="server"></asp:HyperLink>
                 
             </ItemTemplate>
         </asp:DataList>

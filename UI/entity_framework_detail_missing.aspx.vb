@@ -89,22 +89,16 @@
                     ''    cmdNew.Visible = True : cmdNew.Text = "Nahrát do systému novou šablonu sestavy/pluginu"
                     ''    cmdNew.NavigateUrl = "javascript:x31_create()"
                     ''End If
-                Case BO.x29IdEnum.o23Notepad
+                Case BO.x29IdEnum.o23Doc
 
                     img1.ImageUrl = "Images/notepad_32.png"
-                    Dim mq As New BO.myQueryO23
+                    Dim mq As New BO.myQueryO23(0)
                     mq.SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
-                    Dim lis As IEnumerable(Of BO.o23Notepad) = Master.Factory.o23NotepadBL.GetList(mq)
+                    Dim lis As IEnumerable(Of BO.o23Doc) = Master.Factory.o23DocBL.GetList(mq)
                     Me.Count4Read.Text = BO.BAS.FNI(lis.Count)
                     Me.CountBin.Text = BO.BAS.FNI(lis.Where(Function(p) p.IsClosed = True).Count)
                     lblHeader.Text = "Dokumenty"
-                    ''If Master.Factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator) Then
-                    ''    cmdNew.Visible = True : cmdNew.Text = "Vytvořit nový dokument"
-                    ''    cmdNew.NavigateUrl = "javascript:o23_create()"
-                    ''Else
-                    ''    cmdNew.Visible = False
-                    ''End If
-
+                 
                 Case Else
                     img1.Visible = False
 

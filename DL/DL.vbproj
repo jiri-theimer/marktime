@@ -95,7 +95,6 @@
     <Compile Include="j77WorksheetStatTemplateDL.vb" />
     <Compile Include="m62ExchangeRateDL.vb" />
     <Compile Include="o21MilestoneTypeDL.vb" />
-    <Compile Include="o23NotepadDL.vb" />
     <Compile Include="o24NotepadTypeDL.vb" />
     <Compile Include="o25DmsBindingDL.vb" />
     <Compile Include="o41InboxAccountDL.vb" />
@@ -168,7 +167,7 @@
     <Compile Include="p95InvoiceRowDL.vb" />
     <Compile Include="SysDbObjectDL.vb" />
     <Compile Include="x23EntityField_ComboDL.vb" />
-    <Compile Include="x25EntityField_ComboValueDL.vb" />
+    <Compile Include="o23DocDL.vb" />
     <Compile Include="x27EntityFieldGroupDL.vb" />
     <Compile Include="x28EntityFieldDL.vb" />
     <Compile Include="x31ReportDL.vb" />

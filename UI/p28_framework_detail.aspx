@@ -7,7 +7,6 @@
 <%@ Register TagPrefix="uc" TagName="p28_address" Src="~/p28_address.ascx" %>
 <%@ Register TagPrefix="uc" TagName="p28_medium" Src="~/p28_medium.ascx" %>
 <%@ Register TagPrefix="uc" TagName="contactpersons" Src="~/contactpersons.ascx" %>
-<%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="entity_worksheet_summary" Src="~/entity_worksheet_summary.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
@@ -230,18 +229,7 @@
         </asp:Panel>
     </div>
 
-    <asp:Panel ID="boxO23" runat="server" CssClass="content-box1" Style="clear: both;">
-        <div class="title">
-            <img src="Images/notepad.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxO23Title" runat="server" Text="Dokumenty" meta:resourcekey="boxO23Title"></asp:Label>
-        </div>
-        <div class="content" style="overflow: auto; max-height: 200px;">
-
-            <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p41Project"></uc:o23_list>
-
-
-        </div>
-    </asp:Panel>
+    
 
     <asp:Panel ID="boxP41" runat="server" CssClass="content-box1" Style="clear: both;">
         <div class="title">

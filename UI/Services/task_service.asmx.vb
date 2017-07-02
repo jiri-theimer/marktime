@@ -50,7 +50,7 @@ Public Class task_service
         Select Case strFlag
             Case "searchbox"
                 mq.SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
-            Case "search4x25"
+            Case "search4o23"
                 mq.Closed = BO.BooleanQueryMode.FalseQuery
                 mq.SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
             Case Else

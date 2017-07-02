@@ -239,13 +239,13 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents rpArticle As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
-    '''tdRecX25 control.
+    '''tdRecO23 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents tdRecX25 As Global.System.Web.UI.HtmlControls.HtmlTableCell
+    Protected WithEvents tdRecO23 As Global.System.Web.UI.HtmlControls.HtmlTableCell
 
     '''<summary>
     '''rec1 control.
@@ -254,7 +254,7 @@ Partial Public Class j03_mypage_greeting
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rec1 As Global.UI.x25_record_readonly
+    Protected WithEvents rec1 As Global.UI.o23_record_readonly
 
     '''<summary>
     '''comments1 control.

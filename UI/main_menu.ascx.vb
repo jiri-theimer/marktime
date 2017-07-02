@@ -191,7 +191,7 @@ Public Class main_menu
                     Case BO.x29IdEnum.p91Invoice : bolGO = .j04IsMenu_Invoice
                     Case BO.x29IdEnum.p90Proforma : bolGO = .j04IsMenu_Proforma
                     Case BO.x29IdEnum.j02Person : bolGO = .j04IsMenu_People
-                    Case BO.x29IdEnum.o23Notepad
+                    Case BO.x29IdEnum.o23Doc
                         bolGO = .j04IsMenu_Notepad
                     Case BO.x29IdEnum.System
                         bolGO = .IsAdmin

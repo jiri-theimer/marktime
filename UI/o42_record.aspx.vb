@@ -85,7 +85,7 @@
             Case "p56"
                 lisX67 = lisX67.Where(Function(p) p.x29ID = BO.x29IdEnum.p56Task)
             Case "o23"
-                lisX67 = lisX67.Where(Function(p) p.x29ID = BO.x29IdEnum.o23Notepad)
+                lisX67 = lisX67.Where(Function(p) p.x29ID = BO.x29IdEnum.o23Doc)
         End Select
         Dim s As String = Me.x67ID.SelectedValue
         Me.x67ID.DataSource = lisX67

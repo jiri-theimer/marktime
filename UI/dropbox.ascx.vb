@@ -29,7 +29,7 @@
                 cmdFolder.Text = "Přidat složku kontaktu"
             Case BO.x29IdEnum.j02Person
                 cmdFolder.Text = "Přidat osobní složku"
-            Case BO.x29IdEnum.o23Notepad
+            Case BO.x29IdEnum.o23Doc
                 cmdFolder.Text = "Přidat složku"
         End Select
         cmdInhaleAccessToken.Text = cmdFolder.Text

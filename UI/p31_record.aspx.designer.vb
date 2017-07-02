@@ -491,40 +491,13 @@ Partial Public Class p31_record
     Protected WithEvents j02ID_ContactPerson As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''panO23 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panO23 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''lblDokumenty control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblDokumenty As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''cmdDoc control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdDoc As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''notepad1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents notepad1 As Global.UI.o23_list
+    Protected WithEvents cmdDoc As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''panP49 control.

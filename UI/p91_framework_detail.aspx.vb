@@ -242,12 +242,7 @@ Public Class p91_framework_detail
 
 
         Me.comments1.RefreshData(Master.Factory, BO.x29IdEnum.p91Invoice, cRec.PID)
-        Dim mqO23 As New BO.myQueryO23
-        mqO23.p91ID = Master.DataPID
-        Dim lisO23 As IEnumerable(Of BO.o23Notepad) = Master.Factory.o23NotepadBL.GetList(mqO23)
-        If lisO23.Count > 0 Then
-            notepad1.RefreshData(lisO23, cRec.PID)
-        End If
+     
 
         imgDocType.Visible = False : cmdConvertDraft.Visible = False
         If cRec.p91IsDraft Then

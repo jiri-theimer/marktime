@@ -120,7 +120,7 @@
             Case BO.x29IdEnum.p28Contact : Me.x28IsAllEntityTypes.Text = "Pole je použitelné pro všechny typy klientů"
             Case BO.x29IdEnum.j02Person : Me.x28IsAllEntityTypes.Text = "Pole je použitelné pro všechny pozice osob"
             Case BO.x29IdEnum.p91Invoice : Me.x28IsAllEntityTypes.Text = "Pole je použitelné pro všechny typy faktur"
-            Case BO.x29IdEnum.o23Notepad : Me.x28IsAllEntityTypes.Text = "Pole je použitelné pro všechny typy dokumentů"
+            Case BO.x29IdEnum.o23Doc : Me.x28IsAllEntityTypes.Text = "Pole je použitelné pro všechny typy dokumentů"
             Case BO.x29IdEnum.p31Worksheet
                 Me.x28IsAllEntityTypes.Text = "Pole je použitelné pro všechny worksheet sešity"
                 tabPivot.Visible = True
@@ -228,8 +228,8 @@
                 rp1.DataSource = Master.Factory.p42ProjectTypeBL.GetList(mq)
             Case BO.x29IdEnum.j02Person
                 rp1.DataSource = Master.Factory.j07PersonPositionBL.GetList(mq)
-            Case BO.x29IdEnum.o23Notepad
-                rp1.DataSource = Master.Factory.o24NotepadTypeBL.GetList(mq)
+            Case BO.x29IdEnum.o23Doc
+                rp1.DataSource = Master.Factory.x18EntityCategoryBL.GetList(mq)
             Case BO.x29IdEnum.p91Invoice           
                 rp1.DataSource = Master.Factory.p92InvoiceTypeBL.GetList(mq)
             Case BO.x29IdEnum.p90Proforma

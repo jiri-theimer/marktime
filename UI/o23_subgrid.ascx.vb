@@ -84,16 +84,17 @@ Public Class o23_subgrid
     Public Sub InhaleQuery(ByRef mq As BO.myQueryO23)
         Select Case Me.x29ID
             Case BO.x29IdEnum.p41Project
-                mq.p41ID = MasterDataPID
+
+                mq.p41IDs = BO.BAS.ConvertInt2List(MasterDataPID)
             Case BO.x29IdEnum.p28Contact
-                mq.p28ID = MasterDataPID
+                mq.p28IDs = BO.BAS.ConvertInt2List(MasterDataPID)
             Case BO.x29IdEnum.j02Person
-                mq.j02ID = MasterDataPID
+                mq.j02IDs = BO.BAS.ConvertInt2List(MasterDataPID)
             Case BO.x29IdEnum.p56Task
-                mq.p56ID = MasterDataPID
+                mq.p56IDs = BO.BAS.ConvertInt2List(MasterDataPID)
         End Select
 
-        mq.SpecificQuery = BO.myQueryO23_SpecificQuery.AllowedForRead
+        'mq.SpecificQuery = BO.myQueryO23_SpecificQuery.AllowedForRead
 
         With mq
             .Closed = BO.BooleanQueryMode.NoQuery
@@ -114,11 +115,11 @@ Public Class o23_subgrid
     Private Sub gridO23_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles gridO23.NeedDataSource
         If MasterDataPID = 0 Then Return
 
-        Dim mq As New BO.myQueryO23
+        Dim mq As New BO.myQueryO23(0)
         InhaleQuery(mq)
 
       
-        Dim dt As DataTable = Me.Factory.o23NotepadBL.GetGridDataSource(mq)
+        Dim dt As DataTable = Me.Factory.o23DocBL.GetDataTable4Grid(mq)
         If dt Is Nothing Then
             Return
         Else
@@ -130,12 +131,12 @@ Public Class o23_subgrid
             If dt.AsEnumerable.Where(Function(p) p.Item("pid") = Me.DefaultSelectedPID).Count > 0 Then
                 'záznam je na první stránce
             Else
-                Dim mqAll As New BO.myQueryO23
+                Dim mqAll As New BO.myQueryO23(0)
                 mqAll.TopRecordsOnly = 0
                 mqAll.MG_SelectPidFieldOnly = True
 
                 inhalequery(mqAll)
-                Dim dtAll As DataTable = Me.Factory.o23NotepadBL.GetGridDataSource(mqAll)
+                Dim dtAll As DataTable = Me.Factory.o23DocBL.GetDataTable4Grid(mqAll)
                 Dim x As Integer, intNewPageIndex As Integer = 0
                 For Each dbRow As DataRow In dtAll.Rows
                     x += 1
@@ -146,7 +147,7 @@ Public Class o23_subgrid
                         InhaleQuery(mq)
                         gridO23.radGridOrig.CurrentPageIndex = intNewPageIndex
                         mq.MG_CurrentPageIndex = intNewPageIndex
-                        dt = Me.Factory.o23NotepadBL.GetGridDataSource(mq) 'nový zdroj pro grid
+                        dt = Me.Factory.o23DocBL.GetDataTable4Grid(mq) 'nový zdroj pro grid
                         Exit For
                     End If
                 Next

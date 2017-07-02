@@ -196,7 +196,7 @@
         
         
         
-        Dim lisO23 As IEnumerable(Of BO.o23NotepadGrid) = Master.Factory.o23NotepadBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
+        Dim lisO23 As IEnumerable(Of BO.o23Doc) = Master.Factory.o23DocBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
         If lisO23.Count > 0 Then
             Me.panO23.Visible = True
             Me.o23Count.Text = lisO23.Count.ToString
@@ -237,13 +237,13 @@
     
 
     Private Sub rpO23_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpO23.ItemDataBound
-        Dim cRec As BO.o23NotepadGrid = CType(e.Item.DataItem, BO.o23NotepadGrid)
+        Dim cRec As BO.o23Doc = CType(e.Item.DataItem, BO.o23Doc)
         With CType(e.Item.FindControl("link1"), HyperLink)
-            .Text = cRec.o24Name & ": "
+            .Text = cRec.x23Name & ": "
             If cRec.o23Name <> "" Then
                 .Text += cRec.o23Name
             Else
-                .Text += cRec.ProjectClient
+                .Text += cRec.o23Code
             End If
             .NavigateUrl = "o23_framework.aspx?pid=" & cRec.PID.ToString
             If cRec.IsClosed Then .Font.Strikeout = True
@@ -546,9 +546,9 @@
             If c.x18DashboardFlag = BO.x18DashboardENUM.ShowItemsLikeNoticeboard Then
                 c.x18ReportCodes = ""
                 panNoticeBoard.Visible = True
-                Dim mq As New BO.myQueryX25(c.x23ID)
+                Dim mq As New BO.myQueryO23(c.x23ID)
                 mq.Closed = BO.BooleanQueryMode.FalseQuery
-                Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = Master.Factory.x25EntityField_ComboValueBL.GetList(mq).OrderBy(Function(p) p.x25Ordinary).OrderByDescending(Function(p) p.x25FreeDate01).ThenByDescending(Function(p) p.DateInsert)
+                Dim lis As IEnumerable(Of BO.o23Doc) = Master.Factory.o23DocBL.GetList(mq).OrderBy(Function(p) p.o23Ordinary).OrderByDescending(Function(p) p.o23FreeDate01).ThenByDescending(Function(p) p.DateInsert)
                 rpArticle.DataSource = lis
                 rpArticle.DataBind()
                 lblNoticeBoardHeader.Text = c.x18Name
@@ -562,7 +562,7 @@
                 rpX18.DataSource = lisX18
                 rpX18.DataBind()
             End If
-            
+
         Else
             chkX18.Visible = False
         End If
@@ -584,23 +584,23 @@
             With CType(e.Item.FindControl("cmdNew"), HtmlButton)
                 .Visible = True
                 .InnerHtml = "<img src='Images/new.png' />Nový"
-                .Attributes.Item("onclick") = "x25_create(" & cRec.PID.ToString & ")"
+                .Attributes.Item("onclick") = "o23_create(" & cRec.PID.ToString & ")"
             End With
         End If
         If (cRec.x18DashboardFlag = BO.x18DashboardENUM.CreateLinkAndGrid Or cRec.x18DashboardFlag = BO.x18DashboardENUM.LinkOnly Or cRec.x18DashboardFlag = BO.x18DashboardENUM.ShowItemsLikeNoticeboard) And Right(cRec.x18ReportCodes, 1) = "1" Then
             With CType(e.Item.FindControl("linkFramework"), HyperLink)
                 .Visible = True
-                .NavigateUrl = "x25_framework.aspx?x18id=" & cRec.PID.ToString
+                .NavigateUrl = "o23_framework.aspx?x18id=" & cRec.PID.ToString
             End With
             With CType(e.Item.FindControl("linkCalendar"), HyperLink)
                 If cRec.x18IsCalendar Then
                     .Visible = True
-                    .NavigateUrl = "x25_scheduler.aspx?x18id=" & cRec.PID.ToString
+                    .NavigateUrl = "o23_scheduler.aspx?x18id=" & cRec.PID.ToString
                 End If
             End With
         End If
-        
-        
+
+
     End Sub
 
     Private Sub chkX18_CheckedChanged(sender As Object, e As EventArgs) Handles chkX18.CheckedChanged
@@ -610,31 +610,31 @@
     End Sub
 
     Private Sub rpArticle_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rpArticle.ItemCommand
-        Dim intX25ID As Integer = e.CommandArgument
-        Dim cRec As BO.x25EntityField_ComboValue = Master.Factory.x25EntityField_ComboValueBL.Load(intX25ID)
-        tdRecX25.Visible = True
+        Dim intO23ID As Integer = e.CommandArgument
+        Dim cRec As BO.o23Doc = Master.Factory.o23DocBL.Load(intO23ID)
+        tdRecO23.Visible = True
 
         rec1.FillData(cRec, Master.Factory.x18EntityCategoryBL.LoadByX23ID(cRec.x23ID))
-        comments1.RefreshData(Master.Factory, BO.x29IdEnum.x25EntityField_ComboValue, cRec.PID)
+        comments1.RefreshData(Master.Factory, BO.x29IdEnum.o23Doc, cRec.PID)
 
         With CType(e.Item.FindControl("link1"), LinkButton)
             .CommandArgument = cRec.PID
-            .Text = BO.BAS.OM3(cRec.x25Name, 30)
+            .Text = BO.BAS.OM3(cRec.o23Name, 30)
             .BackColor = Drawing.Color.Yellow
         End With
     End Sub
 
-    
+
     Private Sub rpArticle_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpArticle.ItemDataBound
-        Dim cRec As BO.x25EntityField_ComboValue = CType(e.Item.DataItem, BO.x25EntityField_ComboValue)
+        Dim cRec As BO.o23Doc = CType(e.Item.DataItem, BO.o23Doc)
         With CType(e.Item.FindControl("link1"), LinkButton)
             .CommandArgument = cRec.PID
-            .Text = BO.BAS.OM3(cRec.x25Name, 30)
-            
+            .Text = BO.BAS.OM3(cRec.o23Name, 30)
+
         End With
         With CType(e.Item.FindControl("timestamp"), Label)
-            If Not cRec.x25FreeDate01 Is Nothing Then
-                .Text = BO.BAS.FD(cRec.x25FreeDate01, True, True) & " " & cRec.UserInsert
+            If Not cRec.o23FreeDate01 Is Nothing Then
+                .Text = BO.BAS.FD(cRec.o23FreeDate01, True, True) & " " & cRec.UserInsert
             Else
                 .Text = BO.BAS.FD(cRec.DateInsert, True, True) & " " & cRec.UserInsert
             End If

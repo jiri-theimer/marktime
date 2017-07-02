@@ -30,7 +30,7 @@
             boxO22.Visible = True
         End If
 
-        rpO23.DataSource = Master.Factory.o23NotepadBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
+        rpO23.DataSource = Master.Factory.o23DocBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
         rpO23.DataBind()
         If rpO23.Items.Count = 0 Then
             boxO23.Visible = False
@@ -101,15 +101,15 @@
     End Sub
 
     Private Sub rpO23_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpO23.ItemDataBound
-        Dim cRec As BO.o23NotepadGrid = CType(e.Item.DataItem, BO.o23NotepadGrid)
+        Dim cRec As BO.o23Doc = CType(e.Item.DataItem, BO.o23Doc)
         With CType(e.Item.FindControl("cmdO23"), HyperLink)
-            .Text = cRec.o24Name & ": " & cRec.o23Name
+            .Text = cRec.x23Name & ": " & cRec.o23Name
             .NavigateUrl = "javascript: o23_detail(" & cRec.PID.ToString & ")"
             If cRec.IsClosed Then .Font.Strikeout = True
         End With
 
         With CType(e.Item.FindControl("Project"), Label)
-            .Text = Trim(cRec.ProjectClient & " " & cRec.Project & " " & cRec.Person & " " & cRec.p91Code)
+            .Text = "????"
         End With
     End Sub
 End Class

@@ -457,7 +457,7 @@ Class mtService
         If fields Is Nothing Then
             sr.ErrorMessage = "fields is nothing" : Return sr
         End If
-        If intPID = 0 And Not _factory.o23NotepadBL.LoadByExternalPID(strExternalPID) Is Nothing Then
+        If intPID = 0 And Not _factory.o23DocBL.LoadByExternalPID(strExternalPID) Is Nothing Then
             sr.ErrorMessage = "V MARKTIME již existuje dokument k této Outlook položce! Upravovat nebo odstranit tento dokument lze pouze v MARKTIME rozhraní." : Return sr
         End If
         Dim strGUID As String = ""
@@ -481,12 +481,12 @@ Class mtService
             Next
         End If
 
-        Dim cRec As New BO.o23Notepad
+        Dim cRec As New BO.o23Doc
         If intPID = 0 Then
             cRec.o23GUID = strGUID
             cRec.o23ExternalPID = strExternalPID
         Else
-            cRec = _factory.o23NotepadBL.Load(intPID)
+            cRec = _factory.o23DocBL.Load(intPID)
         End If
         If cRec Is Nothing Then
             sr.ErrorMessage = "record not found" : Return sr
@@ -500,11 +500,11 @@ Class mtService
         Next
 
         Try
-            If _factory.o23NotepadBL.Save(cRec, strGUID, Nothing, Nothing) Then
-                sr.PID = _factory.o23NotepadBL.LastSavedPID
+            If _factory.o23DocBL.Save(cRec, Nothing, Nothing, Nothing, Nothing, strGUID) Then
+                sr.PID = _factory.o23DocBL.LastSavedPID
                 sr.IsSuccess = True
             Else
-                sr.ErrorMessage = _factory.o23NotepadBL.ErrorMessage
+                sr.ErrorMessage = _factory.o23DocBL.ErrorMessage
                 sr.IsSuccess = False
             End If
         Catch ex As Exception
@@ -629,6 +629,7 @@ Class mtService
     Public Function LoadMsOfficeBinding(strEntryID As String, strLogin As String, strPassword As String) As BO.MsOfficeBinding Implements ImtService.LoadMsOfficeBinding
         If strEntryID = "" Then Return Nothing
         VerifyUser(strLogin, strPassword)
-        Return _factory.o23NotepadBL.LoadMsOfficeBinding(strEntryID)
+        'Return _factory.o23DocBL.LoadMsOfficeBinding(strEntryID)
+        Return Nothing
     End Function
 End Class

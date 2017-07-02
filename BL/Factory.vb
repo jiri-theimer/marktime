@@ -16,7 +16,7 @@
     Private Property _o21 As Io21MilestoneTypeBL
     Private Property _o24 As Io24NotepadTypeBL
     Private Property _o22 As Io22MilestoneBL
-    Private Property _o23 As Io23NotepadBL
+    Private Property _o23 As Io23DocBL
     Private Property _p51 As Ip51PriceListBL
     Private Property _p50 As Ip50OfficePriceListBL
     Private Property _p56 As Ip56TaskBL
@@ -62,7 +62,6 @@
     Private Property _x27 As Ix27EntityFieldGroupBL
     Private Property _x28 As Ix28EntityFieldBL
     Private Property _x23 As Ix23EntityField_ComboBL
-    Private Property _x25 As Ix25EntityField_ComboValueBL
     Private Property _x18 As Ix18EntityCategoryBL
     Private Property _x38 As Ix38CodeLogicBL
     Private Property _b01 As Ib01WorkflowTemplateBL
@@ -380,13 +379,7 @@
             Return _p29
         End Get
     End Property
-    Public ReadOnly Property o23NotepadBL As Io23NotepadBL
-        Get
-            If _o23 Is Nothing Then _o23 = New o23NotepadBL(_cUser)
-            Return _o23
-        End Get
-    End Property
-   
+  
     Public ReadOnly Property o24NotepadTypeBL As Io24NotepadTypeBL
         Get
             If _o24 Is Nothing Then _o24 = New o24NotepadTypeBL(_cUser)
@@ -471,10 +464,10 @@
             Return _x23
         End Get
     End Property
-    Public ReadOnly Property x25EntityField_ComboValueBL As Ix25EntityField_ComboValueBL
+    Public ReadOnly Property o23DocBL As Io23DocBL
         Get
-            If _x25 Is Nothing Then _x25 = New x25EntityField_ComboValueBL(_cUser)
-            Return _x25
+            If _o23 Is Nothing Then _o23 = New o23DocBL(_cUser)
+            Return _o23
         End Get
     End Property
     Public ReadOnly Property x18EntityCategoryBL As Ix18EntityCategoryBL

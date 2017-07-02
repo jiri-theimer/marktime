@@ -30,15 +30,15 @@
                 strPage += "?board=1"
                 If bolNeedMobileUI Then strPage += "&source=start"
                 Select Case strPrefix
-                    Case "p56", "p41", "p28", "p91", "o23", "j02"
+                    Case "p56", "p41", "p28", "p91", "j02"
                         strPage += "&pid=" & strPID
                         Response.Redirect(strPage)
-                    Case "x25"
+                    Case "o23"
 
                         If bolNeedMobileUI Then
-                            Response.Redirect("clue_x25_record.aspx?dr=1&pid=" & strPID)
+                            Response.Redirect("clue_o23_record.aspx?dr=1&pid=" & strPID)
                         Else
-                            Response.Redirect("x25_framework.aspx?pid=" & strPID)
+                            Response.Redirect("o23_framework.aspx?pid=" & strPID)
                         End If
                     Case "x31"
                         Dim c As BO.x31Report = Master.Factory.x31ReportBL.Load(CInt(strPID))

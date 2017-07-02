@@ -58,7 +58,7 @@ Class o27AttachmentBL
                                 .p28ID = intDataPID
                             Case BO.x29IdEnum.j02Person
                                 .j02ID = intDataPID
-                            Case BO.x29IdEnum.o23Notepad
+                            Case BO.x29IdEnum.o23Doc
                                 .o23ID = intDataPID
                             Case BO.x29IdEnum.p56Task
                                 .p56ID = intDataPID

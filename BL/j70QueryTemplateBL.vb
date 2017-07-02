@@ -95,7 +95,7 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(4, "Došlo k překročení limitu rozpracovanosti"))
                 lis.Add(New BO.OtherQueryItem(7, "Obsahují úkoly (otevřené nebo uzavřené)"))
                 lis.Add(New BO.OtherQueryItem(6, "Obsahují otevřené úkoly"))
-                lis.Add(New BO.OtherQueryItem(9, "Obsahují minimálně jeden notepad dokument"))
+                lis.Add(New BO.OtherQueryItem(9, "Mají vazbu na minimálně jeden dokument"))
                 lis.Add(New BO.OtherQueryItem(10, "Obsahují opakované odměny/paušály"))
                 lis.Add(New BO.OtherQueryItem(11, "Projekty v režimu DRAFT"))
                 lis.Add(New BO.OtherQueryItem(12, "Projekty mimo režim DRAFT"))
@@ -116,7 +116,7 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(19, "Není klientem ani u jednoho projektu"))
                 lis.Add(New BO.OtherQueryItem(16, "Přiřazena minimálně jedna kontaktní osoba"))
                 lis.Add(New BO.OtherQueryItem(17, "Bez přiřazení kontaktních osob"))
-                lis.Add(New BO.OtherQueryItem(20, "Obsahují minimálně jeden notepad dokument"))
+                lis.Add(New BO.OtherQueryItem(20, "Mají vazbu na minimálně jeden dokument"))
                 lis.Add(New BO.OtherQueryItem(21, "Vystupuje jako dodavatel"))
                 lis.Add(New BO.OtherQueryItem(28, "Ani klient, ani dodavatel"))
                 lis.Add(New BO.OtherQueryItem(22, "Duplicitní klienti podle prvních 25 písmen v názvu"))
@@ -169,7 +169,7 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(10, "Vyplněn plán/limit výdajů"))
                 lis.Add(New BO.OtherQueryItem(11, "Došlo k překročení plánu/limitu hodin"))
                 lis.Add(New BO.OtherQueryItem(12, "Došlo k překročení plánu/limitu výdajů"))
-            Case BO.x29IdEnum.o23Notepad
+            Case BO.x29IdEnum.o23Doc
                 lis.Add(New BO.OtherQueryItem(3, "Dokument byl svázán s projektem"))
                 lis.Add(New BO.OtherQueryItem(4, "Dokument čeká na vazbu s projektem"))
                 lis.Add(New BO.OtherQueryItem(5, "Dokument byl svázán s klientem"))
@@ -339,14 +339,14 @@ Class j70QueryTemplateBL
                     Case Else
                         c.j70ColumnNames = "p56Code,p56Name,b02Name"
                 End Select
-            Case BO.x29IdEnum.o23Notepad
+            Case BO.x29IdEnum.o23Doc
                 Select Case strMasterPrefix
                     Case "p41"
-                        c.j70ColumnNames = "o24Name,o23Name"
+                        c.j70ColumnNames = "x18Name,o23Name"
                     Case "mobile_grid"
-                        c.j70ColumnNames = "o24Name,o23Name"
+                        c.j70ColumnNames = "x18Name,o23Name"
                     Case Else
-                        c.j70ColumnNames = "o24Name,o23Name,Project"
+                        c.j70ColumnNames = "x18Name,x23Code,o23Name"
                 End Select
 
         End Select
@@ -372,7 +372,7 @@ Class j70QueryTemplateBL
                 InhaleJ02ColList(lis)
             Case BO.x29IdEnum.p56Task
                 InhaleP56ColList(lis)
-            Case BO.x29IdEnum.o23Notepad
+            Case BO.x29IdEnum.o23Doc
                 InhaleO23ColList(lis)
         End Select
 
@@ -831,18 +831,14 @@ Class j70QueryTemplateBL
     End Sub
     Private Sub InhaleO23ColList(ByRef lis As List(Of BO.GridColumn))
         With lis
-            .Add(AGC("Typ dokumentu", "o24Name"))
+            .Add(AGC("Typ dokumentu", "x18Name"))
             .Add(AGC("Název", "o23Name"))
-            .Add(AGC("Kód dokumentu", "o23Code"))
+            .Add(AGC("Kód", "o23Code"))
             .Add(AGC("Aktuální stav", "b02Name"))
-            .Add(AGC("Projekt", "Project", , , "isnull(p41.p41NameShort,p41.p41Name)"))
-            .Add(AGC("Klient projektu", "ProjectClient", , , "p28_client.p28Name"))
-            .Add(AGC("Firma", "DocCompany", , , "p28.p28Name"))
-            .Add(AGC("Faktura", "p91Code"))
-            .Add(AGC("Úkol", "p56Code"))
+            
             .Add(AGC("Příjemci", "ReceiversInLine", , , "dbo.o23_getroles_inline(a.o23ID)"))
 
-            .Add(AGC("Datum", "o23Date", BO.cfENUM.DateTime))
+            .Add(AGC("Datum", "o23FreeDate01", BO.cfENUM.DateTime))
             .Add(AGC("Připomenutí", "o23ReminderDate", BO.cfENUM.DateTime))
 
             .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName", , , "Záznam"))
@@ -851,8 +847,8 @@ Class j70QueryTemplateBL
             .Add(AGC(My.Resources.common.Aktualizace, "o23DateUpdate", BO.cfENUM.DateTime, , , , , "Záznam"))
             .Add(AGC(My.Resources.common.Aktualizoval, "o23UserUpdate", , , , , , "Záznam"))
         End With
-
-        AppendFreeFields(BO.x29IdEnum.o23Notepad, lis)
+        AppendRoles(BO.x29IdEnum.o23Doc, "a.o23ID", "Role v dokumentu", lis)
+        AppendFreeFields(BO.x29IdEnum.o23Doc, lis)
     End Sub
 
 
@@ -890,10 +886,8 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.GridGroupByColumn("Fakturační jazyk", "p87Name", "a.p87ID", "min(p87Name)"))
                 lis.Add(New BO.GridGroupByColumn("Vlastník záznamu", "Owner", "a.j02ID_Owner", "min(j02owner.j02LastName+' '+j02owner.j02FirstName)"))
                 lis.Add(New BO.GridGroupByColumn("DRAFT", "p28IsDraft", "a.p28IsDraft", "a.p28IsDraft"))
-            Case BO.x29IdEnum.o23Notepad
-                lis.Add(New BO.GridGroupByColumn("Typ dokumentu", "o24Name", "a.o24ID", "min(o24Name)"))
-                lis.Add(New BO.GridGroupByColumn("Klient", "ProjectClient", "a.p28ID", "min(p28Name)"))
-                lis.Add(New BO.GridGroupByColumn("Projekt", "Project", "a.p41ID", "min(isnull(p41NameShort,p41Name))"))
+            Case BO.x29IdEnum.o23Doc
+                lis.Add(New BO.GridGroupByColumn("Typ dokumentu", "x18Name", "x23.x18ID", "min(x18Name)"))
                 lis.Add(New BO.GridGroupByColumn("Aktuální stav", "b02Name", "a.b02ID", "min(b02.b02Name)"))
                 lis.Add(New BO.GridGroupByColumn("Vlastník záznamu", "Owner", "a.j02ID_Owner", "min(j02owner.j02LastName+' '+j02owner.j02FirstName)"))
                 lis.Add(New BO.GridGroupByColumn("DRAFT", "o23IsDraft", "a.o23IsDraft", "a.o23IsDraft"))

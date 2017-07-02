@@ -119,7 +119,7 @@
     <Compile Include="DBNative\x19EntityCategory_Binding.vb" />
     <Compile Include="DBNative\x20EntiyToCategory.vb" />
     <Compile Include="DBNative\x23EntityField_Combo.vb" />
-    <Compile Include="DBNative\x25EntityField_ComboValue.vb" />
+    <Compile Include="DBNative\o23Doc.vb" />
     <Compile Include="DBNative\x26EntityField_Binding.vb" />
     <Compile Include="DBNative\x28EntityField.vb" />
     <Compile Include="DBNative\x27EntityFieldGroup.vb" />
@@ -142,7 +142,7 @@
     <Compile Include="Helpers\MsOfficeBinding.vb" />
     <Compile Include="Helpers\p56TaskSum.vb" />
     <Compile Include="Helpers\PersonOrTeam.vb" />
-    <Compile Include="Helpers\Query\myQueryX25.vb" />
+    <Compile Include="Helpers\Query\myQueryO23.vb" />
     <Compile Include="Helpers\SchedulerItem.vb" />
     <Compile Include="Helpers\SearchBoxItem.vb" />
     <Compile Include="Helpers\SubjectMonitoring.vb" />
@@ -160,7 +160,6 @@
     <Compile Include="Helpers\GetString.vb" />
     <Compile Include="Helpers\j03UserSYS.vb" />
     <Compile Include="Helpers\o23RecordDisposition.vb" />
-    <Compile Include="Helpers\o23NotepadGrid.vb" />
     <Compile Include="Helpers\OperativePlanSumPerPerson.vb" />
     <Compile Include="Helpers\p28RecordDisposition.vb" />
     <Compile Include="Helpers\p41ProjectSum.vb" />
@@ -198,7 +197,6 @@
     <Compile Include="Helpers\Query\myQueryJ02.vb" />
     <Compile Include="Helpers\Query\myQueryJ03.vb" />
     <Compile Include="Helpers\Query\myQueryO22.vb" />
-    <Compile Include="Helpers\Query\myQueryO23.vb" />
     <Compile Include="Helpers\Query\myQueryO27.vb" />
     <Compile Include="Helpers\Query\myQueryO38.vb" />
     <Compile Include="Helpers\Query\myQueryP28.vb" />
@@ -228,7 +226,6 @@
     <Compile Include="DBNative\j90LoginAccessLog.vb" />
     <Compile Include="DBNative\o13AttachmentType.vb" />
     <Compile Include="DBNative\o22Milestone.vb" />
-    <Compile Include="DBNative\o23Notepad.vb" />
     <Compile Include="DBNative\o27Attachment.vb" />
     <Compile Include="DBNative\o28ProjectRole_Workload.vb" />
     <Compile Include="DBNative\o32Contact_Medium.vb" />

@@ -1,8 +1,8 @@
-﻿Public Class x25_record_readonly
+﻿Public Class o23_record_readonly
     Inherits System.Web.UI.UserControl
     Public Factory As BL.Factory
-    Private Property _curRec As BO.x25EntityField_ComboValue
-    
+    Private Property _curRec As BO.o23Doc
+
 
     Public Function IsEmpty() As Boolean
         If rpFF.Items.Count > 0 Then
@@ -30,7 +30,7 @@
 
     End Sub
 
-    Public Sub FillData(cRec As BO.x25EntityField_ComboValue, cX18 As BO.x18EntityCategory)
+    Public Sub FillData(cRec As BO.o23Doc, cX18 As BO.x18EntityCategory)
         hidPID.Value = cRec.PID.ToString
 
         _curRec = cRec
@@ -41,16 +41,16 @@
             cX18 = Me.Factory.x18EntityCategoryBL.Load(Me.X18ID)
         End If
         With cRec
-            If .x25Name <> "" Then
-                Me.x25Name.Text = .x25Name
-                If .x25BackColor <> "" Then Me.x25Name.Style.Item("background-color") = .x25BackColor
-                If .x25ForeColor <> "" Then Me.x25Name.Style.Item("color") = .x25ForeColor
+            If .o23Name <> "" Then
+                Me.o23Name.Text = .o23Name
+                If .o23BackColor <> "" Then Me.o23Name.Style.Item("background-color") = .o23BackColor
+                If .o23ForeColor <> "" Then Me.o23Name.Style.Item("color") = .o23ForeColor
             Else
                 trName.Visible = False
             End If
-            If .x25Code <> "" Then
-                Me.x25Code.Text = .x25Code
-                Me.x25Code.ToolTip = .x25ArabicCode
+            If .o23Code <> "" Then
+                Me.o23Code.Text = .o23Code
+                Me.o23Code.ToolTip = .o23ArabicCode
             Else
                 trCode.Visible = False
             End If
@@ -80,9 +80,9 @@
     Private Sub RefreshUserFields()
         Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Me.Factory.x18EntityCategoryBL.GetList_x16(Me.X18ID)
         Dim bolHTML As Boolean = False
-        If lisX16.Where(Function(p) p.x16Field = "x25HtmlContent").Count > 0 Then
+        If lisX16.Where(Function(p) p.x16Field = "o23HtmlContent").Count > 0 Then
             bolHTML = True
-            lisX16 = lisX16.Where(Function(p) p.x16Field <> "x25HtmlContent")
+            lisX16 = lisX16.Where(Function(p) p.x16Field <> "o23HtmlContent")
         End If
         If lisX16.Count > 0 Then
 
@@ -115,7 +115,7 @@
             Select Case cRec.FieldType
                 Case BO.x24IdENUM.tString
                     With CType(e.Item.FindControl("valFF"), Label)
-                        If curValue.ToString.IndexOf(vbCrLf) > 0 Or cRec.x16Field = "x25BigText" Then
+                        If curValue.ToString.IndexOf(vbCrLf) > 0 Or cRec.x16Field = "o23BigText" Then
                             .Text = BO.BAS.CrLfText2Html(curValue.ToString)
                             .CssClass = "val"
                             .Font.Italic = True
@@ -182,7 +182,7 @@
 
 
         End With
-        
+
         With CType(e.Item.FindControl("BindValue"), Label)
             Select Case cRec.x29ID
                 Case 102 And Factory.SysUser.j04IsMenu_People = True
@@ -215,7 +215,7 @@
     Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
         If panHtml.Visible And hidPID.Value <> "" Then
 
-            place1.Controls.Add(New LiteralControl(Me.Factory.x25EntityField_ComboValueBL.LoadHtmlContent(CInt(hidPID.Value))))
+            place1.Controls.Add(New LiteralControl(Me.Factory.o23DocBL.LoadHtmlContent(CInt(hidPID.Value))))
         End If
     End Sub
 End Class

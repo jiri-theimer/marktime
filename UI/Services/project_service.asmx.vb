@@ -60,7 +60,7 @@ Public Class project_service
             Case "p31_entry"
                 'omezit pouze na projekty, ke kterým má osoba oprávnění zapisovat worksheet
                 mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForWorksheetEntry
-            Case "search4x25"
+            Case "search4o23"
                 mq.Closed = BO.BooleanQueryMode.FalseQuery
                 mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
             Case "p48"

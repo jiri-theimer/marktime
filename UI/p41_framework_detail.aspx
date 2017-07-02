@@ -4,7 +4,6 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="entity_menu" Src="~/entity_menu.ascx" %>
 <%@ Register TagPrefix="uc" TagName="entityrole_assign_inline" Src="~/entityrole_assign_inline.ascx" %>
-<%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="contactpersons" Src="~/contactpersons.ascx" %>
 <%@ Register TagPrefix="uc" TagName="entity_worksheet_summary" Src="~/entity_worksheet_summary.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
@@ -315,18 +314,7 @@
 
         </asp:panel>
     </div>
-    <asp:Panel ID="boxO23" runat="server" CssClass="content-box1" style="clear:both;">
-        <div class="title">
-            <img src="Images/notepad.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxO23Title" runat="server" Text="Dokumenty" meta:resourcekey="boxO23Title"></asp:Label>
-        </div>
-        <div class="content" style="overflow: auto; max-height: 200px;">
-
-            <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p41Project"></uc:o23_list>
-
-
-        </div>
-    </asp:Panel>
+    
     <div style="clear:both;">
     <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
     </div>

@@ -34,7 +34,7 @@
                     If list1.ItemsCount > 3 Then
                         list1.IsRepeatDirectionVerticaly = True : list1.RepeatColumns = 2
                     End If
-                    Master.HeaderText = Master.Factory.GetRecordCaption(BO.x29IdEnum.o23Notepad, Master.DataPID)
+                    Master.HeaderText = Master.Factory.GetRecordCaption(BO.x29IdEnum.o23Doc, Master.DataPID)
                     ViewState("if1_height") = "80%"
                 Case "o27"
                     Dim cRec As BO.o27Attachment = Master.Factory.o27AttachmentBL.Load(Master.DataPID)

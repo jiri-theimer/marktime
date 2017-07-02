@@ -63,7 +63,7 @@ Public Class user_service
                 mq.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
             Case "intra"
                 mq.IntraPersons = BO.myQueryJ02_IntraPersons.IntraOnly
-            Case "search4x25"
+            Case "search4o23"
                 mq.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
                 mq.Closed = BO.BooleanQueryMode.FalseQuery
                 If strQryField = "j07id" Then

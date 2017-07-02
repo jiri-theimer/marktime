@@ -177,7 +177,8 @@ Class x31ReportBL
         End If
         
 
-        lisX31.Add(GPPS(-998, "[Dokumenty]", "o23_framework.aspx", -30, BO.x29IdEnum.o23Notepad, "o23"))
+        lisX31.Add(GPPS(-998, "[Dokumenty - základní přehled]", "o23_framework.aspx", -30, BO.x29IdEnum.o23Doc, "o23"))
+        lisX31.Add(GPPS(-998, "[Dokumenty]", "entity_framework.aspx?prefix=o23", -30, BO.x29IdEnum.o23Doc, "o23"))
         lisX31.Add(GPPS(-998, "[Úkoly]", "p56_framework.aspx", -30, BO.x29IdEnum.p56Task, "p56"))
         lisX31.Add(GPPS(-998, "[Kalendář]", "entity_scheduler.aspx", -30, BO.x29IdEnum.o22Milestone, "entity_scheduler"))
 

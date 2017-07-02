@@ -64,9 +64,9 @@ Public Class x18_querybuilder
         nParent.Checkable = False
         nParent.Expanded = True
         tr1.Nodes.Add(nParent)
-        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, Me.CurrentX29ID)
+        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, Me.CurrentX29ID).Where(Function(p) p.x18IsManyItems = False)
         If lisX18.Count = 0 Then
-            Master.Notify(String.Format("Pro entitu [{0}] zatím neexistuje štítek.", BO.BAS.GetX29EntityAlias(Me.CurrentX29ID, False)))
+            Master.Notify(String.Format("Pro entitu [{0}] zatím neexistuje štítek (typ dokumentu).", BO.BAS.GetX29EntityAlias(Me.CurrentX29ID, False)))
         End If
         For Each c In lisX18
             WN(c, hidPrefix.Value & "-" & Right("0000" & c.PID.ToString, 4), nParent)
@@ -146,7 +146,7 @@ Public Class x18_querybuilder
         n0.Checkable = False
         nParent.Nodes.Add(n0)
 
-        Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = Master.Factory.x25EntityField_ComboValueBL.GetList(New BO.myQueryX25(cX18.x23ID))
+        Dim lis As IEnumerable(Of BO.o23Doc) = Master.Factory.o23DocBL.GetList(New BO.myQueryO23(cX18.x23ID))
         If lis.Count > 50 Then
             Dim n As New RadTreeNode(String.Join("Příliš mnoho položek pro tento druh filtrování {0}.", lis.Count))
             n.Checkable = False
@@ -154,7 +154,7 @@ Public Class x18_querybuilder
             Return
         End If
         For Each c In lis
-            Dim n As New RadTreeNode(c.x25Name, strValue & "-" & c.PID.ToString)
+            Dim n As New RadTreeNode(c.o23Name, strValue & "-" & c.PID.ToString)
             n.Checkable = True
             If c.IsClosed Then n.Font.Strikeout = True
             n0.Nodes.Add(n)

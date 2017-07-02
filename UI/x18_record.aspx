@@ -34,7 +34,7 @@
             <table cellpadding="5" cellspacing="2">
                 <tr>
                     <td>
-                        <asp:Label ID="lblName" runat="server" CssClass="lblReq" Text="Název štítku:"></asp:Label></td>
+                        <asp:Label ID="lblName" runat="server" CssClass="lblReq" Text="Typ dokumentu:"></asp:Label></td>
                     <td>
                         <asp:TextBox ID="x18Name" runat="server" Style="width: 400px;"></asp:TextBox>
                         <asp:Label ID="lblOrdinary" Text="Index pořadí:" runat="server" CssClass="lbl"></asp:Label>
@@ -57,7 +57,7 @@
 
             <div class="content-box2" style="margin-top: 20px;">
                 <div class="title">
-                    Vazba štítku na entity
+                    Vazba dokumentu na entity
                     <asp:DropDownList ID="x29ID_addX20" runat="server" AutoPostBack="true">
                         <asp:ListItem Text="--Vyberte entitu--" Value=""></asp:ListItem>
                         <asp:ListItem Text="Projekt" Value="141"></asp:ListItem>
@@ -129,15 +129,15 @@
                                     <td>
                                         <div>
                                             <asp:DropDownList ID="x20EntryModeFlag" runat="server">
-                                                <asp:ListItem Text="Vazbu vyplňovat odkazem na položku štítku (combo-list v záznamu entity)" Value="1"></asp:ListItem>
-                                                <asp:ListItem Text="Vazbu vyplňovat odkazem na záznam entity (přímo v záznamu položky štítku)" Value="2"></asp:ListItem>
+                                                <asp:ListItem Text="Vazbu vyplňovat odkazem na položku dokumentu (combo-list v záznamu entity)" Value="1"></asp:ListItem>
+                                                <asp:ListItem Text="Vazbu vyplňovat odkazem na záznam entity (přímo v záznamu dokumentu)" Value="2"></asp:ListItem>
                                                 <asp:ListItem Text="Vazbu generuje workflow stavový mechanismus" Value="3"></asp:ListItem>
                                             </asp:DropDownList>
                                         </div>
                                         <div>
                                             <asp:DropDownList ID="x20GridColumnFlag" runat="server">
                                                 <asp:ListItem Text="Sloupec v přehledu záznamů entity" Value="1"></asp:ListItem>
-                                                <asp:ListItem Text="Sloupec v přehledu položek štítku" Value="2"></asp:ListItem>
+                                                <asp:ListItem Text="Sloupec v přehledu dokumentů" Value="2"></asp:ListItem>
                                                 <asp:ListItem Text="Sloupec v entitním přehledu i v přehledu položek" Value="3"></asp:ListItem>
                                                 <asp:ListItem Text="Nezobrazovat jako sloupec" Value="4"></asp:ListItem>
                                             </asp:DropDownList>
@@ -176,7 +176,7 @@
                 </asp:RadioButtonList>
 
                 <div style="margin-top:20px;">
-                    <asp:Label ID="lblX23ID" Text="Datový zdroj položek štítku:" runat="server" CssClass="lblReq"></asp:Label>
+                    <asp:Label ID="lblX23ID" Text="Datový zdroj dokumentů:" runat="server" CssClass="lblReq"></asp:Label>
                                 <uc:datacombo ID="x23ID" runat="server" DataTextField="x23Name" DataValueField="pid" IsFirstEmptyRow="true" AutoPostBack="true" Width="400px"></uc:datacombo>
                 </div>
             </asp:panel>
@@ -189,7 +189,7 @@
             <div class="content-box2" style="margin-top: 10px;">
                 <div class="title">
                     <img src="Images/form.png" width="16px" height="16px" />
-                    Rozšíření položky štítku o další pole
+                    Rozšíření karty dokumentu o další pole
                     <asp:Button ID="cmdNewX16" runat="server" CssClass="cmd" Text="Přidat" />
                 </div>
                 <div class="content">
@@ -209,33 +209,33 @@
 
                                         <asp:DropDownList ID="x16Field" runat="server">
                                             <asp:ListItem Text="--Obsazené pole--" Value=""></asp:ListItem>
-                                            <asp:ListItem Text="Text 1" Value="x25FreeText01"></asp:ListItem>
-                                            <asp:ListItem Text="Text 2" Value="x25FreeText02"></asp:ListItem>
-                                            <asp:ListItem Text="Text 3" Value="x25FreeText03"></asp:ListItem>
-                                            <asp:ListItem Text="Text 4" Value="x25FreeText04"></asp:ListItem>
-                                            <asp:ListItem Text="Text 5" Value="x25FreeText05"></asp:ListItem>
-                                            <asp:ListItem Text="Text 6" Value="x25FreeText06"></asp:ListItem>
-                                            <asp:ListItem Text="Text 7" Value="x25FreeText07"></asp:ListItem>
-                                            <asp:ListItem Text="Text 8" Value="x25FreeText08"></asp:ListItem>
-                                            <asp:ListItem Text="Text 9" Value="x25FreeText09"></asp:ListItem>
-                                            <asp:ListItem Text="Text 10" Value="x25FreeText10"></asp:ListItem>
-                                            <asp:ListItem Text="Velký text (1000)" Value="x25BigText"></asp:ListItem>
-                                            <asp:ListItem Text="Html editor" Value="x25HtmlContent"></asp:ListItem>
-                                            <asp:ListItem Text="Číslo 1" Value="x25FreeNumber01"></asp:ListItem>
-                                            <asp:ListItem Text="Číslo 2" Value="x25FreeNumber02"></asp:ListItem>
-                                            <asp:ListItem Text="Číslo 3" Value="x25FreeNumber03"></asp:ListItem>
-                                            <asp:ListItem Text="Číslo 4" Value="x25FreeNumber04"></asp:ListItem>
-                                            <asp:ListItem Text="Číslo 5" Value="x25FreeNumber05"></asp:ListItem>
-                                            <asp:ListItem Text="Datum 1" Value="x25FreeDate01"></asp:ListItem>
-                                            <asp:ListItem Text="Datum 2" Value="x25FreeDate02"></asp:ListItem>
-                                            <asp:ListItem Text="Datum 3" Value="x25FreeDate03"></asp:ListItem>
-                                            <asp:ListItem Text="Datum 4" Value="x25FreeDate04"></asp:ListItem>
-                                            <asp:ListItem Text="Datum 5" Value="x25FreeDate05"></asp:ListItem>
-                                            <asp:ListItem Text="ANO/NE 1" Value="x25FreeBoolean01"></asp:ListItem>
-                                            <asp:ListItem Text="ANO/NE 2" Value="x25FreeBoolean02"></asp:ListItem>
-                                            <asp:ListItem Text="ANO/NE 3" Value="x25FreeBoolean03"></asp:ListItem>
-                                            <asp:ListItem Text="ANO/NE 4" Value="x25FreeBoolean04"></asp:ListItem>
-                                            <asp:ListItem Text="ANO/NE 5" Value="x25FreeBoolean05"></asp:ListItem>
+                                            <asp:ListItem Text="Text 1" Value="o23FreeText01"></asp:ListItem>
+                                            <asp:ListItem Text="Text 2" Value="o23FreeText02"></asp:ListItem>
+                                            <asp:ListItem Text="Text 3" Value="o23FreeText03"></asp:ListItem>
+                                            <asp:ListItem Text="Text 4" Value="o23FreeText04"></asp:ListItem>
+                                            <asp:ListItem Text="Text 5" Value="o23FreeText05"></asp:ListItem>
+                                            <asp:ListItem Text="Text 6" Value="o23FreeText06"></asp:ListItem>
+                                            <asp:ListItem Text="Text 7" Value="o23FreeText07"></asp:ListItem>
+                                            <asp:ListItem Text="Text 8" Value="o23FreeText08"></asp:ListItem>
+                                            <asp:ListItem Text="Text 9" Value="o23FreeText09"></asp:ListItem>
+                                            <asp:ListItem Text="Text 10" Value="o23FreeText10"></asp:ListItem>
+                                            <asp:ListItem Text="Velký text (1000)" Value="o23BigText"></asp:ListItem>
+                                            <asp:ListItem Text="Html editor" Value="o23HtmlContent"></asp:ListItem>
+                                            <asp:ListItem Text="Číslo 1" Value="o23FreeNumber01"></asp:ListItem>
+                                            <asp:ListItem Text="Číslo 2" Value="o23FreeNumber02"></asp:ListItem>
+                                            <asp:ListItem Text="Číslo 3" Value="o23FreeNumber03"></asp:ListItem>
+                                            <asp:ListItem Text="Číslo 4" Value="o23FreeNumber04"></asp:ListItem>
+                                            <asp:ListItem Text="Číslo 5" Value="o23FreeNumber05"></asp:ListItem>
+                                            <asp:ListItem Text="Datum 1" Value="o23FreeDate01"></asp:ListItem>
+                                            <asp:ListItem Text="Datum 2" Value="o23FreeDate02"></asp:ListItem>
+                                            <asp:ListItem Text="Datum 3" Value="o23FreeDate03"></asp:ListItem>
+                                            <asp:ListItem Text="Datum 4" Value="o23FreeDate04"></asp:ListItem>
+                                            <asp:ListItem Text="Datum 5" Value="o23FreeDate05"></asp:ListItem>
+                                            <asp:ListItem Text="ANO/NE 1" Value="o23FreeBoolean01"></asp:ListItem>
+                                            <asp:ListItem Text="ANO/NE 2" Value="o23FreeBoolean02"></asp:ListItem>
+                                            <asp:ListItem Text="ANO/NE 3" Value="o23FreeBoolean03"></asp:ListItem>
+                                            <asp:ListItem Text="ANO/NE 4" Value="o23FreeBoolean04"></asp:ListItem>
+                                            <asp:ListItem Text="ANO/NE 5" Value="o23FreeBoolean05"></asp:ListItem>
                                                                                        
                                         </asp:DropDownList>
                                     </td>
@@ -286,13 +286,13 @@
             <div class="content-box2">
                 <div class="title">
                     <img src="Images/projectrole.png" width="16px" height="16px" />
-                    <asp:Label ID="ph1" runat="server" Text="Oprávnění k položkám štítku"></asp:Label>
+                    <asp:Label ID="ph1" runat="server" Text="Oprávnění k dokumentům"></asp:Label>
                     <asp:Button ID="cmdAddX69" runat="server" CssClass="cmd" Text="Přidat" />
                 </div>
                 <div class="content">
                     <uc:entityrole_assign ID="roles1" runat="server" EntityX29ID="x18EntityCategory"></uc:entityrole_assign>
                     <div class="div6" style="clear: both; margin-top: 20px; border-top: dashed silver 1px; display: none;">
-                        <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu štítku:" CssClass="lblReq"></asp:Label>
+                        <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu dokumentu:" CssClass="lblReq"></asp:Label>
                         <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
                     </div>
                 </div>
@@ -306,16 +306,16 @@
                 <div class="content">
                     <div class="div6">
                 <asp:DropDownList ID="x18GridColsFlag" runat="server">
-                    <asp:ListItem Text="Jako sloupce v přehledu zobrazovat i [Název] a [Kód]" Value="1"></asp:ListItem>
-                    <asp:ListItem Text="Jako sloupce v přehledu zobrazovat i [Kód]" Value="2"></asp:ListItem>
-                    <asp:ListItem Text="Jako sloupce v přehledu zobrazovat i [Název]" Value="3"></asp:ListItem>
+                    <asp:ListItem Text="Jako sloupce v přehledu dokumentů zobrazovat i [Název] a [Kód]" Value="1"></asp:ListItem>
+                    <asp:ListItem Text="Jako sloupce v přehledu dokumentů zobrazovat i [Kód]" Value="2"></asp:ListItem>
+                    <asp:ListItem Text="Jako sloupce v přehledu dokumentů zobrazovat i [Název]" Value="3"></asp:ListItem>
                     <asp:ListItem Text="Nezobrazovat ani [Název] ani [Kód]" Value="4"></asp:ListItem>
                 </asp:DropDownList>
             </div>
                     <table cellpadding="5" cellspacing="2">
                         <tr>
                             <td colspan="2">
-                                <asp:CheckBox ID="x18IsColors" runat="server" CssClass="chk" Text="Možnost rozlišovat položky štítku barvou" Checked="false" />
+                                <asp:CheckBox ID="x18IsColors" runat="server" CssClass="chk" Text="Možnost rozlišovat dokumenty barvou" Checked="false" />
                             </td>
                         </tr>
                         <tr>
@@ -343,7 +343,7 @@
                                 <asp:DropDownList ID="x18EntryCodeFlag" runat="server">
                                     <asp:ListItem Text="Ručně" Value="1"></asp:ListItem>
                                     <asp:ListItem Text="Nepoužívat" Value="2"></asp:ListItem>
-                                    <asp:ListItem Text="Generovat automaticky v rámci všech položek štítku" Value="3"></asp:ListItem>
+                                    <asp:ListItem Text="Generovat automaticky v rámci všech dokumentů" Value="3"></asp:ListItem>
                                     <asp:ListItem Text="Generovat automaticky v rámci projektu" Value="4"></asp:ListItem>
                                 </asp:DropDownList>
                             </td>
@@ -381,11 +381,11 @@
                             <td>
                                 <asp:DropDownList ID="x18CalendarFieldStart" runat="server">
                                     <asp:ListItem Text=""></asp:ListItem>
-                                    <asp:ListItem Text="Datum 1" Value="x25FreeDate01"></asp:ListItem>
-                                    <asp:ListItem Text="Datum 2" Value="x25FreeDate02"></asp:ListItem>
-                                    <asp:ListItem Text="Datum 3" Value="x25FreeDate03"></asp:ListItem>
-                                    <asp:ListItem Text="Datum 4" Value="x25FreeDate04"></asp:ListItem>
-                                    <asp:ListItem Text="Datum 5" Value="x25FreeDate05"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 1" Value="o23FreeDate01"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 2" Value="o23FreeDate02"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 3" Value="o23FreeDate03"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 4" Value="o23FreeDate04"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 5" Value="o23FreeDate05"></asp:ListItem>
                                 </asp:DropDownList>
                             </td>
                         </tr>
@@ -396,11 +396,11 @@
                             <td>
                                 <asp:DropDownList ID="x18CalendarFieldEnd" runat="server">
                                     <asp:ListItem Text=""></asp:ListItem>
-                                    <asp:ListItem Text="Datum 1" Value="x25FreeDate01"></asp:ListItem>
-                                    <asp:ListItem Text="Datum 2" Value="x25FreeDate02"></asp:ListItem>
-                                    <asp:ListItem Text="Datum 3" Value="x25FreeDate03"></asp:ListItem>
-                                    <asp:ListItem Text="Datum 4" Value="x25FreeDate04"></asp:ListItem>
-                                    <asp:ListItem Text="Datum 5" Value="x25FreeDate05"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 1" Value="o23FreeDate01"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 2" Value="o23FreeDate02"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 3" Value="o23FreeDate03"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 4" Value="o23FreeDate04"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 5" Value="o23FreeDate05"></asp:ListItem>
                                 </asp:DropDownList>
                             </td>
                         </tr>
@@ -411,8 +411,8 @@
                             <td>
                                 <asp:DropDownList ID="x18CalendarFieldSubject" runat="server">
                                     <asp:ListItem Text="--Prázdné--" Value=""></asp:ListItem>
-                                    <asp:ListItem Text="Název záznamu" Value="x25Name"></asp:ListItem>
-                                    <asp:ListItem Text="Kód záznamu" Value="x25Code"></asp:ListItem>
+                                    <asp:ListItem Text="Název záznamu" Value="o23Name"></asp:ListItem>
+                                    <asp:ListItem Text="Kód záznamu" Value="o23Code"></asp:ListItem>
                                     <asp:ListItem Text="Osoba" Value="j02_alias"></asp:ListItem>
                                     <asp:ListItem Text="Projekt" Value="p41_alias"></asp:ListItem>
                                     <asp:ListItem Text="Klient" Value="p28_alias"></asp:ListItem>

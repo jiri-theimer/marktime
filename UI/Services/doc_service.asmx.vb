@@ -38,32 +38,20 @@ Public Class notepad_service
         factory.j03UserBL.InhaleUserParams("handler_search_notepad-toprecs", "handler_search_notepad-bin")
 
         Dim result As List(Of RadComboBoxItemData) = Nothing
-
-        Dim mq As New BO.myQueryO23
-        mq.SpecificQuery = BO.myQueryO23_SpecificQuery.AllowedForRead
+        
+        Dim mq As New BO.myQueryO23(0)
+        ''mq.SpecificQuery = BO.myQueryO23_SpecificQuery.AllowedForRead
         mq.SearchExpression = filterString
         mq.Closed = BO.BooleanQueryMode.FalseQuery
         mq.TopRecordsOnly = BO.BAS.IsNullInt(factory.j03UserBL.GetUserParam("handler_search_notepad-toprecs", "40"))
-        If strQryField = "o24id" Then
-            mq.o24ID = BO.BAS.IsNullInt(strQryValue)
+        If strQryField = "x23id" Then
+            mq.x23ID = BO.BAS.IsNullInt(strQryValue)
         End If
 
-        ''If factory.j03UserBL.GetUserParam("handler_search_notepad-bin", "1") = "1" Then
-        ''    mq.Closed = BO.BooleanQueryMode.NoQuery
-        ''End If
-        Select Case strFlag
-            Case "searchbox"
-                mq.SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
-            Case "search4x25"
-                mq.QuickQuery = BO.myQueryO23_QuickQuery.Bind2x25Wait
-                mq.SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
-
-            Case Else
-
-        End Select
+        
 
 
-        Dim lis As IEnumerable(Of BO.o23Notepad) = factory.o23NotepadBL.GetList4Grid(mq)
+        Dim lis As IEnumerable(Of BO.o23Doc) = factory.o23DocBL.GetDataTable4Grid(mq)
         result = New List(Of RadComboBoxItemData)(lis.Count)
         Dim itemData As New RadComboBoxItemData()
         itemData.Enabled = False
@@ -78,10 +66,10 @@ Public Class notepad_service
         If itemData.Text <> "" Then result.Add(itemData)
 
 
-        For Each c As BO.o23Notepad In lis
+        For Each c As BO.o23Doc In lis
             itemData = New RadComboBoxItemData()
 
-            itemData.Text = c.o24Name & ": " & c.o23Name & " (" & c.Owner & ")"
+            itemData.Text = c.x23Name & ": " & c.o23Name & " (" & c.Owner & ")"
 
 
             If c.IsClosed Then

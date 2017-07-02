@@ -188,8 +188,8 @@
                     Master.HeaderText = "Zapsat úkon do faktury | " & Master.Factory.GetRecordCaption(BO.x29IdEnum.p91Invoice, Me.CurrentP91ID)
                 End If
             End If
-            cmdDoc.NavigateUrl = "javascript:o23_create('" & Me.DocGUID & "'," & Master.DataPID.ToString & ")"
-            RefreshListO23()
+            cmdDoc.Attributes.Item("onclick") = "o23_create('" & Me.DocGUID & "'," & Master.DataPID.ToString & ")"
+
 
             If Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.PresnyCasOdDo And (Me.TimeFrom.Text <> "" Or Me.TimeUntil.Text <> "") Then
                 panT.Visible = True
@@ -1083,13 +1083,10 @@
 
                 End If
             Case "o23-save"
-                Dim cRec As BO.o23Notepad = Master.Factory.o23NotepadBL.Load(BO.BAS.IsNullInt(Me.HardRefreshPID.Value))
-                If cRec.p31ID = 0 Then
-                    Master.Notify("Vazbu úkonu na dokument potvrdíte tlačítkem [Uložit změny].")
-                End If
-                RefreshListO23()
+
+
             Case "o23-queue"
-                RefreshListO23()
+                ''RefreshListO23()
             Case "p49-bind"
                 Me.p49ID.Value = Me.HardRefreshPID.Value
                 Me.p49_record.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p49FinancialPlan, CInt(Me.p49ID.Value)) & "</br>"
@@ -1101,14 +1098,7 @@
         Me.HardRefreshPID.Value = ""
     End Sub
 
-    Private Sub RefreshListO23()
-        Dim mq As New BO.myQueryO23
-        mq.o23GUID = Me.DocGUID
-        mq.p31ID = Master.DataPID
-        Dim lisO23 As IEnumerable(Of BO.o23Notepad) = Master.Factory.o23NotepadBL.GetList(mq)
-        notepad1.RefreshData(lisO23, Master.DataPID)
-    End Sub
-
+    
     Private Sub p32ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p32ID.NeedMissingItem
         If Master.DataPID = 0 Then Return
         Dim cRec As BO.p32Activity = Master.Factory.p32ActivityBL.Load(CInt(strFoundedMissingItemValue))
@@ -1164,11 +1154,11 @@
             Else
                 panP56.Visible = cP42.p42IsModule_p56
             End If
-            If notepad1.RowsCount > 0 Then
-                panO23.Visible = True
-            Else
-                panO23.Visible = cP42.p42IsModule_o23
-            End If
+            ''If notepad1.RowsCount > 0 Then
+            ''    panO23.Visible = True
+            ''Else
+            ''    panO23.Visible = cP42.p42IsModule_o23
+            ''End If
             If panM.Visible Then
                 panP49.Visible = cP42.p42IsModule_p45
             Else

@@ -482,7 +482,7 @@ Class o42ImapRuleBL
         End If
         If intO43ID <> 0 And cHistory.o23ID <> 0 Then
             'propsat do dokumentu informaci o vazbě na IMAP zdroj
-            Factory.o23NotepadBL.UpdateImapSource(cHistory.o23ID, intO43ID)
+            ''Factory.o23NotepadBL.UpdateImapSource(cHistory.o23ID, intO43ID)
         End If
 
         Return intO43ID
@@ -493,44 +493,44 @@ Class o42ImapRuleBL
 
 
     Private Function CreateO23Record(ByRef cO43 As BO.o43ImapRobotHistory, cRule As BO.o42ImapRule, cInbox As BO.o41InboxAccount, cJ02_FROM As BO.j02Person, lisJ02 As List(Of BO.j02Person), lisP41 As List(Of BO.p41Project), lisP28 As List(Of BO.p28Contact), lisJ11 As List(Of BO.j11Team)) As Integer
-        Dim c As New BO.o23Notepad
-        c.o24ID = cRule.o24ID
-        c.o23Name = cO43.o43Subject
-        c.o23BodyPlainText = cO43.o43Body_PlainText
-        c.o23BodyHtml = cO43.o43Body_Html
-        c.o23Date = cO43.o43DateMessage
-        If lisP41.Count > 0 Then
-            c.p41ID = lisP41(0).PID
-        End If
-        If lisP28.Count > 0 Then
-            c.p28ID = lisP28(0).PID
-        End If
-        If c.p41ID = 0 And cRule.p41ID_Default <> 0 Then
-            c.p41ID = cRule.p41ID_Default
-        End If
-        If Not cJ02_FROM Is Nothing Then
-            c.j02ID_Owner = cJ02_FROM.PID
-        Else
-            c.j02ID_Owner = cRule.j02ID_Owner_Default   'vlastník úkolu chybí, je třeba ho vzít z IMAP pravidla
-        End If
-        Dim cJ03 As BO.j03User = Factory.j03UserBL.LoadByJ02ID(c.j02ID_Owner)
-        c.SetUserInsert(cJ03.j03Login)
-        Dim lisX69 As New List(Of BO.x69EntityRole_Assign)
-        For Each person In lisJ02
-            Dim role As New BO.x69EntityRole_Assign()
-            role.j02ID = person.PID
-            role.x67ID = cRule.x67ID
-            lisX69.Add(role)
-        Next
-        For Each team In lisJ11
-            Dim role As New BO.x69EntityRole_Assign()
-            role.j11ID = team.PID
-            role.x67ID = cRule.x67ID
-            lisX69.Add(role)
-        Next
+        Dim c As New BO.o23Doc
+        ''c.x23ID = cRule.o24ID
+        ''c.o23Name = cO43.o43Subject
+        ''c.o23BodyPlainText = cO43.o43Body_PlainText
+        ''c.o23BodyHtml = cO43.o43Body_Html
+        ''c.o23Date = cO43.o43DateMessage
+        ''If lisP41.Count > 0 Then
+        ''    c.p41ID = lisP41(0).PID
+        ''End If
+        ''If lisP28.Count > 0 Then
+        ''    c.p28ID = lisP28(0).PID
+        ''End If
+        ''If c.p41ID = 0 And cRule.p41ID_Default <> 0 Then
+        ''    c.p41ID = cRule.p41ID_Default
+        ''End If
+        ''If Not cJ02_FROM Is Nothing Then
+        ''    c.j02ID_Owner = cJ02_FROM.PID
+        ''Else
+        ''    c.j02ID_Owner = cRule.j02ID_Owner_Default   'vlastník úkolu chybí, je třeba ho vzít z IMAP pravidla
+        ''End If
+        ''Dim cJ03 As BO.j03User = Factory.j03UserBL.LoadByJ02ID(c.j02ID_Owner)
+        ''c.SetUserInsert(cJ03.j03Login)
+        ''Dim lisX69 As New List(Of BO.x69EntityRole_Assign)
+        ''For Each person In lisJ02
+        ''    Dim role As New BO.x69EntityRole_Assign()
+        ''    role.j02ID = person.PID
+        ''    role.x67ID = cRule.x67ID
+        ''    lisX69.Add(role)
+        ''Next
+        ''For Each team In lisJ11
+        ''    Dim role As New BO.x69EntityRole_Assign()
+        ''    role.j11ID = team.PID
+        ''    role.x67ID = cRule.x67ID
+        ''    lisX69.Add(role)
+        ''Next
 
-        With Factory.o23NotepadBL
-            If .Save(c, cO43.o43RecordGUID, lisX69, Nothing) Then
+        With Factory.o23DocBL
+            If .Save(c, 0, Nothing, Nothing, Nothing, cO43.o43RecordGUID) Then
                 Return .LastSavedPID
             Else
                 cO43.o43ErrorMessage = "Chyba při pokusu o založení dokumentu: " & .ErrorMessage

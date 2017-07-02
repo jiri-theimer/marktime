@@ -89,7 +89,7 @@
             Case BO.x29IdEnum.j02Person
                 Dim cRec As BO.j02Person = Master.Factory.j02PersonBL.Load(Me.CurrentRecordPID)
                 Me.txtNewFolder.Text = cRec.FullNameDesc
-            Case BO.x29IdEnum.o23Notepad
+            Case BO.x29IdEnum.o23Doc
                 Me.txtNewFolder.Text = "Dropbox složka"
         End Select
         Me.txtNewFolder.Text = Replace(Me.txtNewFolder.Text, ".", "_")

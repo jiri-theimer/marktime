@@ -9,11 +9,11 @@
             Case BO.x29IdEnum.p41Project And bolMnozneCislo : Return "Projekty"
             Case BO.x29IdEnum.p28Contact And Not bolMnozneCislo : Return "Klient"
             Case BO.x29IdEnum.p28Contact And bolMnozneCislo : Return "Klienti"
-            Case x29IdEnum.o23Notepad And Not bolMnozneCislo : Return "Dokument"
-            Case x29IdEnum.o23Notepad And bolMnozneCislo : Return "Dokumenty"
+            Case x29IdEnum.o23Doc And Not bolMnozneCislo : Return "Dokument"
+            Case x29IdEnum.o23Doc And bolMnozneCislo : Return "Dokumenty"
             Case BO.x29IdEnum.p31Worksheet : Return "Worksheet úkon"
             Case BO.x29IdEnum.p56Task And Not bolMnozneCislo : Return "Úkol"
-            Case x29IdEnum.x25EntityField_ComboValue And Not bolMnozneCislo : Return "Štítek"
+
             Case BO.x29IdEnum.x31Report And Not bolMnozneCislo : Return "Tisková sestava"
 
             Case BO.x29IdEnum.j02Person And Not bolMnozneCislo : Return "Osoba"
@@ -24,7 +24,7 @@
             Case BO.x29IdEnum.p90Proforma And bolMnozneCislo : Return "Zálohy"
             Case BO.x29IdEnum.p56Task And Not bolMnozneCislo : Return "Úkol"
             Case BO.x29IdEnum.p56Task And bolMnozneCislo : Return "Úkoly"
-            Case x29IdEnum.x25EntityField_ComboValue And bolMnozneCislo : Return "Štítky"
+
 
 
             Case Else
@@ -51,7 +51,7 @@
             Case "j02" : Return x29IdEnum.j02Person
             Case "p56" : Return x29IdEnum.p56Task
             Case "p57" : Return x29IdEnum.p57TaskType
-            Case "o23" : Return x29IdEnum.o23Notepad
+            Case "o23" : Return x29IdEnum.o23Doc
             Case "o24" : Return x29IdEnum.o24NotepadType
             Case "o22" : Return x29IdEnum.o22Milestone
             Case "j23" : Return x29IdEnum.j23NonPerson
@@ -65,7 +65,7 @@
             Case "p48" : Return x29IdEnum.p48OperativePlan
             Case "p47" : Return x29IdEnum.p47CapacityPlan
             Case "p64" : Return x29IdEnum.p64Binder
-            Case "x25" : Return x29IdEnum.x25EntityField_ComboValue
+
             Case Else
                 Return x29IdEnum._NotSpecified
         End Select

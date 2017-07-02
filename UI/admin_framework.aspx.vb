@@ -97,7 +97,7 @@ Public Class admin_framework
                     menu1.Visible = True
             End Select
             Select Case ViewState("prefix")
-                Case "x28", "x25", "j05", "c26", "p36"
+                Case "x28", "j05", "c26", "p36"
                     query_validity.Visible = False
                 Case Else
                     query_validity.Visible = True
@@ -172,7 +172,7 @@ Public Class admin_framework
 
 
             .AddItem("Dokumenty", "o23", , , "Images/notepad.png")
-            .AddItem("Typy dokumentů", "o24", NU("o24"), "o23")
+
             .AddItem("Role v dokumentu", "o23_x67", NU("o23_x67"), "o23")
 
 
@@ -225,7 +225,7 @@ Public Class admin_framework
             .AddItem("Katalog polí", "x28", NU("x28"), "ff")
 
             .AddItem("Combo seznamy", "x23", NU("x23"), "ff")
-            .AddItem("Combo položky", "x25", NU("x25"), "ff")
+
             .AddItem("Skupiny uživatelských polí", "x27", NU("x27"), "ff")
 
             .AddItem("Ostatní nastavení", "other", , , "Images/more.png")
@@ -349,11 +349,7 @@ Public Class admin_framework
                 Case "j18"
                     .AddColumn("j18Name", "Název střediska")
                     .AddColumn("j18Ordinary", "#", BO.cfENUM.Numeric0)
-                Case "o24"
-                    .AddColumn("o24Name", "Název typu")
-                    .AddColumn("x29Name", "Entita")
-                    .AddColumn("b01Name", "Workflow šablona")
-                    .AddColumn("o24Ordinary", "#", BO.cfENUM.Numeric0)
+               
                 Case "j61"
                     .AddColumn("j61Name", "Název šablony")
                     .AddColumn("Owner", "Vlastník")
@@ -490,10 +486,7 @@ Public Class admin_framework
                 Case "p29"
                     .AddColumn("p29Name", "Název")
                     .AddColumn("p29Ordinary", "#", BO.cfENUM.Numeric0)
-                Case "x25"
-                    .AddColumn("x23Name", "Combo seznam")
-                    .AddColumn("x25Name", "Název položky")
-                    .AddColumn("x25Ordinary", "#", BO.cfENUM.Numeric0)
+                
                 Case "x23"
                     .AddColumn("x23Name", "Název")
                     .AddColumn("x23Ordinary", "#", BO.cfENUM.Numeric0)
@@ -725,9 +718,7 @@ Public Class admin_framework
                 Case "p50"
                     Dim lis As IEnumerable(Of BO.p50OfficePriceList) = .p50OfficePriceListBL.GetList(mqDef)
                     grid1.DataSource = lis
-                Case "o24"
-                    Dim lis As IEnumerable(Of BO.o24NotepadType) = .o24NotepadTypeBL.GetList(mqDef)
-                    grid1.DataSource = lis
+              
                 Case "p41_o21", "p28_o21", "j02_o21"
                     Dim x29id As BO.x29IdEnum = BO.BAS.GetX29FromPrefix(Left(ViewState("prefix"), 3))
                     Dim lis As IEnumerable(Of BO.o21MilestoneType) = .o21MilestoneTypeBL.GetList(mqDef).Where(Function(p) p.x29ID = x29id)
@@ -799,9 +790,7 @@ Public Class admin_framework
                 Case "x23"
                     Dim lis As IEnumerable(Of BO.x23EntityField_Combo) = .x23EntityField_ComboBL.GetList(mqDef)
                     grid1.DataSource = lis
-                Case "x25"
-                    Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = .x25EntityField_ComboValueBL.GetList(New BO.myQueryX25(0))
-                    grid1.DataSource = lis
+               
                 
                 Case "x46"
                     Dim lis As IEnumerable(Of BO.x46EventNotification) = .x46EventNotificationBL.GetList(mqDef)

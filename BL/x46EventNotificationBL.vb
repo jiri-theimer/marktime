@@ -115,25 +115,22 @@ Class x46EventNotificationBL
                     If .x29ID = BO.x29IdEnum.p91Invoice Then objectReference = Factory.p91InvoiceBL.Load(.b07RecordPID)
                     If .x29ID = BO.x29IdEnum.o22Milestone Then objectReference = Factory.o22MilestoneBL.Load(.b07RecordPID)
                     If .x29ID = BO.x29IdEnum.p31Worksheet Then objectReference = Factory.p31WorksheetBL.Load(.b07RecordPID)
-                    If .x29ID = BO.x29IdEnum.o23Notepad Then
-                        Dim c As BO.o23Notepad = Factory.o23NotepadBL.Load(.b07RecordPID)
+                    If .x29ID = BO.x29IdEnum.o23Doc Then
+                        Dim c As BO.o23Doc = Factory.o23DocBL.Load(.b07RecordPID)
                         If c.o23IsEncrypted Then
-                            c.o23BodyPlainText = "Obsah je zašifrovaný."
+                            c.o23BigText = "Obsah je zašifrovaný."
                         End If
                         objectReference = c
                     End If
                 End With
-            Case BO.x29IdEnum.o23Notepad
-                Dim cRec As BO.o23Notepad = Factory.o23NotepadBL.Load(cX47.x47RecordPID)
+            Case BO.x29IdEnum.o23Doc
+                Dim cRec As BO.o23Doc = Factory.o23DocBL.Load(cX47.x47RecordPID)
                 intJ02ID_Owner = cRec.j02ID_Owner
                 If cRec.o23IsEncrypted Then
-                    cRec.o23BodyPlainText = "Obsah je zašifrovaný."
+                    cRec.o23BigText = "Obsah je zašifrovaný."
                 End If
                 objects.Add(cRec)
-                With cRec
-                    If .p41ID > 0 Then objectReference = Factory.p41ProjectBL.Load(.p41ID)
-                    If .p28ID > 0 Then objectReference = Factory.p28ContactBL.Load(.p28ID)
-                End With
+                
             Case BO.x29IdEnum.o22Milestone
                 Dim cRec As BO.o22Milestone = Factory.o22MilestoneBL.Load(cX47.x47RecordPID)
                 intJ02ID_Owner = cRec.j02ID_Owner

@@ -1,7 +1,7 @@
 ﻿Public Class x19EntityCategory_Binding
     Inherits BOMother
     Public Property x20ID As Integer
-    Public Property x25ID As Integer
+    Public Property o23ID As Integer
     Public Property x19RecordPID As Integer
 
     Private Property _RecordAlias As String
@@ -29,17 +29,17 @@
             Return _x18Name
         End Get
     End Property
-    
+
     Private Property _x18Icon As String
     Public ReadOnly Property x18Icon As String
         Get
             Return _x18Icon
         End Get
     End Property
-    Private Property _x25Name As String
-    Public ReadOnly Property x25Name As String
+    Private Property _o23Name As String
+    Public ReadOnly Property o23Name As String
         Get
-            Return _x25Name
+            Return _o23Name
         End Get
     End Property
     Private Property _NameWithCode As String

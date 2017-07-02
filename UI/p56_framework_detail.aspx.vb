@@ -161,18 +161,7 @@
         Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p56Task, cRec.PID)
         Me.roles_task.RefreshData(lisX69, cRec.PID)
 
-        Dim mqO23 As New BO.myQueryO23
-        mqO23.p56ID = Master.DataPID
-        Dim lisO23 As IEnumerable(Of BO.o23Notepad) = Master.Factory.o23NotepadBL.GetList(mqO23)
-        If lisO23.Count > 0 Then
-            Me.boxO23.Visible = True
-            notepad1.RefreshData(lisO23, Master.DataPID)
-            With Me.boxO23Title
-                .Text = BO.BAS.OM2(.Text, lisO23.Count.ToString)
-            End With
-        Else
-            Me.boxO23.Visible = False
-        End If
+        
 
         labels1.RefreshData(Master.Factory, BO.x29IdEnum.p56Task, cRec.PID)
         boxX18.Visible = labels1.ContainsAnyData

@@ -10,14 +10,14 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
-                .HeaderText = "Položky štítku"
+                .HeaderText = "Položky štítku (typu dokumentu)"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .DataPID = 0 Then .StopPage("pid missing")
 
                 If Not .Factory.TestPermission(BO.x53PermValEnum.GR_X18_Admin) Then
                     If Not .Factory.x67EntityRoleBL.TestEntityRolePermission(BO.x29IdEnum.x18EntityCategory, .DataPID, 1, False) Then
                         've štítkové roli má oprávnění být vlastníkem všech úkolů
-                        .StopPage("Nemáte oprávnění spravovat položky u tohoto štítku.")
+                        .StopPage("Nemáte oprávnění spravovat položky u tohoto štítku (typu dokumentu).")
                     End If
                 End If
 
@@ -45,8 +45,8 @@
 
     End Sub
     Private Sub RefreshItems()
-        rpX25.DataSource = Master.Factory.x25EntityField_ComboValueBL.GetList(New BO.myQueryX25(CInt(Me.hidX23ID.Value)))
-        rpX25.DataBind()
+        rpO23.DataSource = Master.Factory.o23DocBL.GetList(New BO.myQueryO23(CInt(Me.hidX23ID.Value)))
+        rpO23.DataBind()
 
     End Sub
 End Class

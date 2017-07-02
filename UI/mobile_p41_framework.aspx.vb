@@ -102,10 +102,10 @@
         
         Me.roles_project.RefreshData(lisX69, cRec.PID)
 
-        Dim mqO23 As New BO.myQueryO23
-        mqO23.p41ID = Master.DataPID
+        Dim mqO23 As New BO.myQueryO23(0)
+        mqO23.p41IDs = BO.BAS.ConvertInt2List(Master.DataPID)
         mqO23.SpecificQuery = BO.myQueryO23_SpecificQuery.AllowedForRead
-        Dim lisO23 As IEnumerable(Of BO.o23Notepad) = Master.Factory.o23NotepadBL.GetList(mqO23)
+        Dim lisO23 As IEnumerable(Of BO.o23Doc) = Master.Factory.o23DocBL.GetList(mqO23)
         If lisO23.Count > 0 Then
             Me.boxO23.Visible = True
             notepad1.RefreshData(lisO23, cRec.PID)

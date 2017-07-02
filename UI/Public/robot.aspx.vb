@@ -136,7 +136,7 @@
         _Factory.o22MilestoneBL.Handle_Reminder()
     End Sub
     Public Sub Handle_o23Reminder()
-        _Factory.o23NotepadBL.Handle_Reminder()
+        _Factory.o23DocBL.Handle_Reminder()
     End Sub
     Public Sub Handle_p56Reminder()
         _Factory.p56TaskBL.Handle_Reminder()

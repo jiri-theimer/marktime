@@ -20,124 +20,61 @@ Partial Public Class o23_framework_detail
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents menu1 As Global.UI.entity_menu
+    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadNavigation
 
     '''<summary>
-    '''tableRecord control.
+    '''begin control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents tableRecord As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents begin As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
-    '''imgRecord control.
+    '''reload control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents imgRecord As Global.System.Web.UI.WebControls.Image
+    Protected WithEvents reload As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
-    '''boxCoreTitle control.
+    '''record control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents boxCoreTitle As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents record As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
-    '''lblPermissionMessage control.
+    '''cmdNew control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblPermissionMessage As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents cmdNew As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
-    '''o23Name control.
+    '''cmdEdit control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents o23Name As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents cmdEdit As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
-    '''imgDraft control.
+    '''cmdClone control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents imgDraft As Global.System.Web.UI.WebControls.Image
-
-    '''<summary>
-    '''panDraftCommands control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panDraftCommands As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''lblType control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblType As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''clue_o24 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents clue_o24 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''o24Name control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents o24Name As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''trWorkflow control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents trWorkflow As Global.System.Web.UI.HtmlControls.HtmlTableRow
-
-    '''<summary>
-    '''lblB02ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblB02ID As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''b02Name control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents b02Name As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents cmdClone As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
     '''cmdWorkflow control.
@@ -146,286 +83,52 @@ Partial Public Class o23_framework_detail
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdWorkflow As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents cmdWorkflow As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
-    '''lblBind control.
+    '''cmdReport control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblBind As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents cmdReport As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
-    '''clue_bind_entity control.
+    '''cmdEmail control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents clue_bind_entity As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents cmdEmail As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
-    '''BindEntity control.
+    '''imgIcon32 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents BindEntity As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents imgIcon32 As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
-    '''trBindTemp control.
+    '''rec1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents trBindTemp As Global.System.Web.UI.HtmlControls.HtmlTableRow
+    Protected WithEvents rec1 As Global.UI.o23_record_readonly
 
     '''<summary>
-    '''lblBindTemp control.
+    '''roles1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblBindTemp As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''clue_bindtemp_entity control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents clue_bindtemp_entity As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''BindTempEntity control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents BindTempEntity As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''lblDate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblDate As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''o23Date control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents o23Date As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Label1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Owner control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Owner As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''roles_notepad control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents roles_notepad As Global.UI.entityrole_assign_inline
-
-    '''<summary>
-    '''Timestamp control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Timestamp As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''filesPreview control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents filesPreview As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''Fileupload_list__readonly control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Fileupload_list__readonly As Global.UI.fileupload_list
-
-    '''<summary>
-    '''upload1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents upload1 As Global.UI.fileupload
-
-    '''<summary>
-    '''boxFF control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxFF As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''boxFFTitle control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxFFTitle As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''chkFFShowFilledOnly control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkFFShowFilledOnly As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''ff1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ff1 As Global.UI.freefields_readonly
-
-    '''<summary>
-    '''boxIMAP control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxIMAP As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''imap1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents imap1 As Global.UI.imap_record
-
-    '''<summary>
-    '''boxDropbox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxDropbox As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''dropbox1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents dropbox1 As Global.UI.dropbox
-
-    '''<summary>
-    '''panBody control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panBody As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''o23BodyPlainText control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents o23BodyPlainText As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''boxX18 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxX18 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''labels1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents labels1 As Global.UI.x18_readonly
-
-    '''<summary>
-    '''panEntryPassword control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panEntryPassword As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''txtEntryPassword control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtEntryPassword As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''cmdDecrypt control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdDecrypt As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents roles1 As Global.UI.entityrole_assign_inline
 
     '''<summary>
     '''comments1 control.
@@ -437,31 +140,22 @@ Partial Public Class o23_framework_detail
     Protected WithEvents comments1 As Global.UI.b07_list
 
     '''<summary>
-    '''hidHardRefreshFlag control.
+    '''hidX18ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidHardRefreshFlag As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidX18ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidHardRefreshPID control.
+    '''hidB01ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidHardRefreshPID As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''cmdRefresh control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents hidB01ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

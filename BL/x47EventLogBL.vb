@@ -64,13 +64,9 @@ Class x47EventLogBL
                     Case BO.x29IdEnum.p56Task
                         Dim c As BO.p56Task = Factory.p56TaskBL.Load(.x47RecordPID)
                         If c.p41ID > 0 Then .x29ID_Reference = BO.x29IdEnum.p41Project : .x47RecordPID_Reference = c.p41ID
-                    Case BO.x29IdEnum.o23Notepad
-                        Dim c As BO.o23Notepad = Factory.o23NotepadBL.Load(.x47RecordPID)
-                        If c.p41ID > 0 Then .x29ID_Reference = BO.x29IdEnum.p41Project : .x47RecordPID_Reference = c.p41ID
-                        If c.p28ID > 0 Then .x29ID_Reference = BO.x29IdEnum.p28Contact : .x47RecordPID_Reference = c.p28ID
-                        If c.j02ID > 0 Then .x29ID_Reference = BO.x29IdEnum.j02Person : .x47RecordPID_Reference = c.j02ID
-                        If c.p91ID > 0 Then .x29ID_Reference = BO.x29IdEnum.p91Invoice : .x47RecordPID_Reference = c.p91ID
-                        If c.p56ID > 0 Then .x29ID_Reference = BO.x29IdEnum.p56Task : .x47RecordPID_Reference = c.p56ID
+                    Case BO.x29IdEnum.o23Doc
+                        Dim c As BO.o23Doc = Factory.o23DocBL.Load(.x47RecordPID)
+                        
                     Case BO.x29IdEnum.b07Comment
                         Dim c As BO.b07Comment = Factory.b07CommentBL.Load(.x47RecordPID)
                         .x29ID_Reference = c.x29ID

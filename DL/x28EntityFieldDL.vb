@@ -167,7 +167,7 @@
             Case BO.x29IdEnum.p91Invoice : Return 392
             Case BO.x29IdEnum.p31Worksheet : Return 334
             Case BO.x29IdEnum.j02Person : Return 107
-            Case BO.x29IdEnum.o23Notepad : Return 224
+            Case BO.x29IdEnum.o23Doc : Return 918
             Case BO.x29IdEnum.p56Task : Return 357
             Case Else
                 Return 0
@@ -213,8 +213,7 @@
                     dr = _cDB.GetDataReader("select * from p56Task_FreeField WHERE p56ID=" & intRecordPID.ToString)
                 Case BO.x29IdEnum.j02Person
                     dr = _cDB.GetDataReader("select * from j02Person_FreeField WHERE j02ID=" & intRecordPID.ToString)
-                Case BO.x29IdEnum.o23Notepad
-                    dr = _cDB.GetDataReader("select * from o23Notepad_FreeField WHERE o23ID=" & intRecordPID.ToString)
+                
                 Case BO.x29IdEnum.o22Milestone
                     dr = _cDB.GetDataReader("select * from o22Milestone_FreeField WHERE o22ID=" & intRecordPID.ToString)
             End Select

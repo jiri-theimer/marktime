@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="x25_scheduler.aspx.vb" Inherits="UI.x25_scheduler" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="o23_scheduler.aspx.vb" Inherits="UI.o23_scheduler" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
@@ -102,13 +102,13 @@
 
         function hardrefresh(pid, flag) {
 
-            location.replace("x25_scheduler.aspx");
+            location.replace("o23_scheduler.aspx");
 
         }
 
-        function x25_record(pid) {
+        function o23_record(pid) {
 
-            sw_master("x25_record.aspx?x18id=<%=me.CurrentX18ID%>&pid=" + pid, "Images/label.png")
+            sw_master("o23_record.aspx?x18id=<%=me.CurrentX18ID%>&pid=" + pid, "Images/label.png")
         }
 
 
@@ -117,8 +117,8 @@
 
 
         function re(pid, prefix) {
-            if (prefix == 'x25')
-                x25_record(pid);
+            if (prefix == 'o23')
+                o23_record(pid);
 
 
         }
@@ -138,7 +138,7 @@
             }
 
             
-            var url = "x25_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&x18id=<%=Me.CurrentX18ID%>";
+            var url = "o23_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&x18id=<%=Me.CurrentX18ID%>";
 
 
 
@@ -159,7 +159,7 @@
 
 
 
-            var url = "x25_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&x18id=<%=Me.CurrentX18ID%>";
+            var url = "o23_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&x18id=<%=Me.CurrentX18ID%>";
 
 
 
@@ -259,17 +259,17 @@
 
         function x18id_onchange(ctl) {
 
-            $.post("Handler/handler_userparam.ashx", { x36value: ctl.value, x36key: "x25_framework-x18id", oper: "set" }, function (data) {
+            $.post("Handler/handler_userparam.ashx", { x36value: ctl.value, x36key: "o23_framework-x18id", oper: "set" }, function (data) {
                 if (data == ' ') {
                     return;
                 }
 
             });
 
-            location.replace("x25_scheduler.aspx?x18id=" + ctl.value);
+            location.replace("o23_scheduler.aspx?x18id=" + ctl.value);
         }
         function switch2grid(){
-            location.replace("x25_framework.aspx?x18id=<%=me.CurrentX18ID%>");
+            location.replace("o23_framework.aspx?x18id=<%=me.CurrentX18ID%>");
         }
     </script>
 
@@ -286,7 +286,7 @@
             </div>            
             <div class="div6" style="float: left;">
 
-                <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="false" BackColor="Yellow" onchange="x18id_onchange(this)" DataTextField="x18Name" DataValueField="pid" Style="width: 200px;" ToolTip="Štítek"></asp:DropDownList>                
+                <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="false" BackColor="Yellow" onchange="x18id_onchange(this)" DataTextField="x18Name" DataValueField="pid" Style="width: 200px;" ToolTip="Typ dokumentu"></asp:DropDownList>                
             </div>
             
 
@@ -480,7 +480,7 @@
                 <TimeSlotContextMenus>
                     <telerik:RadSchedulerContextMenu>
                         <Items>
-                            <telerik:RadMenuItem Text="Nový záznam" ImageUrl="Images/new.png"  Value="x25"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Nový záznam" ImageUrl="Images/new.png"  Value="o23"></telerik:RadMenuItem>
                             <telerik:RadMenuItem IsSeparator="true" Text="."></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Jdi na DNES" Value="CommandGoToToday" />
                         </Items>

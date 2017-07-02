@@ -205,14 +205,7 @@
                 rate_j27ident.Visible = False
             End If
 
-            Dim mqO23 As New BO.myQueryO23
-            mqO23.p31ID = Master.DataPID
-            Dim lisO23 As IEnumerable(Of BO.o23Notepad) = Master.Factory.o23NotepadBL.GetList(mqO23)
-            If lisO23.Count > 0 Then
-                notepad1.RefreshData(lisO23, Master.DataPID)
-            Else
-                Me.boxO23.Visible = False
-            End If
+           
             labels1.RefreshData(Master.Factory, BO.x29IdEnum.p31Worksheet, .PID)
 
             Me.Timestamp.Text = .Timestamp & " | Vlastník záznamu: <span class='val'>" & .Owner & "</span>"

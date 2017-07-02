@@ -206,24 +206,7 @@
         Me.roles_project.RefreshData(lisX69, cRec.PID)
 
 
-        If cRecSum.o23_Count > 0 And cP42.p42SubgridO23Flag = 0 Then
-            Dim mqO23 As New BO.myQueryO23
-            mqO23.p41ID = Master.DataPID
-            mqO23.SpecificQuery = BO.myQueryO23_SpecificQuery.AllowedForRead
-            Dim lisO23 As IEnumerable(Of BO.o23Notepad) = Master.Factory.o23NotepadBL.GetList(mqO23)
-            If lisO23.Count > 0 Then
-                Me.boxO23.Visible = True
-                With Me.boxO23Title
-                    .Text = BO.BAS.OM2(.Text, lisO23.Count.ToString)
-                End With
-                notepad1.RefreshData(lisO23, Master.DataPID)
-            Else
-                boxO23.Visible = False
-            End If
-        Else
-            Me.boxO23.Visible = False
-        End If
-
+        
         If cRecSum.p30_Exist Then
             Dim lisP30 As IEnumerable(Of BO.j02Person) = Master.Factory.p30Contact_PersonBL.GetList_J02(cRec.p28ID_Client, Master.DataPID, False)
             If lisP30.Count > 0 Then

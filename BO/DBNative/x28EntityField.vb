@@ -84,7 +84,7 @@ Public Class x28EntityField
                 Case BO.x29IdEnum.j02Person : Return "j02Person_FreeField"
                 Case BO.x29IdEnum.p56Task : Return "p56Task_FreeField"
                 Case x29IdEnum.p31Worksheet : Return "p31WorkSheet_FreeField"
-                Case x29IdEnum.o23Notepad : Return "o23Notepad_FreeField"
+
                 Case Else
                     Return ""
             End Select

@@ -128,7 +128,7 @@ Public Class entity_menu
 
             Case "o23"
                 s = "<img src='Images/notepad_32.png' style='position:absolute;left:5px;top:" & strTop & ";'/>"
-                cbx.WebServiceSettings.Path = "~/Services/notepad_service.asmx"
+                cbx.WebServiceSettings.Path = "~/Services/doc_service.asmx"
                 cbx.ToolTip = "Hledat dokument"
                
             Case "p41"
@@ -833,64 +833,7 @@ Public Class entity_menu
 
     End Sub
 
-    Public Sub o23_RefreshRecord(cRec As BO.o23Notepad, strTabValue As String, Optional cDisp As BO.o23RecordDisposition = Nothing)
-        If cRec Is Nothing Then Return
-        Me.DataPID = cRec.PID
-        If cDisp Is Nothing Then cDisp = Me.Factory.o23NotepadBL.InhaleRecordDisposition(cRec)
 
-        cti("Dokument", "board")
-
-        o23_SetupMenu(cRec, cDisp)
-
-        Me.CurrentTab = strTabValue
-        Handle_SelectedTab()
-
-
-    End Sub
-
-    Private Sub o23_SetupMenu(cRec As BO.o23Notepad, cDisp As BO.o23RecordDisposition)
-        If cRec.IsClosed Then menu1.Skin = "Black"
-        If cDisp Is Nothing Then cDisp = Me.Factory.o23NotepadBL.InhaleRecordDisposition(cRec)
-        If Not cDisp.ReadAccess Then
-            Handle_NoAccess("Nedisponujete oprávněním přistupovat k dokumentu.")
-        End If
-        'If FNO("level1").Visible Then
-        '    basUIMT.RenderLevelLink(FNO("level1"), cRec.o24Name & ": " & cRec.o23Code, "o23_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, cRec.IsClosed)
-        'Else
-        '    FNO("reload").NavigateUrl = "o23_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
-        'End If
-        FNO("reload").NavigateUrl = "o23_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
-
-        Dim mi As navigationnode = FNO("record")
-        If mi.nodes.Count > 0 Then Return 'menu už bylo dříve zpracované
-
-        mi.Text = "ZÁZNAM DOKUMENTU"
-        If cDisp.OwnerAccess Then
-            ami("Upravit kartu dokumentu", "cmdEdit", "javascript:record_edit();", "Images/edit.png", mi, "Zahrnuje i možnost uzavření (přesunutí do archivu) nebo nenávratného odstranění.")
-        End If
-        If Me.Factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator) Then
-            ami("Vytvořit dokument", "cmdNew", "javascript:menu_o23_record(0);", "Images/new.png", mi, , True)
-        End If
-        If cDisp.OwnerAccess Then
-            ami("Vytvořit dokument kopírováním", "cmdCopy", "javascript:record_clone();", "Images/copy.png", mi, "Nový dokument se kompletně předvyplní podle vzoru tohoto záznamu.")
-        End If
-        If cDisp.LockUnlockFiles_Flag1 Then
-            If cRec.o23LockedFlag = BO.o23LockedTypeENUM.LockAllFiles Then
-                ami("Otevřít přístup k souborům dokumentu", "cmdLockUnlockFlag1", "javascript:hardrefresh(-1,'lockunlock');", "Images/unlock.png", mi, , True)
-            Else
-                ami("Dočasně uzavřít přístup k souborům dokumentu", "cmdLockUnlockFlag1", "javascript:hardrefresh(-1,'lockunlock');", "Images/lock.png", mi, , True)
-            End If
-
-        End If
-        If cRec.b02ID = 0 Then
-            If cDisp.Comments Then ami("Doplnit poznámku, komentář, přílohu", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
-        Else
-            ami("Posunout/doplnit", "cmdWorkflow", "javascript:workflow();", "Images/workflow.png", mi, , True)
-        End If
-        ami("Tisková sestava/pdf/e-mail", "cmdReport", "javascript:report();", "Images/report.png", mi, , True)
-        ami("Odeslat e-mail", "cmdMail", "javascript:menu_sendmail();", "Images/email.png", mi, , True)
-        ami("Čárový kód", "barcode", "javascript:menu_barcode()", "Images/barcode.png", mi)
-    End Sub
 
     Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
         Select Case hidSource.Value

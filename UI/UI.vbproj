@@ -192,7 +192,7 @@
     <Content Include="clue_p41_myworksheet.aspx" />
     <Content Include="clue_p48_record.aspx" />
     <Content Include="clue_search.aspx" />
-    <Content Include="clue_x25_record.aspx" />
+    <Content Include="clue_o23_record.aspx" />
     <Content Include="email_receiver.ascx" />
     <Content Include="entity_framework.aspx" />
     <Content Include="entity_framework_detail_setting.aspx" />
@@ -223,7 +223,6 @@
     <Content Include="mobile_grid.aspx" />
     <Content Include="mobile_j02_framework.aspx" />
     <Content Include="mobile_o22_framework.aspx" />
-    <Content Include="mobile_o23_framework.aspx" />
     <Content Include="mobile_p28_framework.aspx" />
     <Content Include="mobile_p31_calendar.aspx" />
     <Content Include="mobile_p31_framework.aspx" />
@@ -242,12 +241,8 @@
     <Content Include="mygrid.ascx" />
     <Content Include="myscheduler.ascx" />
     <Content Include="navigator.aspx" />
-    <Content Include="o23_batch.aspx" />
-    <Content Include="o23_framework.aspx" />
-    <Content Include="o23_framework_detail.aspx" />
-    <Content Include="o23_queue.aspx" />
+    <Content Include="o23_list.ascx" />
     <Content Include="o23_subgrid.ascx" />
-    <Content Include="o24_record.aspx" />
     <Content Include="o41_record.aspx" />
     <Content Include="o42_record.aspx" />
     <Content Include="o48_record.aspx" />
@@ -298,7 +293,6 @@
     <Content Include="clue_j02_month.aspx" />
     <Content Include="clue_j18_record.aspx" />
     <Content Include="clue_o22_record.aspx" />
-    <Content Include="clue_o23_record.aspx" />
     <Content Include="clue_p28_record.aspx" />
     <Content Include="clue_p31_record.aspx" />
     <Content Include="clue_p40_record.aspx" />
@@ -408,7 +402,7 @@
     <Content Include="Services\combo_external_datasource.asmx" />
     <Content Include="Services\fulltext_service.asmx" />
     <Content Include="Services\invoice_service.asmx" />
-    <Content Include="Services\notepad_service.asmx" />
+    <Content Include="Services\doc_service.asmx" />
     <Content Include="Services\task_service.asmx" />
     <Content Include="Styles\SiteMobile_v2.css" />
     <Content Include="sumgrid_designer.aspx" />
@@ -418,8 +412,6 @@
     <Content Include="o21_record.aspx" />
     <Content Include="o22_record.aspx" />
     <Content Include="o22_scheduler.aspx" />
-    <Content Include="o23_list.ascx" />
-    <Content Include="o23_record.aspx" />
     <Content Include="p28_address.ascx" />
     <Content Include="p28_medium.ascx" />
     <Content Include="p31_approve_onerec.ascx" />
@@ -535,12 +527,12 @@
     <Content Include="x18_readonly.ascx" />
     <Content Include="x18_record.aspx" />
     <Content Include="x23_record.aspx" />
-    <Content Include="x25_framework.aspx" />
-    <Content Include="x25_framework_detail.aspx" />
-    <Content Include="x25_record.aspx" />
-    <Content Include="x25_record_readonly.ascx" />
-    <Content Include="x25_record_readonly.aspx" />
-    <Content Include="x25_scheduler.aspx" />
+    <Content Include="o23_framework.aspx" />
+    <Content Include="o23_framework_detail.aspx" />
+    <Content Include="o23_record.aspx" />
+    <Content Include="o23_record_readonly.ascx" />
+    <Content Include="o23_record_readonly.aspx" />
+    <Content Include="o23_scheduler.aspx" />
     <Content Include="x27_record.aspx" />
     <Content Include="x28_record.aspx" />
     <Content Include="x31_record.aspx" />
@@ -816,11 +808,11 @@
       <DependentUpon>clue_search.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="clue_x25_record.aspx.designer.vb">
-      <DependentUpon>clue_x25_record.aspx</DependentUpon>
+    <Compile Include="clue_o23_record.aspx.designer.vb">
+      <DependentUpon>clue_o23_record.aspx</DependentUpon>
     </Compile>
-    <Compile Include="clue_x25_record.aspx.vb">
-      <DependentUpon>clue_x25_record.aspx</DependentUpon>
+    <Compile Include="clue_o23_record.aspx.vb">
+      <DependentUpon>clue_o23_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="email_receiver.ascx.designer.vb">
@@ -926,9 +918,6 @@
     </Compile>
     <Compile Include="Handler\handler_p45_project.ashx.vb">
       <DependentUpon>handler_p45_project.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Handler\handler_search_notepad.ashx.vb">
-      <DependentUpon>handler_search_notepad.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handler\handler_search_task.ashx.vb">
       <DependentUpon>handler_search_task.ashx</DependentUpon>
@@ -1043,13 +1032,6 @@
     </Compile>
     <Compile Include="mobile_o22_framework.aspx.vb">
       <DependentUpon>mobile_o22_framework.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="mobile_o23_framework.aspx.designer.vb">
-      <DependentUpon>mobile_o23_framework.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="mobile_o23_framework.aspx.vb">
-      <DependentUpon>mobile_o23_framework.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="mobile_p28_framework.aspx.designer.vb">
@@ -1178,33 +1160,12 @@
       <DependentUpon>navigator.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="o23_batch.aspx.designer.vb">
-      <DependentUpon>o23_batch.aspx</DependentUpon>
+    <Compile Include="o23_list.ascx.designer.vb">
+      <DependentUpon>o23_list.ascx</DependentUpon>
     </Compile>
-    <Compile Include="o23_batch.aspx.vb">
-      <DependentUpon>o23_batch.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="o23_framework.aspx.designer.vb">
-      <DependentUpon>o23_framework.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="o23_framework.aspx.vb">
-      <DependentUpon>o23_framework.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="o23_framework_detail.aspx.designer.vb">
-      <DependentUpon>o23_framework_detail.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="o23_framework_detail.aspx.vb">
-      <DependentUpon>o23_framework_detail.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="o23_queue.aspx.designer.vb">
-      <DependentUpon>o23_queue.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="o23_queue.aspx.vb">
-      <DependentUpon>o23_queue.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+    <Compile Include="o23_list.ascx.vb">
+      <DependentUpon>o23_list.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="o23_subgrid.ascx.designer.vb">
       <DependentUpon>o23_subgrid.ascx</DependentUpon>
@@ -1212,13 +1173,6 @@
     <Compile Include="o23_subgrid.ascx.vb">
       <DependentUpon>o23_subgrid.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="o24_record.aspx.designer.vb">
-      <DependentUpon>o24_record.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="o24_record.aspx.vb">
-      <DependentUpon>o24_record.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="o41_record.aspx.designer.vb">
       <DependentUpon>o41_record.aspx</DependentUpon>
@@ -1585,13 +1539,6 @@
     </Compile>
     <Compile Include="clue_o22_record.aspx.vb">
       <DependentUpon>clue_o22_record.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="clue_o23_record.aspx.designer.vb">
-      <DependentUpon>clue_o23_record.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="clue_o23_record.aspx.vb">
-      <DependentUpon>clue_o23_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="clue_p28_record.aspx.designer.vb">
@@ -2266,8 +2213,8 @@
       <DependentUpon>invoice_service.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Services\notepad_service.asmx.vb">
-      <DependentUpon>notepad_service.asmx</DependentUpon>
+    <Compile Include="Services\doc_service.asmx.vb">
+      <DependentUpon>doc_service.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\task_service.asmx.vb">
@@ -2321,20 +2268,6 @@
     </Compile>
     <Compile Include="o22_scheduler.aspx.vb">
       <DependentUpon>o22_scheduler.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="o23_list.ascx.designer.vb">
-      <DependentUpon>o23_list.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="o23_list.ascx.vb">
-      <DependentUpon>o23_list.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="o23_record.aspx.designer.vb">
-      <DependentUpon>o23_record.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="o23_record.aspx.vb">
-      <DependentUpon>o23_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p28_address.ascx.designer.vb">
@@ -3096,46 +3029,46 @@
       <DependentUpon>x23_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="x25_framework.aspx.designer.vb">
-      <DependentUpon>x25_framework.aspx</DependentUpon>
+    <Compile Include="o23_framework.aspx.designer.vb">
+      <DependentUpon>o23_framework.aspx</DependentUpon>
     </Compile>
-    <Compile Include="x25_framework.aspx.vb">
-      <DependentUpon>x25_framework.aspx</DependentUpon>
+    <Compile Include="o23_framework.aspx.vb">
+      <DependentUpon>o23_framework.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="x25_framework_detail.aspx.designer.vb">
-      <DependentUpon>x25_framework_detail.aspx</DependentUpon>
+    <Compile Include="o23_framework_detail.aspx.designer.vb">
+      <DependentUpon>o23_framework_detail.aspx</DependentUpon>
     </Compile>
-    <Compile Include="x25_framework_detail.aspx.vb">
-      <DependentUpon>x25_framework_detail.aspx</DependentUpon>
+    <Compile Include="o23_framework_detail.aspx.vb">
+      <DependentUpon>o23_framework_detail.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="x25_record.aspx.designer.vb">
-      <DependentUpon>x25_record.aspx</DependentUpon>
+    <Compile Include="o23_record.aspx.designer.vb">
+      <DependentUpon>o23_record.aspx</DependentUpon>
     </Compile>
-    <Compile Include="x25_record.aspx.vb">
-      <DependentUpon>x25_record.aspx</DependentUpon>
+    <Compile Include="o23_record.aspx.vb">
+      <DependentUpon>o23_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="x25_record_readonly.ascx.designer.vb">
-      <DependentUpon>x25_record_readonly.ascx</DependentUpon>
+    <Compile Include="o23_record_readonly.ascx.designer.vb">
+      <DependentUpon>o23_record_readonly.ascx</DependentUpon>
     </Compile>
-    <Compile Include="x25_record_readonly.ascx.vb">
-      <DependentUpon>x25_record_readonly.ascx</DependentUpon>
+    <Compile Include="o23_record_readonly.ascx.vb">
+      <DependentUpon>o23_record_readonly.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="x25_record_readonly.aspx.designer.vb">
-      <DependentUpon>x25_record_readonly.aspx</DependentUpon>
+    <Compile Include="o23_record_readonly.aspx.designer.vb">
+      <DependentUpon>o23_record_readonly.aspx</DependentUpon>
     </Compile>
-    <Compile Include="x25_record_readonly.aspx.vb">
-      <DependentUpon>x25_record_readonly.aspx</DependentUpon>
+    <Compile Include="o23_record_readonly.aspx.vb">
+      <DependentUpon>o23_record_readonly.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="x25_scheduler.aspx.designer.vb">
-      <DependentUpon>x25_scheduler.aspx</DependentUpon>
+    <Compile Include="o23_scheduler.aspx.designer.vb">
+      <DependentUpon>o23_scheduler.aspx</DependentUpon>
     </Compile>
-    <Compile Include="x25_scheduler.aspx.vb">
-      <DependentUpon>x25_scheduler.aspx</DependentUpon>
+    <Compile Include="o23_scheduler.aspx.vb">
+      <DependentUpon>o23_scheduler.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="x27_record.aspx.designer.vb">
@@ -3352,7 +3285,6 @@
     <Content Include="Handler\handler_search_person.ashx" />
     <Content Include="Mobile.Master" />
     <Content Include="Handler\handler_search_task.ashx" />
-    <Content Include="Handler\handler_search_notepad.ashx" />
     <Content Include="Handler\handler_capacity_plan.ashx" />
     <Content Include="Handler\handler_p45_project.ashx" />
     <Content Include="Clue.Master" />

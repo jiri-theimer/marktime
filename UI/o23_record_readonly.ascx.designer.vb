@@ -11,134 +11,122 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class o23_queue
+Partial Public Class o23_record_readonly
 
     '''<summary>
-    '''EntityName control.
+    '''trB02Name control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents EntityName As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents trB02Name As Global.System.Web.UI.HtmlControls.HtmlTableRow
 
     '''<summary>
-    '''EntityRecord control.
+    '''b02Name control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents EntityRecord As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents b02Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cbxGroupBy control.
+    '''trCode control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cbxGroupBy As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents trCode As Global.System.Web.UI.HtmlControls.HtmlTableRow
 
     '''<summary>
-    '''designer1 control.
+    '''o23Code control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents designer1 As Global.UI.mygrid
+    Protected WithEvents o23Code As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cbxPaging control.
+    '''trName control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents trName As Global.System.Web.UI.HtmlControls.HtmlTableRow
 
     '''<summary>
-    '''period1 control.
+    '''o23Name control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents period1 As Global.UI.periodcombo
+    Protected WithEvents o23Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''o24ID control.
+    '''rpFF control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents o24ID As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents rpFF As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
-    '''grid1 control.
+    '''rpX19 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents grid1 As Global.UI.datagrid
+    Protected WithEvents rpX19 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
-    '''hidMasterPID control.
+    '''Timestamp control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidMasterPID As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents Timestamp As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''hidMasterPrefix control.
+    '''panHtml control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidMasterPrefix As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents panHtml As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''hidMasterGUID control.
+    '''place1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidMasterGUID As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents place1 As Global.System.Web.UI.WebControls.PlaceHolder
 
     '''<summary>
-    '''hidDefaultSorting control.
+    '''hidX18ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidDefaultSorting As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidX18ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidCols control.
+    '''hidPID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidCols As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''Master property.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated property.
-    '''</remarks>
-    Public Shadows ReadOnly Property Master() As UI.ModalForm
-        Get
-            Return CType(MyBase.Master, UI.ModalForm)
-        End Get
-    End Property
+    Protected WithEvents hidPID As Global.System.Web.UI.WebControls.HiddenField
 End Class

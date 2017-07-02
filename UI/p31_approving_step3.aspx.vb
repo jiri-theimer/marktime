@@ -99,7 +99,7 @@ Public Class p31_approving_step3
 
     Private Sub RefreshRecord()
         bm1.RefreshData(Master.Factory, Me.CurrentMasterPrefix, BO.BAS.IsNullInt(Me.CurrentMasterPID))
-        bm1.HideTogleButton()
+
         If Not bm1.IsEmpty Then
             RadTabStrip1.FindTabByValue("memo").BackColor = System.Drawing.Color.FromArgb(255, 255, 204)
             RadTabStrip1.FindTabByValue("memo").Font.Bold = True

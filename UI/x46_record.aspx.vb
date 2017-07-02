@@ -133,7 +133,7 @@
                     Case BO.x29IdEnum.p56Task
                         Me.x29ID_Reference.Enabled = False
                         Me.x29ID_Reference.SelectedValue = "141"
-                    Case BO.x29IdEnum.o22Milestone, BO.x29IdEnum.o23Notepad
+                    Case BO.x29IdEnum.o22Milestone, BO.x29IdEnum.o23Doc
                         With Me.x29ID_Reference.Items
                             .FindByValue("331").Enabled = False
                             .FindByValue("223").Enabled = False

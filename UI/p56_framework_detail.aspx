@@ -5,7 +5,6 @@
 <%@ Register TagPrefix="uc" TagName="entity_menu" Src="~/entity_menu.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="entityrole_assign_inline" Src="~/entityrole_assign_inline.ascx" %>
-<%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="imap_record" Src="~/imap_record.ascx" %>
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="alertbox" Src="~/alertbox.ascx" %>
@@ -229,18 +228,7 @@
 
     </asp:Panel>
 
-    <asp:Panel ID="boxO23" runat="server" CssClass="content-box1">
-        <div class="title">
-            <img src="Images/notepad.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxO23Title" runat="server" Text="Dokumenty"></asp:Label>
-        </div>
-        <div class="content" style="overflow: auto; max-height: 200px;">
-
-            <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p56Task"></uc:o23_list>
-
-
-        </div>
-    </asp:Panel>
+    
     <asp:Panel ID="boxIMAP" runat="server" CssClass="content-box1" Visible="false">
         <div class="title">
             <img src="Images/imap.png" style="margin-right: 10px;" />
