@@ -97,10 +97,10 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div style="height: 44px; background-color: white; border-bottom: solid 1px silver">
         <div style="float: left;">
-            <img src="Images/label_32.png" alt="Štítky" />
+            <img src="Images/notepad_32.png" alt="Typy dokumentů" />
         </div>
         <div class="commandcell" style="padding-left: 10px;">
-            <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Administrace štítků" Style="vertical-align: top;"></asp:Label>
+            <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Typy dokumentů (a štítků)" Style="vertical-align: top;"></asp:Label>
 
         </div>
         
