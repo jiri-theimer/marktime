@@ -213,7 +213,7 @@
     End Sub
 
     Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
-        If panHtml.Visible And hidPID.Value <> "" Then
+        If panHtml.Visible And BO.BAS.IsNullInt(hidPID.Value, 0) > 0 Then
 
             place1.Controls.Add(New LiteralControl(Me.Factory.o23DocBL.LoadHtmlContent(CInt(hidPID.Value))))
         End If
