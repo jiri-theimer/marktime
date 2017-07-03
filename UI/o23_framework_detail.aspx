@@ -8,13 +8,18 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
 
-        function hardrefresh(pid, flag) {            
+        function hardrefresh(pid, flag) {              
+            <%If hidSource.Value <> "" Then%>
+            var url="o23_framework.aspx?prefix=o23";
+            <%Else%>
+            var url="o23_fixwork.aspx?x18id=<%=me.CurrentX18ID%>";
+            <%end If%>
             if (flag == "o23-delete") {
-                window.open("o23_framework.aspx?x18id=<%=me.CurrentX18ID%>","_top");
+                window.open(url,"_top");
                 return;
             }
-            if (flag == "o23-save") {
-                window.open("o23_framework.aspx?x18id=<%=me.CurrentX18ID%>&pid="+pid,"_top");
+            if (flag == "o23-save") {                
+                window.open(url+"&pid="+pid,"_top");
                 return;
             }
             
@@ -84,7 +89,7 @@
 
             <telerik:NavigationNode ID="reload" ImageUrl="Images/refresh.png" Text=" " ToolTip="Obnovit stránku"></telerik:NavigationNode>
            
-            <telerik:NavigationNode ID="record" Text="ZÁZNAM">
+            <telerik:NavigationNode ID="record" Text="ZÁZNAM DOKUMENTU">
                 <Nodes>
                     <telerik:NavigationNode ID="cmdNew" Text="Nový" NavigateUrl="javascript:record_create();" ImageUrl="Images/new.png"></telerik:NavigationNode>
                     <telerik:NavigationNode ID="cmdEdit" Text="Upravit" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png"></telerik:NavigationNode>
@@ -108,7 +113,7 @@
     <div class="div6">
         <uc:o23_record_readonly ID="rec1" runat="server" />
     </div>
-    <div class="div6">
+    <div class="div6" style="border-top:dashed 1px silver;">
         <uc:entityrole_assign_inline ID="roles1" runat="server" EntityX29ID="o23Doc" NoDataText=""></uc:entityrole_assign_inline>
     </div>
 
@@ -120,4 +125,5 @@
 
     <asp:HiddenField ID="hidX18ID" runat="server" />
     <asp:HiddenField ID="hidB01ID" runat="server" />
+    <asp:HiddenField ID="hidSource" runat="server" />
 </asp:Content>

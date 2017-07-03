@@ -269,7 +269,7 @@
             location.replace("o23_scheduler.aspx?x18id=" + ctl.value);
         }
         function switch2grid(){
-            location.replace("o23_framework.aspx?x18id=<%=me.CurrentX18ID%>");
+            location.replace("o23_fixwork.aspx?x18id=<%=me.CurrentX18ID%>");
         }
     </script>
 

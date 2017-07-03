@@ -590,7 +590,7 @@
         If (cRec.x18DashboardFlag = BO.x18DashboardENUM.CreateLinkAndGrid Or cRec.x18DashboardFlag = BO.x18DashboardENUM.LinkOnly Or cRec.x18DashboardFlag = BO.x18DashboardENUM.ShowItemsLikeNoticeboard) And Right(cRec.x18ReportCodes, 1) = "1" Then
             With CType(e.Item.FindControl("linkFramework"), HyperLink)
                 .Visible = True
-                .NavigateUrl = "o23_framework.aspx?x18id=" & cRec.PID.ToString
+                .NavigateUrl = "o23_fixwork.aspx?x18id=" & cRec.PID.ToString
             End With
             With CType(e.Item.FindControl("linkCalendar"), HyperLink)
                 If cRec.x18IsCalendar Then

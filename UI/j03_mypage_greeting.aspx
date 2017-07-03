@@ -41,7 +41,7 @@
 
         function hardrefresh(pid, flag) {
             if (flag == "o23-save") {
-                location.replace("o23_framework.aspx?pid=" + pid);
+                location.replace("o23_fixwork.aspx?pid=" + pid);
                 return;
             }
             location.replace("default.aspx");
@@ -68,7 +68,7 @@
 
         }
         function o23_fullscreen() {
-            location.replace("o23_framework.aspx?pid=<%=rec1.pid%>");
+            location.replace("o23_fixwork.aspx?pid=<%=rec1.pid%>");
         }
     </script>
 </asp:Content>

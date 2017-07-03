@@ -13,7 +13,7 @@
 
     Private Sub RefreshRecord()
         Dim cRec As BO.o23Doc = Master.Factory.o23DocBL.Load(Master.DataPID)
-        Dim cX18 As BO.x18EntityCategory = Master.Factory.x18EntityCategoryBL.LoadByX23ID(cRec.x23ID)
+        Dim cX18 As BO.x18EntityCategory = Master.Factory.x18EntityCategoryBL.Load(cRec.x18ID)
 
 
         rec1.FillData(cRec, cX18)

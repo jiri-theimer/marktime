@@ -241,6 +241,7 @@
     <Content Include="mygrid.ascx" />
     <Content Include="myscheduler.ascx" />
     <Content Include="navigator.aspx" />
+    <Content Include="o23_framework.aspx" />
     <Content Include="o23_list.ascx" />
     <Content Include="o23_subgrid.ascx" />
     <Content Include="o41_record.aspx" />
@@ -527,7 +528,7 @@
     <Content Include="x18_readonly.ascx" />
     <Content Include="x18_record.aspx" />
     <Content Include="x23_record.aspx" />
-    <Content Include="o23_framework.aspx" />
+    <Content Include="o23_fixwork.aspx" />
     <Content Include="o23_framework_detail.aspx" />
     <Content Include="o23_record.aspx" />
     <Content Include="o23_record_readonly.ascx" />
@@ -1158,6 +1159,13 @@
     </Compile>
     <Compile Include="navigator.aspx.vb">
       <DependentUpon>navigator.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="o23_framework.aspx.designer.vb">
+      <DependentUpon>o23_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="o23_framework.aspx.vb">
+      <DependentUpon>o23_framework.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="o23_list.ascx.designer.vb">
@@ -3029,11 +3037,11 @@
       <DependentUpon>x23_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="o23_framework.aspx.designer.vb">
-      <DependentUpon>o23_framework.aspx</DependentUpon>
+    <Compile Include="o23_fixwork.aspx.designer.vb">
+      <DependentUpon>o23_fixwork.aspx</DependentUpon>
     </Compile>
-    <Compile Include="o23_framework.aspx.vb">
-      <DependentUpon>o23_framework.aspx</DependentUpon>
+    <Compile Include="o23_fixwork.aspx.vb">
+      <DependentUpon>o23_fixwork.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="o23_framework_detail.aspx.designer.vb">

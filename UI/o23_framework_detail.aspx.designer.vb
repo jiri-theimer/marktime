@@ -158,6 +158,15 @@ Partial Public Class o23_framework_detail
     Protected WithEvents hidB01ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidSource control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidSource As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

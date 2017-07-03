@@ -80,7 +80,7 @@
 
             var url = "<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid + "&source=<%=opgLayout.SelectedValue%>";
             pane.set_contentUrl(url);
-
+           
 
         }
 
@@ -166,6 +166,7 @@
                 pane.set_contentUrl(url);
                 return;
             }
+            
             if (flag == "<%=Me.CurrentPrefix%>-create" || flag == "<%=Me.CurrentPrefix%>-save") {
                 location.replace("<%=Me.CurrentPrefix%>_framework.aspx?pid=" + pid);
                 return;

@@ -28,7 +28,7 @@ Public Class o23_scheduler
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
-                .SiteMenuValue = "o23_framework"
+                .SiteMenuValue = "o23_scheduler"
                 ViewState("loading_setting") = "0"
 
                 Dim strX18ID As String = Request.Item("x18id")
@@ -433,6 +433,7 @@ Public Class o23_scheduler
 
     Private Sub InhaleMyQuery(ByRef mq As BO.myQueryO23, d1 As Date, d2 As Date)
         With mq
+            .Closed = BO.BooleanQueryMode.NoQuery
             .x23ID = BO.BAS.IsNullInt(hidX23ID.Value)
             If panWorkflow.Visible Then
                 If cbxQueryB02ID.SelectedIndex > 0 Then .b02IDs = BO.BAS.ConvertPIDs2List(cbxQueryB02ID.SelectedValue)

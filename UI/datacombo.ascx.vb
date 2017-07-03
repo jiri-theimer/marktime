@@ -329,7 +329,12 @@ Public Class datacombo
         End Set
     End Property
     Public Overrides Sub DataBind()
-        Me.cbx1.DataBind()
+        Try
+            Me.cbx1.DataBind()
+        Catch ex As Exception
+
+        End Try
+
 
 
         If IsFirstEmptyRow Then

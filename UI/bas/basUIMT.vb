@@ -257,7 +257,7 @@ Public Class basUIMT
         End If
         With cRec
             If .Item("IsO27") Then
-                Dim s As String = "<a href='fileupload_preview.aspx?prefix=o23&pid=" & cRec.Item("pid").ToString & "' target='_blank' title='Dokument má souborové přílohy'><img src='Images/attachment.png'/></a>"
+                Dim s As String = "<a href='fileupload_preview.aspx?prefix=o23&pid=" & cRec.Item("pid").ToString & "' target='_blank' title='Dokument má přílohy'><img src='Images/attachment.png'/></a>"
                 If bolShowClueTip Then
                     With dataItem.Cells
                         If .Count >= 5 Then
@@ -270,8 +270,8 @@ Public Class basUIMT
 
             End If
             If .Item("IsDraft") Then dataItem("systemcolumn").CssClass = "draft"
-            If .Item("o23IsEncrypted_Grid") Then dataItem("systemcolumn").CssClass = "spy"
-            If CType(BO.BAS.IsNullInt(.Item("o23LockedFlag_Grid")), BO.o23LockedTypeENUM) > BO.o23LockedTypeENUM._NotSpecified Then dataItem("systemcolumn").CssClass = "locked"
+            If .Item("o23IsEncrypted") Then dataItem("systemcolumn").CssClass = "spy"
+            If CType(BO.BAS.IsNullInt(.Item("o23LockedFlag")), BO.o23LockedTypeENUM) > BO.o23LockedTypeENUM._NotSpecified Then dataItem("systemcolumn").CssClass = "locked"
 
             If .Item("IsClosed") Then
                 dataItem.Font.Strikeout = True

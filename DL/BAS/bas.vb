@@ -341,8 +341,10 @@
                 Case "j11id"
                     sql.Append(" AND a.j02ID IN (SELECT j02ID FROM j12Team_Person WHERE j11ID IN (" & strIN & "))")
 
-                Case "o23id"    'štítky
+                Case "o23id"    'dokumenty
                     sql.Append(" AND " & strFK & " IN (SELECT ta.x19RecordPID FROM x19EntityCategory_Binding ta INNER JOIN x20EntiyToCategory tb ON ta.x20ID=tb.x20ID WHERE tb.x29ID=" & CInt(cRec.x29ID).ToString & " AND ta.o23ID IN (" & strIN & "))")
+                Case "x18id"
+                    sql.Append(" AND x18.x18ID IN (" & strIN & ")")
                 Case "p34id"
                     sql.Append(" AND p32.p34ID IN (" & strIN & ")")
                 Case "p95id"

@@ -41,6 +41,7 @@
             cX18 = Me.Factory.x18EntityCategoryBL.Load(Me.X18ID)
         End If
         With cRec
+            Me.x18Name.Text = .DocType
             If .o23Name <> "" Then
                 Me.o23Name.Text = .o23Name
                 If .o23BackColor <> "" Then Me.o23Name.Style.Item("background-color") = .o23BackColor

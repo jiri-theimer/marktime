@@ -20,11 +20,15 @@
         If Not Page.IsPostBack Then
             With Master
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
+                hidSource.Value = Request.Item("source")
                 hidX18ID.Value = Request.Item("x18id")
-                If Me.CurrentX18ID = 0 Then
+                If Me.CurrentX18ID = 0 And .DataPID = 0 Then
                     .StopPage("")
                 End If
-
+                ''Dim lisPars As New List(Of String)
+                ''With lisPars
+                ''    .Add("o23_framework_detail-pid")
+                ''End With
             End With
 
             RefreshRecord()
@@ -41,9 +45,11 @@
         Dim cRec As BO.o23Doc = Master.Factory.o23DocBL.Load(Master.DataPID)
         If cRec Is Nothing Then Return
 
+        ''If Me.CurrentX18ID = 0 Then Me.CurrentX18ID = Master.Factory.x18EntityCategoryBL.LoadByX23ID(cRec.x23ID).PID
+        Me.CurrentX18ID = cRec.x18ID
         Dim cX18 As BO.x18EntityCategory = Master.Factory.x18EntityCategoryBL.Load(Me.CurrentX18ID)
-        If cX18.x18Icon32 <> "" Then
 
+        If cX18.x18Icon32 <> "" Then
             imgIcon32.ImageUrl = cX18.x18Icon32
         End If
         If cX18.b01ID <> 0 Then

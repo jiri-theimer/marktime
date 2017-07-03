@@ -64,6 +64,7 @@
                             <telerik:ColorPickerItem Value="#FFDAB9"></telerik:ColorPickerItem>
                             <telerik:ColorPickerItem Value="#87CEEB"></telerik:ColorPickerItem>
                             <telerik:ColorPickerItem Value="#FF6347"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="gray"></telerik:ColorPickerItem>
         </telerik:RadColorPicker>
         </td>
     </tr>

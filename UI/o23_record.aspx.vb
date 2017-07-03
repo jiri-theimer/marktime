@@ -157,13 +157,16 @@ Public Class o23_record
         With opgX20ID
             .DataSource = lisX20X18
             .DataBind()
+            Dim intDefListIndex As Integer = 0
             If Master.DataPID = 0 Then
+                Dim defUsedVals As New List(Of String)
                 If Request.Item("masterprefix") <> "" And Request.Item("masterpid") <> "" Then 'předvyplnit nový záznam odkazem na entitu
                     Dim intX29ID As Integer = CInt(BO.BAS.GetX29FromPrefix(Request.Item("masterprefix")))
                     If lisX20X18.Where(Function(p) p.x29ID = intX29ID).Count > 0 Then
                         .SelectedValue = lisX20X18.Where(Function(p) p.x29ID = intX29ID)(0).x20ID.ToString
                         Handle_Changex20ID()
                         Handle_CreateTempX19Reocrd(BO.BAS.IsNullInt(Request.Item("masterpid")))
+                        defUsedVals.Add(.SelectedValue)
                     End If
                 End If
                 If lisX20X18.Where(Function(p) p.x29ID = 102).Count > 0 And Request.Item("masterprefix") <> "j02" Then   'předvyplnit nový záznam vazbou na přihlášeného usera
@@ -171,13 +174,23 @@ Public Class o23_record
                     .SelectedValue = lisX20X18.Where(Function(p) p.x29ID = 102)(0).x20ID.ToString
                     Handle_Changex20ID()
                     Handle_CreateTempX19Reocrd(Master.Factory.SysUser.j02ID)
+                    defUsedVals.Add(.SelectedValue)
+                End If
+                If defUsedVals.Count > 0 Then
+                    For i As Integer = 0 To .Items.Count - 1
+                        Dim ii As Integer = i
+                        If defUsedVals.Where(Function(p) p = .Items(ii).Value).Count = 0 Then   'najít první neobsazený druh vazby, kterou přednastavit k vyplnění
+                            intDefListIndex = i : Exit For
+                        End If
+                    Next
                 End If
             End If
 
 
 
             If .Items.Count > 0 Then
-                .SelectedIndex = 0
+                .SelectedIndex = intDefListIndex
+                
                 Handle_Changex20ID()
             Else
                 panX20.Visible = False
@@ -371,11 +384,8 @@ Public Class o23_record
             Me.x23ID.Enabled = True
             cmdChangeCode.Visible = False
         End If
-        If Me.cbxType.SelectedValue = "" Then
-            Me.cbxType.BackgroundColor = ""
-        Else
-            Me.cbxType.BackgroundColor = basUI.ColorQueryCSS
-        End If
+        basUIMT.RenderQueryCombo(Me.cbxType)
+        
     End Sub
 
     Private Function InhaleUserFieldValues(ByRef cRec As BO.o23Doc) As Boolean
@@ -605,10 +615,15 @@ Public Class o23_record
             lisPars.Add(strKey)
             Master.Factory.j03UserBL.InhaleUserParams(lisPars)
 
-            cbxType.Visible = True
-            cbxType.DataBind()
-            cbxType.ChangeItemText("", sT)
-            If Me.CurrentX29ID = BO.x29IdEnum.j02Person Then cbxType.AddOneComboItem("-1", "--Pouze interní osoby--", 0)
+            With cbxType
+                .Visible = True
+                .DataBind()
+                .Items.Insert(0, New ListItem(sT, ""))
+            End With
+
+            If Me.CurrentX29ID = BO.x29IdEnum.j02Person Then
+                cbxType.Items.Insert(0, New ListItem("--Pouze interní osoby--", "-1"))
+            End If
             cbxType.SelectedValue = Master.Factory.j03UserBL.GetUserParam(strKey)
 
         End If
@@ -706,7 +721,8 @@ Public Class o23_record
         Me.o23ArabicCode.Text = ""
     End Sub
 
-    Private Sub cbxType_SelectedIndexChanged(OldValue As String, OldText As String, CurValue As String, CurText As String) Handles cbxType.SelectedIndexChanged
+   
+    Private Sub cbxType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxType.SelectedIndexChanged
         Dim strKey As String = Me.hidX18ID.Value & "-cbxType-" & Me.cbxType.DataTextField
         Master.Factory.j03UserBL.SetUserParam(strKey, cbxType.SelectedValue)
     End Sub

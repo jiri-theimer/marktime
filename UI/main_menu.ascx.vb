@@ -84,18 +84,16 @@ Public Class main_menu
                 If factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then ai(Resources.common.Projekt, "new_p41", "javascript:p41_create()", "", n) : b = True
             End If
             
-            'If factory.TestPermission(BO.x53PermValEnum.GR_P56_Creator) Then
-
-            'End If
+            If factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator) Then
+                ai(Resources.common.Dokument, "new_o23", "javascript:o23_create()", "", n) : b = True
+            End If
             ai(Resources.common.Ukol, "new_p56", "javascript:p56_create()", "", n)
             ai("Událost v kalendáři", "new_o22", "javascript:o22_create()", "", n)
             If .j04IsMenu_Invoice Then
                 If factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator) Then ai(Resources.common.Faktura, "", "javascript:p91_create()", "", n) : b = True
             End If
             If factory.TestPermission(BO.x53PermValEnum.GR_P90_Create) Then ai(Resources.common.ZalohovaFaktura, "new_p90", "javascript:p90_create()", "", n)
-            If factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator) Then
-                ai(Resources.common.Dokument, "new_o23", "javascript:o23_create()", "", n) : b = True
-            End If
+            
             ''If Not b Then menu1.Nodes.Remove(n)
         End With
 

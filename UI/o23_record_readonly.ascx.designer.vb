@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class o23_record_readonly
 
     '''<summary>
+    '''x18Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''trB02Name control.
     '''</summary>
     '''<remarks>

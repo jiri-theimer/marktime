@@ -1,9 +1,17 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="o23_record_readonly.ascx.vb" Inherits="UI.o23_record_readonly" %>
 
     
-    <table cellpadding="5" cellspacing="2" style="width: 100%;" id="responsive">    
-        <tr class="trHover" id="trB02Name" runat="server">
+    <table cellpadding="5" cellspacing="2" style="width: 100%;" id="responsive">   
+        <tr class="trHover">
             <td style="width:140px;">
+                <span class="lbl"><img src="Images/settings.png" /> Typ:</span>
+            </td>
+            <td>
+                <asp:Label ID="x18Name" runat="server" CssClass="valbold"></asp:Label>
+            </td>
+        </tr> 
+        <tr class="trHover" id="trB02Name" runat="server">
+            <td>
                 <span class="lbl"><img src="Images/workflow.png" /> Aktuální stav:</span>
             </td>
             <td>
@@ -13,7 +21,7 @@
             </td>
         </tr>
         <tr class="trHover" id="trCode" runat="server">
-            <td style="width:140px;">
+            <td>
                 <span class="lbl"><img src="Images/type_text.png" /> Kód:</span>
             </td>
             <td>
@@ -21,7 +29,7 @@
             </td>
         </tr>
         <tr class="trHover" id="trName" runat="server">
-            <td style="width:140px;">
+            <td>
                 <span class="lbl"><img src="Images/type_text.png" /> Název:</span>
             </td>
             <td>

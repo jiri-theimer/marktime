@@ -28,7 +28,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div style="max-height: 270px; overflow-x: auto; overflow-y: auto; width: 100%;">
         <div>
-            <img src="Images/label_32.png" />
+            <img src="Images/notepad_32.png" />
             <asp:Label ID="ph1" runat="server" CssClass="clue_header_span"></asp:Label>
             <a  href="javascript:go2module()">Skočit na stránku dokumentu</a>
         </div>
