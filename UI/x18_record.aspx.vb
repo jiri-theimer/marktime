@@ -71,7 +71,11 @@
             Me.b01ID.SelectedValue = .b01ID.ToString
 
             Me.x18IsColors.Checked = .x18IsColors
-            Me.x18IsManyItems.Checked = .x18IsManyItems
+            If .x18IsManyItems Then
+                Me.x18IsManyItems.SelectedValue = "1"
+            Else
+                Me.x18IsManyItems.SelectedValue = "0"
+            End If
             Me.x18IsClueTip.Checked = .x18IsClueTip
             Me.x18Icon.Text = .x18Icon
             Me.x18Icon32.Text = .x18Icon32
@@ -231,7 +235,12 @@
             cRec.b01ID = BO.BAS.IsNullInt(Me.b01ID.SelectedValue)
 
             cRec.x18IsColors = Me.x18IsColors.Checked
-            cRec.x18IsManyItems = Me.x18IsManyItems.Checked
+            If Me.x18IsManyItems.SelectedValue = "1" Then
+                cRec.x18IsManyItems = True
+            Else
+                cRec.x18IsManyItems = False
+            End If
+
             cRec.ValidFrom = Master.RecordValidFrom
             cRec.ValidUntil = Master.RecordValidUntil
             cRec.j02ID_Owner = BO.BAS.IsNullInt(Me.j02ID_Owner.Value)

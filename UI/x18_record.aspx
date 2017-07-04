@@ -31,6 +31,11 @@
 
     <telerik:RadMultiPage ID="RadMultiPage1" runat="server">
         <telerik:RadPageView ID="core" runat="server" Selected="true">
+            
+            <asp:RadioButtonList ID="x18IsManyItems" runat="server" RepeatDirection="Vertical" CellPadding="8">
+                <asp:ListItem Text="Dokument (stovky i tisíce záznamů)" Value="1" Selected="true"></asp:ListItem>
+                <asp:ListItem Text="Pouze štítek s maximálně desítkami záznamů" Value="0"></asp:ListItem>
+            </asp:RadioButtonList>
             <table cellpadding="5" cellspacing="2">
                 <tr>
                     <td>
@@ -318,11 +323,7 @@
                                 <asp:CheckBox ID="x18IsColors" runat="server" CssClass="chk" Text="Možnost rozlišovat dokumenty barvou" Checked="false" />
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="2">
-                                <asp:CheckBox ID="x18IsManyItems" runat="server" CssClass="chk" AutoPostBack="false" Text="Jedná se o štítek s mnoha položkami (100 a více)" />
-                            </td>
-                        </tr>
+                      
                       
                         <tr>
                             <td>

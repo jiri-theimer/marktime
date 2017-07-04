@@ -41,6 +41,15 @@ Partial Public Class x18_record
     Protected WithEvents core As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
+    '''x18IsManyItems control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18IsManyItems As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
     '''lblName control.
     '''</summary>
     '''<remarks>
@@ -255,15 +264,6 @@ Partial Public Class x18_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x18IsColors As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''x18IsManyItems control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x18IsManyItems As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''x18EntryNameFlag control.
