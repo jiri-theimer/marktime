@@ -224,8 +224,6 @@ Public Class admin_framework
             .AddItem("Uživatelská pole", "ff", , , "Images/form.png")
             .AddItem("Katalog polí", "x28", NU("x28"), "ff")
 
-            .AddItem("Combo seznamy", "x23", NU("x23"), "ff")
-
             .AddItem("Skupiny uživatelských polí", "x27", NU("x27"), "ff")
 
             .AddItem("Ostatní nastavení", "other", , , "Images/more.png")
@@ -487,9 +485,9 @@ Public Class admin_framework
                     .AddColumn("p29Name", "Název")
                     .AddColumn("p29Ordinary", "#", BO.cfENUM.Numeric0)
                 
-                Case "x23"
-                    .AddColumn("x23Name", "Název")
-                    .AddColumn("x23Ordinary", "#", BO.cfENUM.Numeric0)
+                    'Case "x23"
+                    '    .AddColumn("x23Name", "Název")
+                    '    .AddColumn("x23Ordinary", "#", BO.cfENUM.Numeric0)
                 
                 Case "x27"
                     .AddColumn("x27Name", "Název skupiny")
@@ -499,7 +497,7 @@ Public Class admin_framework
                     .AddColumn("x28Name", "Název pole")
                     .AddColumn("x27Name", "Skupina")
                     .AddColumn("x28Field", "Fyzický název pole")
-                    .AddColumn("x23Name", "Combo seznam")
+                    ''.AddColumn("x23Name", "Combo seznam")
                     .AddColumn("x28IsRequired", "Povinné", BO.cfENUM.Checkbox)
                     .AddColumn("x28Ordinary", "#", BO.cfENUM.Numeric0)
                 Case "p41_o21", "p28_o21", "j02_o21"
@@ -787,9 +785,9 @@ Public Class admin_framework
                 Case "x28"
                     Dim lis As IEnumerable(Of BO.x28EntityField) = .x28EntityFieldBL.GetList(BO.x29IdEnum._NotSpecified, -1, False)
                     grid1.DataSource = lis
-                Case "x23"
-                    Dim lis As IEnumerable(Of BO.x23EntityField_Combo) = .x23EntityField_ComboBL.GetList(mqDef)
-                    grid1.DataSource = lis
+                    ''Case "x23"
+                    ''    Dim lis As IEnumerable(Of BO.x23EntityField_Combo) = .x23EntityField_ComboBL.GetList(mqDef)
+                    ''    grid1.DataSource = lis
                
                 
                 Case "x46"

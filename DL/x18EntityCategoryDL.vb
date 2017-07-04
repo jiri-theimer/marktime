@@ -308,7 +308,13 @@
         Return _cDB.GetList(Of BO.x20_join_x18)(s, pars)
     End Function
     Public Function GetList_x16(intX18ID As Integer) As IEnumerable(Of BO.x16EntityCategory_FieldSetting)
-        Return _cDB.GetList(Of BO.x16EntityCategory_FieldSetting)("SELECT * FROM x16EntityCategory_FieldSetting WHERE x18ID=@pid ORDER BY x16Ordinary", New With {.pid = intX18ID})
+        Dim s As String = "SELECT * FROM x16EntityCategory_FieldSetting", pars As New DbParameters
+        If intX18ID > 0 Then
+            s += " WHERE x18ID=@x18id"
+            pars.Add("x18id", intX18ID, DbType.Int32)
+        End If
+        s += " ORDER BY x16Ordinary"
+        Return _cDB.GetList(Of BO.x16EntityCategory_FieldSetting)(s, pars)
     End Function
     Private Function GetSQLPart1_x19(bolInhaleRecordAlias As Boolean) As String
         Dim s As String = "SELECT a.*," & bas.RecTail("x19", "a") & ",o23.o23Name as _o23Name,o23.o23Name+isnull(' ('+o23.o23Code+')','') as _NameWithCode,x20.x18ID as _x18ID,isnull(x18.x18NameShort,x18.x18Name) as _x18Name,x18.x18Icon as _x18Icon,o23.o23ForeColor as _ForeColor,o23.o23BackColor as _BackColor,x20.x29ID as _x29ID,x20.x20Name as _x20Name,x20.x20IsMultiselect as _x20IsMultiselect,x20.x20EntityPageFlag as _x20EntityPageFlag"

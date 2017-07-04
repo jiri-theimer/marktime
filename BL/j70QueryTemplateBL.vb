@@ -826,7 +826,7 @@ Class j70QueryTemplateBL
             .Add(AGC(My.Resources.common.Aktualizoval, "p56UserUpdate", , , , , , "Záznam"))
             .Add(AGC(My.Resources.common.ExterniKod, "p56ExternalPID"))
         End With
-        AppendRoles(BO.x29IdEnum.p56Task, "a.p56ID", "Úkolová role", lis)
+        AppendRoles(BO.x29IdEnum.p56Task, "a.p56ID", "Role v úkolu", lis)
         AppendFreeFields(BO.x29IdEnum.p56Task, lis)
     End Sub
     Private Sub InhaleO23ColList(ByRef lis As List(Of BO.GridColumn))
@@ -848,6 +848,26 @@ Class j70QueryTemplateBL
             .Add(AGC(My.Resources.common.Aktualizoval, "o23UserUpdate", , , , , , "Záznam"))
         End With
         AppendRoles(BO.x29IdEnum.o23Doc, "a.o23ID", "Role v dokumentu", lis)
+
+        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum._NotSpecified, -1), x As Integer = 0
+        Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Factory.x18EntityCategoryBL.GetList_x16(0).Where(Function(p) p.x16IsGridField = True)
+        For Each cX18 In lisX18
+            For Each c In lisX16.Where(Function(p) p.x18ID = cX18.PID).OrderBy(Function(p) p.x16Ordinary)
+                ''Dim strSql As String = "iif(x18.x18ID=" & c.x18ID.ToString & "," & c.x16Field & ",null)" 'kvůli tomu, aby do gridu každý sloupce vstupoval s unikátním názvem
+                Dim strSql As String = "dbo.my_iif2_string(x18.x18ID," & c.x18ID.ToString & "," & c.x16Field & ",null)" 'kvůli tomu, aby do gridu každý sloupce vstupoval s unikátním názvem
+                Select Case c.FieldType
+                    Case BO.x24IdENUM.tDate, BO.x24IdENUM.tDateTime
+                        strSql = "dbo.my_iif2_date(x18.x18ID," & c.x18ID.ToString & "," & c.x16Field & ",null)"
+                    Case BO.x24IdENUM.tDecimal, BO.x24IdENUM.tInteger
+                        strSql = "dbo.my_iif2_number(x18.x18ID," & c.x18ID.ToString & "," & c.x16Field & ",null)"
+                    Case BO.x24IdENUM.tBoolean
+                        strSql = "dbo.my_iif2_bit(x18.x18ID," & c.x18ID.ToString & "," & c.x16Field & ",null)"
+                End Select
+                lis.Add(AGC(c.x16Name, "x16_field" & c.x16ID.ToString, c.GridColumnType, , strSql, , , cX18.x18Name))
+            Next
+            
+        Next
+
         AppendFreeFields(BO.x29IdEnum.o23Doc, lis)
     End Sub
 
@@ -856,7 +876,7 @@ Class j70QueryTemplateBL
     Private Function AGC(strHeader As String, strName As String, Optional colType As BO.cfENUM = BO.cfENUM.AnyString, Optional bolSortable As Boolean = True, Optional strDBName As String = "", Optional bolShowTotals As Boolean = False, Optional strSqlSyntax_FROM As String = "", Optional strTreeGroup As String = "", Optional strPivotSelectSql As String = "", Optional strPivotGroupBySql As String = "")
         Dim col As BO.GridColumn
         col = New BO.GridColumn(_x29id, strHeader, strName, colType)
-        With col
+        With col            
             .IsSortable = bolSortable
             .ColumnDBName = strDBName
             .IsShowTotals = bolShowTotals

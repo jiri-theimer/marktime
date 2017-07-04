@@ -65,7 +65,7 @@
 
     }
     function o23_create() {
-        sw_menu_decide("o23_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/notepad.png")
+        sw_menu_decide("select_doctype.aspx?hrjs=hardrefresh_menu", "Images/notepad.png")
 
     }
     function o10_create() {

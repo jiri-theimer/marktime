@@ -124,7 +124,7 @@
         sw_decide("j02_record.aspx?pid=0","Images/person.png",true);
         <%end If%>       
         <%If Me.DataPrefix = "o23" Then%>
-        sw_decide("o23_record.aspx?pid=0","Images/notepad.png",true);
+        sw_decide("select_doctype.aspx?masterprefix=<%=Me.DataPrefix%>&masterpid=<%=Me.DataPID%>","Images/notepad.png",true);
         <%end If%>
 
     }
@@ -186,7 +186,7 @@
     }
     function menu_o23_record(pid) {
         <%If Me.DataPrefix="o23" then%>
-        sw_decide("o23_record.aspx?pid=0","Images/notepad.png",true);
+        sw_decide("select_doctype.aspx","Images/notepad.png",true);
         return;
         <%End If%>
         sw_decide("o23_record.aspx?masterprefix=<%=Me.DataPrefix%>&masterpid=<%=Me.DataPID%>&pid="+pid,"Images/notepad.png",true);

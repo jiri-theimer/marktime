@@ -80,4 +80,35 @@
     End Sub
 
 
+    Private Sub o23_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        With FNO("fs")
+            If hidSource.Value = "3" Then
+                .ImageUrl = "Images/fullscreen.png"
+                .ToolTip = "Přepnout do datového přehledu"
+                .Text = "PŘEHLED"
+                .Width = Nothing
+            Else
+                .ImageUrl = "Images/open_in_new_window.png"
+                .ToolTip = "Otevřít v nové záložce"
+                .Text = " "
+            End If
+
+        End With
+        If hidSource.Value = "2" Then
+
+            menu1.Skin = "Metro"
+            imgIcon32.Visible = False
+
+            FNO("reload").Visible = False
+        Else
+
+            FNO("reload").Visible = True
+        End If
+        If hidSource.Value = "3" Then
+
+            imgIcon32.Style.Item("top") = "44px"
+        Else
+
+        End If
+    End Sub
 End Class

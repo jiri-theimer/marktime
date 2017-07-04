@@ -121,7 +121,7 @@ Public Class o23_record
         With cDisp
             If Master.DataPID = 0 Then
                 If Not .CreateItem Then
-                    Master.StopPage(String.Format("Nemáte oprávnění zakládat nové záznamy do typu dokumentu [{0}].", c.x18Name), True)
+                    Master.StopPage(String.Format("Nemáte oprávnění zakládat nové dokumenty pro typ [{0}].", c.x18Name), True)
                 End If
             Else
                 If Not .OwnerItems Then
@@ -152,6 +152,10 @@ Public Class o23_record
     End Sub
 
     Private Sub RefreshRecord()
+        If Me.CurrentX18ID = 0 And Master.DataPID = 0 Then
+            Server.Transfer("select_doctype.aspx")
+            Return
+        End If
         Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(Me.CurrentX18ID)
         lisX20X18 = lisX20X18.Where(Function(p) p.x20IsClosed = False And p.x20EntryModeFlag = BO.x20EntryModeENUM.InsertUpdateWithoutCombo).OrderBy(Function(p) p.x20IsMultiSelect).ThenBy(Function(p) p.x29ID)   'omezit pouze na otevřené vazby + vazby vyplňované přes záznam položky štítku
         With opgX20ID
@@ -190,7 +194,7 @@ Public Class o23_record
 
             If .Items.Count > 0 Then
                 .SelectedIndex = intDefListIndex
-                
+
                 Handle_Changex20ID()
             Else
                 panX20.Visible = False
@@ -571,7 +575,7 @@ Public Class o23_record
 
     Private Sub Handle_Changex20ID()
         If Me.opgX20ID.SelectedItem Is Nothing Then Return
-
+        
         Dim cX20 As BO.x20EntiyToCategory = LoadX20Record(), sT As String = "--Všechny typy--"
         If cX20 Is Nothing Then Return
         hidX29ID.Value = cX20.x29ID.ToString
@@ -616,16 +620,22 @@ Public Class o23_record
             Master.Factory.j03UserBL.InhaleUserParams(lisPars)
 
             With cbxType
+                Try
+                    .DataBind()
+                Catch ex As Exception
+
+                End Try
+
                 .Visible = True
-                .DataBind()
+
                 .Items.Insert(0, New ListItem(sT, ""))
             End With
 
             If Me.CurrentX29ID = BO.x29IdEnum.j02Person Then
                 cbxType.Items.Insert(0, New ListItem("--Pouze interní osoby--", "-1"))
             End If
-            cbxType.SelectedValue = Master.Factory.j03UserBL.GetUserParam(strKey)
-
+            basUI.SelectDropdownlistValue(Me.cbxType, Master.Factory.j03UserBL.GetUserParam(strKey))
+            
         End If
     End Sub
 

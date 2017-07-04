@@ -10,7 +10,7 @@
 
         function hardrefresh(pid, flag) {              
             <%If hidSource.Value <> "" Then%>
-            var url="o23_framework.aspx?prefix=o23";
+            var url="o23_framework.aspx?source=<%=hidSource.Value%>";
             <%Else%>
             var url="o23_fixwork.aspx?x18id=<%=me.CurrentX18ID%>";
             <%end If%>
@@ -73,7 +73,17 @@
 
 
         }
-
+        function menu_fullscreen(){
+            <%If hidSource.Value = "3" Then%>
+            location.replace("o23_framework.aspx?pid=<%=Master.DataPID%>");
+            <%Else%>
+            window.open("o23_framework_detail.aspx?pid=<%=Master.DataPID%>&saw=1","_blank");
+            <%End If%>
+            
+        }
+        function barcode() {
+            sw_everywhere("barcode.aspx?prefix=o23&pid=<%=master.datapid%>", "Images/barcode.png", true);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -86,6 +96,7 @@
         <Nodes>
             <telerik:NavigationNode id="begin" Width="50px" Enabled="false" Visible="true"  >                             
             </telerik:NavigationNode>
+            <telerik:NavigationNode id="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png"></telerik:NavigationNode>
 
             <telerik:NavigationNode ID="reload" ImageUrl="Images/refresh.png" Text=" " ToolTip="Obnovit stránku"></telerik:NavigationNode>
            
@@ -98,6 +109,8 @@
                     <telerik:NavigationNode ID="cmdWorkflow" Text="Zapsat komentář/souborovou přílohu" NavigateUrl="javascript:b07_create();" ImageUrl="Images/comment.png"></telerik:NavigationNode>
                     <telerik:NavigationNode ID="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report();" ImageUrl="Images/report.png"></telerik:NavigationNode>
                     <telerik:NavigationNode ID="cmdEmail" Text="Odeslat e-mail" NavigateUrl="javascript:sendmail();" ImageUrl="Images/email.png"></telerik:NavigationNode>
+
+                    <telerik:NavigationNode id="cmdBarCode" Text="Čárový kód" NavigateUrl="javascript:barcode();" ImageUrl="Images/barcode.png"></telerik:NavigationNode>
                 </Nodes>
             </telerik:NavigationNode>
             
