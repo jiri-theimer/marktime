@@ -17,7 +17,7 @@
 
     o22Milestone = 222
     o23Doc = 223
-    o24NotepadType = 224
+
     o27Attachment = 227
     p28Contact = 328
     p31Worksheet = 331

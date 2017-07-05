@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class clue_o24_record
+Partial Public Class clue_x18_record
 
     '''<summary>
     '''ph1 control.
@@ -23,49 +23,22 @@ Partial Public Class clue_o24_record
     Protected WithEvents ph1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''x29Name control.
+    '''x18MaxOneFileSize control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents x29Name As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents x18MaxOneFileSize As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''o24MaxOneFileSize control.
+    '''x18AllowedFileExtensions control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents o24MaxOneFileSize As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''o24AllowedFileExtensions control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents o24AllowedFileExtensions As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''panHelp control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panHelp As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''o24HelpText control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents o24HelpText As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents x18AllowedFileExtensions As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''lblBindInfo control.

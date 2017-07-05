@@ -127,6 +127,9 @@ Public Class o23_fixwork
 
     Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String)
         Dim lisSqlSEL As New List(Of String)
+        lisSqlSEL.Add("o23Name")
+        lisSqlSEL.Add("o23Code")
+        lisSqlSEL.Add("o23Ordinary")
         With grid1
             .ClearColumns()
             .radGridOrig.ShowFooter = False

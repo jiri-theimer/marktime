@@ -43,7 +43,7 @@
             </td>
             <td>
                 <uc:datacombo ID="p57ID" runat="server" DataTextField="p57Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px" Visible="false"></uc:datacombo>
-                <uc:datacombo ID="o24ID" runat="server" DataTextField="o24Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px" Visible="false"></uc:datacombo>
+                <uc:datacombo ID="x18ID" runat="server" DataTextField="x18Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px" Visible="false"></uc:datacombo>
 
             </td>
             <td></td>

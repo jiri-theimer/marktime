@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="clue_o24_record.aspx.vb" Inherits="UI.clue_o24_record" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="clue_x18_record.aspx.vb" Inherits="UI.clue_x18_record" %>
 <%@ MasterType VirtualPath="~/Clue.Master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
@@ -11,33 +11,22 @@
        </div>
 
         <table cellpadding="5" cellspacing="2">
-            <tr>
-                <td>Dokument se váže k entitě:</td>
-                <td>
-                    <asp:Label ID="x29Name" runat="server" CssClass="valbold"></asp:Label>
-
-                </td>
-             
-            </tr>
+            
             <tr>
                 <td>Max.povolená velikost 1 souboru:</td>
                 <td>
-                    <asp:Label ID="o24MaxOneFileSize" runat="server" CssClass="valbold"></asp:Label>
+                    <asp:Label ID="x18MaxOneFileSize" runat="server" CssClass="valbold"></asp:Label>
                 </td>
             </tr>
             <tr>
                 <td>Povolené formáty (přípony) nahrávaných souborů:</td>
                 <td>
-                    <asp:Label ID="o24AllowedFileExtensions" runat="server" CssClass="valbold"></asp:Label>
+                    <asp:Label ID="x18AllowedFileExtensions" runat="server" CssClass="valbold"></asp:Label>
                 </td>
             </tr>
         </table>
         
-        <asp:panel ID="panHelp" runat="server" CssClass="bigtext">
-            <img src="Images/help2.png" />
-            <asp:Label ID="o24HelpText" runat="server" Style="font-family: 'Courier New'; word-wrap: break-word; display: block;"></asp:Label>
-           
-        </asp:panel>
+        
        
        
         <div>

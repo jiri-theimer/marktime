@@ -9,7 +9,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
-        
+
 
         function hardrefresh(pid, flag) {
             document.getElementById("<%=HardRefreshPID.ClientID%>").value = pid;
@@ -31,11 +31,16 @@
 
     <telerik:RadMultiPage ID="RadMultiPage1" runat="server">
         <telerik:RadPageView ID="core" runat="server" Selected="true">
-            
-            <asp:RadioButtonList ID="x18IsManyItems" runat="server" RepeatDirection="Vertical" CellPadding="8">
-                <asp:ListItem Text="Dokument (stovky i tisíce záznamů)" Value="1" Selected="true"></asp:ListItem>
-                <asp:ListItem Text="Pouze štítek s maximálně desítkami záznamů" Value="0"></asp:ListItem>
-            </asp:RadioButtonList>
+            <div class="content-box2">
+                <div class="title">Povaha položek typu dokumentu</div>
+                <div class="content">
+                    <asp:RadioButtonList ID="x18IsManyItems" runat="server" RepeatDirection="Vertical" CellPadding="2" AutoPostBack="true">
+                        <asp:ListItem Text="Dokument s formulářovými poli, přílohami a workflow šablonou (stovky i tisíce záznamů)" Value="1" Selected="true"></asp:ListItem>
+                        <asp:ListItem Text="Štítek pro kategorizaci projektů/klientů/úkolů...maximálně desítky záznamů" Value="0"></asp:ListItem>
+                    </asp:RadioButtonList>
+                </div>
+            </div>
+
             <table cellpadding="5" cellspacing="2">
                 <tr>
                     <td>
@@ -57,7 +62,7 @@
                 </tr>
 
             </table>
-            
+
 
 
             <div class="content-box2" style="margin-top: 20px;">
@@ -113,9 +118,9 @@
                                             <asp:TextBox ID="x20Name" runat="server" Width="200px"></asp:TextBox>
                                             <asp:HiddenField ID="x20EntityTypePID" runat="server" />
                                             <asp:HiddenField ID="x29ID_EntityType" runat="server" />
-                                            
+
                                         </div>
-                                        
+
                                     </td>
 
                                     <td>
@@ -125,7 +130,7 @@
                                         <div>
                                             <asp:CheckBox ID="x20IsEntryRequired" runat="server" CssClass="chk" Text="Povinná vazba k přiřazení" />
                                         </div>
-                                        
+
                                         <div>
                                             <asp:CheckBox ID="x20IsClosed" runat="server" Text="Vazba uzavřena pro přiřazování" />
                                         </div>
@@ -149,9 +154,9 @@
                                         </div>
                                         <div>
                                             <asp:DropDownList ID="x20EntityPageFlag" runat="server">
-                                                <asp:ListItem Text="Na stránce záznamu entity zobrazovat jako info" Value="1"></asp:ListItem>   
-                                                <asp:ListItem Text="Na stránce záznamu entity zobrazovat jako odkaz" Value="2"></asp:ListItem> 
-                                                <asp:ListItem Text="Na stránce záznamu entity zobrazovat jako odkaz + tlačítko [Přidat]" Value="3"></asp:ListItem>                                                                                            
+                                                <asp:ListItem Text="Na stránce záznamu entity zobrazovat jako info" Value="1"></asp:ListItem>
+                                                <asp:ListItem Text="Na stránce záznamu entity zobrazovat jako odkaz" Value="2"></asp:ListItem>
+                                                <asp:ListItem Text="Na stránce záznamu entity zobrazovat jako odkaz + tlačítko [Přidat]" Value="3"></asp:ListItem>
                                                 <asp:ListItem Text="Na stránce záznamu entity nic nezobrazovat" Value="9"></asp:ListItem>
                                             </asp:DropDownList>
                                         </div>
@@ -165,7 +170,7 @@
                                         <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit položku" CssClass="button-link" />
                                         <asp:HiddenField ID="p85id" runat="server" />
                                         <asp:HiddenField ID="x20ID" runat="server" />
-                                        
+
                                     </td>
                                 </tr>
                             </ItemTemplate>
@@ -174,17 +179,17 @@
                 </div>
             </div>
 
-            <asp:panel ID="panX23" runat="server" CssClass="div6">
+            <asp:Panel ID="panX23" runat="server" CssClass="div6">
                 <asp:RadioButtonList ID="opg1" runat="server" AutoPostBack="true" Visible="false" RepeatDirection="Vertical">
                     <asp:ListItem Text="Typ dokumentu bude mít vlastní zdroj položek" Value="1" Selected="true"></asp:ListItem>
                     <asp:ListItem Text="Typ dokumentu bude využívat již existující zdroj položek" Value="2"></asp:ListItem>
                 </asp:RadioButtonList>
 
-                <div style="margin-top:20px;">
+                <div style="margin-top: 20px;">
                     <asp:Label ID="lblX23ID" Text="Datový zdroj dokumentů:" runat="server" CssClass="lblReq"></asp:Label>
-                                <uc:datacombo ID="x23ID" runat="server" DataTextField="x23Name" DataValueField="pid" IsFirstEmptyRow="true" AutoPostBack="true" Width="400px"></uc:datacombo>
+                    <uc:datacombo ID="x23ID" runat="server" DataTextField="x23Name" DataValueField="pid" IsFirstEmptyRow="true" AutoPostBack="true" Width="400px"></uc:datacombo>
                 </div>
-            </asp:panel>
+            </asp:Panel>
 
 
 
@@ -241,7 +246,7 @@
                                             <asp:ListItem Text="ANO/NE 3" Value="o23FreeBoolean03"></asp:ListItem>
                                             <asp:ListItem Text="ANO/NE 4" Value="o23FreeBoolean04"></asp:ListItem>
                                             <asp:ListItem Text="ANO/NE 5" Value="o23FreeBoolean05"></asp:ListItem>
-                                                                                       
+
                                         </asp:DropDownList>
                                     </td>
                                     <td>
@@ -284,7 +289,7 @@
                     </table>
                 </div>
             </div>
-            
+
         </telerik:RadPageView>
 
         <telerik:RadPageView ID="other" runat="server" Style="margin-top: 10px;">
@@ -304,27 +309,64 @@
             </div>
 
 
-            
+            <div class="content-box2">
+                <div class="title">
+                    Vztah k souborovým přílohám
+                </div>
+                <div class="content">
+                    <div class="div6">
+                        <asp:RadioButtonList ID="x18UploadFlag" runat="server" RepeatDirection="Vertical" AutoPostBack="true">
+                            <asp:ListItem Text="Podpora rozšířených file-system funkcí" Value="1" Selected="True"></asp:ListItem>
+                            <asp:ListItem Text="Bez rozšířených file-system funkcí" Value="0"></asp:ListItem>
+                        </asp:RadioButtonList>
+                    </div>
+                    <asp:Panel ID="panFileSystem" runat="server">
+                        
+                        <div class="div6">
+                            <span class="lbl">Omezení maximální velikosti souborové přílohy:</span>
+                            <asp:DropDownList ID="x18MaxOneFileSize" runat="server">
+                                <asp:ListItem Text="1 MB" Value="1048576"></asp:ListItem>
+                                <asp:ListItem Text="2 MB" Value="2097152"></asp:ListItem>
+                                <asp:ListItem Text="3 MB" Value="3145728" Selected="true"></asp:ListItem>
+                                <asp:ListItem Text="4 MB" Value="4194304"></asp:ListItem>
+                                <asp:ListItem Text="5 MB" Value="5242880"></asp:ListItem>
+                                <asp:ListItem Text="6 MB" Value="6291456"></asp:ListItem>
+                                <asp:ListItem Text="7 MB" Value="7340032"></asp:ListItem>
+                                <asp:ListItem Text="10 MB" Value="10485760"></asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                        <div class="div6">
+                            <span>Povolené přípony nahrávaných souborů:</span>
+                            <asp:TextBox ID="x18AllowedFileExtensions" runat="server" Width="400px"></asp:TextBox>
+                            (čárkou oddělené)
+                        </div>
+                        <div class="div6">
+                            <span class="infoInForm">Veškeré DOCX dokumenty budou automaticky převáděny i do PDF</span>
+                        </div>
+                    </asp:Panel>
+                </div>
+            </div>
 
             <div class="content-box2" style="margin-top: 60px;">
                 <div class="title">Různé</div>
                 <div class="content">
                     <div class="div6">
-                <asp:DropDownList ID="x18GridColsFlag" runat="server">
-                    <asp:ListItem Text="Jako sloupce v přehledu dokumentů zobrazovat i [Název] a [Kód]" Value="1"></asp:ListItem>
-                    <asp:ListItem Text="Jako sloupce v přehledu dokumentů zobrazovat i [Kód]" Value="2"></asp:ListItem>
-                    <asp:ListItem Text="Jako sloupce v přehledu dokumentů zobrazovat i [Název]" Value="3"></asp:ListItem>
-                    <asp:ListItem Text="Nezobrazovat ani [Název] ani [Kód]" Value="4"></asp:ListItem>
-                </asp:DropDownList>
-            </div>
+                        <asp:DropDownList ID="x18GridColsFlag" runat="server">
+                            <asp:ListItem Text="Jako sloupce v přehledu dokumentů zobrazovat i [Název] a [Kód]" Value="1"></asp:ListItem>
+                            <asp:ListItem Text="Jako sloupce v přehledu dokumentů zobrazovat i [Kód]" Value="2"></asp:ListItem>
+                            <asp:ListItem Text="Jako sloupce v přehledu dokumentů zobrazovat i [Název]" Value="3"></asp:ListItem>
+                            <asp:ListItem Text="Nezobrazovat ani [Název] ani [Kód]" Value="4"></asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
                     <table cellpadding="5" cellspacing="2">
+
                         <tr>
                             <td colspan="2">
                                 <asp:CheckBox ID="x18IsColors" runat="server" CssClass="chk" Text="Možnost rozlišovat dokumenty barvou" Checked="false" />
                             </td>
                         </tr>
-                      
-                      
+
+
                         <tr>
                             <td>
                                 <span>Vyplňování názvu položky:</span>
@@ -428,7 +470,7 @@
                                 <asp:DropDownList ID="x18CalendarResourceField" runat="server">
                                     <asp:ListItem Text="--Zdroje nevyužívat--" Value=""></asp:ListItem>
                                     <asp:ListItem Text="Osoba" Value="j02ID"></asp:ListItem>
-                                    
+
                                 </asp:DropDownList>
                             </td>
                         </tr>
@@ -449,8 +491,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                                Vztah k úvodní (dashboard) stránce:
+                            <td>Vztah k úvodní (dashboard) stránce:
                             </td>
                             <td>
                                 <asp:DropDownList ID="x18DashboardFlag" runat="server">
@@ -476,7 +517,7 @@
                                 (čárkou oddělené kódy sestav)
                             </td>
                         </tr>
-                        
+
                     </table>
                 </div>
             </div>

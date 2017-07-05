@@ -188,7 +188,7 @@
     <Content Include="billingmemo.ascx" />
     <Content Include="blank.aspx" />
     <Content Include="clue_help.aspx" />
-    <Content Include="clue_o24_record.aspx" />
+    <Content Include="clue_x18_record.aspx" />
     <Content Include="clue_p41_myworksheet.aspx" />
     <Content Include="clue_p48_record.aspx" />
     <Content Include="clue_search.aspx" />
@@ -782,11 +782,11 @@
       <DependentUpon>clue_help.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="clue_o24_record.aspx.designer.vb">
-      <DependentUpon>clue_o24_record.aspx</DependentUpon>
+    <Compile Include="clue_x18_record.aspx.designer.vb">
+      <DependentUpon>clue_x18_record.aspx</DependentUpon>
     </Compile>
-    <Compile Include="clue_o24_record.aspx.vb">
-      <DependentUpon>clue_o24_record.aspx</DependentUpon>
+    <Compile Include="clue_x18_record.aspx.vb">
+      <DependentUpon>clue_x18_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="clue_p41_myworksheet.aspx.designer.vb">

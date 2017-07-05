@@ -74,7 +74,7 @@ Public Class x18_querybuilder
 
         Select Case Me.CurrentX29ID
             Case BO.x29IdEnum.p41Project
-                lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1)
+                lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1).Where(Function(p) p.x18IsManyItems = False)
                 If lisX18.Count > 0 Then
                     nParent = WN0("Štítky klienta projektu", "p28", nParent)
                     For Each c In lisX18
@@ -84,7 +84,7 @@ Public Class x18_querybuilder
 
             Case BO.x29IdEnum.p31Worksheet
                 Dim nS As RadTreeNode = nParent
-                lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p41Project, -1)
+                lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p41Project, -1).Where(Function(p) p.x18IsManyItems = False)
                 If lisX18.Count > 0 Then
                     nParent = WN0("Štítky projektu", "p41", nS)
 
@@ -92,7 +92,7 @@ Public Class x18_querybuilder
                         WN(c, "p41-" & Right("0000" & c.PID.ToString, 4), nParent)
                     Next
                 End If
-                lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1)
+                lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1).Where(Function(p) p.x18IsManyItems = False)
                 If lisX18.Count > 0 Then
                     nParent = WN0("Štítky klienta projektu", "p28", nS)
 
@@ -100,7 +100,7 @@ Public Class x18_querybuilder
                         WN(c, "p28-" & Right("0000" & c.PID.ToString, 4), nParent)
                     Next
                 End If
-                lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.j02Person, -1)
+                lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.j02Person, -1).Where(Function(p) p.x18IsManyItems = False)
                 If lisX18.Count > 0 Then
                     nParent = WN0("Štítky osoby", "j02", nS)
 
@@ -109,7 +109,7 @@ Public Class x18_querybuilder
                     Next
                 End If
             Case BO.x29IdEnum.p91Invoice
-                lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1)
+                lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1).Where(Function(p) p.x18IsManyItems = False)
                 If lisX18.Count > 0 Then
                     nParent = WN0("Štítky klienta faktury", "p28", nParent)
                     For Each c In lisX18
@@ -117,7 +117,7 @@ Public Class x18_querybuilder
                     Next
                 End If
             Case BO.x29IdEnum.p56Task
-                lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p41Project, -1)
+                lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p41Project, -1).Where(Function(p) p.x18IsManyItems = False)
                 If lisX18.Count > 0 Then
                     nParent = WN0("Štítky projektu", "p41", nParent)
 

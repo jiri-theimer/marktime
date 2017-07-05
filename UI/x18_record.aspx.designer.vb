@@ -248,6 +248,42 @@ Partial Public Class x18_record
     Protected WithEvents j02ID_Owner As Global.UI.person
 
     '''<summary>
+    '''x18UploadFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18UploadFlag As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
+    '''panFileSystem control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panFileSystem As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''x18MaxOneFileSize control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18MaxOneFileSize As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''x18AllowedFileExtensions control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18AllowedFileExtensions As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''x18GridColsFlag control.
     '''</summary>
     '''<remarks>

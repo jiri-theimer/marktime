@@ -128,6 +128,9 @@
                 pars.Add("x18CalendarFieldSubject", .x18CalendarFieldSubject, DbType.String)
                 pars.Add("x18CalendarResourceField", .x18CalendarResourceField, DbType.String)
                 pars.Add("x18DashboardFlag", CInt(.x18DashboardFlag), DbType.Int32)
+                pars.Add("x18UploadFlag", CInt(.x18UploadFlag), DbType.Int32)
+                pars.Add("x18MaxOneFileSize", .x18MaxOneFileSize, DbType.Int32)
+                pars.Add("x18AllowedFileExtensions", .x18AllowedFileExtensions, DbType.String)
             End With
 
             If _cDB.SaveRecord("x18EntityCategory", pars, bolINSERT, strW, True, _curUser.j03Login) Then

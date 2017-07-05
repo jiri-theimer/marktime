@@ -15,7 +15,7 @@ Public Interface ImtService
 
   
     <OperationContract()>
-    Function SaveTask(intPID As Integer, strExternalPID As String, fields As Dictionary(Of String, Object), receivers As List(Of BO.x69EntityRole_Assign), intO24ID As Integer, uploadedTempFiles As List(Of String), strLogin As String, strPassword As String) As BO.ServiceResult
+    Function SaveTask(intPID As Integer, strExternalPID As String, fields As Dictionary(Of String, Object), receivers As List(Of BO.x69EntityRole_Assign), uploadedTempFiles As List(Of String), strLogin As String, strPassword As String) As BO.ServiceResult
     <OperationContract()>
     Function LoadTaskExtended(intPID As Integer, strLogin As String, strPassword As String) As BO.p56TaskWsExtended
     <OperationContract()>
@@ -83,7 +83,7 @@ Public Interface ImtService
     <OperationContract()>
     Function UploadBinaryToTempFile(chunkBytes As Byte(), intPartZeroIndex As Integer, intTotalSize As Integer, strArchiveFileName As String, strLogin As String, strPassword As String) As BO.ServiceResult
     <OperationContract()>
-    Function ListDocTypes(strLogin As String, strPassword As String) As IEnumerable(Of BO.o24NotepadType)
+    Function ListDocTypes(strLogin As String, strPassword As String) As IEnumerable(Of BO.x18EntityCategory)
     <OperationContract()>
     Function ListComboSource(strDataPrefix As String, strFlag As String, bolFirstEmptyRow As Boolean, intParentPID As Integer, strLogin As String, strPassword As String) As List(Of BO.ComboSource)
     <OperationContract()>

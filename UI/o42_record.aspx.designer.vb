@@ -77,13 +77,13 @@ Partial Public Class o42_record
     Protected WithEvents p57ID As Global.UI.datacombo
 
     '''<summary>
-    '''o24ID control.
+    '''x18ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents o24ID As Global.UI.datacombo
+    Protected WithEvents x18ID As Global.UI.datacombo
 
     '''<summary>
     '''lblRole control.

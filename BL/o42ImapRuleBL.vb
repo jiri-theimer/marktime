@@ -39,7 +39,7 @@ Class o42ImapRuleBL
             If .o41ID = 0 Then _Error = "Chybí IMAP účet." : Return False
             If Trim(.o42Name) = "" Then _Error = "Název pravidla je povinné pole." : Return False
             If .j02ID_Owner_Default = 0 Then _Error = "Chybí výchozí vlastník pravidlem zakládaného záznamu"
-            If .p57ID = 0 And .o24ID = 0 Then _Error = "Chybí [Typ úkolu] nebo [Typ dokumentu]."
+            If .p57ID = 0 And .x18ID = 0 Then _Error = "Chybí [Typ úkolu] nebo [Typ dokumentu]."
             If .x67ID = 0 Then _Error = "Chybí specifikace role, kterou obdrží osoby v novém záznamu"
             If .p57ID <> 0 And .p41ID_Default = 0 Then
                 _Error = "K typu úkolu musíte specifikovat výchozí projekt."
@@ -336,7 +336,7 @@ Class o42ImapRuleBL
             If c.p57ID <> 0 Then
                 cO43.p56ID = CreateP56Record(cO43, c, cInbox, cJ02_FROM, lisCC_Persons, lisCC_Projects, lisCC_Clients, lisCC_Teams)
             End If
-            If c.o24ID <> 0 Then
+            If c.x18ID <> 0 Then
                 cO43.o23ID = CreateO23Record(cO43, c, cInbox, cJ02_FROM, lisCC_Persons, lisCC_Projects, lisCC_Clients, lisCC_Teams)
             End If
         Next
@@ -493,12 +493,13 @@ Class o42ImapRuleBL
 
 
     Private Function CreateO23Record(ByRef cO43 As BO.o43ImapRobotHistory, cRule As BO.o42ImapRule, cInbox As BO.o41InboxAccount, cJ02_FROM As BO.j02Person, lisJ02 As List(Of BO.j02Person), lisP41 As List(Of BO.p41Project), lisP28 As List(Of BO.p28Contact), lisJ11 As List(Of BO.j11Team)) As Integer
+        Dim cx18 As BO.x18EntityCategory = Factory.x18EntityCategoryBL.Load(cRule.x18ID)
+
         Dim c As New BO.o23Doc
-        ''c.x23ID = cRule.o24ID
-        ''c.o23Name = cO43.o43Subject
-        ''c.o23BodyPlainText = cO43.o43Body_PlainText
-        ''c.o23BodyHtml = cO43.o43Body_Html
-        ''c.o23Date = cO43.o43DateMessage
+        c.x23ID = cx18.x23ID
+        c.o23Name = cO43.o43Subject
+        
+        c.o23FreeDate01 = cO43.o43DateMessage
         ''If lisP41.Count > 0 Then
         ''    c.p41ID = lisP41(0).PID
         ''End If
@@ -531,6 +532,8 @@ Class o42ImapRuleBL
 
         With Factory.o23DocBL
             If .Save(c, 0, Nothing, Nothing, Nothing, cO43.o43RecordGUID) Then
+                Dim intO23ID As Integer = .LastSavedPID
+                .SaveHtmlContent(intO23ID, cO43.o43Body_Html, cO43.o43Body_PlainText)
                 Return .LastSavedPID
             Else
                 cO43.o43ErrorMessage = "Chyba při pokusu o založení dokumentu: " & .ErrorMessage

@@ -51,6 +51,8 @@
 
         If cX18.x18Icon32 <> "" Then
             imgIcon32.ImageUrl = cX18.x18Icon32
+        Else
+            If cX18.x18IsManyItems Then imgIcon32.ImageUrl = "Images/notepad_32.png"
         End If
         If cX18.b01ID <> 0 Then
             hidB01ID.Value = cX18.b01ID.ToString

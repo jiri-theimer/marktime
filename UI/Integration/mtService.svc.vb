@@ -45,7 +45,7 @@ Class mtService
         Return True
     End Function
 
-    Public Function SaveTask(intPID As Integer, strExternalPID As String, fields As Dictionary(Of String, Object), receivers As List(Of BO.x69EntityRole_Assign), intO24ID As Integer, uploadedTempFiles As List(Of String), strLogin As String, strPassword As String) As BO.ServiceResult Implements ImtService.SaveTask
+    Public Function SaveTask(intPID As Integer, strExternalPID As String, fields As Dictionary(Of String, Object), receivers As List(Of BO.x69EntityRole_Assign), uploadedTempFiles As List(Of String), strLogin As String, strPassword As String) As BO.ServiceResult Implements ImtService.SaveTask
         VerifyUser(strLogin, strPassword)
         Dim sr As New BO.ServiceResult()
 
@@ -444,10 +444,10 @@ Class mtService
 
         
     End Function
-    Public Function ListDocTypes(strLogin As String, strPassword As String) As IEnumerable(Of BO.o24NotepadType) Implements ImtService.ListDocTypes
+    Public Function ListDocTypes(strLogin As String, strPassword As String) As IEnumerable(Of BO.x18EntityCategory) Implements ImtService.ListDocTypes
         VerifyUser(strLogin, strPassword)
-        
-        Return _factory.o24NotepadTypeBL.GetList(_mqDef)
+
+        Return _factory.x18EntityCategoryBL.GetList(_mqDef)
     End Function
 
     Public Function SaveDocument(intPID As Integer, strExternalPID As String, uploadedTempFiles As List(Of String), fields As Dictionary(Of String, Object), strLogin As String, strPassword As String) As BO.ServiceResult Implements ImtService.SaveDocument

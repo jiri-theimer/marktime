@@ -50,7 +50,7 @@ Public Class x18_framework
             .AddSystemColumn(20)
             .AddColumn("x18Name", "Název")
          
-            
+            .AddColumn("TagOrDoc", "Typ", BO.cfENUM.AnyString)
             .AddColumn("Is_p41", "Projekty", BO.cfENUM.Checkbox)
             .AddColumn("Is_p28", "Klienti", BO.cfENUM.Checkbox)
             .AddColumn("Is_p56", "Úkoly", BO.cfENUM.Checkbox)
@@ -59,7 +59,7 @@ Public Class x18_framework
             .AddColumn("Is_j02", "Osoby", BO.cfENUM.Checkbox)
             .AddColumn("Is_o22", "Kal.události", BO.cfENUM.Checkbox)
             .AddColumn("x18Ordinary", "#", BO.cfENUM.Numeric0, , , , , , False)
-            .AddColumn("DateInsert", "Založeno", BO.cfENUM.DateTime, , , , , , False)
+            '.AddColumn("DateInsert", "Založeno", BO.cfENUM.DateTime, , , , , , False)
 
             .SetFilterSetting(strFilterSetting, strFilterExpression)
         End With

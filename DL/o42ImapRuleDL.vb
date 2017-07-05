@@ -27,7 +27,7 @@
             pars.Add("o42IsUse_To", .o42IsUse_To, DbType.Boolean)
             pars.Add("o41ID", .o41ID, DbType.Int32)
             pars.Add("p57ID", BO.BAS.IsNullDBKey(.p57ID), DbType.Int32)
-            pars.Add("o24ID", BO.BAS.IsNullDBKey(.o24ID), DbType.Int32)
+            pars.Add("x18ID", BO.BAS.IsNullDBKey(.x18ID), DbType.Int32)
             pars.Add("x67ID", BO.BAS.IsNullDBKey(.x67ID), DbType.Int32)
             pars.Add("p41ID_Default", BO.BAS.IsNullDBKey(.p41ID_Default), DbType.Int32)
             pars.Add("j02ID_Owner_Default", BO.BAS.IsNullDBKey(.j02ID_Owner_Default), DbType.Int32)

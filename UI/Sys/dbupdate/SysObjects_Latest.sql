@@ -59,6 +59,75 @@ END
 
 GO
 
+----------FN---------------ConvertNumberToRoman-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('ConvertNumberToRoman') and type = 'FN')
+ drop function ConvertNumberToRoman
+GO
+
+
+CREATE FUNCTION dbo.ConvertNumberToRoman (@Number INT)
+  /**
+ summary:   >
+ This is a simple routine for converting a decimal integer into a roman numeral.
+ Author: Phil Factor
+ Revision: 1.2
+ date: 3rd Feb 2014
+ Why: converted to run on SQL Server 2008-12
+ example:
+      - code: Select dbo.ToRomanNumerals(187)
+      - code: Select dbo.ToRomanNumerals(2011)
+ returns:   >
+ The Mediaeval-style 'roman' numeral as a string.
+ **/   
+ RETURNS varchar(100)
+ AS
+ BEGIN
+  IF @Number<0
+     BEGIN
+     RETURN 'De romanorum non numero negative'
+     end                          
+   IF @Number> 200000
+     BEGIN
+     RETURN 'O Juppiter, magnus numerus'
+     end                          
+   DECLARE @RomanNumeral AS varchar(100)
+   DECLARE @RomanSystem TABLE (symbol varchar(20) 
+                                   COLLATE SQL_Latin1_General_Cp437_BIN ,
+                               DecimalValue INT PRIMARY key)
+    INSERT  INTO @RomanSystem (symbol, DecimalValue)
+     VALUES('I', 1),
+           ('IV', 4),
+           ('V', 5),
+           ('IX', 9),
+           ('X', 10),
+           ('XL', 40),
+           ('L', 50),
+           ('XC', 90),
+           ('C', 100),
+           ('CD', 400),
+           ('D', 500),
+           ('CM', 900),
+           ('M', 1000),
+           (N'|??', 5000),
+           (N'cc|??', 10000),
+           (N'|???', 50000),
+           (N'ccc|???', 100000),
+           (N'ccc|??????', 150000)
+  
+   WHILE @Number > 0
+     SELECT  @RomanNumeral = COALESCE(@RomanNumeral, '') + symbol,
+             @Number = @Number - DecimalValue
+     FROM    @RomanSystem
+     WHERE   DecimalValue = (SELECT  MAX(DecimalValue)
+                             FROM    @RomanSystem
+                             WHERE   DecimalValue <= @number)
+   RETURN COALESCE(@RomanNumeral,'nulla')
+ END
+
+
+GO
+
 ----------FN---------------get_datename-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('get_datename') and type = 'FN')
@@ -854,7 +923,7 @@ if @prefix='p90'
 
 
 if @prefix='p31'
-  select @ret=p41Name+' ['+p34name+'] '+convert(varchar(20),p31date,104)+' ['+j02LastName+']' FROM p31worksheet a inner join p32activity b on a.p32id=b.p32id inner join p34activitygroup c on b.p34id=c.p34id inner join j02Person d on a.j02ID=d.j02ID inner join p41Project p41 on a.p41id=p41.p41id where a.p31id=@pid
+  select @ret=p41Name+' ['+p34name+'] '+convert(varchar(20),p31date,104)+' ['+j02LastName+']'+case when len(a.p31Text)>50 then ' '+left(a.p31Text,50)+'...' else isnull(' '+a.p31Text,'') end FROM p31worksheet a inner join p32activity b on a.p32id=b.p32id inner join p34activitygroup c on b.p34id=c.p34id inner join j02Person d on a.j02ID=d.j02ID inner join p41Project p41 on a.p41id=p41.p41id where a.p31id=@pid
 
 
 if @prefix='j03'
@@ -870,7 +939,7 @@ if @prefix='o22'
 
  
 if @prefix='o23'
- select @ret=isnull(o23Code,'')+' | '+isnull(b.o24Name+': ','')+isnull(a.o23Name,''),@refp28id=a.p28id,@refp41id=a.p41id,@refp91id=a.p91id,@refj02id=a.j02id,@refp56id=a.p56ID FROM o23Notepad a LEFT OUTER JOIN o24NotepadType b ON a.o24ID=b.o24ID WHERE a.o23ID=@pid
+ select @ret=isnull(o23Code,'')+' | '+isnull(c.x18Name+': ','')+isnull(a.o23Name,'') FROM o23Doc a INNER JOIN x23EntityField_Combo b ON a.x23ID=b.x23ID INNER JOIN x18EntityCategory c ON b.x23ID=c.x23ID WHERE a.o23ID=@pid
   
 if @prefix='b07'
  select @ret='Komentáø od: '+b.j02Firstname+' '+b.j02LastName, @refpid=a.b07RecordPID,@refx29id=a.x29ID FROM b07Comment a INNER JOIN j02Person b ON a.j02ID_Owner=b.j02ID WHERE a.b07ID=@pid
@@ -1037,6 +1106,47 @@ BEGIN
 
 	RETURN(@str)
 END
+
+
+
+
+
+GO
+
+----------FN---------------j02_c21_get_hours_for_day-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('j02_c21_get_hours_for_day') and type = 'FN')
+ drop function j02_c21_get_hours_for_day
+GO
+
+
+
+
+
+CREATE FUNCTION [dbo].[j02_c21_get_hours_for_day] (@j02id int,@d datetime)
+--vrací poèet hodin z pracovního fondu osoby @j02id pro den @d
+RETURNS float AS  
+BEGIN 
+
+declare @hours float,@c21id int,@j17id int
+
+select @c21id=c21ID,@j17id=j17ID FROM j02Person WHERE j02ID=@j02id
+
+select @hours=c22hours_work FROM c22FondCalendar_Date WHERE c21ID=@c21id AND c22Date=@d AND isnull(j17ID,0)=isnull(@j17id,0)
+
+
+RETURN(isnull(@hours,0))
+	
+END
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1447,6 +1557,146 @@ END
 
 GO
 
+----------FN---------------my_iif2_bit-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('my_iif2_bit') and type = 'FN')
+ drop function my_iif2_bit
+GO
+
+
+
+
+
+
+create FUNCTION [dbo].[my_iif2_bit](
+    @compare_val1 int
+	,@compare_val2 int
+	,@return_true bit
+	,@return_false bit
+	)
+RETURNS bit
+AS
+BEGIN
+    if @compare_val1=@compare_val2
+	 RETURN @return_true
+	
+
+
+	 RETURN @return_false
+END
+
+
+
+
+
+
+
+GO
+
+----------FN---------------my_iif2_date-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('my_iif2_date') and type = 'FN')
+ drop function my_iif2_date
+GO
+
+
+
+
+
+create FUNCTION [dbo].[my_iif2_date](
+    @compare_val1 int
+	,@compare_val2 int
+	,@return_true datetime
+	,@return_false datetime
+	)
+RETURNS datetime
+AS
+BEGIN
+    if @compare_val1=@compare_val2
+	 RETURN @return_true
+	
+
+
+	 RETURN @return_false
+END
+
+
+
+
+
+
+GO
+
+----------FN---------------my_iif2_number-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('my_iif2_number') and type = 'FN')
+ drop function my_iif2_number
+GO
+
+
+
+
+
+
+CREATE FUNCTION [dbo].[my_iif2_number](
+    @compare_val1 int
+	,@compare_val2 int
+	,@return_true float
+	,@return_false float
+	)
+RETURNS float
+AS
+BEGIN
+    if @compare_val1=@compare_val2
+	 RETURN @return_true
+	
+
+
+	 RETURN @return_false
+END
+
+
+
+
+
+
+
+GO
+
+----------FN---------------my_iif2_string-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('my_iif2_string') and type = 'FN')
+ drop function my_iif2_string
+GO
+
+
+
+
+
+CREATE FUNCTION [dbo].[my_iif2_string](
+    @compare_val1 int
+	,@compare_val2 int
+	,@return_true nvarchar(255)
+	,@return_false nvarchar(255)
+	)
+RETURNS nvarchar(255)
+AS
+BEGIN
+    if @compare_val1=@compare_val2
+	 RETURN @return_true
+	
+
+
+	 RETURN @return_false
+END
+
+
+
+
+
+
+GO
+
 ----------FN---------------o22_getroles_inline-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('o22_getroles_inline') and type = 'FN')
@@ -1507,6 +1757,36 @@ END
 
 GO
 
+----------FN---------------o23_get_text-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('o23_get_text') and type = 'FN')
+ drop function o23_get_text
+GO
+
+
+CREATE FUNCTION [dbo].[o23_get_text](@x23id int,@o23id int)
+RETURNS nvarchar(255) AS  
+BEGIN 
+
+if ISNULL(@o23id,0)=0
+ RETURN(NULL)
+
+declare @ret nvarchar(255)
+
+select @ret=o23Name
+from
+o23Doc
+where x23ID=@x23id AND o23ID=@o23id
+
+
+RETURN(@ret)
+
+END
+
+
+
+GO
+
 ----------FN---------------o23_getroles_inline-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('o23_getroles_inline') and type = 'FN')
@@ -1514,31 +1794,40 @@ if exists (select 1 from sysobjects where  id = object_id('o23_getroles_inline')
 GO
 
 
-
-
-
-
-
 CREATE    FUNCTION [dbo].[o23_getroles_inline](@o23id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené obsazení  rolí v dokumentu @o23id
+  ---vrací èárkou oddìlené obsazení  rolí v položce štítku @x25id
 
- DECLARE @s nvarchar(2000) 
+ DECLARE @s nvarchar(2000),@count int
 
+ select @count=count(*) FROM x67EntityRole WHERE x29ID=223
+
+ 
+ if @count>1
+ begin
 select @s=COALESCE(@s + ', ', '')+ltrim(isnull(j02.j02FirstName+' '+j02.j02LastName,'')+isnull(' '+j11.j11Name,''))+' ('+x67Name+')'
   FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID
   LEFT OUTER JOIN j02Person j02 ON x69.j02ID=j02.j02ID
   LEFT OUTER JOIN j11Team j11 ON x69.j11ID=j11.j11ID
   WHERE x69.x69RecordPID=@o23id AND x67.x29ID=223
   ORDER BY x67Ordinary
+ end
 
+  if @count<=1
+ begin
+select @s=COALESCE(@s + ', ', '')+ltrim(isnull(j02.j02FirstName+' '+j02.j02LastName,'')+isnull(' '+j11.j11Name,''))
+  FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID
+  LEFT OUTER JOIN j02Person j02 ON x69.j02ID=j02.j02ID
+  LEFT OUTER JOIN j11Team j11 ON x69.j11ID=j11.j11ID
+  WHERE x69.x69RecordPID=@o23id AND x67.x29ID=223
+  ORDER BY x67Ordinary
+ end
 
 RETURN(@s)
    
 END
-
 
 
 
@@ -2477,6 +2766,34 @@ END
 
 GO
 
+----------FN---------------p41_ko_inline-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p41_ko_inline') and type = 'FN')
+ drop function p41_ko_inline
+GO
+
+
+create    FUNCTION [dbo].[p41_ko_inline](@p41id int)
+RETURNS nvarchar(2000)
+AS
+BEGIN
+  ---vrací èárkou oddìlené názvy kontaktní osob pøímo svázané s projektem
+
+ DECLARE @s nvarchar(2000) 
+
+select @s=COALESCE(@s + ', ', '')+b.j02LastName+' '+b.j02FirstName
+  FROM p30Contact_Person a INNER JOIN j02Person b ON a.j02ID=b.j02ID
+  WHERE a.p41ID=@p41id
+
+
+
+RETURN(@s)
+   
+END
+
+
+GO
+
 ----------FN---------------p56_get_one_role_inline-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p56_get_one_role_inline') and type = 'FN')
@@ -2991,8 +3308,8 @@ BEGIN
 
 
 select top 10 @s=COALESCE(@s + ', ', '')+dbo.GetObjectAlias(convert(varchar(10),x20.x29ID),a.x19RecordPID)
-FROM x19EntityCategory_Binding a INNER JOIN x25EntityField_ComboValue x25 ON a.x25ID=x25.x25ID INNER JOIN x20EntiyToCategory x20 ON a.x20ID=x20.x20ID
-where a.x25ID=@x25id AND a.x20ID=@x20id
+FROM x19EntityCategory_Binding a INNER JOIN o23Doc o23 ON a.o23ID=o23.o23ID INNER JOIN x20EntiyToCategory x20 ON a.x20ID=x20.x20ID
+where a.o23ID=@x25id AND a.x20ID=@x20id
 
 
 
@@ -3049,8 +3366,8 @@ BEGIN
  DECLARE @s nvarchar(2000) 
 
 
-select top 10 @s=COALESCE(@s + ', ', '')+x25.x25Name
-FROM x19EntityCategory_Binding a INNER JOIN x25EntityField_ComboValue x25 ON a.x25ID=x25.x25ID INNER JOIN x20EntiyToCategory x20 ON a.x20ID=x20.x20ID
+select top 10 @s=COALESCE(@s + ', ', '')+isnull(o23.o23Code,o23.o23Name)
+FROM x19EntityCategory_Binding a INNER JOIN o23Doc o23 ON a.o23ID=o23.o23ID INNER JOIN x20EntiyToCategory x20 ON a.x20ID=x20.x20ID
 where a.x19RecordPID=@recpid AND x20.x18ID=@x18id and x20.x29ID=@x29id
 
 
@@ -3059,105 +3376,6 @@ RETURN(@s)
    
 END
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-GO
-
-----------FN---------------x25_get_text-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('x25_get_text') and type = 'FN')
- drop function x25_get_text
-GO
-
-
-CREATE FUNCTION [dbo].[x25_get_text](@x23id int,@x25id int)
-RETURNS nvarchar(255) AS  
-BEGIN 
-
-if ISNULL(@x25id,0)=0
- RETURN(NULL)
-
-declare @ret nvarchar(255)
-
-select @ret=x25Name
-from
-x25EntityField_ComboValue
-where x23ID=@x23id AND x25ID=@x25id
-
-
-RETURN(@ret)
-
-END
-
-
-
-GO
-
-----------FN---------------x25_getroles_inline-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('x25_getroles_inline') and type = 'FN')
- drop function x25_getroles_inline
-GO
-
-
-create    FUNCTION [dbo].[x25_getroles_inline](@x25id int)
-RETURNS nvarchar(2000)
-AS
-BEGIN
-  ---vrací èárkou oddìlené obsazení  rolí v položce štítku @x25id
-
- DECLARE @s nvarchar(2000),@count int
-
- select @count=count(*) FROM x67EntityRole WHERE x29ID=925
-
- 
- if @count>1
- begin
-select @s=COALESCE(@s + ', ', '')+ltrim(isnull(j02.j02FirstName+' '+j02.j02LastName,'')+isnull(' '+j11.j11Name,''))+' ('+x67Name+')'
-  FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID
-  LEFT OUTER JOIN j02Person j02 ON x69.j02ID=j02.j02ID
-  LEFT OUTER JOIN j11Team j11 ON x69.j11ID=j11.j11ID
-  WHERE x69.x69RecordPID=@x25id AND x67.x29ID=925
-  ORDER BY x67Ordinary
- end
-
-  if @count<=1
- begin
-select @s=COALESCE(@s + ', ', '')+ltrim(isnull(j02.j02FirstName+' '+j02.j02LastName,'')+isnull(' '+j11.j11Name,''))
-  FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID
-  LEFT OUTER JOIN j02Person j02 ON x69.j02ID=j02.j02ID
-  LEFT OUTER JOIN j11Team j11 ON x69.j11ID=j11.j11ID
-  WHERE x69.x69RecordPID=@x25id AND x67.x29ID=925
-  ORDER BY x67Ordinary
- end
-
-RETURN(@s)
-   
-END
 
 
 
@@ -3361,10 +3579,10 @@ if @x29id=382	---úhrada zálohové faktury
 
 
 if @x29id=223 and @isdraft=0	---dokument
- select @pid_last=max(o23ID),@code_max_used=max(dbo.remove_alphacharacters(o23code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM o23Notepad where o23IsDraft=0 AND o23Code NOT LIKE 'TEMP%' and o23Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue AND o24ID IN (SELECT o24ID FROM o24NotepadType WHERE x38ID=@x38id)
+ select @pid_last=max(o23ID),@code_max_used=max(dbo.remove_alphacharacters(o23code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM o23Doc where o23IsDraft=0 AND o23Code NOT LIKE 'TEMP%' and o23Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue AND x23ID IN (SELECT b.x23ID FROM x23EntityField_Combo a INNER JOIN x18EntityCategory b ON a.x23ID=b.x23ID WHERE b.x38ID=@x38id)
 
 if @x29id=223 and @isdraft=1	---dokument DRAFT
- select @pid_last=max(o23ID),@code_max_used=max(dbo.remove_alphacharacters(o23code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM o23Notepad where o23IsDraft=0 AND o23Code NOT LIKE 'TEMP%' and o23Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue AND o24ID IN (SELECT o24ID FROM o24NotepadType WHERE x38ID_Draft=@x38id OR x38ID_Draft is null)
+ select @pid_last=max(o23ID),@code_max_used=max(dbo.remove_alphacharacters(o23code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM o23Doc where o23IsDraft=1
 
 
 if @x29id=391 and @isdraft=0	---faktura
@@ -4535,10 +4753,7 @@ SELECT TOP 1 @ref_pid=p91ID from p91Invoice WHERE j02ID_Owner=@pid
 if @ref_pid is not null
  set @err_ret='Minimálnì v jednomu záznamu faktury je vlastníkem záznamu tato osoba ('+dbo.GetObjectAlias('p91',@ref_pid)+')'
 
-set @ref_pid=null
-SELECT TOP 1 @ref_pid=o23ID from o23Notepad WHERE j02ID=@pid
-if @ref_pid is not null
- set @err_ret='Osoba má vazbu s minimálnì jedním dokumentem ('+dbo.GetObjectAlias('o23',@ref_pid)+')'
+
 
 if exists(select p56ID FROM p56Task WHERE j02ID_Owner=@pid)
  set @err_ret='Osoba je vlastníkem (zakladatelem) minimálnì jednoho úkolu.'
@@ -4565,8 +4780,7 @@ BEGIN TRY
 	if exists(SELECT x69ID FROM x69EntityRole_Assign WHERE j02ID=@pid)
 	 DELETE FROM x69EntityRole_Assign WHERE j02ID=@pid
 
-	if exists(select o27ID FROM o27Attachment where j02ID=@pid)
-	 DELETE FROM o27Attachment WHERE j02ID=@pid
+	
 
 	if exists(select j12ID FROM j12Team_Person where j02ID=@pid)
 	 DELETE FROM j12Team_Person WHERE j02ID=@pid
@@ -4712,8 +4926,8 @@ end
 if exists(select b07ID from b07Comment WHERE x29ID=102 AND b07RecordPID=@pid)
  select @b07_count=count(b07ID) FROM b07Comment WHERE x29ID=102 AND b07RecordPID=@pid
 
-if exists(select o23ID FROM o23Notepad WHERE j02ID=@pid)
- select @o23_count=count(o23ID) FROM o23Notepad WHERE j02ID=@pid and getdate() between o23ValidFrom and o23ValidUntil
+if exists(select a.o23ID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID INNER JOIN o23Doc c ON a.o23ID=c.o23ID WHERE a.x19RecordPID=@pid AND b.x29ID=102 and getdate() between c.o23ValidFrom and c.o23ValidUntil)
+ select @o23_count=count(a.o23ID) FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID INNER JOIN o23Doc c ON a.o23ID=c.o23ID WHERE a.x19RecordPID=@pid AND b.x29ID=102 and getdate() between c.o23ValidFrom and c.o23ValidUntil
 else
  set @o23_count=0
 
@@ -4910,10 +5124,10 @@ select @o22_count=count(o22ID) FROM o22Milestone
 WHERE (o22DateFrom BETWEEN @d1 AND @d2 OR o22DateUntil BETWEEN @d1 AND @d2 OR o22ReminderDate BETWEEN @d1 AND @d2)
 AND (j02ID_Owner=@j02id OR j02ID=@j02id OR o22ID IN (SELECT o22ID FROM o20Milestone_Receiver WHERE j02ID=@j02id OR j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id)))
 
---poèet poznámek
-select @o23_count=count(o23ID) FROM o23Notepad
+--poèet dokumentù k pøipomenutí
+select @o23_count=count(o23ID) FROM o23Doc
 WHERE (o23ReminderDate BETWEEN @d1 AND @d2)
-AND (j02ID_Owner=@j02id OR j02ID=@j02id)
+AND (j02ID_Owner=@j02id OR x23ID IN (select x23ID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE a.x19RecordPID=@j02id AND b.x29ID=102))
 
 
 ----poèet auto-generovaných odmìn/paušálù/úkonù
@@ -6012,8 +6226,8 @@ AS
 
 declare @o23id int,@docname nvarchar(255),@p31id int,@ukon nvarchar(255),@p56id int,@task nvarchar(255),@o22id int,@appointment nvarchar(255)
 
-if exists(select o23ID FROM o23Notepad WHERE o23ExternalPID like @entry_id)
- select top 1 @o23id=a.o23ID,@docname=b.o24Name+': '+a.o23Name+' | '+isnull(o23UserInsert+convert(varchar(20),o23DateInsert),'') FROM o23Notepad a INNER JOIN o24NotepadType b ON a.o24ID=b.o24ID WHERE a.o23ExternalPID like @entry_id
+if exists(select o23ID FROM o23Doc WHERE o23ExternalPID like @entry_id)
+ select top 1 @o23id=a.o23ID,@docname=c.x18Name+': '+a.o23Name+' | '+isnull(o23UserInsert+convert(varchar(20),o23DateInsert),'') FROM o23Doc a INNER JOIN x23EntityField_Combo b ON a.x23ID=b.x23ID INNER JOIN x18EntityCategory c ON b.x23ID=c.x23ID WHERE a.o23ExternalPID like @entry_id
 
 if exists(select p56ID FROM p56Task WHERE p56ExternalPID like @entry_id)
  select top 1 @p56id=a.p56ID,@task=b.p57Name+': '+a.p56Name+' | '+isnull(p56UserInsert+convert(varchar(20),p56DateInsert),'') FROM p56Task a INNER JOIN p57TaskType b ON a.p57ID=b.p57ID WHERE a.p56ExternalPID like @entry_id
@@ -6241,96 +6455,61 @@ CREATE    PROCEDURE [dbo].[o23_aftersave]
 
 AS
 
----automaticky se spouští po uložení záznamu dokumentu
-declare @o23code varchar(50),@x38id int,@x38id_draft int,@isdraft bit,@x29id int
+declare @o23code varchar(50),@x23id int,@x18id int,@x18EntryCodeFlag int,@x38id int,@count int,@o23ArabicCode varchar(50)
 
-select @o23code=a.o23Code,@x38id=o24.x38ID,@x38id_draft=o24.x38ID_Draft,@isdraft=a.o23IsDraft,@x29id=o24.x29ID
-FROM
-o23Notepad a INNER JOIN o24NotepadType o24 ON a.o24ID=o24.o24ID
-WHERE a.o23ID=@o23id
+select @o23code=a.o23Code,@x23id=a.x23ID,@x18id=x18.x18ID,@x18EntryCodeFlag=x18.x18EntryCodeFlag,@x38id=x18.x38ID,@o23ArabicCode=a.o23ArabicCode
+from o23Doc a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID
+INNER JOIN x18EntityCategory x18 ON x23.x23ID=x18.x23ID
+where a.o23ID=@o23id
 
-if left(@o23code,4)='TEMP' OR @o23code is null
+if @x18EntryCodeFlag=3 and @o23code is null
+begin	---automaticky generovat kód v rámci všech položek štítku
+ select @count=count(*) FROM o23Doc WHERE x23ID=@x23id AND o23ID<>@o23id AND o23Code is not null
+ set @o23code=isnull(@count,0)+1
+
+ update o23Doc set o23Code=@o23code WHERE o23ID=@o23id
+end
+
+ 
+
+if @x18EntryCodeFlag=4 and @o23code is null
+begin	---automaticky generovat kód v rámci projektu daného štítku
+ declare @p41id int,@x20id int
+ select @p41id=a.x19RecordPID,@x20id=b.x20ID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE a.o23ID=@o23id AND b.x29ID=141
+
+ if @p41id is not null and @x20id is not null
  begin
-  if @isdraft=1
-   set @x38id=@x38id_draft
+  select @count=count(*) FROM o23Doc WHERE x23ID=@x23id AND o23ID<>@o23id AND o23Code IS NOT NULL AND o23ID IN (select o23ID FROM x19EntityCategory_Binding WHERE x20ID=@x20id AND x19RecordPID=@p41id)
 
-  set @o23code=dbo.x38_get_freecode(@x38id,223,@o23id,@isdraft,1)
+  set @o23code=isnull(@count,0)+1
+
+  update o23Doc set o23Code=@o23code WHERE o23ID=@o23id
+ end
+end
+
+
+
+if (left(@o23code,4)='TEMP' OR @o23code is null) AND @x38id is not null
+ begin
+ 
+
+  exec dbo.x38_get_freecode_proc @x38id,223,@o23id,0,1,@o23code OUTPUT
 
   if @o23code<>''
-   UPDATE o23Notepad SET o23Code=@o23code WHERE o23ID=@o23id 
+   UPDATE o23Doc SET o23Code=@o23code WHERE o23ID=@o23id 
  end 
 
+if ISNUMERIC(@o23code)=1 and @o23ArabicCode is null
+ begin	---pøevod kódu na arabské èíslo
+  declare @num int
+  set @num=convert(int,@o23code)
 
-if @x29id=331
- begin
-	declare @o23id_first int,@p31id int
-	select TOP 1 @p31id=p31ID FROM o23Notepad WHERE o23ID=@o23id
-
-	if @p31id is not null
-	 UPDATE p31Worksheet set o23ID_First=@o23id WHERE p31ID=@p31id
-
-	if @p31id is null
-	 begin
-	  if exists(select p31ID FROM p31Worksheet WHERE o23ID_First=@o23id)
-		UPDATE p31Worksheet set o23ID_First=NULL WHERE o23ID_First=@o23id
-	 end
+  update o23Doc set o23ArabicCode=case when @num<1000 then dbo.ConvertNumberToRoman(@num) else null end WHERE o23ID=@o23id
  end
 
-
-declare @j02id int
-select @j02id=j02ID FROM j03User WHERE j03ID=@j03id_sys
-
-exec j03_recovery_cache @j03id_sys,@j02id
-
-
-
-
-GO
-
-----------P---------------o23_convertdraft-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('o23_convertdraft') and type = 'P')
- drop procedure o23_convertdraft
-GO
-
-
-
-
-CREATE    PROCEDURE [dbo].[o23_convertdraft]
-@o23id int
-,@j03id_sys int
-,@err_ret varchar(1000) OUTPUT
-AS
-
----konverze dokumentu z DRAFT režimu do normálního dokumentu
-set @err_ret=''
-
-declare @code varchar(50),@x38id int,@isdraft bit
-
-select @x38id=o24.x38ID,@isdraft=a.o23IsDraft
-FROM
-o23Notepad a INNER JOIN o24NotepadType o24 ON a.o24ID=o24.o24ID
-WHERE a.o23ID=@o23id
-
-if @isdraft=0
- begin
-  set @err_ret='Záznam není v àežimu DRAFT.'
-  return
- end
+exec [x90_appendlog] 223,@o23id,@j03id_sys
  
-exec dbo.x38_get_freecode_proc @x38id,223,@o23id,0,1,@code OUTPUT
-
-if @code=''
- begin
-  set @err_ret='Systém nedokázal složit odpovídající kód podle nastavení èíselné øady. Záznam zùstává v režimu DRAFT.'
-  return
- end
-
-UPDATE o23Notepad SET o23Code=@code,o23IsDraft=0 WHERE o23ID=@o23id 
-
-  
-
-
+ 
 
 
 
@@ -6348,103 +6527,38 @@ GO
 
 CREATE   procedure [dbo].[o23_delete]
 @j03id_sys int				--pøihlášený uživatel
-,@pid int					--o23ID
+,@pid int					--o23id
 ,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
 
 AS
---odstranìní záznamu dokumentu z tabulky o23Notepad
+--odstranìní záznamu z tabulky o23Doc
 
-BEGIN TRANSACTION
+if exists(select x19ID FROM x19EntityCategory_Binding WHERE o23ID=@pid)
+begin
+ declare @count int
+ select @count=count(*) from x19EntityCategory_Binding WHERE o23ID=@pid
+ if isnull(@count,0)>10
+  set @err_ret='Nelze odstranit, protože dokument má vazbu na více záznamù. Dokument mùžete pøesunout do archivu.'
 
-BEGIN TRY
-	if exists(select b05ID FROM b05Workflow_History WHERE x29ID=223 AND b05RecordPID=@pid)
-	 DELETE FROM b05Workflow_History WHERE x29ID=223 AND b05RecordPID=@pid
-
-	if exists(select o27ID FROM o27Attachment WHERE o23ID=@pid)
-	 DELETE FROM o27Attachment WHERE o23ID=@pid
-
-	if exists(select o27ID FROM o27Attachment WHERE b07ID IN (SELECT b07ID FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid))
-	 DELETE FROM o27Attachment WHERE b07ID IN (SELECT b07ID FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid)
-
-	if exists(select b07ID FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid)
-	 DELETE FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid
-
-	if exists(select o23ID FROM o23Notepad_FreeField WHERE o23ID=@pid)
-	 DELETE FROM o23Notepad_FreeField WHERE o23ID=@pid
-
-	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=223))
-	 DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=223)
-
-	if exists(select o43ID FROM o43ImapRobotHistory WHERE o23ID=@pid)
-	 DELETE FROM o43ImapRobotHistory WHERE o23ID=@pid
-
-	if exists(select p31ID FROM p31Worksheet WHERE o23ID_First=@pid)
-	 begin
-	  declare @p31id int,@o23id_first int
-	  select @p31id=p31ID FROM o23Notepad WHERE o23ID=@pid
-
-	  UPDATE p31Worksheet set o23ID_First=NULL WHERE o23ID_First=@pid
-
-	  select TOP 1 @o23id_first=o23ID FROM o23Notepad WHERE p31ID=@p31id
-
-	  if @o23id_first is not null
-	   UPDATE p31Worksheet SET o23ID_First=@o23id_first WHERE p31ID=@p31id
-	  
-	 end
-
-	delete from o23Notepad where o23ID=@pid
-	
-
-	COMMIT TRANSACTION
-
-END TRY
-BEGIN CATCH
-  set @err_ret=dbo.parse_errinfo(ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE())
-  ROLLBACK TRANSACTION
-  
-END CATCH  
-
-
-
-
-
-
-GO
-
-----------P---------------o24_delete-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('o24_delete') and type = 'P')
- drop procedure o24_delete
-GO
-
-
-
-
-
-CREATE   procedure [dbo].[o24_delete]
-@j03id_sys int				--pøihlášený uživatel
-,@pid int					--o24ID
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
-
-AS
---odstranìní záznamu instituce z tabulky o24NotepadType
-declare @ref_pid int
-
-SELECT TOP 1 @ref_pid=o23ID from o23Notepad WHERE o24ID=@pid
-if @ref_pid is not null
- set @err_ret='Minimálnì jeden záznam  má vazbu na tento typ ('+dbo.GetObjectAlias('o23',@ref_pid)+')'
-
+end
 
 if isnull(@err_ret,'')<>''
  return 
 
 BEGIN TRANSACTION
 
-BEGIN TRY
-	if exists(select o42ID FROM o42ImapRule WHERE o24ID=@pid)
-	 DELETE FROM o42ImapRule WHERE o24ID=@pid
+BEGIN TRY	
+	if exists(select b07ID FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid)
+	 DELETE FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid	
 
-	delete from o24NotepadType where o24ID=@pid
+	
+
+    if exists(select o23ID FROM o23BigData WHERE o23ID=@pid)
+	 DELETE FROM o23BigData WHERE o23ID=@pid
+
+	delete from x19EntityCategory_Binding WHERE o23ID=@pid
+
+	delete from o23Doc where o23ID=@pid
 
 	COMMIT TRANSACTION
 
@@ -6454,6 +6568,9 @@ BEGIN CATCH
   ROLLBACK TRANSACTION
   
 END CATCH  
+
+
+
 
 
 
@@ -6978,10 +7095,7 @@ SELECT TOP 1 @ref_pid=p90ID from p90Proforma WHERE p28ID=@pid
 if @ref_pid is not null
  set @err_ret='Tento klient je svázán s minimálnì jednou zálohou fakturou ('+dbo.GetObjectAlias('p90',@ref_pid)+')'
 
-set @ref_pid=null
-SELECT TOP 1 @ref_pid=o23ID from o23Notepad WHERE p28ID=@pid
-if @ref_pid is not null
- set @err_ret='Klient má vazbu s minimálnì jedním dokumentem ('+dbo.GetObjectAlias('o23',@ref_pid)+')'
+
 
 if @err_ret is null and exists(select p49ID FROM p49FinancialPlan WHERE p28ID_Supplier=@pid)
  set @err_ret='Subjekt vystupuje jako dodavatel v minimálnì jednom rozpoètu (finanèním plánu).'
@@ -7004,8 +7118,6 @@ BEGIN TRY
 	if exists(select b07ID FROM b07Comment WHERE x29ID=228 AND b07RecordPID=@pid)
 	 DELETE FROM b07Comment WHERE x29ID=228 AND b07RecordPID=@pid	
 
-	if exists(SELECT o27ID FROM o27Attachment WHERE p28ID=@pid)
-	 DELETE FROM o27Attachment WHERE p28ID=@pid
 
 	if exists(SELECT o32ID FROM o32Contact_Medium WHERE p28ID=@pid)
 	 DELETE FROM o32Contact_Medium WHERE p28ID=@pid
@@ -7138,8 +7250,8 @@ if exists(select a.p31ID FROM p31Worksheet a INNER JOIN p41Project b ON a.p41ID=
 if exists(select b07ID from b07Comment WHERE x29ID=328 AND b07RecordPID=@pid)
  select @b07_count=count(b07ID) FROM b07Comment WHERE x29ID=328 AND b07RecordPID=@pid
 
-if exists(select o23ID FROM o23Notepad WHERE p28ID=@pid)
- select @o23_count=count(o23ID) FROM o23Notepad WHERE p28ID=@pid AND getdate() between o23ValidFrom AND o23ValidUntil
+if exists(select a.o23ID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID INNER JOIN o23Doc c ON a.o23ID=c.o23ID WHERE a.x19RecordPID=@pid AND b.x29ID=328 and getdate() between c.o23ValidFrom and c.o23ValidUntil)
+ select @o23_count=count(a.o23ID) FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID INNER JOIN o23Doc c ON a.o23ID=c.o23ID WHERE a.x19RecordPID=@pid AND b.x29ID=328 and getdate() between c.o23ValidFrom and c.o23ValidUntil
 else
  set @o23_count=0
 
@@ -7634,6 +7746,146 @@ exec p91_recalc_amount @p91id
 
 GO
 
+----------P---------------p31_create_from_workflow-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p31_create_from_workflow') and type = 'P')
+ drop procedure p31_create_from_workflow
+GO
+
+
+CREATE    PROCEDURE [dbo].[p31_create_from_workflow]
+@record_prefix varchar(50)
+,@record_pid int
+,@b10id int			---workflow krok, z kterého se úkon zakládá
+,@j03id_sys int
+,@err_ret varchar(500) OUTPUT	
+
+AS
+
+
+set @err_ret=''
+
+declare @p41id_def int,@j02id_def int,@p31id_template int,@d1 datetime,@d2 datetime,@p72id int,@p33id int
+declare @p31date datetime,@p41id int,@j02id int,@p31id_new int,@value float,@p31text nvarchar(255)
+declare @b10Worksheet_ProjectFlag int,@b10Worksheet_PersonFlag int,@b10Worksheet_DateFlag int,@b10Worksheet_Text nvarchar(255),@b10Worksheet_HoursFlag int
+
+select @p31id_template=p31ID_Template,@p72id=b10Worksheet_p72ID
+FROM
+b10WorkflowCommandCatalog_Binding
+WHERE b10ID=@b10id
+
+if @p31id_template is null
+begin
+set @err_ret='Nelze dohledat vzorový úkon @p31id_template'
+return
+end
+
+select @b10Worksheet_ProjectFlag=b10Worksheet_ProjectFlag,@b10Worksheet_PersonFlag=b10Worksheet_PersonFlag,@b10Worksheet_DateFlag=b10Worksheet_DateFlag
+,@b10Worksheet_Text=b10Worksheet_Text,@b10Worksheet_HoursFlag=b10Worksheet_HoursFlag
+FROM
+b10WorkflowCommandCatalog_Binding
+WHERE b10ID=@b10id
+
+select @p41id_def=a.p41ID,@j02id_def=a.j02ID,@p31date=a.p31Date,@value=p31Value_Orig,@p33id=p34.p33ID
+,@p31text=case when @b10Worksheet_Text is not null then @b10Worksheet_Text else a.p31Text end
+FROM p31Worksheet a INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE a.p31ID=@p31id_template
+
+set @d1=@p31date
+set @d2=@p31date
+
+
+if @record_prefix='x25'	---štítek
+ begin
+
+  if @b10Worksheet_ProjectFlag=2	---projekt se má naèíst z workflow
+   select @p41id=a.x19RecordPID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE b.x29ID=141 AND a.x25ID=@record_pid
+
+  if @b10Worksheet_PersonFlag=2		---osoba se má naèíst z workflow
+   select @j02id=a.x19RecordPID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE b.x29ID=102 AND a.x25ID=@record_pid
+
+  if @b10Worksheet_PersonFlag=3		---osoba se má naèíst ze zakladatele
+   select @j02id=j02ID_Owner FROM x25EntityField_ComboValue WHERE x25ID=@record_pid
+  
+  if @b10Worksheet_DateFlag=2	---datum naèíst z workflow
+   select @d1=x25FreeDate01,@d2=x25FreeDate02 FROM x25EntityField_ComboValue WHERE x25ID=@record_pid
+
+ end
+
+if @j02id is null
+ set @j02id=@j02id_def
+
+
+if @p41id is null
+ set @p41id=@p41id_def
+
+set @p31date=@d1
+
+declare @go bit
+
+WHILE @p31date between @d1 and @d2
+BEGIN
+  set @go=0
+
+  if @b10Worksheet_HoursFlag=1	---hodnotu brát podle vzorového úkonu
+   set @go=1
+
+  if @b10Worksheet_HoursFlag=2 and @p33id=1	---hodiny poèítat podle pracovního fondu osoby
+   begin
+    select @value=dbo.j02_c21_get_hours_for_day(@j02id,@p31date)
+
+	if @value>0
+	 set @go=1	---je pracovní den
+	else
+     set @go=0	---není pracovní den
+
+   end
+
+  if @go=1
+   begin
+	INSERT INTO p31Worksheet(
+	p41ID,j02ID,p31Date,p31Text,p32ID,p56ID,p31Code,j02ID_Owner
+	,j27ID_Billing_Orig,p31HoursEntryFlag,p31Value_Orig,p31Amount_WithoutVat_Orig,p31Amount_WithVat_Orig,p31Amount_Vat_Orig,p31VatRate_Orig
+	,j02ID_ContactPerson,p31ExternalPID
+	,p31DateInsert,p31DateUpdate,p31UserInsert,p31UserUpdate
+	)
+	SELECT @p41id,@j02id,@p31date,@p31text,p32ID,p56ID,p31Code,@j02id
+	,j27ID_Billing_Orig,p31HoursEntryFlag,@value,p31Amount_WithoutVat_Orig,p31Amount_WithVat_Orig,p31Amount_Vat_Orig,p31VatRate_Orig
+	,j02ID_ContactPerson,p31ExternalPID
+	,getdate(),getdate(),'workflow','workflow'
+	FROM p31Worksheet
+	WHERE p31ID=@p31id_template
+
+	set @p31id_new=@@IDENTITY
+
+	if @p33id=1
+	 update p31Worksheet set p31Hours_Orig=@value,p31Minutes_Orig=@value*60 WHERE p31ID=@p31id_new
+
+	exec dbo.p31_aftersave @p31id_new,@j03id_sys,null,null,null
+
+	declare @rate float,@vat_rate float
+	select @rate=p31Rate_Billing_Orig,@vat_rate=p31VatRate_Orig from p31Worksheet where p31ID=@p31id_new
+
+	if isnull(@p72id,0)>0	--automaticky úkon schválit	
+	 exec dbo.p31_save_approving @p31id_new,@j03id_sys,1,@p72id,null,@value,@value,@rate,@rate,@p31text,@vat_rate,@p31date,0,0,null	  
+
+	if @record_prefix='x25'	---štítek
+	 begin	---vložit odkaz na nový p31 záznam do x19EntityCategory_Binding
+     declare @x20id int,@x18id int
+
+	 select @x18id=c.x18ID FROM x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo b ON a.x23ID=b.x23ID INNER JOIN x18EntityCategory c ON b.x23ID=c.x23ID WHERE a.x25ID=@record_pid
+	
+	 select @x20id=x20ID FROM x20EntiyToCategory WHERE x29ID=331 AND x18ID=@x18id
+
+	 insert into x19EntityCategory_Binding(x25ID,x20ID,x19RecordPID,x19UserInsert,x19UserUpdate) values(@record_pid,@x20id,@p31id_new,'workflow','workflow')
+     end
+
+   end
+   set @p31date=DATEADD(day,1,@p31date)
+END
+
+GO
+
 ----------P---------------p31_delete-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p31_delete') and type = 'P')
@@ -7696,8 +7948,7 @@ BEGIN TRY
 	if exists(select p48ID FROM p48OperativePlan WHERE p31ID=@pid)
 	 UPDATE p48OperativePlan SET p31ID=NULL WHERE p31ID=@pid
 
-	if exists(SELECT o27ID FROM o27Attachment WHERE p31ID=@pid)
-	 DELETE FROM o27Attachment WHERE p31ID=@pid
+	
 
 	if exists(select p31ID FROM p31worksheet_FreeField WHERE p31ID=@pid)
 	 DELETE FROM p31WorkSheet_FreeField WHERE p31ID=@pid
@@ -7705,8 +7956,7 @@ BEGIN TRY
 	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=331))
 	 DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=331)
 
-	if exists(select o23ID FROM o23Notepad WHERE p31ID=@pid)
-	 UPDATE o23Notepad SET p31ID=NULL WHERE p31ID=@pid
+	
 	
 	if exists(select o27ID FROM o27Attachment WHERE b07ID IN (SELECT b07ID FROM b07Comment WHERE x29ID=331 AND b07RecordPID=@pid))
 	 DELETE FROM o27Attachment WHERE b07ID IN (SELECT b07ID FROM b07Comment WHERE x29ID=331 AND b07RecordPID=@pid)
@@ -11064,10 +11314,6 @@ SELECT TOP 1 @ref_pid=p56ID from p56Task WHERE p41ID=@pid
 if @ref_pid is not null
  set @err_ret='K projektu je vytvoøen minimálnì jeden úkol ('+dbo.GetObjectAlias('p56',@ref_pid)+')'
 
-set @ref_pid=null
-SELECT TOP 1 @ref_pid=o23ID from o23Notepad WHERE p41ID=@pid
-if @ref_pid is not null
- set @err_ret='Projekt má vazbu s minimálnì jedním dokumentem ('+dbo.GetObjectAlias('o23',@ref_pid)+')'
 
 
 if isnull(@err_ret,'')<>''
@@ -11082,8 +11328,7 @@ BEGIN TRY
 	if exists(select b07ID FROM b07Comment WHERE x29ID=141 AND b07RecordPID=@pid)
 	 DELETE FROM b07Comment WHERE x29ID=141 AND b07RecordPID=@pid
 
-	if exists(SELECT o27ID FROM o27Attachment WHERE p41ID=@pid)
-	 DELETE FROM o27Attachment WHERE p41ID=@pid
+	
 
 	if exists(SELECT o22ID FROM o22Milestone WHERE p41ID=@pid)
 	 DELETE FROM o22Milestone WHERE p41ID=@pid
@@ -11375,10 +11620,12 @@ else
 
 if @p42IsModule_o23=1
 begin
-if exists(select o23ID FROM o23Notepad WHERE p41ID=@pid)
- select @o23_count=count(o23ID) FROM o23Notepad WHERE p41ID=@pid AND getdate() between o23ValidFrom AND o23ValidUntil
+
+if exists(select a.o23ID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID INNER JOIN o23Doc c ON a.o23ID=c.o23ID WHERE a.x19RecordPID=@pid AND b.x29ID=141 and getdate() between c.o23ValidFrom and c.o23ValidUntil)
+ select @o23_count=count(a.o23ID) FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID INNER JOIN o23Doc c ON a.o23ID=c.o23ID WHERE a.x19RecordPID=@pid AND b.x29ID=141 and getdate() between c.o23ValidFrom and c.o23ValidUntil
 else
  set @o23_count=0
+
 end
 
 if @p42IsModule_p45=1
@@ -12144,10 +12391,6 @@ SELECT TOP 1 @ref_pid=p31ID from p31Worksheet WHERE p56ID=@pid
 if @ref_pid is not null
  set @err_ret='K úkolu má vazbu minimálnì jeden worksheet úkon.'
 
-set @ref_pid=null
-SELECT TOP 1 @ref_pid=o23ID from o23Notepad WHERE p28ID=@pid
-if @ref_pid is not null
- set @err_ret='Úkol má vazbu s minimálnì jedním dokumentem ('+dbo.GetObjectAlias('o23',@ref_pid)+')'
 
 
 
@@ -12157,8 +12400,7 @@ if isnull(@err_ret,'')<>''
 BEGIN TRANSACTION
 
 BEGIN TRY
-	if exists(SELECT o27ID FROM o27Attachment WHERE p56ID=@pid)
-	 DELETE FROM o27Attachment WHERE p56ID=@pid
+	
 
 	if exists(SELECT o22ID FROM o22Milestone WHERE p56ID=@pid)
 	 DELETE FROM o22Milestone WHERE p56ID=@pid
@@ -12899,8 +13141,7 @@ if exists(select p99ID FROM p99Invoice_Proforma WHERE p91ID=@pid)
   delete from p99Invoice_Proforma where p90id=@pid
  end
 
-if exists(SELECT o27ID FROM o27Attachment WHERE p90ID=@pid)
-  DELETE FROM o27Attachment WHERE p90ID=@pid
+
 
 if exists(select p82ID FROM p82Proforma_Payment WHERE p90ID=@pid)
  DELETE FROM p82Proforma_Payment WHERE p90ID=@pid
@@ -13682,10 +13923,7 @@ AS
 --odstranìní záznamu vystavené faktury z tabulky p91Invoice
 declare @ref_pid int
 
-set @ref_pid=null
-SELECT TOP 1 @ref_pid=o23ID from o23Notepad WHERE p91ID=@pid
-if @ref_pid is not null
- set @err_ret='Faktura má vazbu s minimálnì jedním dokumentem ('+dbo.GetObjectAlias('o23',@ref_pid)+')'
+
 
 if @guid is null
  set @err_ret='Na vstupu chybí guid.'
@@ -13761,8 +13999,7 @@ if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AN
 if exists(select p99ID FROM p99Invoice_Proforma WHERE p91ID=@pid)
   delete from p99Invoice_Proforma where p91id=@pid
 
-if exists(SELECT o27ID FROM o27Attachment WHERE p91ID=@pid)
-  DELETE FROM o27Attachment WHERE p91ID=@pid
+
 
 
 if exists(SELECT o22ID FROM o22Milestone WHERE p91ID=@pid)
@@ -15202,7 +15439,7 @@ CREATE   procedure [dbo].[x18_delete]
 AS
 --odstranìní záznamu kategorie z tabulky  èíselníku z tabulky x18EntityCategory
 if exists(select x19ID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE b.x18ID=@pid)
- set @err_ret='Nelze odstranit, protože minimálnì jedna položka již byla použita v oštítkování nìjakého záznamu. Štítek mùžete pøesunout do archivu nebo vyèistit jeho vazby.'
+ set @err_ret='Nelze odstranit, protože minimálnì jedna položka již byla použita v oštítkování nìjakého záznamu. Dokument mùžete pøesunout do archivu nebo vyèistit jeho vazby.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -15213,8 +15450,8 @@ SELECT @x23id=x23ID FROM x18EntityCategory WHERE x18ID=@pid
 
 if not exists(select x18ID FROM x18EntityCategory WHERE x18ID<>@pid AND x23ID=@x23id)
  begin
-  if exists(select x25ID FROM x25EntityField_ComboValue WHERE x23ID=@x23id)
-   set @err_ret='Štítek obsahuje minimálnì jednu položku. Je tøeba nejdøíve odstranit položky štítku.'
+  if exists(select o23ID FROM o23Doc WHERE x23ID=@x23id)
+   set @err_ret='Typ dokumentu obsahuje minimálnì jeden dokument. Je tøeba nejdøíve odstranit svázané dokumenty.'
 
  end
 
@@ -15233,7 +15470,7 @@ BEGIN TRY
 
 	delete from x18EntityCategory where x18ID=@pid
 
-	if not exists(select x25ID FROM x25EntityField_ComboValue WHERE x23ID=@x23id)
+	if not exists(select o23ID FROM o23Doc WHERE x23ID=@x23id)
 	  DELETE FROM x23EntityField_Combo WHERE x23ID=@x23id
 
 	
@@ -15288,7 +15525,7 @@ CREATE   procedure [dbo].[x23_delete]
 
 AS
 --odstranìní záznamu combo èíselníku z tabulky x27EntityFieldGroup
-if exists(select x25ID FROM x25EntityField_ComboValue WHERE x23ID=@pid)
+if exists(select o23ID FROM o23Doc WHERE x23ID=@pid)
  set @err_ret='Èíselník obsahuje minimálnì jednu položku - je tøeba vyèistit položky èíselníku.'
 
 if exists(select x18ID FROM x18EntityCategory where x23ID=@pid)
@@ -15311,144 +15548,6 @@ BEGIN CATCH
   ROLLBACK TRANSACTION
   
 END CATCH  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-GO
-
-----------P---------------x25_aftersave-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('x25_aftersave') and type = 'P')
- drop procedure x25_aftersave
-GO
-
-
-
-
-
-CREATE    PROCEDURE [dbo].[x25_aftersave]
-@x25id int
-,@j03id_sys int
-
-AS
-
-declare @x25code varchar(50),@x23id int,@x18id int,@x18EntryCodeFlag int,@x38id int,@count int
-
-select @x25code=a.x25Code,@x23id=a.x23ID,@x18id=x18.x18ID,@x18EntryCodeFlag=x18.x18EntryCodeFlag,@x38id=x18.x38ID
-from x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID
-INNER JOIN x18EntityCategory x18 ON x23.x23ID=x18.x23ID
-where a.x25ID=@x25id
-
-if @x18EntryCodeFlag=3 and @x25code is null
-begin	---automaticky generovat kód v rámci všech položek štítku
- select @count=count(*) FROM x25EntityField_ComboValue WHERE x23ID=@x23id AND x25ID<>@x25id AND x25Code is not null
- set @x25code=isnull(@count,0)+1
-
- update x25EntityField_ComboValue set x25Code=@x25code WHERE x25ID=@x25id
-end
-
- 
-
-if @x18EntryCodeFlag=4 and @x25code is null
-begin	---automaticky generovat kód v rámci projektu daného štítku
- declare @p41id int,@x20id int
- select @p41id=a.x19RecordPID,@x20id=b.x20ID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE a.x25ID=@x25id AND b.x29ID=141
-
- if @p41id is not null and @x20id is not null
- begin
-  select @count=count(*) FROM x25EntityField_ComboValue WHERE x23ID=@x23id AND x25ID<>@x25id AND x25Code IS NOT NULL AND x25ID IN (select x25ID FROM x19EntityCategory_Binding WHERE x20ID=@x20id AND x19RecordPID=@p41id)
-
-  set @x25code=isnull(@count,0)+1
-
-  update x25EntityField_ComboValue set x25Code=@x25code WHERE x25ID=@x25id
- end
-end
-
-
-
-if (left(@x25code,4)='TEMP' OR @x25code is null) AND @x38id is not null
- begin
- 
-
-  exec dbo.x38_get_freecode_proc @x38id,925,@x25id,0,1,@x25code OUTPUT
-
-  if @x25code<>''
-   UPDATE x25EntityField_ComboValue SET x25Code=@x25code WHERE x25ID=@x25id 
- end 
-
-
-exec [x90_appendlog] 925,@x25id,@j03id_sys
- 
- 
-
-
-
-
-
-GO
-
-----------P---------------x25_delete-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('x25_delete') and type = 'P')
- drop procedure x25_delete
-GO
-
-
-
-CREATE   procedure [dbo].[x25_delete]
-@j03id_sys int				--pøihlášený uživatel
-,@pid int					--x25id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
-
-AS
---odstranìní záznamu položky èíselníku z tabulky x25EntityField_ComboValue
-
-if exists(select x19ID FROM x19EntityCategory_Binding WHERE x25ID=@pid)
-begin
- declare @count int
- select @count=count(*) from x19EntityCategory_Binding WHERE x25ID=@pid
- if isnull(@count,0)>10
-  set @err_ret='Nelze odstranit, protože položka byla použita k oštítkování více záznamù. Položku mùžete pøesunout do archivu.'
-
-end
-
-if isnull(@err_ret,'')<>''
- return 
-
-BEGIN TRANSACTION
-
-BEGIN TRY	
-    if exists(select x25ID FROM x25BigData WHERE x25ID=@pid)
-	 DELETE FROM x25BigData WHERE x25ID=@pid
-
-	delete from x19EntityCategory_Binding WHERE x25ID=@pid
-
-	delete from x25EntityField_ComboValue where x25ID=@pid
-
-	COMMIT TRANSACTION
-
-END TRY
-BEGIN CATCH
-  set @err_ret=dbo.parse_errinfo(ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE())
-  ROLLBACK TRANSACTION
-  
-END CATCH  
-
 
 
 

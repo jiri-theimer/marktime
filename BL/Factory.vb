@@ -14,7 +14,7 @@
     Private Property _p28 As Ip28ContactBL
     Private Property _p29 As Ip29ContactTypeBL
     Private Property _o21 As Io21MilestoneTypeBL
-    Private Property _o24 As Io24NotepadTypeBL
+
     Private Property _o22 As Io22MilestoneBL
     Private Property _o23 As Io23DocBL
     Private Property _p51 As Ip51PriceListBL
@@ -380,12 +380,7 @@
         End Get
     End Property
   
-    Public ReadOnly Property o24NotepadTypeBL As Io24NotepadTypeBL
-        Get
-            If _o24 Is Nothing Then _o24 = New o24NotepadTypeBL(_cUser)
-            Return _o24
-        End Get
-    End Property
+   
     Public ReadOnly Property o21MilestoneTypeBL As Io21MilestoneTypeBL
         Get
             If _o21 Is Nothing Then _o21 = New o21MilestoneTypeBL(_cUser)

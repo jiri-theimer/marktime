@@ -36,8 +36,8 @@
         Me.o41ID.DataBind()
         Me.p57ID.DataSource = Master.Factory.p57TaskTypeBL.GetList(New BO.myQuery)
         Me.p57ID.DataBind()
-        Me.o24ID.DataSource = Master.Factory.o24NotepadTypeBL.GetList(New BO.myQuery)
-        Me.o24ID.DataBind()
+        Me.x18ID.DataSource = Master.Factory.x18EntityCategoryBL.GetList(New BO.myQuery).Where(Function(p) p.x18IsManyItems = True)
+        Me.x18ID.DataBind()
 
         If Master.DataPID = 0 Then
             Me.j02ID_Owner_Default.Value = Master.Factory.SysUser.j02ID.ToString
@@ -56,11 +56,11 @@
             Me.o41ID.SelectedValue = .o41ID.ToString
             Me.p57ID.SelectedValue = .p57ID.ToString
             Me.o41ID.SelectedValue = .o41ID.ToString
-            Me.o24ID.SelectedValue = .o24ID.ToString
+            Me.x18ID.SelectedValue = .x18ID.ToString
             If .p57ID <> 0 Then
                 Me.opgTarget.SelectedValue = "p56"
             End If
-            If .o24ID <> 0 Then
+            If .x18ID <> 0 Then
                 Me.opgTarget.SelectedValue = "o23"
             End If
             Handle_ChangeTarget()
@@ -115,7 +115,7 @@
                 .o42IsUse_CC = Me.o42IsUse_CC.Checked
                 .o42SenderAddress = Me.o42SenderAddress.Text
                 .p57ID = BO.BAS.IsNullInt(Me.p57ID.SelectedValue)
-                .o24ID = BO.BAS.IsNullInt(Me.o24ID.SelectedValue)
+                .x18ID = BO.BAS.IsNullInt(Me.x18ID.SelectedValue)
                 .o41ID = BO.BAS.IsNullInt(Me.o41ID.SelectedValue)
                 .j02ID_Owner_Default = BO.BAS.IsNullInt(Me.j02ID_Owner_Default.Value)
                 .p41ID_Default = BO.BAS.IsNullInt(Me.p41ID_Default.Value)
@@ -137,7 +137,7 @@
     End Sub
 
     Private Sub o42_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        Me.o24ID.Visible = False : Me.p57ID.Visible = False
+        Me.x18ID.Visible = False : Me.p57ID.Visible = False
         Select Case Me.opgTarget.SelectedValue
             Case "p56"
                 lblBind.Text = "Typ zakládaného úkolu:"
@@ -148,7 +148,7 @@
             Case "o23"
                 Me.lblBind.Text = "Typ zakládaného dokumentu:"
                 lblDefaultOwner.Text = "Výchozí vlastník zakládaného dokumentu:"
-                Me.o24ID.Visible = True
+                Me.x18ID.Visible = True
         End Select
     End Sub
 

@@ -5,7 +5,7 @@
     Function LoadByCode(strCode As String, intX23ID As Integer) As BO.o23Doc
     Function LoadByExternalPID(strExternalPID As String) As BO.o23Doc
     Function LoadHtmlContent(intPID As Integer) As String
-    Function SaveHtmlContent(intPID As Integer, strHtmlContent As String) As Boolean
+    Function SaveHtmlContent(intPID As Integer, strHtmlContent As String, Optional strPlainText As String = "") As Boolean
     Function Delete(intPID As Integer) As Boolean
     Function GetList(myQuery As BO.myQueryO23) As IEnumerable(Of BO.o23Doc)
     Function GetDataTable4Grid(myQuery As BO.myQueryO23) As DataTable
@@ -157,8 +157,8 @@ Class o23DocBL
     Public Function LoadHtmlContent(intPID As Integer) As String Implements Io23DocBL.LoadHtmlContent
         Return _cDL.LoadHtmlContent(intPID)
     End Function
-    Public Function SaveHtmlContent(intPID As Integer, strHtmlContent As String) As Boolean Implements Io23DocBL.SaveHtmlContent
-        Return _cDL.SaveHtmlContent(intPID, strHtmlContent)
+    Public Function SaveHtmlContent(intPID As Integer, strHtmlContent As String, Optional strPlainText As String = "") As Boolean Implements Io23DocBL.SaveHtmlContent
+        Return _cDL.SaveHtmlContent(intPID, strHtmlContent, strPlainText)
     End Function
     Public Sub Handle_Reminder() Implements Io23DocBL.Handle_Reminder
         Dim d1 As Date = DateAdd(DateInterval.Day, -2, Now)

@@ -48,6 +48,7 @@
                 Master.DataPID = 0
 
             End If
+            Handle_Change_IsManyItems()
         End If
     End Sub
     Private Sub RefreshRecord()
@@ -94,6 +95,10 @@
             basUI.SelectDropdownlistValue(Me.x18EntryCodeFlag, CInt(.x18EntryCodeFlag).ToString)
             basUI.SelectDropdownlistValue(Me.x18EntryOrdinaryFlag, CInt(.x18EntryOrdinaryFlag).ToString)
             basUI.SelectDropdownlistValue(Me.x18DashboardFlag, CInt(.x18DashboardFlag).ToString)
+            basUI.SelectRadiolistValue(Me.x18UploadFlag, CInt(.x18UploadFlag).ToString)
+
+            basUI.SelectDropdownlistValue(Me.x18MaxOneFileSize, .x18MaxOneFileSize.ToString)
+            Me.x18AllowedFileExtensions.Text = .x18AllowedFileExtensions
 
             roles1.InhaleInitialData(.PID)
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -254,6 +259,9 @@
             cRec.x18CalendarFieldSubject = Me.x18CalendarFieldSubject.SelectedValue
             cRec.x18CalendarResourceField = Me.x18CalendarResourceField.SelectedValue
             cRec.x18DashboardFlag = CType(x18DashboardFlag.SelectedValue, BO.x18DashboardENUM)
+            cRec.x18UploadFlag = CType(Me.x18UploadFlag.SelectedValue, BO.x18UploadENUM)
+            cRec.x18AllowedFileExtensions = Me.x18AllowedFileExtensions.Text
+            cRec.x18MaxOneFileSize = BO.BAS.IsNullInt(Me.x18MaxOneFileSize.SelectedValue)
 
             If .Save(cRec, lisX20, lisX69, lisX16) Then
                 Master.DataPID = .LastSavedPID
@@ -295,6 +303,11 @@
             Me.x20EntityTypePID_addX20.Visible = False
         Else
             Me.x20EntityTypePID_addX20.Visible = True
+        End If
+        If Me.x18UploadFlag.SelectedValue = "1" Then
+            Me.panFileSystem.Visible = True
+        Else
+            Me.panFileSystem.Visible = False
         End If
     End Sub
 
@@ -649,5 +662,15 @@
 
 
 
+    End Sub
+
+    Private Sub x18IsManyItems_SelectedIndexChanged(sender As Object, e As EventArgs) Handles x18IsManyItems.SelectedIndexChanged
+        Handle_Change_IsManyItems()
+    End Sub
+
+    Private Sub Handle_Change_IsManyItems()
+        If Master.DataPID = 0 And Me.x18IsManyItems.SelectedValue = "1" Then
+            Me.x18UploadFlag.SelectedValue = "1"
+        End If
     End Sub
 End Class

@@ -267,10 +267,7 @@
             Dim cRec As BO.j07PersonPosition = CType(e.Item.DataItem, BO.j07PersonPosition)
             strName = cRec.j07Name : intPID = cRec.PID : x29ID = BO.x29IdEnum.j07PersonPosition
         End If
-        If TypeOf e.Item.DataItem Is BO.o24NotepadType Then
-            Dim cRec As BO.o24NotepadType = CType(e.Item.DataItem, BO.o24NotepadType)
-            strName = cRec.o24Name : intPID = cRec.PID : x29ID = BO.x29IdEnum.o24NotepadType
-        End If
+       
         If TypeOf e.Item.DataItem Is BO.p34ActivityGroup Then
             Dim cRec As BO.p34ActivityGroup = CType(e.Item.DataItem, BO.p34ActivityGroup)
             strName = cRec.p34Name : intPID = cRec.PID : x29ID = BO.x29IdEnum.p34ActivityGroup

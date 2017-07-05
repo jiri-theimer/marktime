@@ -30,6 +30,10 @@ Public Enum x18DashboardENUM
     ShowItemsLikeNoticeboard = 4
 
 End Enum
+Public Enum x18UploadENUM
+    NotUsed = 0
+    FileSystemUpload = 1
+End Enum
 
 Public Class x18EntityCategory
     Inherits BOMother
@@ -60,6 +64,11 @@ Public Class x18EntityCategory
     Public Property x18CalendarFieldSubject As String
     Public Property x18CalendarResourceField As String
     Public Property x18DashboardFlag As x18DashboardENUM = x18DashboardENUM.NotUsed
+    Public Property x18UploadFlag As x18UploadENUM = x18UploadENUM.NotUsed
+    
+    Public Property x18MaxOneFileSize As Integer
+    Public Property x18AllowedFileExtensions As String
+
 
     Public ReadOnly Property x23Name As String
         Get
@@ -122,5 +131,9 @@ Public Class x18EntityCategory
         End Get
     End Property
 
-
+    Public ReadOnly Property TagOrDoc As String
+        Get
+            If Me.x18IsManyItems Then Return "Dokument" Else Return "Štítek"
+        End Get
+    End Property
 End Class

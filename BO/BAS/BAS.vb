@@ -52,7 +52,6 @@
             Case "p56" : Return x29IdEnum.p56Task
             Case "p57" : Return x29IdEnum.p57TaskType
             Case "o23" : Return x29IdEnum.o23Doc
-            Case "o24" : Return x29IdEnum.o24NotepadType
             Case "o22" : Return x29IdEnum.o22Milestone
             Case "j23" : Return x29IdEnum.j23NonPerson
             Case "j24" : Return x29IdEnum.j24NonPersonType
@@ -65,7 +64,7 @@
             Case "p48" : Return x29IdEnum.p48OperativePlan
             Case "p47" : Return x29IdEnum.p47CapacityPlan
             Case "p64" : Return x29IdEnum.p64Binder
-
+            Case "x18" : Return x29IdEnum.x18EntityCategory
             Case Else
                 Return x29IdEnum._NotSpecified
         End Select
