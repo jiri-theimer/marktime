@@ -52,20 +52,6 @@ Class o27AttachmentBL
                     Dim cRec As New BO.o27Attachment
                     With cRec
                         Select Case x29id
-                            Case BO.x29IdEnum.p41Project
-                                .p41ID = intDataPID
-                            Case BO.x29IdEnum.p28Contact
-                                .p28ID = intDataPID
-                            Case BO.x29IdEnum.j02Person
-                                .j02ID = intDataPID
-                            Case BO.x29IdEnum.o23Doc
-                                .o23ID = intDataPID
-                            Case BO.x29IdEnum.p56Task
-                                .p56ID = intDataPID
-                            Case BO.x29IdEnum.p91Invoice
-                                .p91ID = intDataPID
-                            Case BO.x29IdEnum.p90Proforma
-                                .p90ID = intDataPID
                             Case BO.x29IdEnum.b07Comment
                                 .b07ID = intDataPID
                             Case BO.x29IdEnum.x31Report

@@ -46,6 +46,11 @@
             Me.upload1.GUID = BO.BAS.GetGUID
             Me.uploadlist1.GUID = Me.upload1.GUID
 
+            If Request.Item("forceupload") = "1" Then
+                Me.upload1.MaxFileInputsCount = 5
+                Me.upload1.InitialFileInputsCount = 1
+            End If
+
             With Master
                 .HeaderText = "Zapsat poznámku/komentář/přílohu | " & .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Me.CurrentRecordPID)
                 .HeaderIcon = "Images/comment_32.png"

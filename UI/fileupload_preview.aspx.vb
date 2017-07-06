@@ -26,7 +26,10 @@
             Select Case Request.Item("prefix")
                 Case "o23"
                     Me.panList.Visible = True
-                    Me.list1.RefreshData_O23(Master.DataPID)
+                    mq.Record_x29ID = BO.x29IdEnum.o23Doc
+                    mq.Record_PID = Master.DataPID
+
+                    Me.list1.RefreshData(mq)
                     If Me.list1.ItemsCount > 0 Then
                         Dim cRec As BO.o27Attachment = Me.list1.GetListO27(0)
                         ViewState("url") = "binaryfile.aspx?prefix=o27&disposition=inline&pid=" & cRec.PID.ToString

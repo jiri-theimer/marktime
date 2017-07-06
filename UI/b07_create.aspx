@@ -36,8 +36,8 @@
     <div class="content-box2">
         <div class="title">
             <img src="Images/email.png" />
-            Komu poslat notifikaci komentáře
-            <asp:Button ID="cmdAddReceiver" runat="server" CssClass="cmd" Text="Přidat" />
+            Komu poslat notifikaci
+            <asp:Button ID="cmdAddReceiver" runat="server" CssClass="cmd" Text="Přidat příjemce" />
         </div>
         <div class="content">
             <uc:person_or_team id="receiver1" runat="server"></uc:person_or_team>

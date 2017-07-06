@@ -102,16 +102,7 @@
             Return BO.BAS.BG(hidShowDateInsert.Value)
         End Get
     End Property
-    Public Sub RefreshData_O23(intO23ID As Integer)
-        Dim mq As New BO.myQueryO27
-        mq.o23ID = intO23ID
-        Dim lis As IEnumerable(Of BO.o27Attachment) = Factory.o27AttachmentBL.GetList(mq)
-        HandleVersions(lis)
-        rp1.DataSource = lis
-        rp1.DataBind()
-
-        After_RefreshData()
-    End Sub
+    
     Public Sub HandleVersions(ByRef lis As IEnumerable(Of BO.o27Attachment))
         lis = lis.OrderBy(Function(p) p.o27OriginalFileName).ThenBy(Function(p) p.PID)
         Dim s As String = "", sLast As String = "", intV As Integer = 0, bolVersions As Boolean = False, x As Integer = 0

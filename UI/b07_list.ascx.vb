@@ -12,6 +12,14 @@
             cmdAdd.Visible = value
         End Set
     End Property
+    Public Property AttachmentIsReadonly As Boolean
+        Get
+            If hidAttachmentsReadonly.Value = "1" Then Return True Else Return False
+        End Get
+        Set(value As Boolean)
+            hidAttachmentsReadonly.Value = BO.BAS.GB(value)
+        End Set
+    End Property
     Public Property ShowHeader As Boolean
         Get
             Return panHeader.Visible
@@ -109,7 +117,12 @@
             If cRec.o27ID > 0 Then
                 .Text = cRec.o27OriginalFileName
                 '.NavigateUrl = "binaryfile.aspx?prefix=o27&disposition=inline&pid=" & cRec.o27ID.ToString
-                .NavigateUrl = "javascript:file_preview('o27'," & cRec.o27ID.ToString & ")"
+                If hidAttachmentsReadonly.Value = "1" Then
+                    .NavigateUrl = ""
+                Else
+                    .NavigateUrl = "javascript:file_preview('o27'," & cRec.o27ID.ToString & ")"
+                End If
+
                 CType(e.Item.FindControl("img1"), Image).ImageUrl = "Images/Files/" & BO.BAS.GetFileExtensionIcon(Right(cRec.o27OriginalFileName, 4))
             Else
                 .Visible = False

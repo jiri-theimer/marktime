@@ -42,6 +42,7 @@
 <asp:HiddenField ID="hidRecordPID" runat="server" />
 <asp:HiddenField ID="hidJS_Create" runat="server" Value="comment()" />
 <asp:HiddenField ID="hidJS_Reaction" runat="server" Value="reaction" />
+<asp:HiddenField ID="hidAttachmentsReadonly" runat="server" Value="0" />
 <script type="text/javascript">
     function comment() {
         window.parent.sw_everywhere("b07_create.aspx?masterprefix=" + document.getElementById("<%=Me.hidPrefix.ClientID%>").value + "&masterpid=" + document.getElementById("<%=Me.hidRecordPID.ClientID%>").value, "Images/comment.png", true);

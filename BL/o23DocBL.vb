@@ -14,6 +14,9 @@
     Function GetRolesInline(intPID As Integer) As String
     Sub Handle_Reminder()
     Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.o23Doc)
+    Function LockFilesInDocument(cRec As BO.o23Doc, lockFlag As BO.o23LockedTypeENUM) As Boolean
+    Function UnLockFilesInDocument(cRec As BO.o23Doc) As Boolean
+    Function InhaleDisposition(cRec As BO.o23Doc, Optional cX18 As BO.x18EntityCategory = Nothing) As BO.o23RecordDisposition
 End Interface
 Class o23DocBL
     Inherits BLMother
@@ -173,5 +176,37 @@ Class o23DocBL
 
     Public Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.o23Doc) Implements Io23DocBL.GetList_forMessagesDashboard
         Return _cDL.GetList_forMessagesDashboard(intJ02ID)
+    End Function
+
+    Public Function LockFilesInDocument(cRec As BO.o23Doc, lockFlag As BO.o23LockedTypeENUM) As Boolean Implements Io23DocBL.LockFilesInDocument
+        Dim cDisp As BO.o23RecordDisposition = InhaleDisposition(cRec)
+        If Not cDisp.LockUnlockFiles_Flag1 Then
+            _Error = "Nemáte oprávnění pro uzamykání/odemykání přístupu k souborům dokumentu." : Return False
+        End If
+        Return _cDL.LockFiles(cRec.PID, lockFlag)
+    End Function
+    Public Function UnLockFilesInDocument(cRec As BO.o23Doc) As Boolean Implements Io23DocBL.UnLockFilesInDocument
+        Dim cDisp As BO.o23RecordDisposition = InhaleDisposition(cRec)
+        If Not cDisp.LockUnlockFiles_Flag1 Then
+            _Error = "Nemáte oprávnění pro uzamykání/odemykání přístupu k souborům dokumentu." : Return False
+        End If
+        Return _cDL.UnLockFiles(cRec.PID)
+    End Function
+
+    Public Function InhaleDisposition(cRec As BO.o23Doc, Optional cX18 As BO.x18EntityCategory = Nothing) As BO.o23RecordDisposition Implements Io23DocBL.InhaleDisposition
+        If cX18 Is Nothing Then cX18 = Factory.x18EntityCategoryBL.Load(cRec.x18ID)
+        Dim cDX18 As BO.x18RecordDisposition = Factory.x18EntityCategoryBL.InhaleDisposition(cX18)
+
+        Dim cD As New BO.o23RecordDisposition
+        cD.CreateItem = cDX18.CreateItem
+        cD.OwnerAccess = cDX18.OwnerItems
+        cD.ReadAccess = cDX18.ReadItems
+        cD.FileAppender = True
+        cD.Comments = True
+        If cD.OwnerAccess Then
+            cD.LockUnlockFiles_Flag1 = True
+        End If
+
+        Return cD
     End Function
 End Class

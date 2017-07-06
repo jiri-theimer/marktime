@@ -153,11 +153,8 @@
         }
 
         function hardrefresh(pid, flag) {
-
-            if (flag == "b07-save") {
-                return;
-            }
-            if (flag == "workflow-dialog") {
+            
+            if (flag == "workflow-dialog" || flag=="b07-delete" || flag=="b07-save") {
                 pid = document.getElementById("<%=hiddatapid.clientid%>").value;
             }
 

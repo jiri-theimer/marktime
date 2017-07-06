@@ -5,6 +5,7 @@
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="entityrole_assign_inline" Src="~/entityrole_assign_inline.ascx" %>
 <%@ Register TagPrefix="uc" TagName="o23_record_readonly" Src="~/o23_record_readonly.ascx" %>
+<%@ Register TagPrefix="uc" TagName="fileupload_list" Src="~/fileupload_list.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
 
@@ -13,7 +14,7 @@
             var url="o23_framework.aspx?source=<%=hidSource.Value%>";
             <%Else%>
             var url="o23_fixwork.aspx?x18id=<%=me.CurrentX18ID%>";
-            <%end If%>
+            <%End If%>
             if (flag == "o23-delete") {
                 window.open(url,"_top");
                 return;
@@ -65,6 +66,10 @@
             sw_everywhere("b07_create.aspx?masterprefix=o23&masterpid=<%=Master.DataPID%>", "Images/comment.png", true);
 
         }
+        function b07_create_upload() {           
+            sw_everywhere("b07_create.aspx?masterprefix=o23&masterpid=<%=Master.DataPID%>&forceupload=1", "Images/comment.png", true);
+
+        }
         function workflow() {         
             sw_everywhere("workflow_dialog.aspx?prefix=o23&pid=<%=Master.DataPID%>", "Images/workflow.png", true);
         }
@@ -84,41 +89,46 @@
         function barcode() {
             sw_everywhere("barcode.aspx?prefix=o23&pid=<%=master.datapid%>", "Images/barcode.png", true);
         }
+        function file_preview(prefix,pid) {
+            ///náhled na soubor            
+            sw_everywhere("fileupload_preview.aspx?prefix="+prefix+"&pid="+pid,"Images/attachment.png",true);
+            
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    
-       
 
-        <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">
+
+
+    <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">
         <CollapseAnimation Type="None" />
         <ExpandAnimation Type="None" />
         <Nodes>
-            <telerik:NavigationNode id="begin" Width="50px" Enabled="false" Visible="true"  >                             
+            <telerik:NavigationNode ID="begin" Width="50px" Enabled="false" Visible="true">
             </telerik:NavigationNode>
-            <telerik:NavigationNode id="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png"></telerik:NavigationNode>
+            <telerik:NavigationNode ID="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png"></telerik:NavigationNode>
 
             <telerik:NavigationNode ID="reload" ImageUrl="Images/refresh.png" Text=" " ToolTip="Obnovit stránku"></telerik:NavigationNode>
-           
+
             <telerik:NavigationNode ID="record" Text="ZÁZNAM DOKUMENTU">
                 <Nodes>
                     <telerik:NavigationNode ID="cmdNew" Text="Nový" NavigateUrl="javascript:record_create();" ImageUrl="Images/new.png"></telerik:NavigationNode>
                     <telerik:NavigationNode ID="cmdEdit" Text="Upravit" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png"></telerik:NavigationNode>
-                    <telerik:NavigationNode ID="cmdClone" Text="Kopírovat"  NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" Visible="false"></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="cmdClone" Text="Kopírovat" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" Visible="false"></telerik:NavigationNode>
 
                     <telerik:NavigationNode ID="cmdWorkflow" Text="Zapsat komentář/souborovou přílohu" NavigateUrl="javascript:b07_create();" ImageUrl="Images/comment.png"></telerik:NavigationNode>
                     <telerik:NavigationNode ID="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report();" ImageUrl="Images/report.png"></telerik:NavigationNode>
                     <telerik:NavigationNode ID="cmdEmail" Text="Odeslat e-mail" NavigateUrl="javascript:sendmail();" ImageUrl="Images/email.png"></telerik:NavigationNode>
 
-                    <telerik:NavigationNode id="cmdBarCode" Text="Čárový kód" NavigateUrl="javascript:barcode();" ImageUrl="Images/barcode.png"></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="cmdBarCode" Text="Čárový kód" NavigateUrl="javascript:barcode();" ImageUrl="Images/barcode.png"></telerik:NavigationNode>
                 </Nodes>
             </telerik:NavigationNode>
-            
-            
+
+
         </Nodes>
     </telerik:RadNavigation>
 
-   <asp:image ID="imgIcon32" runat="server" ImageUrl="Images/label_32.png" style="position:absolute;top:5px;left:5px;"/>
+    <asp:Image ID="imgIcon32" runat="server" ImageUrl="Images/label_32.png" Style="position: absolute; top: 5px; left: 5px;" />
 
 
     <div style="clear: both;"></div>
@@ -126,14 +136,27 @@
     <div class="div6">
         <uc:o23_record_readonly ID="rec1" runat="server" />
     </div>
-    <div class="div6" style="border-top:dashed 1px silver;">
+    <div class="div6" style="border-top: dashed 1px silver;">
         <uc:entityrole_assign_inline ID="roles1" runat="server" EntityX29ID="o23Doc" NoDataText=""></uc:entityrole_assign_inline>
     </div>
 
-    <div style="clear: both;margin-top:20px;">
+    <asp:Panel ID="panUpload" runat="server" CssClass="content-box2">
+        <div class="title">
+           
+            <img src="Images/attachment.png" style="margin-right: 10px;" />
+                <asp:HyperLink ID="filesPreview" runat="server" Text="Přílohy dokumentu"></asp:HyperLink>
+            <button type="button" onclick="b07_create_upload()" runat="server" id="cmdUpload">Nahrát přílohy</button>
+            <asp:Button ID="cmdLockUnlock" runat="server" Text="Uzamknout přístup k přílohám" CssClass="cmd" />
+        </div>
+        <div class="content">
+            <uc:fileupload_list ID="Fileupload_list__readonly" runat="server" OnClientClickPreview="file_preview" />
+        </div>
+    </asp:Panel>
+
+    <div style="clear: both; margin-top: 20px;">
         <uc:b07_list ID="comments1" runat="server" JS_Create="b07_create()" JS_Reaction="b07_reaction" ShowInsertButton="false" />
     </div>
-    
+
 
 
     <asp:HiddenField ID="hidX18ID" runat="server" />

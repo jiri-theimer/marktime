@@ -51,15 +51,9 @@ Public Class o27AttachmentDL
             pars.Add("o27GUID", .o27GUID, DbType.String)
             pars.Add("o13ID", BO.BAS.IsNullDBKey(.o13ID), DbType.Int32)
 
-            pars.Add("p41ID", BO.BAS.IsNullDBKey(.p41ID), DbType.Int32)
-            pars.Add("j02ID", BO.BAS.IsNullDBKey(.j02Id), DbType.Int32)
-            pars.Add("p28ID", BO.BAS.IsNullDBKey(.p28ID), DbType.Int32)
-            pars.Add("p56id", BO.BAS.IsNullDBKey(.p56ID), DbType.Int32)
-            pars.Add("p91ID", BO.BAS.IsNullDBKey(.p91ID), DbType.Int32)
-            pars.Add("o23ID", BO.BAS.IsNullDBKey(.o23ID), DbType.Int32)
+           
             pars.Add("b07ID", BO.BAS.IsNullDBKey(.b07ID), DbType.Int32)
             pars.Add("x31ID", BO.BAS.IsNullDBKey(.x31ID), DbType.Int32)
-            pars.Add("p31ID", BO.BAS.IsNullDBKey(.p31ID), DbType.Int32)
             pars.Add("x40ID", BO.BAS.IsNullDBKey(.x40ID), DbType.Int32)
             pars.Add("x50ID", BO.BAS.IsNullDBKey(.x50id), DbType.Int32)
 
@@ -107,7 +101,7 @@ Public Class o27AttachmentDL
     Public Function GetList(myQuery As BO.myQueryO27) As IEnumerable(Of BO.o27Attachment)
         Dim s As String = GetSQLPart1()
         Dim strW As String = bas.ParseWhereMultiPIDs("a.o27ID", myQuery)
-        strW += bas.ParseWhereValidity("o27", "a", myQuery)
+        ''strW += bas.ParseWhereValidity("o27", "a", myQuery)
 
         Dim pars As New DbParameters
         With myQuery
@@ -115,30 +109,12 @@ Public Class o27AttachmentDL
                 strW += " AND a.o13ID=@o13id"
                 pars.Add("o13id", .o13ID, DbType.Int32)
             End If
-            If .p41ID <> 0 Then
-                strW += " AND a.p41ID=@p41id"
-                pars.Add("p41id", .p41ID, DbType.Int32)
+            If .Record_x29ID > BO.x29IdEnum._NotSpecified And .Record_PID <> 0 Then
+                pars.Add("record_pid", .Record_PID, DbType.Int32)
+                pars.Add("x29id", .Record_x29ID)
+                strW += " AND a.b07ID IN (select b07ID FROM b07Comment WHERE x29ID=@x29id AND b07RecordPID=@record_pid)"
             End If
-            If .p56ID <> 0 Then
-                strW += " AND a.p56ID=@p56id"
-                pars.Add("p56id", .p56ID, DbType.Int32)
-            End If
-            If .p28ID <> 0 Then
-                strW += " AND a.p28ID=@p28id"
-                pars.Add("p28id", .p28ID, DbType.Int32)
-            End If
-            If .p31ID <> 0 Then
-                strW += " AND a.p31ID=@p31id"
-                pars.Add("p31id", .p31ID, DbType.Int32)
-            End If
-            If .j02ID <> 0 Then
-                strW += " AND a.j02ID=@j02id"
-                pars.Add("j02id", .j02ID, DbType.Int32)
-            End If
-            If .o23ID <> 0 Then
-                strW += " AND a.o23ID=@o23id"
-                pars.Add("o23id", .o23ID, DbType.Int32)
-            End If
+            
             If .x31ID <> 0 Then
                 strW += " AND a.x31ID=@x31id"
                 pars.Add("x31id", .x31ID, DbType.Int32)
@@ -189,14 +165,8 @@ Public Class o27AttachmentDL
             pars.Add("pid", cRec.PID)
         End If
         With cRec
-            pars.Add("p41ID", BO.BAS.IsNullDBKey(.p41ID), DbType.Int32)
-            pars.Add("j02ID", BO.BAS.IsNullDBKey(.j02ID), DbType.Int32)
-            pars.Add("p28ID", BO.BAS.IsNullDBKey(.p28ID), DbType.Int32)
-            pars.Add("p56id", BO.BAS.IsNullDBKey(.p56ID), DbType.Int32)
-            pars.Add("p91ID", BO.BAS.IsNullDBKey(.p91ID), DbType.Int32)
-            pars.Add("o23ID", BO.BAS.IsNullDBKey(.o23ID), DbType.Int32)
+            
             pars.Add("x31ID", BO.BAS.IsNullDBKey(.x31ID), DbType.Int32)
-            pars.Add("p31ID", BO.BAS.IsNullDBKey(.p31ID), DbType.Int32)
             pars.Add("x40ID", BO.BAS.IsNullDBKey(.x40ID), DbType.Int32)
             pars.Add("x50ID", BO.BAS.IsNullDBKey(.x50ID), DbType.Int32)
             pars.Add("b07ID", BO.BAS.IsNullDBKey(.b07ID), DbType.Int32)
