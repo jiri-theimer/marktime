@@ -37,6 +37,7 @@ Public Class Crypto
     End Function
 
     Public Shared Function Encrypt(ByVal stringToEncrypt As String, ByVal key As String) As String
+        If stringToEncrypt = "" Then Return ""
         DES.Key = Crypto.MD5Hash(key)
         DES.Mode = CipherMode.ECB
         Dim Buffer As Byte() = UTF8Encoding.UTF8.GetBytes(stringToEncrypt)

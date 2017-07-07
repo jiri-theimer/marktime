@@ -25,7 +25,7 @@
             context["qry_field"] = "<%=Left(Me.cbxType.DataTextField, 3) + "id"%>";
             context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
             context["flag"] = "search4o23";
-           
+
             <%If Me.CurrentX29ID = BO.x29IdEnum.p41Project Then%>
             context["j02id_explicit"] = "<%=Master.Factory.SysUser.j02ID%>";
             <%End If%>
@@ -42,8 +42,8 @@
             <div>
                 <asp:RadioButtonList ID="opgX20ID" runat="server" AutoPostBack="true" RepeatDirection="Horizontal" DataValueField="x20ID" DataTextField="BindName"></asp:RadioButtonList>
             </div>
-            <div>                
-                <asp:DropDownList ID="cbxType" runat="server" DataValueField="pid" AutoPostBack="true" Visible="false" style="height:26px;" ToolTip="Filtrovat rozsah hledaných záznamů"></asp:DropDownList>
+            <div>
+                <asp:DropDownList ID="cbxType" runat="server" DataValueField="pid" AutoPostBack="true" Visible="false" Style="height: 26px;" ToolTip="Filtrovat rozsah hledaných záznamů"></asp:DropDownList>
                 <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="600px" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="500px" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="true">
                     <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
                 </telerik:RadComboBox>
@@ -189,7 +189,7 @@
     </asp:Panel>
 
     <asp:Panel ID="panHtmlEditor" runat="server" Visible="false">
-        
+
         <telerik:RadEditor ID="o23HtmlContent" ForeColor="Black" Font-Names="Verdana" runat="server" Width="98%" Height="500px" ToolbarMode="Default" Language="cs-CZ" NewLineMode="Br" ContentAreaMode="Div">
             <Content>
      Obsah článku
@@ -255,6 +255,29 @@
         <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu:" CssClass="lblReq" Style="padding-right: 30px;"></asp:Label>
         <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
     </div>
+    <div class="div6">
+        <asp:CheckBox ID="o23IsEncrypted" runat="server" Text="Obsah zašifrovat a ochránit heslem" AutoPostBack="true" />
+    </div>
+    <asp:Panel ID="panPassword" runat="server" Style="padding: 10px;">
+        <table cellpadding="5">
+            <tr>
+                <td>
+                    <asp:Label ID="lblPassword" runat="server" CssClass="lbl" Text="Heslo:"></asp:Label>
+                </td>
+                <td>
+                    <asp:TextBox ID="o23password" runat="server" Style="width: 130px;" TextMode="Password"></asp:TextBox>
+                </td>
+                <td>
+                    <asp:Label ID="lblVerify" runat="server" CssClass="lbl" Text="Ověření:"></asp:Label>
+                </td>
+                <td>
+                    <asp:TextBox ID="txtVerify" runat="server" Style="width: 130px;" TextMode="Password"></asp:TextBox>
+                </td>
+            </tr>
+        </table>
+    </asp:Panel>
+
+
     <asp:HiddenField ID="hidX18ID" runat="server" />
     <asp:HiddenField ID="hidX29ID" runat="server" />
     <asp:HiddenField ID="hidGUID_x19" runat="server" />

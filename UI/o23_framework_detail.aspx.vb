@@ -74,6 +74,7 @@
         Dim cDisp As BO.o23RecordDisposition = Master.Factory.o23DocBL.InhaleDisposition(cRec, cX18)
         FNO("cmdNew").Visible = cDisp.CreateItem
         FNO("cmdClone").Visible = cDisp.CreateItem
+        FNO("cmdWorkflow").Visible = cDisp.UploadAndComment
         cmdLockUnlock.Visible = cDisp.LockUnlockFiles_Flag1
         If cRec.o23LockedFlag = BO.o23LockedTypeENUM.LockAllFiles Then
             cmdLockUnlock.Text = "Odemknout přístup k přílohám"

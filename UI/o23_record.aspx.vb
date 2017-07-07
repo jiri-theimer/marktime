@@ -5,7 +5,7 @@ Public Class o23_record
     Protected WithEvents _MasterPage As ModalDataRecord
     Private Property _curRec As BO.o23Doc
     Private Property _loadingLastX20ID As Integer
-
+    Private Const _key As String = "Aesthe22derm"
 
     Public ReadOnly Property CurrentX18ID As Integer
         Get
@@ -242,7 +242,7 @@ Public Class o23_record
             End If
 
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
-
+            Me.o23IsEncrypted.Checked = .o23IsEncrypted
         End With
         ''Dim cX23 As BO.x23EntityField_Combo = Master.Factory.x23EntityField_ComboBL.Load(_curRec.x23ID)
         ''If cX23.x23DataSource <> "" Then
@@ -327,6 +327,9 @@ Public Class o23_record
     End Sub
 
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
+        If Me.o23IsEncrypted.Checked Then
+            If Not TestPassword() Then Return
+        End If
         With Master.Factory.o23DocBL
             Dim cRec As BO.o23Doc = IIf(Master.DataPID <> 0, .Load(Master.DataPID), New BO.o23Doc)
             cRec.o23Name = Me.o23Name.Text
@@ -344,6 +347,24 @@ Public Class o23_record
             If Not InhaleUserFieldValues(cRec) Then
                 Return
             End If
+            With cRec
+                .o23IsEncrypted = Me.o23IsEncrypted.Checked
+                If .o23IsEncrypted Then
+                    .o23FreeText01 = BO.Crypto.Encrypt(.o23FreeText01, _key)
+                    .o23FreeText02 = BO.Crypto.Encrypt(.o23FreeText02, _key)
+                    .o23FreeText03 = BO.Crypto.Encrypt(.o23FreeText03, _key)
+                    .o23FreeText04 = BO.Crypto.Encrypt(.o23FreeText04, _key)
+                    .o23FreeText05 = BO.Crypto.Encrypt(.o23FreeText05, _key)
+                    .o23BigText = BO.Crypto.Encrypt(.o23BigText, _key)
+                End If
+                If panHtmlEditor.Visible Then
+                    Me.o23HtmlContent.Content = BO.Crypto.Encrypt(Me.o23HtmlContent.Content, _key)
+                End If
+                If Me.o23password.Text <> "" Then
+                    .o23Password = BO.Crypto.Encrypt(Me.o23password.Text, _key)
+                End If
+            End With
+
 
             Dim lisX19 As List(Of BO.x19EntityCategory_Binding) = Nothing
             If panX20.Visible Then
@@ -389,7 +410,7 @@ Public Class o23_record
             cmdChangeCode.Visible = False
         End If
         basUIMT.RenderQueryCombo(Me.cbxType)
-        
+        Me.panPassword.Visible = Me.o23IsEncrypted.Checked
     End Sub
 
     Private Function InhaleUserFieldValues(ByRef cRec As BO.o23Doc) As Boolean
@@ -736,4 +757,33 @@ Public Class o23_record
         Dim strKey As String = Me.hidX18ID.Value & "-cbxType-" & Me.cbxType.DataTextField
         Master.Factory.j03UserBL.SetUserParam(strKey, cbxType.SelectedValue)
     End Sub
+
+    Private Function TestPassword() As Boolean
+        If Len(o23password.Text) < 4 And Len(o23password.Text) > 0 Then
+            Master.Notify("Minimální délka hesla jsou 4 znaky.", 2)
+            Return False
+        End If
+        If o23password.Text <> txtVerify.Text And (txtVerify.Text <> "" Or o23password.Text <> "") Then
+            Master.Notify("Heslo nesouhlasí s ověřením.", 2)
+            Return False
+        End If
+       
+        If Len(o23password.Text) < 4 Then
+            If Master.IsRecordNew Then
+                Master.Notify("Zadejte heslo (minimálně 4 znaky).", 2)
+                o23password.Focus()
+                Return False
+            Else
+                Dim cRecCurrent As BO.o23Doc = Master.Factory.o23DocBL.Load(Master.DataPID)
+                If Not cRecCurrent.o23IsEncrypted Then    'dokument dříve nebyl zašifrovaný a nyní má být a heslo je nedostatečné
+                    Master.Notify("Zadejte heslo (minimálně 4 znaky).", 2)
+                    o23password.Focus()
+                    Return False
+                End If
+            End If
+
+        End If
+
+        Return True
+    End Function
 End Class

@@ -170,15 +170,18 @@ Class x18EntityCategoryBL
     Public Function InhaleDisposition(cRec As BO.x18EntityCategory) As BO.x18RecordDisposition Implements Ix18EntityCategoryBL.InhaleDisposition
         Dim c As New BO.x18RecordDisposition
         If Factory.SysUser.IsAdmin Then
-            c.ReadItems = True : c.OwnerItems = True : c.CreateItem = True
+            c.ReadItems = True : c.OwnerItems = True : c.CreateItem = True : c.ReadAndUploadAndComment = True
             Return c
         End If
 
         If Factory.x67EntityRoleBL.TestEntityRolePermission(BO.x29IdEnum.x18EntityCategory, cRec.PID, BO.x53PermValEnum.X18_OwnerItems, False) Then
-            c.ReadItems = True : c.OwnerItems = True
+            c.ReadItems = True : c.OwnerItems = True : c.ReadAndUploadAndComment = True
         End If
         If Factory.x67EntityRoleBL.TestEntityRolePermission(BO.x29IdEnum.x18EntityCategory, cRec.PID, BO.x53PermValEnum.X18_CreateItems, True) Then
             c.CreateItem = True
+        End If
+        If Factory.x67EntityRoleBL.TestEntityRolePermission(BO.x29IdEnum.x18EntityCategory, cRec.PID, BO.x53PermValEnum.X18_ReadAndUpload, True) Then
+            c.ReadAndUploadAndComment = True
         End If
         If Factory.x67EntityRoleBL.TestEntityRolePermission(BO.x29IdEnum.x18EntityCategory, cRec.PID, BO.x53PermValEnum.X18_ReaderItems, True) Then
             c.ReadItems = True

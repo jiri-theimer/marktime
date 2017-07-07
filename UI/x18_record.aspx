@@ -340,9 +340,7 @@
                             <asp:TextBox ID="x18AllowedFileExtensions" runat="server" Width="400px"></asp:TextBox>
                             (čárkou oddělené)
                         </div>
-                        <div class="div6">
-                            <span class="infoInForm">Veškeré DOCX dokumenty budou automaticky převáděny i do PDF</span>
-                        </div>
+                        
                     </asp:Panel>
                 </div>
             </div>

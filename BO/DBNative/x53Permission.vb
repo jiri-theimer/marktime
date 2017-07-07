@@ -83,9 +83,10 @@
     CR_P28_Owner = 2                   'Oprávnění vlastníka klienta
 
     'Oprávnění role pro položky štítku
-    X18_ReaderItems = 1                 'Prohlížet všechny položky
-    X18_CreateItems = 2                 'Vytvářet položky
-    X18_OwnerItems = 3                  'Vytvářet, upravovat a prohlížet všechny položky
+    X18_ReaderItems = 1                 'Číst všechny dokumenty daného typu
+    X18_CreateItems = 2                 'Vytvářet dokumenty v daném typu
+    X18_OwnerItems = 3                  'Vytvářet, upravovat a číst dokumenty daného typu + zamykat přístup k přílohám
+    X18_ReadAndUpload = 4               'Číst vše + nahrávat přílohy/komentáře
 End Enum
 Public Class x53Permission
     Inherits BOMotherFT

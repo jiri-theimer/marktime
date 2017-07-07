@@ -392,7 +392,8 @@ Public Class o23_fixwork
 
         Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
         menu1.FindItemByValue("cmdNew").Visible = cDisp.CreateItem
-        menu1.FindItemByValue("cmdClone").Visible = cDisp.CreateItem
+        menu1.FindItemByValue("cmdClone").Visible = cDisp.OwnerItems
+        menu1.FindItemByValue("cmdWorkflow").Visible = cDisp.ReadAndUploadAndComment
     End Sub
 
     Private Sub o23_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete

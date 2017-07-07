@@ -2,6 +2,7 @@
     Inherits System.Web.UI.UserControl
     Public Factory As BL.Factory
     Private Property _curRec As BO.o23Doc
+    Private Const _key As String = "Aesthe22derm"
 
 
     Public Function IsEmpty() As Boolean

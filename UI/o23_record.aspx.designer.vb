@@ -257,6 +257,60 @@ Partial Public Class o23_record
     Protected WithEvents j02ID_Owner As Global.UI.person
 
     '''<summary>
+    '''o23IsEncrypted control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o23IsEncrypted As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''panPassword control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panPassword As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''lblPassword control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblPassword As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''o23password control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o23password As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lblVerify control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblVerify As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtVerify control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtVerify As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''hidX18ID control.
     '''</summary>
     '''<remarks>

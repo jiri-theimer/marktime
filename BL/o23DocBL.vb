@@ -200,9 +200,10 @@ Class o23DocBL
         Dim cD As New BO.o23RecordDisposition
         cD.CreateItem = cDX18.CreateItem
         cD.OwnerAccess = cDX18.OwnerItems
+        cD.UploadAndComment = cDX18.ReadAndUploadAndComment
         cD.ReadAccess = cDX18.ReadItems
-        cD.FileAppender = True
-        cD.Comments = True
+
+
         If cD.OwnerAccess Then
             cD.LockUnlockFiles_Flag1 = True
         End If
