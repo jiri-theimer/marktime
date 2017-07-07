@@ -2,9 +2,9 @@
     Inherits System.Web.UI.UserControl
     Public Factory As BL.Factory
     Private Property _curRec As BO.o23Doc
-    Private Const _key As String = "Aesthe22derm"
+    Private Property _isEncrypted As Boolean
 
-
+    
     Public Function IsEmpty() As Boolean
         If rpFF.Items.Count > 0 Then
             Return False
@@ -33,6 +33,10 @@
 
     Public Sub FillData(cRec As BO.o23Doc, cX18 As BO.x18EntityCategory)
         hidPID.Value = cRec.PID.ToString
+        If cRec.o23IsEncrypted Then
+            _isEncrypted = True
+            Factory.o23DocBL.DecryptRecord(cRec)
+        End If
 
         _curRec = cRec
         If Not cX18 Is Nothing Then
@@ -216,8 +220,11 @@
 
     Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
         If panHtml.Visible And BO.BAS.IsNullInt(hidPID.Value, 0) > 0 Then
-
-            place1.Controls.Add(New LiteralControl(Me.Factory.o23DocBL.LoadHtmlContent(CInt(hidPID.Value))))
+            Dim s As String = Me.Factory.o23DocBL.LoadHtmlContent(CInt(hidPID.Value))
+            If _isEncrypted Then
+                s = Factory.o23DocBL.DecryptString(s)
+            End If
+            place1.Controls.Add(New LiteralControl(s))
         End If
     End Sub
 End Class

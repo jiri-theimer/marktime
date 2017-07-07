@@ -20,7 +20,7 @@
     ''' <param name="intDataPID"></param>
     ''' <returns>Vrací p85guid z temp tabulky p85tempbox</returns>
     ''' <remarks></remarks>
-    Function SetToDeposit(intDataPID) As String
+    Function SetToDeposit(intDataPID As Integer) As String
     Function SaveObjectReflection2Temp(strGUID As String, cRec As Object) As Boolean
     Function RunTailoredProcedure(strGUID As String, strProcName As String) As String
     Function RunTailoredProcedure(intRecordPID As Integer, strProcName As String) As Boolean
@@ -84,7 +84,7 @@ Class p85TempBoxBL
     Sub Clone(strGUID_Source As String, strGUID_Dest As String) Implements Ip85TempBoxBL.Clone
         _cDL.Clone(strGUID_Source, strGUID_Dest)
     End Sub
-    Function SetToDeposit(intDataPID) As String Implements Ip85TempBoxBL.SetToDeposit
+    Function SetToDeposit(intDataPID As Integer) As String Implements Ip85TempBoxBL.SetToDeposit
         Return _cDL.SetToDeposit(intDataPID)
     End Function
     Function LoadFromDeposit(strGUID As String) As Integer Implements Ip85TempBoxBL.LoadFromDeposit

@@ -363,9 +363,9 @@ Public Class o23_fixwork
         hidx18IsColors.Value = BO.BAS.GB(c.x18IsColors)
         If c.b01ID <> 0 Then
             hidB01ID.Value = c.b01ID.ToString
-            menu1.FindItemByValue("cmdWorkflow").Text = "Posunout stav/doplnit"
-            menu1.FindItemByValue("cmdWorkflow").ImageUrl = "Images/workflow.png"
-            menu1.FindItemByValue("cmdWorkflow").NavigateUrl = "javascript:workflow()"
+            ''menu1.FindItemByValue("cmdWorkflow").Text = "Posunout stav/doplnit"
+            ''menu1.FindItemByValue("cmdWorkflow").ImageUrl = "Images/workflow.png"
+            ''menu1.FindItemByValue("cmdWorkflow").NavigateUrl = "javascript:workflow()"
 
             panWorkflow.Visible = True
             cbxQueryB02ID.DataSource = Master.Factory.b02WorkflowStatusBL.GetList(c.b01ID)
@@ -378,9 +378,9 @@ Public Class o23_fixwork
         Else
             panWorkflow.Visible = False
             hidB01ID.Value = ""
-            menu1.FindItemByValue("cmdWorkflow").Text = "Doplnit komentář nebo přílohu"
-            menu1.FindItemByValue("cmdWorkflow").ImageUrl = "Images/comment.png"
-            menu1.FindItemByValue("cmdWorkflow").NavigateUrl = "javascript:b07_create()"
+            ''menu1.FindItemByValue("cmdWorkflow").Text = "Doplnit komentář nebo přílohu"
+            ''menu1.FindItemByValue("cmdWorkflow").ImageUrl = "Images/comment.png"
+            ''menu1.FindItemByValue("cmdWorkflow").NavigateUrl = "javascript:b07_create()"
         End If
         With menu1.FindItemByValue("scheduler")
             .Visible = c.x18IsCalendar
@@ -390,10 +390,10 @@ Public Class o23_fixwork
             img1.ImageUrl = c.x18Icon32
         End If
 
-        Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
-        menu1.FindItemByValue("cmdNew").Visible = cDisp.CreateItem
-        menu1.FindItemByValue("cmdClone").Visible = cDisp.OwnerItems
-        menu1.FindItemByValue("cmdWorkflow").Visible = cDisp.ReadAndUploadAndComment
+        ''Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
+        ''menu1.FindItemByValue("cmdNew").Visible = cDisp.CreateItem
+        ''menu1.FindItemByValue("cmdClone").Visible = cDisp.OwnerItems
+        ''menu1.FindItemByValue("cmdWorkflow").Visible = cDisp.ReadAndUploadAndComment
     End Sub
 
     Private Sub o23_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete

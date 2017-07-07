@@ -131,6 +131,33 @@ Partial Public Class o23_framework_detail
     Protected WithEvents imgIcon32 As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
+    '''panEncrypted control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panEncrypted As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''txtPassword control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtPassword As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''cmdDecrypt control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdDecrypt As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''rec1 control.
     '''</summary>
     '''<remarks>

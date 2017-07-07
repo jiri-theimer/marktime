@@ -132,6 +132,12 @@
 
 
     <div style="clear: both;"></div>
+    <asp:Panel ID="panEncrypted" runat="server" CssClass="div6" Visible="false">
+        <p class="infoNotificationRed">Obsah dokumentu je zašifrován.</p>
+        <span class="lbl">Zadejte heslo:</span>
+        <asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox>
+        <asp:Button ID="cmdDecrypt" runat="server" CssClass="cmd" Text="Odšifrovat" />
+    </asp:Panel>
 
     <div class="div6">
         <uc:o23_record_readonly ID="rec1" runat="server" />
@@ -162,4 +168,6 @@
     <asp:HiddenField ID="hidX18ID" runat="server" />
     <asp:HiddenField ID="hidB01ID" runat="server" />
     <asp:HiddenField ID="hidSource" runat="server" />
+    
+    
 </asp:Content>

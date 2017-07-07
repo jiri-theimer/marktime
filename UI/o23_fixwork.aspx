@@ -239,24 +239,10 @@
                 </div>
                 <div class="commandcell" style="padding-left: 10px;">
                     <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 3000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true" CollapseAnimation-Type="None">
-                        <Items>
+                        <Items>                            
+                            <telerik:RadMenuItem Text="Kalendář" Value="scheduler" ImageUrl="Images/calendar.png" ToolTip="Přepnout do kalendáře" Visible="false"></telerik:RadMenuItem>
 
-                            <telerik:RadMenuItem Text="ZÁZNAM" Value="record" PostBack="false" ImageUrl="Images/arrow_down_menu.png">
-                                <Items>
-                                    <telerik:RadMenuItem Value="cmdNew" Text="Nový" NavigateUrl="javascript:o23_record(0);" ImageUrl="Images/new.png"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem Value="cmdEdit" Text="Upravit" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" Visible="false"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem Value="cmdWorkflow" Text="Zapsat komentář/souborovou přílohu" NavigateUrl="javascript:b07_create();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem Value="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report();" ImageUrl="Images/report.png"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem Value="cmdEmail" Text="Odeslat e-mail" NavigateUrl="javascript:sendmail();" ImageUrl="Images/email.png"></telerik:RadMenuItem>
-                                </Items>
-                            </telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="KALENDÁŘ" Value="scheduler" ImageUrl="Images/calendar.png" ToolTip="Přepnout do kalendáře" Visible="false"></telerik:RadMenuItem>
-
-                            <telerik:RadMenuItem Text="DALŠÍ AKCE" Value="more" ImageUrl="Images/arrow_down_menu.png" >
+                            <telerik:RadMenuItem Text="Akce" Value="more" ImageUrl="Images/arrow_down_menu.png" >
                                 <GroupSettings OffsetX="-150"/>
                                 <ContentTemplate>
                                     <div style="padding:10px;background-color:#f0f8ff;">

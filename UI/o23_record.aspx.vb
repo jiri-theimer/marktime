@@ -5,7 +5,7 @@ Public Class o23_record
     Protected WithEvents _MasterPage As ModalDataRecord
     Private Property _curRec As BO.o23Doc
     Private Property _loadingLastX20ID As Integer
-    Private Const _key As String = "Aesthe22derm"
+
 
     Public ReadOnly Property CurrentX18ID As Integer
         Get
@@ -227,6 +227,9 @@ Public Class o23_record
         End If
 
         _curRec = Master.Factory.o23DocBL.Load(Master.DataPID)
+        If _curRec.o23IsEncrypted Then Handle_EncryptedRecord()
+
+
         With _curRec
             Me.j02ID_Owner.Value = .j02ID_Owner.ToString
             Me.j02ID_Owner.Text = .Owner
@@ -279,10 +282,27 @@ Public Class o23_record
         End If
 
         If panHtmlEditor.Visible Then
-            Me.o23HtmlContent.Content = Master.Factory.o23DocBL.LoadHtmlContent(Master.DataPID)
+            With Master.Factory.o23DocBL
+                If _curRec.o23IsEncrypted Then
+                    Me.o23HtmlContent.Content = .DecryptString(.LoadHtmlContent(Master.DataPID))
+                Else
+                    Me.o23HtmlContent.Content = .LoadHtmlContent(Master.DataPID)
+                End If
+            End With
         End If
 
 
+    End Sub
+
+    Private Sub Handle_EncryptedRecord()
+        If Not _curRec.o23IsEncrypted Then Return
+
+        Dim cTemp As BO.p85TempBox = Master.Factory.p85TempBoxBL.LoadByGUID(Master.Factory.SysUser.j02ID.ToString & "-" & Master.DataPID.ToString)
+        If cTemp Is Nothing Then
+            Master.StopPage("Nezdařilo se ověření zašifrovaného obsahu.")
+        Else
+            Master.Factory.o23DocBL.DecryptRecord(_curRec)
+        End If
     End Sub
     Private Sub RefreshTempX19()
         rpX19.DataSource = Master.Factory.p85TempBoxBL.GetList(hidGUID_x19.Value).OrderBy(Function(p) p.p85FreeBoolean01).ThenBy(Function(p) p.p85OtherKey2)
@@ -347,23 +367,15 @@ Public Class o23_record
             If Not InhaleUserFieldValues(cRec) Then
                 Return
             End If
-            With cRec
-                .o23IsEncrypted = Me.o23IsEncrypted.Checked
-                If .o23IsEncrypted Then
-                    .o23FreeText01 = BO.Crypto.Encrypt(.o23FreeText01, _key)
-                    .o23FreeText02 = BO.Crypto.Encrypt(.o23FreeText02, _key)
-                    .o23FreeText03 = BO.Crypto.Encrypt(.o23FreeText03, _key)
-                    .o23FreeText04 = BO.Crypto.Encrypt(.o23FreeText04, _key)
-                    .o23FreeText05 = BO.Crypto.Encrypt(.o23FreeText05, _key)
-                    .o23BigText = BO.Crypto.Encrypt(.o23BigText, _key)
-                End If
-                If panHtmlEditor.Visible Then
-                    Me.o23HtmlContent.Content = BO.Crypto.Encrypt(Me.o23HtmlContent.Content, _key)
-                End If
-                If Me.o23password.Text <> "" Then
-                    .o23Password = BO.Crypto.Encrypt(Me.o23password.Text, _key)
-                End If
-            End With
+
+            cRec.o23IsEncrypted = Me.o23IsEncrypted.Checked
+            If cRec.o23IsEncrypted Then
+                .EncryptRecord(cRec)
+            End If
+            If Me.o23password.Text <> "" Then
+                cRec.o23Password = .EncryptString(Me.o23password.Text)
+            End If
+
 
 
             Dim lisX19 As List(Of BO.x19EntityCategory_Binding) = Nothing
@@ -383,7 +395,12 @@ Public Class o23_record
             If .Save(cRec, Me.CurrentX18ID, Nothing, lisX19, GetX20IDs(), "") Then
                 Master.DataPID = .LastSavedPID
                 If panHtmlEditor.Visible Then
-                    .SaveHtmlContent(Master.DataPID, Me.o23HtmlContent.Content)
+                    If cRec.o23IsEncrypted Then
+                        .SaveHtmlContent(Master.DataPID, .EncryptString(Me.o23HtmlContent.Content))
+                    Else
+                        .SaveHtmlContent(Master.DataPID, Me.o23HtmlContent.Content)
+                    End If
+
                 End If
                 Master.CloseAndRefreshParent("o23-save")
             Else

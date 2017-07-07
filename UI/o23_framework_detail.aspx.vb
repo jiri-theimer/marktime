@@ -9,6 +9,7 @@
             hidX18ID.Value = value.ToString
         End Set
     End Property
+    
 
     Private Sub o23_framework_detail_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
@@ -19,6 +20,7 @@
         Me.Fileupload_list__readonly.Factory = Master.Factory
 
         If Not Page.IsPostBack Then
+            ViewState("verified") = ""
             With Master
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 hidSource.Value = Request.Item("source")
@@ -85,8 +87,22 @@
         End If
 
         If cRec.IsClosed Then menu1.Skin = "Black"
+        Dim bolShowContent As Boolean = True
+        If cRec.o23IsEncrypted Then
+            If ViewState("verified") <> "1" Then
+                panEncrypted.Visible = True
+                bolShowContent = False
+            End If
+        End If
+        If bolShowContent Then
+            rec1.Visible = True
+            rec1.FillData(cRec, cX18)
+            panEncrypted.Visible = False
+        Else
+            rec1.Visible = False
+            menu1.Enabled = False
+        End If
 
-        rec1.FillData(cRec, cX18)
 
         Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.o23Doc, cRec.PID)
         roles1.RefreshData(lisX69, cRec.PID)
@@ -158,5 +174,28 @@
             Master.Factory.o23DocBL.LockFilesInDocument(cRec, BO.o23LockedTypeENUM.LockAllFiles)
         End If
         RefreshRecord()
+    End Sub
+
+    Private Sub cmdDecrypt_Click(sender As Object, e As EventArgs) Handles cmdDecrypt.Click
+        With Master.Factory.o23DocBL
+            Dim cRec As BO.o23Doc = .Load(Master.DataPID)
+            Dim strPWD As String = .DecryptString(cRec.o23Password)
+
+            If txtPassword.Text <> strPWD Then
+                ViewState("verified") = "0"
+                Master.Notify("Heslo není správné", NotifyLevel.WarningMessage)
+                Me.txtPassword.Focus()
+            Else
+                ViewState("verified") = "1"
+                RefreshRecord()
+                Dim cTemp As New BO.p85TempBox
+                cTemp.p85GUID = Master.Factory.SysUser.j02ID.ToString & "-" & Master.DataPID.ToString
+                cTemp.p85FreeDate01 = Now
+                Master.Factory.p85TempBoxBL.Save(cTemp)
+            End If
+        End With
+        
+        
+
     End Sub
 End Class

@@ -25,7 +25,7 @@ Public Class p85TempBoxDL
             Return 0
         End If
     End Function
-    Public Function SetToDeposit(intDataPID) As String
+    Public Function SetToDeposit(intDataPID As Integer) As String
         Dim pars As New DbParameters
         Dim strGUID As String = Guid.NewGuid().ToString("N")
         pars.Add("datapid", intDataPID, DbType.Int32)

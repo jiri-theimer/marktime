@@ -17,12 +17,16 @@
     Function LockFilesInDocument(cRec As BO.o23Doc, lockFlag As BO.o23LockedTypeENUM) As Boolean
     Function UnLockFilesInDocument(cRec As BO.o23Doc) As Boolean
     Function InhaleDisposition(cRec As BO.o23Doc, Optional cX18 As BO.x18EntityCategory = Nothing) As BO.o23RecordDisposition
+    Sub DecryptRecord(ByRef cRec As BO.o23Doc)
+    Sub EncryptRecord(ByRef cRec As BO.o23Doc)
+    Function EncryptString(str As String) As String
+    Function DecryptString(str As String) As String
 End Interface
 Class o23DocBL
     Inherits BLMother
     Implements Io23DocBL
     Private WithEvents _cDL As DL.o23DocDL
-
+    Private Const _key As String = "Aesthe22derm"
 
     Private Sub _cDL_OnError(strError As String) Handles _cDL.OnError
         _Error = strError
@@ -209,5 +213,33 @@ Class o23DocBL
         End If
 
         Return cD
+    End Function
+
+    Public Sub DecryptRecord(ByRef cRec As BO.o23Doc) Implements Io23DocBL.DecryptRecord
+        With cRec
+            .o23FreeText01 = BO.Crypto.Decrypt(.o23FreeText01, _key)
+            .o23FreeText02 = BO.Crypto.Decrypt(.o23FreeText02, _key)
+            .o23FreeText03 = BO.Crypto.Decrypt(.o23FreeText03, _key)
+            .o23FreeText04 = BO.Crypto.Decrypt(.o23FreeText04, _key)
+            .o23FreeText05 = BO.Crypto.Decrypt(.o23FreeText05, _key)
+            .o23BigText = BO.Crypto.Decrypt(.o23BigText, _key)
+        End With
+
+    End Sub
+    Public Sub EncryptRecord(ByRef cRec As BO.o23Doc) Implements Io23DocBL.EncryptRecord
+        With cRec
+            .o23FreeText01 = BO.Crypto.Encrypt(.o23FreeText01, _key)
+            .o23FreeText02 = BO.Crypto.Encrypt(.o23FreeText02, _key)
+            .o23FreeText03 = BO.Crypto.Encrypt(.o23FreeText03, _key)
+            .o23FreeText04 = BO.Crypto.Encrypt(.o23FreeText04, _key)
+            .o23FreeText05 = BO.Crypto.Encrypt(.o23FreeText05, _key)
+            .o23BigText = BO.Crypto.Encrypt(.o23BigText, _key)
+        End With
+    End Sub
+    Public Function EncryptString(str As String) As String Implements Io23DocBL.EncryptString
+        Return BO.Crypto.Encrypt(str, _key)
+    End Function
+    Public Function DecryptString(str As String) As String Implements Io23DocBL.DecryptString
+        Return BO.Crypto.Decrypt(str, _key)
     End Function
 End Class
