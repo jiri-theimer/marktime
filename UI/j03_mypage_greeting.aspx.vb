@@ -614,7 +614,13 @@
         Dim cRec As BO.o23Doc = Master.Factory.o23DocBL.Load(intO23ID)
         tdRecO23.Visible = True
 
-        rec1.FillData(cRec, Master.Factory.x18EntityCategoryBL.LoadByX23ID(cRec.x23ID))
+        If cRec.o23IsEncrypted Then
+            rec1.Visible = False
+            Master.Notify("Obsah článku je zašifrovaný.")
+        Else
+            rec1.FillData(cRec, Master.Factory.x18EntityCategoryBL.LoadByX23ID(cRec.x23ID))
+        End If
+
         comments1.RefreshData(Master.Factory, BO.x29IdEnum.o23Doc, cRec.PID)
 
         With CType(e.Item.FindControl("link1"), LinkButton)

@@ -239,7 +239,8 @@
                 </div>
                 <div class="commandcell" style="padding-left: 10px;">
                     <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 3000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true" CollapseAnimation-Type="None">
-                        <Items>                            
+                        <Items>   
+                            <telerik:RadMenuItem Text="Nový" Value="cmdNew" NavigateUrl="javascript:o23_record(0);" ImageUrl="Images/new.png" ToolTip="Založit nový dokument"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Kalendář" Value="scheduler" ImageUrl="Images/calendar.png" ToolTip="Přepnout do kalendáře" Visible="false"></telerik:RadMenuItem>
 
                             <telerik:RadMenuItem Text="Akce" Value="more" ImageUrl="Images/arrow_down_menu.png" >

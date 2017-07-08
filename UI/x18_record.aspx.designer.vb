@@ -302,6 +302,15 @@ Partial Public Class x18_record
     Protected WithEvents x18IsColors As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''x18IsAllowEncryption control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18IsAllowEncryption As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''x18EntryNameFlag control.
     '''</summary>
     '''<remarks>

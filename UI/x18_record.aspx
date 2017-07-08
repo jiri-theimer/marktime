@@ -363,7 +363,11 @@
                                 <asp:CheckBox ID="x18IsColors" runat="server" CssClass="chk" Text="Možnost rozlišovat dokumenty barvou" Checked="false" />
                             </td>
                         </tr>
-
+                        <tr>
+                            <td colspan="2">
+                                <asp:CheckBox ID="x18IsAllowEncryption" runat="server" Text="V záznamu dokumentu nabízet možnost zašifrovat obsah" />
+                            </td>
+                        </tr>
 
                         <tr>
                             <td>

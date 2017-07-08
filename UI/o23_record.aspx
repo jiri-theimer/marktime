@@ -4,6 +4,8 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 <%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
+<%@ Register TagPrefix="uc" TagName="fileupload" Src="~/fileupload.ascx" %>
+<%@ Register TagPrefix="uc" TagName="fileupload_list" Src="~/fileupload_list.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -192,7 +194,7 @@
 
         <telerik:RadEditor ID="o23HtmlContent" ForeColor="Black" Font-Names="Verdana" runat="server" Width="98%" Height="500px" ToolbarMode="Default" Language="cs-CZ" NewLineMode="Br" ContentAreaMode="Div">
             <Content>
-     Obsah článku
+     Text zprávy
             </Content>
             <Tools>
                 <telerik:EditorToolGroup>
@@ -275,6 +277,16 @@
                 </td>
             </tr>
         </table>
+    </asp:Panel>
+
+
+    <asp:Panel ID="panUpload" runat="server" CssClass="content-box2">
+        <div class="title">Nahrát přílohy dokumentu</div>
+        <div class="content">
+            <uc:fileupload ID="upload1" runat="server" InitialFileInputsCount="1" EntityX29ID="b07Comment" />
+
+            <uc:fileupload_list ID="uploadlist1" runat="server" />
+        </div>
     </asp:Panel>
 
 

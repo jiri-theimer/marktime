@@ -390,8 +390,8 @@ Public Class o23_fixwork
             img1.ImageUrl = c.x18Icon32
         End If
 
-        ''Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
-        ''menu1.FindItemByValue("cmdNew").Visible = cDisp.CreateItem
+        Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
+        menu1.FindItemByValue("cmdNew").Visible = cDisp.CreateItem
         ''menu1.FindItemByValue("cmdClone").Visible = cDisp.OwnerItems
         ''menu1.FindItemByValue("cmdWorkflow").Visible = cDisp.ReadAndUploadAndComment
     End Sub

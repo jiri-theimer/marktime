@@ -68,6 +68,8 @@ Public Class x18EntityCategory
     
     Public Property x18MaxOneFileSize As Integer
     Public Property x18AllowedFileExtensions As String
+    Public Property x18IsAllowEncryption As Boolean
+
 
 
     Public ReadOnly Property x23Name As String

@@ -201,7 +201,7 @@
                             <td style="max-width: 250px;">
                                 <asp:Repeater ID="rpArticle" runat="server">
                                     <ItemTemplate>
-                                        <div style="width:200px;" class="badge_label">
+                                        <div style="min-width:200px;margin-bottom:10px;">
                                             <div>
                                                 <asp:Label ID="timestamp" runat="server" CssClass="timestamp"></asp:Label>
                                             </div>

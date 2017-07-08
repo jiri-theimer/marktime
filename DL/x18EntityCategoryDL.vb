@@ -131,6 +131,7 @@
                 pars.Add("x18UploadFlag", CInt(.x18UploadFlag), DbType.Int32)
                 pars.Add("x18MaxOneFileSize", .x18MaxOneFileSize, DbType.Int32)
                 pars.Add("x18AllowedFileExtensions", .x18AllowedFileExtensions, DbType.String)
+                pars.Add("x18IsAllowEncryption", .x18IsAllowEncryption, DbType.Boolean)
             End With
 
             If _cDB.SaveRecord("x18EntityCategory", pars, bolINSERT, strW, True, _curUser.j03Login) Then

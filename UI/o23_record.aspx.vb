@@ -33,7 +33,11 @@ Public Class o23_record
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Me.upload1.Factory = Master.Factory
+        Me.uploadlist1.Factory = Master.Factory
         If Not Page.IsPostBack Then
+            Me.upload1.GUID = BO.BAS.GetGUID
+            Me.uploadlist1.GUID = Me.upload1.GUID
             With Master
                 .HeaderIcon = "Images/label_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
@@ -67,6 +71,13 @@ Public Class o23_record
                         o23ForeColor.Items.Clear()
 
                     End If
+                    Me.o23IsEncrypted.Visible = c.x18IsAllowEncryption
+                    If Master.DataPID = 0 And c.x18UploadFlag = BO.x18UploadENUM.FileSystemUpload Then
+                        panUpload.Visible = True
+                    Else
+                        panUpload.Visible = False
+                    End If
+
                     If c.x18EntryNameFlag = BO.x18EntryNameENUM.NotUsed Then
                         Me.lblName.Visible = False : Me.o23Name.Visible = False
                     End If
@@ -113,6 +124,9 @@ Public Class o23_record
         End If
         If Not panHtmlEditor.Visible Then
             panHtmlEditor.Controls.Clear()
+        End If
+        If Not panUpload.Visible Then
+            panUpload.Controls.Clear()
         End If
     End Sub
 
@@ -347,6 +361,9 @@ Public Class o23_record
     End Sub
 
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
+        If panUpload.Visible Then
+            upload1.TryUploadhWaitingFilesOnClientSide()
+        End If
         If Me.o23IsEncrypted.Checked Then
             If Not TestPassword() Then Return
         End If
@@ -399,6 +416,17 @@ Public Class o23_record
                         .SaveHtmlContent(Master.DataPID, .EncryptString(Me.o23HtmlContent.Content))
                     Else
                         .SaveHtmlContent(Master.DataPID, Me.o23HtmlContent.Content)
+                    End If
+
+                End If
+                If panUpload.Visible Then
+                    Dim lisTempUpload As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(upload1.GUID, False)
+                    If uploadlist1.ItemsCount > 0 Then
+                        Dim cB07 As New BO.b07Comment
+                        cB07.x29ID = BO.x29IdEnum.o23Doc
+                        cB07.b07RecordPID = Master.DataPID
+                        Master.Factory.b07CommentBL.Save(cB07, upload1.GUID, Nothing)
+                        'Master.Factory.o27AttachmentBL.UploadAndSaveUserControl(lisTempUpload, BO.x29IdEnum.b07Comment, intB07ID)
                     End If
 
                 End If
@@ -803,4 +831,8 @@ Public Class o23_record
 
         Return True
     End Function
+
+    Private Sub upload1_AfterUploadAll() Handles upload1.AfterUploadAll
+        Me.uploadlist1.RefreshData_TEMP()
+    End Sub
 End Class

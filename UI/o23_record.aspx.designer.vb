@@ -311,6 +311,33 @@ Partial Public Class o23_record
     Protected WithEvents txtVerify As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''panUpload control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panUpload As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''upload1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents upload1 As Global.UI.fileupload
+
+    '''<summary>
+    '''uploadlist1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents uploadlist1 As Global.UI.fileupload_list
+
+    '''<summary>
     '''hidX18ID control.
     '''</summary>
     '''<remarks>
