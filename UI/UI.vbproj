@@ -243,6 +243,7 @@
     <Content Include="navigator.aspx" />
     <Content Include="o23_framework.aspx" />
     <Content Include="o23_list.ascx" />
+    <Content Include="o23_queue.aspx" />
     <Content Include="o23_subgrid.ascx" />
     <Content Include="o41_record.aspx" />
     <Content Include="o42_record.aspx" />
@@ -1175,6 +1176,13 @@
     <Compile Include="o23_list.ascx.vb">
       <DependentUpon>o23_list.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="o23_queue.aspx.designer.vb">
+      <DependentUpon>o23_queue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="o23_queue.aspx.vb">
+      <DependentUpon>o23_queue.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="o23_subgrid.ascx.designer.vb">
       <DependentUpon>o23_subgrid.ascx</DependentUpon>

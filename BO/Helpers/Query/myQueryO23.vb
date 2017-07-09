@@ -30,6 +30,8 @@ Public Class myQueryO23
     Public Property p56IDs As List(Of Integer)
     Public Property p28IDs As List(Of Integer)
 
+    Public Property o23GUID As String
+
     Public Property Record_x29ID As BO.x29IdEnum = x29IdEnum._NotSpecified
     Public Property RecordPID As Integer
 
@@ -42,6 +44,9 @@ Public Class myQueryO23
     Public Property j70ID As Integer
     Public Property SpecificQuery As BO.myQueryO23_SpecificQuery = myQueryO23_SpecificQuery._NotSpecified
     Public Property x18Value As String
+    Public Property x20ID_Bound As Integer
+    Public Property x20ID_UnBound As Integer
+
 
     Public Sub New(intX23ID As Integer)
         Me.x23ID = intX23ID

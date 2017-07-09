@@ -13,12 +13,12 @@
                     </td>
                 </tr>
                 <tr style="vertical-align: top;">
-                    
+
                     <td style="width: 150px;">
                         <asp:HiddenField ID="x28IsRequired" runat="server" />
 
                         <asp:Label ID="lblFF" runat="server" CssClass="lbl"></asp:Label>
-                        <asp:HyperLink ID="clue_help" runat="server" CssClass="reczoom" Text="?" Visible="false" tooltip="Nápověda"></asp:HyperLink>
+                        <asp:HyperLink ID="clue_help" runat="server" CssClass="reczoom" Text="?" Visible="false" ToolTip="Nápověda"></asp:HyperLink>
                     </td>
                     <td>
 
@@ -39,24 +39,46 @@
             </ItemTemplate>
         </asp:Repeater>
 
+        <asp:Repeater ID="rp1" runat="server">
+            <ItemTemplate>
+                <tr>
+                    <td style="width: 150px;">
+                        <asp:Label ID="x18Name" runat="server" CssClass="lbl"></asp:Label>
+                        <asp:HiddenField ID="x20ID" runat="server" />
+                        <asp:HiddenField ID="x18ID" runat="server" />
+                        <asp:HiddenField ID="x20IsMultiselect" runat="server" />
+                    </td>
+                    <td>
+                        <uc:datacombo ID="o23IDs_Tag" runat="server" DataTextField="NameWithCode" DataValueField="pid" AllowCheckboxes="true" Filter="Contains" Width="400px"></uc:datacombo>
+                        <button type="button" id="cmdX18_Items" runat="server" class="button-link" title="Nastavit položky štítku">
+                            <img src="Images/settings.png" />
+                        </button>
+
+                        
+                        <asp:Repeater ID="rpO23IDs_Doc" runat="server">
+                            <ItemTemplate>
+                                <a class="reczoom" rel="clue_o23_record.aspx?pid=<%#Eval("pid")%>" title="Detail dokumentu">i</a>
+                                <a style="margin-right: 20px;" href="javascript:o23_record_x18(<%#Eval("pid")%>,<%#Eval("x18ID")%>)"><%#Eval("o23Code")%> - <%#Eval("o23Name")%></a>
+
+                            </ItemTemplate>
+                        </asp:Repeater>
+                        <asp:ImageButton ID="cmdO23_Clear" runat="server" ImageUrl="Images/delete.png" ToolTip="Vyčistit vazbu" CommandName="clear" CssClass="button-link" />
+                        <button type="button" id="cmdO23_Create" runat="server">Nový</button>
+                        <button type="button" id="cmdO23_Find" runat="server">Najít</button>
+                        <asp:HiddenField ID="hidO23IDs_Doc" runat="server" />
+                    </td>
+
+                </tr>
+            </ItemTemplate>
+        </asp:Repeater>
     </table>
+
 </asp:Panel>
-<asp:Repeater ID="rp1" runat="server">
-    <ItemTemplate>
-        <div class="div6">
-           
-            <asp:Label ID="x18Name" runat="server" Width="150px"></asp:Label>
-            <uc:datacombo ID="o23IDs" runat="server" DataTextField="NameWithCode" DataValueField="pid" AllowCheckboxes="true" Filter="Contains" Width="400px"></uc:datacombo>
-            <button type="button" onclick="x18_items(<%#Eval("pid")%>)" class="button-link" title="Nastavit položky štítku"><img src="Images/settings.png" /></button>
-            <asp:HiddenField ID="x20ID" runat="server" />
-            <asp:HiddenField ID="x18ID" runat="server" />
-            <asp:HiddenField ID="x20IsMultiselect" runat="server" />
-        </div>
-    </ItemTemplate>
-</asp:Repeater>
+
 <asp:HiddenField ID="hidDataTable" runat="server" />
 <asp:HiddenField ID="hidJ03ID" runat="server" />
 <asp:HiddenField ID="hidDataPID" runat="server" />
+
 
 <script type="text/javascript">
     function <%=Me.ClientID%>_OnClientItemsRequesting(sender, eventArgs) {
@@ -74,6 +96,13 @@
         dialog_master("x18_items.aspx?pid=" + x18id, true)
 
     }
-
-
+    function o23_create_x18(x18id) {
+        dialog_master("o23_record.aspx?pid=0&x18id=" + x18id, true)
+    }
+    function o23_find_x18(x18id,x20id) {
+        dialog_master("o23_queue.aspx?x18id=" + x18id+"&x20id="+x20id, true)
+    }
+    function o23_record_x18(o23id, x18id) {
+        dialog_master("o23_record.aspx?pid=" + o23id + "&x18id=" + x18id, true)
+    }
 </script>

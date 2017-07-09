@@ -228,7 +228,6 @@
                 With pars
                     .Add("p31id", intSavedP31ID, DbType.Int32)
                     .Add("j03id_sys", _curUser.PID, DbType.Int32)
-                    .Add("guid", cRec.DocGUID, DbType.String)
                     .Add("p48id", cRec.p48ID, DbType.Int32)
                     .Add("x45ids", , DbType.String, ParameterDirection.Output, 50)
                 End With

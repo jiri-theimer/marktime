@@ -10,7 +10,7 @@ Public Class freefields
     Private _lisO23 As IEnumerable(Of BO.o23Doc)
     Public Factory As BL.Factory
 
-
+   
     Public Function IsEmpty() As Boolean
         If rpFF.Items.Count > 0 Then
             Return False
@@ -54,9 +54,63 @@ Public Class freefields
 
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
+       
     End Sub
+    Private Sub rp1_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rp1.ItemCommand
+        If e.CommandName = "clear" Then
+            CType(e.Item.FindControl("hidO23IDs_Doc"), HiddenField).Value = ""
+            RefreshDocListComplete()
+        End If
+    End Sub
+    Public Sub RefreshDocListByOneDocument(intO23ID_Append As Integer)
+        'obnoví pouze seznam dokumentů podle hodnot v hidO23IDs_Doc
+        Dim c As BO.o23Doc = Factory.o23DocBL.Load(intO23ID_Append)
+        For Each ri As RepeaterItem In rp1.Items
+            If c.x18ID.ToString = CType(ri.FindControl("x18ID"), HiddenField).Value Then
+                Dim pids As String = CType(ri.FindControl("hidO23IDs_Doc"), HiddenField).Value
+                If pids = "" Then pids = intO23ID_Append.ToString Else pids += "," & intO23ID_Append.ToString
+                Dim lis As List(Of Integer) = BO.BAS.ConvertPIDs2List(pids, ",")
 
+                CType(ri.FindControl("hidO23IDs_Doc"), HiddenField).Value = String.Join(",", lis)
+
+                With CType(ri.FindControl("rpO23IDs_Doc"), Repeater)
+                    Dim mq As New BO.myQueryO23(0)
+                    mq.PIDs = lis
+                    .DataSource = Factory.o23DocBL.GetList(mq)
+                    .DataBind()
+                End With
+                ri.FindControl("cmdO23_Clear").Visible = True
+            End If
+        Next
+    End Sub
+    Public Sub RefreshDocListComplete()
+        For Each ri As RepeaterItem In rp1.Items
+            If Not ri.FindControl("o23IDs_Tag").Visible Then
+                Dim pids As String = CType(ri.FindControl("hidO23IDs_Doc"), HiddenField).Value
+                Dim lis As List(Of Integer) = BO.BAS.ConvertPIDs2List(pids, ",")
+                ri.FindControl("cmdO23_Clear").Visible = False
+                With CType(ri.FindControl("rpO23IDs_Doc"), Repeater)
+                    If lis.Count > 0 Then
+                        Dim mq As New BO.myQueryO23(0)
+                        mq.PIDs = lis
+                        Dim lisO23 As IEnumerable(Of BO.o23Doc) = Factory.o23DocBL.GetList(mq)
+                        .DataSource = lisO23
+                        .DataBind()
+                        CType(ri.FindControl("hidO23IDs_Doc"), HiddenField).Value = String.Join(",", lisO23.Select(Function(p) p.PID))
+                        If lisO23.Count > 0 Then
+                            ri.FindControl("cmdO23_Clear").Visible = True
+                        End If
+                    Else
+                        .DataSource = Nothing
+                        .DataBind()
+                        CType(ri.FindControl("hidO23IDs_Doc"), HiddenField).Value = ""
+                    End If
+                   
+                End With
+
+            End If           
+        Next
+    End Sub
     Public Sub FillData(ByVal listFF As IEnumerable(Of BO.FreeField), lisX20X18 As IEnumerable(Of BO.x20_join_x18), strDataTable As String, intDataPID As Integer, Optional strTempGUID As String = "")
         lisX20X18 = lisX20X18.Where(Function(p) p.x20IsClosed = False And p.x20EntryModeFlag = BO.x20EntryModeENUM.Combo)   'omezit pouze na otevřené vazby + vazby vyplňované přes combo
         'strTempGUID je tu pouze pro agendu štítků
@@ -66,16 +120,12 @@ Public Class freefields
         rpFF.DataSource = listFF
         rpFF.DataBind()
 
-        If Me.rpFF.Items.Count = 0 Then
-            Me.panContainer.Visible = False
-        Else
-            Me.panContainer.Visible = True
-        End If
+        
         Dim curTags As List(Of BO.x19EntityCategory_Binding) = GetTags()    'naposledy ve formuláři vyplněné štítky - pokud existují, mají přednost
         rp1.DataSource = lisX20X18
         rp1.DataBind()
         If rp1.Items.Count = 0 Then
-            rp1.Visible = False 'žádné štítky k vyplnění
+            rp1.Visible = False 'žádné štítky/dokumenty k vyplnění
         Else
             rp1.Visible = True
             If Me.DataPID <> 0 Then
@@ -89,28 +139,56 @@ Public Class freefields
                 For Each ri As RepeaterItem In rp1.Items
                     Dim intX20ID As Integer = CInt(CType(ri.FindControl("x20ID"), HiddenField).Value)
                     Dim lis As List(Of String) = lisX19.Where(Function(p) p.x20ID = intX20ID).Select(Function(p) p.o23ID.ToString).ToList
+                    ri.FindControl("cmdO23_Clear").Visible = False
                     If lis.Count > 0 Then
-                        With CType(ri.FindControl("o23IDs"), UI.datacombo)
-                            If .AllowCheckboxes Then
-                                .SelectCheckboxItems(lis)
-                            Else
-                                If lis.Count > 0 Then .SelectedValue = lis(0)
-                            End If
+                        If ri.FindControl("o23IDs_Tag").Visible Then
+                            'štítek
+                            With CType(ri.FindControl("o23IDs_Tag"), UI.datacombo)
+                                If .AllowCheckboxes Then
+                                    .SelectCheckboxItems(lis)
+                                Else
+                                    If lis.Count > 0 Then .SelectedValue = lis(0)
+                                End If
 
-                        End With
+                            End With
+                        Else
+                            'dokument
+                            With CType(ri.FindControl("hidO23IDs_Doc"), HiddenField)
+                                .Value = String.Join(",", lis)
+                            End With
+                            With CType(ri.FindControl("rpO23IDs_Doc"), Repeater)
+                                Dim mq As New BO.myQueryO23(0)
+                                mq.PIDs = BO.BAS.ConvertPIDs2List(String.Join(",", lis), ",")
+                                .DataSource = Factory.o23DocBL.GetList(mq)
+                                .DataBind()
+                                If .Items.Count > 0 Then
+                                    ri.FindControl("cmdO23_Clear").Visible = True
+                                End If
+                            End With
+                        End If
+
                     End If
                 Next
             End If
 
         End If
 
+        If Me.rpFF.Items.Count > 0 Or rp1.Items.Count > 0 Then
+            Me.panContainer.Visible = True
+        Else
+            Me.panContainer.Visible = False
+        End If
+
     End Sub
+
+    
 
     Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound
         Dim cRec As BO.x20_join_x18 = CType(e.Item.DataItem, BO.x20_join_x18)
         With CType(e.Item.FindControl("x18Name"), Label)
             If cRec.x18Icon = "" Then
                 .Text = "<img src='Images/label.png'/>"
+                If cRec.x18IsManyItems Then .Text = "<img src='Images/notepad.png'/>"
             Else
                 .Text = "<img src='" & cRec.x18Icon & "' alt='Štítek'/>"
             End If
@@ -120,17 +198,43 @@ Public Class freefields
                 .Text += " " & cRec.x20Name & ":"
             End If
         End With
+        e.Item.FindControl("o23IDs_Tag").Visible = False
+        e.Item.FindControl("cmdX18_Items").Visible = False
+        e.Item.FindControl("cmdO23_Create").Visible = False
+        e.Item.FindControl("cmdO23_Find").Visible = False
+        e.Item.FindControl("cmdO23_Clear").Visible = False
+        If cRec.x18IsManyItems Then
+            'dokument
+            With CType(e.Item.FindControl("cmdO23_Create"), HtmlButton)
+                .Visible = True
+                .Attributes.Item("onclick") = "o23_create_x18(" & cRec.x18ID.ToString & ")"
+            End With
+            With CType(e.Item.FindControl("cmdO23_Find"), HtmlButton)
+                .Visible = True
+                .Attributes.Item("onclick") = "o23_find_x18(" & cRec.x18ID.ToString & "," & cRec.x20ID.ToString & ")"
+            End With
+        Else
+            'štítek
+            With CType(e.Item.FindControl("cmdX18_Items"), HtmlButton)
+                .Visible = True
+                .Attributes.Item("onclick") = "x18_items(" & cRec.x18ID.ToString & ")"
+            End With
 
-        Dim lisO23 As IEnumerable(Of BO.o23Doc) = Me.Factory.o23DocBL.GetList(New BO.myQueryO23(cRec.x23ID)).Where(Function(p) p.IsClosed = False)
-        With CType(e.Item.FindControl("o23IDs"), UI.datacombo)
-            If Not cRec.x20IsMultiSelect Then
-                .AllowCheckboxes = False
-                .IsFirstEmptyRow = True
-                If lisO23.Count > 30 Then .Filter = datacombo.FilterMode.Contains
-            End If
-            .DataSource = lisO23
-            .DataBind()
-        End With
+            Dim lisO23 As IEnumerable(Of BO.o23Doc) = Me.Factory.o23DocBL.GetList(New BO.myQueryO23(cRec.x23ID)).Where(Function(p) p.IsClosed = False)
+            With CType(e.Item.FindControl("o23IDs_Tag"), UI.datacombo)
+                .Visible = True
+                If Not cRec.x20IsMultiSelect Then
+                    .AllowCheckboxes = False
+                    .IsFirstEmptyRow = True
+                    If lisO23.Count > 30 Then .Filter = datacombo.FilterMode.Contains
+                End If
+                .DataSource = lisO23
+                .DataBind()
+            End With
+        End If
+        
+
+        
         CType(e.Item.FindControl("x18ID"), HiddenField).Value = cRec.x18ID.ToString
         CType(e.Item.FindControl("x20ID"), HiddenField).Value = cRec.x20ID.ToString
         'CType(e.Item.FindControl("x18IsMultiSelect"), HiddenField).Value = BO.BAS.GB(cRec.x18IsMultiSelect)
@@ -323,12 +427,20 @@ Public Class freefields
         For Each ri As RepeaterItem In rp1.Items
             Dim intX20ID As Integer = CInt(CType(ri.FindControl("x20ID"), HiddenField).Value)
             Dim o23IDs As New List(Of Integer)
-            With CType(ri.FindControl("o23IDs"), UI.datacombo)
-                If .AllowCheckboxes Then
-                    o23IDs = .GetAllCheckedIntegerValues
+            With CType(ri.FindControl("o23IDs_Tag"), UI.datacombo)
+                If ri.FindControl("o23IDs_Tag").Visible Then
+                    If .AllowCheckboxes Then
+                        o23IDs = .GetAllCheckedIntegerValues
+                    Else
+                        If .SelectedValue <> "" Then o23IDs.Add(CInt(.SelectedValue))
+                    End If
                 Else
-                    If .SelectedValue <> "" Then o23IDs.Add(CInt(.SelectedValue))
+                    If CType(ri.FindControl("hidO23IDs_Doc"), HiddenField).Value <> "" Then
+                        Dim pids As List(Of Integer) = BO.BAS.ConvertPIDs2List(CType(ri.FindControl("hidO23IDs_Doc"), HiddenField).Value, ",")
+                        o23IDs.AddRange(pids)
+                    End If
                 End If
+                
             End With
             For Each into23ID As Integer In o23IDs
                 Dim c As New BO.x19EntityCategory_Binding

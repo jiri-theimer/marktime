@@ -7485,7 +7485,6 @@ GO
 CREATE    PROCEDURE [dbo].[p31_aftersave]
 @p31id int
 ,@j03id_sys int
-,@guid varchar(50)			---guid pro vazbu na pøípadné dokumenty k úkonu
 ,@p48id int					---ID operativního plánu
 ,@x45ids varchar(50) OUTPUT	---pøípadné události, které se mají notifikovat (èárkou oddìlené x45id)
 
@@ -7602,17 +7601,6 @@ if @x45ids<>''
  set @x45ids=right(@x45ids,len(@x45ids)-1)
 
 
-if @guid is not null
- begin	---spárování èekajících dokumentù na úkon
-   if exists(select o23ID FROM o23Notepad WHERE o23GUID=@guid AND p31ID IS NULL)
-    UPDATE o23Notepad set p31ID=@p31id,p41ID=null,p28ID=null,j02ID=null,p56ID=null WHERE o23GUID=@guid AND p31ID IS NULL
-
-   declare @o23id_first int
-   select TOP 1 @o23id_first=o23ID FROM o23Notepad WHERE p31ID=@p31id
-
-   if @o23id_first is not null
-    update p31Worksheet SET o23ID_First=@o23id_first WHERE p31ID=@p31id
- end
 
 
 if exists(select m62ID FROM m62ExchangeRate WHERE m62RateType=2)
@@ -7795,20 +7783,20 @@ set @d1=@p31date
 set @d2=@p31date
 
 
-if @record_prefix='x25'	---štítek
+if @record_prefix='o23'	---dokument
  begin
 
   if @b10Worksheet_ProjectFlag=2	---projekt se má naèíst z workflow
-   select @p41id=a.x19RecordPID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE b.x29ID=141 AND a.x25ID=@record_pid
+   select @p41id=a.x19RecordPID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE b.x29ID=141 AND a.o23ID=@record_pid
 
   if @b10Worksheet_PersonFlag=2		---osoba se má naèíst z workflow
-   select @j02id=a.x19RecordPID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE b.x29ID=102 AND a.x25ID=@record_pid
+   select @j02id=a.x19RecordPID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE b.x29ID=102 AND a.o23ID=@record_pid
 
   if @b10Worksheet_PersonFlag=3		---osoba se má naèíst ze zakladatele
-   select @j02id=j02ID_Owner FROM x25EntityField_ComboValue WHERE x25ID=@record_pid
+   select @j02id=j02ID_Owner FROM o23Doc WHERE o23ID=@record_pid
   
   if @b10Worksheet_DateFlag=2	---datum naèíst z workflow
-   select @d1=x25FreeDate01,@d2=x25FreeDate02 FROM x25EntityField_ComboValue WHERE x25ID=@record_pid
+   select @d1=o23FreeDate01,@d2=o23FreeDate02 FROM o23Doc WHERE o23ID=@record_pid
 
  end
 
@@ -7861,7 +7849,7 @@ BEGIN
 	if @p33id=1
 	 update p31Worksheet set p31Hours_Orig=@value,p31Minutes_Orig=@value*60 WHERE p31ID=@p31id_new
 
-	exec dbo.p31_aftersave @p31id_new,@j03id_sys,null,null,null
+	exec dbo.p31_aftersave @p31id_new,@j03id_sys,null,null
 
 	declare @rate float,@vat_rate float
 	select @rate=p31Rate_Billing_Orig,@vat_rate=p31VatRate_Orig from p31Worksheet where p31ID=@p31id_new
@@ -7869,15 +7857,15 @@ BEGIN
 	if isnull(@p72id,0)>0	--automaticky úkon schválit	
 	 exec dbo.p31_save_approving @p31id_new,@j03id_sys,1,@p72id,null,@value,@value,@rate,@rate,@p31text,@vat_rate,@p31date,0,0,null	  
 
-	if @record_prefix='x25'	---štítek
+	if @record_prefix='o23'	---dokument
 	 begin	---vložit odkaz na nový p31 záznam do x19EntityCategory_Binding
      declare @x20id int,@x18id int
 
-	 select @x18id=c.x18ID FROM x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo b ON a.x23ID=b.x23ID INNER JOIN x18EntityCategory c ON b.x23ID=c.x23ID WHERE a.x25ID=@record_pid
+	 select @x18id=c.x18ID FROM o23Doc a INNER JOIN x23EntityField_Combo b ON a.x23ID=b.x23ID INNER JOIN x18EntityCategory c ON b.x23ID=c.x23ID WHERE a.o23ID=@record_pid
 	
 	 select @x20id=x20ID FROM x20EntiyToCategory WHERE x29ID=331 AND x18ID=@x18id
 
-	 insert into x19EntityCategory_Binding(x25ID,x20ID,x19RecordPID,x19UserInsert,x19UserUpdate) values(@record_pid,@x20id,@p31id_new,'workflow','workflow')
+	 insert into x19EntityCategory_Binding(o23ID,x20ID,x19RecordPID,x19UserInsert,x19UserUpdate) values(@record_pid,@x20id,@p31id_new,'workflow','workflow')
      end
 
    end
@@ -10051,9 +10039,9 @@ UPDATE p31Worksheet SET p31Text=@rec2_text,p31Value_Orig=@rec2_hours,p31Hours_Or
 WHERE p31ID=@p31id_new
 
 
-EXEC [dbo].[p31_aftersave] @p31id,@j03id_sys,null,null,null
+EXEC [dbo].[p31_aftersave] @p31id,@j03id_sys,null,null
 
-EXEC [dbo].[p31_aftersave] @p31id_new,@j03id_sys,null,null,null
+EXEC [dbo].[p31_aftersave] @p31id_new,@j03id_sys,null,null
 
 
 

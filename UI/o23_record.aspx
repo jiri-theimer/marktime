@@ -293,6 +293,7 @@
     <asp:HiddenField ID="hidX18ID" runat="server" />
     <asp:HiddenField ID="hidX29ID" runat="server" />
     <asp:HiddenField ID="hidGUID_x19" runat="server" />
+    
 
     <telerik:RadCalendar ID="SharedCalendar" runat="server" EnableMultiSelect="False" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
         <SpecialDays>

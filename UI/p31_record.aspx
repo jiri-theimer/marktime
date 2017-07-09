@@ -293,12 +293,7 @@
             dialog_master(url, is_maximize);
         }
 
-        function o23_create(guid) {
-            dialog_master("o23_record.aspx?masterprefix=p31&masterpid=<%=master.datapid%>&masterguid=" + guid, true);
-        }
-        function o23_record(pid) {
-            dialog_master("o23_record.aspx?masterprefix=p31&pid=" + pid, true);
-        }
+       
         function p49_bind() {
             var p41id = "<%=me.p41ID.value%>";
             var p34id = "<%=Me.p34ID.SelectedValue%>";
@@ -508,7 +503,7 @@
             <asp:DropDownList ID="j02ID_ContactPerson" runat="server" Visible="false" DataValueField="pid" DataTextField="FullNameDescWithEmail"></asp:DropDownList>
         </div>
     </div>
-    <button type="button" id="cmdDoc" runat="server"><img src="Images/notepad.png" /> Nahrát nebo přiřadit dokument</button>
+    
 
     <asp:panel ID="panP49" runat="server" cssclass="content-box1" style="min-width:170px;" Visible="false">
         <div class="title">
@@ -564,7 +559,7 @@
     <asp:HiddenField ID="hidP48ID" runat="server" />
     <asp:HiddenField ID="hidP85ID" runat="server" />
     <asp:HiddenField ID="hidP61ID" runat="server" />
-    <asp:HiddenField ID="hidDocGUID" runat="server" />
+    
     <asp:HiddenField ID="p31_default_HoursEntryFlag" runat="server" />
     <asp:HiddenField ID="hidCurIsScheduler" runat="server" Value="0" />
     <asp:HiddenField ID="hidCurPerson_J02ID" runat="server" />

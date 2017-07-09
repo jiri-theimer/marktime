@@ -26,7 +26,7 @@ Public Class p31WorksheetEntryInput
     Public Property p31Calc_PieceAmount As Double
     Public Property p35ID As Integer
     Public Property p31Code As String
-    Public Property DocGUID As String  'guid zakládaných dokumentů k worksheet záznamu
+
     Public Property p49ID As Integer
     Public Property j19ID As Integer
     Public Property p31ExternalPID As String

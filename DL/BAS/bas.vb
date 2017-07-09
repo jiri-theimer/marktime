@@ -608,7 +608,7 @@
             Case BO.myQueryP28_QuickQuery.WaitingOnInvoice
                 Return "a.p28ID IN (SELECT xb.p28ID_Client FROM p31Worksheet xa INNER JOIN p41Project xb ON xa.p41ID=xb.p41ID WHERE xb.p28ID_Client IS NOT NULL AND xa.p71ID=1 AND xa.p91ID IS NULL)"
             Case BO.myQueryP28_QuickQuery.WIthNotepad
-                Return "a.p28ID IN (SELECT p28ID FROM o23Notepad WHERE p28ID IS NOT NULL AND getdate() BETWEEN o23ValidFrom AND o23ValidUntil)"
+                Return "a.p28ID IN (SELECT xa.x19RecordPID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=328)"
             Case BO.myQueryP28_QuickQuery.OverWorksheetLimit
                 Dim s As String = "a.p28ID IN ("
                 s += "SELECT xb.p28ID_Client"
@@ -694,7 +694,7 @@
             Case BO.myQueryP41_QuickQuery.WithFutureMilestones
                 Return "a.p41ID IN (SELECT p41ID FROM o22Milestone WHERE o22DateUntil>getdate() AND getdate() BETWEEN o22ValidFrom AND o22ValidUntil)"
             Case BO.myQueryP41_QuickQuery.WithNotepad
-                Return "a.p41ID IN (SELECT p41ID FROM o23Notepad WHERE p41ID IS NOT NULL AND getdate() BETWEEN o23ValidFrom AND o23ValidUntil)"
+                Return "a.p41ID IN (SELECT xa.x19RecordPID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=141)"
             Case BO.myQueryP41_QuickQuery.WithRecurrenceWorksheet
                 Return "a.p41ID IN (SELECT p41ID FROM p40WorkSheet_Recurrence WHERE getdate() BETWEEN p40ValidFrom AND p40ValidUntil)"
             Case BO.myQueryP41_QuickQuery.DraftProjects
@@ -807,7 +807,7 @@
             Case BO.myQueryP31_QuickQuery.Is_Corrention
                 Return "a.p72ID_AfterTrimming IS NOT NULL"
             Case BO.myQueryP31_QuickQuery.Is_Document
-                Return "a.p31ID IN (SELECT p31ID FROM o23Notepad WHERE p31ID IS NOT NULL)"
+                Return "a.p31ID IN (SELECT xa.x19RecordPID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=331)"
             Case BO.myQueryP31_QuickQuery.Is_Task
                 Return "a.p56ID IS NOT NULL"
             Case BO.myQueryP31_QuickQuery.Is_Supplier

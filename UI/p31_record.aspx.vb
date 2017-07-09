@@ -95,12 +95,7 @@
             Me.hidP85ID.Value = value.ToString
         End Set
     End Property
-    Public ReadOnly Property DocGUID As String
-        Get
-            If Me.hidDocGUID.Value = "" Then Me.hidDocGUID.Value = BO.BAS.GetGUID()
-            Return Me.hidDocGUID.Value
-        End Get
-    End Property
+    
     Public Property MyDefault_p34ID As Integer
         Get
             Return BO.BAS.IsNullInt(Me.hidDefaultP34ID.Value)
@@ -188,8 +183,7 @@
                     Master.HeaderText = "Zapsat úkon do faktury | " & Master.Factory.GetRecordCaption(BO.x29IdEnum.p91Invoice, Me.CurrentP91ID)
                 End If
             End If
-            cmdDoc.Attributes.Item("onclick") = "o23_create('" & Me.DocGUID & "'," & Master.DataPID.ToString & ")"
-
+            
 
             If Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.PresnyCasOdDo And (Me.TimeFrom.Text <> "" Or Me.TimeUntil.Text <> "") Then
                 panT.Visible = True
@@ -920,7 +914,7 @@
                 Else
                     .j02ID_ContactPerson = 0
                 End If
-                .DocGUID = Me.DocGUID
+
                 If Me.p31Date.IsEmpty Then
                     .p31Date = Today
                 Else
@@ -1082,11 +1076,12 @@
                     Handle_ChangeHoursEntryFlag()
 
                 End If
-            Case "o23-save"
-
-
-            Case "o23-queue"
-                ''RefreshListO23()
+            Case "o23-save", "o23-queue"
+                ff1.RefreshDocListByOneDocument(CInt(Me.HardRefreshPID.Value))
+                Master.Notify("Vazba na dokument se uloží až po stisknutí tlačítka [Uložit změny].")
+            Case "o23-delete"
+                ff1.RefreshDocListComplete()
+            
             Case "p49-bind"
                 Me.p49ID.Value = Me.HardRefreshPID.Value
                 Me.p49_record.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p49FinancialPlan, CInt(Me.p49ID.Value)) & "</br>"

@@ -491,15 +491,6 @@ Partial Public Class p31_record
     Protected WithEvents j02ID_ContactPerson As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''cmdDoc control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdDoc As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
     '''panP49 control.
     '''</summary>
     '''<remarks>
@@ -687,15 +678,6 @@ Partial Public Class p31_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidP61ID As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidDocGUID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidDocGUID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''p31_default_HoursEntryFlag control.
