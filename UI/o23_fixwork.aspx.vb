@@ -139,9 +139,7 @@ Public Class o23_fixwork
 
             .AllowCustomPaging = True
             '.AddCheckboxSelector()
-            If hidB01ID.Value <> "" Or hidx18IsColors.Value = "1" Then
-                .AddSystemColumn(20)
-            End If
+            .AddSystemColumn(20)
 
             .PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
 

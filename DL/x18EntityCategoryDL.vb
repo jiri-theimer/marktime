@@ -62,7 +62,7 @@
             If cRec Is Nothing Then
                 _cDB.RunSQL("DELETE FROM x19EntityCategory_Binding WHERE x20ID=" & c.x20ID.ToString & " AND o23ID=" & c.o23ID.ToString & " AND x19RecordPID=@recordpid", pars)
             End If
-            ''    _cDB.RunSQL("UPDATE x19EntityCategory_Binding set x19UserUpdate=@login,x19DateUpdate=getdate() WHERE x20ID=" & c.x20ID.ToString & " AND o23ID=" & c.o23ID.ToString & " AND x19RecordPID=@recordpid", pars)
+
         Next
         Return True
     End Function
