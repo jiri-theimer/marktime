@@ -618,6 +618,7 @@
             rec1.Visible = False
             Master.Notify("Obsah článku je zašifrovaný.")
         Else
+            rec1.Visible = True
             rec1.FillData(cRec, Master.Factory.x18EntityCategoryBL.LoadByX23ID(cRec.x23ID))
         End If
 
