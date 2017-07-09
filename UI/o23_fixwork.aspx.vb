@@ -478,7 +478,11 @@ Public Class o23_fixwork
                 dataItem.Item("systemcolumn").Style.Item("background-color") = cRec.Item("b02Color")
             End If
         End If
-
+        With dataItem.Item("systemcolumn")
+            If cRec.Item("IsO27") Then
+                dataItem("systemcolumn").Text += "<a href='fileupload_preview.aspx?prefix=o23&pid=" & cRec.Item("pid").ToString & "' target='_blank' title='Dokument má přílohy'><img src='Images/attachment.png'/></a>"
+            End If
+        End With
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
