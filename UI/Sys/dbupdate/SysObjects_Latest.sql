@@ -6548,6 +6548,9 @@ if isnull(@err_ret,'')<>''
 BEGIN TRANSACTION
 
 BEGIN TRY	
+	if exists(select b05ID FROM b05Workflow_History a INNER JOIN b07Comment b ON a.b07ID=b.b07ID WHERE b.x29ID=223 AND b.b07RecordPID=@pid)
+	 DELETE FROM b05Workflow_History WHERE b07ID IN (select b07ID FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid)
+
 	if exists(select b07ID FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid)
 	 DELETE FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid	
 
@@ -12509,8 +12512,8 @@ if exists(select p31ID FROM p31Worksheet WHERE p56ID=@pid AND p71ID=1 AND p91ID 
 end
 
 
-if exists(select o23ID FROM o23Notepad WHERE p56ID=@pid)
- select @o23_count=count(o23ID) FROM o23Notepad WHERE p56ID=@pid AND getdate() between o23ValidFrom AND o23ValidUntil
+if exists(select a.x19ID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE a.x19RecordPID=@pid AND b.x29ID=356)
+ select @o23_count=count(a.x19ID) FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE a.x19RecordPID=@pid AND b.x29ID=356
 else
  set @o23_count=0
 
@@ -15396,8 +15399,8 @@ if exists(select x47ID FROM x47EventLog where x29ID=328 and x45ID=32801 and x47D
 if exists(select x47ID FROM x47EventLog where x29ID=391 and x45ID=39101 and x47Description is null and x47RecordPID NOT IN (SELECT p91ID FROM p91Invoice))
    update x47EventLog set x47Description='deleted' where x29ID=391 and x45ID=39101 and x47RecordPID NOT IN (SELECT p91ID FROM p91Invoice)
 	
-if exists(select x47ID FROM x47EventLog where x29ID=223 and x45ID=22301 and x47Description is null and x47RecordPID NOT IN (SELECT o23ID FROM o23Notepad))
-   update x47EventLog set x47Description='deleted' where x29ID=223 and x45ID=22301 and x47RecordPID NOT IN (SELECT o23ID FROM o23Notepad)
+if exists(select x47ID FROM x47EventLog where x29ID=223 and x45ID=22301 and x47Description is null and x47RecordPID NOT IN (SELECT o23ID FROM o23Doc))
+   update x47EventLog set x47Description='deleted' where x29ID=223 and x45ID=22301 and x47RecordPID NOT IN (SELECT o23ID FROM o23Doc)
 
 if exists(select x47ID FROM x47EventLog where x29ID=356 and x45ID=35601 and x47Description is null and x47RecordPID NOT IN (SELECT p56ID FROM p56Task))
    update x47EventLog set x47Description='deleted' where x29ID=356 and x45ID=35601 and x47RecordPID NOT IN (SELECT p56ID FROM p56Task)

@@ -38,7 +38,7 @@
                         If bolNeedMobileUI Then
                             Response.Redirect("clue_o23_record.aspx?dr=1&pid=" & strPID)
                         Else
-                            Response.Redirect("o23_framework.aspx?pid=" & strPID)
+                            Response.Redirect("o23_fixwork.aspx?pid=" & strPID)
                         End If
                     Case "x31"
                         Dim c As BO.x31Report = Master.Factory.x31ReportBL.Load(CInt(strPID))

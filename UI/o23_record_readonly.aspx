@@ -15,7 +15,7 @@
         <uc:o23_record_readonly ID="rec1" runat="server" />
     </div>
     <div class="div6">
-        <uc:entityrole_assign_inline ID="roles1" runat="server" EntityX29ID="x25EntityField_ComboValue" NoDataText=""></uc:entityrole_assign_inline>
+        <uc:entityrole_assign_inline ID="roles1" runat="server" EntityX29ID="o23Doc" NoDataText=""></uc:entityrole_assign_inline>
     </div>
 
     <div style="clear: both;"></div>

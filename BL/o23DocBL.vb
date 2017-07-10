@@ -207,6 +207,22 @@ Class o23DocBL
         cD.UploadAndComment = cDX18.ReadAndUploadAndComment
         cD.ReadAccess = cDX18.ReadItems
 
+        If cRec.j02ID_Owner = Factory.SysUser.j02ID Then
+            'vlasník záznamu má plná práva, pokud to není ve workflow zakázáno
+            Dim bolTested As Boolean = False
+            If cRec.b02ID <> 0 Then
+                Dim cB02 As BO.b02WorkflowStatus = Factory.b02WorkflowStatusBL.Load(cRec.b02ID)
+                If cB02.b02IsRecordReadOnly4Owner Then  'aktuální workflow status má nastaveno, že vlastník záznam má pouze readonly přístup
+                    cD.ReadAccess = True
+                    bolTested = True
+                End If
+            End If
+            If Not bolTested Then
+                cD.ReadAccess = True : cD.OwnerAccess = True : cD.UploadAndComment = True : cD.LockUnlockFiles_Flag1 = True 'vlastník má plná práva
+            End If
+
+        End If
+
 
         If cD.OwnerAccess Then
             cD.LockUnlockFiles_Flag1 = True

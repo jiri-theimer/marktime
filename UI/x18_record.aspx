@@ -68,7 +68,7 @@
             <div class="content-box2" style="margin-top: 20px;">
                 <div class="title">
                     Vazba dokumentu na entity
-                    <asp:DropDownList ID="x29ID_addX20" runat="server" AutoPostBack="true">
+                    <asp:DropDownList ID="x29ID_addX20" runat="server" AutoPostBack="false">
                         <asp:ListItem Text="--Vyberte entitu--" Value=""></asp:ListItem>
                         <asp:ListItem Text="Projekt" Value="141"></asp:ListItem>
                         <asp:ListItem Text="Klient" Value="328"></asp:ListItem>
@@ -81,7 +81,7 @@
                         <asp:ListItem Text="Worksheet úkon" Value="331"></asp:ListItem>
                         <asp:ListItem Text="Jiný dokument" Value="223"></asp:ListItem>
                     </asp:DropDownList>
-                    <asp:DropDownList ID="x20EntityTypePID_addX20" runat="server"></asp:DropDownList>
+                    
                     <asp:Button ID="cmdAddX20" runat="server" CssClass="cmd" Text="Vložit vybranou vazbu" />
                 </div>
                 <div class="content">
@@ -89,7 +89,7 @@
 
                         <asp:Repeater ID="rpX20" runat="server">
                             <ItemTemplate>
-                                <tr class="trHover">
+                                <tr class="trHover" valign="top">
                                     <td>
                                         <div>
                                             <span>Vazba na entitu:</span>
@@ -97,6 +97,7 @@
                                         <div>
                                             <span>Název vazby (nepovinné):</span>
                                         </div>
+                                        
                                     </td>
                                     <td>
                                         <div>
@@ -112,13 +113,16 @@
                                                 <asp:ListItem Text="Worksheet úkon" Value="331"></asp:ListItem>
                                                 <asp:ListItem Text="Jiný dokument" Value="223"></asp:ListItem>
                                             </asp:DropDownList>
-                                            <asp:Label ID="x20EntityTypePID_Alias" runat="server" ForeColor="Green"></asp:Label>
+                                            
                                         </div>
                                         <div>
                                             <asp:TextBox ID="x20Name" runat="server" Width="200px"></asp:TextBox>
-                                            <asp:HiddenField ID="x20EntityTypePID" runat="server" />
+                                            
                                             <asp:HiddenField ID="x29ID_EntityType" runat="server" />
 
+                                        </div>
+                                        <div>
+                                            <asp:DropDownList ID="x20EntityTypePID" runat="server"></asp:DropDownList>
                                         </div>
 
                                     </td>
@@ -531,7 +535,7 @@
     <asp:HiddenField ID="hidGUID_x20" runat="server" />
     <asp:HiddenField ID="HardRefreshPID" runat="server" />
     <asp:Button ID="cmdHardRefresh" runat="server" Style="display: none;" />
-    <asp:HiddenField ID="hidx29ID_EntityType" runat="server" />
+    
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

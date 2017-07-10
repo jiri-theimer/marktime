@@ -612,10 +612,11 @@
     End Sub
 
     Private Sub Handle_FF()
+
         Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p31Worksheet, Master.DataPID, BO.BAS.IsNullInt(Me.p34ID.SelectedValue))
         Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(BO.x29IdEnum.p31Worksheet, BO.BAS.IsNullInt(Me.p34ID.SelectedValue))
         ff1.FillData(fields, lisX20X18, "p31Worksheet_FreeField", Master.DataPID)
-        
+
     End Sub
 
     Private Sub Handle_ChangeP41(bolTryRun_Handle_P34 As Boolean)

@@ -559,12 +559,12 @@ Public Class entity_menu
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
             ami("WORKSHEET statistika klienta", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
-        ''If cDisp.OwnerAccess And Not cRec.IsClosed Then
-        ''    ami("Přiřadit ke klientovi kontaktní osoby", "cmdP30", "javascript:p30_record(0);", "Images/person.png", mi, , True)
-        ''End If
-        If Me.Factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator) Then
+       
+       
+        If Me.Factory.SysUser.j04IsMenu_Notepad Then
             ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi, , True)
         End If
+
 
         If Not cRec.IsClosed Then ami("Vytvořit událost v kalendáři", "cmdO22", "javascript:menu_o22_record(0);", "Images/calendar.png", mi, , True)
         ami("Kalendář klienta", "cmdScheduler", "javascript:scheduler()", "Images/calendar.png", mi)
@@ -632,7 +632,7 @@ Public Class entity_menu
                 ami("WORKSHEET statistika osoby", "cmdPivot", "p31_sumgrid.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
             End If
 
-            If Me.Factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator) Then
+            If Me.Factory.SysUser.j04IsMenu_Notepad Then
                 ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi, , True)
             End If
             If Not cRec.IsClosed Then ami("Vytvořit událost v kalendáři", "cmdO22", "javascript:menu_o22_record(0);", "Images/calendar.png", mi, , True)

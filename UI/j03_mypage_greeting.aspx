@@ -59,7 +59,7 @@
                 location.replace("p56_framework.aspx?pid=" + pid);
 
         }
-        function o23_create(x18id) {
+        function o23_create_dashboard(x18id) {
 
             sw_master("o23_record.aspx?pid=0&x18id=" + x18id, "Images/label.png")
         }

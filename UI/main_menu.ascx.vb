@@ -84,7 +84,7 @@ Public Class main_menu
                 If factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then ai(Resources.common.Projekt, "new_p41", "javascript:p41_create()", "", n) : b = True
             End If
             
-            If factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator) Then
+            If factory.SysUser.j04IsMenu_Notepad Then
                 ai(Resources.common.Dokument, "new_o23", "javascript:o23_create()", "", n) : b = True
             End If
             ai(Resources.common.Ukol, "new_p56", "javascript:p56_create()", "", n)

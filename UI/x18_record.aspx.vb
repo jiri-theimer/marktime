@@ -142,6 +142,8 @@
                 .p85OtherKey2 = CInt(c.x20EntryModeFlag)
                 .p85OtherKey3 = CInt(c.x20GridColumnFlag)
                 .p85OtherKey6 = CInt(c.x20EntityPageFlag)
+                .p85OtherKey7 = c.x20EntityTypePID
+                .p85OtherKey8 = c.x29ID_EntityType
                 .p85FreeBoolean01 = c.x20IsEntryRequired
                 .p85FreeBoolean02 = c.x20IsMultiSelect
                 .p85FreeBoolean03 = c.x20IsClosed
@@ -301,11 +303,7 @@
         Me.lblx18CalendarFieldSubject.Visible = Me.x18IsCalendar.Checked
         Me.x18CalendarResourceField.Visible = Me.x18IsCalendar.Checked
         Me.lblx18CalendarResourceField.Visible = Me.x18IsCalendar.Checked
-        If Me.x29ID_addX20.SelectedValue = "" Then
-            Me.x20EntityTypePID_addX20.Visible = False
-        Else
-            Me.x20EntityTypePID_addX20.Visible = True
-        End If
+       
         If Me.x18UploadFlag.SelectedValue = "1" Then
             Me.panFileSystem.Visible = True
         Else
@@ -483,11 +481,13 @@
             CType(e.Item.FindControl("x20IsClosed"), CheckBox).Checked = .p85FreeBoolean03
             CType(e.Item.FindControl("x20Ordinary"), Telerik.Web.UI.RadNumericTextBox).Value = .p85FreeNumber01
 
-            CType(e.Item.FindControl("x20EntityTypePID"), HiddenField).Value = .p85OtherKey7.ToString
-            CType(e.Item.FindControl("x29ID_EntityType"), HiddenField).Value = .p85OtherKey8.ToString
-            If .p85OtherKey7 <> 0 And .p85OtherKey8 <> 0 Then
-                CType(e.Item.FindControl("x20EntityTypePID_Alias"), Label).Text = "<img src='Images/query.png'/>" & Master.Factory.GetRecordCaption(.p85OtherKey8, .p85OtherKey7)
+
+            Dim cbxEntityType As DropDownList = CType(e.Item.FindControl("x20EntityTypePID"), DropDownList)
+            If cbxEntityType.Items.Count = 0 Then
+                FillComboEntityType(cbxEntityType, .p85OtherKey1, CType(e.Item.FindControl("x29ID_EntityType"), HiddenField))
             End If
+            basUI.SelectDropdownlistValue(cbxEntityType, .p85OtherKey7.ToString)
+
 
             Dim cbx1 As DropDownList = CType(e.Item.FindControl("x20EntryModeFlag"), DropDownList), cbx2 As DropDownList = CType(e.Item.FindControl("x20GridColumnFlag"), DropDownList)
             Dim cbx3 As DropDownList = CType(e.Item.FindControl("x20EntityPageFlag"), DropDownList)
@@ -540,8 +540,8 @@
                     cbx2.Items.FindByValue("3").Enabled = False
             End Select
 
-            CType(e.Item.FindControl("x20EntityTypePID"), HiddenField).Value = .p85OtherKey4.ToString
-            CType(e.Item.FindControl("x29ID_EntityType"), HiddenField).Value = .p85OtherKey5.ToString
+
+            'CType(e.Item.FindControl("x29ID_EntityType"), HiddenField).Value = .p85OtherKey5.ToString
         End With
        
         ''With CType(e.Item.FindControl("chkEntityType"), CheckBox)
@@ -567,6 +567,12 @@
                 .p85OtherKey2 = CInt(CType(ri.FindControl("x20EntryModeFlag"), DropDownList).SelectedValue)
                 .p85OtherKey3 = CInt(CType(ri.FindControl("x20GridColumnFlag"), DropDownList).SelectedValue)
                 .p85OtherKey6 = CInt(CType(ri.FindControl("x20EntityPageFlag"), DropDownList).SelectedValue)
+                .p85OtherKey7 = BO.BAS.IsNullInt(CType(ri.FindControl("x20EntityTypePID"), DropDownList).SelectedValue)
+                If .p85OtherKey7 <> 0 Then
+                    .p85OtherKey8 = BO.BAS.IsNullInt(CType(ri.FindControl("x29ID_EntityType"), HiddenField).Value)
+                Else
+                    .p85OtherKey8 = 0
+                End If
                 .p85FreeBoolean01 = CType(ri.FindControl("x20IsEntryRequired"), CheckBox).Checked
                 .p85FreeBoolean02 = CType(ri.FindControl("x20IsMultiselect"), CheckBox).Checked
                 .p85FreeBoolean03 = CType(ri.FindControl("x20IsClosed"), CheckBox).Checked
@@ -586,73 +592,69 @@
         cRec.p85GUID = hidGUID_x20.Value
         cRec.p85Prefix = "x20"
         cRec.p85OtherKey1 = Me.x29ID_addX20.SelectedValue
-        cRec.p85OtherKey7 = BO.BAS.IsNullInt(Me.x20EntityTypePID_addX20.SelectedValue)
-        cRec.p85OtherKey8 = BO.BAS.IsNullInt(Me.hidx29ID_EntityType.Value)
+        ''cRec.p85OtherKey7 = BO.BAS.IsNullInt(Me.x20EntityTypePID_addX20.SelectedValue)
+
         Master.Factory.p85TempBoxBL.Save(cRec)
 
         RefreshTempX20()
         x29ID_addX20.SelectedIndex = 0
     End Sub
 
-    Private Sub x29ID_addX20_SelectedIndexChanged(sender As Object, e As EventArgs) Handles x29ID_addX20.SelectedIndexChanged
-        If Me.x29ID_addX20.SelectedValue = "" Then
-            Me.x20EntityTypePID_addX20.DataSource = Nothing
-            Me.x20EntityTypePID_addX20.DataBind()
+    Private Sub FillComboEntityType(cbx As DropDownList, intX29ID As Integer, ctlX29 As HiddenField)
+        If intX29ID = 0 Then
+            cbx.DataSource = Nothing
+            cbx.DataBind()
             Return
         End If
         Dim mq As New BO.myQuery, lis As New List(Of ListItem)
         mq.Closed = BO.BooleanQueryMode.NoQuery
 
-        Select Case CType(Me.x29ID_addX20.SelectedValue, BO.x29IdEnum)
+        Select Case CType(intX29ID, BO.x29IdEnum)
             Case BO.x29IdEnum.p28Contact
                 For Each c In Master.Factory.p29ContactTypeBL.GetList(mq)
                     lis.Add(New ListItem(c.p29Name, c.PID.ToString))
                 Next
-                hidx29ID_EntityType.Value = "329"
+                ctlX29.Value = "329"
             Case BO.x29IdEnum.p41Project
                 For Each c In Master.Factory.p42ProjectTypeBL.GetList(mq)
                     lis.Add(New ListItem(c.p42Name, c.PID.ToString))
                 Next
-                hidx29ID_EntityType.Value = "342"
+                ctlX29.Value = "342"
             Case BO.x29IdEnum.j02Person
                 For Each c In Master.Factory.j07PersonPositionBL.GetList(mq)
                     lis.Add(New ListItem(c.j07Name, c.PID.ToString))
                 Next
-                hidx29ID_EntityType.Value = "107"
+                ctlX29.Value = "107"
             Case BO.x29IdEnum.o23Doc
                 For Each c In Master.Factory.x18EntityCategoryBL.GetList(mq)
                     lis.Add(New ListItem(c.x18Name, c.PID.ToString))
                 Next
-                hidx29ID_EntityType.Value = "224"
+                ctlX29.Value = "918"
             Case BO.x29IdEnum.p91Invoice
                 For Each c In Master.Factory.p92InvoiceTypeBL.GetList(mq)
                     lis.Add(New ListItem(c.p92Name, c.PID.ToString))
                 Next
-                hidx29ID_EntityType.Value = "392"
+                ctlX29.Value = "392"
             Case BO.x29IdEnum.p31Worksheet
                 For Each c In Master.Factory.p34ActivityGroupBL.GetList(mq)
                     lis.Add(New ListItem(c.p34Name, c.PID.ToString))
                 Next
-                hidx29ID_EntityType.Value = "334"
+                ctlX29.Value = "334"
             Case BO.x29IdEnum.p56Task
                 For Each c In Master.Factory.p57TaskTypeBL.GetList(mq)
                     lis.Add(New ListItem(c.p57Name, c.PID.ToString))
                 Next
-                hidx29ID_EntityType.Value = "357"
+                ctlX29.Value = "357"
             Case BO.x29IdEnum.o22Milestone
                 For Each c In Master.Factory.o21MilestoneTypeBL.GetList(mq)
                     lis.Add(New ListItem(c.o21Name, c.PID.ToString))
                 Next
-                hidx29ID_EntityType.Value = "221"
-            Case BO.x29IdEnum.o23Doc
-                For Each c In Master.Factory.x18EntityCategoryBL.GetList(mq).Where(Function(p) p.PID <> Master.DataPID)
-                    lis.Add(New ListItem(c.x18Name, c.PID.ToString))
-                Next
-                hidx29ID_EntityType.Value = "223"
+                ctlX29.Value = "221"
+            
             Case Else
         End Select
 
-        With Me.x20EntityTypePID_addX20
+        With cbx
             .Items.Clear()
             .Items.Add(New ListItem("--Omezit na typ--", ""))
             For Each c In lis

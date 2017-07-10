@@ -50,7 +50,7 @@ Public Class x18_framework
             .AddSystemColumn(20)
             .AddColumn("x18Name", "Název")
          
-            .AddColumn("TagOrDoc", "Typ", BO.cfENUM.AnyString)
+            .AddColumn("TagOrDoc", "Dokument/Štítek", BO.cfENUM.AnyString)
             .AddColumn("Is_p41", "Projekty", BO.cfENUM.Checkbox)
             .AddColumn("Is_p28", "Klienti", BO.cfENUM.Checkbox)
             .AddColumn("Is_p56", "Úkoly", BO.cfENUM.Checkbox)

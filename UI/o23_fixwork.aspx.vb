@@ -160,6 +160,7 @@ Public Class o23_fixwork
             If hidB01ID.Value <> "" Then
                 .AddColumn("b02Name", "Stav", BO.cfENUM.AnyString, True, , "b02Name", , False, True)
                 .AddColumn("Receiver", "Řeší", BO.cfENUM.AnyString, True, True, "dbo.o23_getroles_inline(a.o23ID)")
+                lisSqlSEL.Add("b02.b02Name")
                 lisSqlSEL.Add("dbo.o23_getroles_inline(a.o23ID) as Receiver")
             End If
             Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Master.Factory.x18EntityCategoryBL.GetList_x16(Me.CurrentX18ID).Where(Function(p) p.x16IsGridField = True)

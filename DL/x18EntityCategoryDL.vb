@@ -293,10 +293,11 @@
     End Function
     Public Function GetList_x20_join_x18(x29ID As BO.x29IdEnum, Optional intEntityType As Integer = 0) As IEnumerable(Of BO.x20_join_x18)
         Dim s As String = "SELECT a.*," & bas.RecTail("x18", "a") & ",x20.* FROM x18EntityCategory a INNER JOIN x20EntiyToCategory x20 ON a.x18ID=x20.x18ID"
-        s += " WHERE x20.x29ID=" & CInt(x29ID).ToString
+        s += " WHERE getdate() BETWEEN a.x18ValidFrom AND a.x18ValidUntil AND x20.x29ID=" & CInt(x29ID).ToString
         If intEntityType > 0 Then
             s += " AND ((x20.x20EntityTypePID=" & intEntityType.ToString & " AND x20.x29ID_EntityType=" & GetEntityTypeX29ID(x29ID).ToString & ") OR x20.x20EntityTypePID IS NULL)"
-
+        Else
+            s += " AND (x20.x20EntityTypePID IS NULL)"
         End If
         s += " ORDER BY a.x18Ordinary,a.x18Name"
 

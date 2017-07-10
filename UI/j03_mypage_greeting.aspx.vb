@@ -584,7 +584,7 @@
             With CType(e.Item.FindControl("cmdNew"), HtmlButton)
                 .Visible = True
                 .InnerHtml = "<img src='Images/new.png' />Nový"
-                .Attributes.Item("onclick") = "o23_create(" & cRec.PID.ToString & ")"
+                .Attributes.Item("onclick") = "o23_create_dashboard(" & cRec.PID.ToString & ")"
             End With
         End If
         If (cRec.x18DashboardFlag = BO.x18DashboardENUM.CreateLinkAndGrid Or cRec.x18DashboardFlag = BO.x18DashboardENUM.LinkOnly Or cRec.x18DashboardFlag = BO.x18DashboardENUM.ShowItemsLikeNoticeboard) And Right(cRec.x18ReportCodes, 1) = "1" Then

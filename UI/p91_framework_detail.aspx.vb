@@ -312,7 +312,7 @@ Public Class p91_framework_detail
 
         With Master.Factory
             FNO("cmdCreateInvoice").Visible = .TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)
-            FNO("cmdO23").Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator)
+            FNO("cmdO23").Visible = .SysUser.j04IsMenu_Notepad
             FNO("cmdO22").Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator)
             FNO("cmdPivot").Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
             FNO("cmdPivot").NavigateUrl = "p31_sumgrid.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString
