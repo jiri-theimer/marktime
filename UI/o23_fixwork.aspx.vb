@@ -164,29 +164,33 @@ Public Class o23_fixwork
                 lisSqlSEL.Add("dbo.o23_getroles_inline(a.o23ID) as Receiver")
             End If
             Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Master.Factory.x18EntityCategoryBL.GetList_x16(Me.CurrentX18ID).Where(Function(p) p.x16IsGridField = True)
-            If lisX16.Count = 0 Then
-                .AddColumn("o23Name", "Název", BO.cfENUM.AnyString, True, , "o23Name", , False, True)
-                .AddColumn("o23Code", "Kód", BO.cfENUM.AnyString, True, , "o23Code", , False, True)
-                .AddColumn("o23Ordinary", "#", BO.cfENUM.Numeric0, True, , "o23Ordinary", , False, False)
-            Else
-                If hidx18GridColsFlag.Value = "1" Or hidx18GridColsFlag.Value = "3" Then
-                    .AddColumn("o23Name", "Název", BO.cfENUM.AnyString, True, , "o23Name", , False, True)
-                End If
-                If hidx18GridColsFlag.Value = "1" Or hidx18GridColsFlag.Value = "2" Then
-                    .AddColumn("o23Code", "Kód", BO.cfENUM.AnyString, True, , "o23Code", , False, True)
-                End If
-                For Each c In lisX16
-                    Dim strH As String = c.x16NameGrid
-                    If strH = "" Then strH = c.x16Name
-                    .AddColumn(c.x16Field, strH, c.GridColumnType, True, , c.x16Field, , False, True)
-                    lisSqlSEL.Add(c.x16Field)
+            ''If lisX16.Count = 0 Then
+            ''    .AddColumn("o23Name", "Název", BO.cfENUM.AnyString, True, , "o23Name", , False, True)
+            ''    .AddColumn("o23Code", "Kód", BO.cfENUM.AnyString, True, , "o23Code", , False, True)
+            ''    .AddColumn("o23Ordinary", "#", BO.cfENUM.Numeric0, True, , "o23Ordinary", , False, False)
+            ''Else
 
-                    If c.FieldType = BO.x24IdENUM.tDate Or c.FieldType = BO.x24IdENUM.tDateTime Then
-                        Me.cbxPeriodType.Items.Add(New ListItem(c.x16Name, c.x16Field))
-                    End If
-                Next
+            ''End If
+            If hidx18GridColsFlag.Value = "1" Or hidx18GridColsFlag.Value = "3" Then
+                .AddColumn("o23Name", "Název", BO.cfENUM.AnyString, True, , "o23Name", , False, True)
+            End If
+            If hidx18GridColsFlag.Value = "1" Or hidx18GridColsFlag.Value = "2" Then
+                .AddColumn("o23Code", "Kód", BO.cfENUM.AnyString, True, , "o23Code", , False, True)
+            End If
+            If hidx18EntryOrdinaryFlag.Value = "1" Then
+                .AddColumn("o23Ordinary", "#", BO.cfENUM.Numeric0, True, , "o23Ordinary", , False, False)
             End If
 
+            For Each c In lisX16
+                Dim strH As String = c.x16NameGrid
+                If strH = "" Then strH = c.x16Name
+                .AddColumn(c.x16Field, strH, c.GridColumnType, True, , c.x16Field, , False, True)
+                lisSqlSEL.Add(c.x16Field)
+
+                If c.FieldType = BO.x24IdENUM.tDate Or c.FieldType = BO.x24IdENUM.tDateTime Then
+                    Me.cbxPeriodType.Items.Add(New ListItem(c.x16Name, c.x16Field))
+                End If
+            Next
 
             .SetFilterSetting(strFilterSetting, strFilterExpression)
         End With
@@ -360,6 +364,8 @@ Public Class o23_fixwork
         hidX23ID.Value = c.x23ID.ToString
         hidx18GridColsFlag.Value = CInt(c.x18GridColsFlag).ToString
         hidx18IsColors.Value = BO.BAS.GB(c.x18IsColors)
+        hidx18EntryOrdinaryFlag.Value = CInt(c.x18EntryOrdinaryFlag).ToString
+
         If c.b01ID <> 0 Then
             hidB01ID.Value = c.b01ID.ToString
             ''menu1.FindItemByValue("cmdWorkflow").Text = "Posunout stav/doplnit"

@@ -313,7 +313,8 @@ Public Class o23_record
 
         Dim cTemp As BO.p85TempBox = Master.Factory.p85TempBoxBL.LoadByGUID(Master.Factory.SysUser.j02ID.ToString & "-" & Master.DataPID.ToString)
         If cTemp Is Nothing Then
-            Master.StopPage("Nezdařilo se ověření zašifrovaného obsahu.")
+            Dim s As String = "<hr><a href='o23_fixwork.aspx?pid=" & _curRec.PID.ToString & "&x18id=" & _curRec.x18ID.ToString & "' target='_top'>Stránka dokumentu s možností zadat heslo k zašifrovanému obsahu</a>"
+            Master.StopPage("Nezdařilo se ověření zašifrovaného obsahu." & s)
         Else
             Master.Factory.o23DocBL.DecryptRecord(_curRec)
         End If

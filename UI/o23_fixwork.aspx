@@ -384,6 +384,7 @@
             <asp:HiddenField ID="hidContentPaneDefUrl" runat="server" />
             <asp:HiddenField ID="hidContentPaneWidth" runat="server" />
             <asp:HiddenField ID="hidx18GridColsFlag" runat="server" Value="1" />
+            <asp:HiddenField ID="hidx18EntryOrdinaryFlag" runat="server" />
             <asp:HiddenField ID="hidB01ID" runat="server" />
             <asp:HiddenField ID="hidx18IsColors" runat="server" Value="0" />
             <asp:HiddenField ID="hidCols" runat="server" />

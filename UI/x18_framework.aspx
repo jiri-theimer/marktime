@@ -73,7 +73,7 @@
             }
 
             if (flag == "x18-save") {
-                location.replace("x25_framework.aspx?x18id=" + pid);
+                location.replace("o23_fixwork.aspx?x18id=" + pid);
                 return;
             }
                 

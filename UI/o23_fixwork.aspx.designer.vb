@@ -329,6 +329,15 @@ Partial Public Class o23_fixwork
     Protected WithEvents hidx18GridColsFlag As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidx18EntryOrdinaryFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidx18EntryOrdinaryFlag As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''hidB01ID control.
     '''</summary>
     '''<remarks>
