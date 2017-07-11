@@ -348,6 +348,9 @@
             If Not .p91IDs Is Nothing Then
                 s.Append(" AND a.p91ID IN (" & String.Join(",", .p91IDs) & ")")
             End If
+            If .o23ID <> 0 Then
+                pars.Add("o23id", .o23ID, DbType.Int32) : s.Append(" AND a.p31ID IN (select za.x19RecordPID FROM x19EntityCategory_Binding za INNER JOIN x20EntiyToCategory zb ON za.x20ID=zb.x20ID WHERE zb.x29ID=331 AND za.o23ID=@o23id)")
+            End If
             If Not .p70ID Is Nothing Then
                 If .p70ID > 0 Then
                     pars.Add("p70id", .p70ID, DbType.Int32) : s.Append(" AND a.p70ID=@p70id")

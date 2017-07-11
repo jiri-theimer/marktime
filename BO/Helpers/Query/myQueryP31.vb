@@ -57,6 +57,7 @@ Public Class myQueryP31
     Public Property p72ID As p72IdENUM?
 
     Public Property p49ID As Integer
+    Public Property o23ID As Integer
 
     Public Property Billable As BooleanQueryMode = BooleanQueryMode.NoQuery
 

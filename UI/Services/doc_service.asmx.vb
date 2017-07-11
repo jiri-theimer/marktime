@@ -52,7 +52,7 @@ Public Class notepad_service
         
 
 
-        Dim lis As IEnumerable(Of BO.o23Doc) = factory.o23DocBL.GetDataTable4Grid(mq)
+        Dim lis As IEnumerable(Of BO.o23Doc) = factory.o23DocBL.GetList(mq)
         result = New List(Of RadComboBoxItemData)(lis.Count)
         Dim itemData As New RadComboBoxItemData()
         itemData.Enabled = False

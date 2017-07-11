@@ -173,6 +173,7 @@ Public Class main_menu
         mq.MG_GridSqlColumns = "a.x29ID,j62Name,a.j62Name_ENG,a.j62ParentID,a.j74ID,a.j70ID,a.j62Url,a.j62Target,a.j62ImageUrl,a.j62Tag,a.j62TreeLevel as _j62TreeLevel"    'kvůli co nejvyšší rychlosti
         Dim lisJ62 As IEnumerable(Of BO.j62MenuHome) = factory.j62MenuHomeBL.GetList(factory.SysUser.j60ID, mq)
         Dim ns As New Dictionary(Of Integer, NavigationNode), bolGO As Boolean = False
+        Dim nSeps As New List(Of NavigationNode)
 
         For Each c In lisJ62
             bolGO = True
@@ -213,7 +214,6 @@ Public Class main_menu
 
             If c.j62IsSeparator Then
                 n.NavigateUrl = ""
-                
                 n.Enabled = False
             Else
                 n.NavigateUrl = c.j62Url
@@ -228,7 +228,7 @@ Public Class main_menu
                 n.Target = c.j62Target
             End If
 
-
+            If n.NavigateUrl = "" Then nSeps.Add(n)
 
             Dim nParent As NavigationNode = Nothing
             If c.j62ParentID > 0 Then
@@ -242,20 +242,17 @@ Public Class main_menu
             Else
                 With nParent
                     .Nodes.Add(n)
-                    ''If .Level = 0 Then
-                    ''    .ImageUrl = "~/Images/menuarrow.png"
-                    ''    If menu1.ClickToOpen Then .NavigateUrl = ""
-                    ''    If .Items.Count > 8 Then
-                    ''        .GroupSettings.RepeatColumns = 2
-                    ''        .GroupSettings.RepeatDirection = MenuRepeatDirection.Vertical
-                    ''    End If
-                    ''End If
                 End With
 
             End If
             ns.Add(c.PID, n)
         Next
-
+        For Each n In nSeps
+            If n.Nodes.Count = 0 Then
+                menu1.FindNodeByText(n.Text).Visible = False
+                menu1.FindNodeByText(n.Text).Text = "hovado"
+            End If
+        Next
     End Sub
 
     ''Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender

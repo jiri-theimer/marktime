@@ -18,7 +18,7 @@ Public Class x18_framework
                         hidSource.Value = "admin"
                     End If
                 End If
-                
+                .neededPermission = BO.x53PermValEnum.GR_X18_Admin
 
                 Dim lisPars As New List(Of String)
                 With lisPars

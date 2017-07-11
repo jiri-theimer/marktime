@@ -87,6 +87,10 @@
         </ItemTemplate>
     </asp:Repeater>
 </table>
+<asp:Panel ID="panWorksheetGrid" runat="server" CssClass="div6" Visible="false">
+    <img src="Images/worksheet.png" />
+    <a href="p31_grid.aspx?masterprefix=o23&masterpid=<%=hidPID.Value%>" target="_top">Přehled worksheet úkonů svázaných s dokumentem</a>
+</asp:Panel>
 
 <div class="div6">
     <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>

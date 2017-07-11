@@ -176,6 +176,7 @@
                     strClue = "clue_p91_record.aspx?pid=" & cRec.x19RecordPID.ToString
                 Case 331
                     .Text = "<img src='Images/worksheet.png'/> "
+                    panWorksheetGrid.Visible = True
                 Case 223
                     .Text = "<img src='Images/notepad.png'/> "
                     strClue = "clue_o23_record.aspx?pid=" & cRec.x19RecordPID.ToString
@@ -204,6 +205,7 @@
                     .Text = "<a href='p91_framework.aspx?pid=" & cRec.x19RecordPID.ToString & "' target='_top'>" & cRec.RecordAlias & "</a>"
                 Case 223 And Factory.SysUser.j04IsMenu_Notepad
                     .Text = "<a href='o23_framework.aspx?pid=" & cRec.x19RecordPID.ToString & "' target='_top'>" & cRec.RecordAlias & "</a>"
+                
             End Select
             If .Text = "" Then .Text = cRec.RecordAlias
         End With

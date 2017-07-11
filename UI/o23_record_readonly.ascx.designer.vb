@@ -95,6 +95,15 @@ Partial Public Class o23_record_readonly
     Protected WithEvents rpX19 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
+    '''panWorksheetGrid control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panWorksheetGrid As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''Timestamp control.
     '''</summary>
     '''<remarks>

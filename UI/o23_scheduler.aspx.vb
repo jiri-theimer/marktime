@@ -43,7 +43,8 @@ Public Class o23_scheduler
                     strX18ID = Me.x18ID.SelectedValue
                     Handle_ChangeX18ID()
                 Else
-                    strX18ID = ""
+                    .StopPage("Zatím nebyl nastaven typ dokumentu s podporou kalendářového rozhraní.", False)
+                    Return
                 End If
 
                 Dim lisPars As New List(Of String)

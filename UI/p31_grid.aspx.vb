@@ -128,6 +128,9 @@ Public Class p31_grid
                     Case "j02" : imgEntity.ImageUrl = "Images/person.png"
                     Case "p28" : imgEntity.ImageUrl = "Images/contact.png"
                     Case "p91" : imgEntity.ImageUrl = "Images/invoice.png"
+                    Case "o23"
+                        imgEntity.ImageUrl = "Images/notepad.png"
+                        Me.MasterRecord.NavigateUrl = "o23_fixwork.aspx?pid=" & hidMasterPID.Value
                 End Select
             Else
                 panAdditionalQuery.Visible = False
@@ -349,6 +352,8 @@ Public Class p31_grid
                     .p56IDs.Add(Me.CurrentMasterPID)
                 Case "p91"
                     .p91ID = Me.CurrentMasterPID
+                Case "o23"
+                    .o23ID = Me.CurrentMasterPID
                 Case Else
 
             End Select

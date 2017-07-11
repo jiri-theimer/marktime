@@ -970,9 +970,7 @@ if @prefix='p56'
  if @prefix='p45'
   select @ret=p45Name+' | '+isnull(b.p41NameShort,b.p41Name) from p45Budget a inner join p41Project b on a.p41ID=b.p41id where a.p45ID=@pid 
 
-if @prefix='x25'
- select @ret=isnull(x25Name+' ('+x25Code+')',x25Name) FROM x25EntityField_ComboValue where x25ID=@pid
-  
+
 
 if @prefix='c21'
   select @ret=c21Name FROM c21FondCalendar WHERE c21ID=@pid
@@ -1798,7 +1796,7 @@ CREATE    FUNCTION [dbo].[o23_getroles_inline](@o23id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené obsazení  rolí v položce štítku @x25id
+  ---vrací èárkou oddìlené obsazení  rolí v položce štítku @o23id
 
  DECLARE @s nvarchar(2000),@count int
 
@@ -3298,7 +3296,7 @@ GO
 
 
 
-CREATE FUNCTION [dbo].[stitek_entity](@x25id int,@x20id int)
+CREATE FUNCTION [dbo].[stitek_entity](@o23id int,@x20id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
@@ -3309,7 +3307,7 @@ BEGIN
 
 select top 10 @s=COALESCE(@s + ', ', '')+dbo.GetObjectAlias(convert(varchar(10),x20.x29ID),a.x19RecordPID)
 FROM x19EntityCategory_Binding a INNER JOIN o23Doc o23 ON a.o23ID=o23.o23ID INNER JOIN x20EntiyToCategory x20 ON a.x20ID=x20.x20ID
-where a.o23ID=@x25id AND a.x20ID=@x20id
+where a.o23ID=@o23id AND a.x20ID=@x20id
 
 
 
@@ -9339,12 +9337,7 @@ CREATE  procedure [dbo].[p31_save_freefields_after_approving]
 
 AS
 
---if exists(select p85ID FROM p85TempBox WHERE p85GUID=@guid AND p85Prefix='x19')
--- begin
---  DELETE FROM x19EntityCategory_Binding WHERE x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=331) AND x19RecordPID IN (select p85OtherKey3 FROM p85TempBox WHERE p85GUID=@guid AND p85Prefix='x19')
 
---  INSERT INTO x19EntityCategory_Binding(x20ID,x25ID,x19RecordPID) SELECT p85OtherKey4,p85OtherKey2,p85OtherKey3 FROM p85TempBox WHERE p85GUID=@guid AND p85Prefix='x19'
--- end
 
 if not exists(select p31ID FROM p31WorkSheet_FreeField_Temp WHERE p31GUID=@guid)
  return
@@ -16707,6 +16700,7 @@ GO
 
 
 
+
 CREATE VIEW [dbo].[view_fulltext_main]
 as
 select 'p41' as Prefix,'Kód' as Field,p41ID as RecPid,p41Code as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
@@ -16777,6 +16771,7 @@ UNION SELECT 'j02' as Prefix,'Osoba' as Field,a.j02ID as RecPid
 ,isnull(c.p28Name,'')+isnull(', '+a.j02JobTitle,'')+isnull(', '+a.j02Office,'') as RecComment
 ,a.j02LastName+' '+a.j02FirstName as RecName,a.j02DateInsert as RecDateInsert
 FROM j02Person a LEFT OUTER JOIN p30Contact_Person b ON a.j02ID=b.j02ID LEFT OUTER JOIN p28Contact c ON b.p28ID=c.p28ID
+
 
 
 

@@ -18,7 +18,10 @@ Public Class fulltext_service
         Dim filterString As String = (DirectCast(contextDictionary("filterstring"), String))
         filterString = Trim(filterString)
         If filterString.IndexOf("...") > 0 Then filterString = "" 'pokud jsou uvedeny 3 tečky, pak bráno jako nápovědný text pro hledání
-        Dim strFlag As String = (DirectCast(contextDictionary("flag"), String))
+        Dim strFlag As String = ""
+        If contextDictionary.ContainsKey("flag") Then
+            strFlag = (DirectCast(contextDictionary("flag"), String))
+        End If
         If Len(filterString) > 15 Then filterString = ""
 
         Dim factory As BL.Factory = Nothing
