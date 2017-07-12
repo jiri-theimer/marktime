@@ -184,6 +184,8 @@ Public Class fileupload
             lblError.Text = "Soubor [" & invalidFile.FileName & "] není povolen nahrát na server."
             RaiseEvent ErrorUpload(invalidFile.FileName, lblError.Text)
         Next
+        upload1.UploadedFiles.Clear()
+
         If bolOK Then RaiseEvent AfterUploadAll()
     End Sub
 

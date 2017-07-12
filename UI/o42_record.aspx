@@ -55,7 +55,7 @@
             </td>
             <td>
                 <uc:datacombo ID="x67ID" runat="server" DataTextField="x67Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
-                
+                <span class="infoInForm">Příjemcem poštovní zprávy může být imap adresa konkrétní osoby nebo řešitelského týmu.</span>
 
             </td>
             <td></td>

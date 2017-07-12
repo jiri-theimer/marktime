@@ -242,7 +242,7 @@ Class o42ImapRuleBL
             receivers.Add(imi.To(i).Address)
             If i = 0 Then cO43.o43TO = imi.To(i).Address Else cO43.o43TO += ";" & imi.To(i).Address
         Next
-        For Each strAddress As String In receivers.Where(Function(p) p <> cInbox.o41Login)
+        For Each strAddress As String In receivers  ''.Where(Function(p) p <> cInbox.o41Login)
             Dim cJ02 As BO.j02Person = Factory.j02PersonBL.LoadByImapRobotAddress(strAddress)
             If cJ02 Is Nothing Then cJ02 = Factory.j02PersonBL.LoadByEmail(strAddress) 'u osob zkusit i normální adresu j02Email
             Dim cJ11 As BO.j11Team = Nothing
@@ -377,7 +377,13 @@ Class o42ImapRuleBL
             c.j02ID_Owner = cRule.j02ID_Owner_Default   'vlastník úkolu chybí, je třeba ho vzít z IMAP pravidla
         End If
         Dim cJ03 As BO.j03User = Factory.j03UserBL.LoadByJ02ID(c.j02ID_Owner)
-        c.SetUserInsert(cJ03.j03Login)
+        If Not cJ03 Is Nothing Then
+            'odesílatel mailu má zavedený účet
+            c.SetUserInsert(cJ03.j03Login)
+        Else
+            c.SetUserInsert("imap-robot")
+        End If
+
         Dim lisX69 As New List(Of BO.x69EntityRole_Assign)
         For Each person In lisJ02
             Dim role As New BO.x69EntityRole_Assign()
