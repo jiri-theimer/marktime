@@ -188,6 +188,7 @@ Class x40MailQueueBL
                 .From = New MailAddress(strGlobalSenderAddress, cRec.x40SenderName)
                 cRec.x40SenderAddress = strGlobalSenderAddress
                 .ReplyToList.Add(New MailAddress(cRec.x40SenderAddress, cRec.x40SenderName))
+
             End If
             .Body = cRec.x40Body
             .IsBodyHtml = cRec.x40IsHtmlBody
@@ -196,7 +197,7 @@ Class x40MailQueueBL
             .SubjectEncoding = System.Text.Encoding.UTF8
         End With
 
-        For Each c In recipients
+        For Each c In recipients.Where(Function(p) p.x43Email <> "")
             Try
                 Select Case c.x43RecipientFlag
                     Case BO.x43RecipientIdEnum.recTO
@@ -209,7 +210,7 @@ Class x40MailQueueBL
             Catch ex As Exception
                 'chyba v mail adrese příjemce
             End Try
-            
+
         Next
 
         Dim mqO27 As New BO.myQueryO27

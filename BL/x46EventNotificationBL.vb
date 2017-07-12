@@ -73,9 +73,11 @@ Class x46EventNotificationBL
             mrs = lisExplicitNotifyReceivers    'příjemci notifikace jsou ručně předáni
         End If
 
+        Dim cRoles As New BO.Roles4Notification
+
         Select Case cX45.x29ID
             Case BO.x29IdEnum.p41Project
-                Dim cRec As BO.p41Project = Factory.p41ProjectBL.Load(cX47.x47RecordPID)
+                Dim cRec As BO.p41Project = Factory.p41ProjectBL.Load(cX47.x47RecordPID)            
                 intJ02ID_Owner = cRec.j02ID_Owner
                 objects.Add(cRec)
                 If cX47.x45ID = BO.x45IDEnum.p41_limitfee_over Or cX47.x45ID = BO.x45IDEnum.p41_limithours_over Then
@@ -83,10 +85,13 @@ Class x46EventNotificationBL
                     mq.p41ID = cX47.x47RecordPID
                     objects.Add(Factory.p31WorksheetBL.LoadSumRow(mq, True, True))
                 End If
+                cRoles.RolesInLine = Factory.p41ProjectBL.GetRolesInline(cRec.PID)
+
             Case BO.x29IdEnum.p56Task
                 Dim cRec As BO.p56Task = Factory.p56TaskBL.Load(cX47.x47RecordPID)
                 intJ02ID_Owner = cRec.j02ID_Owner
                 objects.Add(cRec)
+                cRoles.RolesInLine = Factory.p56TaskBL.GetRolesInline(cRec.PID)
             Case BO.x29IdEnum.p91Invoice
                 Dim cRec As BO.p91Invoice = Factory.p91InvoiceBL.Load(cX47.x47RecordPID)
                 intJ02ID_Owner = cRec.j02ID_Owner
@@ -100,6 +105,7 @@ Class x46EventNotificationBL
                     mq.p28ID_Client = cX47.x47RecordPID
                     objects.Add(Factory.p31WorksheetBL.LoadSumRow(mq, True, True))
                 End If
+                cRoles.RolesInLine = Factory.p28ContactBL.GetRolesInline(cRec.PID)
             Case BO.x29IdEnum.j02Person
                 objects.Add(Factory.j02PersonBL.Load(cX47.x47RecordPID))
             Case BO.x29IdEnum.p51PriceList
@@ -130,7 +136,7 @@ Class x46EventNotificationBL
                     cRec.o23BigText = "Obsah je zašifrovaný."
                 End If
                 objects.Add(cRec)
-                
+                cRoles.RolesInLine = Factory.o23DocBL.GetRolesInline(cRec.PID)
             Case BO.x29IdEnum.o22Milestone
                 Dim cRec As BO.o22Milestone = Factory.o22MilestoneBL.Load(cX47.x47RecordPID)
                 intJ02ID_Owner = cRec.j02ID_Owner
@@ -156,7 +162,7 @@ Class x46EventNotificationBL
 
         End Select
 
-
+        objects.Add(cRoles)
 
         If Not objectReference Is Nothing Then
             intJ02ID_Owner_Reference = objectReference.j02ID_Owner

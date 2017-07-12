@@ -397,31 +397,31 @@
         If intJ61ID <> 0 Then
             _isChangeJ61ID = True
             Dim c As BO.j61TextTemplate = Master.Factory.j61TextTemplateBL.Load(intJ61ID)
+            Dim cRoles As New BO.Roles4Notification
             If Me.CurrentX29ID > BO.x29IdEnum._NotSpecified And c.j61PlainTextBody.IndexOf("]") > 0 Then
                 Dim cM As New BO.clsMergeContent(), objects As New List(Of Object)
+                If c.j61PlainTextBody.IndexOf("#RolesInline#") > 0 Then
+                    c.j61PlainTextBody = Replace(c.j61PlainTextBody, "#RolesInline#", "[%RolesInLine%]", , , CompareMethod.Text)
+                End If
                 Select Case Me.CurrentX29ID
                     Case BO.x29IdEnum.p41Project
                         objects.Add(Master.Factory.p41ProjectBL.Load(Master.DataPID))
-                        If c.j61PlainTextBody.IndexOf("#RolesInline#") > 0 Then
-                            c.j61PlainTextBody = Replace(c.j61PlainTextBody, "#RolesInline#", Master.Factory.p41ProjectBL.GetRolesInline(Master.DataPID))
-                        End If
+                        cRoles.RolesInLine = Master.Factory.p41ProjectBL.GetRolesInline(Master.DataPID)
                     Case BO.x29IdEnum.p28Contact
                         objects.Add(Master.Factory.p28ContactBL.Load(Master.DataPID))
+                        cRoles.RolesInLine = Master.Factory.p28ContactBL.GetRolesInline(Master.DataPID)
                     Case BO.x29IdEnum.p91Invoice
                         objects.Add(Master.Factory.p91InvoiceBL.Load(Master.DataPID))
                     Case BO.x29IdEnum.j02Person
                         objects.Add(Master.Factory.j02PersonBL.Load(Master.DataPID))
                     Case BO.x29IdEnum.p56Task
                         objects.Add(Master.Factory.j02PersonBL.Load(Master.DataPID))
-                        If c.j61PlainTextBody.IndexOf("#RolesInline#") > 0 Then
-                            c.j61PlainTextBody = Replace(c.j61PlainTextBody, "#RolesInline#", Master.Factory.p56TaskBL.GetRolesInline(Master.DataPID))
-                        End If
+                        cRoles.RolesInLine = Master.Factory.p56TaskBL.GetRolesInline(Master.DataPID)
                     Case BO.x29IdEnum.o23Doc
                         objects.Add(Master.Factory.o23DocBL.Load(Master.DataPID))
-                        If c.j61PlainTextBody.IndexOf("#RolesInline#") > 0 Then
-                            c.j61PlainTextBody = Replace(c.j61PlainTextBody, "#RolesInline#", Master.Factory.o23DocBL.GetRolesInline(Master.DataPID))
-                        End If
+                        cRoles.RolesInLine = Master.Factory.o23DocBL.GetRolesInline(Master.DataPID)
                 End Select
+                objects.Add(cRoles)
                 c.j61PlainTextBody = cM.MergeContent(objects, c.j61PlainTextBody, strLINK)
                 c.j61MailSubject = cM.MergeContent(objects, c.j61MailSubject, strLINK)
             End If

@@ -378,7 +378,8 @@ Class b06WorkflowStepBL
                     mes.SenderName = "MARKTIME robot"
 
                     mes.Body = cMerge.MergeContent(objects, cB65.b65MessageBody, strLinkUrl)
-                    If mes.Body.IndexOf("#RolesInline#") > 0 Then
+                    If mes.Body.IndexOf("#RolesInline#") > 0 Or mes.Body.IndexOf("[%RolesInline%]") > 0 Then
+                        mes.Body = Replace(mes.Body, "[%RolesInline%]", "#RolesInline#", , , CompareMethod.Text)
                         Select Case x29id
                             Case BO.x29IdEnum.p56Task
                                 mes.Body = Replace(mes.Body, "#RolesInline#", Factory.p56TaskBL.GetRolesInline(intRecordPID))
@@ -386,6 +387,8 @@ Class b06WorkflowStepBL
                                 mes.Body = Replace(mes.Body, "#RolesInline#", Factory.o23DocBL.GetRolesInline(intRecordPID))
                             Case BO.x29IdEnum.p41Project
                                 mes.Body = Replace(mes.Body, "#RolesInline#", Factory.p41ProjectBL.GetRolesInline(intRecordPID))
+                            Case BO.x29IdEnum.p28Contact
+                                mes.Body = Replace(mes.Body, "#RolesInline#", Factory.p28ContactBL.GetRolesInline(intRecordPID))
                         End Select
 
                     End If

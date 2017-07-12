@@ -43,6 +43,7 @@
     Public Function GetAllMergeFieldsInContent(ByVal strContent As String) As List(Of String)
         'vrátí seznam slučovacích polí, které se vyskytují v strContent
         Dim lisRet As New List(Of String)
+        If Trim(strContent) = "" Then Return lisRet
 
         If strContent.IndexOf("[%") >= 0 Then
             've výchozím popisu aktivity jsou slučovací pole z projektu
