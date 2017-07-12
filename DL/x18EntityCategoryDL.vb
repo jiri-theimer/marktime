@@ -64,6 +64,11 @@
             End If
 
         Next
+        If x29id = BO.x29IdEnum.p31Worksheet Then
+            pars = New DbParameters
+            pars.Add("recordpid", intRecordPID, DbType.Int32)
+            _cDB.RunSQL("update p31Worksheet set o23ID_First=null WHERE p31ID=@recordpid; update a set o23ID_First=b.o23ID FROM p31Worksheet a INNER JOIN x19EntityCategory_Binding b ON a.p31ID=b.x19RecordPID INNER JOIN x20EntiyToCategory c ON b.x20ID=c.x20ID WHERE c.x29ID=331 AND b.x19RecordPID=@recordpid", pars)
+        End If
         Return True
     End Function
     Public Function SaveX19Binding(into23ID As Integer, lisX19 As List(Of BO.x19EntityCategory_Binding), x20IDs As List(Of Integer)) As Boolean

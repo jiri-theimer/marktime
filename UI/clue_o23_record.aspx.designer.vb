@@ -23,6 +23,24 @@ Partial Public Class clue_o23_record
     Protected WithEvents ph1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''panUpload control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panUpload As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''filesPreview control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents filesPreview As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''rec1 control.
     '''</summary>
     '''<remarks>

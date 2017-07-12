@@ -33,6 +33,11 @@
             <%End If%>
         }
 
+        function file_preview(prefix, pid) {
+            ///náhled na soubor            
+            sw_everywhere("fileupload_preview.aspx?prefix=" + prefix + "&pid=" + pid, "Images/attachment.png", true);
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -283,9 +288,14 @@
     <asp:Panel ID="panUpload" runat="server" CssClass="content-box2">
         <div class="title">Nahrát přílohy dokumentu</div>
         <div class="content">
+                    
             <uc:fileupload ID="upload1" runat="server" InitialFileInputsCount="1" EntityX29ID="b07Comment" />
 
             <uc:fileupload_list ID="uploadlist1" runat="server" />
+
+            <div class="div6">
+            <asp:HyperLink ID="filesPreview" runat="server" Text="<hr><img src='Images/attachment.png'/> Náhled na již uložené přílohy dokumentu" Visible="false"></asp:HyperLink>
+            </div>
         </div>
     </asp:Panel>
 

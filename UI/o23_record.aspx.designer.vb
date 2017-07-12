@@ -338,6 +338,15 @@ Partial Public Class o23_record
     Protected WithEvents uploadlist1 As Global.UI.fileupload_list
 
     '''<summary>
+    '''filesPreview control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents filesPreview As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''hidX18ID control.
     '''</summary>
     '''<remarks>

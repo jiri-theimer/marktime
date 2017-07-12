@@ -72,7 +72,8 @@ Public Class o23_record
 
                     End If
                     Me.o23IsEncrypted.Visible = c.x18IsAllowEncryption
-                    If Master.DataPID = 0 And c.x18UploadFlag = BO.x18UploadENUM.FileSystemUpload Then
+                    'If Master.DataPID = 0 And c.x18UploadFlag = BO.x18UploadENUM.FileSystemUpload Then
+                    If c.x18UploadFlag = BO.x18UploadENUM.FileSystemUpload Then
                         panUpload.Visible = True
                     Else
                         panUpload.Visible = False
@@ -261,11 +262,21 @@ Public Class o23_record
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
             Me.o23IsEncrypted.Checked = .o23IsEncrypted
         End With
-        ''Dim cX23 As BO.x23EntityField_Combo = Master.Factory.x23EntityField_ComboBL.Load(_curRec.x23ID)
-        ''If cX23.x23DataSource <> "" Then
-        ''    Master.Notify("Tato položka byla vložena automaticky, protože pochází z externího datového zdroje.", NotifyLevel.InfoMessage)
 
-        ''End If
+        If panUpload.Visible And _curRec.o23LockedFlag <> BO.o23LockedTypeENUM.LockAllFiles Then
+            Dim mq As New BO.myQueryO27
+            mq.Record_x29ID = BO.x29IdEnum.o23Doc
+            mq.Record_PID = _curRec.PID
+            Dim lis As IEnumerable(Of BO.o27Attachment) = Master.Factory.o27AttachmentBL.GetList(mq)
+            With Me.filesPreview
+                If lis.Count > 0 Then
+                    .Visible = True
+                    .Text = BO.BAS.OM2(.Text, lis.Count.ToString)
+                    .NavigateUrl = "javascript:file_preview('o23'," & Master.DataPID.ToString & ")"
+                End If
+            End With
+        End If
+
         RefreshUserFields()
         If panX20.Visible Then
             Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Master.Factory.x18EntityCategoryBL.GetList_X19(Master.DataPID, lisX20X18.Select(Function(p) p.x20ID).ToList, True)
@@ -362,9 +373,7 @@ Public Class o23_record
     End Sub
 
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
-        If panUpload.Visible Then
-            upload1.TryUploadhWaitingFilesOnClientSide()
-        End If
+       
         If Me.o23IsEncrypted.Checked Then
             If Not TestPassword() Then Return
         End If
@@ -457,6 +466,10 @@ Public Class o23_record
         End If
         basUIMT.RenderQueryCombo(Me.cbxType)
         Me.panPassword.Visible = Me.o23IsEncrypted.Checked
+        If Page.IsPostBack And panUpload.Visible Then
+            upload1.TryUploadhWaitingFilesOnClientSide()
+        End If
+      
     End Sub
 
     Private Function InhaleUserFieldValues(ByRef cRec As BO.o23Doc) As Boolean

@@ -22,7 +22,11 @@
             window.parent.sw_everywhere("workflow_dialog.aspx?prefix=o23&pid=<%=Master.DataPID%>", "Images/label.png", true);
 
         }
+        function file_preview(prefix, pid) {
+            ///náhled na soubor            
+            window.parent.sw_everywhere("fileupload_preview.aspx?prefix=" + prefix + "&pid=" + pid, "Images/attachment.png", true);
 
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -32,6 +36,13 @@
             <asp:Label ID="ph1" runat="server" CssClass="clue_header_span"></asp:Label>
             <a  href="javascript:go2module()">Skočit na stránku dokumentu</a>
         </div>
+        <asp:panel ID="panUpload" runat="server" CssClass="div6" Visible="false">
+            <img src="Images/attachment.png" />
+            <asp:HyperLink ID="filesPreview" runat="server" Text="Náhled na přílohy dokumentu"></asp:HyperLink>
+        </asp:panel>
+        
+    
+
         <div class="div6">
             <uc:o23_record_readonly ID="rec1" runat="server" />
         </div>

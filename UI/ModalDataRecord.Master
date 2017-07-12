@@ -57,7 +57,7 @@
                     },
                     style: {
                         classes: 'qtip-tipped',
-                        width: 600,
+                        width: 700,
                         height: 300
 
                     }
