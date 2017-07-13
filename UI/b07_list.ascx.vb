@@ -112,6 +112,14 @@
                 .Visible = False
             End If
         End With
+        With CType(e.Item.FindControl("aMSG"), HyperLink)
+            If cRec.o43ID = 0 Then
+                .Visible = False
+            Else
+                .Visible = True
+                .NavigateUrl = "binaryfile.aspx?format=msg&prefix=o43&pid=" & cRec.o43ID.ToString
+            End If
+        End With
         CType(e.Item.FindControl("Timestamp"), Label).Text = BO.BAS.FD(cRec.DateInsert, True, True)
         With CType(e.Item.FindControl("att1"), HyperLink)
             If cRec.o27ID > 0 Then

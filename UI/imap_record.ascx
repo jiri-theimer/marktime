@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="imap_record.ascx.vb" Inherits="UI.imap_record" %>
 <div class="div6">
     <img src="Images/Files/msg_24.png" />
-    <asp:HyperLink ID="cmdMSG" runat="server" Text="MS OUTLOOK formát zprávy"></asp:HyperLink>
+    <asp:HyperLink ID="cmdMSG" runat="server" Text="Otevřít v MS-OUTLOOK"></asp:HyperLink>
 </div>
 <div class="div6">
     <img src="Images/Files/eml_24.png" />

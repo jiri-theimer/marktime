@@ -145,6 +145,7 @@ Class x40MailQueueBL
             .Subject = strSubject
             .BodyEncoding = System.Text.Encoding.UTF8
             .SubjectEncoding = System.Text.Encoding.UTF8
+
         End With
         mail.To.Add(New MailAddress(strRecipient, "MARKTIME support"))
         Dim smtp As SmtpClient = New SmtpClient(), bolSucceeded As Boolean = False

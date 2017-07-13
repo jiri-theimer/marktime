@@ -7,7 +7,10 @@
         Dim s As String = GetSQLPart1() & " WHERE a.b07ID=@pid"
         Return _cDB.GetRecord(Of BO.b07Comment)(s, New With {.pid = intPID})
     End Function
-
+    Public Function LoadByO43ID(intO43ID As Integer) As BO.b07Comment
+        Dim s As String = GetSQLPart1() & " WHERE a.o43ID=@o43id"
+        Return _cDB.GetRecord(Of BO.b07Comment)(s, New With {.o43id = intO43ID})
+    End Function
     Public Function Delete(intPID As Integer) As Boolean
         Dim pars As New DbParameters()
         With pars
@@ -30,6 +33,7 @@
             pars.Add("b07RecordPID", BO.BAS.IsNullDBKey(.b07RecordPID), DbType.Int32)
             pars.Add("j02ID_Owner", BO.BAS.IsNullDBKey(.j02ID_Owner), DbType.Int32)
             pars.Add("b07ID_Parent", BO.BAS.IsNullDBKey(.b07ID_Parent), DbType.Int32)
+            pars.Add("o43ID", BO.BAS.IsNullDBKey(.o43ID), DbType.Int32)
             pars.Add("b07Value", .b07Value, DbType.String)
             pars.Add("b07WorkflowInfo", .b07WorkflowInfo, DbType.String)
             pars.Add("b07ValidFrom", .ValidFrom, DbType.DateTime)

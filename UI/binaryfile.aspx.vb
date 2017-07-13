@@ -51,12 +51,14 @@ Public Class binaryfile
                         strFullPath = factory.x35GlobalParam.TempFolder & "\" & cRec.p85FreeText02
                         strDestFileName = cRec.p85FreeText01
                     Case "o43"
-                        Dim cRec As BO.o43ImapRobotHistory = factory.o42ImapRuleBL.LoadHistoryByRecordGUID(Request.Item("guid"))
-                        strPdfGuid = cRec.o43RecordGUID
+                        Dim cRec As BO.o43ImapRobotHistory = Nothing
+                        If Request.Item("guid") <> "" Then cRec = factory.o42ImapRuleBL.LoadHistoryByRecordGUID(Request.Item("guid"))
+                        If Request.Item("pid") <> "" Then cRec = factory.o42ImapRuleBL.LoadHistoryByID(BO.BAS.IsNullInt(Request.Item("pid")))
                         If cRec Is Nothing Then
                             Response.Write("Nelze načíst IMAP záznam.")
                             Return
                         End If
+                        strPdfGuid = cRec.o43RecordGUID
                         If Request.Item("att") <> "" Then
                             'dotaz na jednu z externích příloh z poštovní zprávy
                             strFullPath = factory.x35GlobalParam.UploadFolder & "\IMAP\" & cRec.o43ImapArchiveFolder
@@ -72,7 +74,7 @@ Public Class binaryfile
                             If cRec.o23ID <> 0 Then strDestFileName = factory.GetRecordCaption(BO.x29IdEnum.o23Doc, cRec.o23ID)
                             strDestFileName = Left(BO.BAS.Prepare4FileName(strDestFileName), 80) & "." & Request.Item("format")
                         End If
-                        
+
 
                         ''factory.o42ImapRuleBL.ChangeRecordGuidInHistory(cRec.o43ID, BO.BAS.GetGUID) 'změnit guid, aby to nikdo už nemohl stáhnout pod stejnou URL
                 End Select

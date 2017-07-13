@@ -3,6 +3,7 @@
     Public Property x29ID As BO.x29IdEnum
     Public Property b07RecordPID As Integer
     Public Property j02ID_Owner As Integer
+    Public Property o43ID As Integer        'načtená e-mail zpráva přes IMAP
     Public Property b07Value As String
     Public Property b07WorkflowInfo As String
 

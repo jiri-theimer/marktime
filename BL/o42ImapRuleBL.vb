@@ -195,15 +195,31 @@ Class o42ImapRuleBL
         Next
 
         If lisItems4Delete.Count > 0 Then
-            'odstranit naimportované zprávy ze zdrojového imap účtu
+            'odstranit naimportované zprávy ze zdrojového imap účtu, pokud platí o41IsDeleteMesageAfterImport=1
             For Each c In lisItems4Delete
                 Dim strUniqueID As String = c.UniqueId
                 Try
-
-                    _client.DeleteMessage(strUniqueID)
                     If cInbox.o41IsDeleteMesageAfterImport Then
+                        _client.DeleteMessage(strUniqueID)  'nastaví pouze flag DELETED
                         _client.Purge() 'trvale odstranit zprávu  z inboxu
+                    Else
+                        'nastavit FLAG SEEN
+                        _client.SetMessageFlags(strUniqueID, ImapFlagAction.Add, ImapMessageFlags.Seen)
+
+
+                        Dim cO43 As BO.o43ImapRobotHistory = LoadHistoryByMessageGUID(strUniqueID)
+                        If Not cO43 Is Nothing Then
+                            Dim cB07 As BO.b07Comment = Factory.b07CommentBL.LoadByO43ID(cO43.o43ID)
+                            If Not cB07 Is Nothing Then
+                                _client.SetMessageFlags(strUniqueID, ImapFlagAction.Add, ImapMessageFlags.Keywords, "marktime-b07id", cB07.PID.ToString)
+                            End If
+
+                        End If
+                      
+                        
                     End If
+
+                   
 
                     W2L("Message " & strUniqueID & " deleted in IMAP account.")
                 Catch ex As Exception
@@ -300,6 +316,11 @@ Class o42ImapRuleBL
                     cO43.o43Body_PlainText = Trim(.BodyText).Replace("<", "[").Replace(">", "]")
                 End If
             End With
+
+            ''Dim reply As Rebex.Mail.MailMessage = message.CreateReply("ja@seznam.cz", Rebex.Mail.ReplyBodyTransformation.None, True)
+            ''reply.BodyText = "ahoj.\n" & message.BodyText
+          
+
 
         Catch ex As Exception
             W2L("message ID " & imi.UniqueId, ex)
@@ -400,7 +421,9 @@ Class o42ImapRuleBL
 
         With Factory.p56TaskBL
             If .Save(c, lisX69, Nothing, "") Then
-                Return .LastSavedPID
+                Dim intP56ID As Integer = .LastSavedPID
+
+                Return intP56ID
             Else
                 cO43.o43ErrorMessage = "Chyba při pokusu o založení úkolu: " & .ErrorMessage
                 W2L("Chyba při pokusu o založení úkolu: " & .ErrorMessage)
@@ -482,13 +505,32 @@ Class o42ImapRuleBL
 
     Public Function InsertImport2History(cHistory As BO.o43ImapRobotHistory) As Boolean Implements Io42ImapRuleBL.InsertImport2History
         Dim intO43ID As Integer = _cDL.InsertImport2History(cHistory)
+
+        Dim cB07 As New BO.b07Comment
+        cB07.o43ID = intO43ID
+        If cHistory.o43Body_PlainText <> "" Then
+            cB07.b07Value = cHistory.o43Body_PlainText
+        Else
+            cB07.b07Value = cHistory.o43Body_Html
+        End If
+        cB07.j02ID_Owner = cHistory.j02ID_Owner
+
+
         If intO43ID <> 0 And cHistory.p56ID <> 0 Then
             'propsat do úkolu informaci o vazbě na IMAP zdroj
             Factory.p56TaskBL.UpdateImapSource(cHistory.p56ID, intO43ID)
+
+            cB07.x29ID = BO.x29IdEnum.p56Task
+            cB07.b07RecordPID = cHistory.p56ID
+            Factory.b07CommentBL.Save(cB07, "", Nothing)
         End If
         If intO43ID <> 0 And cHistory.o23ID <> 0 Then
             'propsat do dokumentu informaci o vazbě na IMAP zdroj
             ''Factory.o23NotepadBL.UpdateImapSource(cHistory.o23ID, intO43ID)
+
+            cB07.x29ID = BO.x29IdEnum.o23Doc
+            cB07.b07RecordPID = cHistory.o23ID
+            Factory.b07CommentBL.Save(cB07, "", Nothing)
         End If
 
         Return intO43ID

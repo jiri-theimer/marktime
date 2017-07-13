@@ -923,7 +923,7 @@ if @prefix='p90'
 
 
 if @prefix='p31'
-  select @ret=p41Name+' ['+p34name+'] '+convert(varchar(20),p31date,104)+' ['+j02LastName+']'+case when len(a.p31Text)>50 then ' '+left(a.p31Text,50)+'...' else isnull(' '+a.p31Text,'') end FROM p31worksheet a inner join p32activity b on a.p32id=b.p32id inner join p34activitygroup c on b.p34id=c.p34id inner join j02Person d on a.j02ID=d.j02ID inner join p41Project p41 on a.p41id=p41.p41id where a.p31id=@pid
+  select @ret=p41Name+' ['+p34name+'] '+convert(varchar(20),p31date,104)+' ['+j02LastName+']'+case when len(a.p31Text)>50 then ' '+left(a.p31Text,50)+'...' else isnull(' '+a.p31Text,'') end+case when c.p33ID IN (2,5) then ' ['+convert(varchar(10),a.p31Amount_WithoutVat_Orig)+' '+j27.j27Code+']' else '' end FROM p31worksheet a inner join p32activity b on a.p32id=b.p32id inner join p34activitygroup c on b.p34id=c.p34id inner join j02Person d on a.j02ID=d.j02ID inner join p41Project p41 on a.p41id=p41.p41id left outer join j27Currency j27 ON a.j27ID_Billing_Orig=j27.j27ID where a.p31id=@pid
 
 
 if @prefix='j03'
@@ -3055,6 +3055,38 @@ BEGIN
   declare @p86id int,@j27id int,@p93id int
 
   select @j27id=a.j27ID,@p93id=b.p93ID
+  FROM p91Invoice a INNER JOIN p92InvoiceType b ON a.p92ID=b.p92ID
+  WHERE a.p91ID=@p91id
+
+  RETURN(select p86ID FROM p88InvoiceHeader_BankAccount WHERE j27ID=@j27id AND p93ID=@p93id)
+
+ 
+   
+END
+
+
+GO
+
+----------FN---------------p91_get_p86id_currency-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p91_get_p86id_currency') and type = 'FN')
+ drop function p91_get_p86id_currency
+GO
+
+
+
+
+
+
+CREATE  FUNCTION [dbo].[p91_get_p86id_currency](@p91id int,@j27id int)
+RETURNS int
+AS
+BEGIN
+  ---vrací ID bankovního úètu pro fakturu @p91id a explicitnì mìnu @j27id
+
+  declare @p86id int,@p93id int
+
+  select @p93id=b.p93ID
   FROM p91Invoice a INNER JOIN p92InvoiceType b ON a.p92ID=b.p92ID
   WHERE a.p91ID=@p91id
 
@@ -6548,6 +6580,9 @@ BEGIN TRANSACTION
 BEGIN TRY	
 	if exists(select b05ID FROM b05Workflow_History a INNER JOIN b07Comment b ON a.b07ID=b.b07ID WHERE b.x29ID=223 AND b.b07RecordPID=@pid)
 	 DELETE FROM b05Workflow_History WHERE b07ID IN (select b07ID FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid)
+
+	if exists(select o27ID FROM o27Attachment WHERE b07ID IS NOT NULL AND b07ID IN (select b07ID FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid))
+	 DELETE FROM o27Attachment WHERE b07ID IS NOT NULL AND b07ID IN (select b07ID FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid)
 
 	if exists(select b07ID FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid)
 	 DELETE FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid	
@@ -12397,6 +12432,12 @@ BEGIN TRY
 
 	if exists(select o43ID FROM o43ImapRobotHistory WHERE p56ID=@pid)
 	 DELETE FROM o43ImapRobotHistory WHERE p56ID=@pid
+
+	if exists(select o27ID FROM o27Attachment WHERE b07ID IS NOT NULL AND b07ID IN (select b07ID FROM b07Comment WHERE x29ID=356 AND b07RecordPID=@pid))
+	 DELETE FROM o27Attachment WHERE b07ID IS NOT NULL AND b07ID IN (select b07ID FROM b07Comment WHERE x29ID=356 AND b07RecordPID=@pid)
+
+	if exists(select b07ID FROM b07Comment WHERE x29ID=356 AND b07RecordPID=@pid)
+	 DELETE FROM b07Comment WHERE x29ID=356 AND b07RecordPID=@pid
 
 	if exists(select a.x69ID FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE a.x69RecordPID=@pid AND b.x29ID=356)
 	 DELETE a FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE a.x69RecordPID=@pid AND b.x29ID=356

@@ -2,6 +2,7 @@
     Inherits IFMother
     Function Save(cRec As BO.b07Comment, strUploadGUID As String, notifyReceivers As List(Of BO.PersonOrTeam)) As Boolean
     Function Load(intPID As Integer) As BO.b07Comment
+    Function LoadByO43ID(intO43ID As Integer) As BO.b07Comment
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryB07) As IEnumerable(Of BO.b07Comment)
 
@@ -56,6 +57,9 @@ Class b07CommentBL
     End Function
     Public Function Load(intPID As Integer) As BO.b07Comment Implements Ib07CommentBL.Load
         Return _cDL.Load(intPID)
+    End Function
+    Public Function LoadByO43ID(intO43ID As Integer) As BO.b07Comment Implements Ib07CommentBL.LoadByO43ID
+        Return _cDL.LoadByO43ID(intO43ID)
     End Function
     Public Function Delete(intPID As Integer) As Boolean Implements Ib07CommentBL.Delete
         Return _cDL.Delete(intPID)

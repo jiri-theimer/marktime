@@ -27,8 +27,9 @@
                       
                         <div style="padding-top: 8px;">
                             <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
-                            <asp:HyperLink ID="aAnswer" runat="server" Text="Reagovat"></asp:HyperLink>
-                            <asp:HyperLink ID="aDelete" runat="server" Text="Odstranit" Visible="false"></asp:HyperLink>
+                            <asp:HyperLink ID="aAnswer" runat="server" Text="<img src='Images/comment.png'/>Reagovat"></asp:HyperLink>
+                            <asp:HyperLink ID="aDelete" runat="server" Text="<img src='Images/delete.png'/>Odstranit" Visible="false"></asp:HyperLink>
+                            <asp:HyperLink ID="aMSG" runat="server" Text="<img src='Images/outlook.png'/>Otevřít v MS-OUTLOOK" Visible="false" style="margin-left:6px;"></asp:HyperLink>
                         </div>
                     </td>
                 </tr>
