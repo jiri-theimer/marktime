@@ -354,6 +354,18 @@ Public Class admin_workflow
             End If
         End With
 
+        dt = FindDataTable(ds, "b65WorkflowMessage")
+        For Each dbRow As DataRow In dt.Rows
+            Dim c As New BO.b65WorkflowMessage
+            c.b01ID = cB01.PID
+            c.b65Name = dbRow.Item("b65Name") & ""
+            c.b65MessageBody = dbRow.Item("b65MessageBody") & ""
+            c.b65MessageSubject = dbRow.Item("b65MessageSubject") & ""
+            If Master.Factory.b65WorkflowMessageBL.Save(c) Then
+                lisIDS.Add(New IDS("b65", dbRow.Item("b65ID"), Master.Factory.b65WorkflowMessageBL.LastSavedPID))
+            End If
+        Next
+
         dt = FindDataTable(ds, "b02WorkflowStatus")
         For Each dbRow As DataRow In dt.Rows
             Dim c As New BO.b02WorkflowStatus
@@ -370,16 +382,17 @@ Public Class admin_workflow
 
         Dim dtB08 As DataTable = FindDataTable(ds, "b08WorkflowReceiverToStep")
         Dim dtB10 As DataTable = FindDataTable(ds, "b10WorkflowCommandCatalog_Binding")
+        Dim dtB11 As DataTable = FindDataTable(ds, "b11WorkflowMessageToStep")
 
         dt = FindDataTable(ds, "b06WorkflowStep")
         For Each dbRow As DataRow In dt.Rows
             Dim c As New BO.b06WorkflowStep
-            c.b02ID = lisIDS.First(Function(p) p.OrigPID = dbRow.Item("b02ID")).NewPID
+            c.b02ID = lisIDS.First(Function(p) p.Prefix = "b02" And p.OrigPID = dbRow.Item("b02ID")).NewPID
             If Not dbRow.Item("b02ID_LastReceiver_ReturnTo") Is System.DBNull.Value Then
-                c.b02ID_LastReceiver_ReturnTo = BO.BAS.IsNullInt(lisIDS.First(Function(p) p.OrigPID = dbRow.Item("b02ID_LastReceiver_ReturnTo")).NewPID)
+                c.b02ID_LastReceiver_ReturnTo = BO.BAS.IsNullInt(lisIDS.First(Function(p) p.Prefix = "b02" And p.OrigPID = dbRow.Item("b02ID_LastReceiver_ReturnTo")).NewPID)
             End If
             If Not dbRow.Item("b02ID_Target") Is System.DBNull.Value Then
-                c.b02ID_Target = BO.BAS.IsNullInt(lisIDS.First(Function(p) p.OrigPID = dbRow.Item("b02ID_Target")).NewPID())
+                c.b02ID_Target = BO.BAS.IsNullInt(lisIDS.First(Function(p) p.Prefix = "b02" And p.OrigPID = dbRow.Item("b02ID_Target")).NewPID())
             End If
 
             c.b06Code = dbRow.Item("b06Code") & ""
@@ -427,8 +440,18 @@ Public Class admin_workflow
                 lisB10.Add(cc)
             Next
             Dim lisB11 As New List(Of BO.b11WorkflowMessageToStep)
+            For Each row As DataRow In dtB11.Rows
+                Dim cc As New BO.b11WorkflowMessageToStep
+                cc.b65ID = lisIDS.First(Function(p) p.Prefix = "b65" And p.OrigPID = dbRow.Item("b65ID")).NewPID
+                If Not row.Item("b11IsRecordCreator") Is System.DBNull.Value Then cc.b11IsRecordCreator = row.Item("b11IsRecordCreator")
+                If Not row.Item("b11IsRecordOwner") Is System.DBNull.Value Then cc.b11IsRecordCreator = row.Item("b11IsRecordOwner")
+                cc.j02ID = BO.BAS.IsNullInt(row.Item("j02id"))
+                cc.j11ID = BO.BAS.IsNullInt(row.Item("j11ID"))
+                cc.x67ID = BO.BAS.IsNullInt(row.Item("x67ID"))
+                cc.j04ID = BO.BAS.IsNullInt(row.Item("j04ID"))
+            Next
 
-            If Master.Factory.b06WorkflowStepBL.Save(c, lisB08, Nothing, lisB10) Then
+            If Master.Factory.b06WorkflowStepBL.Save(c, lisB08, lisB11, lisB10) Then
                 ''lisIDS.Add(New IDS("b06", row.Item("b06ID"), Master.Factory.b06WorkflowStepBL.LastSavedPID))
             End If
         Next

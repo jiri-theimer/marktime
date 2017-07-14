@@ -30,20 +30,22 @@
                 .HeaderText = "Workflow krok"
             End With
             ViewState("b02id") = Request.Item("b02id")
-            Dim cB02 As BO.b02WorkflowStatus = Master.Factory.b02WorkflowStatusBL.Load(BO.BAS.IsNullInt(ViewState("b02id")))
-            hidB01ID.Value = cB02.b01ID.ToString
-            hidcurx29id.Value = CInt(cB02.x29ID).ToString
 
             RefreshRecord()
 
             If Master.IsRecordClone Then
                 Master.DataPID = 0
-
             End If
             If BO.BAS.IsNullInt(ViewState("b02id")) = 0 Then Master.StopPage("b02id is missing!")
+
+           
         End If
 
         RefreshState()
+    End Sub
+    Private Sub Handle_InhaleB02(cB02 As BO.b02WorkflowStatus)
+        hidB01ID.Value = cB02.b01ID.ToString
+        hidcurx29id.Value = CInt(cB02.x29ID).ToString
     End Sub
 
     Private Sub RefreshState()
@@ -66,7 +68,7 @@
             ViewState("b02id") = c.b02ID.ToString
         End If
         Dim cB02 As BO.b02WorkflowStatus = Master.Factory.b02WorkflowStatusBL.Load(ViewState("b02id"))
-        Me.CurrentX29ID = cB02.x29ID
+        Handle_InhaleB02(cB02)
 
         b02ID_Target.DataSource = Master.Factory.b02WorkflowStatusBL.GetList(cB02.b01ID).Where(Function(p As BO.b02WorkflowStatus) p.PID <> BO.BAS.IsNullInt(ViewState("b02id")))
         b02ID_Target.DataBind()
