@@ -441,14 +441,21 @@ Public Class admin_workflow
             Next
             Dim lisB11 As New List(Of BO.b11WorkflowMessageToStep)
             For Each row As DataRow In dtB11.Rows
-                Dim cc As New BO.b11WorkflowMessageToStep
-                cc.b65ID = lisIDS.First(Function(p) p.Prefix = "b65" And p.OrigPID = dbRow.Item("b65ID")).NewPID
-                If Not row.Item("b11IsRecordCreator") Is System.DBNull.Value Then cc.b11IsRecordCreator = row.Item("b11IsRecordCreator")
-                If Not row.Item("b11IsRecordOwner") Is System.DBNull.Value Then cc.b11IsRecordCreator = row.Item("b11IsRecordOwner")
-                cc.j02ID = BO.BAS.IsNullInt(row.Item("j02id"))
-                cc.j11ID = BO.BAS.IsNullInt(row.Item("j11ID"))
-                cc.x67ID = BO.BAS.IsNullInt(row.Item("x67ID"))
-                cc.j04ID = BO.BAS.IsNullInt(row.Item("j04ID"))
+                If Not row.Item("b65ID") Is System.DBNull.Value Then
+                    Dim cc As New BO.b11WorkflowMessageToStep
+                    If Not lisIDS.First(Function(p) p.Prefix = "b65" And p.OrigPID = row.Item("b65ID")) Is Nothing Then
+                        cc.b65ID = lisIDS.First(Function(p) p.Prefix = "b65" And p.OrigPID = row.Item("b65ID")).NewPID
+                        If Not row.Item("b11IsRecordCreator") Is System.DBNull.Value Then cc.b11IsRecordCreator = row.Item("b11IsRecordCreator")
+                        If Not row.Item("b11IsRecordOwner") Is System.DBNull.Value Then cc.b11IsRecordCreator = row.Item("b11IsRecordOwner")
+                        cc.j02ID = BO.BAS.IsNullInt(row.Item("j02id"))
+                        cc.j11ID = BO.BAS.IsNullInt(row.Item("j11ID"))
+                        cc.x67ID = BO.BAS.IsNullInt(row.Item("x67ID"))
+                        cc.j04ID = BO.BAS.IsNullInt(row.Item("j04ID"))
+                        lisB11.Add(cc)
+                    End If
+                    
+                End If
+                
             Next
 
             If Master.Factory.b06WorkflowStepBL.Save(c, lisB08, lisB11, lisB10) Then
