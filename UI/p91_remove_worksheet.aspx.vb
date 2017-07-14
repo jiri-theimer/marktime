@@ -131,6 +131,7 @@ Public Class p91_remove_worksheet
                         Case "batch-2" : c.p70ID = BO.p70IdENUM.ViditelnyOdpis
                         Case "batch-6" : c.p70ID = BO.p70IdENUM.ZahrnutoDoPausalu
                     End Select
+                    c.p31IsInvoiceManual = True
                     lis.Add(c)
                 Next
                 If Master.Factory.p31WorksheetBL.UpdateInvoice(Master.DataPID, lis) Then

@@ -25,7 +25,14 @@
             Case BO.x29IdEnum.p56Task And Not bolMnozneCislo : Return "Úkol"
             Case BO.x29IdEnum.p56Task And bolMnozneCislo : Return "Úkoly"
 
-
+            Case BO.x29IdEnum.j07PersonPosition And Not bolMnozneCislo : Return "Pozice"
+            Case BO.x29IdEnum.j07PersonPosition And bolMnozneCislo : Return "Pozice"
+            Case BO.x29IdEnum.j18Region And Not bolMnozneCislo : Return "Středisko"
+            Case BO.x29IdEnum.j18Region And bolMnozneCislo : Return "Střediska"
+            Case BO.x29IdEnum.p34ActivityGroup And Not bolMnozneCislo : Return "Sešit"
+            Case BO.x29IdEnum.p34ActivityGroup And bolMnozneCislo : Return "Sešity"
+            Case BO.x29IdEnum.p32Activity And Not bolMnozneCislo : Return "Aktivita"
+            Case BO.x29IdEnum.p32Activity And bolMnozneCislo : Return "Aktivity"
 
             Case Else
                 Return ""
@@ -65,6 +72,9 @@
             Case "p47" : Return x29IdEnum.p47CapacityPlan
             Case "p64" : Return x29IdEnum.p64Binder
             Case "x18" : Return x29IdEnum.x18EntityCategory
+            Case "p32" : Return x29IdEnum.p32Activity
+            Case "p34" : Return x29IdEnum.p34ActivityGroup
+            Case "p51" : Return x29IdEnum.p51PriceList
             Case Else
                 Return x29IdEnum._NotSpecified
         End Select

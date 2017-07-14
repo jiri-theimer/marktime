@@ -32,13 +32,13 @@
     GR_O22_Creator = 30                   'Zapisovat události do kalendáře
     GR_P41_Draft_Creator = 31                'Vytvářet DRAFT projekty
     GR_P28_Draft_Creator = 32                'Vytvářet DRAFT klienty
-    GR_O23_Draft_Creator = 33                'Vytvářet DRAFT dokumenty
+    ''GR_O23_Draft_Creator = 33                'Vytvářet DRAFT dokumenty
     GR_P91_Draft_Creator = 34                'Oprávnění vystavovat DRAFT faktury za všechny projekty
     ''GR_O10_Creator = 35                   'Zapisovat články na nástěnku
     GR_X31_Personal = 36                  'Přístup k osobním tiskovým sestavám
     GR_GridTools = 37                   'Pokročilé nástroje v datových přehledech (vytvářet pojmenované filtry/návrhář sloupců/export do XLS/PDF/DOC)
     GR_Navigator = 38                     'Přístup do nástroje NAVIGATOR
-    GR_X18_Admin = 39                     'Správce štítků
+    GR_X18_Admin = 39                     'Správce dokumentů
     'Oprávnění projektové role
     PR_P41_Owner = 1                    'Oprávnění vlastníka projektu
     PR_P41_Roles = 2                    'Obsazovat projektové role v projektu
