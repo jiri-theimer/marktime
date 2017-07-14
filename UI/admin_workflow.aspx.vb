@@ -418,9 +418,9 @@ Public Class admin_workflow
             For Each row As DataRow In dtB08.Rows
                 Dim cc As New BO.b08WorkflowReceiverToStep
                 ''cc.b06ID = row.Item("b06ID")
-                cc.j04ID = BO.BAS.IsNullInt(row.Item("j04id"))
-                cc.j11ID = BO.BAS.IsNullInt(row.Item("j11id"))
-                cc.x67ID = BO.BAS.IsNullInt(row.Item("x67id"))
+                cc.j04ID = TestRecordExistenct("j04", BO.BAS.IsNullInt(row.Item("j04id")))
+                cc.j11ID = TestRecordExistenct("j11", BO.BAS.IsNullInt(row.Item("j11id")))
+                cc.x67ID = TestRecordExistenct("x67", BO.BAS.IsNullInt(row.Item("x67id")))
                 If Not row.Item("b08IsRecordCreator") Is System.DBNull.Value Then cc.b08IsRecordCreator = row.Item("b08IsRecordCreator")
                 If Not row.Item("b08IsRecordOwner") Is System.DBNull.Value Then cc.b08IsRecordOwner = row.Item("b08IsRecordOwner")
                 lisB08.Add(cc)
@@ -436,21 +436,21 @@ Public Class admin_workflow
                 cc.b10Worksheet_PersonFlag = BO.BAS.IsNullInt(row.Item("b10Worksheet_PersonFlag"))
                 cc.b10Worksheet_ProjectFlag = BO.BAS.IsNullInt(row.Item("b10Worksheet_ProjectFlag"))
                 cc.b10Worksheet_Text = row.Item("b10Worksheet_Text") & ""
-                cc.p31ID_Template = BO.BAS.IsNullInt(row.Item("p31ID_Template"))
+                cc.p31ID_Template = TestRecordExistenct("p31", BO.BAS.IsNullInt(row.Item("p31ID_Template")))
                 lisB10.Add(cc)
             Next
             Dim lisB11 As New List(Of BO.b11WorkflowMessageToStep)
             For Each row As DataRow In dtB11.Rows
                 If Not row.Item("b65ID") Is System.DBNull.Value Then
                     Dim cc As New BO.b11WorkflowMessageToStep
-                    If Not lisIDS.First(Function(p) p.Prefix = "b65" And p.OrigPID = row.Item("b65ID")) Is Nothing Then
+                    If lisIDS.Where(Function(p) p.Prefix = "b65" And p.OrigPID = row.Item("b65ID")).Count > 0 Then
                         cc.b65ID = lisIDS.First(Function(p) p.Prefix = "b65" And p.OrigPID = row.Item("b65ID")).NewPID
                         If Not row.Item("b11IsRecordCreator") Is System.DBNull.Value Then cc.b11IsRecordCreator = row.Item("b11IsRecordCreator")
                         If Not row.Item("b11IsRecordOwner") Is System.DBNull.Value Then cc.b11IsRecordCreator = row.Item("b11IsRecordOwner")
-                        cc.j02ID = BO.BAS.IsNullInt(row.Item("j02id"))
-                        cc.j11ID = BO.BAS.IsNullInt(row.Item("j11ID"))
-                        cc.x67ID = BO.BAS.IsNullInt(row.Item("x67ID"))
-                        cc.j04ID = BO.BAS.IsNullInt(row.Item("j04ID"))
+                        cc.j02ID = TestRecordExistenct("j02", BO.BAS.IsNullInt(row.Item("j02id")))
+                        cc.j11ID = TestRecordExistenct("j11", BO.BAS.IsNullInt(row.Item("j11ID")))
+                        cc.x67ID = TestRecordExistenct("x67", BO.BAS.IsNullInt(row.Item("x67ID")))
+                        cc.j04ID = TestRecordExistenct("j04", BO.BAS.IsNullInt(row.Item("j04ID")))
                         lisB11.Add(cc)
                     End If
                     
@@ -466,6 +466,24 @@ Public Class admin_workflow
         Dim lis As New List(Of BO.b01WorkflowTemplate)
 
     End Sub
+
+    Private Function TestRecordExistenct(strPrefix As String, intPID As Integer) As Integer
+        If intPID = 0 Then Return 0
+        Select Case strPrefix
+            Case "j04"
+                If Master.Factory.j04UserRoleBL.Load(intPID) Is Nothing Then intPID = 0
+            Case "j11"
+                If Master.Factory.j11TeamBL.Load(intPID) Is Nothing Then intPID = 0
+            Case "j02"
+                If Master.Factory.j02PersonBL.Load(intPID) Is Nothing Then intPID = 0
+            Case "x67"
+                If Master.Factory.x67EntityRoleBL.Load(intPID) Is Nothing Then intPID = 0
+            Case "p31"
+                If Master.Factory.p31WorksheetBL.Load(intPID) Is Nothing Then intPID = 0
+        End Select
+
+        Return intPID
+    End Function
 
     Private Function FindDataTable(ds As DataSet, strTableName As String) As DataTable
         For Each dt As DataTable In ds.Tables
