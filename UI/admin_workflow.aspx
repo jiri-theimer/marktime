@@ -181,7 +181,10 @@
                 <asp:CheckBox ID="chkIncludeNonActual" runat="server" AutoPostBack="true" Text="Zobrazovat i neplatné stavy a kroky" />
             </div>
             <div class="div6">
-                <asp:Button ID="cmdGenerateDump" runat="server" Text="Vyexportovat nastavení workflow šablony" />
+                <asp:Button ID="cmdGenerateDump" runat="server" Text="Vyexportovat nastavení workflow šablony" CssClass="cmd" />
+            </div>
+            <div class="div6">
+                <asp:Button ID="cmdImportXML" runat="server" Text="Importovat šablonu z XML souboru" CssClass="cmd" />
             </div>
         </div>
     </div>

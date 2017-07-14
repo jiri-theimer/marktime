@@ -86,6 +86,15 @@ Partial Public Class admin_workflow
     Protected WithEvents cmdGenerateDump As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''cmdImportXML control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdImportXML As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''tree1 control.
     '''</summary>
     '''<remarks>

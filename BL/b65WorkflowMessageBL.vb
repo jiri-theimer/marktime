@@ -3,7 +3,7 @@
     Function Save(cRec As BO.b65WorkflowMessage) As Boolean
     Function Load(intPID As Integer) As BO.b65WorkflowMessage
     Function Delete(intPID As Integer) As Boolean
-    Function GetList(Optional myQuery As BO.myQuery = Nothing) As IEnumerable(Of BO.b65WorkflowMessage)
+    Function GetList(intB01ID As Integer, Optional myQuery As BO.myQuery = Nothing) As IEnumerable(Of BO.b65WorkflowMessage)
 
 End Interface
 Class b65WorkflowMessageBL
@@ -26,8 +26,8 @@ Class b65WorkflowMessageBL
         Return _cDL.Delete(intPID)
     End Function
 
-    Public Function GetList(Optional myQuery As BO.myQuery = Nothing) As System.Collections.Generic.IEnumerable(Of BO.b65WorkflowMessage) Implements Ib65WorkflowMessageBL.GetList
-        Return _cDL.GetList(myQuery)
+    Public Function GetList(intB01ID As Integer, Optional myQuery As BO.myQuery = Nothing) As System.Collections.Generic.IEnumerable(Of BO.b65WorkflowMessage) Implements Ib65WorkflowMessageBL.GetList
+        Return _cDL.GetList(intB01ID, myQuery)
     End Function
 
     Public Function Load(intPID As Integer) As BO.b65WorkflowMessage Implements Ib65WorkflowMessageBL.Load
@@ -37,12 +37,12 @@ Class b65WorkflowMessageBL
 
     Public Function Save(cRec As BO.b65WorkflowMessage) As Boolean Implements Ib65WorkflowMessageBL.Save
         If Trim(cRec.b65Name) = "" Or Trim(cRec.b65MessageSubject) = "" Then
-            _Error = "[Název šablony] a [Předmět zprávy] jsou povinná pole k vyplnění."
+            _Error = "[Název] a [Předmět zprávy] jsou povinná pole k vyplnění." : Return False
         End If
-        'If cRec.x29ID = 0 Then
-        '    _Error = "Entita je povinné pole."
-        'End If
-        If _Error <> "" Then Return False
+        If cRec.b01ID = 0 Then
+            _Error = "Chybí vazba na workflow šablonu." : Return False
+        End If
+      
         Return _cDL.Save(cRec)
     End Function
 End Class

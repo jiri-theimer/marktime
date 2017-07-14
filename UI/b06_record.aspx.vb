@@ -10,6 +10,11 @@
             Me.hidcurx29id.Value = CInt(value).ToString
         End Set
     End Property
+    Public ReadOnly Property CurrentB01ID As Integer
+        Get
+            Return BO.BAS.IsNullInt(hidB01ID.Value)
+        End Get
+    End Property
     Private Sub b06_record_Init(sender As Object, e As System.EventArgs) Handles Me.Init
         _MasterPage = Me.Master
     End Sub
@@ -25,6 +30,9 @@
                 .HeaderText = "Workflow krok"
             End With
             ViewState("b02id") = Request.Item("b02id")
+            Dim cB02 As BO.b02WorkflowStatus = Master.Factory.b02WorkflowStatusBL.Load(BO.BAS.IsNullInt(ViewState("b02id")))
+            hidB01ID.Value = cB02.b01ID.ToString
+            hidcurx29id.Value = CInt(cB02.x29ID).ToString
 
             RefreshRecord()
 
@@ -390,8 +398,9 @@
                 Catch ex As Exception
                 End Try
             End With
+
             Dim mq As New BO.myQuery
-            Dim lis2 As IEnumerable(Of BO.b65WorkflowMessage) = Master.Factory.b65WorkflowMessageBL.GetList(mq).Where(Function(p) p.x29ID = Me.CurrentX29ID)
+            Dim lis2 As IEnumerable(Of BO.b65WorkflowMessage) = Master.Factory.b65WorkflowMessageBL.GetList(Me.CurrentB01ID, New BO.myQuery)
             With CType(e.Item.FindControl("b65id"), DropDownList)
                 .DataSource = lis2
                 .DataBind()

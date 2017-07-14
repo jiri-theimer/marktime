@@ -16,7 +16,7 @@
             End With
             If Request.Item("b01id") <> "" Then
                 Dim cB01 As BO.b01WorkflowTemplate = Master.Factory.b01WorkflowTemplateBL.Load(CInt(Request.Item("b01id")))
-                Me.x29ID.SelectedValue = CInt(cB01.x29ID).ToString
+
             End If
 
             RefreshRecord()
@@ -33,12 +33,17 @@
        
     End Sub
     Private Sub RefreshRecord()
-       
-        If Master.DataPID = 0 Then Return
+        Me.b01ID.DataSource = Master.Factory.b01WorkflowTemplateBL.GetList()
+        Me.b01ID.DataBind()
+
+        If Master.DataPID = 0 Then
+            Me.b01ID.SelectedValue = Request.Item("b01id")
+            Return
+        End If
 
         Dim cRec As BO.b65WorkflowMessage = Master.Factory.b65WorkflowMessageBL.Load(Master.DataPID)
         With cRec
-            basUI.SelectDropdownlistValue(Me.x29ID, CInt(.x29ID).ToString)
+            Me.b01ID.SelectedValue = .b01ID.ToString
             b65name.Text = .b65Name
             b65MessageSubject.Text = .b65MessageSubject
             b65MessageBody.Text = .b65MessageBody
@@ -69,7 +74,7 @@
         With Master.Factory.b65WorkflowMessageBL
             Dim cRec As BO.b65WorkflowMessage = IIf(Master.DataPID <> 0, .Load(Master.DataPID), New BO.b65WorkflowMessage)
             With cRec
-                .x29ID = BO.BAS.IsNullInt(Me.x29ID.SelectedValue)
+                .b01ID = BO.BAS.IsNullInt(Me.b01ID.SelectedValue)
                 .b65Name = b65name.Text
                 .b65MessageSubject = b65MessageSubject.Text
                 .b65MessageBody = b65MessageBody.Text

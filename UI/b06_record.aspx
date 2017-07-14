@@ -336,6 +336,7 @@
 
 
     <asp:HiddenField ID="hidcurx29id" runat="server" />
+    <asp:HiddenField ID="hidB01ID" runat="server" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

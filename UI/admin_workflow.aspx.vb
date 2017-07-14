@@ -3,6 +3,16 @@
 Public Class admin_workflow
     Inherits System.Web.UI.Page
 
+    Private Class IDS
+        Public Property Prefix As String
+        Public Property OrigPID As Integer
+        Public Property NewPID As Integer
+        Public Sub New(strPrefix As String, intOrigPID As Integer, intNewPID As Integer)
+            Me.Prefix = strPrefix
+            Me.OrigPID = intOrigPID
+            Me.NewPID = intNewPID
+        End Sub
+    End Class
     Public Property CurrentB01ID As Integer
         Get
             Return BO.BAS.IsNullInt(cbxB01ID.SelectedValue)
@@ -113,7 +123,7 @@ Public Class admin_workflow
 
     Private Sub RefreshB65List(cRec As BO.b01WorkflowTemplate)
 
-        Dim lis As IEnumerable(Of BO.b65WorkflowMessage) = Master.Factory.b65WorkflowMessageBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = Me.CurrentX29ID)
+        Dim lis As IEnumerable(Of BO.b65WorkflowMessage) = Master.Factory.b65WorkflowMessageBL.GetList(Me.CurrentB01ID, New BO.myQuery)
 
         rpB65.DataSource = lis
         rpB65.DataBind()
@@ -309,7 +319,7 @@ Public Class admin_workflow
         pars.Add(par)
         Dim s As String = "SELECT * from b01WorkflowTemplate where b01ID=@b01id"
         s += ";SELECT * FROM b02WorkflowStatus WHERE b01ID=@b01id"
-        s += ";SELECT * FROM b65WorkflowMessage"
+        s += ";SELECT * FROM b65WorkflowMessage WHERE b01ID=@b01id"
         s += ";SELECT * FROM b06WorkflowStep WHERE b02ID IN (SELECT b02ID FROM b02WorkflowStatus where b01ID=@b01id)"
         s += ";SELECT * from b08WorkflowReceiverToStep WHERE b06ID IN (SELECT a.b06ID FROM b06WorkflowStep a INNER JOIN b02WorkflowStatus b ON a.b02ID=b.b02ID)"
         s += ";SELECT * from b11WorkflowMessageToStep WHERE b06ID IN (SELECT a.b06ID FROM b06WorkflowStep a INNER JOIN b02WorkflowStatus b ON a.b02ID=b.b02ID)"
@@ -318,9 +328,119 @@ Public Class admin_workflow
         Dim ds As System.Data.DataSet = Master.Factory.pluginBL.GetDataSet(s, pars, "b01WorkflowTemplate,b02WorkflowStatus,b65WorkflowMessage,b06WorkflowStep,b08WorkflowReceiverToStep,b11WorkflowMessageToStep,b10WorkflowCommandCatalog_Binding")
 
 
-        ds.WriteXml("c:\temp\pokus.xml", XmlWriteMode.WriteSchema)
+        ds.WriteXml(Master.Factory.x35GlobalParam.TempFolder & "\workflow_b01id_" & Me.CurrentB01ID.ToString & ".xml", XmlWriteMode.WriteSchema)
+        Master.Notify("Šablona vyexportována do TEMpu.")
+        
+    End Sub
+
+    Private Sub cmdImportXML_Click(sender As Object, e As EventArgs) Handles cmdImportXML.Click
+        Dim strFile As String = Master.Factory.x35GlobalParam.TempFolder & "\workflow_b01id_1014.xml"
+        Dim ds As New DataSet
+        ds.ReadXml(strFile)
+
+        Dim lisIDS As New List(Of IDS)
+
+
+        Dim dt As DataTable = FindDataTable(ds, "b01WorkflowTemplate")
+        Dim cB01 As New BO.b01WorkflowTemplate
+        With cB01
+            .x29ID = dt.Rows(0).Item("x29ID")
+            .b01Name = dt.Rows(0).Item("b01Name") & " KOPIE"
+            .b01Code = dt.Rows(0).Item("b01Code") & ""
+        End With
+        With Master.Factory.b01WorkflowTemplateBL
+            If .Save(cB01) Then
+                cB01 = .Load(.LastSavedPID)
+            End If
+        End With
+
+        dt = FindDataTable(ds, "b02WorkflowStatus")
+        For Each dbRow As DataRow In dt.Rows
+            Dim c As New BO.b02WorkflowStatus
+            c.b01ID = cB01.PID
+            c.b02Code = dbRow.Item("b02Code") & ""
+            c.b02Name = dbRow.Item("b02Name")
+            c.b02Ordinary = BO.BAS.IsNullInt(dbRow.Item("b02Ordinary"))
+            c.b02Color = dbRow.Item("b02Color") & ""
+            If Not dbRow.Item("b02IsRecordReadOnly4Owner") Is System.DBNull.Value Then c.b02IsRecordReadOnly4Owner = dbRow.Item("b02IsRecordReadOnly4Owner")
+            If Master.Factory.b02WorkflowStatusBL.Save(c) Then
+                lisIDS.Add(New IDS("b02", dbRow.Item("b02ID"), Master.Factory.b02WorkflowStatusBL.LastSavedPID))
+            End If
+        Next
+
+        Dim dtB08 As DataTable = FindDataTable(ds, "b08WorkflowReceiverToStep")
+        Dim dtB10 As DataTable = FindDataTable(ds, "b10WorkflowCommandCatalog_Binding")
+
+        dt = FindDataTable(ds, "b06WorkflowStep")
+        For Each dbRow As DataRow In dt.Rows
+            Dim c As New BO.b06WorkflowStep
+            c.b02ID = lisIDS.First(Function(p) p.OrigPID = dbRow.Item("b02ID")).NewPID
+            If Not dbRow.Item("b02ID_LastReceiver_ReturnTo") Is System.DBNull.Value Then
+                c.b02ID_LastReceiver_ReturnTo = BO.BAS.IsNullInt(lisIDS.First(Function(p) p.OrigPID = dbRow.Item("b02ID_LastReceiver_ReturnTo")).NewPID)
+            End If
+            If Not dbRow.Item("b02ID_Target") Is System.DBNull.Value Then
+                c.b02ID_Target = BO.BAS.IsNullInt(lisIDS.First(Function(p) p.OrigPID = dbRow.Item("b02ID_Target")).NewPID())
+            End If
+
+            c.b06Code = dbRow.Item("b06Code") & ""
+            c.b06CreateDirectory = dbRow.Item("b06CreateDirectory") & ""
+            c.b06CreateSubdirectory = dbRow.Item("b06CreateSubdirectory") & ""
+            c.b06IsCommentRequired = dbRow.Item("b06IsCommentRequired")
+            c.b06IsKickOffStep = dbRow.Item("b06IsKickOffStep")
+            c.b06IsManualStep = dbRow.Item("b06IsManualStep")
+            c.b06IsNominee = dbRow.Item("b06IsNominee")
+            c.b06IsNomineeRequired = dbRow.Item("b06IsNomineeRequired")
+            c.b06IsRunOneInstanceOnly = dbRow.Item("b06IsRunOneInstanceOnly")
+            c.b06Name = dbRow.Item("b06Name") & ""
+            c.b06Ordinary = dbRow.Item("b06Ordinary")
+            c.b06RunSQL = dbRow.Item("b06RunSQL") & ""
+            c.b06ValidateAutoMoveSQL = dbRow.Item("b06ValidateAutoMoveSQL") & ""
+            c.b06ValidateBeforeErrorMessage = dbRow.Item("b06ValidateBeforeErrorMessage") & ""
+            c.b06ValidateBeforeRunSQL = dbRow.Item("b06ValidateBeforeRunSQL") & ""
+            c.j11ID_Direct = BO.BAS.IsNullInt(dbRow.Item("j11ID_Direct"))
+            c.x67ID_Direct = BO.BAS.IsNullInt(dbRow.Item("x67ID_Direct"))
+            c.x67ID_Nominee = BO.BAS.IsNullInt(dbRow.Item("x67ID_Nominee"))
+
+            Dim lisB08 As New List(Of BO.b08WorkflowReceiverToStep)
+            For Each row As DataRow In dtB08.Rows
+                Dim cc As New BO.b08WorkflowReceiverToStep
+                ''cc.b06ID = row.Item("b06ID")
+                cc.j04ID = BO.BAS.IsNullInt(row.Item("j04id"))
+                cc.j11ID = BO.BAS.IsNullInt(row.Item("j11id"))
+                cc.x67ID = BO.BAS.IsNullInt(row.Item("x67id"))
+                If Not row.Item("b08IsRecordCreator") Is System.DBNull.Value Then cc.b08IsRecordCreator = row.Item("b08IsRecordCreator")
+                If Not row.Item("b08IsRecordOwner") Is System.DBNull.Value Then cc.b08IsRecordOwner = row.Item("b08IsRecordOwner")
+                lisB08.Add(cc)
+            Next
+            Dim lisB10 As New List(Of BO.b10WorkflowCommandCatalog_Binding)
+            For Each row As DataRow In dtB10.Rows
+                Dim cc As New BO.b10WorkflowCommandCatalog_Binding
+                ''cc.b06ID = row.Item("b06ID")
+                cc.b09ID = BO.BAS.IsNullInt(row.Item("b09ID"))
+                cc.b10Worksheet_DateFlag = BO.BAS.IsNullInt(row.Item("b10Worksheet_DateFlag"))
+                cc.b10Worksheet_HoursFlag = BO.BAS.IsNullInt(row.Item("b10Worksheet_HoursFlag"))
+                cc.b10Worksheet_p72ID = BO.BAS.IsNullInt(row.Item("b10Worksheet_p72ID"))
+                cc.b10Worksheet_PersonFlag = BO.BAS.IsNullInt(row.Item("b10Worksheet_PersonFlag"))
+                cc.b10Worksheet_ProjectFlag = BO.BAS.IsNullInt(row.Item("b10Worksheet_ProjectFlag"))
+                cc.b10Worksheet_Text = row.Item("b10Worksheet_Text") & ""
+                cc.p31ID_Template = BO.BAS.IsNullInt(row.Item("p31ID_Template"))
+                lisB10.Add(cc)
+            Next
+            Dim lisB11 As New List(Of BO.b11WorkflowMessageToStep)
+
+            If Master.Factory.b06WorkflowStepBL.Save(c, lisB08, Nothing, lisB10) Then
+                ''lisIDS.Add(New IDS("b06", row.Item("b06ID"), Master.Factory.b06WorkflowStepBL.LastSavedPID))
+            End If
+        Next
 
         Dim lis As New List(Of BO.b01WorkflowTemplate)
 
     End Sub
+
+    Private Function FindDataTable(ds As DataSet, strTableName As String) As DataTable
+        For Each dt As DataTable In ds.Tables
+            If LCase(dt.TableName) = LCase(strTableName) Then Return dt
+        Next
+        Return Nothing
+    End Function
 End Class

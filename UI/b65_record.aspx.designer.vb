@@ -14,22 +14,22 @@ Option Explicit On
 Partial Public Class b65_record
 
     '''<summary>
-    '''Label3 control.
+    '''lblB01ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblB01ID As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''x29ID control.
+    '''b01ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents x29ID As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents b01ID As Global.UI.datacombo
 
     '''<summary>
     '''lblB65Name control.

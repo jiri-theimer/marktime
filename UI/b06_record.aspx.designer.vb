@@ -527,6 +527,15 @@ Partial Public Class b06_record
     Protected WithEvents hidcurx29id As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidB01ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidB01ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>
