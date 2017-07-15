@@ -24,7 +24,7 @@
 
         function sw(url) {
             sw_master(url, "Images/setting_32.png");
-    }
+        }
 
 
 
@@ -32,38 +32,38 @@
           
             var pid = <%=Me.cbxB01ID.SelectedValue%>;
             
-         if (pid == "" || pid == null) {
-             alert("Není vybrán záznam šablony.");
-             return
-         }
-         sw("b01_record.aspx?pid=" + pid);
+            if (pid == "" || pid == null) {
+                alert("Není vybrán záznam šablony.");
+                return
+            }
+            sw("b01_record.aspx?pid=" + pid);
 
-     }
+        }
 
-     function b02_new() {
-         var b01id = <%=Me.cbxB01ID.SelectedValue%>;
-         sw("b02_record.aspx?pid=0&b01id=" + b01id);
+        function b02_new() {
+            var b01id = <%=Me.cbxB01ID.SelectedValue%>;
+            sw("b02_record.aspx?pid=0&b01id=" + b01id);
 
-     }
-     function b02_edit(b02id) {
-         if (b02id == "" || b02id == null) {
-             alert("Není vybrán stav.");
-             return
-         }
+        }
+        function b02_edit(b02id) {
+            if (b02id == "" || b02id == null) {
+                alert("Není vybrán stav.");
+                return
+            }
 
-         sw("b02_record.aspx?pid=" + b02id);
+            sw("b02_record.aspx?pid=" + b02id);
 
-     }
+        }
 
-     function b01_new(bolContextMenu) {
-         sw("b01_record.aspx?pid=0");
+        function b01_new(bolContextMenu) {
+            sw("b01_record.aspx?pid=0");
 
-         if (bolContextMenu == false)
-             return (false);
-     }
+            if (bolContextMenu == false)
+                return (false);
+        }
 
-     function b65_new() {
-         var b01id = <%=Me.cbxB01ID.SelectedValue%>;
+        function b65_new() {
+            var b01id = <%=Me.cbxB01ID.SelectedValue%>;
          sw("b65_record.aspx?pid=0&b01id=" + b01id);
          return (false);
      }
@@ -101,17 +101,17 @@
      function hardrefresh(pid, flag) {
          if (flag == "b01-save") {
              
-            document.getElementById("<%=hidcurb02id.clientid%>").value = "";
-            document.getElementById("<%=hidcurb06id.clientid%>").value = "";
-        }
+             document.getElementById("<%=hidcurb02id.clientid%>").value = "";
+             document.getElementById("<%=hidcurb06id.clientid%>").value = "";
+         }
 
-        if (flag == "b02-save") {
-            document.getElementById("<%=hidcurb02id.clientid%>").value = pid;
-            document.getElementById("<%=hidcurb06id.clientid%>").value = "";
-        }
+         if (flag == "b02-save") {
+             document.getElementById("<%=hidcurb02id.clientid%>").value = pid;
+             document.getElementById("<%=hidcurb06id.clientid%>").value = "";
+         }
 
-        if (flag == "b06-save")
-            document.getElementById("<%=hidcurb06id.clientid%>").value = pid;
+         if (flag == "b06-save")
+             document.getElementById("<%=hidcurb06id.clientid%>").value = pid;
 
 
         document.getElementById("<%=hidcurflag.clientid%>").value = flag;
@@ -121,31 +121,31 @@
 
         function b02_click(b02id) {
             if (b02id == document.getElementById("<%=hidcurb02id.clientid%>").value)
-             return;
+                return;
 
-         document.getElementById("<%=hidcurb02id.clientid%>").value = b02id;
-         document.getElementById("<%=hidcurflag.clientid%>").value = "b02-change";
-         <%=Me.ClientScript.GetPostBackEventReference(Me.cmdRefreshOnBehind, "", False)%>;
+            document.getElementById("<%=hidcurb02id.clientid%>").value = b02id;
+            document.getElementById("<%=hidcurflag.clientid%>").value = "b02-change";
+            <%=Me.ClientScript.GetPostBackEventReference(Me.cmdRefreshOnBehind, "", False)%>;
 
-     }
+        }
 
 
         function b06_click(b06id) {
             if (b06id == document.getElementById("<%=hidcurb06id.clientid%>").value)
-             return;
+                return;
 
-         document.getElementById("<%=hidcurb06id.clientid%>").value = b06id;
-         document.getElementById("<%=hidcurflag.clientid%>").value = "b06-change";
-         <%=Me.ClientScript.GetPostBackEventReference(Me.cmdRefreshOnBehind, "", False)%>;
+            document.getElementById("<%=hidcurb06id.clientid%>").value = b06id;
+            document.getElementById("<%=hidcurflag.clientid%>").value = "b06-change";
+            <%=Me.ClientScript.GetPostBackEventReference(Me.cmdRefreshOnBehind, "", False)%>;
 
-     }
+        }
 
 
     </script>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    
+
     <div class="gridheader">
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
@@ -155,10 +155,10 @@
                 <td>
                     <asp:Label ID="lblFormHeader" runat="server" CssClass="framework_header_span" Style="margin-left: 10px;"></asp:Label>
                 </td>
-              
+
                 <td>
-                    <span>Vybraná workflow šablona:</span>
-                    <asp:DropDownList ID="cbxB01ID" DataTextField="b01Name" DataValueField="pid" runat="server" AutoPostBack="true" style="min-width:200px;"></asp:DropDownList>
+                    <span>Pracovat s workflow šablonou:</span>
+                    <asp:DropDownList ID="cbxB01ID" DataTextField="b01Name" DataValueField="pid" runat="server" AutoPostBack="true" Style="min-width: 200px;background-color:yellow;"></asp:DropDownList>
                 </td>
                 <td align="right">
                     <button type="button" id="cmdMore" class="show_hide1">
@@ -174,17 +174,33 @@
                 </td>
             </tr>
         </table>
-        <div class="slidingDiv1" style="text-align: right;">
-            <div class="div6">
-                <asp:CheckBox ID="chkShowB65" runat="server" AutoPostBack="true" Text="Zobrazovat šablony notifikačních zpráv" />
+        <div class="slidingDiv1">
+            <div class="content-box3">
+                <div class="title">Různá nastavení</div>
+                <div class="content">
 
-                <asp:CheckBox ID="chkIncludeNonActual" runat="server" AutoPostBack="true" Text="Zobrazovat i neplatné stavy a kroky" />
-            </div>
-            <div class="div6">
-                <asp:Button ID="cmdGenerateDump" runat="server" Text="Vyexportovat nastavení workflow šablony" CssClass="cmd" />
-            </div>
-            <div class="div6">
-                <asp:Button ID="cmdImportXML" runat="server" Text="Importovat šablonu z XML souboru" CssClass="cmd" />
+                    <div class="div6">
+
+                        <asp:CheckBox ID="chkIncludeNonActual" runat="server" AutoPostBack="true" Text="Zobrazovat i neplatné stavy a kroky" />
+                    </div>
+                    <div class="div6">
+                        <asp:Button ID="cmdGenerateDump" runat="server" Text="Vyexportovat workflow šablonu do XML" CssClass="cmd" />
+                    </div>
+
+
+
+
+                    <div class="content-box2">
+                        <div class="title">Importovat šablonu z XML souboru</div>
+                        <div class="content">
+                            <telerik:RadUpload ID="upload1" runat="server" InputSize="30" InitialFileInputsCount="1" RenderMode="Auto" Skin="Default" ControlObjectsVisibility="None" AllowedFileExtensions="xml" MaxFileInputsCount="1">
+                                <Localization Add="Přidat" Delete="Odstranit" Select="Vybrat XML" Remove="Odstranit" />
+                            </telerik:RadUpload>
+
+                            <asp:Button ID="cmdImportXML" runat="server" Text="Naimportovat šablonu z XML" CssClass="cmd" />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -214,7 +230,7 @@
                     <div class="div6">
                         <asp:Button ID="cmdNewB06" runat="server" Text="Nový krok v rámci stavu" CssClass="cmd" OnClientClick="return b06_new(false)" />
                     </div>
-                   
+
                     <asp:Repeater ID="rpB02_B06" runat="server">
                         <ItemTemplate>
                             <div style="padding: 6px;">
@@ -223,7 +239,7 @@
                             </div>
                         </ItemTemplate>
                     </asp:Repeater>
-                     
+
                 </asp:Panel>
             </td>
         </tr>
@@ -233,7 +249,7 @@
     <asp:Panel ID="panB65" runat="server">
         <uc:pageheader ID="ph1" runat="server" Text="Šablony notifikačních zpráv" IsInForm="true" />
         <div>
-            <asp:Button ID="cmdNewB65" runat="server" Text="Nová šablona zprávy" CssClass="cmd" OnClientClick="return b65_new()" />
+            <asp:Button ID="cmdNewB65" runat="server" Text="Nová notifikační zpráva" CssClass="cmd" OnClientClick="return b65_new()" />
         </div>
         <table cellpadding="4" cellspacing="3">
             <asp:Repeater ID="rpB65" runat="server">
@@ -256,7 +272,7 @@
 
 
     <asp:LinkButton ID="cmdRefreshOnBehind" runat="server" Text="refreshonbehind" Style="display: none;"></asp:LinkButton>
-    
+
     <asp:HiddenField ID="hidcurb02id" runat="server" />
     <asp:HiddenField ID="hidcurb06id" runat="server" />
     <asp:HiddenField ID="hidcurx29id" runat="server" />

@@ -3910,6 +3910,8 @@ END
 CLOSE cur2
 DEALLOCATE cur2   
 
+if exists(select b65ID FROM b65WorkflowMessage where b01ID=@pid)
+ DELETE FROM b65WorkflowMessage WHERE b01ID=@pid
 
 delete from b01WorkflowTemplate where b01id=@pid
 
@@ -3951,10 +3953,23 @@ begin
  return
 end
 
+if exists(select p56ID from p56Task where b02ID=@pid)
+begin
+ set @err_ret='Minimálnì jeden úkol má vazbu na tento workflow stav.'
+ return
+end
+
+if exists(select o23ID from o23Doc where b02ID=@pid)
+begin
+ set @err_ret='Minimálnì jeden dokument má vazbu na tento workflow stav.'
+ return
+end
+
+
 declare @b06id int,@err_b06 varchar(500)
 
 DECLARE cur1 CURSOR FOR 
-SELECT b06id FROM b06WorkflowStep WHERE b02ID=@pid
+SELECT b06id FROM b06WorkflowStep WHERE b02ID=@pid OR b02ID_Target=@pid
 
 OPEN cur1
 FETCH NEXT FROM cur1 

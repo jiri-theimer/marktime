@@ -4125,10 +4125,10 @@
     <TableName>b65WorkflowMessage</TableName>
   </Table>
   <Table>
-    <name>x29ID</name>
+    <name>b01ID</name>
     <id>226099846</id>
     <xtype>56</xtype>
-    <typestat>1</typestat>
+    <typestat>0</typestat>
     <xusertype>56</xusertype>
     <length>4</length>
     <xprec>10</xprec>
@@ -4142,17 +4142,17 @@
     <domain>0</domain>
     <number>0</number>
     <colorder>2</colorder>
-    <offset>6</offset>
+    <offset>-1</offset>
     <collationid>0</collationid>
     <language>0</language>
-    <status>0</status>
-    <type>56</type>
+    <status>8</status>
+    <type>38</type>
     <usertype>7</usertype>
     <prec>10</prec>
     <scale>0</scale>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
-    <isnullable>0</isnullable>
+    <isnullable>1</isnullable>
     <tdscollation>AAAAAAA=</tdscollation>
     <type_name>int</type_name>
     <TableName>b65WorkflowMessage</TableName>
@@ -4175,7 +4175,7 @@
     <domain>0</domain>
     <number>0</number>
     <colorder>3</colorder>
-    <offset>-1</offset>
+    <offset>-2</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -4208,7 +4208,7 @@
     <domain>0</domain>
     <number>0</number>
     <colorder>4</colorder>
-    <offset>-2</offset>
+    <offset>-3</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -4241,7 +4241,7 @@
     <domain>0</domain>
     <number>0</number>
     <colorder>5</colorder>
-    <offset>-3</offset>
+    <offset>-4</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>8</status>
@@ -4273,7 +4273,7 @@
     <domain>0</domain>
     <number>0</number>
     <colorder>6</colorder>
-    <offset>-4</offset>
+    <offset>-5</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -4306,7 +4306,7 @@
     <domain>0</domain>
     <number>0</number>
     <colorder>7</colorder>
-    <offset>-5</offset>
+    <offset>-6</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -4339,7 +4339,7 @@
     <domain>0</domain>
     <number>0</number>
     <colorder>8</colorder>
-    <offset>-6</offset>
+    <offset>-7</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -4372,7 +4372,7 @@
     <domain>0</domain>
     <number>0</number>
     <colorder>9</colorder>
-    <offset>-7</offset>
+    <offset>-8</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -4405,7 +4405,7 @@
     <domain>0</domain>
     <number>0</number>
     <colorder>10</colorder>
-    <offset>-8</offset>
+    <offset>-9</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -4438,7 +4438,7 @@
     <domain>0</domain>
     <number>0</number>
     <colorder>11</colorder>
-    <offset>-9</offset>
+    <offset>-10</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>

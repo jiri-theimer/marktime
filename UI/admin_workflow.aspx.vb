@@ -71,7 +71,7 @@ Public Class admin_workflow
                 If Me.CurrentB01ID = 0 Then
                     Me.CurrentB01ID = BO.BAS.IsNullInt(.GetUserParam("admin_workflow-b01id"))
                 End If
-                chkShowB65.Checked = BO.BAS.BG(.GetUserParam("admin_workflow-showb65", "1"))
+
                 Me.chkIncludeNonActual.Checked = BO.BAS.BG(.GetUserParam("admin_workflow-include_nonactual", "0"))
             End With
             ''With Master
@@ -96,7 +96,7 @@ Public Class admin_workflow
         End If
     End Sub
     Private Sub RefreshState()
-        panB65.Visible = chkShowB65.Checked
+
         If Me.CurrentB02ID = 0 Then
             cmdNewB06.Visible = False
         Else
@@ -114,9 +114,7 @@ Public Class admin_workflow
         End If
         Dim cRec As BO.b01WorkflowTemplate = Master.Factory.b01WorkflowTemplateBL.Load(Me.CurrentB01ID)
         Me.CurrentX29ID = cRec.x29ID
-        If chkShowB65.Checked Then
-            RefreshB65List(cRec)
-        End If
+        RefreshB65List(cRec)
 
         RefreshTree()
     End Sub
@@ -140,10 +138,7 @@ Public Class admin_workflow
         CType(e.Item.FindControl("b65MessageSubject"), Label).Text = cRec.b65MessageSubject
     End Sub
 
-    Private Sub chkShowB65_CheckedChanged(sender As Object, e As System.EventArgs) Handles chkShowB65.CheckedChanged
-        Master.Factory.j03UserBL.SetUserParam("admin_workflow-showb65", BO.BAS.GB(chkShowB65.Checked))
-        RefreshRecord()
-    End Sub
+    
 
     Private Sub RefreshTree()
         Dim myQuery As New BO.myQuery
@@ -251,10 +246,8 @@ Public Class admin_workflow
                 Me.CurrentB02ID = cRec.b02ID
                 RefreshB02Record()
             Case "b65-save", "b65-delete"
-                If chkShowB65.Checked Then
-                    Dim cRec As BO.b01WorkflowTemplate = Master.Factory.b01WorkflowTemplateBL.Load(Me.CurrentB01ID)
-                    RefreshB65List(cRec)
-                End If
+                Dim cRec As BO.b01WorkflowTemplate = Master.Factory.b01WorkflowTemplateBL.Load(Me.CurrentB01ID)
+                RefreshB65List(cRec)
                 RefreshB02Record()
             Case Else
                 RefreshRecord()
@@ -321,20 +314,27 @@ Public Class admin_workflow
         s += ";SELECT * FROM b02WorkflowStatus WHERE b01ID=@b01id"
         s += ";SELECT * FROM b65WorkflowMessage WHERE b01ID=@b01id"
         s += ";SELECT * FROM b06WorkflowStep WHERE b02ID IN (SELECT b02ID FROM b02WorkflowStatus where b01ID=@b01id)"
-        s += ";SELECT * from b08WorkflowReceiverToStep WHERE b06ID IN (SELECT a.b06ID FROM b06WorkflowStep a INNER JOIN b02WorkflowStatus b ON a.b02ID=b.b02ID)"
-        s += ";SELECT * from b11WorkflowMessageToStep WHERE b06ID IN (SELECT a.b06ID FROM b06WorkflowStep a INNER JOIN b02WorkflowStatus b ON a.b02ID=b.b02ID)"
-        s += ";SELECT * from b10WorkflowCommandCatalog_Binding WHERE b06ID IN (SELECT a.b06ID FROM b06WorkflowStep a INNER JOIN b02WorkflowStatus b ON a.b02ID=b.b02ID)"
+        s += ";SELECT * from b08WorkflowReceiverToStep WHERE b06ID IN (SELECT a.b06ID FROM b06WorkflowStep a INNER JOIN b02WorkflowStatus b ON a.b02ID=b.b02ID WHERE b.b01ID=@b01id)"
+        s += ";SELECT * from b11WorkflowMessageToStep WHERE b06ID IN (SELECT a.b06ID FROM b06WorkflowStep a INNER JOIN b02WorkflowStatus b ON a.b02ID=b.b02ID WHERE b.b01ID=@b01id)"
+        s += ";SELECT * from b10WorkflowCommandCatalog_Binding WHERE b06ID IN (SELECT a.b06ID FROM b06WorkflowStep a INNER JOIN b02WorkflowStatus b ON a.b02ID=b.b02ID WHER b.b01ID=@b01id)"
 
         Dim ds As System.Data.DataSet = Master.Factory.pluginBL.GetDataSet(s, pars, "b01WorkflowTemplate,b02WorkflowStatus,b65WorkflowMessage,b06WorkflowStep,b08WorkflowReceiverToStep,b11WorkflowMessageToStep,b10WorkflowCommandCatalog_Binding")
 
 
         ds.WriteXml(Master.Factory.x35GlobalParam.TempFolder & "\workflow_b01id_" & Me.CurrentB01ID.ToString & ".xml", XmlWriteMode.WriteSchema)
-        Master.Notify("Šablona vyexportována do TEMpu.")
+        ''Master.Notify("Šablona vyexportována do TEMpu.")
+        Response.Redirect("binaryfile.aspx?tempfile=workflow_b01id_" & Me.CurrentB01ID.ToString & ".xml")
         
     End Sub
 
+
     Private Sub cmdImportXML_Click(sender As Object, e As EventArgs) Handles cmdImportXML.Click
-        Dim strFile As String = Master.Factory.x35GlobalParam.TempFolder & "\workflow_b01id_1014.xml"
+        Dim lisFiles As List(Of String) = basUI.Get_Uploaded_Files(Me.upload1, Master.Factory.x35GlobalParam.TempFolder)
+        If lisFiles.Count = 0 Then
+            Master.Notify("Na vstupu chybí nahraný XML soubor.", NotifyLevel.ErrorMessage)
+            Return
+        End If
+        Dim strFile As String = lisFiles(0)
         Dim ds As New DataSet
         ds.ReadXml(strFile)
 
@@ -453,9 +453,9 @@ Public Class admin_workflow
                         cc.j04ID = TestRecordExistenct("j04", BO.BAS.IsNullInt(row.Item("j04ID")))
                         lisB11.Add(cc)
                     End If
-                    
+
                 End If
-                
+
             Next
 
             If Master.Factory.b06WorkflowStepBL.Save(c, lisB08, lisB11, lisB10) Then
@@ -463,7 +463,7 @@ Public Class admin_workflow
             End If
         Next
 
-        Dim lis As New List(Of BO.b01WorkflowTemplate)
+        Response.Redirect("admin_workflow.aspx?b01id=" & cB01.PID.ToString)
 
     End Sub
 

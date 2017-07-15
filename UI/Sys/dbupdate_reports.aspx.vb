@@ -20,6 +20,7 @@ Public Class dbupdate_reports
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Master.NoMenu = True
         If Not Page.IsPostBack Then
             If Not System.IO.File.Exists(BO.ASS.GetApplicationRootFolder & "\sys\reports\reports.ini") Then
                 Master.StopPage("Chybí konfigurační soubor: \sys\reports\reports.ini")

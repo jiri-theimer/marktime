@@ -59,15 +59,6 @@ Partial Public Class admin_workflow
     Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''chkShowB65 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkShowB65 As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
     '''chkIncludeNonActual control.
     '''</summary>
     '''<remarks>
@@ -84,6 +75,15 @@ Partial Public Class admin_workflow
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdGenerateDump As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''upload1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents upload1 As Global.Telerik.Web.UI.RadUpload
 
     '''<summary>
     '''cmdImportXML control.

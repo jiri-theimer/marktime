@@ -283,4 +283,16 @@ Public Class basUI
         ''Return s
 
     End Function
+
+    Public Shared Function Get_Uploaded_Files(upl1 As Telerik.Web.UI.RadUpload, strDestFolder As String) As List(Of String)
+        'vrací seznam uploadnutých souborů do složky strDestFolder
+        Dim lis As New List(Of String)
+        For Each validFile As Telerik.Web.UI.UploadedFile In upl1.UploadedFiles
+            validFile.SaveAs(strDestFolder & "\" & validFile.FileName, True)
+            lis.Add(strDestFolder & "\" & validFile.FileName)
+
+        Next
+        Return lis
+    End Function
+
 End Class
