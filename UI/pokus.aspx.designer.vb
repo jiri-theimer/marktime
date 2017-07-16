@@ -14,67 +14,22 @@ Option Explicit On
 Partial Public Class pokus
 
     '''<summary>
-    '''nav1 control.
+    '''cmdJson control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents nav1 As Global.Telerik.Web.UI.RadNavigation
+    Protected WithEvents cmdJson As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Posledni control.
+    '''txt1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Posledni As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''txtHours control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtHours As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''cmdPokus control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdPokus As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''txtResult control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtResult As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''hiddatapid control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hiddatapid As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''scheduler1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents scheduler1 As Global.Telerik.Web.UI.RadScheduler
+    Protected WithEvents txt1 As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Master property.

@@ -382,6 +382,8 @@
     <Content Include="query_builder.aspx" />
     <Content Include="Public\mtservice_recovery.aspx" />
     <Content Include="report_framework_detail4.aspx" />
+    <Content Include="Public\Datovka_Directories.ashx" />
+    <Content Include="Public\Datovka_ServiceInfo.ashx" />
     <None Include="Service References\SpolehlivostDPH\rozhraniCRPDPH.wsdl" />
     <Content Include="searchbox.ascx" />
     <Content Include="Service References\SpolehlivostDPH\UI.SpolehlivostDPH.InformaceOPlatciType.datasource">
@@ -1316,6 +1318,12 @@
     <Compile Include="projects.ascx.vb">
       <DependentUpon>projects.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Datovka_Directories.ashx.vb">
+      <DependentUpon>Datovka_Directories.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\Datovka_ServiceInfo.ashx.vb">
+      <DependentUpon>Datovka_ServiceInfo.ashx</DependentUpon>
     </Compile>
     <Compile Include="select_doctype.aspx.designer.vb">
       <DependentUpon>select_doctype.aspx</DependentUpon>

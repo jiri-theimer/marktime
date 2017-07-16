@@ -1,48 +1,31 @@
-﻿
-
-Imports Telerik.Web.UI
+﻿Imports System.Web
+Imports System.Web.Services
 Imports System.Web.Script.Serialization
 
-'Imports Aspose.Words
+Public Class Datovka_Directories
+    Implements System.Web.IHttpHandler
+
+    Sub ProcessRequest(ByVal context As HttpContext) Implements IHttpHandler.ProcessRequest
+
+        context.Response.ContentType = "application/json"
+
+        Dim factory As New BL.Factory(Nothing, "mtservice")
 
 
-
-
-Public Class pokus
-    Inherits System.Web.UI.Page
-    Protected WithEvents _MasterPage As Site
-    'Private fileFormatProvider As IFormatProvider
-
-
-
-    Private Sub pokus_Init(sender As Object, e As EventArgs) Handles Me.Init
-        _MasterPage = Me.Master
-
-
-    End Sub
-
-
-
-    
-    Private Sub pokus_Load(sender As Object, e As EventArgs) Handles Me.Load
-       
-    End Sub
-
-    Private Sub cmdJson_Click(sender As Object, e As EventArgs) Handles cmdJson.Click
         Dim c0 As New BO.DatovkaRoot
         Dim mqP28 As New BO.myQueryP28
         mqP28.Closed = BO.BooleanQueryMode.FalseQuery
-        Dim lisP28 As IEnumerable(Of BO.p28Contact) = Master.Factory.p28ContactBL.GetList(mqP28)
+        Dim lisP28 As IEnumerable(Of BO.p28Contact) = factory.p28ContactBL.GetList(mqP28)
         Dim mqP41 As New BO.myQueryP41
         mqP41.Closed = BO.BooleanQueryMode.FalseQuery
-        mqP41.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
-        Dim lisP41 As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mqP41)
+        ''mqP41.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
+        Dim lisP41 As IEnumerable(Of BO.p41Project) = factory.p41ProjectBL.GetList(mqP41)
 
         For Each cP28 In lisP28
             Dim c1 As New BO.DatovkaItem
             c1.id = cP28.PID.ToString
             c1.name = cP28.p28Name
-            For Each cP41 In lisP41
+            For Each cP41 In lisP41.Where(Function(p) p.p28ID_Client = cP28.PID)
                 Dim c2 As New BO.DatovkaItem
                 c2.id = cP41.PID.ToString
                 c2.name = cP41.PrefferedName
@@ -58,7 +41,15 @@ Public Class pokus
         Dim serializer As New JavaScriptSerializer()
         Dim serializedResult = serializer.Serialize(c0)
 
-        Me.txt1.Text = serializedResult
+
+        context.Response.Write(serializedResult)
 
     End Sub
+
+    ReadOnly Property IsReusable() As Boolean Implements IHttpHandler.IsReusable
+        Get
+            Return False
+        End Get
+    End Property
+
 End Class
