@@ -2,9 +2,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 
-    <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">
-        <CollapseAnimation Type="None" />
-        <ExpandAnimation Type="None" />
+    <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">       
         <Nodes>
             <telerik:NavigationNode id="begin" Width="40px" Enabled="false" Visible="true"  >  
                            

@@ -254,68 +254,67 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    
-        <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false" SkinID="Metro">
-        <CollapseAnimation Type="None" />
-        <ExpandAnimation Type="None" />
+
+    <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">       
         <Nodes>
-            <telerik:NavigationNode id="begin" Width="50px" Enabled="false" Visible="true" >                             
+            <telerik:NavigationNode ID="begin" Width="50px" Enabled="false" Visible="true">
             </telerik:NavigationNode>
-            <telerik:NavigationNode id="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png"></telerik:NavigationNode>
-                <telerik:NavigationNode id="reload" ImageUrl="Images/refresh.png" Text=" " ToolTip="Obnovit stránku"></telerik:NavigationNode>
-
-            
-            <telerik:NavigationNode Text="ZÁZNAM FAKTURY" id="record">
-                    <Nodes>
-                        <telerik:NavigationNode id="cmdEdit" Text="Upravit kartu faktury" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění."></telerik:NavigationNode>
-                        <telerik:NavigationNode id="cmdCreateInvoice" Text="Vystavit novou fakturu" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:NavigationNode>
-                        
-                        <telerik:NavigationNode id="cmdPay" Text="Zapsat úhradu faktury" NavigateUrl="javascript:pay();" ImageUrl="Images/payment.png" ToolTip="Je možné zapsat úplnou nebo částečnou úhradu faktury."></telerik:NavigationNode>
-                        
-                        <telerik:NavigationNode id="cmdAppendWorksheet" Text="Přidat do faktury další položky (úkony)" NavigateUrl="javascript:p31_add();" ImageUrl="Images/worksheet.png" ToolTip="Způsob, jak do faktury přidat slevu, přirážku, fixní odměnu, další časové úkony, výdaje apod."></telerik:NavigationNode>
-                        <telerik:NavigationNode id="cmdChangeCurrency" Text="Převést fakturu na jinou měnu" NavigateUrl="javascript:changecurrency();" ImageUrl="Images/recalc.png"></telerik:NavigationNode>
-                        <telerik:NavigationNode id="cmdChangeVat" Text="Převést fakturu kompletně na jinou DPH sazbu" NavigateUrl="javascript:changevat();" ImageUrl="Images/recalc.png"></telerik:NavigationNode>
-                        
-                        <telerik:NavigationNode id="cmdProforma" Text="Spárovat fakturu s uhrazenou zálohou" NavigateUrl="javascript:proforma();" ImageUrl="Images/proforma.png"></telerik:NavigationNode>
-                        <telerik:NavigationNode id="cmdCreditNote" Text="Vytvořit k faktuře opravný doklad" NavigateUrl="javascript:creditnote();" ImageUrl="Images/correction_down.gif"></telerik:NavigationNode>
-                        
-                        <telerik:NavigationNode id="cmdReport" Text="Tisková sestava/pdf/e-mail" NavigateUrl="javascript:report('');" ImageUrl="Images/report.png"></telerik:NavigationNode>
-                        <telerik:NavigationNode id="cmdEmail" Text="Odeslat e-mail" NavigateUrl="javascript:sendmail();" ImageUrl="Images/email.png"></telerik:NavigationNode>
-                    </Nodes>
-
-                </telerik:NavigationNode>
-                <telerik:NavigationNode Text="DALŠÍ" id="more">                    
-                    <Nodes>
-                        <telerik:NavigationNode id="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()">
-                        </telerik:NavigationNode>
-
-                        <telerik:NavigationNode id="cmdPivot" Text="WORKSHEET statistika faktury" NavigateUrl="javascript:report('');" Target="_top" ImageUrl="Images/pivot.png"></telerik:NavigationNode>
-                        
-                        <telerik:NavigationNode id="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png"></telerik:NavigationNode>
-                        
-                        <telerik:NavigationNode id="cmdO23" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" ImageUrl="Images/notepad.png"></telerik:NavigationNode>
-                        <telerik:NavigationNode id="cmdO22" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" ImageUrl="Images/calendar.png"></telerik:NavigationNode>
-                        <telerik:NavigationNode id="cmdB07" Text="Zapsat komentář/poznámku" NavigateUrl="javascript:b07_comment();" ImageUrl="Images/comment.png"></telerik:NavigationNode>
-                        
-                        <telerik:NavigationNode id="cmdAboImport" Text="Import úhrad z ABO souboru" NavigateUrl="javascript:abo_import();" ImageUrl="Images/payment.png"></telerik:NavigationNode>
-                        <telerik:NavigationNode id="cmdPohoda" Text="Export do účetnictví POHODA" NavigateUrl="javascript:export_pohoda();" ImageUrl="Images/license.png"></telerik:NavigationNode>
-                        
-                        <telerik:NavigationNode id="cmdBarCode" Text="Čárový kód" NavigateUrl="javascript:barcode();" ImageUrl="Images/barcode.png"></telerik:NavigationNode>
-                    </Nodes>
+            <telerik:NavigationNode ID="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png"></telerik:NavigationNode>
+            <telerik:NavigationNode ID="reload" ImageUrl="Images/refresh.png" Text=" " ToolTip="Obnovit stránku"></telerik:NavigationNode>
 
 
-                </telerik:NavigationNode>
+            <telerik:NavigationNode Text="ZÁZNAM FAKTURY" ID="record">
+                <Nodes>
+                    <telerik:NavigationNode ID="cmdEdit" Text="Upravit kartu faktury" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění."></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="cmdCreateInvoice" Text="Vystavit novou fakturu" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:NavigationNode>
 
-                <telerik:NavigationNode id="searchbox">
-                    <NodeTemplate></NodeTemplate>
-                </telerik:NavigationNode>
-            
+                    <telerik:NavigationNode ID="cmdPay" Text="Zapsat úhradu faktury" NavigateUrl="javascript:pay();" ImageUrl="Images/payment.png" ToolTip="Je možné zapsat úplnou nebo částečnou úhradu faktury."></telerik:NavigationNode>
+
+                    <telerik:NavigationNode ID="cmdAppendWorksheet" Text="Přidat do faktury další položky (úkony)" NavigateUrl="javascript:p31_add();" ImageUrl="Images/worksheet.png" ToolTip="Způsob, jak do faktury přidat slevu, přirážku, fixní odměnu, další časové úkony, výdaje apod."></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="cmdChangeCurrency" Text="Převést fakturu na jinou měnu" NavigateUrl="javascript:changecurrency();" ImageUrl="Images/recalc.png"></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="cmdChangeVat" Text="Převést fakturu kompletně na jinou DPH sazbu" NavigateUrl="javascript:changevat();" ImageUrl="Images/recalc.png"></telerik:NavigationNode>
+
+                    <telerik:NavigationNode ID="cmdProforma" Text="Spárovat fakturu s uhrazenou zálohou" NavigateUrl="javascript:proforma();" ImageUrl="Images/proforma.png"></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="cmdCreditNote" Text="Vytvořit k faktuře opravný doklad" NavigateUrl="javascript:creditnote();" ImageUrl="Images/correction_down.gif"></telerik:NavigationNode>
+
+                    <telerik:NavigationNode ID="cmdReport" Text="Tisková sestava/pdf/e-mail" NavigateUrl="javascript:report('');" ImageUrl="Images/report.png"></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="cmdEmail" Text="Odeslat e-mail" NavigateUrl="javascript:sendmail();" ImageUrl="Images/email.png"></telerik:NavigationNode>
+                </Nodes>
+
+            </telerik:NavigationNode>
+            <telerik:NavigationNode Text="DALŠÍ" ID="more">
+                <Nodes>
+                    <telerik:NavigationNode ID="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()">
+                    </telerik:NavigationNode>
+
+                    <telerik:NavigationNode ID="cmdPivot" Text="WORKSHEET statistika faktury" NavigateUrl="javascript:report('');" Target="_top" ImageUrl="Images/pivot.png"></telerik:NavigationNode>
+
+                    <telerik:NavigationNode ID="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png"></telerik:NavigationNode>
+
+                    <telerik:NavigationNode ID="cmdO23" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" ImageUrl="Images/notepad.png"></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="cmdO22" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" ImageUrl="Images/calendar.png"></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="cmdB07" Text="Zapsat komentář/poznámku" NavigateUrl="javascript:b07_comment();" ImageUrl="Images/comment.png"></telerik:NavigationNode>
+
+                    <telerik:NavigationNode ID="cmdAboImport" Text="Import úhrad z ABO souboru" NavigateUrl="javascript:abo_import();" ImageUrl="Images/payment.png"></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="cmdPohoda" Text="Export do účetnictví POHODA" NavigateUrl="javascript:export_pohoda();" ImageUrl="Images/license.png"></telerik:NavigationNode>
+
+                    <telerik:NavigationNode ID="cmdBarCode" Text="Čárový kód" NavigateUrl="javascript:barcode();" ImageUrl="Images/barcode.png"></telerik:NavigationNode>
+                </Nodes>
+
+
+            </telerik:NavigationNode>
+           
+
+            <telerik:NavigationNode ID="searchbox">
+                <NodeTemplate></NodeTemplate>
+            </telerik:NavigationNode>
+
         </Nodes>
-    
-    </telerik:RadNavigation>
-   <asp:image ID="imgIcon32" runat="server" ImageUrl="Images/invoice_32.png" style="position:absolute;top:5px;left:5px;"/>
 
-       
+    </telerik:RadNavigation>
+    <asp:Image ID="imgIcon32" runat="server" ImageUrl="Images/invoice_32.png" Style="position: absolute; top: 5px; left: 5px;" />
+
+
 
 
     <div style="clear: both;"></div>
@@ -548,7 +547,7 @@
                         <asp:Label ID="p91Text1" runat="server" CssClass="val" Style="font-family: 'Courier New'; word-wrap: break-word; display: block; font-size: 120%;"></asp:Label>
                     </div>
                 </asp:Panel>
-                <asp:Panel ID="boxX18" runat="server" CssClass="content-box1" style="clear:both;">
+                <asp:Panel ID="boxX18" runat="server" CssClass="content-box1" Style="clear: both;">
                     <div class="title">
                         <img src="Images/label.png" style="margin-right: 10px;" /><span>Štítky</span>
                     </div>
@@ -559,7 +558,7 @@
                 </asp:Panel>
 
 
-               
+
                 <uc:b07_list ID="comments1" runat="server" ShowHeader="false" ShowInsertButton="false" JS_Reaction="b07_reaction" />
                 <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
                 <div class="div6">
@@ -588,7 +587,7 @@
                         <asp:ListItem Text="100"></asp:ListItem>
                     </asp:DropDownList>
 
-                    <uc:mygrid id="designer1" runat="server" prefix="p31" MasterPrefix="p91" MasterPrefixFlag="2" Width="250px"></uc:mygrid>
+                    <uc:mygrid ID="designer1" runat="server" Prefix="p31" MasterPrefix="p91" MasterPrefixFlag="2" Width="250px"></uc:mygrid>
 
                 </div>
                 <div class="commandcell">

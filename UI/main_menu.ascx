@@ -3,9 +3,7 @@
 
 
 <asp:Panel runat="server" ID="panContainer" Style="height: 34px;" Visible="false">
-    <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Windows7" EnableViewState="false">
-        <CollapseAnimation Type="None" />
-        <ExpandAnimation Type="None" />
+    <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Windows7" EnableViewState="false">        
         <Nodes>
             <telerik:NavigationNode Text="" width="165px" Enabled="false" ID="logo">                 
             </telerik:NavigationNode>

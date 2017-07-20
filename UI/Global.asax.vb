@@ -1,4 +1,7 @@
 ﻿Imports System.Web.SessionState
+Imports System.Web.Http
+Imports System.Web.Routing
+
 
 Public Class Global_asax
     Inherits System.Web.HttpApplication
@@ -14,6 +17,8 @@ Public Class Global_asax
             Dim intCacheTimeOut As Integer = factory.x35GlobalParam.GetValueInteger("robot_cache_timeout", 300)
             RegisterCacheEntry(strRobotHost, intCacheTimeOut)
         End If
+
+        RouteTable.Routes.MapPageRoute("Datovka", "Datovka/upload_hiearchy", "~/Public/test.aspx")
 
     End Sub
 
@@ -49,9 +54,7 @@ Public Class Global_asax
         'If LCase(HttpContext.Current.Request.Url.ToString) = LCase(strWakeupURL) Then RegisterCacheEntry()
     End Sub
 
-    Sub Application_AuthenticateRequest(ByVal sender As Object, ByVal e As EventArgs)
-        ' Fires upon attempting to authenticate the use
-    End Sub
+    
 
     Sub Application_Error(ByVal sender As Object, ByVal e As EventArgs)
         ' Fires when an error occurs
