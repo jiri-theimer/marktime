@@ -38,6 +38,23 @@
             sw_everywhere("fileupload_preview.aspx?prefix=" + prefix + "&pid=" + pid, "Images/attachment.png", true);
 
         }
+
+        function chklist(x16id,ctl) {
+            ///checkbox-list
+            var x18id = document.getElementById("<%=hidX18ID.clientID%>").value;
+            var combo = $find(ctl);
+            var val = combo.get_text();
+           
+            sw_everywhere("freefields_checkboxlist.aspx?prefix=x16&pid=" + x16id+"&x18id="+x18id+"&ctl="+ctl+"&value="+val, "Images/setting.png", true);
+        }
+
+        function hardrefresh(pid, flag, par1) {            
+            var ctlID = flag;            
+            var combo = $find(ctlID);
+            
+            combo.set_text(par1);
+            
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -137,7 +154,7 @@
                                 <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                             </telerik:RadDatePicker>
                             <telerik:RadComboBox ID="cbxFF" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="400px"></telerik:RadComboBox>
-
+                            <button type="button" id="cmdChklist" runat="server" visible="false">...</button>
 
                             <asp:HiddenField runat="server" ID="x16Field" />
                             <asp:HiddenField runat="server" ID="x16ID" />

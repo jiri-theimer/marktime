@@ -222,6 +222,7 @@
     <Content Include="ErrorPage.aspx" />
     <Content Include="fileupload_preview.aspx" />
     <Content Include="flexibee.aspx" />
+    <Content Include="freefields_checkboxlist.aspx" />
     <Content Include="imap_record.ascx" />
     <Content Include="Integration\mtService.svc" />
     <Content Include="invoice.ascx" />
@@ -277,7 +278,6 @@
     <Content Include="p91_batch_sendmail.aspx" />
     <Content Include="p91_delete.aspx" />
     <Content Include="persons.ascx" />
-    <Content Include="pokus_navigation.aspx" />
     <Content Include="projects.ascx" />
     <Content Include="Public\test.aspx" />
     <Content Include="select_doctype.aspx" />
@@ -935,6 +935,13 @@
       <DependentUpon>flexibee.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="freefields_checkboxlist.aspx.designer.vb">
+      <DependentUpon>freefields_checkboxlist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="freefields_checkboxlist.aspx.vb">
+      <DependentUpon>freefields_checkboxlist.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Handler\handler_capacity_plan.ashx.vb">
       <DependentUpon>handler_capacity_plan.ashx</DependentUpon>
     </Compile>
@@ -1328,13 +1335,6 @@
     <Compile Include="persons.ascx.vb">
       <DependentUpon>persons.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="pokus_navigation.aspx.designer.vb">
-      <DependentUpon>pokus_navigation.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="pokus_navigation.aspx.vb">
-      <DependentUpon>pokus_navigation.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="projects.ascx.designer.vb">
       <DependentUpon>projects.ascx</DependentUpon>

@@ -561,27 +561,42 @@ Public Class o23_record
                 CType(e.Item.FindControl("hidType"), HiddenField).Value = "string"
                 If cRec.x16DataSource <> "" Then
                     e.Item.FindControl("cbxFF").Visible = True
-                    Dim a() As String = Split(cRec.x16DataSource, ";")
-                    With CType(e.Item.FindControl("cbxFF"), RadComboBox)
-                        .AllowCustomText = Not cRec.x16IsFixedDataSource
-                        If .AllowCustomText Then .Items.Add(New RadComboBoxItem(" "))
-                        For i As Integer = 0 To UBound(a)
-                            .Items.Add(New RadComboBoxItem(a(i)))
-                        Next
-                        If Not curValue Is Nothing Then
-                            If .AllowCustomText Then
-                                .Text = curValue
-                            Else
-                                Try
-                                    .Items.FindItemByText(curValue).Selected = True
-                                Catch ex As Exception
-                                End Try
+                    If cRec.x16DataSource.IndexOf("|") > 0 And cRec.x16DataSource.IndexOf(vbCrLf) > 0 Then
+                        'checkbox-list
+                        With CType(e.Item.FindControl("cbxFF"), RadComboBox)
+                            .Enabled = False
+                            .Text = curValue
+                            If .Text <> "" Then .ToolTip = .Text
+                        End With
+
+                        With CType(e.Item.FindControl("cmdChklist"), HtmlButton)
+                            .Visible = True
+                            .Attributes.Item("onclick") = "chklist(" & cRec.x16ID.ToString & ",'" & e.Item.FindControl("cbxFF").ClientID & "')"
+                        End With
+                    Else
+                        Dim a() As String = Split(cRec.x16DataSource, ";")
+                        With CType(e.Item.FindControl("cbxFF"), RadComboBox)
+                            .AllowCustomText = Not cRec.x16IsFixedDataSource
+                            If .AllowCustomText Then .Items.Add(New RadComboBoxItem(" "))
+                            For i As Integer = 0 To UBound(a)
+                                .Items.Add(New RadComboBoxItem(a(i)))
+                            Next
+                            If Not curValue Is Nothing Then
+                                If .AllowCustomText Then
+                                    .Text = curValue
+                                Else
+                                    Try
+                                        .Items.FindItemByText(curValue).Selected = True
+                                    Catch ex As Exception
+                                    End Try
+                                End If
                             End If
-                        End If
-                        If cRec.x16TextboxWidth > 0 Then
-                            .Style.Item("width") = cRec.x16TextboxWidth.ToString & "px"
-                        End If
-                    End With
+                            If cRec.x16TextboxWidth > 0 Then
+                                .Style.Item("width") = cRec.x16TextboxWidth.ToString & "px"
+                            End If
+                        End With
+                    End If
+                    
                 Else
                     With CType(e.Item.FindControl("txtFF_Text"), TextBox)
                         .Visible = True

@@ -271,7 +271,7 @@
                                         <telerik:RadNumericTextBox ID="x16Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="x16DataSource" runat="server" Width="400px"></asp:TextBox>
+                                        <asp:TextBox ID="x16DataSource" runat="server" Width="600px" Height="42px" TextMode="MultiLine"></asp:TextBox>
                                         <div>
                                             <asp:CheckBox ID="x16IsFixedDataSource" runat="server" Text="Okruh hodnot je zafixován" />
                                         </div>
