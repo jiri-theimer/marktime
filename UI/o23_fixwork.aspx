@@ -286,9 +286,7 @@
                                         </div>
                                         <div class="content">
 
-                                            <img src="Images/export.png" alt="export" />
-                                            <asp:LinkButton ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
-
+                                            
                                             <img src="Images/xls.png" alt="xls" />
                                             <asp:LinkButton ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
 

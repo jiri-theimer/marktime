@@ -100,9 +100,7 @@
 
 
 
-    <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">
-        <CollapseAnimation Type="None" />
-        <ExpandAnimation Type="None" />
+    <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">        
         <Nodes>
             <telerik:NavigationNode ID="begin" Width="50px" Enabled="false" Visible="true">
             </telerik:NavigationNode>

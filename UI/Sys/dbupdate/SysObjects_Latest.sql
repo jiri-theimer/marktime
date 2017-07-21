@@ -2703,6 +2703,52 @@ END
 
 GO
 
+----------FN---------------p41_get_p41code_yyyy_mm_dd_xxxx-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p41_get_p41code_yyyy_mm_dd_xxxx') and type = 'FN')
+ drop function p41_get_p41code_yyyy_mm_dd_xxxx
+GO
+
+
+
+
+CREATE    FUNCTION [dbo].[p41_get_p41code_yyyy_mm_dd_xxxx](@pid int)
+RETURNS varchar(50)
+AS
+BEGIN
+  ---vrací kód projektu podle logiky YYYY_MM_DD_XXXX
+
+ DECLARE @ret varchar(50),@d datetime,@pocet int,@suffix varchar(10),@s varchar(50)
+ set @d=getdate()
+
+ set @s=convert(varchar(10),year(@d))+'_'+right('0'+convert(varchar(10),month(@d)),2)+'_'+right('0'+convert(varchar(10),day(@d)),2)
+
+
+
+ select @pocet=count(*) FROM p41Project WHERE p41ID<>@pid
+
+ set @pocet=isnull(@pocet,0)+1
+ set @suffix=right('000'+convert(varchar(10),@pocet),4)
+ 
+ set @ret=@s+'_'+@suffix
+ 
+ WHILE (exists(select p41ID FROM p41Project WHERE p41Code like @ret))
+  BEGIN
+    set @pocet=@pocet+1
+	set @suffix=right('000'+convert(varchar(10),@pocet),4)
+	set @ret=@s+'-'+@suffix
+	if @pocet>=999
+	 BREAK
+  END
+
+
+
+RETURN(@ret)
+   
+END
+
+GO
+
 ----------FN---------------p41_getroles_inline-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p41_getroles_inline') and type = 'FN')

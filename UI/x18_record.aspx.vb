@@ -43,12 +43,13 @@
 
             RefreshRecord()
 
+            Handle_Change_IsManyItems()
 
             If Master.IsRecordClone Then
                 Master.DataPID = 0
-
+                Me.x18Name.Text += " KOPIE"
+                Me.x23ID.SelectedValue = ""
             End If
-            Handle_Change_IsManyItems()
         End If
     End Sub
     Private Sub RefreshRecord()

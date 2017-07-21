@@ -131,15 +131,6 @@ Partial Public Class o23_fixwork
     Protected WithEvents panExport As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''cmdExport control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdExport As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
     '''cmdXLS control.
     '''</summary>
     '''<remarks>
