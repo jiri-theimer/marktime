@@ -1,9 +1,8 @@
-﻿Imports System.Web
-Imports System.Web.Services
+﻿Imports System.Web.Services
 Imports System.Web.Script.Serialization
 
-Public Class Datovka_Directories
-    Implements System.Web.IHttpHandler
+Public Class datovka_upload_hiearchy
+    Inherits System.Web.UI.Page
 
     Private Class DatovkaRoot
         Public Property name As String
@@ -18,10 +17,8 @@ Public Class Datovka_Directories
         Public Property metadata() As Object
         Public Property [sub] As List(Of DatovkaItem)
     End Class
-
-    Sub ProcessRequest(ByVal context As HttpContext) Implements IHttpHandler.ProcessRequest
-
-        context.Response.ContentType = "application/json"
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Response.ContentType = "application/json"
 
         Dim factory As New BL.Factory(Nothing, "mtservice")
 
@@ -56,14 +53,9 @@ Public Class Datovka_Directories
         Dim serializedResult = serializer.Serialize(c0)
 
 
-        context.Response.Write(serializedResult)
+        Response.Write(serializedResult)
+
 
     End Sub
-
-    ReadOnly Property IsReusable() As Boolean Implements IHttpHandler.IsReusable
-        Get
-            Return False
-        End Get
-    End Property
 
 End Class

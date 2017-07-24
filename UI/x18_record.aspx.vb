@@ -19,6 +19,7 @@
             Me.b01ID.DataBind()
 
             hidGUID_x16.Value = BO.BAS.GetGUID()
+            hidGUID_x17.Value = BO.BAS.GetGUID()
             hidGUID_x20.Value = BO.BAS.GetGUID()
             With Master
                 .HeaderIcon = "Images/label_32.png"
@@ -130,6 +131,23 @@
             Master.Factory.p85TempBoxBL.Save(cTemp)
         Next
         RefreshTempX16()
+        Dim lisX17 As IEnumerable(Of BO.x17EntityCategory_Folder) = Master.Factory.x18EntityCategoryBL.GetList_x17(Master.DataPID)
+        Master.Factory.p85TempBoxBL.Truncate(hidGUID_x17.Value)
+        For Each c In lisX17
+            Dim cTemp As New BO.p85TempBox
+            With cTemp
+                .p85GUID = hidGUID_x17.Value
+                .p85Prefix = "x17"
+                .p85DataPID = c.x17ID
+                .p85FreeText01 = c.x17Path
+                .p85FreeNumber02 = c.x17Ordinary
+                .p85OtherKey1 = c.j11ID_Read
+                .p85OtherKey2 = c.j11ID_CreateFiles
+                .p85OtherKey3 = c.j11ID_FullControl
+            End With
+            Master.Factory.p85TempBoxBL.Save(cTemp)
+        Next
+        RefreshTempX17()
         Dim lisX20 As IEnumerable(Of BO.x20EntiyToCategory) = Master.Factory.x18EntityCategoryBL.GetList_x20(Master.DataPID)
         Master.Factory.p85TempBoxBL.Truncate(hidGUID_x20.Value)
         For Each c In lisX20
@@ -160,6 +178,10 @@
         rpX16.DataSource = Master.Factory.p85TempBoxBL.GetList(hidGUID_x16.Value)
         rpX16.DataBind()
     End Sub
+    Private Sub RefreshTempX17()
+        rpX17.DataSource = Master.Factory.p85TempBoxBL.GetList(hidGUID_x17.Value)
+        rpX17.DataBind()
+    End Sub
     Private Sub RefreshTempX20()
         rpX20.DataSource = Master.Factory.p85TempBoxBL.GetList(hidGUID_x20.Value)
         rpX20.DataBind()
@@ -183,6 +205,7 @@
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
         roles1.SaveCurrentTempData()
         SaveTempX16()
+        SaveTempX17()
         SaveTempX20()
 
         If Master.DataPID = 0 And opg1.SelectedValue = "2" Then
@@ -210,6 +233,19 @@
                 c.x16TextboxHeight = .p85FreeNumber02
             End With
             lisX16.Add(c)
+        Next
+        Dim lisX17 As New List(Of BO.x17EntityCategory_Folder)
+        For Each cTMP In Master.Factory.p85TempBoxBL.GetList(hidGUID_x17.Value)
+            Dim c As New BO.x17EntityCategory_Folder
+            With cTMP
+
+                c.x17Path = .p85FreeText01
+                c.x17Ordinary = .p85FreeNumber02
+                c.j11ID_Read = .p85OtherKey1
+                c.j11ID_CreateFiles = .p85OtherKey2
+                c.j11ID_FullControl = .p85OtherKey3
+            End With
+            lisX17.Add(c)
         Next
         Dim lisX20 As New List(Of BO.x20EntiyToCategory)
         For Each cTMP In Master.Factory.p85TempBoxBL.GetList(hidGUID_x20.Value)
@@ -268,7 +304,7 @@
             cRec.x18MaxOneFileSize = BO.BAS.IsNullInt(Me.x18MaxOneFileSize.SelectedValue)
             cRec.x18IsAllowEncryption = Me.x18IsAllowEncryption.Checked
 
-            If .Save(cRec, lisX20, lisX69, lisX16) Then
+            If .Save(cRec, lisX20, lisX69, lisX16, lisX17) Then
                 Master.DataPID = .LastSavedPID
 
                 Master.CloseAndRefreshParent("x18-save")
@@ -446,7 +482,18 @@
             Master.Factory.p85TempBoxBL.Save(cRec)
         Next
     End Sub
-
+    Private Sub SaveTempX17()
+        Dim lisTEMP As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(hidGUID_x17.Value)
+        For Each ri As RepeaterItem In rpX17.Items
+            Dim intP85ID As Integer = BO.BAS.IsNullInt(CType(ri.FindControl("p85id"), HiddenField).Value)
+            Dim cRec As BO.p85TempBox = lisTEMP.Where(Function(p) p.PID = intP85ID)(0)
+            With cRec
+                .p85FreeText01 = CType(ri.FindControl("x17Path"), TextBox).Text
+                .p85FreeNumber02 = BO.BAS.IsNullInt(CType(ri.FindControl("x17Ordinary"), Telerik.Web.UI.RadNumericTextBox).Value)
+            End With
+            Master.Factory.p85TempBoxBL.Save(cRec)
+        Next
+    End Sub
     Private Sub rpX20_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rpX20.ItemCommand
         SaveTempX20()
         Dim cRec As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(BO.BAS.IsNullInt(e.CommandArgument))
@@ -677,5 +724,40 @@
         If Master.DataPID = 0 And Me.x18IsManyItems.SelectedValue = "1" Then
             Me.x18UploadFlag.SelectedValue = "1"
         End If
+    End Sub
+
+    Private Sub cmdAddX17_Click(sender As Object, e As EventArgs) Handles cmdAddX17.Click
+        SaveTempX17()
+        Dim cRec As New BO.p85TempBox()
+        cRec.p85GUID = hidGUID_x17.Value
+        cRec.p85Prefix = "x17"
+        Master.Factory.p85TempBoxBL.Save(cRec)
+        RefreshTempX17()
+    End Sub
+
+    Private Sub rpX17_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rpX17.ItemCommand
+        SaveTempX17()
+        Dim cRec As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(BO.BAS.IsNullInt(e.CommandArgument))
+        If e.CommandName = "delete" Then
+            If Master.Factory.p85TempBoxBL.Delete(cRec) Then
+
+            End If
+        End If
+        RefreshTempX17()
+    End Sub
+
+    Private Sub rpX17_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpX17.ItemDataBound
+        Dim cRec As BO.p85TempBox = CType(e.Item.DataItem, BO.p85TempBox)
+
+        With CType(e.Item.FindControl("del"), ImageButton)
+            .CommandArgument = cRec.PID.ToString
+            .CommandName = "delete"
+        End With
+
+        With cRec
+            CType(e.Item.FindControl("p85id"), HiddenField).Value = .PID.ToString
+            CType(e.Item.FindControl("x17Path"), TextBox).Text = .p85FreeText01
+            CType(e.Item.FindControl("x17Ordinary"), Telerik.Web.UI.RadNumericTextBox).Value = .p85FreeNumber02
+        End With
     End Sub
 End Class

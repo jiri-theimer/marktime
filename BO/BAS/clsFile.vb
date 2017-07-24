@@ -1,4 +1,6 @@
 ﻿Imports System.IO
+Imports System.Security.AccessControl
+
 
 Public Class clsFile
     Private _Error As String
@@ -226,6 +228,24 @@ Public Class clsFile
             stream.Write(bytes, 0, bytes.Length)
         End Using
     End Sub
+
+    Public Function CreateDirectoryWithSecurity(strDir As String, lisIdentities As List(Of String), bolRead As Boolean, bolFullControl As Boolean)
+        Dim securityRules As DirectorySecurity = New DirectorySecurity()
+        For Each strIdentity As String In lisIdentities
+            If bolRead Then
+                securityRules.AddAccessRule(New FileSystemAccessRule(strIdentity, FileSystemRights.Read, AccessControlType.Allow))
+            End If
+            If bolFullControl Then
+                securityRules.AddAccessRule(New FileSystemAccessRule(strIdentity, FileSystemRights.FullControl, AccessControlType.Allow))
+            End If
+        Next
+        
+
+        Dim di As DirectoryInfo = Directory.CreateDirectory(strDir, securityRules)
+
+
+        Return True
+    End Function
 End Class
 
 

@@ -11,5 +11,5 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class test
+Partial Public Class datovka_service_info
 End Class

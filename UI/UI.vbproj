@@ -224,6 +224,9 @@
     <Content Include="flexibee.aspx" />
     <Content Include="freefields_checkboxlist.aspx" />
     <Content Include="imap_record.ascx" />
+    <Content Include="Integration\datovka_service_info.aspx" />
+    <Content Include="Integration\datovka_upload_file.aspx" />
+    <Content Include="Integration\datovka_upload_hiearchy.aspx" />
     <Content Include="Integration\mtService.svc" />
     <Content Include="invoice.ascx" />
     <Content Include="j02_framework.aspx" />
@@ -279,7 +282,6 @@
     <Content Include="p91_delete.aspx" />
     <Content Include="persons.ascx" />
     <Content Include="projects.ascx" />
-    <Content Include="Public\test.aspx" />
     <Content Include="select_doctype.aspx" />
     <Content Include="select_field.aspx" />
     <Content Include="p31_record_split.aspx" />
@@ -399,8 +401,6 @@
     <Content Include="query_builder.aspx" />
     <Content Include="Public\mtservice_recovery.aspx" />
     <Content Include="report_framework_detail4.aspx" />
-    <Content Include="Public\Datovka_Directories.ashx" />
-    <Content Include="Public\Datovka_ServiceInfo.ashx" />
     <None Include="Service References\SpolehlivostDPH\rozhraniCRPDPH.wsdl" />
     <Content Include="searchbox.ascx" />
     <Content Include="Service References\SpolehlivostDPH\UI.SpolehlivostDPH.InformaceOPlatciType.datasource">
@@ -961,6 +961,27 @@
       <DependentUpon>imap_record.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Integration\datovka_service_info.aspx.designer.vb">
+      <DependentUpon>datovka_service_info.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Integration\datovka_service_info.aspx.vb">
+      <DependentUpon>datovka_service_info.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Integration\datovka_upload_file.aspx.designer.vb">
+      <DependentUpon>datovka_upload_file.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Integration\datovka_upload_file.aspx.vb">
+      <DependentUpon>datovka_upload_file.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Integration\datovka_upload_hiearchy.aspx.designer.vb">
+      <DependentUpon>datovka_upload_hiearchy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Integration\datovka_upload_hiearchy.aspx.vb">
+      <DependentUpon>datovka_upload_hiearchy.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Integration\ImtService.vb" />
     <Compile Include="Integration\mtService.svc.vb">
       <DependentUpon>mtService.svc</DependentUpon>
@@ -1342,19 +1363,6 @@
     <Compile Include="projects.ascx.vb">
       <DependentUpon>projects.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Public\Datovka_Directories.ashx.vb">
-      <DependentUpon>Datovka_Directories.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Public\Datovka_ServiceInfo.ashx.vb">
-      <DependentUpon>Datovka_ServiceInfo.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Public\test.aspx.designer.vb">
-      <DependentUpon>test.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Public\test.aspx.vb">
-      <DependentUpon>test.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="select_doctype.aspx.designer.vb">
       <DependentUpon>select_doctype.aspx</DependentUpon>

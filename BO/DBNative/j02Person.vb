@@ -30,7 +30,7 @@
     Public Property j02Salutation As String
     Public Property j02WorksheetAccessFlag As Integer   '1= nemá přístup k již vyfakturovaným úkonům
     Public Property p72ID_NonBillable As BO.p72IdENUM
-
+    Public Property j02DomainAccount As String
 
     Public ReadOnly Property FullNameAsc As String
         Get

@@ -33,6 +33,7 @@ End Enum
 Public Enum x18UploadENUM
     NotUsed = 0
     FileSystemUpload = 1
+
 End Enum
 
 Public Class x18EntityCategory

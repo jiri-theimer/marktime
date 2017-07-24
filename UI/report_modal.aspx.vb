@@ -169,7 +169,25 @@ Public Class report_modal
     Private Sub SetupX31Combo(strDefX31ID As String)
         Dim mq As New BO.myQuery
         mq.Closed = BO.BooleanQueryMode.FalseQuery
-        Dim lisX31 As IEnumerable(Of BO.x31Report) = Master.Factory.x31ReportBL.GetList(mq).Where(Function(p) p.x29ID = Me.CurrentX29ID And (p.x31FormatFlag = BO.x31FormatFlagENUM.Telerik Or p.x31FormatFlag = BO.x31FormatFlagENUM.DOCX Or p.x31FormatFlag = BO.x31FormatFlagENUM.XLSX))
+        Dim lisX31 As List(Of BO.x31Report) = Master.Factory.x31ReportBL.GetList(mq).Where(Function(p) p.x29ID = Me.CurrentX29ID And (p.x31FormatFlag = BO.x31FormatFlagENUM.Telerik Or p.x31FormatFlag = BO.x31FormatFlagENUM.DOCX Or p.x31FormatFlag = BO.x31FormatFlagENUM.XLSX)).ToList
+        If Me.CurrentX29ID = BO.x29IdEnum.o23Doc Then
+            Dim cO23 As BO.o23Doc = Master.Factory.o23DocBL.Load(Master.DataPID)
+            Dim cX18 As BO.x18EntityCategory = Master.Factory.x18EntityCategoryBL.Load(cO23.x18ID)
+            Dim lis As List(Of String) = BO.BAS.ConvertDelimitedString2List(cX18.x18ReportCodes, ","), lisX31Q As New List(Of BO.x31Report)
+            If lis.Count = 0 Then
+                Master.StopPage(String.Format("Pro typ dokumentu [{0}] není nastavena šablona tiskové sestavy.", cX18.x18Name))
+            Else
+                For Each strCode As String In lis
+                    If lisX31.Where(Function(p) LCase(p.x31Code) = LCase(strCode)).Count > 0 Then
+                        lisX31Q.Add(lisX31.Where(Function(p) LCase(p.x31Code) = LCase(strCode)).First)
+                    End If
+                Next
+                lisX31 = lisX31Q
+            End If
+
+        Else
+
+        End If
         Me.x31ID.DataSource = lisX31
         Me.x31ID.DataBind()
         If strDefX31ID <> "" Then Me.x31ID.SelectedValue = strDefX31ID

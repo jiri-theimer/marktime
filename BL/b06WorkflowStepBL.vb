@@ -312,8 +312,15 @@ Class b06WorkflowStepBL
             If cB06.b06CreateSubdirectory <> "" Then
                 Dim subdirs As List(Of String) = BO.BAS.ConvertDelimitedString2List(cB06.b06CreateSubdirectory, ";")
                 For Each strDir In subdirs
+                    Dim lis As List(Of String) = BO.BAS.ConvertDelimitedString2List(strDir, "#")
+                    If lis.Count > 0 Then
+                        strDir = lis(0)
+                    End If
                     Try
                         System.IO.Directory.CreateDirectory(strMasterDIR & "\" & strDir)
+                        For i As Integer = 1 To lis.Count - 1
+                            System.IO.Directory.CreateDirectory(strMasterDIR & "\" & strDir & "\" & lis(i))
+                        Next
                     Catch ex As Exception
 
                     End Try
@@ -325,6 +332,7 @@ Class b06WorkflowStepBL
         End Try
 
     End Sub
+  
 
     Private Sub Handle_Notification(cB06 As BO.b06WorkflowStep, intRecordPID As Integer, x29id As BO.x29IdEnum, intJ02ID_Owner As Integer, objects As List(Of Object), intP41ID_Ref As Integer, strComment As String)
         Dim lisB11 As IEnumerable(Of BO.b11WorkflowMessageToStep) = GetList_B11(cB06.PID)

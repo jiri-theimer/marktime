@@ -81,7 +81,7 @@
                         <asp:ListItem Text="Worksheet úkon" Value="331"></asp:ListItem>
                         <asp:ListItem Text="Jiný dokument" Value="223"></asp:ListItem>
                     </asp:DropDownList>
-                    
+
                     <asp:Button ID="cmdAddX20" runat="server" CssClass="cmd" Text="Vložit vybranou vazbu" />
                 </div>
                 <div class="content">
@@ -97,7 +97,7 @@
                                         <div>
                                             <span>Název vazby (nepovinné):</span>
                                         </div>
-                                        
+
                                     </td>
                                     <td>
                                         <div>
@@ -113,11 +113,11 @@
                                                 <asp:ListItem Text="Worksheet úkon" Value="331"></asp:ListItem>
                                                 <asp:ListItem Text="Jiný dokument" Value="223"></asp:ListItem>
                                             </asp:DropDownList>
-                                            
+
                                         </div>
                                         <div>
                                             <asp:TextBox ID="x20Name" runat="server" Width="200px"></asp:TextBox>
-                                            
+
                                             <asp:HiddenField ID="x29ID_EntityType" runat="server" />
 
                                         </div>
@@ -233,6 +233,11 @@
                                             <asp:ListItem Text="Text 8" Value="o23FreeText08"></asp:ListItem>
                                             <asp:ListItem Text="Text 9" Value="o23FreeText09"></asp:ListItem>
                                             <asp:ListItem Text="Text 10" Value="o23FreeText10"></asp:ListItem>
+                                            <asp:ListItem Text="Text 11" Value="o23FreeText11"></asp:ListItem>
+                                            <asp:ListItem Text="Text 12" Value="o23FreeText12"></asp:ListItem>
+                                            <asp:ListItem Text="Text 13" Value="o23FreeText13"></asp:ListItem>
+                                            <asp:ListItem Text="Text 14" Value="o23FreeText14"></asp:ListItem>
+                                            <asp:ListItem Text="Text 15" Value="o23FreeText15"></asp:ListItem>
                                             <asp:ListItem Text="Velký text (1000)" Value="o23BigText"></asp:ListItem>
                                             <asp:ListItem Text="Html editor" Value="o23HtmlContent"></asp:ListItem>
                                             <asp:ListItem Text="Číslo 1" Value="o23FreeNumber01"></asp:ListItem>
@@ -320,12 +325,12 @@
                 <div class="content">
                     <div class="div6">
                         <asp:RadioButtonList ID="x18UploadFlag" runat="server" RepeatDirection="Vertical" AutoPostBack="true">
-                            <asp:ListItem Text="Podpora rozšířených file-system funkcí" Value="1" Selected="True"></asp:ListItem>
-                            <asp:ListItem Text="Bez rozšířených file-system funkcí" Value="0"></asp:ListItem>
+                            <asp:ListItem Text="Bez rozšířených file-system funkcí" Value="0" Selected="true"></asp:ListItem>
+                            <asp:ListItem Text="Podpora rozšířených file-system funkcí" Value="1"></asp:ListItem>
                         </asp:RadioButtonList>
                     </div>
                     <asp:Panel ID="panFileSystem" runat="server">
-                        
+
                         <div class="div6">
                             <span class="lbl">Omezení maximální velikosti souborové přílohy:</span>
                             <asp:DropDownList ID="x18MaxOneFileSize" runat="server">
@@ -344,8 +349,39 @@
                             <asp:TextBox ID="x18AllowedFileExtensions" runat="server" Width="400px"></asp:TextBox>
                             (čárkou oddělené)
                         </div>
-                        
+
                     </asp:Panel>
+                    
+
+                </div>
+            </div>
+            <div class="content-box2" style="margin-top:20px;">
+                <div class="title">V záznamu dokumentu zakládat složky</div>
+                <div class="content">
+                    <div class="div6">
+                        <asp:Button ID="cmdAddX17" runat="server" CssClass="cmd" Text="Přidat složku" />
+                    </div>
+                    <table>  
+                                 
+                        <asp:Repeater ID="rpX17" runat="server">
+                            <ItemTemplate>
+                                <tr valign="top">
+                                    <td>                                        
+                                        <asp:TextBox ID="x17Path" runat="server" Width="500px" ToolTip="Cesta"></asp:TextBox>
+                                    </td>
+                                    
+                                    
+                                    <td>
+                                        <telerik:RadNumericTextBox ID="x17Ordinary" ToolTip="Pořadí" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+                                    </td>
+                                    <td>
+                                        <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit položku" CssClass="button-link" />
+                                        <asp:HiddenField ID="p85id" runat="server" />
+                                    </td>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </table>
                 </div>
             </div>
 
@@ -532,10 +568,11 @@
     </telerik:RadMultiPage>
 
     <asp:HiddenField ID="hidGUID_x16" runat="server" />
+    <asp:HiddenField ID="hidGUID_x17" runat="server" />
     <asp:HiddenField ID="hidGUID_x20" runat="server" />
     <asp:HiddenField ID="HardRefreshPID" runat="server" />
     <asp:Button ID="cmdHardRefresh" runat="server" Style="display: none;" />
-    
+
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

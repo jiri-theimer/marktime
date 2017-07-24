@@ -30,7 +30,7 @@
                 Handle_CnbKurzy()
             End If
 
-            If Now > Today.AddHours(3) And Now < Today.AddHours(4) Then
+            If (Now > Today.AddHours(3) And Now < Today.AddHours(4)) Or Request.Item("ping") = "1" Then
                 'mezi třetí a čtvrtou hodinou ráno vyčistit temp tabulky
                 _Factory.p85TempBoxBL.Recovery_ClearCompleteTemp()
 
@@ -357,5 +357,10 @@
 
         End If
 
+        strBackupFileName = "MARKTIME50_MEMBERSHIP_Backup_day" & Weekday(Now, Microsoft.VisualBasic.FirstDayOfWeek.Monday).ToString & ".bak"
+        If System.IO.File.Exists(strDir & "\" & strBackupFileName) Then
+            System.IO.File.Delete(strDir & "\" & strBackupFileName)
+        End If
+        strRet = cBL.CreateDbBackup(System.Configuration.ConfigurationManager.ConnectionStrings.Item("ApplicationServices").ToString, strDir, strBackupFileName)
     End Sub
 End Class
