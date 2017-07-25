@@ -37,6 +37,9 @@ Public Class b10WorkflowCommandCatalog_Binding
     Public Property b10Worksheet_p72ID As Integer
     Public Property b10Worksheet_Text As String     'text nového worksheet záznamu
     Public Property b10Worksheet_HoursFlag As b10Worksheet_HoursENUM = b10Worksheet_HoursENUM._None
+    Public Property x18ID As Integer
+    Public Property o23Name As String
+
     Public ReadOnly Property b09Name As String
         Get
             Return _b09Name

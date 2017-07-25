@@ -262,6 +262,31 @@ Class b06WorkflowStepBL
         End If
         _cDL.RunB09Commands(intRecordPID, x29id, cB06.PID)
 
+        Dim lisB10 As IEnumerable(Of BO.b10WorkflowCommandCatalog_Binding) = GetList_B10(cB06.PID).Where(Function(p) p.x18ID <> 0) 'zakládání dokumentů
+
+        If lisB10.Count > 0 Then
+            Dim objects As List(Of Object) = GetObjects(intRecordPID, x29id, 0)
+            Dim cM As New BO.clsMergeContent, strDirs As String = cB06.b06CreateDirectory
+
+            For Each cB10 In lisB10
+                Dim cDoc As New BO.o23Doc
+                cDoc.o23Name = cB10.o23Name
+                cDoc.o23Name = cM.MergeContent(objects, cDoc.o23Name, "")
+                cDoc.x23ID = Factory.x18EntityCategoryBL.Load(cB10.x18ID).x23ID
+                Dim lisX20 As List(Of BO.x20EntiyToCategory) = Factory.x18EntityCategoryBL.GetList_x20(cB10.x18ID).Where(Function(p) p.x29ID = x29id).ToList
+
+                Dim lisX19 As New List(Of BO.x19EntityCategory_Binding)
+                For Each cX20 In lisX20
+                    Dim cc As New BO.x19EntityCategory_Binding
+                    cc.x20ID = cX20.x20ID
+                    cc.x19RecordPID = intRecordPID
+                    lisX19.Add(cc)
+                Next
+                Factory.o23DocBL.Save(cDoc, cB10.x18ID, Nothing, lisX19, lisX20.Select(Function(p) p.x20ID).ToList, "")
+            Next
+        End If
+        
+
         If cB06.b06CreateDirectory <> "" Then
             CreateDirectories(intRecordPID, cB06, x29id)
         End If
@@ -301,31 +326,16 @@ Class b06WorkflowStepBL
         End With
 
         Dim objects As List(Of Object) = GetObjects(intRecordPID, x29id, 0)
-
-        Dim cM As New BO.clsMergeContent, strMasterDIR As String = cB06.b06CreateDirectory
-        strMasterDIR = cM.MergeContent(objects, strMasterDIR, "")
+        Dim cM As New BO.clsMergeContent, strDirs As String = cB06.b06CreateDirectory
+        strDirs = cM.MergeContent(objects, strDirs, "")
 
         Try
-            If Not System.IO.Directory.Exists(strMasterDIR) Then
-                System.IO.Directory.CreateDirectory(strMasterDIR)
-            End If
-            If cB06.b06CreateSubdirectory <> "" Then
-                Dim subdirs As List(Of String) = BO.BAS.ConvertDelimitedString2List(cB06.b06CreateSubdirectory, ";")
-                For Each strDir In subdirs
-                    Dim lis As List(Of String) = BO.BAS.ConvertDelimitedString2List(strDir, "#")
-                    If lis.Count > 0 Then
-                        strDir = lis(0)
-                    End If
-                    Try
-                        System.IO.Directory.CreateDirectory(strMasterDIR & "\" & strDir)
-                        For i As Integer = 1 To lis.Count - 1
-                            System.IO.Directory.CreateDirectory(strMasterDIR & "\" & strDir & "\" & lis(i))
-                        Next
-                    Catch ex As Exception
-
-                    End Try
-                Next
-            End If
+            For Each strDir As String In BO.BAS.ConvertDelimitedString2List(strDirs, ";")
+                If Not System.IO.Directory.Exists(strDir) Then
+                    System.IO.Directory.CreateDirectory(strDir)
+                End If
+            Next
+            
 
         Catch ex As Exception
             _Error += " | " & ex.Message

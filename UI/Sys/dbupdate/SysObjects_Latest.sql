@@ -3421,6 +3421,163 @@ END
 
 GO
 
+----------FN---------------stitek_entity_pid-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('stitek_entity_pid') and type = 'FN')
+ drop function stitek_entity_pid
+GO
+
+
+
+
+CREATE FUNCTION [dbo].[stitek_entity_pid](@o23id int,@x29id int)
+RETURNS int
+AS
+BEGIN
+  ---vrací PID entity v dokumentu
+  
+ DECLARE @ret int,@x20id int,@x18id int
+
+ select @x18id=c.x18ID FROM o23Doc a INNER JOIN x23EntityField_Combo b ON a.x23ID=b.x23ID INNER JOIN x18EntityCategory c ON b.x23ID=c.x23ID WHERE a.o23ID=@o23id
+
+ select @x20id=x20ID FROM x20EntiyToCategory WHERE x18ID=@x18id AND x29ID=@x29id
+
+
+select top 1 @ret=a.x19RecordPID
+FROM x19EntityCategory_Binding a INNER JOIN o23Doc o23 ON a.o23ID=o23.o23ID INNER JOIN x20EntiyToCategory x20 ON a.x20ID=x20.x20ID
+where a.o23ID=@o23id AND a.x20ID=@x20id
+
+
+
+RETURN(@ret)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
+----------FN---------------stitek_entity_pid_by_x20id-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('stitek_entity_pid_by_x20id') and type = 'FN')
+ drop function stitek_entity_pid_by_x20id
+GO
+
+
+CREATE FUNCTION [dbo].[stitek_entity_pid_by_x20id](@o23id int,@x20id int)
+RETURNS int
+AS
+BEGIN
+  ---vrací PID entity v dokumentu
+  
+ DECLARE @ret int
+
+
+select top 1 @ret=a.x19RecordPID
+FROM x19EntityCategory_Binding a INNER JOIN o23Doc o23 ON a.o23ID=o23.o23ID INNER JOIN x20EntiyToCategory x20 ON a.x20ID=x20.x20ID
+where a.o23ID=@o23id AND a.x20ID=@x20id
+
+
+
+RETURN(@ret)
+   
+END
+
+
+GO
+
+----------FN---------------stitek_entity_report-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('stitek_entity_report') and type = 'FN')
+ drop function stitek_entity_report
+GO
+
+
+
+
+
+
+
+
+
+CREATE FUNCTION [dbo].[stitek_entity_report](@o23id int,@x29id int)
+RETURNS nvarchar(2000)
+AS
+BEGIN
+  ---vrací èárkou oddìlené názvy entit
+  
+ DECLARE @s nvarchar(2000),@x20id int,@x18id int
+
+ select @x18id=c.x18ID FROM o23Doc a INNER JOIN x23EntityField_Combo b ON a.x23ID=b.x23ID INNER JOIN x18EntityCategory c ON b.x23ID=c.x23ID WHERE a.o23ID=@o23id
+
+ select @x20id=x20ID FROM x20EntiyToCategory WHERE x18ID=@x18id AND x29ID=@x29id
+
+
+select top 10 @s=COALESCE(@s + ', ', '')+dbo.GetObjectAlias(convert(varchar(10),x20.x29ID),a.x19RecordPID)
+FROM x19EntityCategory_Binding a INNER JOIN o23Doc o23 ON a.o23ID=o23.o23ID INNER JOIN x20EntiyToCategory x20 ON a.x20ID=x20.x20ID
+where a.o23ID=@o23id AND a.x20ID=@x20id
+
+
+
+RETURN(@s)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------stitek_hodnoty-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('stitek_hodnoty') and type = 'FN')
@@ -15553,6 +15710,9 @@ BEGIN TRY
 	DELETE FROM x20EntiyToCategory WHERE x18ID=@pid
 
 	DELETE FROM x16EntityCategory_FieldSetting WHERE x18ID=@pid		
+
+	if exists(select x17ID FROM x17EntityCategory_Folder WHERE x18ID=@pid)
+	 DELETE FROM x17EntityCategory_Folder WHERE x18ID=@pid
 
 	delete from x18EntityCategory where x18ID=@pid
 

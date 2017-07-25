@@ -1,0 +1,1 @@
+﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="datovka_service_info.aspx.vb" Inherits="UIAPI.datovka_service_info" %>

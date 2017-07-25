@@ -196,6 +196,15 @@
                     <asp:DropDownList ID="cbxAddB09ID" runat="server" DataTextField="b09Name" DataValueField="b09ID" AutoPostBack="true" Width="300px"></asp:DropDownList>
                     <p></p>
 
+                    <asp:Panel ID="panDoc" runat="server" Visible="false">
+                        <span>Typ dokumentu:</span>
+                        <asp:DropDownList ID="x18ID" runat="server" DataTextField="x18Name" DataValueField="pid"></asp:DropDownList>
+                        <div>
+                            <span>Název dokumentu:</span>
+                            <asp:TextBox ID="o23Name" runat="server" Width="300px"></asp:TextBox>
+                        </div>
+                    </asp:Panel>
+
                     <asp:Panel ID="panWorksheetTemplate" runat="server" Visible="false">
                         <span>Najít vzorový worksheet úkon:</span>
                         <telerik:RadComboBox ID="p31ID_Template" runat="server" RenderMode="Auto" DropDownWidth="600px" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" ShowToggleImage="false" Text="Hledat text úkonu..." Width="500px" OnClientItemsRequesting="p31ID_Template_OnClientItemsRequesting" AutoPostBack="false">
@@ -265,6 +274,9 @@
                                 <div>
                                     <asp:Label ID="WorksheetTemplate" runat="server"></asp:Label>
                                 </div>
+                                <div>
+                                    <asp:Label ID="DocumentTemplate" runat="server"></asp:Label>
+                                </div>
                             </td>
 
                             <td>
@@ -284,10 +296,8 @@
                 </div>
                 <div class="content">
                     <div class="div6">
-                        <span>Hlavní složka:</span>
-                        <asp:TextBox ID="b06CreateDirectory" runat="server" Width="400px"></asp:TextBox>
-                    <span>Pod-složky v rámci hlavní složky:</span>
-                        <asp:TextBox ID="b06CreateSubdirectory" runat="server" Width="400px"></asp:TextBox>(oddělovač je středník)
+                        
+                        <asp:TextBox ID="b06CreateDirectory" runat="server" Width="600px"></asp:TextBox>(oddělovač je středník)
                         
                     </div>
                 </div>

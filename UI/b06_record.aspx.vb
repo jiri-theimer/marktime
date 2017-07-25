@@ -136,7 +136,7 @@
                 Me.chkDirectNominee.Checked = False
             End If
             Me.b06CreateDirectory.Text = .b06CreateDirectory
-            Me.b06CreateSubdirectory.Text = .b06CreateSubdirectory
+
 
             Master.Timestamp = .Timestamp
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -179,6 +179,7 @@
                 .p85OtherKey1 = c.b09ID
                 .p85FreeText01 = c.b09Name
                 If c.p31ID_Template <> 0 Then
+                    .p85Prefix = "p31"
                     .p85OtherKey2 = c.p31ID_Template
                     .p85OtherKey3 = c.b10Worksheet_p72ID
                     .p85FreeNumber01 = CInt(c.b10Worksheet_ProjectFlag)
@@ -186,6 +187,11 @@
                     .p85FreeNumber03 = CInt(c.b10Worksheet_DateFlag)
                     .p85FreeText01 = c.b10Worksheet_Text
                     .p85OtherKey4 = CInt(c.b10Worksheet_HoursFlag)
+                End If
+                If c.x18ID <> 0 Then
+                    .p85Prefix = "o23"
+                    .p85OtherKey2 = c.x18ID
+                    .p85FreeText02 = c.o23Name
                 End If
 
             End With
@@ -249,7 +255,7 @@
                 .b06IsRunOneInstanceOnly = Me.b06IsRunOneInstanceOnly.Checked
 
                 .b06CreateDirectory = Me.b06CreateDirectory.Text
-                .b06CreateSubdirectory = Me.b06CreateSubdirectory.Text
+
 
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil
@@ -307,13 +313,19 @@
             For Each cTMP In Master.Factory.p85TempBoxBL.GetList(ViewState("guid_b10"))
                 Dim c As New BO.b10WorkflowCommandCatalog_Binding
                 c.b09ID = cTMP.p85OtherKey1
-                c.p31ID_Template = cTMP.p85OtherKey2
-                c.b10Worksheet_ProjectFlag = CInt(cTMP.p85FreeNumber01)
-                c.b10Worksheet_PersonFlag = CInt(cTMP.p85FreeNumber02)
-                c.b10Worksheet_DateFlag = CInt(cTMP.p85FreeNumber03)
-                c.b10Worksheet_p72ID = cTMP.p85OtherKey3
-                c.b10Worksheet_Text = cTMP.p85FreeText01
-                c.b10Worksheet_HoursFlag = CInt(cTMP.p85OtherKey4)
+                If cTMP.p85Prefix = "p31" Then
+                    c.p31ID_Template = cTMP.p85OtherKey2
+                    c.b10Worksheet_ProjectFlag = CInt(cTMP.p85FreeNumber01)
+                    c.b10Worksheet_PersonFlag = CInt(cTMP.p85FreeNumber02)
+                    c.b10Worksheet_DateFlag = CInt(cTMP.p85FreeNumber03)
+                    c.b10Worksheet_p72ID = cTMP.p85OtherKey3
+                    c.b10Worksheet_Text = cTMP.p85FreeText01
+                    c.b10Worksheet_HoursFlag = CInt(cTMP.p85OtherKey4)
+                End If
+                If cTMP.p85Prefix = "o23" Then
+                    c.x18ID = cTMP.p85OtherKey2
+                    c.o23Name = cTMP.p85FreeText02
+                End If
                 lisB10.Add(c)
             Next
 
@@ -480,7 +492,7 @@
             CType(e.Item.FindControl("p85id"), HiddenField).Value = .PID.ToString
             CType(e.Item.FindControl("b09id"), HiddenField).Value = .p85OtherKey1.ToString
             CType(e.Item.FindControl("b09Name"), Label).Text = .p85FreeText01
-            If cRec.p85OtherKey2 <> 0 Then
+            If cRec.p85Prefix = "p31" Then
                 'vzorový worksheet záznam
                 With CType(e.Item.FindControl("WorksheetTemplate"), Label)
                     .Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p31Worksheet, cRec.p85OtherKey2, False)
@@ -519,6 +531,14 @@
                         .Text += "<br>Schválit statusem: " & Master.Factory.ftBL.GetList_P72().Where(Function(p) p.PID = cRec.p85OtherKey3)(0).p72Name
                     End If
                 End With
+
+            End If
+            If cRec.p85Prefix = "o23" Then
+                With CType(e.Item.FindControl("DocumentTemplate"), Label)
+                    .Text = "Typ dokumentu: "
+                    If cRec.p85OtherKey2 <> 0 Then .Text += Master.Factory.x18EntityCategoryBL.Load(cRec.p85OtherKey2).x18Name
+                    .Text += ", název: " & cRec.p85FreeText02
+                End With
                 
             End If
             
@@ -528,7 +548,7 @@
 
    
     Private Sub cbxAddB09ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxAddB09ID.SelectedIndexChanged
-        panWorksheetTemplate.Visible = False
+        panWorksheetTemplate.Visible = False : panDoc.Visible = False
 
         Dim intB09ID As Integer = BO.BAS.IsNullInt(Me.cbxAddB09ID.SelectedValue)
         If intB09ID = 0 Then
@@ -543,6 +563,12 @@
                 '    Case BO.x29IdEnum.p56Task
                 '        b10Worksheet_ProjectFlag.Items.FindByValue("2").Text=
                 'End Select
+            Case "o23_create"
+                If Me.x18ID.Items.Count = 0 Then
+                    Me.x18ID.DataSource = Master.Factory.x18EntityCategoryBL.GetList(New BO.myQuery, Me.CurrentX29ID)
+                    Me.x18ID.DataBind()
+                End If
+                panDoc.Visible = True
         End Select
     End Sub
     Private Sub cmdAddB09_Click(sender As Object, e As System.EventArgs) Handles cmdAddB09.Click
@@ -554,7 +580,10 @@
             Master.Notify("Musíte vybrat vzorový worksheet záznam.")
             Return
         End If
-
+        If panDoc.Visible And Me.x18ID.SelectedValue = "" Then
+            Master.Notify("Musíte vybrat typ dokumentu.")
+            Return
+        End If
         Dim cRec As BO.b09WorkflowCommandCatalog = Master.Factory.b06WorkflowStepBL.GetList_Allb09IDs().Where(Function(p) p.b09ID = intB09ID)(0)
 
         Dim cTMP As New BO.p85TempBox
@@ -562,6 +591,7 @@
         cTMP.p85OtherKey1 = intB09ID
         cTMP.p85FreeText01 = cRec.b09Name
         If panWorksheetTemplate.Visible Then
+            cTMP.p85Prefix = "p31"
             cTMP.p85OtherKey2 = BO.BAS.IsNullInt(Me.p31ID_Template.SelectedValue)
             cTMP.p85FreeNumber01 = CInt(b10Worksheet_ProjectFlag.SelectedValue)
             cTMP.p85FreeNumber02 = CInt(b10Worksheet_PersonFlag.SelectedValue)
@@ -569,6 +599,11 @@
             cTMP.p85OtherKey3 = BO.BAS.IsNullInt(Me.b10Worksheet_p72ID.SelectedValue)
             cTMP.p85OtherKey4 = BO.BAS.IsNullInt(Me.b10Worksheet_HoursFlag.SelectedValue)
             cTMP.p85FreeText01 = b10Worksheet_Text.Text
+        End If
+        If panDoc.Visible Then
+            cTMP.p85Prefix = "o23"
+            cTMP.p85OtherKey2 = BO.BAS.IsNullInt(Me.x18ID.SelectedValue)
+            cTMP.p85FreeText02 = o23Name.Text
         End If
 
         Master.Factory.p85TempBoxBL.Save(cTMP)

@@ -311,6 +311,33 @@ Partial Public Class b06_record
     Protected WithEvents cbxAddB09ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''panDoc control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panDoc As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''x18ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''o23Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o23Name As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''panWorksheetTemplate control.
     '''</summary>
     '''<remarks>
@@ -408,15 +435,6 @@ Partial Public Class b06_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents b06CreateDirectory As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''b06CreateSubdirectory control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents b06CreateSubdirectory As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''RadPageView5 control.

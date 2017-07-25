@@ -17,11 +17,7 @@ Public Class Global_asax
             Dim intCacheTimeOut As Integer = factory.x35GlobalParam.GetValueInteger("robot_cache_timeout", 300)
             RegisterCacheEntry(strRobotHost, intCacheTimeOut)
         End If
-
-        RouteTable.Routes.MapPageRoute("DatovkaUH", "datovka/upload_hiearchy", "~/Integration/datovka_upload_hiearchy.aspx")
-        RouteTable.Routes.MapPageRoute("DatovkaSI", "datovka/service_info", "~/Integration/datovka_service_info.aspx")
-        RouteTable.Routes.MapPageRoute("DatovkaUF", "datovka/upload_file", "~/Integration/datovka_upload_file.aspx")
-
+        
     End Sub
 
     Sub Session_Start(ByVal sender As Object, ByVal e As EventArgs)

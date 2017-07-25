@@ -20,6 +20,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "UI", "UI\UI.vbproj", "{8E4B
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TelerikReportingBAS", "TelerikReportingBAS\TelerikReportingBAS.vbproj", "{BD292F09-A7A7-4050-98EC-28CE7F01D9C5}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "UIAPI", "UIAPI\UIAPI.vbproj", "{06637345-F14D-458A-B101-F1966746B68B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,16 @@ Global
 		{BD292F09-A7A7-4050-98EC-28CE7F01D9C5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{BD292F09-A7A7-4050-98EC-28CE7F01D9C5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{BD292F09-A7A7-4050-98EC-28CE7F01D9C5}.Release|x86.ActiveCfg = Release|Any CPU
+		{06637345-F14D-458A-B101-F1966746B68B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06637345-F14D-458A-B101-F1966746B68B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06637345-F14D-458A-B101-F1966746B68B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{06637345-F14D-458A-B101-F1966746B68B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{06637345-F14D-458A-B101-F1966746B68B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{06637345-F14D-458A-B101-F1966746B68B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06637345-F14D-458A-B101-F1966746B68B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06637345-F14D-458A-B101-F1966746B68B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{06637345-F14D-458A-B101-F1966746B68B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{06637345-F14D-458A-B101-F1966746B68B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

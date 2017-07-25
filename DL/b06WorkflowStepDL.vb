@@ -98,6 +98,8 @@
                     pars = New DbParameters
                     pars.Add("b09ID", c.b09ID, DbType.Int32)
                     pars.Add("b06ID", intLastSavedPID, DbType.Int32)
+                    pars.Add("x18ID", BO.BAS.IsNullDBKey(c.x18ID), DbType.Int32)
+                    pars.Add("o23Name", c.o23Name, DbType.String)
                     pars.Add("p31ID_Template", BO.BAS.IsNullDBKey(c.p31ID_Template), DbType.Int32)
                     pars.Add("b10Worksheet_ProjectFlag", CInt(c.b10Worksheet_ProjectFlag), DbType.Int32)
                     pars.Add("b10Worksheet_PersonFlag", CInt(c.b10Worksheet_PersonFlag), DbType.Int32)
