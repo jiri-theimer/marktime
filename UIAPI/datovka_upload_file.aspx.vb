@@ -37,6 +37,10 @@ Public Class datovka_upload_file
 
         cF.SaveText2File("c:\temp\hovado.txt", c.ids(0))
         cF.SaveText2File("c:\temp\hovado_pokus.zfo", c.file_content, , , False)
+
+
+        Dim imageBytes As Byte() = Convert.FromBase64String(c.file_content)
+        System.IO.File.WriteAllBytes("c:\temp\hovado_pokus2.zfo", imageBytes)
     End Sub
 
 End Class
