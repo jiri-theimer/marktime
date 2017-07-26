@@ -65,6 +65,12 @@
     }
 
     function sw_decide(url, iconUrl, is_maximize) {
+        var w=window.innerWidth;            
+        if (w<1100){
+            window.parent.sw_master(url, iconUrl, is_maximize);
+            return;
+        }
+
         <%If Me.hidSource.Value = "2" Then%>
         window.parent.sw_master(url, iconUrl, is_maximize);
         <%else%>
@@ -180,7 +186,7 @@
         sw_decide("p31_move2project.aspx?prefix=p41&pid=<%=Me.DataPID%>","Images/cut.png",true);
     }
     function p31_recalc(){            
-        sw_decide("p31_recalc.aspx?prefix=p41&pid=<%=me.datapid%>","Images/recalc.png",true);
+        sw_decide("p31_recalc.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=me.datapid%>","Images/recalc.png",true);
     }
     function menu_o23_record(pid) {
         <%If Me.DataPrefix="o23" then%>

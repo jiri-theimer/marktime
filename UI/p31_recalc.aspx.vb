@@ -28,7 +28,13 @@
                 Me.CurrentPrefix = Request.Item("prefix")
                 If Me.CurrentPrefix = "" Then .StopPage("prefix missing")
                 If .DataPID = 0 Then .StopPage("pid missing")
-                .HeaderText = "Přepočítat rozpracovanost v projektu | " & .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), .DataPID)
+                Select Case Me.CurrentPrefix
+                    Case "p41"
+                        .HeaderText = "Přepočítat rozpracovanost v projektu | " & .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), .DataPID)
+                    Case "j02"
+                        .HeaderText = "Přepočítat rozpracovanost osoby | " & .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), .DataPID)
+                End Select
+
 
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
                 period1.SetupData(.Factory, .Factory.j03UserBL.GetUserParam("periodcombo-custom_query"))
@@ -44,20 +50,26 @@
     End Sub
 
     Private Sub RefreshRecord()
-        Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
-        Dim intP51ID As Integer = cRec.p51ID_Billing
-        If intP51ID = 0 Then
-            If cRec.p28ID_Client <> 0 Then
-                Dim cClient As BO.p28Contact = Master.Factory.p28ContactBL.Load(cRec.p28ID_Client)
-                intP51ID = cClient.p51ID_Billing
+        If Me.CurrentPrefix = "p41" Then
+            Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
+            Dim intP51ID As Integer = cRec.p51ID_Billing
+            If intP51ID = 0 Then
+                If cRec.p28ID_Client <> 0 Then
+                    Dim cClient As BO.p28Contact = Master.Factory.p28ContactBL.Load(cRec.p28ID_Client)
+                    intP51ID = cClient.p51ID_Billing
+                End If
             End If
-        End If
-        If intP51ID = 0 Then
-            Master.Notify("Vybraný projekt ani jeho klient nemá přiřazený fakturační ceník!", NotifyLevel.WarningMessage)
+            If intP51ID = 0 Then
+                Master.Notify("Vybraný projekt ani jeho klient nemá přiřazený fakturační ceník!", NotifyLevel.WarningMessage)
+            Else
+                Dim cP51 As BO.p51PriceList = Master.Factory.p51PriceListBL.Load(intP51ID)
+                Me.p51Name.Text = cP51.NameWithCurr
+            End If
         Else
-            Dim cP51 As BO.p51PriceList = Master.Factory.p51PriceListBL.Load(intP51ID)
-            Me.p51Name.Text = cP51.NameWithCurr
+            lblP51.Visible = False
+            Me.p51Name.Visible = False
         End If
+        
 
     End Sub
     Private Sub SetupGrid()
@@ -75,7 +87,9 @@
             Select Case Me.CurrentPrefix
                 Case "p41"
                 Case Else
-                    .AddColumn("Projekt", "p41Name")
+                    .AddColumn("p28Client.p28Name", "Klient")
+                    .AddColumn("p41Name", "Projekt")
+
             End Select
             .AddColumn("p34Name", "Sešit")
             .AddColumn("p32Name", "Aktivita")

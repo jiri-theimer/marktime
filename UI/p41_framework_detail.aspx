@@ -324,6 +324,7 @@
         <div class="title">
             <img src="Images/worksheet.png" style="margin-right: 10px;" />
             <asp:Label ID="boxP31SummaryTitle" runat="server" Text="WORKSHEET Summary"></asp:Label>
+            
         </div>
         <div class="content">
             <uc:entity_worksheet_summary ID="p31summary1" runat="server"></uc:entity_worksheet_summary>

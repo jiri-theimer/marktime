@@ -29,6 +29,12 @@
         });
 
         function sw_decide(url, iconUrl, is_maximize) {
+            var w=window.innerWidth;            
+            if (w<1100){
+                window.parent.sw_master(url, iconUrl, is_maximize);
+                return;
+            }
+            
             <%If hidSource.Value = "2" Then%>
             window.parent.sw_master(url, iconUrl, is_maximize);
             <%Else%>

@@ -892,7 +892,6 @@
                 With pars
                     .Add("p31id", intP31ID, DbType.Int32)
                     .Add("j03id_sys", _curUser.PID, DbType.Int32)
-                    .Add("guid", Nothing, DbType.String)
                     .Add("p48id", Nothing, DbType.Int32)
                     .Add("x45ids", , DbType.String, ParameterDirection.Output, 50)
                 End With
@@ -907,7 +906,6 @@
             With pars
                 .Add("p31id", intP31ID, DbType.Int32)
                 .Add("j03id_sys", _curUser.PID, DbType.Int32)
-                .Add("guid", Nothing, DbType.String)
                 .Add("p48id", Nothing, DbType.Int32)
                 .Add("x45ids", , DbType.String, ParameterDirection.Output, 50)
             End With

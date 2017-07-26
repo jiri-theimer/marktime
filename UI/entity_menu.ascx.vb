@@ -631,6 +631,9 @@ Public Class entity_menu
             If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
                 ami("WORKSHEET statistika osoby", "cmdPivot", "p31_sumgrid.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
             End If
+            If Me.Factory.TestPermission(BO.x53PermValEnum.GR_Admin) Then
+                ami("Přepočítat sazby rozpracovaných čas.úkonů", "cmdP31Recalc", "javascript:p31_recalc();", "Images/recalc.png", mi)
+            End If
 
             If Me.Factory.SysUser.j04IsMenu_Notepad Then
                 ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi, , True)
