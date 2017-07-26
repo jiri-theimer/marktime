@@ -32,7 +32,7 @@
                 End If
             End If
 
-
+            'a
             If .PersonalPage <> "" Then
                 If .PersonalPage.IndexOf(".aspx") > 0 Then
                     If LCase(.PersonalPage) = "default.aspx" Then
