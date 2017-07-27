@@ -11,5 +11,5 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class datovka_service_info
+Partial Public Class datovka_upload_hierarchy
 End Class

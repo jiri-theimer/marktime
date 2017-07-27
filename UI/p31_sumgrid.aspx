@@ -32,7 +32,8 @@
             <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období">
                 <asp:ListItem Text="Datum úkonu:" Value="p31Date" Selected="true"></asp:ListItem>
                 <asp:ListItem Text="Datum založení:" Value="p31DateInsert"></asp:ListItem>
-                <asp:ListItem Text="Datum fakturace:" Value="p91Date"></asp:ListItem>
+                <asp:ListItem Text="Vystavení faktury:" Value="p91Date"></asp:ListItem>
+                <asp:ListItem Text="DZP faktury:" Value="p91DateSupply"></asp:ListItem>
             </asp:DropDownList>
             <uc:periodcombo ID="period1" runat="server" Width="180px"></uc:periodcombo>
 

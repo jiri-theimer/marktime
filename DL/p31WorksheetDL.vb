@@ -376,6 +376,8 @@
                         s.Append(" AND a.p31DateInsert >= @datefrom AND a.p31DateInsert < dateadd(day,1,@dateuntil)")
                     Case BO.myQueryP31_Period.p91Date
                         s.Append(" AND p91.p91Date BETWEEN @datefrom AND @dateuntil")
+                    Case BO.myQueryP31_Period.p91DateSupply
+                        s.Append(" AND p91.p91DateSupply BETWEEN @datefrom AND @dateuntil")
                 End Select
             End If
             

@@ -224,9 +224,6 @@
     <Content Include="flexibee.aspx" />
     <Content Include="freefields_checkboxlist.aspx" />
     <Content Include="imap_record.ascx" />
-    <Content Include="Integration\datovka_service_info.aspx" />
-    <Content Include="Integration\datovka_upload_file.aspx" />
-    <Content Include="Integration\datovka_upload_hiearchy.aspx" />
     <Content Include="Integration\mtService.svc" />
     <Content Include="invoice.ascx" />
     <Content Include="j02_framework.aspx" />
@@ -960,27 +957,6 @@
     <Compile Include="imap_record.ascx.vb">
       <DependentUpon>imap_record.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Integration\datovka_service_info.aspx.designer.vb">
-      <DependentUpon>datovka_service_info.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Integration\datovka_service_info.aspx.vb">
-      <DependentUpon>datovka_service_info.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Integration\datovka_upload_file.aspx.designer.vb">
-      <DependentUpon>datovka_upload_file.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Integration\datovka_upload_file.aspx.vb">
-      <DependentUpon>datovka_upload_file.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Integration\datovka_upload_hiearchy.aspx.designer.vb">
-      <DependentUpon>datovka_upload_hiearchy.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Integration\datovka_upload_hiearchy.aspx.vb">
-      <DependentUpon>datovka_upload_hiearchy.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Integration\ImtService.vb" />
     <Compile Include="Integration\mtService.svc.vb">

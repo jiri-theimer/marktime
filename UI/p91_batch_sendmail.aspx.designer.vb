@@ -23,6 +23,15 @@ Partial Public Class p91_batch_sendmail
     Protected WithEvents txtBody As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''txtSubjectPre control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSubjectPre As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''chkAtt control.
     '''</summary>
     '''<remarks>

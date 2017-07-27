@@ -15,6 +15,10 @@
         <div class="title">Text zprávy</div>
         <div class="content">
             <asp:textbox ID="txtBody" runat="server" TextMode="MultiLine" Width="99%" Height="100px"></asp:textbox>
+            <div>
+                <span class="lbl">Úvod předmětu zprávy:</span>
+                <asp:TextBox ID="txtSubjectPre" runat="server" Width="300px"></asp:TextBox>
+            </div>
         </div>
     </div>
     <div>

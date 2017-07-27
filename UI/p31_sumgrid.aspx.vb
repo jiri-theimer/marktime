@@ -143,6 +143,7 @@ Public Class p31_sumgrid
             If period1.SelectedValue <> "" Then
                 Select Case Me.cbxPeriodType.SelectedValue
                     Case "p91Date" : .PeriodType = BO.myQueryP31_Period.p91Date
+                    Case "p91DateSupply" : .PeriodType = BO.myQueryP31_Period.p91DateSupply
                     Case "p31DateInsert" : .PeriodType = BO.myQueryP31_Period.p31DateInsert
                     Case Else
                         .PeriodType = BO.myQueryP31_Period.p31Date
@@ -474,6 +475,7 @@ Public Class p31_sumgrid
             Select Case .SelectedIndex
                 Case 1 : .BackColor = Drawing.Color.LightSkyBlue
                 Case 2 : .BackColor = Drawing.Color.Green
+                Case 3, 4 : .BackColor = basUI.ColorQueryRGB
                 Case Else : .BackColor = Nothing
             End Select
         End With

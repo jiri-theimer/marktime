@@ -27,6 +27,7 @@ Public Enum myQueryP31_Period
     p31Date = 1
     p31DateInsert = 2
     p91Date = 3
+    p91DateSupply = 4
 End Enum
 Public Class myQueryP31
     Inherits myQuery
