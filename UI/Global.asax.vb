@@ -17,7 +17,7 @@ Public Class Global_asax
             Dim intCacheTimeOut As Integer = factory.x35GlobalParam.GetValueInteger("robot_cache_timeout", 300)
             RegisterCacheEntry(strRobotHost, intCacheTimeOut)
         End If
-        
+
     End Sub
 
     Sub Session_Start(ByVal sender As Object, ByVal e As EventArgs)
