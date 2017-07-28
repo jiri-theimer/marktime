@@ -553,6 +553,7 @@
                         <asp:Label ID="p91Text1" runat="server" CssClass="val" Style="font-family: 'Courier New'; word-wrap: break-word; display: block; font-size: 120%;"></asp:Label>
                     </div>
                 </asp:Panel>
+                
                 <asp:Panel ID="boxX18" runat="server" CssClass="content-box1" Style="clear: both;">
                     <div class="title">
                         <img src="Images/label.png" style="margin-right: 10px;" /><span>Štítky</span>
@@ -567,6 +568,9 @@
 
                 <uc:b07_list ID="comments1" runat="server" ShowHeader="false" ShowInsertButton="false" JS_Reaction="b07_reaction" />
                 <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
+                <div class="div6" style="clear:both;">
+                    <asp:Label ID="p92ReportConstantText" runat="server" CssClass="val"></asp:Label>
+                </div>
                 <div class="div6">
                     <asp:Label ID="lblTimestamp" runat="server" CssClass="timestamp"></asp:Label>
                 </div>

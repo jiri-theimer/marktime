@@ -270,6 +270,7 @@ Public Class p91_framework_detail
     Private Sub HandleDirectReports(intP92ID As Integer)
         Dim cRec As BO.p92InvoiceType = Master.Factory.p92InvoiceTypeBL.Load(intP92ID)
         With cRec
+            Me.p92ReportConstantText.Text = BO.BAS.CrLfText2Html(.p92ReportConstantText)
             If .x31ID_Invoice > 0 Then
                 Me.cmdReportInvoice.NavigateUrl = "javascript: report(" & .x31ID_Invoice.ToString & ")"
             Else

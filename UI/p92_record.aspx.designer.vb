@@ -176,6 +176,15 @@ Partial Public Class p92_record
     Protected WithEvents x31ID_Invoice As Global.UI.datacombo
 
     '''<summary>
+    '''p92ReportConstantText control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p92ReportConstantText As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''Label1 control.
     '''</summary>
     '''<remarks>

@@ -77942,6 +77942,39 @@
     <TableName>p92InvoiceType</TableName>
   </Table>
   <Table>
+    <name>p92ReportConstantText</name>
+    <id>1531152500</id>
+    <xtype>231</xtype>
+    <typestat>2</typestat>
+    <xusertype>231</xusertype>
+    <length>1000</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>21</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>21</colorder>
+    <offset>-20</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>0</usertype>
+    <prec>1000</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>nvarchar</type_name>
+    <TableName>p92InvoiceType</TableName>
+  </Table>
+  <Table>
     <name>p92DateInsert</name>
     <id>1531152500</id>
     <xtype>61</xtype>
@@ -77950,7 +77983,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>21</colid>
+    <colid>22</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -77958,8 +77991,8 @@
     <cdefault>1563152614</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>21</colorder>
-    <offset>-20</offset>
+    <colorder>22</colorder>
+    <offset>-21</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -77983,7 +78016,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>22</colid>
+    <colid>23</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -77991,8 +78024,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>22</colorder>
-    <offset>-21</offset>
+    <colorder>23</colorder>
+    <offset>-22</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -78016,7 +78049,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>23</colid>
+    <colid>24</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -78024,8 +78057,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>23</colorder>
-    <offset>-22</offset>
+    <colorder>24</colorder>
+    <offset>-23</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -78049,7 +78082,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>24</colid>
+    <colid>25</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -78057,8 +78090,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>24</colorder>
-    <offset>-23</offset>
+    <colorder>25</colorder>
+    <offset>-24</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -78082,7 +78115,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>25</colid>
+    <colid>26</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -78090,8 +78123,8 @@
     <cdefault>1579152671</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>25</colorder>
-    <offset>-24</offset>
+    <colorder>26</colorder>
+    <offset>-25</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -78115,7 +78148,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>26</colid>
+    <colid>27</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -78123,8 +78156,8 @@
     <cdefault>1595152728</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>26</colorder>
-    <offset>-25</offset>
+    <colorder>27</colorder>
+    <offset>-26</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>

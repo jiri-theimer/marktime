@@ -83,6 +83,7 @@
             Me.b01ID.SelectedValue = .b01ID.ToString
             Me.p92InvoiceDefaultText1.Text = .p92InvoiceDefaultText1
             Me.p92InvoiceDefaultText2.Text = .p92InvoiceDefaultText2
+            Me.p92ReportConstantText.Text = .p92ReportConstantText
             Me.p92Ordinary.Value = .p92Ordinary
             basUI.SelectRadiolistValue(Me.p92InvoiceType, CInt(.p92InvoiceType).ToString)
 
@@ -128,6 +129,7 @@
                 .p92InvoiceType = CType(Me.p92InvoiceType.SelectedValue, BO.p92InvoiceTypeENUM)
                 .p92InvoiceDefaultText1 = Trim(Me.p92InvoiceDefaultText1.Text)
                 .p92InvoiceDefaultText2 = Trim(Me.p92InvoiceDefaultText2.Text)
+                .p92ReportConstantText = Trim(Me.p92ReportConstantText.Text)
 
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil

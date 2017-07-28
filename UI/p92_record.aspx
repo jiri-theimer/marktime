@@ -77,8 +77,17 @@
             </td>
             <td>
                 <uc:datacombo ID="x31ID_Invoice" runat="server" AutoPostBack="false" DataTextField="NameWithCode" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
-                <span class="infoInForm">Doklad faktury je možné tisknout i přes ostatní šablony fakturačních sestav.</span>
-
+                
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>
+        <span class="lbl">Do sestavy faktury vkládat text:</span>
+    </div>
+    <div>
+        <asp:TextBox ID="p92ReportConstantText" runat="server" TextMode="MultiLine" Style="width: 650px; height: 50px;"></asp:TextBox>
+    </div>
             </td>
         </tr>
         <tr valign="top">
@@ -138,16 +147,17 @@
         </tr>
 
     </table>
+    
     <div>
         <asp:Label ID="lblp92InvoiceDefaultText1" runat="server" Text="Výchozí text faktury:" CssClass="lbl"></asp:Label>
     </div>
-    <div class="div6">
+    <div>
         <asp:TextBox ID="p92InvoiceDefaultText1" runat="server" TextMode="MultiLine" Style="width: 650px; height: 50px;"></asp:TextBox>
     </div>
     <div>
         <asp:Label ID="lblp92InvoiceDefaultText2" runat="server" Text="Výchozí technický text faktury:" CssClass="lbl"></asp:Label>
     </div>
-    <div class="div6">
+    <div>
         <asp:TextBox ID="p92InvoiceDefaultText2" runat="server" TextMode="MultiLine" Style="width: 650px; height: 30px;"></asp:TextBox>
     </div>
 </asp:Content>

@@ -24,6 +24,7 @@ Public Class p92InvoiceType
 
     Public Property p92InvoiceDefaultText1 As String
     Public Property p92InvoiceDefaultText2 As String
+    Public Property p92ReportConstantText As String
 
     Private Property _j27Code As String
     Public ReadOnly Property j27Code As String
