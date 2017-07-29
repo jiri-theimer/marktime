@@ -210,7 +210,7 @@
                 <asp:Label ID="lblSearchProject" runat="server" Text="Vyhledat projekt pro nový úkon..." meta:resourcekey="lblSearchProject"></asp:Label>
             </div>
             <div class="content">
-                <uc:project ID="p41ID" runat="server" Width="99%" AutoPostBack="false" Flag="p31_entry" OnClientSelectedIndexChanged="p41id_onchange" Text="Hledat projekt..." />
+                <uc:project ID="p41ID" runat="server"  AutoPostBack="false" Flag="p31_entry" Width="330px" OnClientSelectedIndexChanged="p41id_onchange" Text="Hledat projekt..." />
             </div>
         </div>
 

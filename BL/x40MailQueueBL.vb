@@ -210,8 +210,8 @@ Class x40MailQueueBL
             Else
                 .BodyText = cRec.x40Body
             End If
-
             .Subject = cRec.x40Subject
+
 
         End With
 

@@ -105,31 +105,31 @@
                     <div class="content">
                         <asp:Panel ID="panSearch_P41" runat="server" Visible="false">
 
-                            <telerik:RadComboBox ID="search_p41" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat projekt..." Width="250px" OnClientSelectedIndexChanged="project_OnClientSelectedIndexChanged" OnClientItemsRequesting="project_OnClientItemsRequesting">
+                            <telerik:RadComboBox ID="search_p41" runat="server" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat projekt..." Width="250px" OnClientSelectedIndexChanged="project_OnClientSelectedIndexChanged" OnClientItemsRequesting="project_OnClientItemsRequesting">
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/project_service.asmx" UseHttpGet="false" />
                             </telerik:RadComboBox>
                         </asp:Panel>
                         <asp:Panel ID="panSearch_p28" runat="server" Style="margin-top: 6px;" Visible="false">
 
-                            <telerik:RadComboBox ID="search_p28" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat klienta..." Width="250px" OnClientSelectedIndexChanged="contact_OnClientSelectedIndexChanged" OnClientItemsRequesting="contact_OnClientItemsRequesting">
+                            <telerik:RadComboBox ID="search_p28" runat="server" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat klienta..." Width="250px" OnClientSelectedIndexChanged="contact_OnClientSelectedIndexChanged" OnClientItemsRequesting="contact_OnClientItemsRequesting">
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/contact_service.asmx" UseHttpGet="false" />
                             </telerik:RadComboBox>
                         </asp:Panel>
                         <asp:Panel ID="panSearch_p91" runat="server" Style="margin-top: 6px;" Visible="false">
 
-                            <telerik:RadComboBox ID="search_p91" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat fakturu..." Width="250px" OnClientSelectedIndexChanged="invoice_OnClientSelectedIndexChanged" OnClientItemsRequesting="invoice_OnClientItemsRequesting">
+                            <telerik:RadComboBox ID="search_p91" runat="server" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat fakturu..." Width="250px" OnClientSelectedIndexChanged="invoice_OnClientSelectedIndexChanged" OnClientItemsRequesting="invoice_OnClientItemsRequesting">
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/invoice_service.asmx" UseHttpGet="false" />
                             </telerik:RadComboBox>
                         </asp:Panel>
                         <asp:Panel ID="panSearch_p56" runat="server" Style="margin-top: 6px;" Visible="false">
 
-                            <telerik:RadComboBox ID="search_p56" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat úkol..." Width="250px" OnClientSelectedIndexChanged="task_OnClientSelectedIndexChanged" OnClientItemsRequesting="task_OnClientItemsRequesting">
+                            <telerik:RadComboBox ID="search_p56" runat="server" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat úkol..." Width="250px" OnClientSelectedIndexChanged="task_OnClientSelectedIndexChanged" OnClientItemsRequesting="task_OnClientItemsRequesting">
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/task_service.asmx" UseHttpGet="false" />
                             </telerik:RadComboBox>
                         </asp:Panel>
                         <asp:Panel ID="panSearch_j02" runat="server" Style="margin-top: 6px;" Visible="false">
 
-                            <telerik:RadComboBox ID="search_j02" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat osobu..." Width="250px" OnClientSelectedIndexChanged="person_OnClientSelectedIndexChanged" OnClientItemsRequesting="person_OnClientItemsRequesting">
+                            <telerik:RadComboBox ID="search_j02" runat="server" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat osobu..." Width="250px" OnClientSelectedIndexChanged="person_OnClientSelectedIndexChanged" OnClientItemsRequesting="person_OnClientItemsRequesting">
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/person_service.asmx" UseHttpGet="false" />
                             </telerik:RadComboBox>
                         </asp:Panel>

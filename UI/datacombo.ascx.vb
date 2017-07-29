@@ -78,6 +78,7 @@ Public Class datacombo
         Set(ByVal value As String)
 
             Me.cbx1.Width = Unit.Parse(value)
+
         End Set
     End Property
 

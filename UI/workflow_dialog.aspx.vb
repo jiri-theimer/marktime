@@ -57,7 +57,14 @@
             opgB06ID.Items.Add(New ListItem(c.RadioListText, c.b06ID.ToString))
         Next
         opgB06ID.Items.Add(New ListItem("Doplnit pouze komentář nebo nahrát přílohu", ""))
-
+        If Me.CurrentPrefix = "p56" Then
+            Dim cP56 As BO.p56Task = Master.Factory.p56TaskBL.Load(Me.CurrentRecordPID)
+            If cP56.o43ID <> 0 Then
+                'úkol načtený přes IMAP
+                Dim cO43 As BO.o43ImapRobotHistory = Master.Factory.o42ImapRuleBL.LoadHistoryByID(cP56.o43ID)
+                opgB06ID.Items.Add(New ListItem(String.Format("Napsat odpověď žadateli požadavku [{0}]", cO43.o43FROM), "-1"))
+            End If
+        End If
 
         history1.RefreshData(Master.Factory, BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Me.CurrentRecordPID)
         If history1.RowsCount = 0 Then
@@ -212,7 +219,9 @@
     End Sub
 
     Private Sub opgB06ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgB06ID.SelectedIndexChanged
+        Me.panNotify.Visible = False
         If opgB06ID.SelectedValue = "" Then
+            'Zapsat pouze komentář
             Me.panNotify.Visible = True
             If receiver1.RowsCount = 0 And Me.CurrentPrefix = "p56" Then
                 Dim cP56 As BO.p56Task = Master.Factory.p56TaskBL.Load(Me.CurrentRecordPID)
@@ -221,10 +230,12 @@
                 End If
             End If
             Return
-        Else
-            Me.panNotify.Visible = False
         End If
+        If opgB06ID.SelectedValue = "-1" Then
+            'odpovědět žadateli požadavku na mail
 
+            Return
+        End If
         Dim cRec As BO.b06WorkflowStep = Master.Factory.b06WorkflowStepBL.Load(opgB06ID.SelectedValue)
         panNominee.Visible = cRec.b06IsNominee
         If cRec.b06IsNominee Then

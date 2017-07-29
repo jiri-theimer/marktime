@@ -11,6 +11,10 @@
         End If
         Me.hidGUID.Value = cRec.o43RecordGUID
         With cRec
+            Me.Sender.Text = "<a href='mailto:" & .o43FROM & "'>" & .o43FROM & "</a> " & .o43FROM_DisplayName
+            Me.Timestamp.Text = BO.BAS.FD(.o43DateMessage, True, True)
+            Me.Subject.Text = .o43Subject
+
             cmdMSG.NavigateUrl = "binaryfile.aspx?format=msg&prefix=o43&guid=" & .o43RecordGUID
             cmdEML.NavigateUrl = "binaryfile.aspx?format=eml&prefix=o43&guid=" & .o43RecordGUID
             If .o43Attachments <> "" And cRec.p56ID <> 0 Then

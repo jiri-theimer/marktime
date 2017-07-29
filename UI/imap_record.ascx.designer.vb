@@ -14,6 +14,33 @@ Option Explicit On
 Partial Public Class imap_record
 
     '''<summary>
+    '''Sender control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Sender As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Subject control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Subject As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Timestamp control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Timestamp As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''cmdMSG control.
     '''</summary>
     '''<remarks>

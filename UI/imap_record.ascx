@@ -1,5 +1,14 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="imap_record.ascx.vb" Inherits="UI.imap_record" %>
 <div class="div6">
+    <asp:Label ID="Sender" runat="server"></asp:Label>
+</div>
+<div class="div6">
+    <asp:Label ID="Subject" runat="server" CssClass="valbold"></asp:Label>
+</div>
+<div class="div6">
+    <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
+</div>
+<div class="div6">
     <img src="Images/Files/msg_24.png" />
     <asp:HyperLink ID="cmdMSG" runat="server" Text="Otevřít v MS-OUTLOOK"></asp:HyperLink>
 </div>

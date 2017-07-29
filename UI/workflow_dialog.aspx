@@ -53,7 +53,7 @@
 
             </asp:Panel>
 
-            <asp:TextBox ID="b07Value" runat="server" TextMode="MultiLine" Style="width: 99%; height: 100px; font-family: 'Courier New';" ToolTip="Doplňující komentář"></asp:TextBox>
+            <asp:TextBox ID="b07Value" runat="server" TextMode="MultiLine" Style="width: 99%; height: 200px; font-family: 'Courier New';" ToolTip="Doplňující komentář"></asp:TextBox>
 
             <table style="margin-bottom: 10px;">
                 <tr>

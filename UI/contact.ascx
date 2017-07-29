@@ -2,7 +2,6 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <telerik:RadComboBox ID="cbx1"
 runat="server" 
-rendermode="Auto"
 DropDownWidth="400" 
 EnableTextSelection="true" 
 MarkFirstMatch="true" 

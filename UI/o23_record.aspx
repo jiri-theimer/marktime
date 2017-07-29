@@ -67,8 +67,8 @@
                 <asp:RadioButtonList ID="opgX20ID" runat="server" AutoPostBack="true" RepeatDirection="Horizontal" DataValueField="x20ID" DataTextField="BindName"></asp:RadioButtonList>
             </div>
             <div>
-                <asp:DropDownList ID="cbxType" runat="server" DataValueField="pid" AutoPostBack="true" Visible="false" Style="height: 26px;" ToolTip="Filtrovat rozsah hledaných záznamů"></asp:DropDownList>
-                <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="600px" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="500px" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="true">
+                <asp:DropDownList ID="cbxType" runat="server" DataValueField="pid" AutoPostBack="true" Visible="false" ToolTip="Filtrovat rozsah hledaných záznamů"></asp:DropDownList>
+                <telerik:RadComboBox ID="cbx1" runat="server" DropDownWidth="600px" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="500px" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="true">
                     <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
                 </telerik:RadComboBox>
 

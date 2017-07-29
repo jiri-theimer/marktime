@@ -233,7 +233,7 @@
     <asp:Panel ID="boxIMAP" runat="server" CssClass="content-box1" Visible="false">
         <div class="title">
             <img src="Images/imap.png" style="margin-right: 10px;" />
-            <span>Úkol byl vygenerován poštovní zprávou</span>
+            <span>Úkol byl vygenerován importem z poštovní zprávy</span>
         </div>
         <div class="content">
             <uc:imap_record ID="imap1" runat="server"></uc:imap_record>
