@@ -28,6 +28,7 @@
         Me.uploadlist1.Factory = Master.Factory
 
         If Not Page.IsPostBack Then
+            txtSender.Text = Master.Factory.SysUser.PersonEmail
             If Request.Item("prefix") <> "" Then
                 Me.CurrentX29ID = BO.BAS.GetX29FromPrefix(Request.Item("prefix"))
                 Master.DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
@@ -36,12 +37,12 @@
                 If Me.CurrentX29ID = BO.x29IdEnum.j02Person And Master.DataPID <> Master.Factory.SysUser.j02ID Then
                     If Master.DataPID <> 0 Then Me.txtTo.Text = Master.Factory.j02PersonBL.Load(Master.DataPID).j02Email
                 End If
-                
+
             Else
                 Me.CurrentX29ID = BO.x29IdEnum.j02Person
                 Master.DataPID = Master.Factory.SysUser.j02ID
             End If
-            
+
             Me.EntityContext.Text = BO.BAS.GetX29EntityAlias(Me.CurrentX29ID, False) & ": " & Master.Factory.GetRecordCaption(Me.CurrentX29ID, Master.DataPID, True)
             Me.upload1.GUID = BO.BAS.GetGUID
             Me.uploadlist1.GUID = Me.upload1.GUID
@@ -81,7 +82,7 @@
             If Me.hidMasterPrefix_p30.Value <> "" Then
                 linkNewPerson.Text = BO.BAS.OM2(Me.linkNewPerson.Text, Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(hidMasterPrefix_p30.Value), BO.BAS.IsNullInt(hidMasterPID_p30.Value), False))
             End If
-            
+
             With Master
                 .HeaderText = "Odeslat poštovní zprávu"
                 .HeaderIcon = "Images/email_32.png"
@@ -97,7 +98,7 @@
                     Me.txtTo.Text = Master.Factory.j02PersonBL.Load(CInt(s)).j02Email
                 End If
             End If
-            
+
             If Me.CurrentX29ID > BO.x29IdEnum._NotSpecified And Me.CurrentX29ID <> BO.x29IdEnum.j02Person Then
                 Me.txtBody.Text = vbCrLf & vbCrLf & "Přímý odkaz: " & Master.Factory.GetRecordLinkUrl(Me.CurrentPrefix, Master.DataPID)
             End If
@@ -193,7 +194,8 @@
             Dim message As New BO.smtpMessage()
             With message
                 .Body = Trim(Me.txtBody.Text)
-                .SenderAddress = Master.Factory.SysUser.PersonEmail
+                .SenderAddress = Me.txtSender.Text
+
                 .SenderName = Master.Factory.SysUser.Person
                 .Subject = Me.txtSubject.Text
                 If uploadlist1.ItemsCount > 0 Then

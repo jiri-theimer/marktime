@@ -1,4 +1,6 @@
-﻿Imports System.Net.Mail
+﻿'Imports System.Net.Mail
+Imports Rebex.Net
+
 Public Interface Ix40MailQueueBL
     Inherits IFMother
 
@@ -137,37 +139,44 @@ Class x40MailQueueBL
 
     End Function
     Public Function SendMessageWithoutQueque(strRecipient As String, strBody As String, strSubject As String) As Boolean Implements Ix40MailQueueBL.SendMessageWithoutQueque
-        Dim mail As MailMessage = New MailMessage()
+        'Dim mail As MailMessage = New MailMessage()
+        Dim mail As New Rebex.Mail.MailMessage
+
         With mail
-            .From = New MailAddress("info@marktime.cz", "MARKTIME")
-            .Body = strBody
-            .IsBodyHtml = False
+            .DefaultCharset = System.Text.Encoding.UTF8
+            .BodyText = strBody
             .Subject = strSubject
-            .BodyEncoding = System.Text.Encoding.UTF8
-            .SubjectEncoding = System.Text.Encoding.UTF8
-
+            .To = strRecipient
         End With
-        mail.To.Add(New MailAddress(strRecipient, "MARKTIME support"))
-        Dim smtp As SmtpClient = New SmtpClient(), bolSucceeded As Boolean = False
+       
         Dim strIsUseWebConfigSetting As String = Me.Factory.x35GlobalParam.GetValueString("IsUseWebConfigSetting", "1")
+        If strIsUseWebConfigSetting = "0" Then
+            'odeslat podle nastavení mimo web.config
+            Dim smtp As New Smtp
+            With smtp
+                Try
+                    .Connect(Me.Factory.x35GlobalParam.GetValueString("SMTP_Server"))
+                    .Login(Me.Factory.x35GlobalParam.GetValueString("SMTP_Login"), Me.Factory.x35GlobalParam.GetValueString("SMTP_Password"))
+                    .Send(mail)
+                    Return True
+                Catch ex As Exception
+                    _Error = ex.Message
+                    Return False
+                End Try
+                
+            End With
 
-        With smtp
-            If strIsUseWebConfigSetting = "0" Then
-                'vlastní SMTP nastavení z globálních proměnných
-                Dim basicAuthenticationInfo As New System.Net.NetworkCredential(Me.Factory.x35GlobalParam.GetValueString("SMTP_Login"), Me.Factory.x35GlobalParam.GetValueString("SMTP_Password"), "")
-                .UseDefaultCredentials = False
-                .Credentials = basicAuthenticationInfo
-                .Host = Me.Factory.x35GlobalParam.GetValueString("SMTP_Server")
-            End If
+        Else
+            'odeslat podle web.config nastavení
             Try
-                .Send(mail)
+                Smtp.Send(mail, SmtpConfiguration.Default)
                 Return True
             Catch ex As Exception
                 _Error = ex.Message
                 Return False
             End Try
 
-        End With
+        End If
     End Function
     Public Overloads Function SendMessageFromQueque(intX40ID As Integer) As Boolean Implements Ix40MailQueueBL.SendMessageFromQueque
         Dim cRec As BO.x40MailQueue = Load(intX40ID)
@@ -179,34 +188,43 @@ Class x40MailQueueBL
         Dim recipients As IEnumerable(Of BO.x43MailQueue_Recipient) = _cDL.GetList_Recipients(cRec.PID)
         Dim strGlobalSenderAddress As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress")
         Dim strSenderIsUser As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_SenderIsUser")
-
-        Dim mail As MailMessage = New MailMessage()
+        Dim strSenderName As String = cRec.x40SenderName
+        If strSenderName <> "" Then strSenderName += " via MARKTIME"
+        Dim mail As New Rebex.Mail.MailMessage
         With mail
+            .DefaultCharset = System.Text.Encoding.UTF8
 
             If strSenderIsUser = "1" Then
-                .From = New MailAddress(cRec.x40SenderAddress, cRec.x40SenderName)
+                .From.Add(New Rebex.Mime.Headers.MailAddress(cRec.x40SenderAddress, strSenderName))
             Else
-                .From = New MailAddress(strGlobalSenderAddress, cRec.x40SenderName)
-                cRec.x40SenderAddress = strGlobalSenderAddress
-                .ReplyToList.Add(New MailAddress(cRec.x40SenderAddress, cRec.x40SenderName))
+                .From.Add(New Rebex.Mime.Headers.MailAddress(strGlobalSenderAddress, strSenderName))
+
+                If strGlobalSenderAddress <> cRec.x40SenderAddress Then
+                    .ReplyTo.Add(cRec.x40SenderAddress)
+                    cRec.x40SenderAddress = strGlobalSenderAddress
+                End If
 
             End If
-            .Body = cRec.x40Body
-            .IsBodyHtml = cRec.x40IsHtmlBody
+            If cRec.x40IsHtmlBody Then
+                .BodyHtml = cRec.x40Body
+            Else
+                .BodyText = cRec.x40Body
+            End If
+
             .Subject = cRec.x40Subject
-            .BodyEncoding = System.Text.Encoding.UTF8
-            .SubjectEncoding = System.Text.Encoding.UTF8
+
         End With
 
         For Each c In recipients.Where(Function(p) p.x43Email <> "")
             Try
                 Select Case c.x43RecipientFlag
                     Case BO.x43RecipientIdEnum.recTO
-                        mail.To.Add(New MailAddress(c.x43Email, c.x43DisplayName))
+                        mail.To.Add(New Rebex.Mime.Headers.MailAddress(c.x43Email, c.x43DisplayName))
+
                     Case BO.x43RecipientIdEnum.recBCC
-                        mail.Bcc.Add(New MailAddress(c.x43Email, c.x43DisplayName))
+                        mail.Bcc.Add(New Rebex.Mime.Headers.MailAddress(c.x43Email, c.x43DisplayName))
                     Case BO.x43RecipientIdEnum.recCC
-                        mail.CC.Add(New MailAddress(c.x43Email, c.x43DisplayName))
+                        mail.CC.Add(New Rebex.Mime.Headers.MailAddress(c.x43Email, c.x43DisplayName))
                 End Select
             Catch ex As Exception
                 'chyba v mail adrese příjemce
@@ -221,67 +239,142 @@ Class x40MailQueueBL
             Dim strRootFolder As String = Me.Factory.x35GlobalParam.UploadFolder
             For Each cO27 In lisO27
                 Dim strPath As String = cO27.GetFullPath(strRootFolder)
-                Dim att As New Attachment(strPath)
+
+                Dim att As New Rebex.Mail.Attachment(strPath)
                 att.ContentDisposition.FileName = cO27.o27OriginalFileName
+
                 mail.Attachments.Add(att)
                 If cO27.o27OriginalFileName.IndexOf(".ics") > 0 Then
-                    Dim mimeType As System.Net.Mime.ContentType = New System.Net.Mime.ContentType("text/calendar; method=REQUEST")
-                    Dim icalView As New AlternateView(strPath, mimeType)
+                    'Dim mimeType As System.Net.Mime.ContentType = New System.Net.Mime.ContentType("text/calendar; method=REQUEST")
+                    'Dim icalView As New Rebex.Mail.AlternateView(strPath, mimeType)
+                    Dim icalView As New Rebex.Mail.AlternateView(strPath)
+
+                    icalView.SetContentFromFile(strPath, "text/calendar")
+
                     icalView.TransferEncoding = Net.Mime.TransferEncoding.SevenBit
                     mail.AlternateViews.Add(icalView)
                 End If
             Next
         End If
-        
 
-        Dim smtp As SmtpClient = New SmtpClient(), bolSucceeded As Boolean = False
-        Dim strIsUseWebConfigSetting As String = Me.Factory.x35GlobalParam.GetValueString("IsUseWebConfigSetting", "1")
+        ''mail.Save("c:\temp\pokus_hovado.eml", Rebex.Mail.MailFormat.Mime)
 
-        With smtp
-            If strIsUseWebConfigSetting = "0" Then
-                'vlastní SMTP nastavení z globálních proměnných
-                Dim basicAuthenticationInfo As New System.Net.NetworkCredential(Me.Factory.x35GlobalParam.GetValueString("SMTP_Login"), Me.Factory.x35GlobalParam.GetValueString("SMTP_Password"), "")
-                .UseDefaultCredentials = False
-                .Credentials = basicAuthenticationInfo
-                .Host = Me.Factory.x35GlobalParam.GetValueString("SMTP_Server")
-            End If
-            If _cUser.j02ID <> 0 Then
-                Dim cPerson As BO.j02Person = Me.Factory.j02PersonBL.Load(_cUser.j02ID)
-                If cPerson.j02SmtpServer <> "" Then
-                    'osoba má vlastní SMTP účet
-                    cRec.x40SenderAddress = _cUser.PersonEmail
-                    cRec.x40SenderName = _cUser.Person
-                    mail.From = New MailAddress(_cUser.PersonEmail, _cUser.Person)
-                    Dim basicAuthenticationInfo As New System.Net.NetworkCredential()
-                    If cPerson.j02IsSmtpVerify Then
-                        basicAuthenticationInfo = New System.Net.NetworkCredential(cPerson.j02SmtpLogin, BO.Crypto.Decrypt(cPerson.j02SmtpPassword, "hoVaDo7Ivan1"), "")
-                    End If
-                    .UseDefaultCredentials = False
-                    .Credentials = basicAuthenticationInfo
-                    .Host = cPerson.j02SmtpServer
+        Dim bolSucceeded As Boolean = False, bolUseWebConfig As Boolean = True, strSmtpServer As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_Server")
+        Dim strSmtpLogin As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_Login"), strSmtpPassword As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_Password")
+        If Me.Factory.x35GlobalParam.GetValueString("IsUseWebConfigSetting", "1") = "0" Then
+            bolUseWebConfig = False
+        End If
+        If _cUser.j02ID <> 0 Then
+            Dim cPerson As BO.j02Person = Me.Factory.j02PersonBL.Load(_cUser.j02ID)
+            If cPerson.j02SmtpServer <> "" Then
+                'osoba má vlastní SMTP účet
+                bolUseWebConfig = False
+                ''mail.From = _cUser.PersonEmail
+                mail.From.Add(New Rebex.Mime.Headers.MailAddress(_cUser.PersonEmail, _cUser.Person))
+                cRec.x40SenderAddress = _cUser.PersonEmail
+                cRec.x40SenderName = _cUser.Person
+                strSenderName = _cUser.Person
+                strSmtpServer = cPerson.j02SmtpServer
+                If cPerson.j02IsSmtpVerify Then
+                    strSmtpLogin = cPerson.j02SmtpLogin
+                    strSmtpPassword = BO.Crypto.Decrypt(cPerson.j02SmtpPassword, "hoVaDo7Ivan1")
+                Else
+                    strSmtpLogin = "" : strSmtpPassword = ""
                 End If
-                log4net.LogManager.GetLogger("smtplog").Info("SMTP sender: " & .Host & vbCrLf & "Message subject: " & cPerson.j02SmtpLogin)
             End If
-            Try
-                .Send(mail)
-                log4net.LogManager.GetLogger("smtplog").Info("Sender: " & mail.From.Address & "/" & mail.From.DisplayName & vbCrLf & "Message recipients: " & cRec.x40Recipient & vbCrLf & "Message subject: " & cRec.x40Subject & vbCrLf & "Message body: " & cRec.x40Body)
+        End If
 
-                For i As Integer = 0 To mail.Attachments.Count - 1
-                    log4net.LogManager.GetLogger("smtplog").Info("Message attachment: " & mail.Attachments(i).ContentDisposition.FileName)
-                Next
-                cRec.x40State = BO.x40StateENUM.IsProceeded
-                cRec.x40WhenProceeded = Now
-                cRec.x40ErrorMessage = ""
+        If Not bolUseWebConfig Then
+            Dim smtp As New Smtp
+            With smtp
+                Try
+                    .Connect(strSmtpServer)
+                    If strSmtpLogin <> "" And strSmtpPassword <> "" Then
+                        .Login(strSmtpLogin, strSmtpPassword)
+                    End If
+                    .Send(mail)
+                    bolSucceeded = True
+                Catch ex As Exception
+                    _Error = ex.Message
+                    bolSucceeded = False
+                End Try
+
+            End With
+        Else
+            Try
+                Smtp.Send(mail, SmtpConfiguration.Default)
                 bolSucceeded = True
             Catch ex As Exception
-                bolSucceeded = False
                 _Error = ex.Message
-                cRec.x40State = BO.x40StateENUM.IsError
-                cRec.x40ErrorMessage = _Error
-                log4net.LogManager.GetLogger("smtplog").Error("Error: " & _Error & vbCrLf & "Sender: " & mail.From.Address & "/" & mail.From.DisplayName & vbCrLf & "Message recipients: " & cRec.x40Recipient & vbCrLf & "Message subject: " & cRec.x40Subject & vbCrLf & "Message body: " & cRec.x40Body)
+                bolSucceeded = False
             End Try
+        End If
+        If bolSucceeded Then
+            log4net.LogManager.GetLogger("smtplog").Info("Sender: " & mail.From(0).Address & vbCrLf & "Message recipients: " & cRec.x40Recipient & vbCrLf & "Message subject: " & cRec.x40Subject & vbCrLf & "Message body: " & cRec.x40Body)
 
-        End With
+            For i As Integer = 0 To mail.Attachments.Count - 1
+                log4net.LogManager.GetLogger("smtplog").Info("Message attachment: " & mail.Attachments(i).ContentDisposition.FileName)
+            Next
+            cRec.x40State = BO.x40StateENUM.IsProceeded
+            cRec.x40WhenProceeded = Now
+            cRec.x40ErrorMessage = ""
+        Else
+            bolSucceeded = False
+            cRec.x40State = BO.x40StateENUM.IsError
+            cRec.x40ErrorMessage = _Error
+            log4net.LogManager.GetLogger("smtplog").Error("Error: " & _Error & vbCrLf & "Sender: " & mail.From(0).Address & "/" & vbCrLf & "Message recipients: " & cRec.x40Recipient & vbCrLf & "Message subject: " & cRec.x40Subject & vbCrLf & "Message body: " & cRec.x40Body)
+
+        End If
+
+        _cDL.Save(cRec, Nothing)
+
+        Return bolSucceeded
+
+        ''With smtp
+        ''    If strIsUseWebConfigSetting = "0" Then
+        ''        'vlastní SMTP nastavení z globálních proměnných
+        ''        Dim basicAuthenticationInfo As New System.Net.NetworkCredential(Me.Factory.x35GlobalParam.GetValueString("SMTP_Login"), Me.Factory.x35GlobalParam.GetValueString("SMTP_Password"), "")
+        ''        .UseDefaultCredentials = False
+        ''        .Credentials = basicAuthenticationInfo
+        ''        .Host = Me.Factory.x35GlobalParam.GetValueString("SMTP_Server")
+        ''    End If
+        ''    ''If _cUser.j02ID <> 0 Then
+        ''    ''    Dim cPerson As BO.j02Person = Me.Factory.j02PersonBL.Load(_cUser.j02ID)
+        ''    ''    If cPerson.j02SmtpServer <> "" Then
+        ''    ''        'osoba má vlastní SMTP účet
+        ''    ''        cRec.x40SenderAddress = _cUser.PersonEmail
+        ''    ''        cRec.x40SenderName = _cUser.Person
+        ''    ''        mail.From = New MailAddress(_cUser.PersonEmail, _cUser.Person)
+        ''    ''        Dim basicAuthenticationInfo As New System.Net.NetworkCredential()
+        ''    ''        If cPerson.j02IsSmtpVerify Then
+        ''    ''            basicAuthenticationInfo = New System.Net.NetworkCredential(cPerson.j02SmtpLogin, BO.Crypto.Decrypt(cPerson.j02SmtpPassword, "hoVaDo7Ivan1"), "")
+        ''    ''        End If
+        ''    ''        .UseDefaultCredentials = False
+        ''    ''        .Credentials = basicAuthenticationInfo
+        ''    ''        .Host = cPerson.j02SmtpServer
+        ''    ''    End If
+        ''    ''    log4net.LogManager.GetLogger("smtplog").Info("SMTP sender: " & .Host & vbCrLf & "Message subject: " & cPerson.j02SmtpLogin)
+        ''    ''End If
+        ''    Try
+        ''        .Send(mail)
+        ''        log4net.LogManager.GetLogger("smtplog").Info("Sender: " & mail.From.Address & "/" & mail.From.DisplayName & vbCrLf & "Message recipients: " & cRec.x40Recipient & vbCrLf & "Message subject: " & cRec.x40Subject & vbCrLf & "Message body: " & cRec.x40Body)
+
+        ''        For i As Integer = 0 To mail.Attachments.Count - 1
+        ''            log4net.LogManager.GetLogger("smtplog").Info("Message attachment: " & mail.Attachments(i).ContentDisposition.FileName)
+        ''        Next
+        ''        cRec.x40State = BO.x40StateENUM.IsProceeded
+        ''        cRec.x40WhenProceeded = Now
+        ''        cRec.x40ErrorMessage = ""
+        ''        bolSucceeded = True
+        ''    Catch ex As Exception
+        ''        bolSucceeded = False
+        ''        _Error = ex.Message
+        ''        cRec.x40State = BO.x40StateENUM.IsError
+        ''        cRec.x40ErrorMessage = _Error
+        ''        log4net.LogManager.GetLogger("smtplog").Error("Error: " & _Error & vbCrLf & "Sender: " & mail.From.Address & "/" & mail.From.DisplayName & vbCrLf & "Message recipients: " & cRec.x40Recipient & vbCrLf & "Message subject: " & cRec.x40Subject & vbCrLf & "Message body: " & cRec.x40Body)
+        ''    End Try
+
+        ''End With
 
         _cDL.Save(cRec, Nothing)
 

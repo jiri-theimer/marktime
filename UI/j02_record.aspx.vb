@@ -178,6 +178,8 @@
                             Return
                         End If
                     End If
+                Else
+                    .j02SmtpServer = "" : .j02SmtpLogin = "" : .j02SmtpPassword = ""
                 End If
             End With
 

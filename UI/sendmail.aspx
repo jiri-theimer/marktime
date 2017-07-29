@@ -58,7 +58,15 @@
         </div>
         <div class="content">
             <table cellpadding="5" cellspacing="2">
+                <tr>
+                    <td>
+                        <asp:Label ID="Label1" runat="server" CssClass="lblReq" Text="Od:"></asp:Label>
 
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtSender" runat="server" Width="700px"></asp:TextBox>
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         <asp:Label ID="lblTo" runat="server" CssClass="lblReq" Text="Komu:"></asp:Label>

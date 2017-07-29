@@ -50,6 +50,24 @@ Partial Public Class sendmail
     Protected WithEvents cbxAddPosition As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''Label1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtSender control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSender As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''lblTo control.
     '''</summary>
     '''<remarks>

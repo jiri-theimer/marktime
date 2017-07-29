@@ -62,7 +62,7 @@ Class j02PersonBL
     End Function
     Public Function Save(cRec As BO.j02Person, lisFF As List(Of BO.FreeField)) As Boolean Implements Ij02PersonBL.Save
         If Not ValidateBeforeSave(cRec) Then Return False
-
+       
         If _cDL.Save(cRec, lisFF) Then
             If cRec.j02SmtpPassword <> "" And cRec.j02SmtpServer <> "" Then
                 _cDL.SaveHashedSmtpPassword(_LastSavedPID, BO.Crypto.Encrypt(cRec.j02SmtpPassword, "hoVaDo7Ivan1"))

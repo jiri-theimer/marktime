@@ -84,7 +84,7 @@ Class o42ImapRuleBL
                     If .o41Port = 0 Then
                         _client.Connect(.o41Server)
                     Else
-                        _client.Connect(.o41Server, .o41Port)
+                        _client.Connect(.o41Server, .o41Port, SslMode.Implicit)
                     End If
                 End If
 
