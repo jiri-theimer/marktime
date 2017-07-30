@@ -191,16 +191,13 @@
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
         If strButtonValue = "ok" Or strButtonValue = "queue" Then
-            Dim message As New BO.smtpMessage()
+            Dim message As New Rebex.Mail.MailMessage
             With message
-                .Body = Trim(Me.txtBody.Text)
-                .SenderAddress = Me.txtSender.Text
-
-                .SenderName = Master.Factory.SysUser.Person
+                .BodyText = Trim(Me.txtBody.Text)
+                .From.Add(New Rebex.Mime.Headers.MailAddress(Me.txtSender.Text, Master.Factory.SysUser.Person))
                 .Subject = Me.txtSubject.Text
-                If uploadlist1.ItemsCount > 0 Then
-                    .o27UploadGUID = upload1.GUID
-                End If
+                Master.Factory.x40MailQueueBL.CompleteMailAttachments(message, upload1.GUID)
+                
             End With
             Me.txtTo.Text = Replace(Replace(Me.txtTo.Text, " ", ""), ";", ",")
             Dim a() As String = Split(Trim(Me.txtTo.Text), ",")
@@ -236,7 +233,7 @@
             End If
             If Me.CurrentX29ID = BO.x29IdEnum.o22Milestone Then
                 Dim strPath As String = Master.Factory.o22MilestoneBL.CreateICalendarTempFullPath(Master.DataPID)
-                If strPath <> "" Then message.AddOneFile2FullPath(strPath)
+                If strPath <> "" Then message.Attachments.Add(New Rebex.Mail.Attachment(strPath))
             End If
 
             Dim messageStatus As BO.x40StateENUM = BO.x40StateENUM.InQueque

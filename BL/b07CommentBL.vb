@@ -1,6 +1,7 @@
 ﻿Public Interface Ib07CommentBL
     Inherits IFMother
     Function Save(cRec As BO.b07Comment, strUploadGUID As String, notifyReceivers As List(Of BO.PersonOrTeam)) As Boolean
+    Function SaveTicketAnswer(cRec As BO.b07Comment, strUploadGUID As String) As Boolean
     Function Load(intPID As Integer) As BO.b07Comment
     Function LoadByO43ID(intO43ID As Integer) As BO.b07Comment
     Function Delete(intPID As Integer) As Boolean
@@ -11,8 +12,7 @@ Class b07CommentBL
     Inherits BLMother
     Implements Ib07CommentBL
     Private WithEvents _cDL As DL.b07CommentDL
-
-
+   
     Private Sub _cDL_OnError(strError As String) Handles _cDL.OnError
         _Error = strError
     End Sub
@@ -49,11 +49,38 @@ Class b07CommentBL
             Else
                 If notifyReceivers.Count = 0 Then bolStopNotification = True
             End If
-            Me.RaiseAppEvent(BO.x45IDEnum.b07_new, _LastSavedPID, , , bolStopNotification, notifyReceivers)
+            Me.RaiseAppEvent(BO.x45IDEnum.b07_new, Me.LastSavedPID, , , bolStopNotification, notifyReceivers)
             Return True
         Else
             Return False
         End If
+    End Function
+
+    Function SaveTicketAnswer(cRec As BO.b07Comment, strUploadGUID As String) As Boolean Implements Ib07CommentBL.SaveTicketAnswer
+        With cRec
+            If Len(Trim(.b07Value)) <= 1 Then
+                _Error = "Chybí text zprávy." : Return False
+            End If
+            If .j02ID_Owner = 0 Then .j02ID_Owner = _cUser.j02ID
+        End With
+        Dim cP56 As BO.p56Task = Factory.p56TaskBL.Load(cRec.b07RecordPID)
+
+
+        If _cDL.Save(cRec) Then
+            If strUploadGUID <> "" Then
+                Dim lisTempUpload As IEnumerable(Of BO.p85TempBox) = Me.Factory.p85TempBoxBL.GetList(strUploadGUID, True)
+                Me.Factory.o27AttachmentBL.UploadAndSaveUserControl(lisTempUpload, BO.x29IdEnum.b07Comment, Me.LastSavedPID)
+            End If
+        End If
+        Dim mq As New BO.myQueryB07, intLastO43ID As Integer = cP56.o43ID
+        mq.x29id = cRec.x29ID
+        mq.RecordDataPID = cRec.b07RecordPID
+        Dim lis As IEnumerable(Of BO.b07Comment) = GetList(mq).Where(Function(p) p.o43ID <> 0).OrderByDescending(Function(p) p.o43ID)
+        If lis.Count > 0 Then
+            intLastO43ID = lis(0).o43ID
+        End If
+        Dim mail2Answer As Rebex.Mail.MailMessage = Me.Factory.o42ImapRuleBL.LoadMailMessageFromHistory(intLastO43ID)
+
     End Function
     Public Function Load(intPID As Integer) As BO.b07Comment Implements Ib07CommentBL.Load
         Return _cDL.Load(intPID)

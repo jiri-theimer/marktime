@@ -14,6 +14,7 @@ Public Interface Io42ImapRuleBL
     Function InsertImport2History(cHistory As BO.o43ImapRobotHistory) As Boolean
     Sub ChangeRecordGuidInHistory(intO43ID As Integer, strNewGUID As String)
     Function Connect(cInbox As BO.o41InboxAccount) As Boolean
+    Function LoadMailMessageFromHistory(intO43ID As Integer) As Rebex.Mail.MailMessage
 End Interface
 Class o42ImapRuleBL
     Inherits BLMother
@@ -610,4 +611,14 @@ Class o42ImapRuleBL
 
         Factory.p85TempBoxBL.Save(cRec)
     End Sub
+
+    Public Function LoadMailMessageFromHistory(intO43ID As Integer) As Rebex.Mail.MailMessage Implements Io42ImapRuleBL.LoadMailMessageFromHistory
+        Dim cO43 As BO.o43ImapRobotHistory = Factory.o42ImapRuleBL.LoadHistoryByID(intO43ID)
+        Dim cInbox As BO.o41InboxAccount = Factory.o41InboxAccountBL.Load(cO43.o41ID)
+        If Not Connect(cInbox) Then
+            Return Nothing
+        End If
+        Return _client.GetMailMessage(cO43.o43MessageGUID)
+
+    End Function
 End Class

@@ -1,10 +1,12 @@
 ﻿'Imports System.Net.Mail
 Imports Rebex.Net
+Imports Rebex.Mail
+
 
 Public Interface Ix40MailQueueBL
     Inherits IFMother
 
-    Function SaveMessageToQueque(message As BO.smtpMessage, recipients As List(Of BO.x43MailQueue_Recipient), x29id As BO.x29IdEnum, intRecordPID As Integer, status As BO.x40StateENUM) As Integer
+    Function SaveMessageToQueque(message As MailMessage, recipients As List(Of BO.x43MailQueue_Recipient), x29id As BO.x29IdEnum, intRecordPID As Integer, status As BO.x40StateENUM) As Integer
     Function SendMessageFromQueque(cRec As BO.x40MailQueue) As Boolean
     Function SendMessageFromQueque(intX40ID As Integer) As Boolean
     Function UpdateMessageState(intX40ID As Integer, NewState As BO.x40StateENUM) As Boolean
@@ -13,6 +15,7 @@ Public Interface Ix40MailQueueBL
     Function GetList(myQuery As BO.myQueryX40) As IEnumerable(Of BO.x40MailQueue)
     ''Function GetList_AllHisMessages(intJ03ID_Sender As Integer, intJ02ID_Person As Integer, Optional intTopRecs As Integer = 500) As IEnumerable(Of BO.x40MailQueue)
     Function SendMessageWithoutQueque(strRecipient As String, strBody As String, strSubject As String) As Boolean
+    Function CompleteMailAttachments(ByRef message As MailMessage, strUploadGUID As String) As String
 End Interface
 
 Class x40MailQueueBL
@@ -40,34 +43,58 @@ Class x40MailQueueBL
     Public Function GetList(myQuery As BO.myQueryX40) As IEnumerable(Of BO.x40MailQueue) Implements Ix40MailQueueBL.GetList
         Return _cDL.GetList(myQuery)
     End Function
+    Public Function CompleteMailAttachments(ByRef message As MailMessage, strUploadGUID As String) As String Implements Ix40MailQueueBL.CompleteMailAttachments
+        If strUploadGUID = "" Then Return ""
+        Dim lis As New List(Of String)
+        Dim lisTempUpload As IEnumerable(Of BO.p85TempBox) = Me.Factory.p85TempBoxBL.GetList(strUploadGUID), strTempDir As String = Me.Factory.x35GlobalParam.TempFolder
+        For Each cTMP In lisTempUpload
+            If message.Attachments.Where(Function(p) p.FileName = strTempDir & "\" & cTMP.p85FreeText02).Count = 0 Then
+                Dim att As New Rebex.Mail.Attachment(strTempDir & "\" & cTMP.p85FreeText02, cTMP.p85FreeText01)
+                message.Attachments.Add(att)
+                lis.Add(cTMP.p85FreeText01)
+            End If
+        Next
+        Return String.Join(", ", lis)
 
-    Public Function SaveMessageToQueue(mes As BO.smtpMessage, recipients As List(Of BO.x43MailQueue_Recipient), x29id As BO.x29IdEnum, intRecordPID As Integer, status As BO.x40StateENUM) As Integer Implements Ix40MailQueueBL.SaveMessageToQueque
+        'If Me.Factory.o27AttachmentBL.UploadAndSaveUserControl(lisTempUpload, BO.x29IdEnum.x40MailQueue, cX40.PID) Then
+
+        'End If
+    End Function
+    Public Function SaveMessageToQueue(mes As MailMessage, recipients As List(Of BO.x43MailQueue_Recipient), x29id As BO.x29IdEnum, intRecordPID As Integer, status As BO.x40StateENUM) As Integer Implements Ix40MailQueueBL.SaveMessageToQueque
         _Error = ""
         If recipients Is Nothing Then recipients = New List(Of BO.x43MailQueue_Recipient)
         If recipients.Count = 0 Then
             _Error = "Poštovní zpráva musí mít minimálně jednoho příjemce." : Return 0
         End If
         With mes
-            If Trim(.Subject) = "" And Trim(.Body) = "" Then
+            If Trim(.Subject) = "" And Trim(.BodyText) = "" And Trim(.BodyHtml) = "" Then
                 _Error = "Předmět zprávy i text zprávy jsou prázdné." : Return 0
             End If
-            If Not String.IsNullOrEmpty(.Body) Then
-                If .Body.IndexOf("--") > 0 Then
-                    .Body = Replace(.Body, "[!--", "<!--")
-                    .Body = Replace(.Body, "--]", "-->")
+            If Not String.IsNullOrEmpty(.BodyText) Then
+                If .BodyText.IndexOf("--") > 0 Then
+                    .BodyText = Replace(.BodyText, "[!--", "<!--")
+                    .BodyText = Replace(.BodyText, "--]", "-->")
                 End If
             End If
         End With
+
         Dim cX40 As New BO.x40MailQueue()
         With cX40
             .x40State = status
             .x29ID = x29id
             .x40RecordPID = intRecordPID
-            .x40Body = mes.Body
-            .x40IsHtmlBody = mes.IsHtmlBody
+            If mes.HasBodyHtml Then
+                .x40Body = mes.BodyHtml
+            Else
+                .x40Body = mes.BodyText
+            End If
+            .x40IsHtmlBody = mes.HasBodyHtml
             .x40Subject = mes.Subject
-            .x40SenderName = mes.SenderName
-            .x40SenderAddress = mes.SenderAddress
+            If mes.From.Count > 0 Then
+                .x40SenderName = mes.From(0).DisplayName
+                .x40SenderAddress = mes.From(0).Address
+            End If
+
             .j03ID_Sys = _cUser.PID
         End With
         'nejdříve uložit x40 záznam do databáze
@@ -77,41 +104,49 @@ Class x40MailQueueBL
             _Error = _cDL.ErrorMessage
             Return Nothing
         End If
-
-        If mes.o27UploadGUID <> "" Then
-            Dim lisTempUpload As IEnumerable(Of BO.p85TempBox) = Me.Factory.p85TempBoxBL.GetList(mes.o27UploadGUID)
-            If Me.Factory.o27AttachmentBL.UploadAndSaveUserControl(lisTempUpload, BO.x29IdEnum.x40MailQueue, cX40.PID) Then
-
+        For Each att In mes.Attachments
+            Dim s As String = att.DisplayName
+            If s = "" Then s = att.FileName
+            If cX40.x40Attachments = "" Then
+                cX40.x40Attachments = s
+            Else
+                cX40.x40Attachments += ", " & s
             End If
-        End If
-        If Not mes.AttachmentFiles_FullPath Is Nothing Then
-            Dim cF As New BO.clsFile, lisO13 As IEnumerable(Of BO.o13AttachmentType) = Me.Factory.o13AttachmentTypeBL.GetList()
-            For Each strFullPath As String In mes.AttachmentFiles_FullPath
-                Dim cO27 As New BO.o27Attachment
-                cO27.o13ID = lisO13.Where(Function(p) p.x29ID = BO.x29IdEnum.x40MailQueue)(0).PID
-                cO27.x40ID = cX40.PID
-                Dim strOrigFileName As String = cF.GetNameFromFullpath(strFullPath)
-                Dim strExplicitArchiveFileName As String = strOrigFileName
-                If Len(strExplicitArchiveFileName) < 15 Then strExplicitArchiveFileName = "" 'pokud je délka názvu souboru menší než 15, jméno archív souboru vygeneruje s GUID systém
-                Me.Factory.o27AttachmentBL.UploadAndSaveOneFile(cO27, strOrigFileName, strFullPath, strExplicitArchiveFileName)
-            Next
-        End If
-        If mes.o27UploadGUID <> "" Or Not mes.AttachmentFiles_FullPath Is Nothing Then
-            Dim mq As New BO.myQueryO27
-            mq.x40ID = cX40.PID
-            Threading.Thread.Sleep(1000 * 2) 'počkat po dobu 2 sekundy, jinak to zlobí
-            mes.o27Attachments = Me.Factory.o27AttachmentBL.GetList(mq)
-        End If
-        If Not mes.o27Attachments Is Nothing Then
-            Dim strRootFolder As String = Me.Factory.x35GlobalParam.UploadFolder
-            For Each cO27 In mes.o27Attachments
-                ''Dim att As New Attachment(cO27.GetFullPath(strRootFolder))
-                ''att.ContentDisposition.FileName = cO27.o27OriginalFileName
-                ''mail.Attachments.Add(att)
-                ''cX40.x40Attachments += ", " & att.ContentDisposition.FileName
-                cX40.x40Attachments += ", " & cO27.o27OriginalFileName
-            Next
-        End If
+        Next
+        'If mes.o27UploadGUID <> "" Then
+        '    Dim lisTempUpload As IEnumerable(Of BO.p85TempBox) = Me.Factory.p85TempBoxBL.GetList(mes.o27UploadGUID)
+        '    If Me.Factory.o27AttachmentBL.UploadAndSaveUserControl(lisTempUpload, BO.x29IdEnum.x40MailQueue, cX40.PID) Then
+
+        '    End If
+        'End If
+        'If Not mes.AttachmentFiles_FullPath Is Nothing Then
+        '    Dim cF As New BO.clsFile, lisO13 As IEnumerable(Of BO.o13AttachmentType) = Me.Factory.o13AttachmentTypeBL.GetList()
+        '    For Each strFullPath As String In mes.AttachmentFiles_FullPath
+        '        Dim cO27 As New BO.o27Attachment
+        '        cO27.o13ID = lisO13.Where(Function(p) p.x29ID = BO.x29IdEnum.x40MailQueue)(0).PID
+        '        cO27.x40ID = cX40.PID
+        '        Dim strOrigFileName As String = cF.GetNameFromFullpath(strFullPath)
+        '        Dim strExplicitArchiveFileName As String = strOrigFileName
+        '        If Len(strExplicitArchiveFileName) < 15 Then strExplicitArchiveFileName = "" 'pokud je délka názvu souboru menší než 15, jméno archív souboru vygeneruje s GUID systém
+        '        Me.Factory.o27AttachmentBL.UploadAndSaveOneFile(cO27, strOrigFileName, strFullPath, strExplicitArchiveFileName)
+        '    Next
+        'End If
+        'If mes.o27UploadGUID <> "" Or Not mes.AttachmentFiles_FullPath Is Nothing Then
+        '    Dim mq As New BO.myQueryO27
+        '    mq.x40ID = cX40.PID
+        '    Threading.Thread.Sleep(1000 * 2) 'počkat po dobu 2 sekundy, jinak to zlobí
+        '    mes.o27Attachments = Me.Factory.o27AttachmentBL.GetList(mq)
+        'End If
+        'If Not mes.o27Attachments Is Nothing Then
+        '    Dim strRootFolder As String = Me.Factory.x35GlobalParam.UploadFolder
+        '    For Each cO27 In mes.o27Attachments
+        '        ''Dim att As New Attachment(cO27.GetFullPath(strRootFolder))
+        '        ''att.ContentDisposition.FileName = cO27.o27OriginalFileName
+        '        ''mail.Attachments.Add(att)
+        '        ''cX40.x40Attachments += ", " & att.ContentDisposition.FileName
+        '        cX40.x40Attachments += ", " & cO27.o27OriginalFileName
+        '    Next
+        'End If
         For Each c In recipients
             Select Case c.x43RecipientFlag
                 Case BO.x43RecipientIdEnum.recTO
@@ -125,7 +160,6 @@ Class x40MailQueueBL
         Next
 
         With cX40
-            .x40Attachments = BO.BAS.OM1(.x40Attachments)
             .x40Recipient = BO.BAS.OM1(.x40Recipient)
             .x40BCC = BO.BAS.OM1(.x40BCC)
             .x40CC = BO.BAS.OM1(.x40CC)
@@ -138,9 +172,11 @@ Class x40MailQueueBL
         End If
 
     End Function
+
+
     Public Function SendMessageWithoutQueque(strRecipient As String, strBody As String, strSubject As String) As Boolean Implements Ix40MailQueueBL.SendMessageWithoutQueque
         'Dim mail As MailMessage = New MailMessage()
-        Dim mail As New Rebex.Mail.MailMessage
+        Dim mail As New MailMessage
 
         With mail
             .DefaultCharset = System.Text.Encoding.UTF8
@@ -190,7 +226,7 @@ Class x40MailQueueBL
         Dim strSenderIsUser As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_SenderIsUser")
         Dim strSenderName As String = cRec.x40SenderName
         If strSenderName <> "" Then strSenderName += " via MARKTIME"
-        Dim mail As New Rebex.Mail.MailMessage
+        Dim mail As New MailMessage
         With mail
             .DefaultCharset = System.Text.Encoding.UTF8
 
@@ -240,14 +276,14 @@ Class x40MailQueueBL
             For Each cO27 In lisO27
                 Dim strPath As String = cO27.GetFullPath(strRootFolder)
 
-                Dim att As New Rebex.Mail.Attachment(strPath)
+                Dim att As New Attachment(strPath)
                 att.ContentDisposition.FileName = cO27.o27OriginalFileName
 
                 mail.Attachments.Add(att)
                 If cO27.o27OriginalFileName.IndexOf(".ics") > 0 Then
                     'Dim mimeType As System.Net.Mime.ContentType = New System.Net.Mime.ContentType("text/calendar; method=REQUEST")
                     'Dim icalView As New Rebex.Mail.AlternateView(strPath, mimeType)
-                    Dim icalView As New Rebex.Mail.AlternateView(strPath)
+                    Dim icalView As New AlternateView(strPath)
 
                     icalView.SetContentFromFile(strPath, "text/calendar")
 

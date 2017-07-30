@@ -683,6 +683,11 @@ TH {
     background-repeat: no-repeat;
     background-position: center;
 }
+.imap {
+    background-image: url('../Images/imap.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
 .locked {
     background-image: url('../Images/lock.png');

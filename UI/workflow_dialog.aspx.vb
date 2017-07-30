@@ -93,6 +93,13 @@
                 End If
                 Return
             End If
+            If opgB06ID.SelectedValue = "-1" Then
+                'odpovědět žadateli požadavku
+                If SendTicketMailAnswer() Then
+                    Master.CloseAndRefreshParent("workflow-dialog")
+                End If
+                Return
+            End If
             Dim cB06 As BO.b06WorkflowStep = Master.Factory.b06WorkflowStepBL.Load(BO.BAS.IsNullInt(opgB06ID.SelectedValue))
             Dim lisNominee As List(Of BO.x69EntityRole_Assign) = Nothing
             If cB06.b06IsNominee And rpNominee.Items.Count > 0 Then
@@ -107,7 +114,23 @@
             End If
         End If
     End Sub
+    Private Function SendTicketMailAnswer() As Boolean
+        Dim cRec As New BO.b07Comment
+        With cRec
+            .x29ID = BO.BAS.GetX29FromPrefix(Me.CurrentPrefix)
+            .b07RecordPID = Me.CurrentRecordPID
+            .b07Value = Me.b07Value.Text
+        End With
 
+        With Master.Factory.b07CommentBL
+            If .Save(cRec, upload1.GUID, Nothing) Then
+                Return True
+            Else
+                Master.Notify(Master.Factory.b07CommentBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                Return False
+            End If
+        End With
+    End Function
     Private Function SendCommentOnly() As Boolean
         Dim cRec As New BO.b07Comment
         With cRec

@@ -219,7 +219,9 @@ Public Class basUIMT
                 If strMobileLinkColumn <> "" Then
                     dataItem(strMobileLinkColumn).Text = "<a style='color:blue;text-decoration:underline;' href='javascript:re(" & cRec.Item("pid").ToString & ")'>" & dataItem(strMobileLinkColumn).Text & "</a>"                    
                 End If
-
+                If Not .Item("o43ID") Is System.DBNull.Value Then
+                    dataItem("systemcolumn").CssClass = "imap"
+                End If
             End With
         Else
             Dim cRec As BO.p56Task = CType(e.Item.DataItem, BO.p56Task)
