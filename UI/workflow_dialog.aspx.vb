@@ -139,7 +139,7 @@
                         Return False
                     End If
                 Else
-                    Master.Notify("Nebyla nalezena původní zpráva.", NotifyLevel.ErrorMessage)
+                    Master.Notify("Nebyla nalezena zpráva, na kterou se má odpovědět.", NotifyLevel.ErrorMessage)
                 End If
             Else
                 Master.Notify(Master.Factory.b07CommentBL.ErrorMessage, NotifyLevel.ErrorMessage)
