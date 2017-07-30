@@ -178,7 +178,6 @@
     <Compile Include="Helpers\RecordDisposition.vb" />
     <Compile Include="Helpers\WebService\ServiceBOMother.vb" />
     <Compile Include="Helpers\WebService\ServiceResult.vb" />
-    <Compile Include="Helpers\smtpMessage.vb" />
     <Compile Include="Helpers\EasyStringColletion.vb" />
     <Compile Include="Helpers\Sys\SysDbObject.vb" />
     <Compile Include="Helpers\WebService\p56TaskWsExtended.vb" />

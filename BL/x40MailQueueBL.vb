@@ -67,6 +67,7 @@ Class x40MailQueueBL
             _Error = "Poštovní zpráva musí mít minimálně jednoho příjemce." : Return 0
         End If
         With mes
+            .DefaultCharset = System.Text.Encoding.UTF8
             If Trim(.Subject) = "" And Trim(.BodyText) = "" And Trim(.BodyHtml) = "" Then
                 _Error = "Předmět zprávy i text zprávy jsou prázdné." : Return 0
             End If
@@ -75,6 +76,9 @@ Class x40MailQueueBL
                     .BodyText = Replace(.BodyText, "[!--", "<!--")
                     .BodyText = Replace(.BodyText, "--]", "-->")
                 End If
+            End If
+            If .From.Count = 0 Then
+                .From.Add(New Rebex.Mime.Headers.MailAddress(Me.Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress"), Me.Factory.SysUser.Person & " via MARKTIME"))
             End If
         End With
 
@@ -150,14 +154,20 @@ Class x40MailQueueBL
         For Each c In recipients
             Select Case c.x43RecipientFlag
                 Case BO.x43RecipientIdEnum.recTO
+                    mes.To.Add(c.x43Email)
                     cX40.x40Recipient += ", " & c.x43Email
                 Case BO.x43RecipientIdEnum.recCC
+                    mes.CC.Add(c.x43Email)
                     cX40.x40CC += ", " & c.x43Email
                 Case BO.x43RecipientIdEnum.recBCC
+                    mes.Bcc.Add(c.x43Email)
                     cX40.x40BCC += ", " & c.x43Email
             End Select
 
         Next
+
+        'uložit mailmessage do souboru
+        mes.Save()
 
         With cX40
             .x40Recipient = BO.BAS.OM1(.x40Recipient)

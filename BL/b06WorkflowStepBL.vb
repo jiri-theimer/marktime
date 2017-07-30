@@ -391,26 +391,25 @@ Class b06WorkflowStepBL
                 If lisReceivers.Count > 0 Then
                     Dim cMerge As New BO.clsMergeContent
                     Dim cB65 As BO.b65WorkflowMessage = Factory.b65WorkflowMessageBL.Load(c.b65ID)
-                    Dim mes As New BO.smtpMessage
-                    mes.SenderAddress = Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress")
-                    mes.SenderName = "MARKTIME robot"
-
-                    mes.Body = cMerge.MergeContent(objects, cB65.b65MessageBody, strLinkUrl)
-                    If mes.Body.IndexOf("#RolesInline#") > 0 Or mes.Body.IndexOf("[%RolesInline%]") > 0 Then
-                        mes.Body = Replace(mes.Body, "[%RolesInline%]", "#RolesInline#", , , CompareMethod.Text)
+                    Dim mes As New Rebex.Mail.MailMessage
+                    mes.From.Add(New Rebex.Mime.Headers.MailAddress(Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress"), "MARKTIME robot"))
+                   
+                    mes.BodyText = cMerge.MergeContent(objects, cB65.b65MessageBody, strLinkUrl)
+                    If mes.BodyText.IndexOf("#RolesInline#") > 0 Or mes.BodyText.IndexOf("[%RolesInline%]") > 0 Then
+                        mes.BodyText = Replace(mes.BodyText, "[%RolesInline%]", "#RolesInline#", , , CompareMethod.Text)
                         Select Case x29id
                             Case BO.x29IdEnum.p56Task
-                                mes.Body = Replace(mes.Body, "#RolesInline#", Factory.p56TaskBL.GetRolesInline(intRecordPID))
+                                mes.BodyText = Replace(mes.BodyText, "#RolesInline#", Factory.p56TaskBL.GetRolesInline(intRecordPID))
                             Case BO.x29IdEnum.o23Doc
-                                mes.Body = Replace(mes.Body, "#RolesInline#", Factory.o23DocBL.GetRolesInline(intRecordPID))
+                                mes.BodyText = Replace(mes.BodyText, "#RolesInline#", Factory.o23DocBL.GetRolesInline(intRecordPID))
                             Case BO.x29IdEnum.p41Project
-                                mes.Body = Replace(mes.Body, "#RolesInline#", Factory.p41ProjectBL.GetRolesInline(intRecordPID))
+                                mes.BodyText = Replace(mes.BodyText, "#RolesInline#", Factory.p41ProjectBL.GetRolesInline(intRecordPID))
                             Case BO.x29IdEnum.p28Contact
-                                mes.Body = Replace(mes.Body, "#RolesInline#", Factory.p28ContactBL.GetRolesInline(intRecordPID))
+                                mes.BodyText = Replace(mes.BodyText, "#RolesInline#", Factory.p28ContactBL.GetRolesInline(intRecordPID))
                         End Select
 
                     End If
-                    mes.Body = Replace(mes.Body, "#comment#", strComment, , , CompareMethod.Text)
+                    mes.BodyText = Replace(mes.BodyText, "#comment#", strComment, , , CompareMethod.Text)
 
                     mes.Subject = cB65.b65MessageSubject
                     If mes.Subject.IndexOf("[") > 0 Then mes.Subject = cMerge.MergeContent(objects, cB65.b65MessageSubject, strLinkUrl)

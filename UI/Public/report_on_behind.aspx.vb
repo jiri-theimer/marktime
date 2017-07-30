@@ -42,11 +42,9 @@ Public Class report_on_behind
    
 
     Private Sub SendReportByMail(strOutputFileName As String)
-        Dim message As New BO.smtpMessage()
+        Dim message As New Rebex.Mail.MailMessage
         With message
-            .Body = "Obsah zprávy: " & strOutputFileName
-            .SenderAddress = "jiri.theimer@gmail.com"
-            .SenderName = "MARKTIME"
+            .BodyText = "Obsah zprávy: " & strOutputFileName
             .Subject = "Předmět zprávy: " & strOutputFileName
             '.AddOneFile2FullPath(_factory.x35GlobalParam.TempFolder & "\" & strOutputFileName)
         End With

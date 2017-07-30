@@ -187,13 +187,12 @@
                 Dim cRep As New clsReportOnBehind()
                 Dim strOutputFileName As String = cRep.GenerateReport2Temp(_Factory, strRepFullPath)
 
-                Dim message As New BO.smtpMessage()
+                Dim message As New Rebex.Mail.MailMessage
                 With message
-                    .Body = "Automaticky generovaná zpráva ze systému MARKTIME." & vbCrLf & vbCrLf & "Report: " & c.x31Name & vbCrLf & vbCrLf & vbCrLf & "Pozdrav posílá MARKTIME robot!"
-                    .SenderAddress = _Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress")
-                    .SenderName = "MARKTIME robot"
+                    .BodyText = "Automaticky generovaná zpráva ze systému MARKTIME." & vbCrLf & vbCrLf & "Report: " & c.x31Name & vbCrLf & vbCrLf & vbCrLf & "Pozdrav posílá MARKTIME robot!"
+                    .From.Add(New Rebex.Mime.Headers.MailAddress(_Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress"), "MARKTIME robot"))
                     .Subject = BO.BAS.OM3(c.x31Name, 30) & " | MARKTIME REPORT"
-                    .AddOneFile2FullPath(_Factory.x35GlobalParam.TempFolder & "\" & strOutputFileName)
+                    .Attachments.Add(New Rebex.Mail.Attachment(_Factory.x35GlobalParam.TempFolder & "\" & strOutputFileName))
                 End With
                 c.x31SchedulingReceivers = Replace(c.x31SchedulingReceivers, ",", ";")
                 Dim a() As String = Split(c.x31SchedulingReceivers, ";")
@@ -263,13 +262,14 @@
 
 
                     'odeslat mail zprávu:
-                    Dim message As New BO.smtpMessage()
+                    Dim message As New Rebex.Mail.MailMessage
                     With message
-                        .SenderAddress = _Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress")
-                        .SenderName = "MARKTIME robot"
+                        .From.Add(New Rebex.Mime.Headers.MailAddress(_Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress"), "MARKTIME robot"))
                         .Subject = c.x48MailSubject
-                        .Body = c.x48MailBody
-                        If strOutputPdfFileName <> "" Then .AddOneFile2FullPath(_Factory.x35GlobalParam.TempFolder & "\" & strOutputPdfFileName)
+                        .BodyText = c.x48MailBody
+                        If strOutputPdfFileName <> "" Then
+                            .Attachments.Add(New Rebex.Mail.Attachment(_Factory.x35GlobalParam.TempFolder & "\" & strOutputPdfFileName))
+                        End If
                     End With
                     c.x48MailTo = Replace(c.x48MailTo, ",", ";")
 

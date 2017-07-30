@@ -169,10 +169,9 @@ Class x46EventNotificationBL
             objects.Add(objectReference)
         End If
 
-        Dim mes As New BO.smtpMessage
-        mes.SenderAddress = Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress")
-        mes.SenderName = "MARKTIME robot"
-
+        Dim mes As New Rebex.Mail.MailMessage
+        mes.From.Add(New Rebex.Mime.Headers.MailAddress(Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress"), "MARKTIME robot"))
+        
         Dim strLinkUrl As String = Factory.GetRecordLinkUrl(BO.BAS.GetDataPrefix(cX45.x29ID), cX47.x47RecordPID)
 
         For Each c In lisX46
@@ -221,13 +220,13 @@ Class x46EventNotificationBL
                 If lisReceivers.Count > 0 Then
                     'zkompletovat zprávu a odeslat do mail fronty
                     Dim cMerge As New BO.clsMergeContent
-                    mes.Body = cMerge.MergeContent(objects, strMergedBody, strLinkUrl)
+                    mes.BodyText = cMerge.MergeContent(objects, strMergedBody, strLinkUrl)
                     mes.Subject = strMergedSubject
                     If cX45.x29ID = BO.x29IdEnum.o22Milestone Then
                         'přiložit ICS soubor
                         Dim strICS As String = Factory.o22MilestoneBL.CreateICalendarTempFullPath(cX47.x47RecordPID)
                         If strICS <> "" Then
-                            mes.AddOneFile2FullPath(strICS)
+                            mes.Attachments.Add(New Rebex.Mail.Attachment(strICS))
                         End If
                     End If
 
@@ -240,13 +239,13 @@ Class x46EventNotificationBL
     End Sub
 
     
-    Private Sub CompleteMessages(cX47 As BO.x47EventLog, message As BO.smtpMessage, lisReceivers As IEnumerable(Of BO.j02Person))
+    Private Sub CompleteMessages(cX47 As BO.x47EventLog, message As Rebex.Mail.MailMessage, lisReceivers As IEnumerable(Of BO.j02Person))
         Dim x29ID_Message As BO.x29IdEnum = cX47.x29ID, intRecordPID_Message As Integer = cX47.x47RecordPID
         If cX47.x29ID = BO.x29IdEnum.b07Comment Then
             x29ID_Message = cX47.x29ID_Reference
             intRecordPID_Message = cX47.x47RecordPID_Reference
         End If
-        
+
         For Each cJ02 In lisReceivers
             'pro každou osobu jedna zpráva
             Dim recipients As New List(Of BO.x43MailQueue_Recipient)

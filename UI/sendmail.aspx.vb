@@ -28,7 +28,7 @@
         Me.uploadlist1.Factory = Master.Factory
 
         If Not Page.IsPostBack Then
-            txtSender.Text = Master.Factory.SysUser.PersonEmail
+            txtSender.Text = Master.Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress")
             If Request.Item("prefix") <> "" Then
                 Me.CurrentX29ID = BO.BAS.GetX29FromPrefix(Request.Item("prefix"))
                 Master.DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
@@ -194,7 +194,9 @@
             Dim message As New Rebex.Mail.MailMessage
             With message
                 .BodyText = Trim(Me.txtBody.Text)
-                .From.Add(New Rebex.Mime.Headers.MailAddress(Me.txtSender.Text, Master.Factory.SysUser.Person))
+                If BO.BAS.TestEMailAddress(Me.txtSender.Text, "") Then
+                    .From.Add(New Rebex.Mime.Headers.MailAddress(Me.txtSender.Text, Master.Factory.SysUser.Person & " via MARKTIME"))
+                End If
                 .Subject = Me.txtSubject.Text
                 Master.Factory.x40MailQueueBL.CompleteMailAttachments(message, upload1.GUID)
                 
