@@ -2,7 +2,7 @@
 
 <%@ MasterType VirtualPath="~/ModalForm.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register TagPrefix="uc" TagName="fileupload_list" Src="~/fileupload_list.ascx" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
@@ -18,16 +18,16 @@
             </td>
             <td>
                 <asp:Label ID="x40State" runat="server" CssClass="valbold"></asp:Label>
-                
-                
+
+
             </td>
         </tr>
         <tr>
             <td colspan="2">
                 <asp:Button ID="cmdChangeState" Text="Změnit stav zprávy" runat="server" CssClass="cmd" />
-                
-                
-                    
+
+
+
             </td>
         </tr>
         <tr>
@@ -35,11 +35,19 @@
                 <asp:Button ID="cmdChangeStateOnNeedConfirm" Text="Změnit stav zprávy na [Čeká na odeslání]" runat="server" CssClass="cmd" />
             </td>
         </tr>
-         <tr>
+        <tr>
             <td colspan="2">
-                <asp:Button ID="cmdDelete" Text="Odstranit zprávu" runat="server" CssClass="cmd" Visible="false" />
+                <img src="Images/Files/eml_24.png" />
+                <asp:LinkButton ID="cmdEML" runat="server" Text="EML formát zprávy"></asp:LinkButton>
             </td>
         </tr>
+        <tr>
+            <td colspan="2">
+                <img src="Images/Files/msg_24.png" />                
+                <asp:LinkButton ID="cmdMSG" runat="server" Text="Otevřít v MS-OUTLOOK"></asp:LinkButton>
+            </td>
+        </tr>
+        
         <tr>
             <td>
                 <asp:Label ID="Label2" runat="server" CssClass="lbl" Text="Čas:"></asp:Label>
@@ -88,7 +96,7 @@
                 <asp:Label ID="x40BCC" runat="server" CssClass="valbold"></asp:Label>
             </td>
         </tr>
-       
+
         <tr valign="top">
             <td>
                 <asp:Label ID="lblSubject" runat="server" CssClass="lbl" Text="Předmět zprávy:"></asp:Label>
@@ -98,16 +106,26 @@
                 <asp:Label ID="x40Subject" runat="server" CssClass="valbold"></asp:Label>
             </td>
         </tr>
+      
     </table>
 
     <asp:TextBox ID="x40Body" runat="server" TextMode="MultiLine" Style="width: 100%; height: 200px;" ReadOnly="true">
     </asp:TextBox>
+    <asp:Repeater ID="rpAtt" runat="server">
+        <ItemTemplate>
+            <div class="div6">
+                <asp:Image ID="img1" runat="server" ImageUrl="Images/attachment.png" Style="vertical-align: bottom;" />
+                <asp:HyperLink ID="linkAtt" runat="server"></asp:HyperLink>
+            </div>
+        </ItemTemplate>
+    </asp:Repeater>
     <div>
         <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
     </div>
     <div class="div6">
-        <uc:fileupload_list ID="uploadlist1" runat="server" />
+        <asp:Button ID="cmdDelete" Text="Odstranit zprávu" runat="server" CssClass="cmd" Visible="false" />
     </div>
+   
     <div class="div6">
         <asp:Label ID="x40ErrorMessage" runat="server" Font-Bold="true" ForeColor="Red" Font-Italic="true"></asp:Label>
     </div>

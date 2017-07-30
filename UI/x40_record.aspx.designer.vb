@@ -50,13 +50,22 @@ Partial Public Class x40_record
     Protected WithEvents cmdChangeStateOnNeedConfirm As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''cmdDelete control.
+    '''cmdEML control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdDelete As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents cmdEML As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''cmdMSG control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdMSG As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''Label2 control.
@@ -176,6 +185,15 @@ Partial Public Class x40_record
     Protected WithEvents x40Body As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''rpAtt control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rpAtt As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
     '''Timestamp control.
     '''</summary>
     '''<remarks>
@@ -185,13 +203,13 @@ Partial Public Class x40_record
     Protected WithEvents Timestamp As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''uploadlist1 control.
+    '''cmdDelete control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents uploadlist1 As Global.UI.fileupload_list
+    Protected WithEvents cmdDelete As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''x40ErrorMessage control.

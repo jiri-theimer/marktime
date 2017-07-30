@@ -16,6 +16,7 @@ Public Interface Ix40MailQueueBL
     ''Function GetList_AllHisMessages(intJ03ID_Sender As Integer, intJ02ID_Person As Integer, Optional intTopRecs As Integer = 500) As IEnumerable(Of BO.x40MailQueue)
     Function SendMessageWithoutQueque(strRecipient As String, strBody As String, strSubject As String) As Boolean
     Function CompleteMailAttachments(ByRef message As MailMessage, strUploadGUID As String) As String
+    Function SendAnswer2Ticket(cRec As BO.b07Comment) As Boolean
 End Interface
 
 Class x40MailQueueBL
@@ -117,40 +118,7 @@ Class x40MailQueueBL
                 cX40.x40Attachments += ", " & s
             End If
         Next
-        'If mes.o27UploadGUID <> "" Then
-        '    Dim lisTempUpload As IEnumerable(Of BO.p85TempBox) = Me.Factory.p85TempBoxBL.GetList(mes.o27UploadGUID)
-        '    If Me.Factory.o27AttachmentBL.UploadAndSaveUserControl(lisTempUpload, BO.x29IdEnum.x40MailQueue, cX40.PID) Then
-
-        '    End If
-        'End If
-        'If Not mes.AttachmentFiles_FullPath Is Nothing Then
-        '    Dim cF As New BO.clsFile, lisO13 As IEnumerable(Of BO.o13AttachmentType) = Me.Factory.o13AttachmentTypeBL.GetList()
-        '    For Each strFullPath As String In mes.AttachmentFiles_FullPath
-        '        Dim cO27 As New BO.o27Attachment
-        '        cO27.o13ID = lisO13.Where(Function(p) p.x29ID = BO.x29IdEnum.x40MailQueue)(0).PID
-        '        cO27.x40ID = cX40.PID
-        '        Dim strOrigFileName As String = cF.GetNameFromFullpath(strFullPath)
-        '        Dim strExplicitArchiveFileName As String = strOrigFileName
-        '        If Len(strExplicitArchiveFileName) < 15 Then strExplicitArchiveFileName = "" 'pokud je délka názvu souboru menší než 15, jméno archív souboru vygeneruje s GUID systém
-        '        Me.Factory.o27AttachmentBL.UploadAndSaveOneFile(cO27, strOrigFileName, strFullPath, strExplicitArchiveFileName)
-        '    Next
-        'End If
-        'If mes.o27UploadGUID <> "" Or Not mes.AttachmentFiles_FullPath Is Nothing Then
-        '    Dim mq As New BO.myQueryO27
-        '    mq.x40ID = cX40.PID
-        '    Threading.Thread.Sleep(1000 * 2) 'počkat po dobu 2 sekundy, jinak to zlobí
-        '    mes.o27Attachments = Me.Factory.o27AttachmentBL.GetList(mq)
-        'End If
-        'If Not mes.o27Attachments Is Nothing Then
-        '    Dim strRootFolder As String = Me.Factory.x35GlobalParam.UploadFolder
-        '    For Each cO27 In mes.o27Attachments
-        '        ''Dim att As New Attachment(cO27.GetFullPath(strRootFolder))
-        '        ''att.ContentDisposition.FileName = cO27.o27OriginalFileName
-        '        ''mail.Attachments.Add(att)
-        '        ''cX40.x40Attachments += ", " & att.ContentDisposition.FileName
-        '        cX40.x40Attachments += ", " & cO27.o27OriginalFileName
-        '    Next
-        'End If
+        
         For Each c In recipients
             Select Case c.x43RecipientFlag
                 Case BO.x43RecipientIdEnum.recTO
@@ -167,7 +135,13 @@ Class x40MailQueueBL
         Next
 
         'uložit mailmessage do souboru
-        mes.Save()
+        cX40.x40ArchiveFolder = "x40\" & Year(Now).ToString & "\" & Right("0" & Month(Now).ToString, 2)
+        cX40.x40MessageID = mes.MessageId.Id
+        Dim strDir As String = Me.Factory.x35GlobalParam.UploadFolder & "\" & cX40.x40ArchiveFolder
+        If Not System.IO.Directory.Exists(strDir) Then
+            System.IO.Directory.CreateDirectory(strDir)
+        End If
+        mes.Save(strDir & "\" & mes.MessageId.Id & ".eml", MailFormat.Mime)
 
         With cX40
             .x40Recipient = BO.BAS.OM1(.x40Recipient)
@@ -229,27 +203,26 @@ Class x40MailQueueBL
         If cRec Is Nothing Then Return False
         Return SendMessageFromQueque(cRec)
     End Function
-    Public Overloads Function SendMessageFromQueque(cRec As BO.x40MailQueue) As Boolean Implements Ix40MailQueueBL.SendMessageFromQueque
-        _Error = ""
+
+    Private Function InhaleMailMessageFromDb(cRec As BO.x40MailQueue) As MailMessage
+        Dim mail As New MailMessage
         Dim recipients As IEnumerable(Of BO.x43MailQueue_Recipient) = _cDL.GetList_Recipients(cRec.PID)
+
         Dim strGlobalSenderAddress As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress")
         Dim strSenderIsUser As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_SenderIsUser")
         Dim strSenderName As String = cRec.x40SenderName
-        If strSenderName <> "" Then strSenderName += " via MARKTIME"
-        Dim mail As New MailMessage
+        If strSenderName <> "" Then
+            If strSenderName.IndexOf(" via ") < 0 Then
+                strSenderName += " via MARKTIME"
+            End If
+        End If
+        
         With mail
             .DefaultCharset = System.Text.Encoding.UTF8
-
             If strSenderIsUser = "1" Then
                 .From.Add(New Rebex.Mime.Headers.MailAddress(cRec.x40SenderAddress, strSenderName))
             Else
                 .From.Add(New Rebex.Mime.Headers.MailAddress(strGlobalSenderAddress, strSenderName))
-
-                If strGlobalSenderAddress <> cRec.x40SenderAddress Then
-                    .ReplyTo.Add(cRec.x40SenderAddress)
-                    cRec.x40SenderAddress = strGlobalSenderAddress
-                End If
-
             End If
             If cRec.x40IsHtmlBody Then
                 .BodyHtml = cRec.x40Body
@@ -257,8 +230,6 @@ Class x40MailQueueBL
                 .BodyText = cRec.x40Body
             End If
             .Subject = cRec.x40Subject
-
-
         End With
 
         For Each c In recipients.Where(Function(p) p.x43Email <> "")
@@ -277,7 +248,6 @@ Class x40MailQueueBL
             End Try
 
         Next
-
         Dim mqO27 As New BO.myQueryO27
         mqO27.x40ID = cRec.PID
         Dim lisO27 As IEnumerable(Of BO.o27Attachment) = Factory.o27AttachmentBL.GetList(mqO27)
@@ -303,8 +273,22 @@ Class x40MailQueueBL
             Next
         End If
 
-        ''mail.Save("c:\temp\pokus_hovado.eml", Rebex.Mail.MailFormat.Mime)
+        Return mail
+    End Function
+    Public Overloads Function SendMessageFromQueque(cRec As BO.x40MailQueue) As Boolean Implements Ix40MailQueueBL.SendMessageFromQueque
+        _Error = ""
+        Dim mail As New MailMessage
+        If cRec.x40MessageID <> "" And cRec.x40ArchiveFolder <> "" Then
+            'načíst mail z EML souboru
+            If System.IO.File.Exists(Me.Factory.x35GlobalParam.UploadFolder & "\" & cRec.x40ArchiveFolder & "\" & cRec.x40MessageID & ".eml") Then
+                mail.Load(Me.Factory.x35GlobalParam.UploadFolder & "\" & cRec.x40ArchiveFolder & "\" & cRec.x40MessageID & ".eml")
+            End If
+        End If
+        If mail.BodyText = "" And mail.BodyHtml <> "" And mail.Subject = "" Then
+            mail = InhaleMailMessageFromDb(cRec)    'zpráva načíst z databáze
+        End If
 
+        
         Dim bolSucceeded As Boolean = False, bolUseWebConfig As Boolean = True, strSmtpServer As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_Server")
         Dim strSmtpLogin As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_Login"), strSmtpPassword As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_Password")
         If Me.Factory.x35GlobalParam.GetValueString("IsUseWebConfigSetting", "1") = "0" Then
@@ -316,10 +300,10 @@ Class x40MailQueueBL
                 'osoba má vlastní SMTP účet
                 bolUseWebConfig = False
                 ''mail.From = _cUser.PersonEmail
+                mail.From.Clear()
                 mail.From.Add(New Rebex.Mime.Headers.MailAddress(_cUser.PersonEmail, _cUser.Person))
                 cRec.x40SenderAddress = _cUser.PersonEmail
                 cRec.x40SenderName = _cUser.Person
-                strSenderName = _cUser.Person
                 strSmtpServer = cPerson.j02SmtpServer
                 If cPerson.j02IsSmtpVerify Then
                     strSmtpLogin = cPerson.j02SmtpLogin
@@ -376,56 +360,6 @@ Class x40MailQueueBL
 
         Return bolSucceeded
 
-        ''With smtp
-        ''    If strIsUseWebConfigSetting = "0" Then
-        ''        'vlastní SMTP nastavení z globálních proměnných
-        ''        Dim basicAuthenticationInfo As New System.Net.NetworkCredential(Me.Factory.x35GlobalParam.GetValueString("SMTP_Login"), Me.Factory.x35GlobalParam.GetValueString("SMTP_Password"), "")
-        ''        .UseDefaultCredentials = False
-        ''        .Credentials = basicAuthenticationInfo
-        ''        .Host = Me.Factory.x35GlobalParam.GetValueString("SMTP_Server")
-        ''    End If
-        ''    ''If _cUser.j02ID <> 0 Then
-        ''    ''    Dim cPerson As BO.j02Person = Me.Factory.j02PersonBL.Load(_cUser.j02ID)
-        ''    ''    If cPerson.j02SmtpServer <> "" Then
-        ''    ''        'osoba má vlastní SMTP účet
-        ''    ''        cRec.x40SenderAddress = _cUser.PersonEmail
-        ''    ''        cRec.x40SenderName = _cUser.Person
-        ''    ''        mail.From = New MailAddress(_cUser.PersonEmail, _cUser.Person)
-        ''    ''        Dim basicAuthenticationInfo As New System.Net.NetworkCredential()
-        ''    ''        If cPerson.j02IsSmtpVerify Then
-        ''    ''            basicAuthenticationInfo = New System.Net.NetworkCredential(cPerson.j02SmtpLogin, BO.Crypto.Decrypt(cPerson.j02SmtpPassword, "hoVaDo7Ivan1"), "")
-        ''    ''        End If
-        ''    ''        .UseDefaultCredentials = False
-        ''    ''        .Credentials = basicAuthenticationInfo
-        ''    ''        .Host = cPerson.j02SmtpServer
-        ''    ''    End If
-        ''    ''    log4net.LogManager.GetLogger("smtplog").Info("SMTP sender: " & .Host & vbCrLf & "Message subject: " & cPerson.j02SmtpLogin)
-        ''    ''End If
-        ''    Try
-        ''        .Send(mail)
-        ''        log4net.LogManager.GetLogger("smtplog").Info("Sender: " & mail.From.Address & "/" & mail.From.DisplayName & vbCrLf & "Message recipients: " & cRec.x40Recipient & vbCrLf & "Message subject: " & cRec.x40Subject & vbCrLf & "Message body: " & cRec.x40Body)
-
-        ''        For i As Integer = 0 To mail.Attachments.Count - 1
-        ''            log4net.LogManager.GetLogger("smtplog").Info("Message attachment: " & mail.Attachments(i).ContentDisposition.FileName)
-        ''        Next
-        ''        cRec.x40State = BO.x40StateENUM.IsProceeded
-        ''        cRec.x40WhenProceeded = Now
-        ''        cRec.x40ErrorMessage = ""
-        ''        bolSucceeded = True
-        ''    Catch ex As Exception
-        ''        bolSucceeded = False
-        ''        _Error = ex.Message
-        ''        cRec.x40State = BO.x40StateENUM.IsError
-        ''        cRec.x40ErrorMessage = _Error
-        ''        log4net.LogManager.GetLogger("smtplog").Error("Error: " & _Error & vbCrLf & "Sender: " & mail.From.Address & "/" & mail.From.DisplayName & vbCrLf & "Message recipients: " & cRec.x40Recipient & vbCrLf & "Message subject: " & cRec.x40Subject & vbCrLf & "Message body: " & cRec.x40Body)
-        ''    End Try
-
-        ''End With
-
-        _cDL.Save(cRec, Nothing)
-
-        Return bolSucceeded
-
     End Function
     Public Function UpdateMessageState(intX40ID As Integer, NewState As BO.x40StateENUM) As Boolean Implements Ix40MailQueueBL.UpdateMessageState
         If intX40ID = 0 Then _Error = "ID zprávy je nula." : Return False
@@ -437,4 +371,27 @@ Class x40MailQueueBL
     ''Public Function GetList_AllHisMessages(intJ03ID_Sender As Integer, intJ02ID_Person As Integer, Optional intTopRecs As Integer = 500) As IEnumerable(Of BO.x40MailQueue) Implements Ix40MailQueueBL.GetList_AllHisMessages
     ''    Return _cDL.GetList_AllHisMessages(intJ03ID_Sender, intJ02ID_Person)
     ''End Function
+
+    Function SendAnswer2Ticket(cRec As BO.b07Comment) As Boolean Implements Ix40MailQueueBL.SendAnswer2Ticket
+
+        Dim original As Rebex.Mail.MailMessage = Me.Factory.o42ImapRuleBL.LoadMailMessageFromHistory(cRec.o43ID)
+        Dim reply As New Rebex.Mail.MailMessage
+        If Not (original.MessageId Is Nothing) Then
+            reply.InReplyTo.Add(original.MessageId)
+        End If
+        reply.To = original.From
+        reply.CC = original.CC
+        reply.MessageId = New Rebex.Mime.Headers.MessageId
+        reply.Subject = "RE: " & original.Subject
+        reply.BodyText = cRec.b07Value
+        Dim recipients As New List(Of BO.x43MailQueue_Recipient)
+        Dim cR As New BO.x43MailQueue_Recipient
+        cR.x43Email = original.From(0).Address
+        cR.x43DisplayName = original.From(0).DisplayName
+        recipients.Add(cR)
+        recipients.Add(New BO.x43MailQueue_Recipient())
+        Dim intX40ID As Integer = Me.Factory.x40MailQueueBL.SaveMessageToQueque(reply, recipients, cRec.x29ID, cRec.b07RecordPID, BO.x40StateENUM.InQueque)
+        Return Me.Factory.x40MailQueueBL.SendMessageFromQueque(intX40ID)
+
+    End Function
 End Class

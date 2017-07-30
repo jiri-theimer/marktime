@@ -124,7 +124,23 @@
 
         With Master.Factory.b07CommentBL
             If .Save(cRec, upload1.GUID, Nothing) Then
-                Return True
+                cRec = Master.Factory.b07CommentBL.Load(.LastSavedPID)
+
+                'najít poslední odpověď žadatele načtenou přes IMAP
+                Dim mq As New BO.myQueryB07
+                mq.x29id = cRec.x29ID
+                mq.RecordDataPID = cRec.b07RecordPID
+                Dim lis As IEnumerable(Of BO.b07Comment) = Master.Factory.b07CommentBL.GetList(mq).Where(Function(p) p.o43ID <> 0).OrderByDescending(Function(p) p.o43ID)
+                If lis.Count > 0 Then
+                    If Master.Factory.x40MailQueueBL.SendAnswer2Ticket(lis(0)) Then
+                        Return True
+                    Else
+                        Master.Notify(Master.Factory.x40MailQueueBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                        Return False
+                    End If
+                Else
+                    Master.Notify("Nebyla nalezena původní zpráva.", NotifyLevel.ErrorMessage)
+                End If
             Else
                 Master.Notify(Master.Factory.b07CommentBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Return False

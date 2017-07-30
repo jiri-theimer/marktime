@@ -292,7 +292,7 @@ Class o42ImapRuleBL
             .o43DateMessage = imi.Date.LocalTime
             .o43RecordGUID = strGUID
             .o43MessageGUID = imi.UniqueId
-            If imi.MessageId.Id <> "" Then .o43MessageGUID = imi.MessageId.Id
+            ''If imi.MessageId.Id <> "" Then .o43MessageGUID = imi.MessageId.Id
             .o43Subject = imi.Subject
             .o43Length = imi.Length
 
@@ -618,7 +618,19 @@ Class o42ImapRuleBL
         If Not Connect(cInbox) Then
             Return Nothing
         End If
-        Return _client.GetMailMessage(cO43.o43MessageGUID)
+        Try
+            Return _client.GetMailMessage(cO43.o43MessageGUID)
+        Catch ex As Exception
+            Dim strPath As String = Me.Factory.x35GlobalParam.UploadFolder & "\" & cO43.o43ImapArchiveFolder & "\" & cO43.o43EmlFileName
+            If System.IO.File.Exists(strPath) Then
+                Dim mail As New Rebex.Mail.MailMessage
+                mail.Load(strPath)
+                Return mail            
+            End If
+            Return Nothing
+        End Try
+
+
 
     End Function
 End Class

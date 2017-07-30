@@ -7,7 +7,6 @@
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Me.uploadlist1.Factory = Master.Factory
 
         If Not Page.IsPostBack Then
             With Master
@@ -26,7 +25,17 @@
     Private Sub RefreshRecord()
         cmdChangeStateOnNeedConfirm.Visible = False
         Dim cRec As BO.x40MailQueue = Master.Factory.x40MailQueueBL.Load(Master.DataPID)
+
+        cmdMSG.Visible = False : cmdEML.Visible = False
         With cRec
+            If .x40MessageID <> "" And .x40ArchiveFolder <> "" Then
+
+                cmdMSG.Visible = True : cmdEML.Visible = True
+                Dim mail As New Rebex.Mail.MailMessage
+                mail.Load(Master.Factory.x35GlobalParam.UploadFolder & "\" & cRec.x40ArchiveFolder & "\" & cRec.x40MessageID & ".eml")
+                rpAtt.DataSource = mail.Attachments
+                rpAtt.DataBind()
+            End If
             Me.DateInsert.Text = BO.BAS.FD(.DateInsert)
             Me.x40SenderName.Text = .x40SenderName & " (" & .x40SenderAddress & ")"
             Me.x40Recipient.Text = .x40Recipient
@@ -63,10 +72,7 @@
             Me.Timestamp.Text = .Timestamp
         End With
 
-        Dim mq As New BO.myQueryO27
-        mq.x40ID = Master.DataPID
 
-        Me.uploadlist1.RefreshData(mq)
     End Sub
 
     Private Sub cmdChangeState_Click(sender As Object, e As EventArgs) Handles cmdChangeState.Click
@@ -100,5 +106,26 @@
                 Master.Notify(Master.Factory.x40MailQueueBL.ErrorMessage)
             End If
         End With
+    End Sub
+
+    Private Sub cmdEML_Click(sender As Object, e As EventArgs) Handles cmdEML.Click
+        Response.Redirect("binaryfile.aspx?prefix=x40-eml&pid=" & Master.DataPID.ToString)
+    End Sub
+
+    Private Sub cmdMSG_Click(sender As Object, e As EventArgs) Handles cmdMSG.Click
+        Response.Redirect("binaryfile.aspx?prefix=x40-msg&pid=" & Master.DataPID.ToString)
+    End Sub
+
+    Private Sub rpAtt_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpAtt.ItemDataBound
+        Dim cRec As Rebex.Mail.Attachment = CType(e.Item.DataItem, Rebex.Mail.Attachment)
+        With CType(e.Item.FindControl("linkAtt"), HyperLink)
+            .Text = cRec.DisplayName
+            If .Text = "" Then .Text = cRec.FileName
+            .Text += " (" & BO.BAS.FormatFileSize(cRec.GetContentLength) & ")"
+            .NavigateUrl = "binaryfile.aspx?prefix=x40-eml&pid=" & Master.DataPID.ToString & "&att=" & cRec.FileName
+        End With
+        Dim cF As New BO.clsFile
+
+        CType(e.Item.FindControl("img1"), Image).ImageUrl = "Images/Files/" & BO.BAS.GetFileExtensionIcon(Right(cRec.FileName, 4))
     End Sub
 End Class

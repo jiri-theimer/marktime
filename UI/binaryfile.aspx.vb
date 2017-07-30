@@ -74,9 +74,28 @@ Public Class binaryfile
                             If cRec.o23ID <> 0 Then strDestFileName = factory.GetRecordCaption(BO.x29IdEnum.o23Doc, cRec.o23ID)
                             strDestFileName = Left(BO.BAS.Prepare4FileName(strDestFileName), 80) & "." & Request.Item("format")
                         End If
+                    Case "x40-eml", "x40-msg"
+                        strContentType = "message/rfc822"
+                        Dim cRec As BO.x40MailQueue = factory.x40MailQueueBL.Load(BO.BAS.IsNullInt(Request.Item("pid")))
+                        strFullPath = factory.x35GlobalParam.UploadFolder & "\" & cRec.x40ArchiveFolder & "\" & cRec.x40MessageID & ".eml"
+                        If Request.Item("prefix") = "x40-msg" Then
+                            Dim strMSG As String = factory.x35GlobalParam.UploadFolder & "\" & cRec.x40ArchiveFolder & "\" & cRec.x40MessageID & ".msg"
+                            If Not System.IO.File.Exists(strMSG) Then
+                                Dim mail As New Rebex.Mail.MailMessage
+                                mail.Load(strFullPath)
+                                mail.Save(strMSG, Rebex.Mail.MailFormat.OutlookMsg)
+                                strFullPath = strMSG
+                                strContentType = "application/vnd.ms-outlook"
+                            End If
+                        End If
+                        If Request.Item("att") <> "" Then
+                            Dim mail As New Rebex.Mail.MailMessage
+                            mail.Load(strFullPath)
+                            mail.Attachments.First(Function(p) p.FileName = Request.Item("att")).Save(factory.x35GlobalParam.TempFolder & "\" & Request.Item("att"))
+                            strFullPath = factory.x35GlobalParam.TempFolder & "\" & Request.Item("att")
+                        End If
 
-
-                        ''factory.o42ImapRuleBL.ChangeRecordGuidInHistory(cRec.o43ID, BO.BAS.GetGUID) 'změnit guid, aby to nikdo už nemohl stáhnout pod stejnou URL
+                        strDisposition = "inline"
                 End Select
 
                 If Request.Item("doc2pdf") = "1" Then

@@ -197,6 +197,11 @@
                 If BO.BAS.TestEMailAddress(Me.txtSender.Text, "") Then
                     .From.Add(New Rebex.Mime.Headers.MailAddress(Me.txtSender.Text, Master.Factory.SysUser.Person & " via MARKTIME"))
                 End If
+                If .From.Count > 0 Then
+                    If .From(0).Address <> Master.Factory.SysUser.PersonEmail Then
+                        .ReplyTo = Master.Factory.SysUser.PersonEmail
+                    End If
+                End If
                 .Subject = Me.txtSubject.Text
                 Master.Factory.x40MailQueueBL.CompleteMailAttachments(message, upload1.GUID)
                 

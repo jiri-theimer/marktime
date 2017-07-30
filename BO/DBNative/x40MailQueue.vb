@@ -34,6 +34,8 @@ Public Class x40MailQueue
     Public Property x40ErrorMessage As String
 
     Public Property x40IsAutoNotification As Boolean
+    Public Property x40MessageID As String
+    Public Property x40ArchiveFolder As String
 
 
 
