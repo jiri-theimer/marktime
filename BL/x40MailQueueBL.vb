@@ -69,8 +69,8 @@ Class x40MailQueueBL
         End If
         With mes
             .DefaultCharset = System.Text.Encoding.UTF8
-            .Headers.Add("mt-prefix", BO.BAS.GetDataPrefix(x29id))
-            .Headers.Add("mt-pid", intRecordPID.ToString)
+            .Headers.Add("marktime-prefix", BO.BAS.GetDataPrefix(x29id))
+            .Headers.Add("marktime-pid", intRecordPID.ToString)
 
             If Trim(.Subject) = "" And Trim(.BodyText) = "" And Trim(.BodyHtml) = "" Then
                 _Error = "Předmět zprávy i text zprávy jsou prázdné." : Return 0
@@ -382,8 +382,8 @@ Class x40MailQueueBL
         If Not (original.MessageId Is Nothing) Then
             reply.InReplyTo.Add(original.MessageId)
         End If
-        reply.Headers.Add("mt-prefix", BO.BAS.GetDataPrefix(cRec.x29ID))
-        reply.Headers.Add("mt-pid", cRec.b07RecordPID.ToString)
+        reply.Headers.Add("marktime-prefix", BO.BAS.GetDataPrefix(cRec.x29ID))
+        reply.Headers.Add("marktime-pid", cRec.b07RecordPID.ToString)
 
         reply.To = original.From
         reply.CC = original.CC
