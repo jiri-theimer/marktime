@@ -132,7 +132,7 @@
                 mq.RecordDataPID = cRec.b07RecordPID
                 Dim lis As IEnumerable(Of BO.b07Comment) = Master.Factory.b07CommentBL.GetList(mq).Where(Function(p) p.o43ID <> 0).OrderByDescending(Function(p) p.o43ID)
                 If lis.Count > 0 Then
-                    If Master.Factory.x40MailQueueBL.SendAnswer2Ticket(lis(0)) Then
+                    If Master.Factory.x40MailQueueBL.SendAnswer2Ticket(cRec.b07Value, lis(0)) Then
                         Return True
                     Else
                         Master.Notify(Master.Factory.x40MailQueueBL.ErrorMessage, NotifyLevel.ErrorMessage)

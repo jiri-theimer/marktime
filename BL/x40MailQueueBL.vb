@@ -16,7 +16,7 @@ Public Interface Ix40MailQueueBL
     ''Function GetList_AllHisMessages(intJ03ID_Sender As Integer, intJ02ID_Person As Integer, Optional intTopRecs As Integer = 500) As IEnumerable(Of BO.x40MailQueue)
     Function SendMessageWithoutQueque(strRecipient As String, strBody As String, strSubject As String) As Boolean
     Function CompleteMailAttachments(ByRef message As MailMessage, strUploadGUID As String) As String
-    Function SendAnswer2Ticket(cRec As BO.b07Comment) As Boolean
+    Function SendAnswer2Ticket(strBody As String, cRec2Answer As BO.b07Comment) As Boolean
 End Interface
 
 Class x40MailQueueBL
@@ -375,28 +375,28 @@ Class x40MailQueueBL
     ''    Return _cDL.GetList_AllHisMessages(intJ03ID_Sender, intJ02ID_Person)
     ''End Function
 
-    Function SendAnswer2Ticket(cRec As BO.b07Comment) As Boolean Implements Ix40MailQueueBL.SendAnswer2Ticket
+    Function SendAnswer2Ticket(strBody As String, cRec2Answer As BO.b07Comment) As Boolean Implements Ix40MailQueueBL.SendAnswer2Ticket
 
-        Dim original As Rebex.Mail.MailMessage = Me.Factory.o42ImapRuleBL.LoadMailMessageFromHistory(cRec.o43ID)
+        Dim original As Rebex.Mail.MailMessage = Me.Factory.o42ImapRuleBL.LoadMailMessageFromHistory(cRec2Answer.o43ID)
         Dim reply As New Rebex.Mail.MailMessage
         If Not (original.MessageId Is Nothing) Then
             reply.InReplyTo.Add(original.MessageId)
         End If
-        reply.Headers.Add("marktime-prefix", BO.BAS.GetDataPrefix(cRec.x29ID))
-        reply.Headers.Add("marktime-pid", cRec.b07RecordPID.ToString)
+        reply.Headers.Add("marktime-prefix", BO.BAS.GetDataPrefix(cRec2Answer.x29ID))
+        reply.Headers.Add("marktime-pid", cRec2Answer.b07RecordPID.ToString)
 
         reply.To = original.From
         reply.CC = original.CC
         reply.MessageId = New Rebex.Mime.Headers.MessageId
         reply.Subject = "RE: " & original.Subject
-        reply.BodyText = cRec.b07Value
+        reply.BodyText = strBody
         Dim recipients As New List(Of BO.x43MailQueue_Recipient)
         Dim cR As New BO.x43MailQueue_Recipient
         cR.x43Email = original.From(0).Address
         cR.x43DisplayName = original.From(0).DisplayName
         recipients.Add(cR)
         recipients.Add(New BO.x43MailQueue_Recipient())
-        Dim intX40ID As Integer = Me.Factory.x40MailQueueBL.SaveMessageToQueque(reply, recipients, cRec.x29ID, cRec.b07RecordPID, BO.x40StateENUM.InQueque)
+        Dim intX40ID As Integer = Me.Factory.x40MailQueueBL.SaveMessageToQueque(reply, recipients, cRec2Answer.x29ID, cRec2Answer.b07RecordPID, BO.x40StateENUM.InQueque)
         Return Me.Factory.x40MailQueueBL.SendMessageFromQueque(intX40ID)
 
     End Function
