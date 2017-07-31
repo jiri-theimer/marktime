@@ -6,7 +6,7 @@ Imports Rebex.Mail
 Public Interface Ix40MailQueueBL
     Inherits IFMother
 
-    Function SaveMessageToQueque(message As MailMessage, recipients As List(Of BO.x43MailQueue_Recipient), x29id As BO.x29IdEnum, intRecordPID As Integer, status As BO.x40StateENUM) As Integer
+    Function SaveMessageToQueque(message As MailMessage, recipients As List(Of BO.x43MailQueue_Recipient), x29id As BO.x29IdEnum, intRecordPID As Integer, status As BO.x40StateENUM, intExplicitO40ID As Integer) As Integer
     Function SendMessageFromQueque(cRec As BO.x40MailQueue) As Boolean
     Function SendMessageFromQueque(intX40ID As Integer) As Boolean
     Function UpdateMessageState(intX40ID As Integer, NewState As BO.x40StateENUM) As Boolean
@@ -62,7 +62,7 @@ Class x40MailQueueBL
 
         'End If
     End Function
-    Public Function SaveMessageToQueue(mes As MailMessage, recipients As List(Of BO.x43MailQueue_Recipient), x29id As BO.x29IdEnum, intRecordPID As Integer, status As BO.x40StateENUM) As Integer Implements Ix40MailQueueBL.SaveMessageToQueque
+    Public Function SaveMessageToQueue(mes As MailMessage, recipients As List(Of BO.x43MailQueue_Recipient), x29id As BO.x29IdEnum, intRecordPID As Integer, status As BO.x40StateENUM, intExplicitO40ID As Integer) As Integer Implements Ix40MailQueueBL.SaveMessageToQueque
         _Error = ""
         If recipients Is Nothing Then recipients = New List(Of BO.x43MailQueue_Recipient)
         If recipients.Count = 0 Then
@@ -89,6 +89,7 @@ Class x40MailQueueBL
 
         Dim cX40 As New BO.x40MailQueue()
         With cX40
+            .o40ID = intExplicitO40ID
             .x40State = status
             .x29ID = x29id
             .x40RecordPID = intRecordPID
@@ -122,7 +123,7 @@ Class x40MailQueueBL
                 cX40.x40Attachments += ", " & s
             End If
         Next
-        
+
         For Each c In recipients
             Select Case c.x43RecipientFlag
                 Case BO.x43RecipientIdEnum.recTO
@@ -294,9 +295,23 @@ Class x40MailQueueBL
 
         
         Dim bolSucceeded As Boolean = False, bolUseWebConfig As Boolean = True, strSmtpServer As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_Server"), strSmtpLogin As String = "", strSmtpPassword As String = "", intPort As Integer = 0, bolSSL As Boolean = False
-        If Me.Factory.x35GlobalParam.GetValueString("IsUseWebConfigSetting", "1") = "0" And BO.BAS.IsNullInt(strSmtpServer) <> 0 Then
+
+        If cRec.o40ID = 0 Then  'na vstupu již může být předán jiný SMTP účet
+            If Me.Factory.x35GlobalParam.GetValueString("IsUseWebConfigSetting", "1") = "0" And BO.BAS.IsNullInt(strSmtpServer) <> 0 Then
+                cRec.o40ID = BO.BAS.IsNullInt(strSmtpServer)
+            End If
+            If _cUser.j02ID <> 0 Then
+                Dim cPerson As BO.j02Person = Me.Factory.j02PersonBL.Load(_cUser.j02ID)
+                If cPerson.o40ID <> 0 Then
+                    'osoba má vlastní SMTP účet
+                    cRec.o40ID = cPerson.o40ID
+                End If
+            End If
+        End If
+        
+        If cRec.o40ID <> 0 Then
             bolUseWebConfig = False
-            Dim cO40 As BO.o40SmtpAccount = Me.Factory.o40SmtpAccountBL.Load(strSmtpServer)
+            Dim cO40 As BO.o40SmtpAccount = Me.Factory.o40SmtpAccountBL.Load(cRec.o40ID)
             strSmtpServer = cO40.o40Server
             intPort = BO.BAS.IsNullInt(cO40.o40Port)
             bolSSL = cO40.o40IsUseSSL
@@ -304,26 +319,10 @@ Class x40MailQueueBL
                 strSmtpLogin = cO40.o40Login
                 strSmtpPassword = cO40.DecryptedPassword()
             End If
-        End If
-        If _cUser.j02ID <> 0 Then
-            Dim cPerson As BO.j02Person = Me.Factory.j02PersonBL.Load(_cUser.j02ID)
-            If cPerson.o40ID <> 0 Then
-                'osoba má vlastní SMTP účet
-                Dim cO40 As BO.o40SmtpAccount = Me.Factory.o40SmtpAccountBL.Load(cPerson.o40ID)
-                bolUseWebConfig = False
-                ''mail.From = _cUser.PersonEmail
-                mail.From.Clear()
-                mail.From.Add(New Rebex.Mime.Headers.MailAddress(_cUser.PersonEmail, _cUser.Person))
-                cRec.x40SenderAddress = _cUser.PersonEmail
-                cRec.x40SenderName = _cUser.Person
-                strSmtpServer = cO40.o40Server
-                bolSSL = cO40.o40IsUseSSL
-                intPort = BO.BAS.IsNullInt(cO40.o40Port)
-                If cO40.o40IsVerify Then
-                    strSmtpLogin = cO40.o40Login
-                    strSmtpPassword = cO40.DecryptedPassword()
-                End If
-            End If
+            cRec.x40SenderAddress = cO40.o40EmailAddress
+            cRec.x40SenderName = cO40.o40Name
+            mail.From.Clear()
+            mail.From.Add(New Rebex.Mime.Headers.MailAddress(cO40.o40EmailAddress, cO40.o40Name))
         End If
 
         If Not bolUseWebConfig Then
@@ -405,6 +404,14 @@ Class x40MailQueueBL
         End If
         reply.Headers.Add("marktime-prefix", BO.BAS.GetDataPrefix(cRec2Answer.x29ID))
         reply.Headers.Add("marktime-pid", cRec2Answer.b07RecordPID.ToString)
+        Dim intB01ID As Integer = 0, intO40ID As Integer = 0
+        If cRec2Answer.x29ID = BO.x29IdEnum.p56Task Then
+            intB01ID = Me.Factory.p56TaskBL.Load(cRec2Answer.b07RecordPID).b01ID
+        End If
+        If intB01ID <> 0 Then
+            intO40ID = Me.Factory.b01WorkflowTemplateBL.Load(intB01ID).o40ID
+        End If
+
 
         reply.To = original.From
         reply.CC = original.CC
@@ -417,7 +424,8 @@ Class x40MailQueueBL
         cR.x43DisplayName = original.From(0).DisplayName
         recipients.Add(cR)
         recipients.Add(New BO.x43MailQueue_Recipient())
-        Dim intX40ID As Integer = Me.Factory.x40MailQueueBL.SaveMessageToQueque(reply, recipients, cRec2Answer.x29ID, cRec2Answer.b07RecordPID, BO.x40StateENUM.InQueque)
+
+        Dim intX40ID As Integer = Me.Factory.x40MailQueueBL.SaveMessageToQueque(reply, recipients, cRec2Answer.x29ID, cRec2Answer.b07RecordPID, BO.x40StateENUM.InQueque, intO40ID)
         Return Me.Factory.x40MailQueueBL.SendMessageFromQueque(intX40ID)
 
     End Function

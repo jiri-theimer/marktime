@@ -256,7 +256,7 @@ Class x46EventNotificationBL
                 .x43RecipientFlag = BO.x43RecipientIdEnum.recTO
             End With
             recipients.Add(recipient)
-            Factory.x40MailQueueBL.SaveMessageToQueque(message, recipients, x29ID_Message, intRecordPID_Message, BO.x40StateENUM.InQueque)
+            Factory.x40MailQueueBL.SaveMessageToQueque(message, recipients, x29ID_Message, intRecordPID_Message, BO.x40StateENUM.InQueque, 0)
         Next
     End Sub
     

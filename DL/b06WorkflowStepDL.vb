@@ -154,7 +154,7 @@
     End Function
 
     Private Function GetSQLPart1() As String
-        Dim s As String = "select a.*," & bas.RecTail("b06", "a") & ",b02target.b02Name as _TargetStatus,b01.x29ID as _x29ID"
+        Dim s As String = "select a.*," & bas.RecTail("b06", "a") & ",b02target.b02Name as _TargetStatus,b01.x29ID as _x29ID,b01.o40ID as _o40ID"
         s += " FROM b06WorkflowStep a INNER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID"
         s += " LEFT OUTER JOIN b02WorkflowStatus b02target ON a.b02ID_Target=b02target.b02id"
         s += " LEFT OUTER JOIN b01WorkflowTemplate b01 ON b02.b01ID=b01.b01ID"

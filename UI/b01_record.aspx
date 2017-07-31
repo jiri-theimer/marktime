@@ -2,6 +2,7 @@
 <%@ MasterType VirtualPath="~/ModalDataRecord.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="pageheader" Src="~/pageheader.ascx" %>
+<%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
@@ -39,6 +40,14 @@
                 </asp:DropDownList>
             </td>
         </tr>
+        <tr>
+                    <td>
+                        <asp:Label ID="lblO40ID" Text="Vlastní SMTP účet:" runat="server" CssClass="lbl"></asp:Label></td>
+                    <td>
+                        <uc:datacombo ID="o40ID" runat="server" DataTextField="o40Name" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
+                        
+                    </td>
+                </tr>
     </table>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">

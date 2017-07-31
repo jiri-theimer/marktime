@@ -52,7 +52,7 @@ Public Class admin_smtp
             End If
 
             
-            ''Me.SMTP_SenderIsUser.Checked = BO.BAS.BG(.GetValueString("SMTP_SenderIsUser", "0"))
+
         End With
 
     End Sub
@@ -98,9 +98,7 @@ Public Class admin_smtp
 
                 Master.Factory.o40SmtpAccountBL.SetGlobalDefaultSmtpAccount(BO.BAS.IsNullInt(Me.cbxO40ID.SelectedValue))
 
-                ''cRec = .Load("SMTP_SenderIsUser", True)
-                ''cRec.x35Value = BO.BAS.GB(Me.SMTP_SenderIsUser.Checked)
-                ''.Save(cRec)
+              
 
 
             End With

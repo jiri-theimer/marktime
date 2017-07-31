@@ -23,6 +23,7 @@
             pars.Add("b01validfrom", .ValidFrom, DbType.DateTime)
             pars.Add("b01validuntil", .ValidUntil, DbType.DateTime)
             pars.Add("x29ID", BO.BAS.IsNullDBKey(.x29ID), DbType.Int32)
+            pars.Add("o40ID", BO.BAS.IsNullDBKey(.o40ID), DbType.Int32)
         End With
 
         If _cDB.SaveRecord("b01WorkflowTemplate", pars, bolINSERT, strW, True, _curUser.j03Login) Then

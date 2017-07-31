@@ -247,7 +247,7 @@
             If strButtonValue = "queue" Then messageStatus = BO.x40StateENUM.WaitOnConfirm
             With Master.Factory.x40MailQueueBL
 
-                Dim intMessageID As Integer = .SaveMessageToQueque(message, recipients, Me.CurrentX29ID, Master.DataPID, messageStatus)
+                Dim intMessageID As Integer = .SaveMessageToQueque(message, recipients, Me.CurrentX29ID, Master.DataPID, messageStatus, 0)
                 If intMessageID > 0 Then
                     If messageStatus = BO.x40StateENUM.InQueque Then
                         'rovnou odeslat

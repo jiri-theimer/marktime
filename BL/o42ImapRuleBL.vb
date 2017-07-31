@@ -353,15 +353,27 @@ Class o42ImapRuleBL
             'uloženo do MSG formátu
             cO43.o43MsgFileName = strGUID & ".msg"
         End If
-        Dim lisO42 As IEnumerable(Of BO.o42ImapRule) = GetList(New BO.myQuery).Where(Function(p) p.o41ID = cInbox.PID)
-        For Each c In lisO42
-            If c.p57ID <> 0 Then
-                cO43.p56ID = CreateP56Record(cO43, c, cInbox, cJ02_FROM, lisCC_Persons, lisCC_Projects, lisCC_Clients, lisCC_Teams)
-            End If
-            If c.x18ID <> 0 Then
-                cO43.o23ID = CreateO23Record(cO43, c, cInbox, cJ02_FROM, lisCC_Persons, lisCC_Projects, lisCC_Clients, lisCC_Teams)
-            End If
-        Next
+        Dim strFoundPrefix As String = ""
+        If message.Headers.Where(Function(p) p.Name = "marktime-prefix" And p.Value.ToString = "p56").Count > 0 Then
+            've zprávě je stopa po vazbě na MARKTIME úkol
+            strFoundPrefix = "p56"
+            cO43.p56ID = BO.BAS.IsNullInt(message.Headers.First(Function(p) p.Name = "marktime-pid").Value.ToString)
+        End If
+        If cO43.p56ID > 0 Then
+            'vazba na úkol existuje
+        Else
+            'nový úkol nebo nový dokument
+            Dim lisO42 As IEnumerable(Of BO.o42ImapRule) = GetList(New BO.myQuery).Where(Function(p) p.o41ID = cInbox.PID)
+            For Each c In lisO42
+                If c.p57ID <> 0 Then
+                    cO43.p56ID = CreateP56Record(cO43, c, cInbox, cJ02_FROM, lisCC_Persons, lisCC_Projects, lisCC_Clients, lisCC_Teams)
+                End If
+                If c.x18ID <> 0 Then
+                    cO43.o23ID = CreateO23Record(cO43, c, cInbox, cJ02_FROM, lisCC_Persons, lisCC_Projects, lisCC_Clients, lisCC_Teams)
+                End If
+            Next
+        End If
+        
 
         Me.InsertImport2History(cO43)
         If cO43.o43ErrorMessage = "" Then

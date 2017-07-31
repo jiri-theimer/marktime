@@ -50,4 +50,10 @@
         End Get
     End Property
 
+    Private Property _o40ID As Integer
+    Public ReadOnly Property o40ID As Integer
+        Get
+            Return _o40ID
+        End Get
+    End Property
 End Class

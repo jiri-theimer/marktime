@@ -14,9 +14,7 @@
         <asp:TextBox ID="SMTP_SenderAddress" runat="server" Style="width: 150px;"></asp:TextBox>
 
     </div>
-    <div class="div6" style="display:none;">
-        <asp:CheckBox ID="SMTP_SenderIsUser" runat="server" Text="Adresa odesílatele bude e-mail přihlášeného uživatele" />
-    </div>
+    
     <div class="div6">
         <asp:Label ID="Label1" runat="server" Text="Aplikační adresa (Host URL):"></asp:Label>
         <asp:TextBox ID="AppHost" runat="server" Style="width: 300px;"></asp:TextBox>

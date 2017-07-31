@@ -68,6 +68,24 @@ Partial Public Class b01_record
     Protected WithEvents x29ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''lblO40ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblO40ID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''o40ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o40ID As Global.UI.datacombo
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

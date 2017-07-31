@@ -425,7 +425,7 @@ Class b06WorkflowStepBL
                         End With
                         recipients.Add(recipient)
 
-                        Factory.x40MailQueueBL.SaveMessageToQueque(mes, recipients, x29id, intRecordPID, BO.x40StateENUM.InQueque)
+                        Factory.x40MailQueueBL.SaveMessageToQueque(mes, recipients, x29id, intRecordPID, BO.x40StateENUM.InQueque, cB06.o40ID)
                     Next
 
                 End If

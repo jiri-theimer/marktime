@@ -51,6 +51,7 @@
             End If
             pars.Add("j03ID_Sys", BO.BAS.IsNullDBKey(.j03ID_Sys), DbType.Int32)
             pars.Add("x29ID", BO.BAS.IsNullDBKey(cRec.x29ID), DbType.Int32)
+            pars.Add("o40ID", BO.BAS.IsNullDBKey(.o40ID), DbType.Int32)
             pars.Add("x40State", .x40State, DbType.Int32)
             pars.Add("x40RecordPID", BO.BAS.IsNullDBKey(.x40RecordPID), DbType.Int32)
             pars.Add("x40IsHtmlBody", cRec.x40IsHtmlBody, DbType.Boolean)

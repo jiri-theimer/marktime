@@ -59,7 +59,7 @@ Public Class report_on_behind
         'recipients.Add(cX43)
 
         With _factory.x40MailQueueBL
-            Dim intMessageID As Integer = .SaveMessageToQueque(message, recipients, BO.x29IdEnum.j02Person, _factory.SysUser.j02ID, BO.x40StateENUM.InQueque)
+            Dim intMessageID As Integer = .SaveMessageToQueque(message, recipients, BO.x29IdEnum.j02Person, _factory.SysUser.j02ID, BO.x40StateENUM.InQueque, 0)
             If intMessageID > 0 Then
                 If Not .SendMessageFromQueque(intMessageID) Then
                     Response.Write(.ErrorMessage)

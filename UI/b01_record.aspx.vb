@@ -15,6 +15,8 @@
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 .HeaderText = "Workflow šablona"
 
+                Me.o40ID.DataSource = .Factory.o40SmtpAccountBL.GetList(New BO.myQuery)
+                Me.o40ID.DataBind()
             End With
            
             RefreshRecord()
@@ -42,7 +44,7 @@
             Me.b01Name.Text = .b01Name
             Me.b01Code.Text = .b01Code
             basUI.SelectDropdownlistValue(Me.x29ID, CInt(.x29ID).ToString)
-
+            Me.o40ID.SelectedValue = .o40ID.ToString
            
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
         End With
@@ -68,6 +70,7 @@
 
             With cRec
                 .x29ID = DirectCast(BO.BAS.IsNullInt(Me.x29ID.SelectedValue), BO.x29IdEnum)
+                .o40ID = BO.BAS.IsNullInt(Me.o40ID.SelectedValue)
                 .b01Name = Me.b01Name.Text
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil

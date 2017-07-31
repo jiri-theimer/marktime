@@ -13,6 +13,7 @@ Public Class x40MailQueue
     Public Property x40State As x40StateENUM = x40StateENUM.InQueque
     Public Property x40RecordPID As Integer
     Public Property j03ID_Sys As Integer
+    Public Property o40ID As Integer
 
     Public Property x40Subject As String
     Public Property x40Body As String
