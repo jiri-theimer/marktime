@@ -7037,6 +7037,68 @@ END CATCH
 
 GO
 
+----------P---------------o40_delete-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('o40_delete') and type = 'P')
+ drop procedure o40_delete
+GO
+
+
+
+
+
+
+CREATE   procedure [dbo].[o40_delete]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int					--o40ID
+,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+
+AS
+--odstranìní záznamu role z tabulky o40SmtpAccount
+
+
+if exists(select j02ID FROM j02Person WHERE o40ID=@pid)
+ set @err_ret='Minimálnì jeden osobní profil je svázán s tímto SMTP úètem.'
+
+if exists(select b01ID FROM b01WorkflowTemplate WHERE o40ID=@pid)
+ set @err_ret='Minimálnì jedna workflow šablona má vazbu s tímto SMTP úètem.'
+
+if isnull(@err_ret,'')<>''
+ return 
+
+BEGIN TRANSACTION
+
+BEGIN TRY
+	DELETE FROM o40SmtpAccount WHERE o40ID=@pid
+
+	
+	COMMIT TRANSACTION
+
+END TRY
+BEGIN CATCH
+  set @err_ret=dbo.parse_errinfo(ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE())
+  ROLLBACK TRANSACTION
+  
+END CATCH  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------P---------------o41_delete-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('o41_delete') and type = 'P')
@@ -12653,6 +12715,9 @@ BEGIN TRY
 
 	if exists(select o27ID FROM o27Attachment WHERE b07ID IS NOT NULL AND b07ID IN (select b07ID FROM b07Comment WHERE x29ID=356 AND b07RecordPID=@pid))
 	 DELETE FROM o27Attachment WHERE b07ID IS NOT NULL AND b07ID IN (select b07ID FROM b07Comment WHERE x29ID=356 AND b07RecordPID=@pid)
+
+	if exists(select b05iD FROM b05Workflow_History WHERE x29ID=356 AND b05RecordPID=@pid)
+	 DELETE FROM b05Workflow_History WHERE x29ID=356 AND b05RecordPID=@pid
 
 	if exists(select b07ID FROM b07Comment WHERE x29ID=356 AND b07RecordPID=@pid)
 	 DELETE FROM b07Comment WHERE x29ID=356 AND b07RecordPID=@pid
