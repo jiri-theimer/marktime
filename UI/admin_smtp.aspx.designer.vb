@@ -122,85 +122,22 @@ Partial Public Class admin_smtp
     Protected WithEvents panRec As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''lblServer control.
+    '''lblO40ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblServer As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblO40ID As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''SMTP_Server control.
+    '''cbxO40ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents SMTP_Server As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''lblLogin control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblLogin As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''SMTP_Login control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents SMTP_Login As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''SMTP_IsVerify control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents SMTP_IsVerify As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''lblPassword control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblPassword As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''SMTP_Password control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents SMTP_Password As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''lblVerifyPassword control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblVerifyPassword As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtVerify control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtVerify As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents cbxO40ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''Master property.

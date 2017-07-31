@@ -107,6 +107,7 @@
 
     Private Sub cmdChangePWD_Click(sender As Object, e As EventArgs) Handles cmdChangePWD.Click
         Me.o40Password.Visible = True
+        Me.cmdChangePWD.Visible = False
     End Sub
 
 

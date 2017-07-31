@@ -602,6 +602,11 @@ Public Class admin_framework
                 If cRec.p32Color <> "" Then
                     dataItem("p32Color").Style.Item("background-color") = cRec.p32Color
                 End If
+            Case "o40"
+                Dim cRec As BO.o40SmtpAccount = CType(e.Item.DataItem, BO.o40SmtpAccount)
+                If cRec.o40IsGlobalDefault Then
+                    dataItem.BackColor = System.Drawing.Color.SkyBlue
+                End If
         End Select
         'Select Case ViewState("prefix")
         '    Case "j03-j03"

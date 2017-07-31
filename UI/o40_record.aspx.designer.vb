@@ -95,15 +95,6 @@ Partial Public Class o40_record
     Protected WithEvents o40IsUseSSL As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''o40IsGlobalDefault control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents o40IsGlobalDefault As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
     '''o40IsVerify control.
     '''</summary>
     '''<remarks>

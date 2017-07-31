@@ -62,4 +62,14 @@
         Return _cDB.GetList(Of BO.o40SmtpAccount)(s, pars)
 
     End Function
+
+    Public Function SetGlobalDefaultSmtpAccount(intO40ID As Integer) As Boolean
+        _cDB.RunSQL("UPDATE o40SmtpAccount set o40IsGlobalDefault=0")
+        If intO40ID > 0 Then
+            Return _cDB.RunSQL("UPDATE o40SmtpAccount set o40IsGlobalDefault=1 WHERE o40ID=" & intO40ID.ToString)
+        Else
+            Return True
+        End If
+
+    End Function
 End Class

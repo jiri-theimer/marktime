@@ -17,8 +17,11 @@ Public Class admin_smtp
                 .HeaderText = "Nastavení SMTP serveru"
                 .HeaderIcon = "Images/settings_32.png"
                 .AddToolbarButton("Uložit změny", "ok", , "Images/save.png")
-            End With
 
+                Me.cbxO40ID.DataSource = .Factory.o40SmtpAccountBL.GetList(New BO.myQuery)
+                Me.cbxO40ID.DataBind()
+                Me.cbxO40ID.Items.Insert(0, "")
+            End With
 
             RefreshRecord()
         End If
@@ -44,11 +47,12 @@ Public Class admin_smtp
             Dim bolUseWC As Boolean = BO.BAS.BG(.GetValueString("IsUseWebConfigSetting", "1"))
             Me.SMTP_SenderAddress.Text = .GetValueString("SMTP_SenderAddress")
             Me.chkIsSMTP_UseWebConfigSetting.Checked = bolUseWC
-            Me.SMTP_Server.Text = .GetValueString("SMTP_Server")
-            Me.SMTP_Login.Text = .GetValueString("SMTP_Login")
-            Me.SMTP_IsVerify.Checked = BO.BAS.BG(.GetValueString("SMTP_IsVerify", "0"))
-            Me.SMTP_Password.Text = .GetValueString("SMTP_Password")
-            Me.SMTP_SenderIsUser.Checked = BO.BAS.BG(.GetValueString("SMTP_SenderIsUser", "0"))
+            If Not bolUseWC Then
+                basUI.SelectDropdownlistValue(Me.cbxO40ID, .GetValueString("SMTP_Server"))
+            End If
+
+            
+            ''Me.SMTP_SenderIsUser.Checked = BO.BAS.BG(.GetValueString("SMTP_SenderIsUser", "0"))
         End With
 
     End Sub
@@ -62,14 +66,12 @@ Public Class admin_smtp
             With Master.Factory.x35GlobalParam
                 If Not chkIsSMTP_UseWebConfigSetting.Checked Then
                     'zkontrolovat vlastní nastavení
-                    If Me.SMTP_IsVerify.Checked And Me.SMTP_Password.Text <> Me.txtVerify.Text Then
-                        Master.Notify("Heslo nesouhlasí s ověřením.", NotifyLevel.ErrorMessage)
+                    If Me.cbxO40ID.SelectedValue = "" Then
+                        Master.Notify("Musíte vybrat jeden ze zavedených SMTP účtů.", NotifyLevel.ErrorMessage)
                         Return
                     End If
-                    If Len(Trim(SMTP_Server.Text)) <= 2 Then
-                        Master.Notify("Chybí adresa SMTP serveru.", NotifyLevel.ErrorMessage)
-                        Return
-                    End If
+                Else
+                    cbxO40ID.SelectedValue = ""
                 End If
                 If Trim(Me.SMTP_SenderAddress.Text) = "" Then
                     Master.Notify("Chybí adresa odesílatele.", NotifyLevel.WarningMessage)
@@ -80,33 +82,25 @@ Public Class admin_smtp
                 cRec.x35Value = BO.BAS.GB(Me.chkIsSMTP_UseWebConfigSetting.Checked)
                 .Save(cRec)
 
-                cRec = .Load("SMTP_SenderAddress")
-                cRec.x35Value = Me.SMTP_SenderAddress.Text
-                .Save(cRec)
-
-                cRec = .Load("SMTP_Server")
-                cRec.x35Value = Me.SMTP_Server.Text
-                .Save(cRec)
-
-                cRec = .Load("SMTP_Login")
-                cRec.x35Value = Me.SMTP_Login.Text
-                .Save(cRec)
-
-                cRec = .Load("SMTP_IsVerify")
-                cRec.x35Value = BO.BAS.GB(SMTP_IsVerify.Checked)
-                .Save(cRec)
-
-                cRec = .Load("SMTP_Password")
-                cRec.x35Value = Me.SMTP_Password.Text
-                .Save(cRec)
+                
 
                 cRec = .Load("AppHost")
                 cRec.x35Value = Me.AppHost.Text
                 .Save(cRec)
 
-                cRec = .Load("SMTP_SenderIsUser", True)
-                cRec.x35Value = BO.BAS.GB(Me.SMTP_SenderIsUser.Checked)
+                cRec = .Load("SMTP_Server")
+                If Not chkIsSMTP_UseWebConfigSetting.Checked Then
+                    cRec.x35Value = Me.cbxO40ID.SelectedValue
+                Else
+                    cRec.x35Value = ""
+                End If
                 .Save(cRec)
+
+                Master.Factory.o40SmtpAccountBL.SetGlobalDefaultSmtpAccount(BO.BAS.IsNullInt(Me.cbxO40ID.SelectedValue))
+
+                ''cRec = .Load("SMTP_SenderIsUser", True)
+                ''cRec.x35Value = BO.BAS.GB(Me.SMTP_SenderIsUser.Checked)
+                ''.Save(cRec)
 
 
             End With

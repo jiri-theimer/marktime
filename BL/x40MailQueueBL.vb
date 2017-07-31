@@ -293,10 +293,16 @@ Class x40MailQueueBL
         End If
 
         
-        Dim bolSucceeded As Boolean = False, bolUseWebConfig As Boolean = True, strSmtpServer As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_Server")
-        Dim strSmtpLogin As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_Login"), strSmtpPassword As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_Password")
-        If Me.Factory.x35GlobalParam.GetValueString("IsUseWebConfigSetting", "1") = "0" Then
+        Dim bolSucceeded As Boolean = False, bolUseWebConfig As Boolean = True, strSmtpServer As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_Server"), strSmtpLogin As String = "", strSmtpPassword As String = "", intPort As Integer = 0
+        If Me.Factory.x35GlobalParam.GetValueString("IsUseWebConfigSetting", "1") = "0" And BO.BAS.IsNullInt(strSmtpServer) <> 0 Then
             bolUseWebConfig = False
+            Dim cO40 As BO.o40SmtpAccount = Me.Factory.o40SmtpAccountBL.Load(strSmtpServer)
+            strSmtpServer = cO40.o40Server
+            intPort = BO.BAS.IsNullInt(cO40.o40Port)
+            If cO40.o40IsVerify Then
+                strSmtpLogin = cO40.o40Login
+                strSmtpPassword = cO40.DecryptedPassword()
+            End If
         End If
         If _cUser.j02ID <> 0 Then
             Dim cPerson As BO.j02Person = Me.Factory.j02PersonBL.Load(_cUser.j02ID)
@@ -310,11 +316,10 @@ Class x40MailQueueBL
                 cRec.x40SenderAddress = _cUser.PersonEmail
                 cRec.x40SenderName = _cUser.Person
                 strSmtpServer = cO40.o40Server
+                intPort = BO.BAS.IsNullInt(cO40.o40Port)
                 If cO40.o40IsVerify Then
                     strSmtpLogin = cO40.o40Login
                     strSmtpPassword = cO40.DecryptedPassword()
-                Else
-                    strSmtpLogin = "" : strSmtpPassword = ""
                 End If
             End If
         End If
@@ -323,7 +328,11 @@ Class x40MailQueueBL
             Dim smtp As New Smtp
             With smtp
                 Try
-                    .Connect(strSmtpServer)
+                    If intPort > 0 Then
+                        .Connect(strSmtpServer, intPort)
+                    Else
+                        .Connect(strSmtpServer)
+                    End If
                     If strSmtpLogin <> "" And strSmtpPassword <> "" Then
                         .Login(strSmtpLogin, strSmtpPassword)
                     End If

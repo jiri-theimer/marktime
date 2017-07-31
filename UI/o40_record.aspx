@@ -41,7 +41,7 @@
                 <asp:Label ID="Label3" Text="Port:" runat="server" CssClass="lbl"></asp:Label></td>
             <td>
                 <asp:TextBox ID="o40Port" runat="server" Style="width: 50px;"></asp:TextBox>
-
+                (pokud není uvedeno, bere se hodnota 25)
             </td>
         </tr>
 
@@ -52,12 +52,7 @@
             </td>
         </tr>
 
-        <tr>
-            <td colspan="2">
-                <asp:CheckBox ID="o40IsGlobalDefault" runat="server" Text="Hlavní aplikační SMTP účet" Checked="false" />
-            </td>
-        </tr>
-
+      
         <tr>
             <td colspan="2">
                 <asp:CheckBox ID="o40IsVerify" runat="server" Text="Server vyžaduje ověření" />

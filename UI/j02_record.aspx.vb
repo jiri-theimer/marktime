@@ -219,6 +219,7 @@
         lblJ18ID.Visible = b : Me.j18ID.Visible = b
         lblC21ID.Visible = b : Me.c21ID.Visible = b
         trJ17ID.Visible = b
+        trO40.Visible = b
         If b Then lblj02Email.CssClass = "lblReq" Else lblj02Email.CssClass = "lbl"
         lblj02EmailSignature.Visible = b : Me.j02EmailSignature.Visible = b
 

@@ -14,7 +14,7 @@
         <asp:TextBox ID="SMTP_SenderAddress" runat="server" Style="width: 150px;"></asp:TextBox>
 
     </div>
-    <div class="div6">
+    <div class="div6" style="display:none;">
         <asp:CheckBox ID="SMTP_SenderIsUser" runat="server" Text="Adresa odesílatele bude e-mail přihlášeného uživatele" />
     </div>
     <div class="div6">
@@ -24,7 +24,7 @@
     </div>
     <fieldset>        
     <div class="div6">
-        <asp:CheckBox ID="chkIsSMTP_UseWebConfigSetting" runat="server" Text="Používat výchozí SMTP server z globálního nastavení (web.config)" AutoPostBack="true"></asp:CheckBox>
+        <asp:CheckBox ID="chkIsSMTP_UseWebConfigSetting" runat="server" Text="Aplikační SMTP server je nastaven v konfiguračním souboru web.config" AutoPostBack="true" CssClass="chk"></asp:CheckBox>
 
     </div>
     <asp:Panel ID="panWebConfig" runat="server">
@@ -54,44 +54,14 @@
         <table cellpadding="6" cellspacing="2">
             <tr>
                 <td>
-                    <asp:Label ID="lblServer" runat="server" Text="SMTP server:"></asp:Label>
+                    <asp:Label ID="lblO40ID" runat="server" Text="Vybrat zavedený SMTP účet:"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="SMTP_Server" runat="server" Style="width: 300px;"></asp:TextBox>
+                    <asp:DropDownList ID="cbxO40ID" runat="server" DataValueField="pid" DataTextField="o40Name"></asp:DropDownList>
                 </td>
             </tr>
 
-            <tr>
-                <td>
-                    <asp:Label ID="lblLogin" runat="server" Text="SMTP login:"></asp:Label>
-                </td>
-                <td>
-                    <asp:TextBox ID="SMTP_Login" runat="server" Style="width: 300px;" Text="inbox"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <asp:CheckBox ID="SMTP_IsVerify" runat="server" Text="SMTP server vyžaduje ověření"></asp:CheckBox>
-                </td>
-
-            </tr>
-            <tr>
-                <td>
-                    <asp:Label ID="lblPassword" runat="server" Text="SMTP heslo:"></asp:Label>
-                </td>
-                <td>
-                    <asp:TextBox ID="SMTP_Password" runat="server" Style="width: 300px;" TextMode="Password"></asp:TextBox>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <asp:Label ID="lblVerifyPassword" runat="server" Text="Ověření hesla:"></asp:Label>
-                </td>
-                <td>
-                    <asp:TextBox ID="txtVerify" runat="server" Style="width: 300px;" TextMode="Password"></asp:TextBox>
-                </td>
-            </tr>
+            
 
         </table>
     </asp:Panel>
