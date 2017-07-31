@@ -299,18 +299,19 @@ Class x40MailQueueBL
         End If
         If _cUser.j02ID <> 0 Then
             Dim cPerson As BO.j02Person = Me.Factory.j02PersonBL.Load(_cUser.j02ID)
-            If cPerson.j02SmtpServer <> "" Then
+            If cPerson.o40ID <> 0 Then
                 'osoba má vlastní SMTP účet
+                Dim cO40 As BO.o40SmtpAccount = Me.Factory.o40SmtpAccountBL.Load(cPerson.o40ID)
                 bolUseWebConfig = False
                 ''mail.From = _cUser.PersonEmail
                 mail.From.Clear()
                 mail.From.Add(New Rebex.Mime.Headers.MailAddress(_cUser.PersonEmail, _cUser.Person))
                 cRec.x40SenderAddress = _cUser.PersonEmail
                 cRec.x40SenderName = _cUser.Person
-                strSmtpServer = cPerson.j02SmtpServer
-                If cPerson.j02IsSmtpVerify Then
-                    strSmtpLogin = cPerson.j02SmtpLogin
-                    strSmtpPassword = BO.Crypto.Decrypt(cPerson.j02SmtpPassword, "hoVaDo7Ivan1")
+                strSmtpServer = cO40.o40Server
+                If cO40.o40IsVerify Then
+                    strSmtpLogin = cO40.o40Login
+                    strSmtpPassword = cO40.DecryptedPassword()
                 Else
                     strSmtpLogin = "" : strSmtpPassword = ""
                 End If
@@ -399,5 +400,27 @@ Class x40MailQueueBL
         Dim intX40ID As Integer = Me.Factory.x40MailQueueBL.SaveMessageToQueque(reply, recipients, cRec2Answer.x29ID, cRec2Answer.b07RecordPID, BO.x40StateENUM.InQueque)
         Return Me.Factory.x40MailQueueBL.SendMessageFromQueque(intX40ID)
 
+    End Function
+
+    Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer) As Boolean
+        Dim smtp As New Smtp
+        With smtp
+            Try
+                .Connect(strSmtpServer)
+                If strSmtpLogin <> "" And strSmtpPassword <> "" Then
+                    .Login(strSmtpLogin, strSmtpPassword)
+                End If
+                If intPort > 0 Then
+
+                End If
+
+                .Disconnect()
+                Return True
+            Catch ex As Exception
+                _Error = ex.Message
+                Return False
+            End Try
+
+        End With
     End Function
 End Class

@@ -92,6 +92,7 @@
     <Compile Include="DBNative\o20Milestone_Receiver.vb" />
     <Compile Include="DBNative\o21MilestoneType.vb" />
     <Compile Include="DBNative\o25DmsBinding.vb" />
+    <Compile Include="DBNative\o40SmtpAccount.vb" />
     <Compile Include="DBNative\o41InboxAccount.vb" />
     <Compile Include="DBNative\o42ImapRule.vb" />
     <Compile Include="DBNative\o43ImapRobotHistory.vb" />

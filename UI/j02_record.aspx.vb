@@ -22,7 +22,7 @@
                 'režim zakládání kontaktní osoby
                 Me.j02IsIntraPerson.SelectedValue = "0"
                 Me.j02IsIntraPerson.Enabled = False
-                ''RadTabStrip1.Tabs.FindTabByValue("smtp").Style.Item("display") = "none"
+
                 ''RadTabStrip1.Tabs.FindTabByValue("other").Style.Item("display") = "none"
             Else
                 Master.neededPermission = BO.x53PermValEnum.GR_Admin
@@ -38,6 +38,8 @@
                 Me.j17ID.DataBind()
                 Me.j18ID.DataSource = Master.Factory.j18RegionBL.GetList(New BO.myQuery)
                 Me.j18ID.DataBind()
+                Me.o40ID.DataSource = .Factory.o40SmtpAccountBL.GetList(New BO.myQuery)
+                Me.o40ID.DataBind()
                 Me.j02TimesheetEntryDaysBackLimit_p34IDs.DataSource = Master.Factory.p34ActivityGroupBL.GetList(New BO.myQuery).Where(Function(p) p.p33ID = BO.p33IdENUM.Cas Or p.p33ID = BO.p33IdENUM.Kusovnik)
                 Me.j02TimesheetEntryDaysBackLimit_p34IDs.DataBind()
             End With
@@ -77,6 +79,7 @@
             Me.j17ID.SelectedValue = .j17ID.ToString
             Me.c21ID.SelectedValue = .c21ID.ToString
             Me.j18ID.SelectedValue = .j18ID.ToString
+            Me.o40ID.SelectedValue = .o40ID.ToString
             Me.j02Office.Text = .j02Office
             Me.j02Salutation.Text = .j02Salutation
             Me.j02EmailSignature.Text = .j02EmailSignature
@@ -96,14 +99,7 @@
             Me.j02AvatarImage.Value = .j02AvatarImage
             Master.Timestamp = .Timestamp
 
-            If .j02SmtpServer <> "" Then
-                Me.chkIsSmtp.Checked = True
-                Me.j02SmtpServer.Text = .j02SmtpServer
-                Me.j02SmtpLogin.Text = .j02SmtpLogin
-                Me.j02IsSmtpVerify.Checked = .j02IsSmtpVerify
-            Else
-                Me.chkIsSmtp.Checked = False
-            End If
+            
             
 
             'val1.InitVals(.ValidFrom, .ValidUntil, .DateInsert)
@@ -144,6 +140,7 @@
                 .j17ID = BO.BAS.IsNullInt(j17ID.SelectedValue)
                 .c21ID = BO.BAS.IsNullInt(c21ID.SelectedValue)
                 .j18ID = BO.BAS.IsNullInt(Me.j18ID.SelectedValue)
+                .o40ID = BO.BAS.IsNullInt(Me.o40ID.SelectedValue)
                 .j02FirstName = j02FirstName.Text
                 .j02LastName = j02LastName.Text
                 .j02TitleBeforeName = j02TitleBeforeName.Text
@@ -166,21 +163,7 @@
                 .j02AvatarImage = Me.j02AvatarImage.Value
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil
-                If chkIsSmtp.Checked Then
-                    .j02IsSmtpVerify = Me.j02IsSmtpVerify.Checked
-                    .j02SmtpLogin = Me.j02SmtpLogin.Text
-                    .j02SmtpPassword = Me.j02SmtpPassword.Text
-                    .j02SmtpServer = Me.j02SmtpServer.Text
-
-                    If Me.j02IsSmtpVerify.Checked Then
-                        If (Me.j02SmtpPassword.Text <> "" Or Me.txtVerifyPassword.Text <> "") And (Me.j02SmtpPassword.Text <> Me.txtVerifyPassword.Text) Then
-                            Master.Notify("SMTP heslo nesouhlasí s ověřením.", NotifyLevel.WarningMessage)
-                            Return
-                        End If
-                    End If
-                Else
-                    .j02SmtpServer = "" : .j02SmtpLogin = "" : .j02SmtpPassword = ""
-                End If
+                
             End With
 
             Dim lisFF As List(Of BO.FreeField) = Me.ff1.GetValues()
@@ -241,24 +224,13 @@
 
         trJobTitle.Visible = Not b
 
-        Me.chkIsSmtp.Enabled = b
-        If Not b Then
-            Me.chkIsSmtp.Checked = False
-        End If
-
-        Me.panSMTP.Visible = chkIsSmtp.Checked
-        If chkIsSmtp.Checked Then
-            b = j02IsSmtpVerify.Checked
-            lblj02SmtpLogin.Visible = b : j02SmtpLogin.Visible = b
-            lblj02SmtpPassword.Visible = b : j02SmtpPassword.Visible = b
-            Me.lblVerifyPassword.Visible = b : Me.txtVerifyPassword.Visible = b
-        End If
+        
 
         If Me.j02IsIntraPerson.SelectedValue = "1" Then
-            RadTabStrip1.Tabs.FindTabByValue("smtp").Style.Item("display") = "block"
+
             RadTabStrip1.Tabs.FindTabByValue("other").Style.Item("display") = "block"
         Else
-            RadTabStrip1.Tabs.FindTabByValue("smtp").Style.Item("display") = "none"
+
             RadTabStrip1.Tabs.FindTabByValue("other").Style.Item("display") = "none"
         End If
         If Me.j02AvatarImage.Value <> "" Then

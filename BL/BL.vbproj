@@ -140,6 +140,7 @@
     <Compile Include="o25DmsBindingBL.vb" />
     <Compile Include="o27AttachmentBL.vb" />
     <Compile Include="o38AddressBL.vb" />
+    <Compile Include="o40SmtpAccountBL.vb" />
     <Compile Include="o41InboxAccountBL.vb" />
     <Compile Include="o42ImapRuleBL.vb" />
     <Compile Include="p28ContactBL.vb" />

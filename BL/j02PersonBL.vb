@@ -41,9 +41,7 @@ Class j02PersonBL
             If .j02IsIntraPerson Then
                 If Trim(.j02Email) = "" Then _Error = "Chybí e-mail adresa!" : Return False
             End If
-            If .j02SmtpServer <> "" And Trim(.j02SmtpLogin) = "" And .j02IsSmtpVerify Then
-                _Error = "Chybí SMTP login." : Return False
-            End If
+          
             If .j02Email <> "" Then
                 If Not BO.BAS.TestEMailAddress(.j02Email, _Error) Then
                     Return False
@@ -64,9 +62,7 @@ Class j02PersonBL
         If Not ValidateBeforeSave(cRec) Then Return False
        
         If _cDL.Save(cRec, lisFF) Then
-            If cRec.j02SmtpPassword <> "" And cRec.j02SmtpServer <> "" Then
-                _cDL.SaveHashedSmtpPassword(_LastSavedPID, BO.Crypto.Encrypt(cRec.j02SmtpPassword, "hoVaDo7Ivan1"))
-            End If
+            
             If cRec.PID = 0 Then
                 Me.RaiseAppEvent(BO.x45IDEnum.j02_new, _LastSavedPID)
             Else

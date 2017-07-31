@@ -76,6 +76,7 @@
     Private Property _x58 As Ix58UserPageBL
     Private Property _m62 As Im62ExchangeRateBL
     Private Property _o41 As Io41InboxAccountBL
+    Private Property _o40 As Io40SmtpAccountBL
     Private Property _o42 As Io42ImapRuleBL
     Private Property _j61 As Ij61TextTemplateBL
     Private Property _j62 As Ij62MenuHomeBL
@@ -169,6 +170,12 @@
         Get
             If _o41 Is Nothing Then _o41 = New o41InboxAccountBL(_cUser)
             Return _o41
+        End Get
+    End Property
+    Public ReadOnly Property o40SmtpAccountBL As Io40SmtpAccountBL
+        Get
+            If _o40 Is Nothing Then _o40 = New o40SmtpAccountBL(_cUser)
+            Return _o40
         End Get
     End Property
     Public ReadOnly Property o42ImapRuleBL As Io42ImapRuleBL

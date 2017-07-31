@@ -257,6 +257,33 @@ Partial Public Class j02_record
     Protected WithEvents j17ID As Global.UI.datacombo
 
     '''<summary>
+    '''trO40 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents trO40 As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''lblO40ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblO40ID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''o40ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o40ID As Global.UI.datacombo
+
+    '''<summary>
     '''lblMobile control.
     '''</summary>
     '''<remarks>
@@ -390,114 +417,6 @@ Partial Public Class j02_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ff1 As Global.UI.freefields
-
-    '''<summary>
-    '''smtp control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents smtp As Global.Telerik.Web.UI.RadPageView
-
-    '''<summary>
-    '''chkIsSmtp control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkIsSmtp As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''panSMTP control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSMTP As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''lblj02SmtpServer control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblj02SmtpServer As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''j02SmtpServer control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j02SmtpServer As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''j02IsSmtpVerify control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j02IsSmtpVerify As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''lblj02SmtpLogin control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblj02SmtpLogin As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''j02SmtpLogin control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j02SmtpLogin As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''lblj02SmtpPassword control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblj02SmtpPassword As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''j02SmtpPassword control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j02SmtpPassword As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''lblVerifyPassword control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblVerifyPassword As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtVerifyPassword control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtVerifyPassword As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''other control.

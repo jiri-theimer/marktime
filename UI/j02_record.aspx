@@ -18,7 +18,7 @@
         <Tabs>
             <telerik:RadTab Text="<%$ Resources:common, vlastnosti %>" Selected="true" Value="core"></telerik:RadTab>
             <telerik:RadTab Text="Štítky ({1}), uživatelská pole ({0})" Value="ff"></telerik:RadTab>
-            <telerik:RadTab Text="SMTP účet" Value="smtp" meta:resourcekey="RadTabStrip1_smpt"></telerik:RadTab>
+            
             <telerik:RadTab Text="<%$ Resources:common, ostatni %>" Value="other"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
@@ -112,6 +112,14 @@
                         <span class="infoInForm">Vazba na [Region] se využívá kvůli zohlednění dnů svátků pro pracovní fondy osob z různých zemí (regionů).</span>
                     </td>
                 </tr>
+                <tr valign="top" id="trO40" runat="server">
+                    <td>
+                        <asp:Label ID="lblO40ID" Text="Vlastní SMTP účet:" runat="server" CssClass="lbl"></asp:Label></td>
+                    <td>
+                        <uc:datacombo ID="o40ID" runat="server" DataTextField="o40Name" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
+                        
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         <asp:Label ID="lblMobile" Text="TEL1 (mobil):" runat="server" CssClass="lbl" AssociatedControlID="j02Mobile"></asp:Label>
@@ -164,50 +172,7 @@
             <uc:freefields ID="ff1" runat="server" />
 
         </telerik:RadPageView>
-        <telerik:RadPageView ID="smtp" runat="server">
-            <asp:CheckBox ID="chkIsSmtp" runat="server" Text="Odeslaná pošta osoby odchází z osobního SMTP účtu" AutoPostBack="true" meta:resourcekey="chkIsSmtp" />
-            <asp:Panel ID="panSMTP" runat="server">
-                <table cellpadding="5" cellspacing="2">
-                    <tr>
-                        <td>
-                            <asp:Label ID="lblj02SmtpServer" runat="server" Text="Adresa SMTP serveru:" CssClass="lbl" meta:resourcekey="lblj02SmtpServer"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="j02SmtpServer" runat="server" Style="width: 300px;"></asp:TextBox>
-                            <asp:CheckBox ID="j02IsSmtpVerify" runat="server" AutoPostBack="true" Text="Účet vyžaduje ověření" Checked="true" meta:resourcekey="j02IsSmtpVerify" />
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="lblj02SmtpLogin" runat="server" Text="SMTP login:" CssClass="lbl"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="j02SmtpLogin" runat="server" Style="width: 300px;"></asp:TextBox>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="lblj02SmtpPassword" runat="server" Text="SMTP heslo:" CssClass="lbl" meta:resourcekey="lblj02SmtpPassword"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="j02SmtpPassword" runat="server" Style="width: 200px;" TextMode="Password"></asp:TextBox>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="lblVerifyPassword" runat="server" Text="Ověření hesla:" CssClass="lbl" meta:resourcekey="lblVerifyPassword"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtVerifyPassword" runat="server" Style="width: 200px;" TextMode="Password"></asp:TextBox>
-                        </td>
-
-                    </tr>
-                </table>
-            </asp:Panel>
-        </telerik:RadPageView>
+        
         <telerik:RadPageView ID="other" runat="server">
             
            

@@ -96,6 +96,7 @@
     <Compile Include="m62ExchangeRateDL.vb" />
     <Compile Include="o21MilestoneTypeDL.vb" />
     <Compile Include="o25DmsBindingDL.vb" />
+    <Compile Include="o40SmtpAccountDL.vb" />
     <Compile Include="o41InboxAccountDL.vb" />
     <Compile Include="o42ImapRuleDL.vb" />
     <Compile Include="p30Contact_PersonDL.vb" />

@@ -10,12 +10,7 @@
 
         Return _cDB.GetRecord(Of BO.j02Person)(s, New With {.j02id = intPID})
     End Function
-    Public Function LoadHashedSmtpPassword(intPID As Integer) As String
-        Dim s As String = "select j02SmtpPassword FROM j02Person WHERE j02ID=@pid"
-        Dim pars As New DbParameters
-        pars.Add("pid", intPID, DbType.Int32)
-        Return _cDB.GetValueFromSQL(s, pars)
-    End Function
+    
     Public Function LoadByImapRobotAddress(strRobotAddress As String) As BO.j02Person
         Dim s As String = GetSQLPart1(1)
         s += " WHERE a.j02RobotAddress LIKE @robotkey"
@@ -62,6 +57,7 @@
             pars.Add("j17ID", BO.BAS.IsNullDBKey(.j17ID), DbType.Int32)
             pars.Add("j18ID", BO.BAS.IsNullDBKey(.j18ID), DbType.Int32)
             pars.Add("c21ID", BO.BAS.IsNullDBKey(.c21ID), DbType.Int32)
+            pars.Add("o40ID", BO.BAS.IsNullDBKey(.o40ID), DbType.Int32)
             pars.Add("p72ID_NonBillable", BO.BAS.IsNullDBKey(.p72ID_NonBillable), DbType.Int32)
             pars.Add("j02IsIntraPerson", .j02IsIntraPerson, DbType.Boolean)
             pars.Add("j02Email", .j02Email, DbType.String, , , True, "E-mail adresa")
@@ -85,9 +81,7 @@
             pars.Add("j02validfrom", .ValidFrom, DbType.DateTime)
             pars.Add("j02validuntil", .ValidUntil, DbType.DateTime)
 
-            pars.Add("j02SmtpServer", .j02SmtpServer, DbType.String)
-            pars.Add("j02SmtpLogin", .j02SmtpLogin, DbType.String)
-            pars.Add("j02IsSmtpVerify", .j02IsSmtpVerify, DbType.Boolean)
+            
             pars.Add("j02WorksheetAccessFlag", .j02WorksheetAccessFlag, DbType.Int32)
         End With
 
@@ -109,13 +103,7 @@
         End If
     End Function
 
-    Public Function SaveHashedSmtpPassword(intPID As Integer, strHashedPassword As String) As Boolean
-        Dim pars As New DbParameters()
-        pars.Add("pid", intPID, DbType.Int32)
-        pars.Add("j02SmtpPassword", strHashedPassword, DbType.String)
-        Return _cDB.SaveRecord("j02Person", pars, False, "j02ID=@pid", False, _curUser.j03Login)
-
-    End Function
+    
 
     Public Function Delete(intPID As Integer) As Boolean
         Dim pars As New DbParameters()
@@ -377,7 +365,7 @@
     Private Function GetSQLPart1(intTOP As Integer) As String
         Dim s As String = "SELECT"
         If intTOP > 0 Then s += " TOP " & intTOP.ToString
-        s += " a.j07ID,a.j17ID,a.j18ID,a.c21ID,a.j02IsIntraPerson,a.j02FirstName,a.j02LastName,a.j02TitleBeforeName,a.j02TitleAfterName,a.j02Code,a.j02JobTitle,a.j02Email,a.j02Mobile,a.j02Phone,a.j02Office,a.j02EmailSignature,a.j02Description,a.j02AvatarImage,a.j02SmtpServer,a.j02SmtpLogin,a.j02IsSmtpVerify,a.j02WorksheetAccessFlag"
+        s += " a.j07ID,a.j17ID,a.j18ID,a.c21ID,a.j02IsIntraPerson,a.j02FirstName,a.j02LastName,a.j02TitleBeforeName,a.j02TitleAfterName,a.j02Code,a.j02JobTitle,a.j02Email,a.j02Mobile,a.j02Phone,a.j02Office,a.j02EmailSignature,a.j02Description,a.j02AvatarImage,a.j02WorksheetAccessFlag,a.o40ID"
         s += ",j07.j07Name as _j07Name,c21.c21Name as _c21Name,j18.j18Name as _j18Name,a.j02RobotAddress,a.j02ExternalPID,a.j02TimesheetEntryDaysBackLimit,a.j02TimesheetEntryDaysBackLimit_p34IDs,a.j02Salutation,a.p72ID_NonBillable," & bas.RecTail("j02", "a")
         s += " FROM j02Person a LEFT OUTER JOIN j07PersonPosition j07 ON a.j07ID=j07.j07ID LEFT OUTER JOIN c21FondCalendar c21 ON a.c21ID=c21.c21ID LEFT OUTER JOIN j18Region j18 ON a.j18ID=j18.j18ID LEFT OUTER JOIN j02Person_FreeField j02free ON a.j02ID=j02free.j02ID"
 

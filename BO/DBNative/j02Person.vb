@@ -4,6 +4,7 @@
     Public Property j17ID As Integer
     Public Property j18ID As Integer
     Public Property c21ID As Integer
+    Public Property o40ID As Integer
     Public Property j02FirstName As String
     Public Property j02LastName As String
     Public Property j02TitleBeforeName As String
@@ -21,10 +22,6 @@
     Public Property j02RobotAddress As String
     Public Property j02ExternalPID As String
 
-    Public Property j02SmtpServer As String
-    Public Property j02SmtpLogin As String
-    Public Property j02SmtpPassword As String
-    Public Property j02IsSmtpVerify As Boolean
     Public Property j02TimesheetEntryDaysBackLimit As Integer
     Public Property j02TimesheetEntryDaysBackLimit_p34IDs As String
     Public Property j02Salutation As String

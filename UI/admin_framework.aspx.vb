@@ -217,9 +217,10 @@ Public Class admin_framework
             .AddItem("Notifikační pravidla", "x46", NU("x46"), "smtp")
             .AddItem("Odeslané zprávy/fronta", "x40", "x40_framework.aspx", "smtp")
 
-            .AddItem("IMAP robot", "imap", , , "Images/imap.png")
+            .AddItem("SMTP & IMAP", "imap", , , "Images/imap.png")
             .AddItem("IMAP účty", "o41", NU("o41"), "imap")
             .AddItem("IMAP pravidla", "o42", NU("o42"), "imap")
+            .AddItem("SMTP účty", "o40", NU("o40"), "imap")
 
             .AddItem("Uživatelská pole", "ff", , , "Images/form.png")
             .AddItem("Katalog polí", "x28", NU("x28"), "ff")
