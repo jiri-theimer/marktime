@@ -60,4 +60,10 @@
             Return _o27OriginalFileName
         End Get
     End Property
+    Private Property _o43Attachments As String
+    Public ReadOnly Property o43Attachments As String
+        Get
+            Return _o43Attachments
+        End Get
+    End Property
 End Class

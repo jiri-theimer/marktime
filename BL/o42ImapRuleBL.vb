@@ -314,7 +314,8 @@ Class o42ImapRuleBL
                     cO43.o43Body_Html = cHTML.ToFopCZ(.BodyHtml)
                 End If
                 If .HasBodyText Then
-                    cO43.o43Body_PlainText = Trim(.BodyText).Replace("<", "[").Replace(">", "]")
+                    cO43.o43Body_PlainText = .BodyText
+                    ''    cO43.o43Body_PlainText = Trim(.BodyText).Replace("<", "[").Replace(">", "]")
                 End If
             End With
 
@@ -353,14 +354,36 @@ Class o42ImapRuleBL
             'uloženo do MSG formátu
             cO43.o43MsgFileName = strGUID & ".msg"
         End If
-        Dim strFoundPrefix As String = ""
-        If message.Headers.Where(Function(p) p.Name = "marktime-prefix" And p.Value.ToString = "p56").Count > 0 Then
-            've zprávě je stopa po vazbě na MARKTIME úkol
-            strFoundPrefix = "p56"
-            cO43.p56ID = BO.BAS.IsNullInt(message.Headers.First(Function(p) p.Name = "marktime-pid").Value.ToString)
+
+        If message.InReplyTo.Count > 0 Then
+            'odpověď na zprávu
+            Dim cOrigMessage As BO.x40MailQueue = Me.Factory.x40MailQueueBL.LoadByMessageID(message.InReplyTo(0).Id)
+            If cOrigMessage Is Nothing Then
+                'ještě zkusit najít přes References
+                If Not message.Headers.Item("References") Is Nothing Then
+                    Dim lis As List(Of String) = BO.BAS.ConvertDelimitedString2List(message.Headers.Item("References").Value.ToString, "<")
+                    For Each strMesID As String In lis
+                        strMesID = Trim(Replace(strMesID, ">", ""))
+                        cOrigMessage = Me.Factory.x40MailQueueBL.LoadByMessageID(strMesID)
+                        If Not cOrigMessage Is Nothing Then Exit For
+                    Next
+
+                End If
+            End If
+            If Not cOrigMessage Is Nothing Then
+                'odpovídá se na zprávu odeslanou z MT
+                With cOrigMessage
+                    If .x29ID = BO.x29IdEnum.p56Task Then
+                        cO43.p56ID = .x40RecordPID
+                    End If
+                    If .x29ID = BO.x29IdEnum.o23Doc Then
+                        cO43.o23ID = .x40RecordPID
+                    End If
+                End With
+            End If
         End If
-        If cO43.p56ID > 0 Then
-            'vazba na úkol existuje
+        If cO43.p56ID > 0 Or cO43.o23ID > 0 Then
+            'vazba na úkol nebo dokument existuje
         Else
             'nový úkol nebo nový dokument
             Dim lisO42 As IEnumerable(Of BO.o42ImapRule) = GetList(New BO.myQuery).Where(Function(p) p.o41ID = cInbox.PID)
@@ -390,6 +413,7 @@ Class o42ImapRuleBL
         c.p57ID = cRule.p57ID
         c.p56Name = cO43.o43Subject
         c.p56Description = cO43.o43Body_PlainText
+        c.p56Description = Trim(c.p56Description).Replace("<", "[").Replace(">", "]")
         If lisP41.Count > 0 Then
             c.p41ID = lisP41(0).PID
         Else
@@ -590,6 +614,7 @@ Class o42ImapRuleBL
         ''    role.x67ID = cRule.x67ID
         ''    lisX69.Add(role)
         ''Next
+        cO43.o43Body_PlainText = Trim(cO43.o43Body_PlainText).Replace("<", "[").Replace(">", "]")
 
         With Factory.o23DocBL
             If .Save(c, 0, Nothing, Nothing, Nothing, cO43.o43RecordGUID) Then

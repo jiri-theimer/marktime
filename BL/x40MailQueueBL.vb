@@ -11,6 +11,7 @@ Public Interface Ix40MailQueueBL
     Function SendMessageFromQueque(intX40ID As Integer) As Boolean
     Function UpdateMessageState(intX40ID As Integer, NewState As BO.x40StateENUM) As Boolean
     Function Load(intPID As Integer) As BO.x40MailQueue
+    Function LoadByMessageID(strMessageID As String) As BO.x40MailQueue
     Function Delete(intPID As Integer) As Boolean
     Function GetList(myQuery As BO.myQueryX40) As IEnumerable(Of BO.x40MailQueue)
     ''Function GetList_AllHisMessages(intJ03ID_Sender As Integer, intJ02ID_Person As Integer, Optional intTopRecs As Integer = 500) As IEnumerable(Of BO.x40MailQueue)
@@ -39,6 +40,10 @@ Class x40MailQueueBL
     Public Function Load(intPID As Integer) As BO.x40MailQueue Implements Ix40MailQueueBL.Load
         Return _cDL.Load(intPID)
     End Function
+    Public Function LoadByMessageID(strMessageID As String) As BO.x40MailQueue Implements Ix40MailQueueBL.LoadByMessageID
+        Return _cDL.LoadByMessageID(strMessageID)
+    End Function
+
     Public Function Delete(intPID As Integer) As Boolean Implements Ix40MailQueueBL.Delete
         Return _cDL.Delete(intPID)
     End Function

@@ -102,7 +102,12 @@
         CType(e.Item.FindControl("b07WorkflowInfo"), Label).Text = cRec.b07WorkflowInfo
 
         With CType(e.Item.FindControl("aAnswer"), HyperLink)
-            .NavigateUrl = "javascript:" & Me.hidJS_Reaction.Value & "(" & cRec.PID.ToString & ")"
+            If cRec.o43ID = 0 Then
+                .NavigateUrl = "javascript:" & Me.hidJS_Reaction.Value & "(" & cRec.PID.ToString & ")"
+            Else
+                .Visible = False
+            End If
+
         End With
         With CType(e.Item.FindControl("aDelete"), HyperLink)
             If (cRec.j02ID_Owner = _sysUser.j02ID Or _sysUser.IsAdmin) And (cRec.b07Value <> "" Or cRec.o27ID > 0) Then
@@ -118,6 +123,17 @@
             Else
                 .Visible = True
                 .NavigateUrl = "binaryfile.aspx?format=msg&prefix=o43&pid=" & cRec.o43ID.ToString
+            End If
+        End With
+        With CType(e.Item.FindControl("aAtts"), Label)
+            If cRec.o43Attachments = "" Then
+                .Visible = False
+            Else
+                .Visible = True
+                Dim lis As List(Of String) = BO.BAS.ConvertDelimitedString2List(cRec.o43Attachments, ",")
+                For Each strAtt As String In lis
+                    .Text += "<a href='binaryfile.aspx?prefix=o43&pid=" & cRec.o43ID.ToString & "&disposition=inline&att=" & strAtt & "' style='margin-left:6px;'><img src='Images/attachment.png'/>" & strAtt & "</a>"
+                Next
             End If
         End With
         CType(e.Item.FindControl("Timestamp"), Label).Text = BO.BAS.FD(cRec.DateInsert, True, True)

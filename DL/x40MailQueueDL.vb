@@ -10,6 +10,11 @@
 
         Return _cDB.GetRecord(Of BO.x40MailQueue)(s, New With {.pid = intPID})
     End Function
+    Public Function LoadByMessageID(strMesageID As String) As BO.x40MailQueue
+        Dim s As String = GetSQLPart1() & " WHERE a.x40MessageID = @messageid"
+
+        Return _cDB.GetRecord(Of BO.x40MailQueue)(s, New With {.messageid = strMesageID})
+    End Function
     Public Function Delete(intX40ID As Integer) As Boolean
         Dim pars As New DbParameters()
         With pars
