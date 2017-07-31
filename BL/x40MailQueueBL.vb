@@ -17,6 +17,7 @@ Public Interface Ix40MailQueueBL
     Function SendMessageWithoutQueque(strRecipient As String, strBody As String, strSubject As String) As Boolean
     Function CompleteMailAttachments(ByRef message As MailMessage, strUploadGUID As String) As String
     Function SendAnswer2Ticket(strBody As String, cRec2Answer As BO.b07Comment) As Boolean
+    Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer) As Boolean
 End Interface
 
 Class x40MailQueueBL
@@ -402,17 +403,20 @@ Class x40MailQueueBL
 
     End Function
 
-    Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer) As Boolean
+    Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer) As Boolean Implements Ix40MailQueueBL.TestConnect
         Dim smtp As New Smtp
         With smtp
             Try
-                .Connect(strSmtpServer)
+                If intPort > 0 Then
+                    .Connect(strSmtpServer, intPort)
+                Else
+                    .Connect(strSmtpServer)
+                End If
+
                 If strSmtpLogin <> "" And strSmtpPassword <> "" Then
                     .Login(strSmtpLogin, strSmtpPassword)
                 End If
-                If intPort > 0 Then
 
-                End If
 
                 .Disconnect()
                 Return True

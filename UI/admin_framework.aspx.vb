@@ -425,6 +425,10 @@ Public Class admin_framework
                     .AddColumn("o41Name", "Název účtu")
                     .AddColumn("o41Login", "Login")
                     .AddColumn("o41Server", "Server")
+                Case "o40"
+                    .AddColumn("o40Name", "Název účtu")
+                    .AddColumn("o40EmailAddress", "E-mail adresa")
+                    .AddColumn("o40Server", "SMTP server")
                 Case "o42"
                     .AddColumn("o42Name", "Název pravidla")
                 Case "p93"
@@ -733,6 +737,9 @@ Public Class admin_framework
                     grid1.DataSource = lis
                 Case "o41"
                     Dim lis As IEnumerable(Of BO.o41InboxAccount) = .o41InboxAccountBL.GetList(mqDef)
+                    grid1.DataSource = lis
+                Case "o40"
+                    Dim lis As IEnumerable(Of BO.o40SmtpAccount) = .o40SmtpAccountBL.GetList(mqDef)
                     grid1.DataSource = lis
                 Case "o42"
                     Dim lis As IEnumerable(Of BO.o42ImapRule) = .o42ImapRuleBL.GetList(mqDef)

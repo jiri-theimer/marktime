@@ -44,10 +44,10 @@
         With cRec
             Me.o40Name.Text = .o40Name
             Me.o40IsUseSSL.Checked = .o40IsUseSSL
-            Me.o40IsDeleteMesageAfterImport.Checked = .o40IsDeleteMesageAfterImport
+            Me.o40IsVerify.Checked = .o40IsVerify
             Me.o40login.Text = .o40Login
             Me.o40Password.Text = .o40Password
-            Me.o40Folder.Text = .o40Folder
+            Me.o40EmailAddress.Text = .o40EmailAddress
             Me.o40Server.Text = .o40Server
             Me.o40Port.Text = .o40Port
 
@@ -122,27 +122,11 @@
     Private Sub cmdTest_Click(sender As Object, e As EventArgs) Handles cmdTest.Click
         Dim c As BO.o40SmtpAccount = Master.Factory.o40SmtpAccountBL.Load(Master.DataPID)
 
-        Dim smtp As New Rebex.
-        With smtp
-            Try
-                .Connect(strSmtpServer)
-                If strSmtpLogin <> "" And strSmtpPassword <> "" Then
-                    .Login(strSmtpLogin, strSmtpPassword)
-                End If
-                .Send(mail)
-                bolSucceeded = True
-            Catch ex As Exception
-                _Error = ex.Message
-                bolSucceeded = False
-            End Try
 
-        End With
-
-
-        If Master.Factory.o42ImapRuleBL.Connect(c) Then
+        If Master.Factory.x40MailQueueBL.TestConnect(c.o40Server, c.o40Login, c.DecryptedPassword, BO.BAS.IsNullInt(c.o40Port)) Then
             Master.Notify("Připojení se podařilo.", NotifyLevel.InfoMessage)
         Else
-            Master.Notify(Master.Factory.o42ImapRuleBL.ErrorMessage, NotifyLevel.ErrorMessage)
+            Master.Notify(Master.Factory.x40MailQueueBL.ErrorMessage, NotifyLevel.ErrorMessage)
         End If
     End Sub
 End Class
