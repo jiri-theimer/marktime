@@ -124,7 +124,7 @@
         Dim c As BO.o40SmtpAccount = Master.Factory.o40SmtpAccountBL.Load(Master.DataPID)
 
 
-        If Master.Factory.x40MailQueueBL.TestConnect(c.o40Server, c.o40Login, c.DecryptedPassword, BO.BAS.IsNullInt(c.o40Port)) Then
+        If Master.Factory.x40MailQueueBL.TestConnect(c.o40Server, c.o40Login, c.DecryptedPassword, BO.BAS.IsNullInt(c.o40Port), Me.o40IsUseSSL.Checked) Then
             Master.Notify("Připojení se podařilo.", NotifyLevel.InfoMessage)
         Else
             Master.Notify(Master.Factory.x40MailQueueBL.ErrorMessage, NotifyLevel.ErrorMessage)

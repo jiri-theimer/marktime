@@ -14,10 +14,10 @@ Public Interface Ix40MailQueueBL
     Function Delete(intPID As Integer) As Boolean
     Function GetList(myQuery As BO.myQueryX40) As IEnumerable(Of BO.x40MailQueue)
     ''Function GetList_AllHisMessages(intJ03ID_Sender As Integer, intJ02ID_Person As Integer, Optional intTopRecs As Integer = 500) As IEnumerable(Of BO.x40MailQueue)
-    Function SendMessageWithoutQueque(strRecipient As String, strBody As String, strSubject As String) As Boolean
+    'Function SendMessageWithoutQueque(strRecipient As String, strBody As String, strSubject As String) As Boolean
     Function CompleteMailAttachments(ByRef message As MailMessage, strUploadGUID As String) As String
     Function SendAnswer2Ticket(strBody As String, cRec2Answer As BO.b07Comment) As Boolean
-    Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer) As Boolean
+    Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer, bolSSL As Boolean) As Boolean
 End Interface
 
 Class x40MailQueueBL
@@ -162,46 +162,46 @@ Class x40MailQueueBL
     End Function
 
 
-    Public Function SendMessageWithoutQueque(strRecipient As String, strBody As String, strSubject As String) As Boolean Implements Ix40MailQueueBL.SendMessageWithoutQueque
-        'Dim mail As MailMessage = New MailMessage()
-        Dim mail As New MailMessage
+    ''Public Function SendMessageWithoutQueque(strRecipient As String, strBody As String, strSubject As String) As Boolean Implements Ix40MailQueueBL.SendMessageWithoutQueque
+    ''    'Dim mail As MailMessage = New MailMessage()
+    ''    Dim mail As New MailMessage
 
-        With mail
-            .DefaultCharset = System.Text.Encoding.UTF8
-            .BodyText = strBody
-            .Subject = strSubject
-            .To = strRecipient
-        End With
-       
-        Dim strIsUseWebConfigSetting As String = Me.Factory.x35GlobalParam.GetValueString("IsUseWebConfigSetting", "1")
-        If strIsUseWebConfigSetting = "0" Then
-            'odeslat podle nastavení mimo web.config
-            Dim smtp As New Smtp
-            With smtp
-                Try
-                    .Connect(Me.Factory.x35GlobalParam.GetValueString("SMTP_Server"))
-                    .Login(Me.Factory.x35GlobalParam.GetValueString("SMTP_Login"), Me.Factory.x35GlobalParam.GetValueString("SMTP_Password"))
-                    .Send(mail)
-                    Return True
-                Catch ex As Exception
-                    _Error = ex.Message
-                    Return False
-                End Try
-                
-            End With
+    ''    With mail
+    ''        .DefaultCharset = System.Text.Encoding.UTF8
+    ''        .BodyText = strBody
+    ''        .Subject = strSubject
+    ''        .To = strRecipient
+    ''    End With
 
-        Else
-            'odeslat podle web.config nastavení
-            Try
-                Smtp.Send(mail, SmtpConfiguration.Default)
-                Return True
-            Catch ex As Exception
-                _Error = ex.Message
-                Return False
-            End Try
+    ''    Dim strIsUseWebConfigSetting As String = Me.Factory.x35GlobalParam.GetValueString("IsUseWebConfigSetting", "1")
+    ''    If strIsUseWebConfigSetting = "0" Then
+    ''        'odeslat podle nastavení mimo web.config
+    ''        Dim smtp As New Smtp
+    ''        With smtp
+    ''            Try
+    ''                .Connect(Me.Factory.x35GlobalParam.GetValueString("SMTP_Server"))
+    ''                .Login(Me.Factory.x35GlobalParam.GetValueString("SMTP_Login"), Me.Factory.x35GlobalParam.GetValueString("SMTP_Password"))
+    ''                .Send(mail)
+    ''                Return True
+    ''            Catch ex As Exception
+    ''                _Error = ex.Message
+    ''                Return False
+    ''            End Try
 
-        End If
-    End Function
+    ''        End With
+
+    ''    Else
+    ''        'odeslat podle web.config nastavení
+    ''        Try
+    ''            Smtp.Send(mail, SmtpConfiguration.Default)
+    ''            Return True
+    ''        Catch ex As Exception
+    ''            _Error = ex.Message
+    ''            Return False
+    ''        End Try
+
+    ''    End If
+    ''End Function
     Public Overloads Function SendMessageFromQueque(intX40ID As Integer) As Boolean Implements Ix40MailQueueBL.SendMessageFromQueque
         Dim cRec As BO.x40MailQueue = Load(intX40ID)
         If cRec Is Nothing Then Return False
@@ -293,12 +293,13 @@ Class x40MailQueueBL
         End If
 
         
-        Dim bolSucceeded As Boolean = False, bolUseWebConfig As Boolean = True, strSmtpServer As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_Server"), strSmtpLogin As String = "", strSmtpPassword As String = "", intPort As Integer = 0
+        Dim bolSucceeded As Boolean = False, bolUseWebConfig As Boolean = True, strSmtpServer As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_Server"), strSmtpLogin As String = "", strSmtpPassword As String = "", intPort As Integer = 0, bolSSL As Boolean = False
         If Me.Factory.x35GlobalParam.GetValueString("IsUseWebConfigSetting", "1") = "0" And BO.BAS.IsNullInt(strSmtpServer) <> 0 Then
             bolUseWebConfig = False
             Dim cO40 As BO.o40SmtpAccount = Me.Factory.o40SmtpAccountBL.Load(strSmtpServer)
             strSmtpServer = cO40.o40Server
             intPort = BO.BAS.IsNullInt(cO40.o40Port)
+            bolSSL = cO40.o40IsUseSSL
             If cO40.o40IsVerify Then
                 strSmtpLogin = cO40.o40Login
                 strSmtpPassword = cO40.DecryptedPassword()
@@ -316,6 +317,7 @@ Class x40MailQueueBL
                 cRec.x40SenderAddress = _cUser.PersonEmail
                 cRec.x40SenderName = _cUser.Person
                 strSmtpServer = cO40.o40Server
+                bolSSL = cO40.o40IsUseSSL
                 intPort = BO.BAS.IsNullInt(cO40.o40Port)
                 If cO40.o40IsVerify Then
                     strSmtpLogin = cO40.o40Login
@@ -329,9 +331,17 @@ Class x40MailQueueBL
             With smtp
                 Try
                     If intPort > 0 Then
-                        .Connect(strSmtpServer, intPort)
+                        If bolSSL Then
+                            .Connect(strSmtpServer, intPort, SslMode.Implicit)
+                        Else
+                            .Connect(strSmtpServer, intPort)
+                        End If
                     Else
-                        .Connect(strSmtpServer)
+                        If bolSSL Then
+                            .Connect(strSmtpServer, SslMode.Implicit)
+                        Else
+                            .Connect(strSmtpServer)
+                        End If
                     End If
                     If strSmtpLogin <> "" And strSmtpPassword <> "" Then
                         .Login(strSmtpLogin, strSmtpPassword)
@@ -412,14 +422,24 @@ Class x40MailQueueBL
 
     End Function
 
-    Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer) As Boolean Implements Ix40MailQueueBL.TestConnect
+    Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer, bolSSL As Boolean) As Boolean Implements Ix40MailQueueBL.TestConnect
         Dim smtp As New Smtp
         With smtp
             Try
                 If intPort > 0 Then
-                    .Connect(strSmtpServer, intPort)
+                    If bolSSL Then
+                        .Connect(strSmtpServer, intPort, SslMode.Implicit)
+                    Else
+                        .Connect(strSmtpServer, intPort)
+                    End If
+
                 Else
-                    .Connect(strSmtpServer)
+                    If bolSSL Then
+                        .Connect(strSmtpServer, SslMode.Implicit)
+                    Else
+                        .Connect(strSmtpServer)
+                    End If
+
                 End If
 
                 If strSmtpLogin <> "" And strSmtpPassword <> "" Then

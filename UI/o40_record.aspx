@@ -41,7 +41,7 @@
                 <asp:Label ID="Label3" Text="Port:" runat="server" CssClass="lbl"></asp:Label></td>
             <td>
                 <asp:TextBox ID="o40Port" runat="server" Style="width: 50px;"></asp:TextBox>
-                (pokud není uvedeno, bere se hodnota 25)
+                (Pokud není vyplněno, bere se hodnota 25.)
             </td>
         </tr>
 
