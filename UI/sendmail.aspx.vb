@@ -29,6 +29,10 @@
 
         If Not Page.IsPostBack Then
             txtSender.Text = Master.Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress")
+            If txtSender.Text <> Master.Factory.SysUser.PersonEmail Then
+                lblReplyTo.Text = Master.Factory.SysUser.PersonEmail
+            End If
+
             If Request.Item("prefix") <> "" Then
                 Me.CurrentX29ID = BO.BAS.GetX29FromPrefix(Request.Item("prefix"))
                 Master.DataPID = BO.BAS.IsNullInt(Request.Item("pid"))

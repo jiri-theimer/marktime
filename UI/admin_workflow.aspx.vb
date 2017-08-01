@@ -316,7 +316,7 @@ Public Class admin_workflow
         s += ";SELECT * FROM b06WorkflowStep WHERE b02ID IN (SELECT b02ID FROM b02WorkflowStatus where b01ID=@b01id)"
         s += ";SELECT * from b08WorkflowReceiverToStep WHERE b06ID IN (SELECT a.b06ID FROM b06WorkflowStep a INNER JOIN b02WorkflowStatus b ON a.b02ID=b.b02ID WHERE b.b01ID=@b01id)"
         s += ";SELECT * from b11WorkflowMessageToStep WHERE b06ID IN (SELECT a.b06ID FROM b06WorkflowStep a INNER JOIN b02WorkflowStatus b ON a.b02ID=b.b02ID WHERE b.b01ID=@b01id)"
-        s += ";SELECT * from b10WorkflowCommandCatalog_Binding WHERE b06ID IN (SELECT a.b06ID FROM b06WorkflowStep a INNER JOIN b02WorkflowStatus b ON a.b02ID=b.b02ID WHER b.b01ID=@b01id)"
+        s += ";SELECT * from b10WorkflowCommandCatalog_Binding WHERE b06ID IN (SELECT a.b06ID FROM b06WorkflowStep a INNER JOIN b02WorkflowStatus b ON a.b02ID=b.b02ID WHERE b.b01ID=@b01id)"
 
         Dim ds As System.Data.DataSet = Master.Factory.pluginBL.GetDataSet(s, pars, "b01WorkflowTemplate,b02WorkflowStatus,b65WorkflowMessage,b06WorkflowStep,b08WorkflowReceiverToStep,b11WorkflowMessageToStep,b10WorkflowCommandCatalog_Binding")
 

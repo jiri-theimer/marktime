@@ -68,6 +68,15 @@ Partial Public Class sendmail
     Protected WithEvents txtSender As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lblReplyTo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblReplyTo As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''lblTo control.
     '''</summary>
     '''<remarks>

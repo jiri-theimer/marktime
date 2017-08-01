@@ -64,7 +64,9 @@
 
                     </td>
                     <td>
-                        <asp:TextBox ID="txtSender" runat="server" Width="700px"></asp:TextBox>
+                        <asp:TextBox ID="txtSender" runat="server" Width="400px"></asp:TextBox>
+                        <span class="lbl">REPLY adresa:</span>
+                        <asp:Label ID="lblReplyTo" runat="server"></asp:Label>
                     </td>
                 </tr>
                 <tr>

@@ -42,7 +42,7 @@
         </tr>
         <tr>
                     <td>
-                        <asp:Label ID="lblO40ID" Text="Vlastní SMTP účet:" runat="server" CssClass="lbl"></asp:Label></td>
+                        <asp:Label ID="lblO40ID" Text="Individuální SMTP účet:" runat="server" CssClass="lbl"></asp:Label></td>
                     <td>
                         <uc:datacombo ID="o40ID" runat="server" DataTextField="o40Name" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
                         
