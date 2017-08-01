@@ -82,7 +82,11 @@ Public Class admin_smtp
                 cRec.x35Value = BO.BAS.GB(Me.chkIsSMTP_UseWebConfigSetting.Checked)
                 .Save(cRec)
 
-                
+
+
+                cRec = .Load("SMTP_SenderAddress")
+                cRec.x35Value = Me.SMTP_SenderAddress.Text
+                .Save(cRec)
 
                 cRec = .Load("AppHost")
                 cRec.x35Value = Me.AppHost.Text
