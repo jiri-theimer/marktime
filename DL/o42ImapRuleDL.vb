@@ -121,4 +121,12 @@
         pars.Add("guid", strNewGUID, DbType.String)
         _cDB.RunSQL("UPDATE o43ImapRobotHistory set o43RecordGUID=@guid WHERE o43ID=@pid", pars)
     End Sub
+
+    Public Function UpdateHistoryBind(intO43ID As Integer, intP56ID As Integer, intO23ID As Integer) As Boolean
+        Dim pars As New DbParameters()
+        pars.Add("pid", intO43ID)
+        pars.Add("p56id", BO.BAS.IsNullDBKey(intP56ID), DbType.Int32)
+        pars.Add("o23id", BO.BAS.IsNullDBKey(intO23ID), DbType.Int32)
+        Return _cDB.RunSQL("UPDATE o43ImapRobotHistory set p56ID=@p56id,o23ID=@o23id WHERE o43ID=@pid", pars)
+    End Function
 End Class

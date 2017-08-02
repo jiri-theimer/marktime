@@ -360,6 +360,19 @@ Class b06WorkflowStepBL
             If c.b11IsRecordOwner Then
                 mrs.Add(New BO.PersonOrTeam(intJ02ID_Owner, 0))
             End If
+            If c.b11IsRecordCreatorByEmail Then
+                'zjistit e-mail adresu autora záznamu
+                Dim cc As New BO.PersonOrTeam(0, 0)
+                If x29id = BO.x29IdEnum.p56Task Then
+                    cc.o43ID = Me.Factory.p56TaskBL.Load(intRecordPID).o43ID
+                    cc.EmailAddressOnly = Me.Factory.o42ImapRuleBL.LoadHistoryByID(cc.o43ID).o43FROM
+                End If
+                If x29id = BO.x29IdEnum.o23Doc Then
+                    cc.o43ID = Me.Factory.o23DocBL.Load(intRecordPID).o43ID
+                    cc.EmailAddressOnly = Me.Factory.o42ImapRuleBL.LoadHistoryByID(cc.o43ID).o43FROM
+                End If
+
+            End If
             If c.x67ID <> 0 Then
                 If lisX69.Where(Function(p) p.x67ID = c.x67ID).Count > 0 Then
                     Dim cRole As BO.x69EntityRole_Assign = lisX69.Where(Function(p) p.x67ID = c.x67ID)(0)
@@ -388,12 +401,12 @@ Class b06WorkflowStepBL
                 Dim j02ids As IEnumerable(Of Integer) = mrs.Where(Function(p) p.j02ID <> 0).Select(Function(p) p.j02ID).Distinct
                 Dim j11ids As IEnumerable(Of Integer) = mrs.Where(Function(p) p.j11ID <> 0).Select(Function(p) p.j11ID).Distinct
                 Dim lisReceivers As IEnumerable(Of BO.j02Person) = Factory.j02PersonBL.GetList_j02_join_j11(j02ids.ToList, j11ids.ToList).Where(Function(p) p.IsClosed = False)
-                If lisReceivers.Count > 0 Then
+                If lisReceivers.Count > 0 Or mrs.Where(Function(p) p.o43ID <> 0).Count > 0 Then
                     Dim cMerge As New BO.clsMergeContent
                     Dim cB65 As BO.b65WorkflowMessage = Factory.b65WorkflowMessageBL.Load(c.b65ID)
                     Dim mes As New Rebex.Mail.MailMessage
                     mes.From.Add(New Rebex.Mime.Headers.MailAddress(Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress"), "MARKTIME robot"))
-                   
+
                     mes.BodyText = cMerge.MergeContent(objects, cB65.b65MessageBody, strLinkUrl)
                     If mes.BodyText.IndexOf("#RolesInline#") > 0 Or mes.BodyText.IndexOf("[%RolesInline%]") > 0 Then
                         mes.BodyText = Replace(mes.BodyText, "[%RolesInline%]", "#RolesInline#", , , CompareMethod.Text)
@@ -428,6 +441,10 @@ Class b06WorkflowStepBL
                         Factory.x40MailQueueBL.SaveMessageToQueque(mes, recipients, x29id, intRecordPID, BO.x40StateENUM.InQueque, cB06.o40ID)
                     Next
 
+                    If mrs.Where(Function(p) p.o43ID <> 0).Count > 0 Then
+                        'odpověď e-mail zakladateli záznamu
+                        Factory.x40MailQueueBL.SendAnswer2Ticket(mes.BodyText, x29id, intRecordPID)
+                    End If
                 End If
             End If
         Next

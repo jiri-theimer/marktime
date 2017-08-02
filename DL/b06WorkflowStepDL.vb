@@ -85,6 +85,7 @@
                     pars.Add("j11id", BO.BAS.IsNullDBKey(c.j11ID), DbType.Int32)
                     pars.Add("b11IsRecordCreator", c.b11IsRecordCreator, DbType.Boolean)
                     pars.Add("b11IsRecordOwner", c.b11IsRecordOwner, DbType.Boolean)
+                    pars.Add("b11IsRecordCreatorByEmail", c.b11IsRecordCreatorByEmail, DbType.Boolean)
                     pars.Add("b06id", intLastSavedPID, DbType.Int32)
                     pars.Add("b65id", BO.BAS.IsNullDBKey(c.b65ID), DbType.Int32)
                     If Not _cDB.SaveRecord("b11WorkflowMessageToStep", pars, True) Then

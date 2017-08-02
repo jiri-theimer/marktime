@@ -18,6 +18,9 @@ Public Interface Ix40MailQueueBL
     'Function SendMessageWithoutQueque(strRecipient As String, strBody As String, strSubject As String) As Boolean
     Function CompleteMailAttachments(ByRef message As MailMessage, strUploadGUID As String) As String
     Function SendAnswer2Ticket(strBody As String, cRec2Answer As BO.b07Comment) As Boolean
+    Function SendAnswer2Ticket(strBody As String, intO43ID As Integer, x29id As BO.x29IdEnum, intRecordPID As Integer) As Boolean
+    Function SendAnswer2Ticket(strBody As String, x29id As BO.x29IdEnum, intRecordPID As Integer) As Boolean
+
     Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer, bolSSL As Boolean) As Boolean
 End Interface
 
@@ -396,22 +399,22 @@ Class x40MailQueueBL
         End If
         Return _cDL.UpdateMessageState(intX40ID, NewState)
     End Function
-    ''Public Function GetList_AllHisMessages(intJ03ID_Sender As Integer, intJ02ID_Person As Integer, Optional intTopRecs As Integer = 500) As IEnumerable(Of BO.x40MailQueue) Implements Ix40MailQueueBL.GetList_AllHisMessages
-    ''    Return _cDL.GetList_AllHisMessages(intJ03ID_Sender, intJ02ID_Person)
-    ''End Function
 
-    Function SendAnswer2Ticket(strBody As String, cRec2Answer As BO.b07Comment) As Boolean Implements Ix40MailQueueBL.SendAnswer2Ticket
-
-        Dim original As Rebex.Mail.MailMessage = Me.Factory.o42ImapRuleBL.LoadMailMessageFromHistory(cRec2Answer.o43ID)
+    Function SendAnswer2Ticket(strBody As String, intO43ID As Integer, x29id As BO.x29IdEnum, intRecordPID As Integer) As Boolean Implements Ix40MailQueueBL.SendAnswer2Ticket
+        If intO43ID = 0 Then
+            _Error = "Nelze najít zprávu, na kterou poslat odpověď (o43id)"
+            Return False
+        End If
+        Dim original As Rebex.Mail.MailMessage = Me.Factory.o42ImapRuleBL.LoadMailMessageFromHistory(intO43ID)
         Dim reply As New Rebex.Mail.MailMessage
         If Not (original.MessageId Is Nothing) Then
             reply.InReplyTo.Add(original.MessageId)
         End If
-        reply.Headers.Add("marktime-prefix", BO.BAS.GetDataPrefix(cRec2Answer.x29ID))
-        reply.Headers.Add("marktime-pid", cRec2Answer.b07RecordPID.ToString)
+        reply.Headers.Add("marktime-prefix", BO.BAS.GetDataPrefix(x29id))
+        reply.Headers.Add("marktime-pid", intRecordPID.ToString)
         Dim intB01ID As Integer = 0, intO40ID As Integer = 0
-        If cRec2Answer.x29ID = BO.x29IdEnum.p56Task Then
-            intB01ID = Me.Factory.p56TaskBL.Load(cRec2Answer.b07RecordPID).b01ID
+        If x29id = BO.x29IdEnum.p56Task Then
+            intB01ID = Me.Factory.p56TaskBL.Load(intRecordPID).b01ID
         End If
         If intB01ID <> 0 Then
             intO40ID = Me.Factory.b01WorkflowTemplateBL.Load(intB01ID).o40ID
@@ -430,9 +433,32 @@ Class x40MailQueueBL
         recipients.Add(cR)
         recipients.Add(New BO.x43MailQueue_Recipient())
 
-        Dim intX40ID As Integer = Me.Factory.x40MailQueueBL.SaveMessageToQueque(reply, recipients, cRec2Answer.x29ID, cRec2Answer.b07RecordPID, BO.x40StateENUM.InQueque, intO40ID)
+        Dim intX40ID As Integer = Me.Factory.x40MailQueueBL.SaveMessageToQueque(reply, recipients, x29id, intRecordPID, BO.x40StateENUM.InQueque, intO40ID)
         Return Me.Factory.x40MailQueueBL.SendMessageFromQueque(intX40ID)
-
+    End Function
+    Function SendAnswer2Ticket(strBody As String, x29id As BO.x29IdEnum, intRecordPID As Integer) As Boolean Implements Ix40MailQueueBL.SendAnswer2Ticket
+        Dim mq As New BO.myQueryB07 'najít poslední odpověď žadatele načtenou přes IMAP
+        mq.x29id = x29id
+        mq.RecordDataPID = intRecordPID
+        Dim lis As IEnumerable(Of BO.b07Comment) = Factory.b07CommentBL.GetList(mq).Where(Function(p) p.o43ID <> 0).OrderByDescending(Function(p) p.o43ID)
+        Dim intO43ID As Integer = 0
+        If lis.Count > 0 Then
+            Return SendAnswer2Ticket(strBody, lis(0))   'nalezena poslední odpověď
+        Else
+            Select Case x29id
+                Case BO.x29IdEnum.p56Task
+                    intO43ID = Factory.p56TaskBL.Load(intRecordPID).o43ID
+                Case BO.x29IdEnum.o23Doc
+                    intO43ID = Factory.o23DocBL.Load(intRecordPID).o43ID
+                Case Else
+                    Return False
+            End Select
+            Return SendAnswer2Ticket(strBody, intO43ID, x29id, intRecordPID)
+        End If
+        
+    End Function
+    Function SendAnswer2Ticket(strBody As String, cRec2Answer As BO.b07Comment) As Boolean Implements Ix40MailQueueBL.SendAnswer2Ticket
+        Return SendAnswer2Ticket(strBody, cRec2Answer.o43ID, cRec2Answer.x29ID, cRec2Answer.b07RecordPID)
     End Function
 
     Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer, bolSSL As Boolean) As Boolean Implements Ix40MailQueueBL.TestConnect

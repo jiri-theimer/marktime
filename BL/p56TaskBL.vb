@@ -17,7 +17,7 @@
     Sub UpdateSelectedTaskRole(intX67ID As Integer, lisX69 As List(Of BO.x69EntityRole_Assign), intP56ID As Integer)
     Sub ClearSelectedTaskRole(intX67ID As Integer, intP56ID As Integer)
     Function InhaleRecordDisposition(cRec As BO.p56Task) As BO.p56RecordDisposition
-    Function UpdateImapSource(intPID As Integer, intO43ID As Integer) As Boolean
+    ''Function UpdateImapSource(intPID As Integer, intO43ID As Integer) As Boolean
     Function GetTotalTasksCount() As Integer
     Function GetGridFooterSums(myQuery As BO.myQueryP56, strSumFields As String) As DataTable
     Function LoadSumRow(intPID As Integer) As BO.p56TaskSum
@@ -254,9 +254,9 @@ Class p56TaskBL
         Return c
     End Function
 
-    Public Function UpdateImapSource(intPID As Integer, intO43ID As Integer) As Boolean Implements Ip56TaskBL.UpdateImapSource
-        Return _cDL.UpdateImapSource(intPID, intO43ID)
-    End Function
+    ''Public Function UpdateImapSource(intPID As Integer, intO43ID As Integer) As Boolean Implements Ip56TaskBL.UpdateImapSource
+    ''    Return _cDL.UpdateImapSource(intPID, intO43ID)
+    ''End Function
     Public Function GetTotalTasksCount() As Integer Implements Ip56TaskBL.GetTotalTasksCount
         Return _cDL.GetTotalTasksCount()
     End Function

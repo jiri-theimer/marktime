@@ -22,6 +22,7 @@
     Sub EncryptRecord(ByRef cRec As BO.o23Doc)
     Function EncryptString(str As String) As String
     Function DecryptString(str As String) As String
+    ''Function UpdateImapSource(intPID As Integer, intO43ID As Integer) As Boolean
 End Interface
 Class o23DocBL
     Inherits BLMother
@@ -299,4 +300,8 @@ Class o23DocBL
     Public Function DecryptString(str As String) As String Implements Io23DocBL.DecryptString
         Return BO.Crypto.Decrypt(str, _key)
     End Function
+
+    ''Public Function UpdateImapSource(intPID As Integer, intO43ID As Integer) As Boolean Implements Io23DocBL.UpdateImapSource
+    ''    Return _cDL.UpdateImapSource(intPID, intO43ID)
+    ''End Function
 End Class

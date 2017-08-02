@@ -166,6 +166,7 @@
             cTMP.p85DataPID = c.b11ID
             cTMP.p85FreeBoolean01 = c.b11IsRecordOwner
             cTMP.p85FreeBoolean02 = c.b11IsRecordCreator
+            cTMP.p85FreeBoolean03 = c.b11IsRecordCreatorByEmail
             Master.Factory.p85TempBoxBL.Save(cTMP)
         Next
         RefreshTempListB11()
@@ -298,6 +299,8 @@
                         c.b11IsRecordOwner = True
                     Case "b11IsRecordCreator"
                         c.b11IsRecordCreator = True
+                    Case "b11IsRecordCreatorByEmail"
+                        c.b11IsRecordCreatorByEmail = True
                     Case Else
                         c.x67ID = BO.BAS.IsNullInt(CType(ri.FindControl("x67ID"), DropDownList).SelectedValue)
                 End Select
@@ -368,6 +371,8 @@
                     cRec.p85FreeBoolean01 = True
                 Case "b11IsRecordCreator"
                     cRec.p85FreeBoolean02 = True
+                Case "b11IsRecordCreatorByEmail"
+                    cRec.p85FreeBoolean03 = True
                 Case Else
                     cRec.p85OtherKey1 = BO.BAS.IsNullInt(CType(ri.FindControl("x67id"), DropDownList).SelectedValue)
             End Select
@@ -398,12 +403,21 @@
                 .DataBind()
                 .Items.Add(New ListItem("Vlastník záznamu", "b11IsRecordOwner"))
                 .Items.Add(New ListItem("Zakladatel záznamu", "b11IsRecordCreator"))
+                If Me.CurrentX29ID = BO.x29IdEnum.p56Task Then
+                    .Items.Add(New ListItem("Odpověď na e-mail zakladateli úkolu", "b11IsRecordCreatorByEmail"))
+                End If
+                If Me.CurrentX29ID = BO.x29IdEnum.o23Doc Then
+                    .Items.Add(New ListItem("Odpověď na e-mail zakladateli dokumentu", "b11IsRecordCreatorByEmail"))
+                End If
                 .Items.Insert(0, "---Vyberte kontextovou roli---")
                 If cRec.p85FreeBoolean01 Then
                     .Items.FindByValue("b11IsRecordOwner").Selected = True
                 End If
                 If cRec.p85FreeBoolean02 Then
                     .Items.FindByValue("b11IsRecordCreator").Selected = True
+                End If
+                If cRec.p85FreeBoolean03 Then
+                    .Items.FindByValue("b11IsRecordCreatorByEmail").Selected = True
                 End If
                 Try
                     If Not cRec.p85FreeBoolean01 Or cRec.p85FreeBoolean02 Then

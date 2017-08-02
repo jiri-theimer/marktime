@@ -465,7 +465,7 @@
     End Function
 
     Private Function GetSF() As String
-        Dim s As String = "a.p41ID,a.o22ID,a.p57ID,a.j02ID_Owner,a.b02ID,a.p59ID_Submitter,a.p59ID_Receiver,a.o43ID as _o43ID,a.p56Name,a.p56NameShort,a.p56Code,a.p56Description,a.p56Ordinary,a.p56PlanFrom,a.p56PlanUntil,a.p56ReminderDate,a.p56Plan_Hours,a.p56Plan_Expenses,a.p56RatingValue,a.p56CompletePercent,a.p56ExternalPID,a.p56IsPlan_Hours_Ceiling,a.p56IsPlan_Expenses_Ceiling,a.p56IsHtml,a.p56IsNoNotify"
+        Dim s As String = "a.p41ID,a.o22ID,a.p57ID,a.j02ID_Owner,a.b02ID,a.p59ID_Submitter,a.p59ID_Receiver,a.o43ID,a.p56Name,a.p56NameShort,a.p56Code,a.p56Description,a.p56Ordinary,a.p56PlanFrom,a.p56PlanUntil,a.p56ReminderDate,a.p56Plan_Hours,a.p56Plan_Expenses,a.p56RatingValue,a.p56CompletePercent,a.p56ExternalPID,a.p56IsPlan_Hours_Ceiling,a.p56IsPlan_Expenses_Ceiling,a.p56IsHtml,a.p56IsNoNotify"
         Return s & "," & bas.RecTail("p56", "a") & ",p28client.p28Name as _Client,p57.p57Name as _p57Name,p59submitter.p59Name as _p59NameSubmitter,isnull(p41.p41NameShort,p41.p41Name) as _p41Name,p41.p41Code as _p41Code,o22.o22Name as _o22Name,b02.b02Name as _b02Name,b02.b02Color as _b02Color,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p57.p57IsHelpdesk as _p57IsHelpdesk,p57.b01ID as _b01ID,p57.p57PlanDatesEntryFlag as _p57PlanDatesEntryFlag"
     End Function
     Private Function GetSQLPart1(intTOP As Integer) As String
@@ -511,12 +511,12 @@
     Public Sub ClearSelectedTaskRole(intX67ID As Integer, intP56ID As Integer)
         _cDB.RunSQL("DELETE FROM x69EntityRole_Assign WHERE x67ID=" & intX67ID.ToString & " AND x69RecordPID=" & intP56ID.ToString)
     End Sub
-    Public Function UpdateImapSource(intPID As Integer, intO43ID As Integer) As Boolean
-        Dim pars As New DbParameters()
-        pars.Add("pid", intPID)
-        pars.Add("o43ID", BO.BAS.IsNullDBKey(intO43ID), DbType.Int32)
-        Return _cDB.SaveRecord("p56Task", pars, False, "p56ID=@pid", False)
-    End Function
+    ''Public Function UpdateImapSource(intPID As Integer, intO43ID As Integer) As Boolean
+    ''    Dim pars As New DbParameters()
+    ''    pars.Add("pid", intPID)
+    ''    pars.Add("o43ID", BO.BAS.IsNullDBKey(intO43ID), DbType.Int32)
+    ''    Return _cDB.SaveRecord("p56Task", pars, False, "p56ID=@pid", False)
+    ''End Function
     Public Function GetTotalTasksCount() As Integer
         Return _cDB.GetRecord(Of BO.GetInteger)("SELECT COUNT(*) as Value FROM p56Task").Value
     End Function

@@ -11,7 +11,7 @@ Public Interface Io42ImapRuleBL
     Function LoadHistoryByMessageGUID(strMessageGUID As String) As BO.o43ImapRobotHistory
     Function LoadHistoryByID(intO43ID As Integer) As BO.o43ImapRobotHistory
     Function LoadHistoryByRecordGUID(strGUID As String) As BO.o43ImapRobotHistory
-    Function InsertImport2History(cHistory As BO.o43ImapRobotHistory) As Boolean
+
     Sub ChangeRecordGuidInHistory(intO43ID As Integer, strNewGUID As String)
     Function Connect(cInbox As BO.o41InboxAccount) As Boolean
     Function LoadMailMessageFromHistory(intO43ID As Integer) As Rebex.Mail.MailMessage
@@ -382,8 +382,11 @@ Class o42ImapRuleBL
                 End With
             End If
         End If
+
+        Dim intO43ID As Integer = _cDL.InsertImport2History(cO43)
+
         If cO43.p56ID > 0 Or cO43.o23ID > 0 Then
-            'vazba na úkol nebo dokument existuje
+            'vazba na úkol nebo dokument existuje -> není třeba zakládat nový úkol/dokument
         Else
             'nový úkol nebo nový dokument
             Dim lisO42 As IEnumerable(Of BO.o42ImapRule) = GetList(New BO.myQuery).Where(Function(p) p.o41ID = cInbox.PID)
@@ -395,10 +398,11 @@ Class o42ImapRuleBL
                     cO43.o23ID = CreateO23Record(cO43, c, cInbox, cJ02_FROM, lisCC_Persons, lisCC_Projects, lisCC_Clients, lisCC_Teams)
                 End If
             Next
+            _cDL.UpdateHistoryBind(intO43ID, cO43.p56ID, cO43.o23ID)
         End If
         
 
-        Me.InsertImport2History(cO43)
+
         If cO43.o43ErrorMessage = "" Then
             Return True
         Else
@@ -411,9 +415,11 @@ Class o42ImapRuleBL
     Private Function CreateP56Record(ByRef cO43 As BO.o43ImapRobotHistory, cRule As BO.o42ImapRule, cInbox As BO.o41InboxAccount, cJ02_FROM As BO.j02Person, lisJ02 As List(Of BO.j02Person), lisP41 As List(Of BO.p41Project), lisP28 As List(Of BO.p28Contact), lisJ11 As List(Of BO.j11Team)) As Integer
         Dim c As New BO.p56Task
         c.p57ID = cRule.p57ID
+        c.o43ID = cO43.o43ID
         c.p56Name = cO43.o43Subject
         c.p56Description = cO43.o43Body_PlainText
         c.p56Description = Trim(c.p56Description).Replace("<", "[").Replace(">", "]")
+
         If lisP41.Count > 0 Then
             c.p41ID = lisP41(0).PID
         Else
@@ -459,6 +465,18 @@ Class o42ImapRuleBL
         With Factory.p56TaskBL
             If .Save(c, lisX69, Nothing, "") Then
                 Dim intP56ID As Integer = .LastSavedPID
+
+                Dim cB07 As New BO.b07Comment
+                cB07.o43ID = cO43.o43ID
+                cB07.x29ID = BO.x29IdEnum.p56Task
+                cB07.b07RecordPID = intP56ID
+                If cO43.o43Body_PlainText <> "" Then
+                    cB07.b07Value = cO43.o43Body_PlainText
+                Else
+                    cB07.b07Value = cO43.o43Body_Html
+                End If
+                cB07.j02ID_Owner = c.j02ID_Owner
+                Factory.b07CommentBL.Save(cB07, "", Nothing)
 
                 Return intP56ID
             Else
@@ -540,38 +558,38 @@ Class o42ImapRuleBL
         log4net.LogManager.GetLogger("imaplog").Info(strMessage2Log)
     End Sub
 
-    Public Function InsertImport2History(cHistory As BO.o43ImapRobotHistory) As Boolean Implements Io42ImapRuleBL.InsertImport2History
-        Dim intO43ID As Integer = _cDL.InsertImport2History(cHistory)
+    ''Private Function InsertImport2History(cHistory As BO.o43ImapRobotHistory) As Integer
+    ''    Return _cDL.InsertImport2History(cHistory)
 
-        Dim cB07 As New BO.b07Comment
-        cB07.o43ID = intO43ID
-        If cHistory.o43Body_PlainText <> "" Then
-            cB07.b07Value = cHistory.o43Body_PlainText
-        Else
-            cB07.b07Value = cHistory.o43Body_Html
-        End If
-        cB07.j02ID_Owner = cHistory.j02ID_Owner
+    ''    ''Dim cB07 As New BO.b07Comment
+    ''    ''cB07.o43ID = intO43ID
+    ''    ''If cHistory.o43Body_PlainText <> "" Then
+    ''    ''    cB07.b07Value = cHistory.o43Body_PlainText
+    ''    ''Else
+    ''    ''    cB07.b07Value = cHistory.o43Body_Html
+    ''    ''End If
+    ''    ''cB07.j02ID_Owner = cHistory.j02ID_Owner
 
 
-        If intO43ID <> 0 And cHistory.p56ID <> 0 Then
-            'propsat do úkolu informaci o vazbě na IMAP zdroj
-            Factory.p56TaskBL.UpdateImapSource(cHistory.p56ID, intO43ID)
+    ''    ''If intO43ID <> 0 And cHistory.p56ID <> 0 Then
+    ''    ''    'propsat do úkolu informaci o vazbě na IMAP zdroj
+    ''    ''    Factory.p56TaskBL.UpdateImapSource(cHistory.p56ID, intO43ID)
 
-            cB07.x29ID = BO.x29IdEnum.p56Task
-            cB07.b07RecordPID = cHistory.p56ID
-            Factory.b07CommentBL.Save(cB07, "", Nothing)
-        End If
-        If intO43ID <> 0 And cHistory.o23ID <> 0 Then
-            'propsat do dokumentu informaci o vazbě na IMAP zdroj
-            ''Factory.o23NotepadBL.UpdateImapSource(cHistory.o23ID, intO43ID)
+    ''    ''    cB07.x29ID = BO.x29IdEnum.p56Task
+    ''    ''    cB07.b07RecordPID = cHistory.p56ID
+    ''    ''    Factory.b07CommentBL.Save(cB07, "", Nothing)
+    ''    ''End If
+    ''    ''If intO43ID <> 0 And cHistory.o23ID <> 0 Then
+    ''    ''    'propsat do dokumentu informaci o vazbě na IMAP zdroj
+    ''    ''    Factory.o23DocBL.UpdateImapSource(cHistory.o23ID, intO43ID)
 
-            cB07.x29ID = BO.x29IdEnum.o23Doc
-            cB07.b07RecordPID = cHistory.o23ID
-            Factory.b07CommentBL.Save(cB07, "", Nothing)
-        End If
+    ''    ''    cB07.x29ID = BO.x29IdEnum.o23Doc
+    ''    ''    cB07.b07RecordPID = cHistory.o23ID
+    ''    ''    Factory.b07CommentBL.Save(cB07, "", Nothing)
+    ''    ''End If
 
-        Return intO43ID
-    End Function
+    ''    ''Return intO43ID
+    ''End Function
     Public Sub ChangeRecordGuidInHistory(intO43ID As Integer, strNewGUID As String) Implements Io42ImapRuleBL.ChangeRecordGuidInHistory
         _cDL.ChangeRecordGuidInHistory(intO43ID, strNewGUID)
     End Sub
@@ -583,44 +601,30 @@ Class o42ImapRuleBL
         Dim c As New BO.o23Doc
         c.x23ID = cx18.x23ID
         c.o23Name = cO43.o43Subject
-        
+        c.o43ID = cO43.o43ID
         c.o23FreeDate01 = cO43.o43DateMessage
-        ''If lisP41.Count > 0 Then
-        ''    c.p41ID = lisP41(0).PID
-        ''End If
-        ''If lisP28.Count > 0 Then
-        ''    c.p28ID = lisP28(0).PID
-        ''End If
-        ''If c.p41ID = 0 And cRule.p41ID_Default <> 0 Then
-        ''    c.p41ID = cRule.p41ID_Default
-        ''End If
-        ''If Not cJ02_FROM Is Nothing Then
-        ''    c.j02ID_Owner = cJ02_FROM.PID
-        ''Else
-        ''    c.j02ID_Owner = cRule.j02ID_Owner_Default   'vlastník úkolu chybí, je třeba ho vzít z IMAP pravidla
-        ''End If
-        ''Dim cJ03 As BO.j03User = Factory.j03UserBL.LoadByJ02ID(c.j02ID_Owner)
-        ''c.SetUserInsert(cJ03.j03Login)
-        ''Dim lisX69 As New List(Of BO.x69EntityRole_Assign)
-        ''For Each person In lisJ02
-        ''    Dim role As New BO.x69EntityRole_Assign()
-        ''    role.j02ID = person.PID
-        ''    role.x67ID = cRule.x67ID
-        ''    lisX69.Add(role)
-        ''Next
-        ''For Each team In lisJ11
-        ''    Dim role As New BO.x69EntityRole_Assign()
-        ''    role.j11ID = team.PID
-        ''    role.x67ID = cRule.x67ID
-        ''    lisX69.Add(role)
-        ''Next
-        cO43.o43Body_PlainText = Trim(cO43.o43Body_PlainText).Replace("<", "[").Replace(">", "]")
+
+        Dim strPlainText As String = Trim(cO43.o43Body_PlainText).Replace("<", "[").Replace(">", "]")
 
         With Factory.o23DocBL
             If .Save(c, 0, Nothing, Nothing, Nothing, cO43.o43RecordGUID) Then
                 Dim intO23ID As Integer = .LastSavedPID
-                .SaveHtmlContent(intO23ID, cO43.o43Body_Html, cO43.o43Body_PlainText)
-                Return .LastSavedPID
+
+                .SaveHtmlContent(intO23ID, cO43.o43Body_Html, strPlainText)
+
+                Dim cB07 As New BO.b07Comment
+                cB07.o43ID = cO43.o43ID
+                cB07.x29ID = BO.x29IdEnum.o23Doc
+                cB07.b07RecordPID = intO23ID
+                If cO43.o43Body_PlainText <> "" Then
+                    cB07.b07Value = cO43.o43Body_PlainText
+                Else
+                    cB07.b07Value = cO43.o43Body_Html
+                End If
+                cB07.j02ID_Owner = c.j02ID_Owner
+                Factory.b07CommentBL.Save(cB07, "", Nothing)
+
+                Return intO23ID
             Else
                 cO43.o43ErrorMessage = "Chyba při pokusu o založení dokumentu: " & .ErrorMessage
                 W2L("Chyba při pokusu o založení dokumentu: " & .ErrorMessage)
