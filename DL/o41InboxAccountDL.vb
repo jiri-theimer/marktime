@@ -33,6 +33,11 @@
             pars.Add("o41validfrom", .ValidFrom, DbType.DateTime)
             pars.Add("o41validuntil", .ValidUntil, DbType.DateTime)
 
+            pars.Add("o41ForwardFlag_New", BO.BAS.IsNullDBKey(CInt(.o41ForwardFlag_New)), DbType.Int32)
+            pars.Add("o41ForwardEmail_New", .o41ForwardEmail_New, DbType.String)
+            pars.Add("o41ForwardFlag_Answer", BO.BAS.IsNullDBKey(CInt(.o41ForwardFlag_Answer)), DbType.Int32)
+            pars.Add("o41ForwardEmail_Answer", .o41ForwardEmail_Answer, DbType.String)
+            pars.Add("o41ForwardEmail_UnBound", .o41ForwardEmail_UnBound, DbType.String)
         End With
 
         If _cDB.SaveRecord("o41InboxAccount", pars, bolINSERT, strW, True, _curUser.j03Login) Then

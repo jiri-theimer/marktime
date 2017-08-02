@@ -719,6 +719,7 @@ TH {
 
 .box_comment {
     padding-bottom: 6px;
+    border-top:dashed 1px gray;
 }
 
     .box_comment:hover {

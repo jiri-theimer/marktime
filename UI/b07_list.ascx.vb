@@ -87,6 +87,9 @@
             If _intSelectedB07ID > 0 And cRec.PID = _intSelectedB07ID Then
                 .BackColor = Drawing.Color.Orange
             End If
+            If cRec.o43ID > 0 Then
+                .BackColor = Drawing.Color.LightSkyBlue
+            End If
         End With
         With CType(e.Item.FindControl("b07Value"), Label)
             .Text = BO.BAS.CrLfText2Html(cRec.b07Value)
@@ -123,6 +126,14 @@
             Else
                 .Visible = True
                 .NavigateUrl = "binaryfile.aspx?format=msg&prefix=o43&pid=" & cRec.o43ID.ToString
+            End If
+        End With
+        With CType(e.Item.FindControl("aEML"), HyperLink)
+            If cRec.o43ID = 0 Then
+                .Visible = False
+            Else
+                .Visible = True
+                .NavigateUrl = "binaryfile.aspx?format=eml&prefix=o43&pid=" & cRec.o43ID.ToString
             End If
         End With
         With CType(e.Item.FindControl("aAtts"), Label)

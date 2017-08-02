@@ -28,6 +28,12 @@ Class o41InboxAccountBL
             If Trim(.o41Name) = "" Or Trim(.o41Login) = "" Or Trim(.o41Server) = "" Then
                 _Error = "Název, login a server jsou povinná pole!" : Return False
             End If
+            If .o41ForwardFlag_Answer <> BO.o41ForwardENUM.EmailAddress Then
+                .o41ForwardEmail_Answer = ""
+            End If
+            If .o41ForwardFlag_New <> BO.o41ForwardENUM.EmailAddress Then
+                .o41ForwardEmail_New = ""
+            End If
         End With
 
         Return _cDL.Save(cRec)

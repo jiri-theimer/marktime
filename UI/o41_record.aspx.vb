@@ -52,6 +52,13 @@
             Me.o41Server.Text = .o41Server
             Me.o41Port.Text = .o41Port
 
+            basUI.SelectDropdownlistValue(Me.o41ForwardFlag_New, CInt(.o41ForwardFlag_New).ToString)
+            Me.o41ForwardEmail_New.Text = .o41ForwardEmail_New
+            basUI.SelectDropdownlistValue(Me.o41ForwardFlag_Answer, CInt(.o41ForwardFlag_Answer).ToString)
+            Me.o41ForwardEmail_Answer.Text = .o41ForwardEmail_Answer
+            Me.o41ForwardEmail_UnBound.Text = .o41ForwardEmail_UnBound
+
+
             Master.Timestamp = .Timestamp
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
 
@@ -87,7 +94,11 @@
                 .o41IsUseSSL = Me.o41IsUseSSL.Checked
                 .o41IsDeleteMesageAfterImport = Me.o41IsDeleteMesageAfterImport.Checked
                 .o41Port = Me.o41Port.Text
-
+                .o41ForwardEmail_UnBound = Me.o41ForwardEmail_UnBound.Text
+                .o41ForwardFlag_New = CType(CInt(Me.o41ForwardFlag_New.SelectedValue), BO.o41ForwardENUM)
+                .o41ForwardFlag_Answer = CType(CInt(Me.o41ForwardFlag_Answer.SelectedValue), BO.o41ForwardENUM)
+                .o41ForwardEmail_New = Me.o41ForwardEmail_New.Text
+                .o41ForwardEmail_Answer = Me.o41ForwardEmail_Answer.Text
 
                 If Me.o41Password.Visible Then .o41Password = BO.Crypto.Encrypt(Me.o41Password.Text, "o41InboxAccount")
 
@@ -117,6 +128,18 @@
             cmdChangePWD.Visible = False
         Else
             cmdChangePWD.Visible = True
+        End If
+        If Me.o41ForwardFlag_New.SelectedValue = "2" Then
+            o41ForwardEmail_New.Visible = True
+        Else
+            o41ForwardEmail_New.Visible = False
+            o41ForwardEmail_New.Text = ""
+        End If
+        If Me.o41ForwardFlag_Answer.SelectedValue = "2" Then
+            Me.o41ForwardEmail_Answer.Visible = True
+        Else
+            Me.o41ForwardEmail_Answer.Visible = False
+            o41ForwardEmail_Answer.Text = ""
         End If
     End Sub
 

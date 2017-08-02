@@ -383,10 +383,28 @@ Class o42ImapRuleBL
             End If
         End If
 
-        Dim intO43ID As Integer = _cDL.InsertImport2History(cO43)
+        Dim intO43ID As Integer = _cDL.InsertImport2History(cO43), bolAnswer As Boolean = False
+        cO43 = LoadHistoryByID(intO43ID)
 
         If cO43.p56ID > 0 Or cO43.o23ID > 0 Then
-            'vazba na úkol nebo dokument existuje -> není třeba zakládat nový úkol/dokument
+            'vazba na úkol nebo dokument existuje -> není třeba zakládat nový úkol/dokument, jedná se odpověď
+            Dim cB07 As New BO.b07Comment
+            With cO43
+                If .p56ID > 0 Then
+                    cB07.x29ID = BO.x29IdEnum.p56Task : cB07.b07RecordPID = .p56ID
+                End If
+                If .o23ID > 0 Then
+                    cB07.x29ID = BO.x29IdEnum.o23Doc : cB07.b07RecordPID = .o23ID
+                End If
+                cB07.o43ID = intO43ID
+                If .o43Body_PlainText <> "" Then
+                    cB07.b07Value = .o43Body_PlainText
+                Else
+                    cB07.b07Value = .o43Body_Html
+                End If
+                cB07.j02ID_Owner = .j02ID_Owner
+            End With
+            Factory.b07CommentBL.Save(cB07, "", Nothing)
         Else
             'nový úkol nebo nový dokument
             Dim lisO42 As IEnumerable(Of BO.o42ImapRule) = GetList(New BO.myQuery).Where(Function(p) p.o41ID = cInbox.PID)
@@ -400,7 +418,12 @@ Class o42ImapRuleBL
             Next
             _cDL.UpdateHistoryBind(intO43ID, cO43.p56ID, cO43.o23ID)
         End If
-        
+        If cO43.p56ID = 0 And cO43.o23ID = 0 Then
+            'zpráva bez vazby
+            If cInbox.o41ForwardEmail_UnBound <> "" Then
+
+            End If
+        End If
 
 
         If cO43.o43ErrorMessage = "" Then

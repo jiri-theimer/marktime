@@ -400,6 +400,9 @@ Class x40MailQueueBL
         Return _cDL.UpdateMessageState(intX40ID, NewState)
     End Function
 
+    Sub SendReply2Message(strBody As String, intO43ID As Integer, x29id As BO.x29IdEnum, intRecordPID As Integer)
+
+    End Sub
     Function SendAnswer2Ticket(strBody As String, intO43ID As Integer, x29id As BO.x29IdEnum, intRecordPID As Integer) As Boolean Implements Ix40MailQueueBL.SendAnswer2Ticket
         If intO43ID = 0 Then
             _Error = "Nelze najít zprávu, na kterou poslat odpověď (o43id)"

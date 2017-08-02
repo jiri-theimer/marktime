@@ -18,6 +18,7 @@
                         <asp:Label ID="Author" runat="server" CssClass="timestamp" Style="padding-left: 6px;"></asp:Label>
                         <div style="padding-top: 4px;">
                             <asp:HyperLink ID="aMSG" runat="server" Text="<img src='Images/outlook.png'/>Otevřít v MS-OUTLOOK" Visible="false"></asp:HyperLink>
+                            <asp:HyperLink ID="aEML" runat="server" Text="<img src='Images/email.png'/>EML" Visible="false"></asp:HyperLink>
                             <asp:Label ID="aAtts" runat="server" Visible="false"></asp:Label>
                         </div>
                         <div>

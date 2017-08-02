@@ -158,6 +158,51 @@ Partial Public Class o41_record
     Protected WithEvents cmdTest As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''o41ForwardFlag_New control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o41ForwardFlag_New As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''o41ForwardEmail_New control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o41ForwardEmail_New As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''o41ForwardFlag_Answer control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o41ForwardFlag_Answer As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''o41ForwardEmail_Answer control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o41ForwardEmail_Answer As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''o41ForwardEmail_UnBound control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o41ForwardEmail_UnBound As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>
