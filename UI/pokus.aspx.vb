@@ -25,8 +25,17 @@ Public Class pokus
 
     
     Private Sub pokus_Load(sender As Object, e As EventArgs) Handles Me.Load
-       
+        
     End Sub
 
     
+    Private Sub cmdPokus_Click(sender As Object, e As EventArgs) Handles cmdPokus.Click
+        Dim j02ids As List(Of Integer) = BO.BAS.ConvertPIDs2List(Me.txt1.Text)
+        Dim j11ids As List(Of Integer) = BO.BAS.ConvertPIDs2List(Me.txt2.Text)
+        Master.Notify(Master.Factory.j02PersonBL.GetEmails_j02_join_j11(j02ids, j11ids).Count)
+
+        txt3.Text = String.Join(",", Master.Factory.j02PersonBL.GetEmails_j02_join_j11(j02ids, j11ids).Select(Function(p) p.x43Email))
+
+
+    End Sub
 End Class

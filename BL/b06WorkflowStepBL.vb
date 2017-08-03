@@ -385,9 +385,9 @@ Class b06WorkflowStepBL
             End If
 
             If mrs.Count > 0 Then
-                Dim j02ids As IEnumerable(Of Integer) = mrs.Where(Function(p) p.j02ID <> 0).Select(Function(p) p.j02ID).Distinct
-                Dim j11ids As IEnumerable(Of Integer) = mrs.Where(Function(p) p.j11ID <> 0).Select(Function(p) p.j11ID).Distinct
-                Dim lisReceivers As IEnumerable(Of BO.j02Person) = Factory.j02PersonBL.GetList_j02_join_j11(j02ids.ToList, j11ids.ToList).Where(Function(p) p.IsClosed = False)
+                Dim j02ids As List(Of Integer) = mrs.Where(Function(p) p.j02ID <> 0).Select(Function(p) p.j02ID).ToList
+                Dim j11ids As List(Of Integer) = mrs.Where(Function(p) p.j11ID <> 0).Select(Function(p) p.j11ID).ToList
+                Dim lisReceivers As List(Of BO.x43MailQueue_Recipient) = Factory.j02PersonBL.GetEmails_j02_join_j11(j02ids.ToList, j11ids.ToList)
                 If lisReceivers.Count > 0 Then
                     Dim cMerge As New BO.clsMergeContent
                     Dim cB65 As BO.b65WorkflowMessage = Factory.b65WorkflowMessageBL.Load(c.b65ID)
@@ -414,18 +414,12 @@ Class b06WorkflowStepBL
                     mes.Subject = cB65.b65MessageSubject
                     If mes.Subject.IndexOf("[") > 0 Then mes.Subject = cMerge.MergeContent(objects, cB65.b65MessageSubject, strLinkUrl)
 
-                    For Each person In lisReceivers
-                        'pro každou osobu jedna zpráva
-                        Dim recipients As New List(Of BO.x43MailQueue_Recipient)
-                        Dim recipient As New BO.x43MailQueue_Recipient
-                        With recipient
-                            .x43Email = person.j02Email
-                            .x43DisplayName = person.FullNameAsc
-                            .x43RecipientFlag = BO.x43RecipientIdEnum.recTO
-                        End With
-                        recipients.Add(recipient)
+                    For Each cEmail In lisReceivers
+                        'pro každého jedna zpráva
+                        Dim lisTo As New List(Of BO.x43MailQueue_Recipient)
+                        lisTo.Add(cEmail)
 
-                        Factory.x40MailQueueBL.SaveMessageToQueque(mes, recipients, x29id, intRecordPID, BO.x40StateENUM.InQueque, cB06.o40ID)
+                        Factory.x40MailQueueBL.SaveMessageToQueque(mes, lisTo, x29id, intRecordPID, BO.x40StateENUM.InQueque, cB06.o40ID)
                     Next
 
                 End If

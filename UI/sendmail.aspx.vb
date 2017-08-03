@@ -323,7 +323,9 @@
         If Me.cbxAddTeam.SelectedIndex > 0 Then
             Dim mq As New BO.myQueryJ02
             mq.j11ID = CInt(Me.cbxAddTeam.SelectedValue)
-            AR(mq)
+            Dim cRec As BO.j11Team = Master.Factory.j11TeamBL.Load(CInt(Me.cbxAddTeam.SelectedValue))
+            If cRec.j11Email <> "" Then mq = Nothing
+            AR(mq, cRec.j11Email)
             Me.cbxAddTeam.SelectedIndex = 0
         End If
     End Sub

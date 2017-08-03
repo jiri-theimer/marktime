@@ -36,6 +36,7 @@
         With cRec
             Me.j11name.Text = .j11Name
             Me.j11IsAllPersons.Checked = .j11IsAllPersons
+            Me.j11Email.Text = .j11Email
             Me.j11RobotAddress.Text = .j11RobotAddress
             Master.Timestamp = .Timestamp
 
@@ -78,6 +79,7 @@
             cRec.j11Name = Me.j11name.Text
             cRec.j11IsAllPersons = Me.j11IsAllPersons.Checked
             cRec.j11RobotAddress = Me.j11RobotAddress.Text
+            cRec.j11Email = Me.j11Email.Text
             cRec.ValidFrom = Master.RecordValidFrom
             cRec.ValidUntil = Master.RecordValidUntil
 

@@ -209,14 +209,14 @@ Class x46EventNotificationBL
 
             If mrs.Count > 0 Then
                 'existují příjemci události
-                Dim j02ids As IEnumerable(Of Integer) = mrs.Where(Function(p) p.j02ID <> 0).Select(Function(p) p.j02ID).Distinct
-                Dim j11ids As IEnumerable(Of Integer) = mrs.Where(Function(p) p.j11ID <> 0).Select(Function(p) p.j11ID).Distinct
-
-                Dim lisReceivers As IEnumerable(Of BO.j02Person) = Factory.j02PersonBL.GetList_j02_join_j11(j02ids.ToList, j11ids.ToList).Where(Function(p) p.IsClosed = False)
-
+             
+                Dim j02ids As List(Of Integer) = mrs.Where(Function(p) p.j02ID <> 0).Select(Function(p) p.j02ID).ToList
+                Dim j11ids As List(Of Integer) = mrs.Where(Function(p) p.j11ID <> 0).Select(Function(p) p.j11ID).ToList
                 If c.x46IsExcludeAuthor Then    'vyloučit z příjemců zprávy autora události
-                    lisReceivers = lisReceivers.Where(Function(p) p.PID <> _cUser.j02ID)
+                    If j02ids.Exists(Function(p) p = _cUser.j02ID) Then j02ids.Remove(_cUser.j02ID)
                 End If
+                Dim lisReceivers As List(Of BO.x43MailQueue_Recipient) = Factory.j02PersonBL.GetEmails_j02_join_j11(j02ids.ToList, j11ids.ToList)
+
                 If lisReceivers.Count > 0 Then
                     'zkompletovat zprávu a odeslat do mail fronty
                     Dim cMerge As New BO.clsMergeContent
@@ -239,24 +239,19 @@ Class x46EventNotificationBL
     End Sub
 
     
-    Private Sub CompleteMessages(cX47 As BO.x47EventLog, message As Rebex.Mail.MailMessage, lisReceivers As IEnumerable(Of BO.j02Person))
+    Private Sub CompleteMessages(cX47 As BO.x47EventLog, message As Rebex.Mail.MailMessage, lisReceivers As List(Of BO.x43MailQueue_Recipient))
         Dim x29ID_Message As BO.x29IdEnum = cX47.x29ID, intRecordPID_Message As Integer = cX47.x47RecordPID
         If cX47.x29ID = BO.x29IdEnum.b07Comment Then
             x29ID_Message = cX47.x29ID_Reference
             intRecordPID_Message = cX47.x47RecordPID_Reference
         End If
 
-        For Each cJ02 In lisReceivers
-            'pro každou osobu jedna zpráva
-            Dim recipients As New List(Of BO.x43MailQueue_Recipient)
-            Dim recipient As New BO.x43MailQueue_Recipient
-            With recipient
-                .x43Email = cJ02.j02Email
-                .x43DisplayName = cJ02.FullNameAsc
-                .x43RecipientFlag = BO.x43RecipientIdEnum.recTO
-            End With
-            recipients.Add(recipient)
-            Factory.x40MailQueueBL.SaveMessageToQueque(message, recipients, x29ID_Message, intRecordPID_Message, BO.x40StateENUM.InQueque, 0)
+        For Each cReceiver In lisReceivers
+            'každému poslat zprávu individuálně
+            Dim lisTo As New List(Of BO.x43MailQueue_Recipient)
+            lisTo.Add(cReceiver)
+
+            Factory.x40MailQueueBL.SaveMessageToQueque(message, lisTo, x29ID_Message, intRecordPID_Message, BO.x40StateENUM.InQueque, 0)
         Next
     End Sub
     

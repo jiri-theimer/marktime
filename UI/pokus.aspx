@@ -21,12 +21,14 @@
     
     
 
-    <asp:Button ID="cmdJson" runat="server" Text="Generovat" />
+    <asp:Button ID="cmdPokus" runat="server" Text="Generovat" />
 
 
     <hr />
-    <asp:TextBox ID="txt1" runat="server" TextMode="MultiLine" style="width:100%;height:300px;"></asp:TextBox>
-    
+    <span>j02ids:</span><asp:TextBox ID="txt1" runat="server" text="3,1,4"></asp:TextBox>
+    <span>j11ids:</span><asp:TextBox ID="txt2" runat="server" Text=""></asp:TextBox>
+    <hr />
+    <asp:TextBox ID="txt3" runat="server" Width="800px" Height="100px"></asp:TextBox>
 </asp:Content>
 
 

@@ -11,6 +11,7 @@
     Function GetGridDataSource(myQuery As BO.myQueryJ02) As DataTable
     Function GetList_x90(intPID As Integer, datFrom As Date, datUntil As Date) As IEnumerable(Of BO.x90EntityLog)
     Function GetList_j02_join_j11(j02ids As List(Of Integer), j11ids As List(Of Integer)) As IEnumerable(Of BO.j02Person)
+    Function GetEmails_j02_join_j11(j02ids As List(Of Integer), j11ids As List(Of Integer)) As List(Of BO.x43MailQueue_Recipient)
     Function GetList_j11(intJ02ID As Integer) As IEnumerable(Of BO.j11Team)
     Function GetList_Slaves(intJ02ID As Integer, bolDispCreateP31 As Boolean, dispP31 As BO.j05Disposition_p31ENUM, bolDispCreateP48 As Boolean, dispP48 As BO.j05Disposition_p48ENUM) As IEnumerable(Of BO.j02Person)
     Function GetTeamsInLine(intJ02ID As Integer) As String
@@ -102,6 +103,49 @@ Class j02PersonBL
     End Function
     Public Function GetList_j02_join_j11(j02ids As List(Of Integer), j11ids As List(Of Integer)) As IEnumerable(Of BO.j02Person) Implements Ij02PersonBL.GetList_j02_join_j11
         Return _cDL.GetList_j02_join_j11(j02ids, j11ids)
+    End Function
+    Public Function GetEmails_j02_join_j11(j02ids As List(Of Integer), j11ids As List(Of Integer)) As List(Of BO.x43MailQueue_Recipient) Implements Ij02PersonBL.GetEmails_j02_join_j11
+        Dim ret As New List(Of BO.x43MailQueue_Recipient)
+        Dim lisJ02 As New List(Of BO.j02Person)
+        Dim lisJ11WithAddress As New List(Of BO.j11Team), lisJ11WithoutAddress As New List(Of BO.j11Team)
+
+        If j11ids.Count > 0 Then
+            Dim mq As New BO.myQuery
+            mq.Closed = BO.BooleanQueryMode.FalseQuery
+            mq.PIDs = j11ids
+            Dim lis As IEnumerable(Of BO.j11Team) = Factory.j11TeamBL.GetList(mq)
+            lisJ11WithAddress = lis.Where(Function(p) p.j11Email <> "").ToList
+            lisJ11WithoutAddress = lis.Where(Function(p) p.j11Email = "").ToList
+        End If
+        If j02ids.Count > 0 Then
+            Dim mq As New BO.myQueryJ02
+            mq.Closed = BO.BooleanQueryMode.FalseQuery
+            mq.PIDs = j02ids
+            lisJ02 = GetList(mq).Where(Function(p) p.j02Email <> "").ToList
+        End If
+        If lisJ11WithoutAddress.Count > 0 Then
+            Dim lisAppend As List(Of BO.j02Person) = GetList_j02_join_j11(New List(Of Integer), lisJ11WithoutAddress.Select(Function(p) p.PID).ToList).ToList
+            For Each c In lisAppend
+                lisJ02.Add(c)
+            Next
+        End If
+
+
+        For Each c In lisJ11WithAddress
+            Factory.x40MailQueueBL.AppendRecipient(ret, c.j11Email, c.j11Name)
+            If lisJ02.Count > 0 Then
+                For Each cJ12 In Factory.j11TeamBL.GetList_BoundJ12(c.PID)
+                    If lisJ02.Exists(Function(p) p.PID = cJ12.j02ID) Then
+                        lisJ02.Remove(lisJ02.First(Function(p) p.PID = cJ12.j02ID))   'osoba je v týmu s vyplněnou e-mail adresou
+                    End If
+                Next
+            End If
+
+        Next
+        For Each c In lisJ02
+            Factory.x40MailQueueBL.AppendRecipient(ret, c.j02Email, c.FullNameAsc)
+        Next
+        Return ret
     End Function
     Public Function GetList_Slaves(intJ02ID As Integer, bolDispCreateP31 As Boolean, dispP31 As BO.j05Disposition_p31ENUM, bolDispCreateP48 As Boolean, dispP48 As BO.j05Disposition_p48ENUM) As IEnumerable(Of BO.j02Person) Implements Ij02PersonBL.GetList_Slaves
         Return _cDL.GetList_Slaves(intJ02ID, bolDispCreateP31, dispP31, bolDispCreateP48, dispP48)

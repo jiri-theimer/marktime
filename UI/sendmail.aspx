@@ -50,7 +50,7 @@
             <asp:DropDownList ID="cbxAddContactPerson" runat="server" DataTextField="FullNameDescWithJobTitle" DataValueField="pid" AutoPostBack="true" Style="width: 150px;"></asp:DropDownList>
 
 
-            <asp:DropDownList ID="cbxAddTeam" runat="server" DataTextField="j11Name" DataValueField="pid" AutoPostBack="true" Style="width: 150px;"></asp:DropDownList>
+            <asp:DropDownList ID="cbxAddTeam" runat="server" DataTextField="NameWithEmail" DataValueField="pid" AutoPostBack="true" Style="width: 150px;"></asp:DropDownList>
 
 
             <asp:DropDownList ID="cbxAddPosition" runat="server" DataTextField="j07Name" DataValueField="pid" AutoPostBack="true" Style="width: 150px;"></asp:DropDownList>

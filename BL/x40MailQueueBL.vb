@@ -20,7 +20,9 @@ Public Interface Ix40MailQueueBL
     Function SendAnswer2Ticket(strBody As String, cRec2Answer As BO.b07Comment) As Boolean
     Function SendAnswer2Ticket(strBody As String, intO43ID As Integer, x29id As BO.x29IdEnum, intRecordPID As Integer) As Boolean
     Function SendAnswer2Ticket(strBody As String, x29id As BO.x29IdEnum, intRecordPID As Integer) As Boolean
-
+    Function CreateRecipients(strEmail As String, strDisplayName As String, Optional side As BO.x43RecipientIdEnum = BO.x43RecipientIdEnum.recTO) As List(Of BO.x43MailQueue_Recipient)
+    Sub AppendRecipient(ByRef lis2Append As List(Of BO.x43MailQueue_Recipient), strEmail As String, strDisplayName As String, Optional side As BO.x43RecipientIdEnum = BO.x43RecipientIdEnum.recTO)
+    Function ForwardMessageToQueue(strBody As String, recipients As List(Of BO.x43MailQueue_Recipient), intO43ID As Integer, x29id As BO.x29IdEnum, intRecordPID As Integer) As Integer
     Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer, bolSSL As Boolean) As Boolean
 End Interface
 
@@ -400,9 +402,22 @@ Class x40MailQueueBL
         Return _cDL.UpdateMessageState(intX40ID, NewState)
     End Function
 
-    Sub SendReply2Message(strBody As String, intO43ID As Integer, x29id As BO.x29IdEnum, intRecordPID As Integer)
+    Function ForwardMessageToQueue(strBody As String, recipients As List(Of BO.x43MailQueue_Recipient), intO43ID As Integer, x29id As BO.x29IdEnum, intRecordPID As Integer) As Integer Implements Ix40MailQueueBL.ForwardMessageToQueue
+        'fce vrací x40ID
+        _Error = ""
+        If intO43ID = 0 Then Return 0
+        Dim original As Rebex.Mail.MailMessage = Me.Factory.o42ImapRuleBL.LoadMailMessageFromHistory(intO43ID)
+        If original Is Nothing Then Return 0
 
-    End Sub
+        Dim forward As New MailMessage()
+        forward.Subject = "FW: " & original.Subject
+        forward.BodyText = strBody
+        'and add the original e-mail as an attachment
+        forward.Attachments.Add(New Attachment(original))
+
+        Return SaveMessageToQueue(forward, recipients, x29id, intRecordPID, BO.x40StateENUM.InQueque, 0)
+
+    End Function
     Function SendAnswer2Ticket(strBody As String, intO43ID As Integer, x29id As BO.x29IdEnum, intRecordPID As Integer) As Boolean Implements Ix40MailQueueBL.SendAnswer2Ticket
         If intO43ID = 0 Then
             _Error = "Nelze najít zprávu, na kterou poslat odpověď (o43id)"
@@ -429,16 +444,28 @@ Class x40MailQueueBL
         reply.MessageId = New Rebex.Mime.Headers.MessageId
         reply.Subject = "RE: " & original.Subject
         reply.BodyText = strBody
+
+        Dim recipients As List(Of BO.x43MailQueue_Recipient) = CreateRecipients(original.From(0).Address, original.From(0).DisplayName)
+
+        Dim intX40ID As Integer = SaveMessageToQueue(reply, recipients, x29id, intRecordPID, BO.x40StateENUM.InQueque, intO40ID)
+        Return SendMessageFromQueque(intX40ID)
+    End Function
+    Function CreateRecipients(strEmail As String, strDisplayName As String, Optional side As BO.x43RecipientIdEnum = BO.x43RecipientIdEnum.recTO) As List(Of BO.x43MailQueue_Recipient) Implements Ix40MailQueueBL.CreateRecipients
         Dim recipients As New List(Of BO.x43MailQueue_Recipient)
         Dim cR As New BO.x43MailQueue_Recipient
-        cR.x43Email = original.From(0).Address
-        cR.x43DisplayName = original.From(0).DisplayName
+        cR.x43Email = strEmail
+        cR.x43DisplayName = strDisplayName
+        cR.x43RecipientFlag = side
         recipients.Add(cR)
-        recipients.Add(New BO.x43MailQueue_Recipient())
-
-        Dim intX40ID As Integer = Me.Factory.x40MailQueueBL.SaveMessageToQueque(reply, recipients, x29id, intRecordPID, BO.x40StateENUM.InQueque, intO40ID)
-        Return Me.Factory.x40MailQueueBL.SendMessageFromQueque(intX40ID)
+        Return recipients
     End Function
+    Sub AppendRecipient(ByRef lis2Append As List(Of BO.x43MailQueue_Recipient), strEmail As String, strDisplayName As String, Optional side As BO.x43RecipientIdEnum = BO.x43RecipientIdEnum.recTO) Implements Ix40MailQueueBL.AppendRecipient
+        Dim c As New BO.x43MailQueue_Recipient
+        c.x43Email = strEmail
+        c.x43DisplayName = strDisplayName
+        c.x43RecipientFlag = side
+        lis2Append.Add(c)
+    End Sub
     Function SendAnswer2Ticket(strBody As String, x29id As BO.x29IdEnum, intRecordPID As Integer) As Boolean Implements Ix40MailQueueBL.SendAnswer2Ticket
         Dim mq As New BO.myQueryB07 'najít poslední odpověď žadatele načtenou přes IMAP
         mq.x29id = x29id
@@ -458,7 +485,7 @@ Class x40MailQueueBL
             End Select
             Return SendAnswer2Ticket(strBody, intO43ID, x29id, intRecordPID)
         End If
-        
+
     End Function
     Function SendAnswer2Ticket(strBody As String, cRec2Answer As BO.b07Comment) As Boolean Implements Ix40MailQueueBL.SendAnswer2Ticket
         Return SendAnswer2Ticket(strBody, cRec2Answer.o43ID, cRec2Answer.x29ID, cRec2Answer.b07RecordPID)

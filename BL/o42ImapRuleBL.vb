@@ -387,6 +387,7 @@ Class o42ImapRuleBL
         cO43 = LoadHistoryByID(intO43ID)
 
         If cO43.p56ID > 0 Or cO43.o23ID > 0 Then
+            bolAnswer = True
             'vazba na úkol nebo dokument existuje -> není třeba zakládat nový úkol/dokument, jedná se odpověď
             Dim cB07 As New BO.b07Comment
             With cO43
@@ -407,6 +408,7 @@ Class o42ImapRuleBL
             Factory.b07CommentBL.Save(cB07, "", Nothing)
         Else
             'nový úkol nebo nový dokument
+            bolAnswer = False
             Dim lisO42 As IEnumerable(Of BO.o42ImapRule) = GetList(New BO.myQuery).Where(Function(p) p.o41ID = cInbox.PID)
             For Each c In lisO42
                 If c.p57ID <> 0 Then
@@ -418,12 +420,43 @@ Class o42ImapRuleBL
             Next
             _cDL.UpdateHistoryBind(intO43ID, cO43.p56ID, cO43.o23ID)
         End If
+
+        Dim strBodyForward As String = message.Sender.Address & " " & message.Sender.DisplayName & vbCrLf & vbCrLf & message.Subject & ": " & vbCrLf & vbCrLf & message.BodyText
+        Dim recepientsForward As New List(Of BO.x43MailQueue_Recipient), x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified, intRecordPID As Integer = 0
         If cO43.p56ID = 0 And cO43.o23ID = 0 Then
             'zpráva bez vazby
             If cInbox.o41ForwardEmail_UnBound <> "" Then
-
+                Factory.x40MailQueueBL.AppendRecipient(recepientsForward, cInbox.o41ForwardEmail_UnBound, "")
+            End If
+        Else
+            If bolAnswer Then
+                Select Case cInbox.o41ForwardFlag_Answer
+                    Case BO.o41ForwardENUM.EmailAddress
+                        If cInbox.o41ForwardEmail_Answer <> "" Then
+                            Factory.x40MailQueueBL.AppendRecipient(recepientsForward, cInbox.o41ForwardEmail_Answer, "")
+                        End If
+                    Case BO.o41ForwardENUM.EntityRoles
+                        For Each c In Factory.x67EntityRoleBL.GetEmails_j02_join_j11(BO.x29IdEnum.p56Task, intRecordPID)
+                            Factory.x40MailQueueBL.AppendRecipient(recepientsForward, c.x43Email, c.x43DisplayName)
+                        Next
+                End Select
+            Else
+                Select Case cInbox.o41ForwardFlag_New
+                    Case BO.o41ForwardENUM.EmailAddress
+                        If cInbox.o41ForwardEmail_New <> "" Then
+                            Factory.x40MailQueueBL.AppendRecipient(recepientsForward, cInbox.o41ForwardEmail_New, "")
+                        End If
+                    Case BO.o41ForwardENUM.EntityRoles
+                        For Each c In Factory.x67EntityRoleBL.GetEmails_j02_join_j11(BO.x29IdEnum.p56Task, intRecordPID)
+                            Factory.x40MailQueueBL.AppendRecipient(recepientsForward, c.x43Email, c.x43DisplayName)
+                        Next
+                End Select
             End If
         End If
+        If recepientsForward.Count > 0 Then
+            Factory.x40MailQueueBL.ForwardMessageToQueue(strBodyForward, Factory.x40MailQueueBL.CreateRecipients(cInbox.o41ForwardEmail_UnBound, ""), intO43ID, x29ID, intRecordPID)
+        End If
+
 
 
         If cO43.o43ErrorMessage = "" Then

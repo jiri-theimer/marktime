@@ -14,13 +14,13 @@ Option Explicit On
 Partial Public Class pokus
 
     '''<summary>
-    '''cmdJson control.
+    '''cmdPokus control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdJson As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents cmdPokus As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''txt1 control.
@@ -30,6 +30,24 @@ Partial Public Class pokus
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txt1 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txt2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txt2 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txt3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txt3 As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Master property.

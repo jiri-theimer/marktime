@@ -15,19 +15,37 @@
             Tým osob
         </div>
         <div class="content">
-            <div class="div6">
-                <asp:Label ID="lblJ11Name" Text="Název týmu:" runat="server" CssClass="lblReq" AssociatedControlID="j11name"></asp:Label>
-                <asp:TextBox ID="j11name" runat="server" Style="width: 300px;"></asp:TextBox>
-            </div>
-            <div class="div6">
-                <span class="lbl">Adresa pro IMAP robota:</span>
-                <asp:TextBox ID="j11RobotAddress" runat="server" Style="width: 200px;"></asp:TextBox>
-                <span class="infoInForm">E-mail adresa, podle které IMAP robot pozná, že nový úkol/dokument zakládaný automaticky z poštovní zprávy má vztah k týmu.</span>
-            </div>
+            <table cellpadding="6">
+                <tr>
+                    <td>
+                        <asp:Label ID="lblJ11Name" Text="Název týmu:" runat="server" CssClass="lblReq" AssociatedControlID="j11name"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="j11name" runat="server" Style="width: 300px;"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="lbl">Skupinová e-mail adresa:</span>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="j11Email" runat="server" Style="width: 200px;"></asp:TextBox>
+                        <span class="infoInForm">E-mail adresa, na kterou se mají týmu odesílat poštovní zprávy.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="lbl">Adresa pro IMAP robota:</span>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="j11RobotAddress" runat="server" Style="width: 200px;"></asp:TextBox>
+                        <span class="infoInForm">E-mail adresa, podle které IMAP robot pozná, že nový úkol/dokument zakládaný automaticky z poštovní zprávy má vztah k týmu.</span>
+                    </td>
+                </tr>
+            </table>
 
-            <div class="div6">
-            </div>
         </div>
+
     </div>
 
     <asp:Panel ID="panMembers" runat="server">

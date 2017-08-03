@@ -13,7 +13,7 @@
     Function TestEntityRolePermission(x29id As BO.x29IdEnum, intRecordPID As Integer, NeededPermissionValue As BO.x53PermValEnum, bolUseLastRowset As Boolean) As Boolean
     Function HasPersonEntityRole(x29id As BO.x29IdEnum, intRecordPID As Integer) As Boolean
     ReadOnly Property TestedX67IDs As List(Of Integer)
-
+    Function GetEmails_j02_join_j11(x29ID As BO.x29IdEnum, intRecordPID As Integer, Optional intX67ID As Integer = 0) As List(Of BO.x43MailQueue_Recipient)
 End Interface
 Class x67EntityRoleBL
     Inherits BLMother
@@ -111,6 +111,15 @@ Class x67EntityRoleBL
     End Function
     Public Overloads Function GetList_x69(x29ID As BO.x29IdEnum, recPIDs As List(Of Integer)) As IEnumerable(Of BO.x69EntityRole_Assign) Implements Ix67EntityRoleBL.GetList_x69
         Return _cDL._GetList_x69(x29ID, recPIDs)
+    End Function
+    Public Function GetEmails_j02_join_j11(x29ID As BO.x29IdEnum, intRecordPID As Integer, Optional intX67ID As Integer = 0) As List(Of BO.x43MailQueue_Recipient) Implements Ix67EntityRoleBL.GetEmails_j02_join_j11
+        Dim lis As IEnumerable(Of BO.x69EntityRole_Assign) = GetList_x69(x29ID, intRecordPID)
+        If intX67ID <> 0 Then lis = lis.Where(Function(p) p.x67ID = intX67ID)
+
+        Dim j02ids As List(Of Integer) = lis.Where(Function(p) p.j02ID <> 0).Select(Function(p) p.j02ID).ToList
+        Dim j11ids As List(Of Integer) = lis.Where(Function(p) p.j11ID <> 0).Select(Function(p) p.j11ID).ToList
+
+        Return Me.Factory.j02PersonBL.GetEmails_j02_join_j11(j02ids, j11ids)
     End Function
 
     Public Function TestEntityRolePermission(x29id As BO.x29IdEnum, intRecordPID As Integer, NeededPermissionValue As BO.x53PermValEnum, bolUseLastRowset As Boolean) As Boolean Implements Ix67EntityRoleBL.TestEntityRolePermission

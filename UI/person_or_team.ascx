@@ -7,7 +7,7 @@
             <span>Osoba:</span>
             <uc:person id="j02id" runat="server" width="200px" flag="all" />
             <span>nebo tým:</span>
-            <asp:DropDownList ID="j11id" runat="server" DataTextField="j11Name" DataValueField="pid" Style="width: 200px;"></asp:DropDownList>
+            <asp:DropDownList ID="j11id" runat="server" DataTextField="NameWithEmail" DataValueField="pid" Style="width: 200px;"></asp:DropDownList>
             <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit položku" CssClass="button-link" />
             <asp:HiddenField ID="p85id" runat="server" />
         </div>

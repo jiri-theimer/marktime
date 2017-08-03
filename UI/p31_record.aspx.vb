@@ -742,6 +742,9 @@
                 RefreshContactPersonCombo(True, intDefj02ID)
             
             End If
+            If _Project.p41WorksheetOperFlag = BO.p41WorksheetOperFlagEnum.WithTaskOnly Then
+                Me.chkBindToP56.Checked = True  'v projektu je povinnost zapisovat přes úkol
+            End If
 
             If Me.chkBindToP56.Checked Then
                 SetupP56Combo(True, BO.BAS.IsNullInt(Me.p56ID.SelectedValue))

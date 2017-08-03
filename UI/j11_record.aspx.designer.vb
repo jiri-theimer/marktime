@@ -32,6 +32,15 @@ Partial Public Class j11_record
     Protected WithEvents j11name As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''j11Email control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j11Email As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''j11RobotAddress control.
     '''</summary>
     '''<remarks>
