@@ -8,25 +8,31 @@
         End Get
     End Property
 
-    Public Function MakeBackup(ByVal strCon As String, ByVal strBackupFileName As String, ByVal strBackupDir As String, Optional ByVal intTimeout As Integer = -1) As Boolean
+    Public Function MakeBackup(ByVal strCon As String, ByVal strBackupFileName As String, ByVal strBackupDir As String, Optional ByVal intTimeout As Integer = -1, Optional bolTestFileSystem As Boolean = True) As Boolean
         Dim strDB As String = ParseDbNameFromConString(strCon)
         If strDB = "" Then
             _Error = "nelze z connectstringu poznat jméno databáze"
             Return False
         End If
 
-        If Not System.IO.Directory.Exists(strBackupDir) Then
-            _Error = "Directory '" & strBackupDir & "' doesn't exist!"
-            Return False
-        End If
-        If Right(strBackupDir, 1) = "\" Then strBackupDir = Left(strBackupDir, Len(strBackupDir) - 1)
-        Dim cF As New BO.clsFile, strFullBackupPath As String = strBackupDir & "\" & strBackupFileName
-        If cF.FileExist(strFullBackupPath) Then
-            If Not cF.DeleteFile(strFullBackupPath) Then
-                _Error = cF.ErrorMessage
+        If bolTestFileSystem Then
+            If Not System.IO.Directory.Exists(strBackupDir) Then
+                _Error = "Directory '" & strBackupDir & "' doesn't exist!"
                 Return False
             End If
         End If
+        
+        If Right(strBackupDir, 1) = "\" Then strBackupDir = Left(strBackupDir, Len(strBackupDir) - 1)
+        Dim cF As New BO.clsFile, strFullBackupPath As String = strBackupDir & "\" & strBackupFileName
+        If bolTestFileSystem Then
+            If cF.FileExist(strFullBackupPath) Then
+                If Not cF.DeleteFile(strFullBackupPath) Then
+                    _Error = cF.ErrorMessage
+                    Return False
+                End If
+            End If
+        End If
+        
 
         Dim strSQL As String
         Dim cDB As New DL.DbHandler
@@ -70,6 +76,9 @@
                 _Error = cDB.ErrorMessage
                 Return False
             End If
+        End If
+        If Not bolTestFileSystem Then
+            Return True
         End If
 
         If System.IO.File.Exists(strFullBackupPath) Then

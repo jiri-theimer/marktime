@@ -37,8 +37,8 @@
                 Handle_CentralPing()
             End If
             If BO.ASS.GetConfigVal("autobackup", "1") = "1" Then
-                If Now > Today.AddDays(1).AddHours(-1) Then
-                    'zbývá hodina do půlnoci na zálohování
+                If Now > Today.AddDays(1).AddMinutes(-15) Then
+                    'zbývá 15 minut do půlnoci na zálohování
                     Handle_DbBackup()
                 End If
             End If
@@ -319,48 +319,60 @@
 
     Private Sub Handle_DbBackup()
         Dim cBL As New BL.SysObjectBL()
-        Dim strDir As String = _Factory.x35GlobalParam.UploadFolder & "\dbBackup"
-        If Not System.IO.Directory.Exists(strDir) Then
-            Try
-                System.IO.Directory.CreateDirectory(strDir)
-            Catch ex As Exception
-                log4net.LogManager.GetLogger("robotlog").Error("Handle_DbBackup: " & ex.Message)
-                Return
-            End Try
+        Dim strDir As String = BO.ASS.GetConfigVal("backupdir", ""), bolTestFileSystem As Boolean = False
+        If strDir = "" Then
+            strDir = _Factory.x35GlobalParam.UploadFolder & "\dbBackup"
+            If Not System.IO.Directory.Exists(strDir) Then
+                Try
+                    System.IO.Directory.CreateDirectory(strDir)
+                Catch ex As Exception
+                    log4net.LogManager.GetLogger("robotlog").Error("Handle_DbBackup: " & ex.Message)
+                    Return
+                End Try
+            End If
+            bolTestFileSystem = True
         End If
+        
         Dim strBackupFileName As String = "MARKTIME50_Backup_day" & Weekday(Now, Microsoft.VisualBasic.FirstDayOfWeek.Monday).ToString & ".bak"
 
-        If System.IO.File.Exists(strDir & "\" & strBackupFileName) Then
-            If System.IO.File.Exists(strDir & "\backup.info") Then
-                Dim cF As New BO.clsFile
-                Dim strDat As String = cF.GetFileContents(strDir & "\backup.info", , , True)
-                If strDat = Format(Now, "dd.MM.yyyy") Then
-                    Return  'záloha pro tento den již existuje
-                Else
-                    Try
-                        System.IO.File.Delete(strDir & "\" & strBackupFileName)
-                    Catch ex As Exception
-                        log4net.LogManager.GetLogger("robotlog").Error("Nelze odstranit starý backup soubor: " & strDir & "\" & strBackupFileName)
-                        Return
-                    End Try
+        If bolTestFileSystem Then
+            If System.IO.File.Exists(strDir & "\" & strBackupFileName) Then
+                If System.IO.File.Exists(strDir & "\backup.info") Then
+                    Dim cF As New BO.clsFile
+                    Dim strDat As String = cF.GetFileContents(strDir & "\backup.info", , , True)
+                    If strDat = Format(Now, "dd.MM.yyyy") Then
+                        Return  'záloha pro tento den již existuje
+                    Else
+                        Try
+                            System.IO.File.Delete(strDir & "\" & strBackupFileName)
+                        Catch ex As Exception
+                            log4net.LogManager.GetLogger("robotlog").Error("Nelze odstranit starý backup soubor: " & strDir & "\" & strBackupFileName)
+                            Return
+                        End Try
+                    End If
                 End If
             End If
         End If
+        
 
-        Dim strRet As String = cBL.CreateDbBackup(, strDir, strBackupFileName)
+        Dim strRet As String = cBL.CreateDbBackup(, strDir, strBackupFileName, bolTestFileSystem)
         If strRet <> strBackupFileName Then
             log4net.LogManager.GetLogger("robotlog").Error("Handle_DbBackup: " & strRet)
         Else
-            Dim cF As New BO.clsFile
-            cF.SaveText2File(strDir & "\backup.info", Format(Now, "dd.MM.yyyy"))
+            If bolTestFileSystem Then
+                Dim cF As New BO.clsFile
+                cF.SaveText2File(strDir & "\backup.info", Format(Now, "dd.MM.yyyy"))
 
-
+            End If
         End If
 
         strBackupFileName = "MARKTIME50_MEMBERSHIP_Backup_day" & Weekday(Now, Microsoft.VisualBasic.FirstDayOfWeek.Monday).ToString & ".bak"
-        If System.IO.File.Exists(strDir & "\" & strBackupFileName) Then
-            System.IO.File.Delete(strDir & "\" & strBackupFileName)
+        If bolTestFileSystem Then
+            If System.IO.File.Exists(strDir & "\" & strBackupFileName) Then
+                System.IO.File.Delete(strDir & "\" & strBackupFileName)
+            End If
         End If
-        strRet = cBL.CreateDbBackup(System.Configuration.ConfigurationManager.ConnectionStrings.Item("ApplicationServices").ToString, strDir, strBackupFileName)
+        
+        strRet = cBL.CreateDbBackup(System.Configuration.ConfigurationManager.ConnectionStrings.Item("ApplicationServices").ToString, strDir, strBackupFileName, bolTestFileSystem)
     End Sub
 End Class
