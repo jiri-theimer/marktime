@@ -18,6 +18,8 @@
     o22Milestone = 222
     o23Doc = 223
 
+    o43ImapRobotHistory = 243
+
     o27Attachment = 227
     p28Contact = 328
     p31Worksheet = 331

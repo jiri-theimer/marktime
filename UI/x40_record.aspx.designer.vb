@@ -176,15 +176,6 @@ Partial Public Class x40_record
     Protected WithEvents x40Subject As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''x40Body control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x40Body As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''rpAtt control.
     '''</summary>
     '''<remarks>
@@ -201,6 +192,15 @@ Partial Public Class x40_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents Timestamp As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x40Body control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x40Body As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''cmdDelete control.

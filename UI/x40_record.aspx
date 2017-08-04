@@ -107,10 +107,8 @@
             </td>
         </tr>
       
-    </table>
-
-    <asp:TextBox ID="x40Body" runat="server" TextMode="MultiLine" Style="width: 100%; height: 200px;" ReadOnly="true">
-    </asp:TextBox>
+    </table>    
+    
     <asp:Repeater ID="rpAtt" runat="server">
         <ItemTemplate>
             <div class="div6">
@@ -121,6 +119,9 @@
     </asp:Repeater>
     <div>
         <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
+    </div>
+    <div class="div6" style="background-color: #ffffcc;border:solid 1px silver;">
+        <asp:Label ID="x40Body" runat="server"  CssClass="val"></asp:Label>
     </div>
     <div class="div6">
         <asp:Button ID="cmdDelete" Text="Odstranit zprávu" runat="server" CssClass="cmd" Visible="false" />

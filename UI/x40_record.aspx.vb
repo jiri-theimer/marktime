@@ -43,7 +43,7 @@
             Me.x40BCC.Text = .x40BCC
 
             Me.x40Subject.Text = .x40Subject
-            Me.x40Body.Text = .x40Body
+            Me.x40Body.Text = BO.BAS.CrLfText2Html(.x40Body)
             Me.x40ErrorMessage.Text = .x40ErrorMessage
             Me.x40State.Text = .StatusAlias
 

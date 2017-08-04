@@ -422,7 +422,7 @@ Class o42ImapRuleBL
             _cDL.UpdateHistoryBind(intO43ID, cO43.p56ID, cO43.o23ID)
         End If
 
-        Dim strBodyForward As String = message.Sender.Address & " " & message.Sender.DisplayName & vbCrLf & vbCrLf & message.Subject & ": " & vbCrLf & vbCrLf & message.BodyText
+        Dim strBodyForward As String = message.From(0).Address & " " & message.From(0).DisplayName & vbCrLf & vbCrLf & message.Subject & ": " & vbCrLf & vbCrLf & message.BodyText
         Dim recepientsForward As New List(Of BO.x43MailQueue_Recipient), x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified, intRecordPID As Integer = 0
         If cO43.p56ID = 0 And cO43.o23ID = 0 Then
             'zpráva bez vazby
@@ -455,13 +455,20 @@ Class o42ImapRuleBL
             End If
         End If
         If recepientsForward.Count > 0 Then
+            x29ID = BO.x29IdEnum.o43ImapRobotHistory
+            intRecordPID = cO43.o43ID
+
             If cO43.p56ID > 0 Then
+                x29ID = BO.x29IdEnum.p56Task
+                intRecordPID = cO43.p56ID
                 strBodyForward = "ÚKOL: " & Factory.GetRecordLinkUrl("p56", intRecordPID) & vbCrLf & strBodyForward
             End If
             If cO43.o23ID > 0 Then
+                x29ID = BO.x29IdEnum.o23Doc
+                intRecordPID = cO43.o23ID
                 strBodyForward = "DOKUMENT: " & Factory.GetRecordLinkUrl("o23", intRecordPID) & vbCrLf & strBodyForward
             End If
-            Factory.x40MailQueueBL.ForwardMessageToQueue(strBodyForward, Factory.x40MailQueueBL.CreateRecipients(cInbox.o41ForwardEmail_UnBound, ""), intO43ID, x29ID, intRecordPID)
+            Factory.x40MailQueueBL.ForwardMessageToQueue("Upozornění na příchozí MARKTIME poštu", strBodyForward, recepientsForward, intO43ID, x29ID, intRecordPID)
         End If
 
 

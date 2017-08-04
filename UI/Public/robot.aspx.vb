@@ -198,10 +198,7 @@
                 Dim a() As String = Split(c.x31SchedulingReceivers, ";")
                 Dim recipients As New List(Of BO.x43MailQueue_Recipient)
                 For i = 0 To UBound(a)
-                    Dim cc As New BO.x43MailQueue_Recipient()
-                    cc.x43Email = a(i)
-                    cc.x43RecipientFlag = BO.x43RecipientIdEnum.recBCC
-                    recipients.Add(cc)
+                    _Factory.x40MailQueueBL.AppendRecipient(recipients, a(i), "")
                 Next
                 With _Factory.x40MailQueueBL
                     Dim intMessageID As Integer = .SaveMessageToQueque(message, recipients, BO.x29IdEnum.x31Report, c.PID, BO.x40StateENUM.InQueque, 0)

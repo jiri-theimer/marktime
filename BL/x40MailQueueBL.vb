@@ -22,7 +22,7 @@ Public Interface Ix40MailQueueBL
     Function SendAnswer2Ticket(strBody As String, x29id As BO.x29IdEnum, intRecordPID As Integer) As Boolean
     Function CreateRecipients(strEmail As String, strDisplayName As String, Optional side As BO.x43RecipientIdEnum = BO.x43RecipientIdEnum.recTO) As List(Of BO.x43MailQueue_Recipient)
     Sub AppendRecipient(ByRef lis2Append As List(Of BO.x43MailQueue_Recipient), strEmail As String, strDisplayName As String, Optional side As BO.x43RecipientIdEnum = BO.x43RecipientIdEnum.recTO)
-    Function ForwardMessageToQueue(strBody As String, recipients As List(Of BO.x43MailQueue_Recipient), intO43ID As Integer, x29id As BO.x29IdEnum, intRecordPID As Integer) As Integer
+    Function ForwardMessageToQueue(strSubject As String, strBody As String, recipients As List(Of BO.x43MailQueue_Recipient), intO43ID As Integer, x29id As BO.x29IdEnum, intRecordPID As Integer) As Integer
     Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer, bolSSL As Boolean) As Boolean
 End Interface
 
@@ -376,7 +376,12 @@ Class x40MailQueueBL
             log4net.LogManager.GetLogger("smtplog").Info("Sender: " & mail.From(0).Address & vbCrLf & "Message recipients: " & cRec.x40Recipient & vbCrLf & "Message subject: " & cRec.x40Subject & vbCrLf & "Message body: " & cRec.x40Body)
 
             For i As Integer = 0 To mail.Attachments.Count - 1
-                log4net.LogManager.GetLogger("smtplog").Info("Message attachment: " & mail.Attachments(i).ContentDisposition.FileName)
+                Try
+                    log4net.LogManager.GetLogger("smtplog").Info("Message attachment: " & mail.Attachments(i).ContentDisposition.FileName)
+                Catch ex As Exception
+
+                End Try
+
             Next
             cRec.x40State = BO.x40StateENUM.IsProceeded
             cRec.x40WhenProceeded = Now
@@ -402,7 +407,7 @@ Class x40MailQueueBL
         Return _cDL.UpdateMessageState(intX40ID, NewState)
     End Function
 
-    Function ForwardMessageToQueue(strBody As String, recipients As List(Of BO.x43MailQueue_Recipient), intO43ID As Integer, x29id As BO.x29IdEnum, intRecordPID As Integer) As Integer Implements Ix40MailQueueBL.ForwardMessageToQueue
+    Function ForwardMessageToQueue(strSubject As String, strBody As String, recipients As List(Of BO.x43MailQueue_Recipient), intO43ID As Integer, x29id As BO.x29IdEnum, intRecordPID As Integer) As Integer Implements Ix40MailQueueBL.ForwardMessageToQueue
         'fce vrací x40ID
         _Error = ""
         If intO43ID = 0 Then Return 0
@@ -410,7 +415,12 @@ Class x40MailQueueBL
         If original Is Nothing Then Return 0
 
         Dim forward As New MailMessage()
-        forward.Subject = "FW: " & original.Subject
+        If strSubject = "" Then
+            forward.Subject = "FW: " & original.Subject
+        Else
+            forward.Subject = strSubject
+        End If
+
         forward.BodyText = strBody
         'and add the original e-mail as an attachment
         forward.Attachments.Add(New Attachment(original))
