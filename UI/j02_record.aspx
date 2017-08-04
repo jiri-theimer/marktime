@@ -122,6 +122,14 @@
                 </tr>
                 <tr>
                     <td>
+                        <asp:Label ID="lblDomain" Text="Doménový účet:" runat="server" CssClass="lbl"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="j02DomainAccount" runat="server" Style="width: 300px;"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <asp:Label ID="lblMobile" Text="TEL1 (mobil):" runat="server" CssClass="lbl" AssociatedControlID="j02Mobile"></asp:Label>
                     </td>
                     <td>

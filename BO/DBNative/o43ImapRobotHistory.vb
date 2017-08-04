@@ -26,4 +26,28 @@
     Public Property o43EmlFileName As String
     Public Property o43MsgFileName As String
 
+    Private Property _o41Name As String
+    Public ReadOnly Property o41Name As String
+        Get
+            Return _o41Name
+        End Get
+    End Property
+
+    Public ReadOnly Property EntityName As String
+        Get
+            If Me.p56ID > 0 Then
+                Return "ÚKOL"
+            End If
+            If Me.o23ID > 0 Then
+                Return "DOKUMENT"
+            End If
+            Return ""
+        End Get
+    End Property
+
+    Public ReadOnly Property pid As Integer
+        Get
+            Return Me.o43ID
+        End Get
+    End Property
 End Class

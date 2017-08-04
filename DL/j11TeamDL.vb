@@ -34,6 +34,7 @@
                 pars.Add("j11name", .j11Name, DbType.String, , , True, "Název")
                 pars.Add("j11RobotAddress", .j11RobotAddress, DbType.String)
                 pars.Add("j11Email", .j11Email, DbType.String)
+                pars.Add("j11DomainAccount", .j11DomainAccount, DbType.String)
                 pars.Add("j11validfrom", .ValidFrom, DbType.DateTime)
                 pars.Add("j11validuntil", .ValidUntil, DbType.DateTime)
                 pars.Add("j11IsAllPersons", .j11IsAllPersons, DbType.Boolean)

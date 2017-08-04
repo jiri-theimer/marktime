@@ -65,17 +65,17 @@
 
     End Function
     Public Function LoadHistoryByMessageGUID(strMessageGUID As String) As BO.o43ImapRobotHistory
-        Dim s As String = "SELECT TOP 1 * FROM o43ImapRobotHistory WHERE o43MessageGUID=@guid ORDER BY o43ID DESC"
+        Dim s As String = GetSQLPart1_o43(1) & " WHERE a.o43MessageGUID=@guid ORDER BY a.o43ID DESC"
 
         Return _cDB.GetRecord(Of BO.o43ImapRobotHistory)(s, New With {.guid = strMessageGUID})
     End Function
     Public Function LoadHistoryByID(intO43ID As Integer) As BO.o43ImapRobotHistory
-        Dim s As String = "SELECT * FROM o43ImapRobotHistory WHERE o43ID=@pid"
+        Dim s As String = GetSQLPart1_o43(0) & " WHERE a.o43ID=@pid"
 
         Return _cDB.GetRecord(Of BO.o43ImapRobotHistory)(s, New With {.pid = intO43ID})
     End Function
     Public Function LoadHistoryByRecordGUID(strGUID As String) As BO.o43ImapRobotHistory
-        Dim s As String = "SELECT TOP 1 * FROM o43ImapRobotHistory WHERE o43RecordGUID = @guid"
+        Dim s As String = GetSQLPart1_o43(1) & " WHERE a.o43RecordGUID = @guid"
 
         Return _cDB.GetRecord(Of BO.o43ImapRobotHistory)(s, New With {.guid = strGUID})
     End Function
@@ -128,5 +128,42 @@
         pars.Add("p56id", BO.BAS.IsNullDBKey(intP56ID), DbType.Int32)
         pars.Add("o23id", BO.BAS.IsNullDBKey(intO23ID), DbType.Int32)
         Return _cDB.RunSQL("UPDATE o43ImapRobotHistory set p56ID=@p56id,o23ID=@o23id WHERE o43ID=@pid", pars)
+    End Function
+
+    Private Function GetSQLPart1_o43(Optional intTOP As Integer = 0) As String
+        Dim s As String = "SELECT"
+        If intTOP > 0 Then s += " TOP " & intTOP.ToString
+        s += " a.*,o41.o41Name as _o41Name"
+        s += " FROM o43ImapRobotHistory a INNER JOIN o41InboxAccount o41 ON a.o41ID=o41.o41ID"
+        Return s
+    End Function
+    Public Function GetList_o43(mq As BO.myQuery) As IEnumerable(Of BO.o43ImapRobotHistory)
+        Dim s As String = GetSQLPart1_o43(mq.TopRecordsOnly)
+        Dim strW As String = bas.ParseWhereMultiPIDs("a.o43ID", mq), pars As New DbParameters
+
+        With mq
+            If .SearchExpression <> "" Then
+                strW += " AND (a.o43Body_PlainText like '%'+@expr+'%' OR a.o43Subject LIKE '%'+@expr+'%')"
+                pars.Add("expr", .SearchExpression, DbType.String)
+            End If
+            If .DateFrom > DateSerial(1900, 1, 1) Then
+                strW += " AND a.o43DateMessage>=@datefrom" : pars.Add("datefrom", .DateFrom, DbType.DateTime)
+            End If
+            If .DateUntil < DateSerial(3000, 1, 1) Then
+                strW += " AND a.o43DateMessage<@dateuntil" : pars.Add("dateuntil", .DateUntil.AddDays(1), DbType.DateTime)
+            End If
+
+            If .ColumnFilteringExpression <> "" Then
+                strW += " AND " & .ColumnFilteringExpression
+            End If
+
+        End With
+
+
+        If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
+        s += " ORDER BY a.o43ID DESC"
+
+        Return _cDB.GetList(Of BO.o43ImapRobotHistory)(s, pars)
+
     End Function
 End Class

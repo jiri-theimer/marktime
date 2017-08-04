@@ -38,6 +38,7 @@
             Me.j11IsAllPersons.Checked = .j11IsAllPersons
             Me.j11Email.Text = .j11Email
             Me.j11RobotAddress.Text = .j11RobotAddress
+            Me.j11DomainAccount.Text = .j11DomainAccount
             Master.Timestamp = .Timestamp
 
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -80,6 +81,7 @@
             cRec.j11IsAllPersons = Me.j11IsAllPersons.Checked
             cRec.j11RobotAddress = Me.j11RobotAddress.Text
             cRec.j11Email = Me.j11Email.Text
+            cRec.j11DomainAccount = Me.j11DomainAccount.Text
             cRec.ValidFrom = Master.RecordValidFrom
             cRec.ValidUntil = Master.RecordValidUntil
 

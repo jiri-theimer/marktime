@@ -3,6 +3,7 @@
     Public Property j11Name As String
     Public Property j11IsAllPersons As Boolean
     Public Property j11Email As String
+    Public Property j11DomainAccount As String
     Public Property j11RobotAddress As String
     Public ReadOnly Property NameWithEmail As String
         Get

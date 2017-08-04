@@ -15,6 +15,7 @@ Public Interface Io42ImapRuleBL
     Sub ChangeRecordGuidInHistory(intO43ID As Integer, strNewGUID As String)
     Function Connect(cInbox As BO.o41InboxAccount) As Boolean
     Function LoadMailMessageFromHistory(intO43ID As Integer) As Rebex.Mail.MailMessage
+    Function GetList_o43(mq As BO.myQuery) As IEnumerable(Of BO.o43ImapRobotHistory)
 End Interface
 Class o42ImapRuleBL
     Inherits BLMother
@@ -454,6 +455,12 @@ Class o42ImapRuleBL
             End If
         End If
         If recepientsForward.Count > 0 Then
+            If cO43.p56ID > 0 Then
+                strBodyForward = "ÚKOL: " & Factory.GetRecordLinkUrl("p56", intRecordPID) & vbCrLf & strBodyForward
+            End If
+            If cO43.o23ID > 0 Then
+                strBodyForward = "DOKUMENT: " & Factory.GetRecordLinkUrl("o23", intRecordPID) & vbCrLf & strBodyForward
+            End If
             Factory.x40MailQueueBL.ForwardMessageToQueue(strBodyForward, Factory.x40MailQueueBL.CreateRecipients(cInbox.o41ForwardEmail_UnBound, ""), intO43ID, x29ID, intRecordPID)
         End If
 
@@ -729,5 +736,9 @@ Class o42ImapRuleBL
 
 
 
+    End Function
+
+    Public Function GetList_o43(mq As BO.myQuery) As IEnumerable(Of BO.o43ImapRobotHistory) Implements Io42ImapRuleBL.GetList_o43
+        Return _cDL.GetList_o43(mq)
     End Function
 End Class

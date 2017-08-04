@@ -42,6 +42,15 @@
                         <span class="infoInForm">E-mail adresa, podle které IMAP robot pozná, že nový úkol/dokument zakládaný automaticky z poštovní zprávy má vztah k týmu.</span>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <span class="lbl">Název skupiny v doméně:</span>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="j11DomainAccount" runat="server" Style="width: 200px;"></asp:TextBox>
+                        <span class="infoInForm">Lze využít pro definování oprávnění file-system složek v modulu [DOKUMENTY].</span>
+                    </td>
+                </tr>
             </table>
 
         </div>

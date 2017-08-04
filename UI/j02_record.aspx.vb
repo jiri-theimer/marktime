@@ -87,6 +87,7 @@
             Me.j02JobTitle.SetText(.j02JobTitle)
             Me.j02RobotAddress.Text = .j02RobotAddress
             Me.j02ExternalPID.Text = .j02ExternalPID
+            Me.j02DomainAccount.Text = .j02DomainAccount
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
             basUI.SelectDropdownlistValue(Me.j02TimesheetEntryDaysBackLimit, .j02TimesheetEntryDaysBackLimit.ToString)
             If .j02TimesheetEntryDaysBackLimit_p34IDs <> "" Then
@@ -161,6 +162,7 @@
                 .j02WorksheetAccessFlag = BO.BAS.IsNullInt(Me.j02WorksheetAccessFlag.SelectedValue)
                 .p72ID_NonBillable = BO.BAS.IsNullInt(Me.p72ID_NonBillable.SelectedValue)
                 .j02AvatarImage = Me.j02AvatarImage.Value
+                .j02DomainAccount = Me.j02DomainAccount.Text
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil
                 

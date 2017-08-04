@@ -192,6 +192,26 @@ Public Class basUIMT
 
         
     End Sub
+    Public Shared Sub o43_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs)
+        If Not TypeOf e.Item Is GridDataItem Then Return
+
+        Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
+        Dim cRec As BO.o43ImapRobotHistory = CType(e.Item.DataItem, BO.o43ImapRobotHistory)
+        dataItem("UserInsert").Text = ""  'náhrada za systemcolumn
+        If cRec.o43Attachments > "" Then
+            dataItem("UserInsert").CssClass = "attachment"
+
+        End If
+        dataItem("UserInsert").Text = "<a style='float:right;' title='Otevřít v MS-OUTLOOK' href='binaryfile.aspx?prefix=o43&format=msg&pid=" & cRec.o43ID.ToString & "'><img src='Images/files/msg_24.png'/></a>"
+        dataItem("UserInsert").Text += "<a style='float:right;' title='EML formát zprávy' href='binaryfile.aspx?prefix=o43&format=eml&pid=" & cRec.o43ID.ToString & "'><img src='Images/files/eml_24.png'/></a>"
+
+        If cRec.p56ID > 0 Then
+            dataItem("EntityName").Text = "<a href='p56_framework.aspx?pid=" & cRec.p56ID.ToString & "'>ÚKOL</a>"
+        End If
+        If cRec.o23ID > 0 Then
+            dataItem("EntityName").Text = "<a href='o23_fixwork.aspx?pid=" & cRec.o23ID.ToString & "'>DOKUMENT</a>"
+        End If
+    End Sub
 
     Public Shared Sub p56_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolShowClueTip As Boolean, Optional bolDT As Boolean = False, Optional strMobileLinkColumn As String = "")
         If Not TypeOf e.Item Is GridDataItem Then Return
