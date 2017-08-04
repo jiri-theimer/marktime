@@ -30010,7 +30010,7 @@
     <TableName>o41InboxAccount</TableName>
   </Table>
   <Table>
-    <name>o41ForwardFlag_Anwer</name>
+    <name>o41ForwardFlag_Answer</name>
     <id>382624406</id>
     <xtype>56</xtype>
     <typestat>0</typestat>
