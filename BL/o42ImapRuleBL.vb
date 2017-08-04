@@ -424,6 +424,20 @@ Class o42ImapRuleBL
 
         Dim strBodyForward As String = message.From(0).Address & " " & message.From(0).DisplayName & vbCrLf & vbCrLf & message.Subject & ": " & vbCrLf & vbCrLf & message.BodyText
         Dim recepientsForward As New List(Of BO.x43MailQueue_Recipient), x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified, intRecordPID As Integer = 0
+
+        x29ID = BO.x29IdEnum.o43ImapRobotHistory
+        intRecordPID = cO43.o43ID
+        If cO43.p56ID > 0 Then
+            x29ID = BO.x29IdEnum.p56Task
+            intRecordPID = cO43.p56ID
+            strBodyForward = "ÚKOL: " & Factory.GetRecordLinkUrl("p56", intRecordPID) & vbCrLf & strBodyForward
+        End If
+        If cO43.o23ID > 0 Then
+            x29ID = BO.x29IdEnum.o23Doc
+            intRecordPID = cO43.o23ID
+            strBodyForward = "DOKUMENT: " & Factory.GetRecordLinkUrl("o23", intRecordPID) & vbCrLf & strBodyForward
+        End If
+
         If cO43.p56ID = 0 And cO43.o23ID = 0 Then
             'zpráva bez vazby
             If cInbox.o41ForwardEmail_UnBound <> "" Then
@@ -437,7 +451,7 @@ Class o42ImapRuleBL
                             Factory.x40MailQueueBL.AppendRecipient(recepientsForward, cInbox.o41ForwardEmail_Answer, "")
                         End If
                     Case BO.o41ForwardENUM.EntityRoles
-                        For Each c In Factory.x67EntityRoleBL.GetEmails_j02_join_j11(BO.x29IdEnum.p56Task, intRecordPID)
+                        For Each c In Factory.x67EntityRoleBL.GetEmails_j02_join_j11(x29ID, intRecordPID)
                             Factory.x40MailQueueBL.AppendRecipient(recepientsForward, c.x43Email, c.x43DisplayName)
                         Next
                 End Select
@@ -448,26 +462,16 @@ Class o42ImapRuleBL
                             Factory.x40MailQueueBL.AppendRecipient(recepientsForward, cInbox.o41ForwardEmail_New, "")
                         End If
                     Case BO.o41ForwardENUM.EntityRoles
-                        For Each c In Factory.x67EntityRoleBL.GetEmails_j02_join_j11(BO.x29IdEnum.p56Task, intRecordPID)
+                        For Each c In Factory.x67EntityRoleBL.GetEmails_j02_join_j11(x29ID, intRecordPID)
                             Factory.x40MailQueueBL.AppendRecipient(recepientsForward, c.x43Email, c.x43DisplayName)
                         Next
                 End Select
             End If
         End If
         If recepientsForward.Count > 0 Then
-            x29ID = BO.x29IdEnum.o43ImapRobotHistory
-            intRecordPID = cO43.o43ID
+            
 
-            If cO43.p56ID > 0 Then
-                x29ID = BO.x29IdEnum.p56Task
-                intRecordPID = cO43.p56ID
-                strBodyForward = "ÚKOL: " & Factory.GetRecordLinkUrl("p56", intRecordPID) & vbCrLf & strBodyForward
-            End If
-            If cO43.o23ID > 0 Then
-                x29ID = BO.x29IdEnum.o23Doc
-                intRecordPID = cO43.o23ID
-                strBodyForward = "DOKUMENT: " & Factory.GetRecordLinkUrl("o23", intRecordPID) & vbCrLf & strBodyForward
-            End If
+           
             Factory.x40MailQueueBL.ForwardMessageToQueue("Upozornění na příchozí MARKTIME poštu", strBodyForward, recepientsForward, intO43ID, x29ID, intRecordPID)
         End If
 
