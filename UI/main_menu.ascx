@@ -74,6 +74,10 @@
         sw_menu_decide("p90_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/proforma.png")
 
     }
+    function j02_create() {
+        sw_menu_decide("j02_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/person.png")
+
+    }
     function mysearch() {
         sw_menu_decide("clue_search.aspx", "Images/search.png")
 

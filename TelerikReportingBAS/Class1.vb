@@ -17,7 +17,12 @@
         End If
     End Function
     Public Shared Function GetDateFormat(d As Date, strFormat As String) As String
-        If strFormat = "" Then strFormat = "dd.MM.yyyy"
-        Return Format(d, strFormat)
+        
+        If strFormat = "" Or LCase(strFormat) = "mm/dd/yyyy" Then
+            Return Right("0" & Month(d).ToString, 2) & "/" & Right("0" & Day(d).ToString, 2) & "/" & Year(d).ToString
+        Else
+            Return Format(d, strFormat)
+        End If
+
     End Function
 End Class

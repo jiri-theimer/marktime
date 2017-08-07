@@ -38,4 +38,9 @@ Public Class pokus
 
 
     End Sub
+
+    Private Sub cmdFormat_Click(sender As Object, e As EventArgs) Handles cmdFormat.Click
+        Dim d As Date = DateSerial(2017, 8, 31)
+        Me.txt2.Text = Right("0" & Month(d).ToString, 2) & "/" & Right("0" & Day(d).ToString, 2) & "/" & Year(d).ToString
+    End Sub
 End Class

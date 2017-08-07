@@ -525,7 +525,6 @@ Class x40MailQueueBL
                     .Login(strSmtpLogin, strSmtpPassword)
                 End If
 
-
                 .Disconnect()
                 Return True
             Catch ex As Exception

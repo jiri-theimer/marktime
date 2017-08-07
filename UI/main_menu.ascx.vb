@@ -93,7 +93,10 @@ Public Class main_menu
                 If factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator) Then ai(Resources.common.Faktura, "", "javascript:p91_create()", "", n) : b = True
             End If
             If factory.TestPermission(BO.x53PermValEnum.GR_P90_Create) Then ai(Resources.common.ZalohovaFaktura, "new_p90", "javascript:p90_create()", "", n)
-            
+
+            If factory.SysUser.IsAdmin Then
+                ai(Resources.common.Osoba, "new_j02", "javascript:j02_create()", "", n) : b = True
+            End If
             ''If Not b Then menu1.Nodes.Remove(n)
         End With
 
