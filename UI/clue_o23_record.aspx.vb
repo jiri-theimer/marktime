@@ -15,7 +15,7 @@
         Dim cX18 As BO.x18EntityCategory = Master.Factory.x18EntityCategoryBL.LoadByX23ID(cRec.x23ID)
         ph1.Text = cX18.x18Name
 
-        rec1.FillData(cRec, cX18)
+        rec1.FillData(cRec, cX18, False)
 
         Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.o23Doc, cRec.PID)
         roles1.RefreshData(lisX69, cRec.PID)
@@ -35,6 +35,8 @@
                 End If
             End With
         End If
+        
     End Sub
 
+    
 End Class

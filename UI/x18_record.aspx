@@ -158,7 +158,7 @@
                                         </div>
                                         <div>
                                             <asp:DropDownList ID="x20EntityPageFlag" runat="server">
-                                                <asp:ListItem Text="Na stránce záznamu entity zobrazovat jako info" Value="1"></asp:ListItem>
+                                                <asp:ListItem Text="Na stránce záznamu entity zobrazovat jako info" Value="1"></asp:ListItem>                                                
                                                 <asp:ListItem Text="Na stránce záznamu entity zobrazovat jako odkaz" Value="2"></asp:ListItem>
                                                 <asp:ListItem Text="Na stránce záznamu entity zobrazovat jako odkaz + tlačítko [Přidat]" Value="3"></asp:ListItem>
                                                 <asp:ListItem Text="Na stránce záznamu entity nic nezobrazovat" Value="9"></asp:ListItem>
@@ -279,6 +279,7 @@
                                         <asp:TextBox ID="x16DataSource" runat="server" Width="600px" Height="42px" TextMode="MultiLine"></asp:TextBox>
                                         <div>
                                             <asp:CheckBox ID="x16IsFixedDataSource" runat="server" Text="Okruh hodnot je zafixován" />
+                                            <span>Formát:</span><asp:TextBox ID="x16Format" runat="server"></asp:TextBox>
                                         </div>
                                         <div>
                                             <span>Šířka pole:</span>

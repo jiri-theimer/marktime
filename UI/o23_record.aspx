@@ -132,7 +132,7 @@
 
     </table>
 
-    <asp:Panel ID="panX16" runat="server">
+    <asp:Panel ID="panX16" runat="server">        
         <table cellpadding="5" cellspacing="2">
             <asp:Repeater ID="rpX16" runat="server">
                 <ItemTemplate>
@@ -150,9 +150,11 @@
                             <telerik:RadNumericTextBox ID="txtFF_Number" runat="server"></telerik:RadNumericTextBox>
                             <asp:CheckBox ID="chkFF" runat="server" ForeColor="Black" />
 
-                            <telerik:RadDatePicker ID="txtFF_Date" runat="server" Width="130px">
-                                <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
-                            </telerik:RadDatePicker>
+                            <telerik:RadDateTimePicker ID="txtFF_Date" runat="server" Width="130px">
+                                <DateInput ID="DateInput1" DateFormat="d.M.yyyy" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
+                                <TimePopupButton Visible="false" />
+                                <TimeView Interval="60" runat="server"></TimeView>
+                            </telerik:RadDateTimePicker>
                             <telerik:RadComboBox ID="cbxFF" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="400px"></telerik:RadComboBox>
                             <button type="button" id="cmdChklist" runat="server" visible="false">...</button>
 

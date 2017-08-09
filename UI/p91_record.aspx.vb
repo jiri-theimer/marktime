@@ -115,6 +115,9 @@
         Dim lis As IEnumerable(Of BO.o38Address) = Master.Factory.p28ContactBL.GetList_o37(intP28ID)
         Me.o38ID_Primary.DataSource = lis
         Me.o38ID_Primary.DataBind()
+        If lis.Count > 0 Then
+            Me.o38ID_Primary.SelectedIndex = 1
+        End If
         Me.o38ID_Delivery.DataSource = lis
         Me.o38ID_Delivery.DataBind()
     End Sub

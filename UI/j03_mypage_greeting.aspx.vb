@@ -619,7 +619,7 @@
             Master.Notify("Obsah článku je zašifrovaný.")
         Else
             rec1.Visible = True
-            rec1.FillData(cRec, Master.Factory.x18EntityCategoryBL.LoadByX23ID(cRec.x23ID))
+            rec1.FillData(cRec, Master.Factory.x18EntityCategoryBL.LoadByX23ID(cRec.x23ID), False)
         End If
 
         comments1.RefreshData(Master.Factory, BO.x29IdEnum.o23Doc, cRec.PID)

@@ -68,7 +68,7 @@
                     </div>
                    
                     <div class="div6">
-                    <asp:CheckBox ID="j04IsMenu_Report" runat="server" Text="[TISKOVÉ SESTAVY | PLUGINY]" Checked="true" CssClass="chk" />
+                    <asp:CheckBox ID="j04IsMenu_Report" runat="server" Text="[TISKOVÉ SESTAVY]" Checked="true" CssClass="chk" />
                     </div>
                     <div class="div6">
                     <asp:CheckBox ID="j04IsMenu_Invoice" runat="server" Text="[FAKTURY]" Checked="false" CssClass="chk" />

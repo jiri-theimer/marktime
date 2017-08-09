@@ -7,6 +7,7 @@
             <asp:Repeater ID="rpItems" runat="server">
                 <ItemTemplate>
                     <div class="badge_label" style="background-color: <%#Eval("BackColor")%>" title="<%#Eval("BindName") %>">
+                        <a class="reczoom" title="Detail dokumentu" rel="clue_o23_record.aspx?pid=<%#Eval("o23ID")%>">i</a>
                         <%If hidNoLinksAndButtons.Value <> "1" Then%>
                         <a style="color: <%#Eval("ForeColor")%>" href="javascript:r25(<%#Eval("o23ID")%>,<%#Eval("x18ID")%>)"><%# Eval("NameWithCode") %></a>
                         <%Else%>
@@ -20,7 +21,9 @@
             <asp:Repeater ID="rpLabels" runat="server">
                 <ItemTemplate>
                     <div class="badge_label" style="background-color: <%#Eval("BackColor")%>" title="<%#Eval("BindName") %>">
+                        <a class="reczoom" title="Detail dokumentu" rel="clue_o23_record.aspx?pid=<%#Eval("o23ID")%>">i</a>
                         <span class="val" style="color: <%#Eval("ForeColor")%>;"><%# Eval("NameWithCode") %></span>
+                        
                     </div>
                 </ItemTemplate>
             </asp:Repeater>

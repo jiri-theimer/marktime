@@ -127,6 +127,7 @@
                 .p85FreeBoolean03 = c.x16IsFixedDataSource
                 .p85FreeNumber01 = c.x16TextboxWidth
                 .p85FreeNumber02 = c.x16TextboxHeight
+                .p85FreeText04 = c.x16Format
             End With
             Master.Factory.p85TempBoxBL.Save(cTemp)
         Next
@@ -231,6 +232,7 @@
                 c.x16IsFixedDataSource = .p85FreeBoolean03
                 c.x16TextboxWidth = .p85FreeNumber01
                 c.x16TextboxHeight = .p85FreeNumber02
+                c.x16Format = .p85FreeText04
             End With
             lisX16.Add(c)
         Next
@@ -460,6 +462,7 @@
             CType(e.Item.FindControl("x16DataSource"), TextBox).Text = .p85Message
             CType(e.Item.FindControl("x16TextboxWidth"), TextBox).Text = .p85FreeNumber01
             CType(e.Item.FindControl("x16TextboxHeight"), TextBox).Text = .p85FreeNumber02
+            CType(e.Item.FindControl("x16Format"), TextBox).Text = .p85FreeText04
         End With
     End Sub
     Private Sub SaveTempX16()
@@ -478,6 +481,7 @@
                 .p85Message = CType(ri.FindControl("x16DataSource"), TextBox).Text
                 .p85FreeNumber01 = BO.BAS.IsNullInt(CType(ri.FindControl("x16TextboxWidth"), TextBox).Text)
                 .p85FreeNumber02 = BO.BAS.IsNullInt(CType(ri.FindControl("x16TextboxHeight"), TextBox).Text)
+                .p85FreeText04 = CType(ri.FindControl("x16Format"), TextBox).Text
             End With
             Master.Factory.p85TempBoxBL.Save(cRec)
         Next

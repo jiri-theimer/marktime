@@ -350,22 +350,19 @@
                                             <img src="Images/batch.png" />
                                             <span>Operace pro označené (zaškrtlé) záznamy</span>
                                         </div>
-                                        <div class="content" style="text-align:center;">
-                                            <div class="div6">
-                                            <button type="button" id="buttonBatch" onclick="batch()" title="Hromadné operace nad označenými záznamy v přehledu" style="display: none;">Hromadné operace</button>
-                                            </div>
-                                            <div class="div6">
-                                            <button id="cmdApprove" runat="server" type="button" visible="false" onclick="approve()">Schválit/připravit k fakturaci</button>
-                                                </div>
-                                            <div class="div6">
-                                            <button id="cmdInvoice" runat="server" type="button" visible="false" onclick="invoice()">Zrychlená fakturace bez schvalování</button>
-                                                </div>
-                                            <div class="div6">
-                                            <button type="button" onclick="report()" title="Tisková sestava">Tisková sestava</button>
-                                            </div>
-                                            <button type="button" id="buttonBatchMail" onclick="sendmail_batch()" style="display: none;">Hromadně odeslat faktury (e-mail)</button>
+                                        <div class="content">
+                                            
+                                            <button type="button" id="buttonBatch" onclick="batch()" title="Hromadné operace nad označenými záznamy v přehledu" style="display: none;float:left;">Hromadné operace</button>
+                                           
+                                            <button id="cmdApprove" runat="server" type="button" visible="false" onclick="approve()" style="float:left;">Schválit/připravit k fakturaci</button>
+                                               
+                                            <button id="cmdInvoice" runat="server" type="button" visible="false" onclick="invoice()" style="float:left;">Zrychlená fakturace bez schvalování</button>
+                                               
+                                            <button type="button" onclick="report()" title="Tisková sestava" style="float:left;">Tisková sestava</button>
+                                            
+                                            <button type="button" id="buttonBatchMail" onclick="sendmail_batch()" style="display: none;float:left;">Hromadně odeslat faktury (e-mail)</button>
 
-                                            <button type="button" id="cmdSummary" runat="server" onclick="drilldown()">WORKSHEET statistika</button>
+                                            <button type="button" id="cmdSummary" runat="server" onclick="drilldown()" style="float:left;">WORKSHEET statistika</button>
 
                                         </div>
                                     </div>

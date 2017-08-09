@@ -31,7 +31,7 @@
 
     End Sub
 
-    Public Sub FillData(cRec As BO.o23Doc, cX18 As BO.x18EntityCategory)
+    Public Sub FillData(cRec As BO.o23Doc, cX18 As BO.x18EntityCategory, bolShowBoundEntities As Boolean)
         hidPID.Value = cRec.PID.ToString
         If cRec.o23IsEncrypted Then
             _isEncrypted = True
@@ -71,17 +71,37 @@
             Me.Timestamp.Text = .Timestamp
         End With
 
+        Dim s As String = Me.Factory.o23DocBL.LoadFolders(cRec.PID)
+        If s = "" Then
+            rpFolders.Visible = False
+        Else
+            Dim lis As List(Of String) = BO.BAS.ConvertDelimitedString2List(s, "|")
+            rpFolders.DataSource = lis
+            rpFolders.DataBind()
+        End If
 
-        'Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Me.Factory.x18EntityCategoryBL.GetList_x20_join_x18(Me.X18ID).Where(Function(p) p.x20EntryModeFlag = BO.x20EntryModeENUM.InsertUpdateWithoutCombo Or p.x20EntryModeFlag = BO.x20EntryModeENUM.ExternalByWorkflow)
-        Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Me.Factory.x18EntityCategoryBL.GetList_x20_join_x18(Me.X18ID)
-        'Dim x20IDs As List(Of Integer) = lisX20X18.Where(Function(p) p.x29ID <> 331).Select(Function(p) p.x20ID).ToList
-        Dim x20IDs As List(Of Integer) = lisX20X18.Select(Function(p) p.x20ID).ToList
-        Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Me.Factory.x18EntityCategoryBL.GetList_X19(cRec.PID, x20IDs, True).OrderBy(Function(p) p.x20IsMultiselect).ThenBy(Function(p) p.x20ID).ThenBy(Function(p) p.RecordAlias)
+        If bolShowBoundEntities Then
+            'Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Me.Factory.x18EntityCategoryBL.GetList_x20_join_x18(Me.X18ID).Where(Function(p) p.x20EntryModeFlag = BO.x20EntryModeENUM.InsertUpdateWithoutCombo Or p.x20EntryModeFlag = BO.x20EntryModeENUM.ExternalByWorkflow)
+            Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Me.Factory.x18EntityCategoryBL.GetList_x20_join_x18(Me.X18ID)
+            'Dim x20IDs As List(Of Integer) = lisX20X18.Where(Function(p) p.x29ID <> 331).Select(Function(p) p.x20ID).ToList
+            Dim x20IDs As List(Of Integer) = lisX20X18.Select(Function(p) p.x20ID).ToList
+            Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Me.Factory.x18EntityCategoryBL.GetList_X19(cRec.PID, x20IDs, True).OrderBy(Function(p) p.x20IsMultiselect).ThenBy(Function(p) p.x20ID).ThenBy(Function(p) p.RecordAlias)
 
-        rpX19.DataSource = lisX19
-        rpX19.DataBind()
+            rpX19.DataSource = lisX19
+            rpX19.DataBind()
+        Else
+            rpX19.Visible = False
+        End If
+        
 
         RefreshUserFields()
+    End Sub
+
+    Private Sub rpFolders_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpFolders.ItemDataBound
+        With CType(e.Item.FindControl("link1"), HyperLink)
+            .NavigateUrl = "file:///" & CType(e.Item.DataItem, String)
+            .Text = CType(e.Item.DataItem, String)
+        End With
     End Sub
 
     Private Sub RefreshUserFields()

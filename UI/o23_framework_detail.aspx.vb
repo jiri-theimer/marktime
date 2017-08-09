@@ -96,7 +96,7 @@
         End If
         If bolShowContent Then
             rec1.Visible = True
-            rec1.FillData(cRec, cX18)
+            rec1.FillData(cRec, cX18, True)
             panEncrypted.Visible = False
         Else
             rec1.Visible = False

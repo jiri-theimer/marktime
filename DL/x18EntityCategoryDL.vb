@@ -186,6 +186,7 @@
                         pars.Add("x16TextboxHeight", c.x16TextboxHeight, DbType.Int32)
                         pars.Add("x16TextboxWidth", c.x16TextboxWidth, DbType.Int32)
                         pars.Add("x16Ordinary", c.x16Ordinary, DbType.Int32)
+                        pars.Add("x16Format", c.x16Format, DbType.String)
                         _cDB.SaveRecord("x16EntityCategory_FieldSetting", pars, True, "", False, "", False)
                     Next
                 End If

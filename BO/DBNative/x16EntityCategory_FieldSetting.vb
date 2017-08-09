@@ -11,7 +11,7 @@
     Public Property x16IsGridField As Boolean
     Public Property x16TextboxHeight As Integer
     Public Property x16TextboxWidth As Integer
-    Public Property FormatString As String
+    ''Public Property FormatString As String
     Public Property x16IsReportField As Boolean
     Public Property x16FieldGroup As String
     Public Property x16Format As String

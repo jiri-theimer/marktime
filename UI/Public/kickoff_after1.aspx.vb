@@ -25,7 +25,7 @@
     Private Sub PracovniCas(intP95ID As Integer)
         Dim cP34 As New BO.p34ActivityGroup
         With cP34
-            .p34Name = "Pracovní čas"
+            .p34Name = "Klientský čas"
             .p34Code = "TB"
             .p33ID = BO.p33IdENUM.Cas
             .p34ActivityEntryFlag = BO.p34ActivityEntryFlagENUM.AktivitaJePovinna
@@ -100,7 +100,7 @@
     Private Sub NePracovniCas()
         Dim cP34 As New BO.p34ActivityGroup
         With cP34
-            .p34Name = "Interní/neúčtovatelný čas"
+            .p34Name = "Interní čas"
             .p34Code = "TN"
             .p33ID = BO.p33IdENUM.Cas
             .p34ActivityEntryFlag = BO.p34ActivityEntryFlagENUM.AktivitaJePovinna
@@ -159,7 +159,7 @@
     Private Sub FixniOdmeny(intP95ID As Integer)
         Dim cP34 As New BO.p34ActivityGroup
         With cP34
-            .p34Name = "Odměny k fakturaci"
+            .p34Name = "Pevné (paušální) odměny"
             .p34Code = "FEE"
             .p33ID = BO.p33IdENUM.PenizeBezDPH
             .p34ActivityEntryFlag = BO.p34ActivityEntryFlagENUM.AktivitaJePovinna
@@ -203,7 +203,7 @@
         End If
         Dim cRec As New BO.p42ProjectType
         With cRec
-            .p42Name = "Fakturační projekt"
+            .p42Name = "Klientský"
             .p42IsDefault = True
             .p42Code = "FP"
             .x38ID = lisX38(0).PID
@@ -219,7 +219,7 @@
         lis = New List(Of BO.p43ProjectType_Workload)
         cRec = New BO.p42ProjectType
         With cRec
-            .p42Name = "Režijní projekt"
+            .p42Name = "Interní"
             .p42Code = "NP"
             .x38ID = lisX38(0).PID
         End With
@@ -351,7 +351,7 @@
         If _Factory.p28ContactBL.Save(c, lisO37, Nothing, Nothing, Nothing, Nothing) Then
             Dim intP28ID As Integer = _Factory.p28ContactBL.LastSavedPID
             Dim intP42ID As Integer = _Factory.p42ProjectTypeBL.GetList(New BO.myQuery).Where(Function(p) p.p42Code = "NP")(0).PID
-            CreateP41(intP28ID, "Vnitrofiremní režije", intP42ID, intJ02ID)
+            CreateP41(intP28ID, "Interní projekt", intP42ID, intJ02ID)
 
         Else
             WE(_Factory.p28ContactBL.ErrorMessage)

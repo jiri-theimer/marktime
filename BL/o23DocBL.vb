@@ -5,8 +5,10 @@
     Function LoadByCode(strCode As String, intX23ID As Integer) As BO.o23Doc
     Function LoadByExternalPID(strExternalPID As String) As BO.o23Doc
     Function LoadHtmlContent(intPID As Integer) As String
+    Function LoadFolders(intPID As Integer) As String
     Function GetEntityPidByX20ID(intO23ID As Integer, intX20ID As Integer) As Integer
     Function SaveHtmlContent(intPID As Integer, strHtmlContent As String, Optional strPlainText As String = "") As Boolean
+    Function SaveFolders(intPID As Integer, strFoldersByPipes As String) As Boolean
     Function Delete(intPID As Integer) As Boolean
     Function GetList(myQuery As BO.myQueryO23) As IEnumerable(Of BO.o23Doc)
     Function GetDataTable4Grid(myQuery As BO.myQueryO23) As DataTable
@@ -149,7 +151,8 @@ Class o23DocBL
                 End Select
             Next
         End If
-        
+
+        Dim folders As New List(Of String)
         For Each c In lisX17
             Dim strDir As String = c.x17Path
             If strDir.IndexOf("%]") > 0 Then
@@ -158,8 +161,10 @@ Class o23DocBL
             End If
             If Not System.IO.Directory.Exists(strDir) Then
                 System.IO.Directory.CreateDirectory(strDir)
+                folders.Add(strDir)
             End If
         Next
+        Me.SaveFolders(intO23ID, String.Join("|", folders))
     End Sub
     Private Sub InhaleDefaultWorkflowMove(into23ID As Integer, intB01ID As Integer)
         Dim cB06 As BO.b06WorkflowStep = Me.Factory.b06WorkflowStepBL.LoadKickOffStep(intB01ID)
@@ -206,8 +211,14 @@ Class o23DocBL
     Public Function LoadHtmlContent(intPID As Integer) As String Implements Io23DocBL.LoadHtmlContent
         Return _cDL.LoadHtmlContent(intPID)
     End Function
+    Public Function LoadFolders(intPID As Integer) As String Implements Io23DocBL.LoadFolders
+        Return _cDL.LoadFolders(intPID)
+    End Function
     Public Function SaveHtmlContent(intPID As Integer, strHtmlContent As String, Optional strPlainText As String = "") As Boolean Implements Io23DocBL.SaveHtmlContent
         Return _cDL.SaveHtmlContent(intPID, strHtmlContent, strPlainText)
+    End Function
+    Public Function SaveFolders(intPID As Integer, strFoldersByPipes As String) As Boolean Implements Io23DocBL.SaveFolders
+        Return _cDL.SaveFolders(intPID, strFoldersByPipes)
     End Function
     Public Sub Handle_Reminder() Implements Io23DocBL.Handle_Reminder
         Dim d1 As Date = DateAdd(DateInterval.Day, -2, Now)

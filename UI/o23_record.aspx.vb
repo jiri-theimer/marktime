@@ -228,10 +228,10 @@ Public Class o23_record
                     For Each ri As RepeaterItem In rpX16.Items
                         Dim strF As String = CType(ri.FindControl("x16Field"), HiddenField).Value
                         If strF = hidx18CalendarFieldStart.Value Then
-                            CType(ri.FindControl("txtFF_Date"), Telerik.Web.UI.RadDatePicker).SelectedDate = dt1.DateOnly
+                            CType(ri.FindControl("txtFF_Date"), Telerik.Web.UI.RadDateTimePicker).SelectedDate = dt1.DateOnly
                         End If
                         If strF = hidx18CalendarFieldEnd.Value Then
-                            CType(ri.FindControl("txtFF_Date"), Telerik.Web.UI.RadDatePicker).SelectedDate = dt2.DateOnly
+                            CType(ri.FindControl("txtFF_Date"), Telerik.Web.UI.RadDateTimePicker).SelectedDate = dt2.DateOnly
                         End If
                     Next
                 End If
@@ -492,7 +492,7 @@ Public Class o23_record
                 Case BO.x24IdENUM.tBoolean
                     val = CType(ri.FindControl("chkFF"), CheckBox).Checked
                 Case BO.x24IdENUM.tDate, BO.x24IdENUM.tDateTime
-                    With CType(ri.FindControl("txtFF_Date"), RadDatePicker)
+                    With CType(ri.FindControl("txtFF_Date"), RadDateTimePicker)
                         If .IsEmpty Then
                             val = Nothing
                         Else
@@ -516,7 +516,7 @@ Public Class o23_record
     End Function
 
     Private Sub rpX16_ItemCreated(sender As Object, e As RepeaterItemEventArgs) Handles rpX16.ItemCreated
-        With CType(e.Item.FindControl("txtFF_Date"), RadDatePicker)
+        With CType(e.Item.FindControl("txtFF_Date"), RadDateTimePicker)
             .SharedCalendar = Me.SharedCalendar
         End With
 
@@ -635,14 +635,23 @@ Public Class o23_record
             Case BO.x24IdENUM.tDateTime
                 CType(e.Item.FindControl("hidType"), HiddenField).Value = "datetime"
 
-                With CType(e.Item.FindControl("txtFF_Date"), RadDatePicker)
+                With CType(e.Item.FindControl("txtFF_Date"), RadDateTimePicker)
                     ''.SharedCalendar = Me.SharedCalendar
                     .Visible = True
                     .MinDate = DateSerial(1900, 1, 1)
                     .MaxDate = DateSerial(2100, 1, 1)
-                    If cRec.FormatString = "" Then cRec.FormatString = "dd.MM.yyyy"
-                    .DateInput.DisplayDateFormat = cRec.FormatString
-                    .DateInput.DateFormat = cRec.FormatString
+                    If cRec.x16Format = "" Then cRec.x16Format = "dd.MM.yyyy"
+                    .DateInput.DisplayDateFormat = cRec.x16Format
+                    .DateInput.DateFormat = cRec.x16Format
+                    If LCase(cRec.x16Format).IndexOf("hh") > 0 Then                        
+                        .TimePopupButton.Visible = True
+                        ''.TimeView.Visible = True
+                        .Width = Unit.Parse("170px")
+                    Else
+                        .TimePopupButton.Visible = False
+                        ''.TimeView.Visible = False
+                        .Width = Unit.Parse("130px")
+                    End If
 
                     'Select Case cRec.TypeName
                     '    Case "datetime"

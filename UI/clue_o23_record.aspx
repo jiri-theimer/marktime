@@ -41,7 +41,7 @@
             <asp:HyperLink ID="filesPreview" runat="server" Text="Náhled na přílohy dokumentu"></asp:HyperLink>
         </asp:panel>
         
-    
+        
 
         <div class="div6">
             <uc:o23_record_readonly ID="rec1" runat="server" />
