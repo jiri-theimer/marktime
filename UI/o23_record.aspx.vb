@@ -58,6 +58,7 @@ Public Class o23_record
                     Me.x23ID.SelectedValue = c.x23ID.ToString
                     Me.hidx18CalendarFieldStart.Value = c.x18CalendarFieldStart
                     Me.hidx18CalendarFieldEnd.Value = c.x18CalendarFieldEnd
+                    Me.hidJavascriptFile.Value = c.x18JavascriptFile
 
                     .HeaderText = c.x18Name
                     If c.x18Icon32 <> "" Then .HeaderIcon = c.x18Icon32
@@ -468,6 +469,11 @@ Public Class o23_record
         Me.panPassword.Visible = Me.o23IsEncrypted.Checked
         If Page.IsPostBack And panUpload.Visible Then
             upload1.TryUploadhWaitingFilesOnClientSide()
+        End If
+        If hidJavascriptFile.Value <> "" Then
+            Dim strFile As String = BO.ASS.GetApplicationRootFolder & "\Plugins\" & hidJavascriptFile.Value
+            Dim cF As New BO.clsFile
+            place_x18JavascriptFile.Controls.Add(New LiteralControl(cF.GetFileContents(strFile, , False)))
         End If
       
     End Sub

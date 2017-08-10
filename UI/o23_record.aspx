@@ -56,6 +56,7 @@
             
         }
     </script>
+    <asp:PlaceHolder ID="place_x18JavascriptFile" runat="server"></asp:PlaceHolder>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Panel ID="panX20" runat="server" CssClass="content-box2">
@@ -322,7 +323,7 @@
     <asp:HiddenField ID="hidX18ID" runat="server" />
     <asp:HiddenField ID="hidX29ID" runat="server" />
     <asp:HiddenField ID="hidGUID_x19" runat="server" />
-    
+    <asp:HiddenField ID="hidJavascriptFile" runat="server" />
 
     <telerik:RadCalendar ID="SharedCalendar" runat="server" EnableMultiSelect="False" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
         <SpecialDays>

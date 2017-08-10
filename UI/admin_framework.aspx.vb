@@ -172,7 +172,7 @@ Public Class admin_framework
 
 
             .AddItem("Dokumenty", "o23", , , "Images/notepad.png")
-
+            .AddItem("Typy dokumentů", "o23_x18", "x18_framework.aspx?source=admin", "o23")
             .AddItem("Role v dokumentu", "o23_x67", NU("o23_x67"), "o23")
 
 

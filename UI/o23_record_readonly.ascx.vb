@@ -76,8 +76,11 @@
             rpFolders.Visible = False
         Else
             Dim lis As List(Of String) = BO.BAS.ConvertDelimitedString2List(s, "|")
-            rpFolders.DataSource = lis
-            rpFolders.DataBind()
+            If lis.Count > 0 Then
+                rpFolders.DataSource = lis.Take(1)
+                rpFolders.DataBind()
+            End If
+            
         End If
 
         If bolShowBoundEntities Then

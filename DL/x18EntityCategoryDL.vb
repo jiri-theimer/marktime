@@ -137,6 +137,7 @@
                 pars.Add("x18MaxOneFileSize", .x18MaxOneFileSize, DbType.Int32)
                 pars.Add("x18AllowedFileExtensions", .x18AllowedFileExtensions, DbType.String)
                 pars.Add("x18IsAllowEncryption", .x18IsAllowEncryption, DbType.Boolean)
+                pars.Add("x18JavascriptFile", .x18JavascriptFile, DbType.String)
             End With
 
             If _cDB.SaveRecord("x18EntityCategory", pars, bolINSERT, strW, True, _curUser.j03Login) Then

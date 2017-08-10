@@ -560,7 +560,15 @@
                                 (čárkou oddělené kódy sestav)
                             </td>
                         </tr>
-
+                        <tr>
+                            <td>
+                                <span>Javascript soubor:</span>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="x18JavascriptFile" runat="server" Width="300px"></asp:TextBox>(Soubor je třeba na serveru nahrát do složky [Plugins].)
+                                
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div>

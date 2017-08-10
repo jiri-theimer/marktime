@@ -14,7 +14,7 @@
         }
         function go2module() {
 
-            window.open("o23_framework.aspx?pid=<%=Master.DataPID%>", "_top");
+            window.open("o23_fixwork.aspx?pid=<%=Master.DataPID%>", "_top");
 
         }
         function go2workflow() {

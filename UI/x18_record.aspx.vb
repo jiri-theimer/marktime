@@ -102,6 +102,7 @@
             basUI.SelectDropdownlistValue(Me.x18MaxOneFileSize, .x18MaxOneFileSize.ToString)
             Me.x18AllowedFileExtensions.Text = .x18AllowedFileExtensions
             Me.x18IsAllowEncryption.Checked = .x18IsAllowEncryption
+            Me.x18JavascriptFile.Text = .x18JavascriptFile
 
             roles1.InhaleInitialData(.PID)
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -305,6 +306,7 @@
             cRec.x18AllowedFileExtensions = Me.x18AllowedFileExtensions.Text
             cRec.x18MaxOneFileSize = BO.BAS.IsNullInt(Me.x18MaxOneFileSize.SelectedValue)
             cRec.x18IsAllowEncryption = Me.x18IsAllowEncryption.Checked
+            cRec.x18JavascriptFile = Me.x18JavascriptFile.Text
 
             If .Save(cRec, lisX20, lisX69, lisX16, lisX17) Then
                 Master.DataPID = .LastSavedPID

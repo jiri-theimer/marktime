@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class o23_record
 
     '''<summary>
+    '''place_x18JavascriptFile control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents place_x18JavascriptFile As Global.System.Web.UI.WebControls.PlaceHolder
+
+    '''<summary>
     '''panX20 control.
     '''</summary>
     '''<remarks>
@@ -372,6 +381,15 @@ Partial Public Class o23_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidGUID_x19 As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidJavascriptFile control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidJavascriptFile As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''SharedCalendar control.
