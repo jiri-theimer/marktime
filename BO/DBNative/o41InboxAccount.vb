@@ -11,7 +11,7 @@ Public Class o41InboxAccount
     Public Property o41Login As String
     Public Property o41Password As String
     Public Property o41Folder As String = "inbox"
-    Public Property o41IsUseSSL As Boolean
+    Public Property o41SslModeFlag As BO.SslModeENUM = SslModeENUM._NoSSL
     Public Property o41IsDeleteMesageAfterImport As Boolean
     Public Property o41DateImportAfter As Date?
     Public Property o41ForwardFlag_New As o41ForwardENUM = o41ForwardENUM._None

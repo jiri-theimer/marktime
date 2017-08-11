@@ -2,7 +2,6 @@
 Imports Rebex.Net
 Imports Rebex.Mail
 
-
 Public Interface Ix40MailQueueBL
     Inherits IFMother
 
@@ -23,7 +22,7 @@ Public Interface Ix40MailQueueBL
     Function CreateRecipients(strEmail As String, strDisplayName As String, Optional side As BO.x43RecipientIdEnum = BO.x43RecipientIdEnum.recTO) As List(Of BO.x43MailQueue_Recipient)
     Sub AppendRecipient(ByRef lis2Append As List(Of BO.x43MailQueue_Recipient), strEmail As String, strDisplayName As String, Optional side As BO.x43RecipientIdEnum = BO.x43RecipientIdEnum.recTO)
     Function ForwardMessageToQueue(strSubject As String, strBody As String, recipients As List(Of BO.x43MailQueue_Recipient), intO43ID As Integer, x29id As BO.x29IdEnum, intRecordPID As Integer) As Integer
-    Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer, bolSSL As Boolean) As Boolean
+    Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer, sslM As BO.SslModeENUM) As Boolean
 End Interface
 
 Class x40MailQueueBL
@@ -304,7 +303,7 @@ Class x40MailQueueBL
         End If
 
         
-        Dim bolSucceeded As Boolean = False, bolUseWebConfig As Boolean = True, strSmtpServer As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_Server"), strSmtpLogin As String = "", strSmtpPassword As String = "", intPort As Integer = 0, bolSSL As Boolean = False
+        Dim bolSucceeded As Boolean = False, bolUseWebConfig As Boolean = True, strSmtpServer As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_Server"), strSmtpLogin As String = "", strSmtpPassword As String = "", intPort As Integer = 0, sslM As BO.SslModeENUM = BO.SslModeENUM._NoSSL
 
         If cRec.o40ID = 0 Then  'na vstupu již může být předán jiný SMTP účet
             If Me.Factory.x35GlobalParam.GetValueString("IsUseWebConfigSetting", "1") = "0" And BO.BAS.IsNullInt(strSmtpServer) <> 0 Then
@@ -324,7 +323,8 @@ Class x40MailQueueBL
             Dim cO40 As BO.o40SmtpAccount = Me.Factory.o40SmtpAccountBL.Load(cRec.o40ID)
             strSmtpServer = cO40.o40Server
             intPort = BO.BAS.IsNullInt(cO40.o40Port)
-            bolSSL = cO40.o40IsUseSSL
+            sslM = cO40.o40SslModeFlag
+
             If cO40.o40IsVerify Then
                 strSmtpLogin = cO40.o40Login
                 strSmtpPassword = cO40.DecryptedPassword()
@@ -338,22 +338,27 @@ Class x40MailQueueBL
         If Not bolUseWebConfig Then
             Dim smtp As New Smtp
             With smtp
-                ''.Settings.SslAllowedSuites = TlsVersion.SSL30 Or TlsVersion.TLS10       'je třeba parametrizovat
-
                 Try
-                    If intPort > 0 Then
-                        If bolSSL Then
-                            .Connect(strSmtpServer, intPort, SslMode.Implicit)
-                        Else
-                            .Connect(strSmtpServer, intPort)
-                        End If
-                    Else
-                        If bolSSL Then
-                            .Connect(strSmtpServer, SslMode.Implicit)
-                        Else
-                            .Connect(strSmtpServer)
-                        End If
-                    End If
+                    Select Case sslM
+                        Case BO.SslModeENUM._NoSSL
+                            If intPort = 0 Then
+                                .Connect(strSmtpServer)
+                            Else
+                                .Connect(strSmtpServer, intPort)
+                            End If
+                        Case BO.SslModeENUM.Implicit
+                            If intPort = 0 Then
+                                .Connect(strSmtpServer, Rebex.Net.SslMode.Implicit)
+                            Else
+                                .Connect(strSmtpServer, intPort, Rebex.Net.SslMode.Implicit)
+                            End If
+                        Case BO.SslModeENUM.Explicit
+                            If intPort = 0 Then
+                                .Connect(strSmtpServer, Rebex.Net.SslMode.Explicit)
+                            Else
+                                .Connect(strSmtpServer, intPort, Rebex.Net.SslMode.Explicit)
+                            End If
+                    End Select
                     If strSmtpLogin <> "" And strSmtpPassword <> "" Then
                         .Login(strSmtpLogin, strSmtpPassword)
                     End If
@@ -503,26 +508,32 @@ Class x40MailQueueBL
         Return SendAnswer2Ticket(strBody, cRec2Answer.o43ID, cRec2Answer.x29ID, cRec2Answer.b07RecordPID)
     End Function
 
-    Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer, bolSSL As Boolean) As Boolean Implements Ix40MailQueueBL.TestConnect
+    Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer, sslM As BO.SslModeENUM) As Boolean Implements Ix40MailQueueBL.TestConnect
         Dim smtp As New Smtp
         With smtp
-
             Try
-                If intPort > 0 Then
-                    If bolSSL Then
-                        .Connect(strSmtpServer, intPort, SslMode.Implicit)
-                    Else
-                        .Connect(strSmtpServer, intPort)
-                    End If
-
-                Else
-                    If bolSSL Then
-                        .Connect(strSmtpServer, SslMode.Implicit)
-                    Else
-                        .Connect(strSmtpServer)
-                    End If
-
-                End If
+                Select Case sslM
+                    Case BO.SslModeENUM._NoSSL
+                        If intPort = 0 Then
+                            .Connect(strSmtpServer)
+                        Else
+                            .Connect(strSmtpServer, intPort)
+                        End If
+                    Case BO.SslModeENUM.Implicit
+                        .Settings.SslAcceptAllCertificates = True
+                        If intPort = 0 Then
+                            .Connect(strSmtpServer, SslMode.Implicit)
+                        Else
+                            .Connect(strSmtpServer, intPort, SslMode.Implicit)
+                        End If
+                    Case BO.SslModeENUM.Explicit
+                        .Settings.SslAcceptAllCertificates = True
+                        If intPort = 0 Then
+                            .Connect(strSmtpServer, SslMode.Explicit)
+                        Else
+                            .Connect(strSmtpServer, intPort, SslMode.Explicit)
+                        End If
+                End Select
 
                 If strSmtpLogin <> "" And strSmtpPassword <> "" Then
                     .Login(strSmtpLogin, strSmtpPassword)

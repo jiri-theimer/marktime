@@ -86,13 +86,22 @@ Partial Public Class o40_record
     Protected WithEvents o40Port As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''o40IsUseSSL control.
+    '''Label4 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents o40IsUseSSL As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''o40SslModeFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o40SslModeFlag As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''o40IsVerify control.

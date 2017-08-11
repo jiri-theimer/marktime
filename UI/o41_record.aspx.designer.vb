@@ -140,13 +140,22 @@ Partial Public Class o41_record
     Protected WithEvents o41IsDeleteMesageAfterImport As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''o41IsUseSSL control.
+    '''Label4 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents o41IsUseSSL As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''o41SslModeFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o41SslModeFlag As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''cmdTest control.

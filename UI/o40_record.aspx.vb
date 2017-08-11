@@ -43,7 +43,7 @@
         Dim cRec As BO.o40SmtpAccount = Master.Factory.o40SmtpAccountBL.Load(Master.DataPID)
         With cRec
             Me.o40Name.Text = .o40Name
-            Me.o40IsUseSSL.Checked = .o40IsUseSSL
+            basUI.SelectDropdownlistValue(Me.o40SslModeFlag, CInt(.o40SslModeFlag).ToString)
             Me.o40IsVerify.Checked = .o40IsVerify
             Me.o40login.Text = .o40Login
             Me.o40Password.Text = .o40Password
@@ -83,7 +83,7 @@
                 .o40Name = Me.o40Name.Text
                 .o40EmailAddress = Me.o40EmailAddress.Text
                 .o40Server = Me.o40Server.Text
-                .o40IsUseSSL = Me.o40IsUseSSL.Checked
+                .o40SslModeFlag = CInt(Me.o40SslModeFlag.SelectedValue)
                 .o40IsVerify = Me.o40IsVerify.Checked
                 .o40Port = Me.o40Port.Text
 
@@ -124,7 +124,7 @@
         Dim c As BO.o40SmtpAccount = Master.Factory.o40SmtpAccountBL.Load(Master.DataPID)
 
 
-        If Master.Factory.x40MailQueueBL.TestConnect(c.o40Server, c.o40Login, c.DecryptedPassword, BO.BAS.IsNullInt(c.o40Port), Me.o40IsUseSSL.Checked) Then
+        If Master.Factory.x40MailQueueBL.TestConnect(c.o40Server, c.o40Login, c.DecryptedPassword, BO.BAS.IsNullInt(c.o40Port), CType(Me.o40SslModeFlag.SelectedValue, BO.SslModeENUM)) Then
             Master.Notify("Připojení se podařilo.", NotifyLevel.InfoMessage)
         Else
             Master.Notify(Master.Factory.x40MailQueueBL.ErrorMessage, NotifyLevel.ErrorMessage)

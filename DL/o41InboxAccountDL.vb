@@ -27,7 +27,7 @@
 
             pars.Add("o41Port", .o41Port, DbType.String)
             pars.Add("o41Folder", .o41Folder, DbType.String)
-            pars.Add("o41IsUseSSL", .o41IsUseSSL, DbType.Boolean)
+            pars.Add("o41SslModeFlag", CInt(.o41SslModeFlag), DbType.Int32)
             pars.Add("o41IsDeleteMesageAfterImport", .o41IsDeleteMesageAfterImport, DbType.Boolean)
             pars.Add("o41DateImportAfter", .o41DateImportAfter, DbType.DateTime)
             pars.Add("o41validfrom", .ValidFrom, DbType.DateTime)

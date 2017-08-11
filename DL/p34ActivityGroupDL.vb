@@ -103,6 +103,7 @@
 
         If BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Creator) Then
             'právo zapisovat worksheeet úkony do všech projektů
+            pars.Add("p42id", intP42ID, DbType.Int32)
             s += " ORDER BY a.p34Ordinary,a.p34Name"
             Return _cDB.GetList(Of BO.p34ActivityGroup)(s, pars)
         End If

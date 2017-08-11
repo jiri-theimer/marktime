@@ -76,21 +76,28 @@ Class o42ImapRuleBL
 
         With cInbox
             Try
-                If .o41IsUseSSL Then
-                    Dim par As TlsParameters = New TlsParameters
-                    par.CommonName = .o41Server
-
-                    par.CertificateVerifier = CertificateVerifier.AcceptAll
-                    _client.Connect(.o41Server, .o41Port, par, ImapSecurity.Implicit)
-                Else
-                    If .o41Port = 0 Then
-                        _client.Connect(.o41Server)
-                    Else
-                        _client.Connect(.o41Server, .o41Port, SslMode.Implicit)
-                    End If
-                End If
-
-
+                Select Case .o41SslModeFlag
+                    Case BO.SslModeENUM._NoSSL
+                        If .o41Port = "" Then
+                            _client.Connect(.o41Server)
+                        Else
+                            _client.Connect(.o41Server, CInt(.o41Port))
+                        End If
+                    Case BO.SslModeENUM.Implicit
+                        _client.Settings.SslAcceptAllCertificates = True
+                        If .o41Port <> "" Then
+                            _client.Connect(.o41Server, BO.BAS.IsNullInt(.o41Port), SslMode.Implicit)
+                        Else
+                            _client.Connect(.o41Server, SslMode.Implicit)
+                        End If
+                    Case BO.SslModeENUM.Explicit
+                        _client.Settings.SslAcceptAllCertificates = True
+                        If .o41Port <> "" Then
+                            _client.Connect(.o41Server, BO.BAS.IsNullInt(.o41Port), SslMode.Explicit)
+                        Else
+                            _client.Connect(.o41Server, SslMode.Explicit)
+                        End If
+                End Select
             Catch ex As Exception
                 _Error = .o41Server & "<br>" & ex.Message
                 Return False

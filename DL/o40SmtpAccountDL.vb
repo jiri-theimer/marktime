@@ -28,7 +28,7 @@
             pars.Add("o40IsVerify", .o40IsVerify, DbType.Boolean)
 
             pars.Add("o40Port", .o40Port, DbType.String)
-            pars.Add("o40IsUseSSL", .o40IsUseSSL, DbType.Boolean)
+            pars.Add("o40SslModeFlag", CInt(.o40SslModeFlag), DbType.Int32)
 
             pars.Add("o40validfrom", .ValidFrom, DbType.DateTime)
             pars.Add("o40validuntil", .ValidUntil, DbType.DateTime)

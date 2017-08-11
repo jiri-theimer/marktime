@@ -44,7 +44,7 @@
         Dim cRec As BO.o41InboxAccount = Master.Factory.o41InboxAccountBL.Load(Master.DataPID)
         With cRec
             Me.o41Name.Text = .o41Name
-            Me.o41IsUseSSL.Checked = .o41IsUseSSL
+            basUI.SelectDropdownlistValue(Me.o41SslModeFlag, CInt(.o41SslModeFlag).ToString)
             Me.o41IsDeleteMesageAfterImport.Checked = .o41IsDeleteMesageAfterImport
             Me.o41login.Text = .o41Login
             Me.o41Password.Text = .o41Password
@@ -91,7 +91,7 @@
                 .o41Name = Me.o41Name.Text
                 .o41Folder = Me.o41Folder.Text
                 .o41Server = Me.o41Server.Text
-                .o41IsUseSSL = Me.o41IsUseSSL.Checked
+                .o41SslModeFlag = CInt(Me.o41SslModeFlag.SelectedValue)
                 .o41IsDeleteMesageAfterImport = Me.o41IsDeleteMesageAfterImport.Checked
                 .o41Port = Me.o41Port.Text
                 .o41ForwardEmail_UnBound = Me.o41ForwardEmail_UnBound.Text

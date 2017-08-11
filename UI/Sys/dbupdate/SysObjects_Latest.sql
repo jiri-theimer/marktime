@@ -10595,8 +10595,15 @@ if @err<>''
  return
    
 ---test oprávnìní zapisovat do projektu worksheet---------
-declare @o28id int,@o28entryflag int,@x69id int
+declare @o28id int,@o28entryflag int,@x69id int,@is_gr_p31_entry_all_projects bit
 
+set @is_gr_p31_entry_all_projects=dbo.j03_test_permission_global(@j03id_sys,29)
+
+if @is_gr_p31_entry_all_projects=1
+ set @o28entryflag=1	--má paušální právo zapisovat do všech projektù
+
+if @is_gr_p31_entry_all_projects=0
+begin
 select @o28id=a.o28id,@o28entryflag=a.o28entryflag
 from o28ProjectRole_Workload a inner join x67EntityRole x67 on a.x67ID=x67.x67ID
 inner join x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID
@@ -10609,7 +10616,7 @@ declare @j18id int
 select @j18id=j18ID FROM p41Project WHERE p41ID=@p41id
 
 if @o28id is null and @j18id is not null
- begin ----------oprávnìní k projektu podle projektové skupiny (regionu)
+ begin ----------oprávnìní k projektu podle støediska
   select @o28id=a.o28id,@o28entryflag=a.o28entryflag
   from o28ProjectRole_Workload a inner join x67EntityRole x67 on a.x67ID=x67.x67ID
   inner join x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID
@@ -10621,9 +10628,10 @@ if @o28id is null and @j18id is not null
 
 if @o28id is null
  begin  
-  set @err='Osoba ['+@person+'] nemá v tomto projektu nebo v pøíslušném støedisku pøiøazenou roli k zapisování worksheet úkonù do sešitu ['+dbo.GetObjectAlias('p34',@p34id)+']'
+  set @err='['+@person+'] nemá v tomto projektu nebo v pøíslušném støedisku pøiøazenou roli k zapisování worksheet úkonù do sešitu ['+dbo.GetObjectAlias('p34',@p34id)+']'
 
  end
+end
    
 if @err<>''
  return  

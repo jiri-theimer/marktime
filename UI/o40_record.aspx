@@ -46,9 +46,17 @@
         </tr>
 
 
+        
         <tr>
-            <td colspan="2">
-                <asp:CheckBox ID="o40IsUseSSL" runat="server" Text="SSL komunikace" />
+            <td>
+                <asp:Label ID="Label4" Text="SSL mód:" runat="server" CssClass="lbl"></asp:Label>
+            </td>
+            <td>
+                <asp:DropDownList ID="o40SslModeFlag" runat="server">
+                    <asp:ListItem Text="Bez SSL" Value="0"></asp:ListItem>
+                    <asp:ListItem Text="SSL implicit" Value="1"></asp:ListItem>
+                    <asp:ListItem Text="SSL explicit" Value="2"></asp:ListItem>
+                </asp:DropDownList>
             </td>
         </tr>
 
