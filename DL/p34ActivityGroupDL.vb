@@ -99,7 +99,15 @@
             strEntryFlags = "1,2,4"
         End If
         s += " INNER JOIN p43ProjectType_Workload p43 ON a.p34ID=p43.p34ID"
-        s += " WHERE p43.p42ID=@p42id AND a.p34ValidFrom<=getdate() AND a.p34ValidUntil>=getdate() AND (a.p34ID IN ("
+        s += " WHERE p43.p42ID=@p42id AND a.p34ValidFrom<=getdate() AND a.p34ValidUntil>=getdate()"
+
+        If BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Creator) Then
+            'právo zapisovat worksheeet úkony do všech projektů
+            s += " ORDER BY a.p34Ordinary,a.p34Name"
+            Return _cDB.GetList(Of BO.p34ActivityGroup)(s, pars)
+        End If
+
+        s += " AND (a.p34ID IN ("
 
         s += "SELECT a1.p34ID FROM o28ProjectRole_Workload a1 INNER JOIN x69EntityRole_Assign a2 ON a1.x67ID=a2.x67ID INNER JOIN x67EntityRole a3 ON a2.x67ID=a3.x67ID"
         s += " WHERE a3.x29ID=141 AND a2.x69RecordPID=@p41id AND a1.o28EntryFlag IN (" & strEntryFlags & ") AND (a2.j02ID=@j02id OR a2.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id))"

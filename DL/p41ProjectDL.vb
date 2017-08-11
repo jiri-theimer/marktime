@@ -418,14 +418,17 @@
             Select Case .SpecificQuery
                 Case BO.myQueryP41_SpecificQuery.AllowedForWorksheetEntry
                     s.Append(" AND a.p41IsDraft=0 AND a.p41WorksheetOperFlag>1 AND p42.p42IsModule_p31=1 AND getdate() BETWEEN a.p41ValidFrom AND a.p41ValidUntil")
-                    s.Append(" AND (a.p41ID IN (")
+                    If Not BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Creator) Then
+                        s.Append(" AND (a.p41ID IN (")
 
-                    s.Append("SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN o28ProjectRole_Workload o28 ON x69.x67ID=o28.x67ID INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID")
-                    s.Append(" WHERE x67.x29ID=141 AND o28.o28EntryFlag IN (1,2,4) AND (x69.j02ID=@j02id_query " & strJ11IDs & ")")
-                    s.Append(") OR a.j18ID IN (")
-                    s.Append("SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN o28ProjectRole_Workload o28 ON x69.x67ID=o28.x67ID INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID")
-                    s.Append(" WHERE x67.x29ID=118 AND o28.o28EntryFlag IN (1,2,4) AND (x69.j02ID=@j02id_query " & strJ11IDs & ")")
-                    s.Append("))")
+                        s.Append("SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN o28ProjectRole_Workload o28 ON x69.x67ID=o28.x67ID INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID")
+                        s.Append(" WHERE x67.x29ID=141 AND o28.o28EntryFlag IN (1,2,4) AND (x69.j02ID=@j02id_query " & strJ11IDs & ")")
+                        s.Append(") OR a.j18ID IN (")
+                        s.Append("SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN o28ProjectRole_Workload o28 ON x69.x67ID=o28.x67ID INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID")
+                        s.Append(" WHERE x67.x29ID=118 AND o28.o28EntryFlag IN (1,2,4) AND (x69.j02ID=@j02id_query " & strJ11IDs & ")")
+                        s.Append("))")
+                    End If
+                    
                 Case BO.myQueryP41_SpecificQuery.AllowedForRead
                     If BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P41_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P41_Owner) Then
                         'právo paušálně číst všechny projekty - není třeba skládat podmínku

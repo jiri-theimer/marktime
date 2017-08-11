@@ -338,6 +338,8 @@ Class x40MailQueueBL
         If Not bolUseWebConfig Then
             Dim smtp As New Smtp
             With smtp
+                ''.Settings.SslAllowedSuites = TlsVersion.SSL30 Or TlsVersion.TLS10       'je třeba parametrizovat
+
                 Try
                     If intPort > 0 Then
                         If bolSSL Then
@@ -504,6 +506,7 @@ Class x40MailQueueBL
     Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer, bolSSL As Boolean) As Boolean Implements Ix40MailQueueBL.TestConnect
         Dim smtp As New Smtp
         With smtp
+
             Try
                 If intPort > 0 Then
                     If bolSSL Then
