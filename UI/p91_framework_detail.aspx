@@ -265,8 +265,6 @@
         <Nodes>
             <telerik:NavigationNode ID="begin" Width="50px" Enabled="false" Visible="true">
             </telerik:NavigationNode>
-            <telerik:NavigationNode ID="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png"></telerik:NavigationNode>
-            <telerik:NavigationNode ID="reload" ImageUrl="Images/refresh.png" Text=" " ToolTip="Obnovit stránku"></telerik:NavigationNode>
 
 
             <telerik:NavigationNode Text="ZÁZNAM FAKTURY" ID="record">
@@ -308,6 +306,13 @@
                 </Nodes>
 
 
+            </telerik:NavigationNode>
+            <telerik:NavigationNode ID="thePage" Text="STRÁNKA">
+                <Nodes>
+                    <telerik:NavigationNode ID="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png" Text="Otevřít v nové záložce"></telerik:NavigationNode>
+
+                    <telerik:NavigationNode ID="reload" ImageUrl="Images/refresh.png" text="Obnovit stránku"></telerik:NavigationNode>
+                </Nodes>
             </telerik:NavigationNode>
            
 
