@@ -136,7 +136,7 @@
                 Me.chkDirectNominee.Checked = False
             End If
             Me.b06CreateDirectory.Text = .b06CreateDirectory
-
+            basUI.SelectDropdownlistValue(Me.b06NomineeFlag, CInt(.b06NomineeFlag).ToString)
 
             Master.Timestamp = .Timestamp
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -233,6 +233,7 @@
                 .b06IsNominee = Me.b06IsNominee.Checked
                 .b06IsNomineeRequired = Me.b06IsNomineeRequired.Checked
                 .x67ID_Nominee = BO.BAS.IsNullInt(Me.x67ID_Nominee.SelectedValue)
+                .b06NomineeFlag = BO.BAS.IsNullInt(Me.b06NomineeFlag.SelectedValue)
                 If Me.chkDirectNominee.Checked Then
                     .x67ID_Direct = BO.BAS.IsNullInt(Me.x67ID_Direct.SelectedValue)
                     .j11ID_Direct = BO.BAS.IsNullInt(Me.j11ID_Direct.SelectedValue)

@@ -45,6 +45,7 @@
 
                 pars.Add("b06IsNominee", .b06IsNominee, DbType.Boolean)
                 pars.Add("b06IsNomineeRequired", .b06IsNomineeRequired, DbType.Boolean)
+                pars.Add("b06NomineeFlag", CInt(.b06NomineeFlag), DbType.Int32)
                 
                 pars.Add("b06IsRunOneInstanceOnly", .b06IsRunOneInstanceOnly, DbType.Boolean)
                 pars.Add("b06CreateDirectory", .b06CreateDirectory, DbType.String)

@@ -42,7 +42,7 @@
                             <asp:Image ID="img1" runat="server" ImageUrl="Images/projectrole_team.png"></asp:Image>
                             <span>Osoba:</span>
                             <uc:person ID="j02ID" runat="server" Width="200px" Flag="all" />
-                            <span>nebo tým osob:</span>
+                            <asp:label ID="lblNeboTymOsob" runat="server" Text="nebo tým osob:"></asp:label>
                             <asp:DropDownList ID="j11id" runat="server" DataTextField="j11Name" DataValueField="pid" Style="width: 200px;" Font-Bold="true"></asp:DropDownList>
 
                             <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit položku" CssClass="button-link" />
@@ -87,6 +87,7 @@
 
     <asp:HiddenField ID="hidPrefix" runat="server" />
     <asp:HiddenField ID="hidRecordPID" runat="server" />
+    <asp:HiddenField ID="hidb06NomineeFlag" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

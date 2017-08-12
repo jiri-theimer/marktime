@@ -167,6 +167,15 @@ Partial Public Class b06_record
     Protected WithEvents b06IsNomineeRequired As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''b06NomineeFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents b06NomineeFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''chkDirectNominee control.
     '''</summary>
     '''<remarks>

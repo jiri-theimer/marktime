@@ -96,9 +96,14 @@ Public Class user_service
             Case Else
                 mq.SpecificQuery = BO.myQueryJ02_SpecificQuery.AllowedForRead
         End Select
-        
 
-        Dim lis As IEnumerable(Of BO.j02Person) = factory.j02PersonBL.GetList(mq)
+        Dim lis As IEnumerable(Of BO.j02Person) = Nothing
+        If strFlag = "masters" Then
+            'pouze nadřízení
+            lis = factory.j02PersonBL.GetList_Masters(factory.SysUser.j02ID)
+        Else
+            lis = factory.j02PersonBL.GetList(mq)
+        End If
 
         result = New List(Of RadComboBoxItemData)(lis.Count)
 

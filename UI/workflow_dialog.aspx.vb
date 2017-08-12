@@ -220,11 +220,17 @@
         End With
 
         With CType(e.Item.FindControl("j11id"), DropDownList)
-            If .Items.Count = 0 Then
-                .DataSource = Master.Factory.j11TeamBL.GetList(New BO.myQuery).Where(Function(p) p.j11IsAllPersons = False)
-                .DataBind()
-                .Items.Insert(0, "")
+            If hidb06NomineeFlag.Value = "1" Then
+                .Visible = False : e.Item.FindControl("lblNeboTymOsob").Visible = False
+            Else
+                .Visible = True : e.Item.FindControl("lblNeboTymOsob").Visible = True
+                If .Items.Count = 0 Then
+                    .DataSource = Master.Factory.j11TeamBL.GetList(New BO.myQuery).Where(Function(p) p.j11IsAllPersons = False)
+                    .DataBind()
+                    .Items.Insert(0, "")
+                End If
             End If
+            
         End With
         basUI.SelectDropdownlistValue(CType(e.Item.FindControl("j11id"), DropDownList), cRec.p85OtherKey3.ToString)
         If cRec.p85OtherKey3 <> 0 Then
@@ -236,6 +242,11 @@
             .Visible = True
             .Value = cRec.p85OtherKey2.ToString
             .Text = cRec.p85FreeText02
+            If hidb06NomineeFlag.Value = "1" Then
+                .Flag = "masters"   'pouze nadřízení
+            Else
+                .Flag = "all"
+            End If
         End With
 
         If cRec.p85OtherKey2 <> 0 Then
@@ -271,6 +282,8 @@
         If cRec.b06IsNominee Then
             Dim cX67 As BO.x67EntityRole = Master.Factory.x67EntityRoleBL.Load(cRec.x67ID_Nominee)
             cmdAddNominee.Text = String.Format("Přidat ({0})", cX67.x67Name)
+            hidb06NomineeFlag.Value = CInt(cRec.b06NomineeFlag).ToString
+            
         End If
         If cRec.b06IsNomineeRequired Then
             If rpNominee.Items.Count = 0 Then InsertBlankNominee()

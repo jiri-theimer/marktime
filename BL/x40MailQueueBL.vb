@@ -363,6 +363,7 @@ Class x40MailQueueBL
                         .Login(strSmtpLogin, strSmtpPassword)
                     End If
                     .Send(mail)
+                    .Disconnect()
                     bolSucceeded = True
                 Catch ex As Exception
                     _Error = ex.Message

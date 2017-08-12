@@ -101,6 +101,10 @@
                         <asp:CheckBox ID="b06IsNomineeRequired" runat="server" Text="Nominace řešitelů je povinná" CssClass="chk" />
 
                     </div>
+                    <asp:DropDownList ID="b06NomineeFlag" runat="server">
+                        <asp:ListItem Text="Nominovat lze jakoukoliv osobu" Value="0" Selected="true"></asp:ListItem>
+                        <asp:ListItem Text="V nominaci se nabízí pouze nadřízené osoby" Value="1"></asp:ListItem>
+                    </asp:DropDownList>
                 </fieldset>
             </asp:Panel>
 

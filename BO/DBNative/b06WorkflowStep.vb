@@ -1,4 +1,8 @@
-﻿Public Class b06WorkflowStep
+﻿Public Enum b06NomineeFlagENUM
+    _AllPersons = 0
+    MastersOnly = 1
+End Enum
+Public Class b06WorkflowStep
     Inherits BOMother
     Public Property b02ID As Integer
     Public Property b02ID_Target As Integer
@@ -11,6 +15,7 @@
     Public Property b06IsNominee As Boolean
     Public Property b06IsNomineeRequired As Boolean
     Public Property x67ID_Nominee As Integer
+    Public Property b06NomineeFlag As b06NomineeFlagENUM = b06NomineeFlagENUM._AllPersons
     Public Property x67ID_Direct As Integer
     Public Property j11ID_Direct As Integer
     Public Property b02ID_LastReceiver_ReturnTo As Integer

@@ -258,6 +258,16 @@
         s += " ORDER BY a.j02LastName,a.j02FirstName"
         Return _cDB.GetList(Of BO.j02Person)(s, pars)
     End Function
+    Public Function GetList_Masters(intJ02ID As Integer) As IEnumerable(Of BO.j02Person)
+        Dim s As String = GetSQLPart1(0), pars As New DbParameters
+        pars.Add("j02id_me", intJ02ID, DbType.Int32)
+        Dim strW As String = "a.j02ID IN (SELECT j02ID_Master FROM j05MasterSlave WHERE j02ID_Slave=@j02id_me)"
+        strW += " OR a.j02ID IN (SELECT xj05.j02ID_Master FROM j12Team_Person j12 INNER JOIN j05MasterSlave xj05 ON j12.j11ID=xj05.j11ID_Slave WHERE j12.j02ID=@j02id_me)"
+        strW = "(" & strW & ")"
+        s += " WHERE " & strW
+        s += " ORDER BY a.j02LastName,a.j02FirstName"
+        Return _cDB.GetList(Of BO.j02Person)(s, pars)
+    End Function
     Public Function GetTeamsInLine(intJ02ID As Integer) As String
         Return _cDB.GetValueFromSQL("SELECT dbo.j02_teams_inline(" & intJ02ID.ToString & ")")
     End Function
