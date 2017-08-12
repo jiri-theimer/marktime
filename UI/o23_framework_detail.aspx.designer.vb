@@ -32,24 +32,6 @@ Partial Public Class o23_framework_detail
     Protected WithEvents begin As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
-    '''fs control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents fs As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''reload control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents reload As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
     '''record control.
     '''</summary>
     '''<remarks>
@@ -120,6 +102,33 @@ Partial Public Class o23_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdBarCode As Global.Telerik.Web.UI.NavigationNode
+
+    '''<summary>
+    '''thePage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents thePage As Global.Telerik.Web.UI.NavigationNode
+
+    '''<summary>
+    '''fs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents fs As Global.Telerik.Web.UI.NavigationNode
+
+    '''<summary>
+    '''reload control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents reload As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
     '''imgIcon32 control.

@@ -188,6 +188,7 @@ Public Class entity_menu
         Dim cP42 As BO.p42ProjectType = Me.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
         p41_SetupTabs(cRecSum, cP42, cDisp)
         p41_SetupMenu(cRec, cP42, cDisp)
+        SetupMenu_thePage("p41_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value)
 
         Me.CurrentTab = strTabValue
         Handle_SelectedTab()
@@ -200,24 +201,6 @@ Public Class entity_menu
         If Not cDisp.ReadAccess Then
             Handle_NoAccess("Nedisponujete přístupovým oprávněním k projektu.")
         End If
-
-        If Me.hidSource.Value <> "2" Then
-            With cRec
-                'basUIMT.RenderHeaderMenu(.IsClosed, Me.panMenuContainer, menu1)
-                Dim strLevel1 As String = .FullName
-                If Len(cRec.Client) > 30 Then
-                    strLevel1 = Left(.Client, 30) & "..."
-                    strLevel1 += "->" & .PrefferedName
-                End If
-                ''If FNO("level1").Visible Then
-                ''    basUIMT.RenderLevelLink(FNO("level1"), strLevel1, "p41_framework_detail.aspx?pid=" & .PID.ToString & "&source=" & Me.hidSource.Value, .IsClosed)
-                ''Else
-                ''    FNO("reload").NavigateUrl = "p41_framework_detail.aspx?pid=" & .PID.ToString & "&source=" & Me.hidSource.Value
-                ''End If
-                FNO("reload").NavigateUrl = "p41_framework_detail.aspx?pid=" & .PID.ToString & "&source=" & Me.hidSource.Value
-            End With
-        End If
-
 
         Dim mi As NavigationNode = FNO("record")
         If mi.Nodes.Count > 0 Then Return 'menu už bylo dříve zpracované
@@ -278,7 +261,7 @@ Public Class entity_menu
 
         mi = ami("DALŠÍ", "more", "", "", Nothing)
 
-        If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky projektu", "", "javascript:page_setting()", "Images/setting.png", mi)
+
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
             ami("WORKSHEET statistika projektu", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
@@ -319,6 +302,22 @@ Public Class entity_menu
         End If
         ami("Čárový kód", "barcode", "javascript:menu_barcode()", "Images/barcode.png", mi)
 
+
+    End Sub
+
+    Private Sub SetupMenu_thePage(strReloadUrl As String)
+        Dim mi As NavigationNode = ami("STRÁNKA", "thePage", "", "", Nothing)
+        ami("Nastavení vzhledu stránky osoby", "", "javascript:page_setting()", "Images/setting.png", mi)
+        Select Case Me.hidSource.Value
+            Case "1"
+                ami("Otevřít v nové záložce", "fs", "javascript:menu_fullscreen()", "Images/open_in_new_window.png", mi)
+                ami("Obnovit stránku", "reload", strReloadUrl, "Images/refresh.png", mi)
+            Case "2"
+                ami("Otevřít v nové záložce", "fs", "javascript:menu_fullscreen()", "Images/open_in_new_window.png", mi)
+            Case "3"
+                ami("Přepnout do datového přehledu", "fs", "entity_framework.aspx?prefix=" & Me.DataPrefix, "Images/fullscreen.png", mi)
+                ami("Obnovit stránku", "reload", strReloadUrl, "Images/refresh.png", mi)
+        End Select
 
     End Sub
 
@@ -449,6 +448,7 @@ Public Class entity_menu
         If cDisp Is Nothing Then cDisp = Me.Factory.p28ContactBL.InhaleRecordDisposition(cRec)
         p28_SetupTabs(cRecSum)
         p28_SetupMenu(cRec, cDisp)
+        SetupMenu_thePage("p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value)
 
         Me.CurrentTab = strTabValue
         Handle_SelectedTab()
@@ -499,10 +499,7 @@ Public Class entity_menu
 
             If bolGo Then cti(s, c.x61Code)
         Next
-        ''If crs.b07_Count > 0 Then
-        ''    If lisX61.Where(Function(p) p.x61Code = "workflow").Count = 0 Then Me.alert1.Append("Ke klientovi byl zapsán minimálně jeden komentář. V nastavení vzhledu stránky klienta si přidejte záložku [Komentáře a workflow].")
-        ''End If
-
+       
     End Sub
 
     Private Sub Handle_NoAccess(strMessage As String)
@@ -515,13 +512,7 @@ Public Class entity_menu
         If Not cDisp.ReadAccess Then
             Handle_NoAccess("Nedisponujete přístupovým oprávněním ke klientovi.")
         End If
-        ''If FNO("level1").Visible Then
-        ''    basUIMT.RenderLevelLink(FNO("level1"), cRec.p28Name, "p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, cRec.IsClosed)
-        ''Else
-        ''    FNO("reload").NavigateUrl = "p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
-        ''End If
-        FNO("reload").NavigateUrl = "p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
-
+      
 
         Dim mi As NavigationNode = FNO("record")
         If mi.Nodes.Count > 0 Then Return 'menu už bylo dříve zpracované
@@ -555,12 +546,12 @@ Public Class entity_menu
 
         mi = ami("DALŠÍ", "more", "", "", Nothing)
         'mi.GroupSettings.OffsetX = -200
-        If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky klienta", "", "javascript:page_setting()", "Images/setting.png", mi)
+
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
             ami("WORKSHEET statistika klienta", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
-       
-       
+
+
         If Me.Factory.SysUser.j04IsMenu_Notepad Then
             ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi, , True)
         End If
@@ -590,6 +581,7 @@ Public Class entity_menu
 
         j02_SetupTabs(cRec, cRecSum)
         j02_SetupMenu(cRec)
+        SetupMenu_thePage("j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value)
 
         Me.CurrentTab = strTabValue
         Handle_SelectedTab()
@@ -601,17 +593,12 @@ Public Class entity_menu
         If Not Me.Factory.SysUser.j04IsMenu_People Then
             Handle_NoAccess("Nedisponujete přístupovým oprávněním k prohlížení osobních profilů.")
         End If
-        'If FNO("level1").Visible Then
-        '    basUIMT.RenderLevelLink(FNO("level1"), cRec.FullNameAsc, "j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, cRec.IsClosed)
-        'Else
-        '    FNO("reload").NavigateUrl = "j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
-        'End If
-        FNO("reload").NavigateUrl = "j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+
 
 
         Dim mi As NavigationNode = FNO("record")
         mi.Text = "ZÁZNAM OSOBY"
-        If mi.nodes.Count > 0 Then Return 'menu už bylo dříve zpracované
+        If mi.Nodes.Count > 0 Then Return 'menu už bylo dříve zpracované
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_Admin) Then
             ami("Upravit kartu osoby", "cmdEdit", "javascript:record_edit();", "Images/edit.png", mi, "Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění.")
             ami("Založit osobu", "cmdNew", "javascript:record_new();", "Images/new.png", mi, , True)
@@ -626,7 +613,7 @@ Public Class entity_menu
 
         mi = ami("DALŠÍ", "more", "", "", Nothing)
         ''mi.GroupSettings.OffsetX = -200
-        If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky osoby", "", "javascript:page_setting()", "Images/setting.png", mi)
+
         If cRec.j02IsIntraPerson Then
             If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
                 ami("WORKSHEET statistika osoby", "cmdPivot", "p31_sumgrid.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
@@ -738,6 +725,7 @@ Public Class entity_menu
         cti(s, "o23")
 
         p56_SetupMenu(cRec, cP41, cP42, cDisp)
+        SetupMenu_thePage("p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value)
 
         Me.CurrentTab = strTabValue
         Handle_SelectedTab()
@@ -751,15 +739,9 @@ Public Class entity_menu
         If Not cDisp.ReadAccess Then
             Handle_NoAccess("Nedisponujete oprávněním číst tento úkol.")
         End If
-        'If FNO("level1").Visible Then
-        '    basUIMT.RenderLevelLink(FNO("level1"), cRec.p57Name & ": " & cRec.p56Code, "p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, cRec.IsClosed)
-        'Else
-        '    FNO("reload").NavigateUrl = "p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
-        'End If
-        FNO("reload").NavigateUrl = "p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
-
-        Dim mi As navigationnode = FNO("record")
-        If mi.nodes.Count > 0 Then Return 'menu už bylo dříve zpracované
+        
+        Dim mi As NavigationNode = FNO("record")
+        If mi.Nodes.Count > 0 Then Return 'menu už bylo dříve zpracované
 
         mi.Text = "ZÁZNAM ÚKOLU"
         If cDisp.OwnerAccess Then
@@ -818,7 +800,7 @@ Public Class entity_menu
 
         mi = ami("DALŠÍ", "more", "", "", Nothing)
         ''mi.GroupSettings.OffsetX = -270
-        If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky úkolu", "", "javascript:page_setting()", "Images/setting.png", mi)
+        'If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky úkolu", "", "javascript:page_setting()", "Images/setting.png", mi)
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
             ami("WORKSHEET statistika úkolu", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
@@ -841,48 +823,30 @@ Public Class entity_menu
     Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
         Select Case hidSource.Value
             Case "1"
-                With FNO("fs")
-                    .ImageUrl = "Images/open_in_new_window.png"
-                    .ToolTip = "Otevřít v nové záložce"
-                End With
-                ''FNO("reload").Visible = Not FNO("level1").Visible
+                'With FNO("fs")
+                '    .ImageUrl = "Images/open_in_new_window.png"
+                '    .ToolTip = "Otevřít v nové záložce"
+                'End With
             Case "2"
-                With FNO("fs")
-                    .ImageUrl = "Images/open_in_new_window.png"
-                    .ToolTip = "Otevřít stránku v nové záložce prohlížeče"
-                End With
+                'With FNO("fs")
+                '    .ImageUrl = "Images/open_in_new_window.png"
+                '    .ToolTip = "Otevřít stránku v nové záložce prohlížeče"
+                'End With
 
                 If menu1.Skin <> "Black" Then
                     menu1.Skin = "Metro"
                 End If
 
+                'FNO("reload").Visible = False
 
-                ''FNO("level1").Visible = False
-                FNO("reload").Visible = False
-                ''FNO("saw").Visible = False
-
-                'For Each it As NavigationNode In Me.menu1.Nodes
-                '    If it.Items.Where(Function(p) p.IsSeparator = False).Count > 3 Then
-                '        it.GroupSettings.RepeatDirection = MenuRepeatDirection.Vertical
-                '        Select Case it.Items.Where(Function(p) p.IsSeparator = False).Count
-                '            Case 4 To 6
-                '                it.GroupSettings.RepeatColumns = 2
-                '            Case 7 To 9
-                '                it.GroupSettings.RepeatColumns = 3
-                '            Case Is > 9
-                '                it.GroupSettings.RepeatColumns = 4
-                '        End Select
-
-                '    End If
-                'Next
             Case "3"
-                With FNO("fs")
-                    .NavigateUrl = "entity_framework.aspx?prefix=" & Me.DataPrefix
-                    .ToolTip = "Přepnout do datového přehledu"
-                    .ImageUrl = "Images/fullscreen.png"
-                    .Text = "PŘEHLED"
-                    .Width = Nothing
-                End With
+                'With FNO("fs")
+                '    .NavigateUrl = "entity_framework.aspx?prefix=" & Me.DataPrefix
+                '    .ToolTip = "Přepnout do datového přehledu"
+                '    .ImageUrl = "Images/fullscreen.png"
+                '    .Text = "PŘEHLED"
+                '    .Width = Nothing
+                'End With
                 'FNO("reload").Visible = Not FNO("level1").Visible
         End Select
 

@@ -100,13 +100,11 @@
 
 
 
-    <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">        
+    <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">
         <Nodes>
             <telerik:NavigationNode ID="begin" Width="50px" Enabled="false" Visible="true">
             </telerik:NavigationNode>
-            <telerik:NavigationNode ID="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png"></telerik:NavigationNode>
 
-            <telerik:NavigationNode ID="reload" ImageUrl="Images/refresh.png" Text=" " ToolTip="Obnovit stránku"></telerik:NavigationNode>
 
             <telerik:NavigationNode ID="record" Text="ZÁZNAM DOKUMENTU">
                 <Nodes>
@@ -121,7 +119,13 @@
                     <telerik:NavigationNode ID="cmdBarCode" Text="Čárový kód" NavigateUrl="javascript:barcode();" ImageUrl="Images/barcode.png"></telerik:NavigationNode>
                 </Nodes>
             </telerik:NavigationNode>
+            <telerik:NavigationNode ID="thePage" Text="STRÁNKA">
+                <Nodes>
+                    <telerik:NavigationNode ID="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png" Text="Otevřít v nové záložce"></telerik:NavigationNode>
 
+                    <telerik:NavigationNode ID="reload" ImageUrl="Images/refresh.png" text="Obnovit stránku"></telerik:NavigationNode>
+                </Nodes>
+            </telerik:NavigationNode>
 
         </Nodes>
     </telerik:RadNavigation>
@@ -146,9 +150,9 @@
 
     <asp:Panel ID="panUpload" runat="server" CssClass="content-box2">
         <div class="title">
-           
+
             <img src="Images/attachment.png" style="margin-right: 10px;" />
-                <asp:HyperLink ID="filesPreview" runat="server" Text="Přílohy dokumentu"></asp:HyperLink>
+            <asp:HyperLink ID="filesPreview" runat="server" Text="Přílohy dokumentu"></asp:HyperLink>
             <button type="button" onclick="b07_create_upload()" runat="server" id="cmdUpload">Nahrát přílohy</button>
             <asp:Button ID="cmdLockUnlock" runat="server" Text="Uzamknout přístup k přílohám" CssClass="cmd" />
         </div>
@@ -166,6 +170,6 @@
     <asp:HiddenField ID="hidX18ID" runat="server" />
     <asp:HiddenField ID="hidB01ID" runat="server" />
     <asp:HiddenField ID="hidSource" runat="server" />
-    
-    
+
+
 </asp:Content>

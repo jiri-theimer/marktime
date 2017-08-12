@@ -32,24 +32,6 @@ Partial Public Class entity_menu
     Protected WithEvents begin As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
-    '''fs control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents fs As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''reload control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents reload As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
     '''record control.
     '''</summary>
     '''<remarks>

@@ -138,13 +138,11 @@
         With FNO("fs")
             If hidSource.Value = "3" Then
                 .ImageUrl = "Images/fullscreen.png"
-                .ToolTip = "Přepnout do datového přehledu"
-                .Text = "PŘEHLED"
+                .Text = "Přepnout do přehledu"
                 .Width = Nothing
             Else
                 .ImageUrl = "Images/open_in_new_window.png"
-                .ToolTip = "Otevřít v nové záložce"
-                .Text = " "
+                .Text = "Otevřít v nové záložce"
             End If
 
         End With

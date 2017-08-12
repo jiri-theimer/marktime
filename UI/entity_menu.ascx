@@ -2,32 +2,31 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 
-    <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">       
-        <Nodes>
-            <telerik:NavigationNode id="begin" Width="40px" Enabled="false" Visible="true"  >  
-                           
-            </telerik:NavigationNode>
-            <telerik:NavigationNode ID="fs"  NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/open_in_new_window.png" ToolTip="Otevřít stránku v nové záložce prohlížeče"></telerik:NavigationNode>
-            <telerik:NavigationNode ID="reload" ImageUrl="Images/refresh.png" Text=" " ToolTip="Obnovit stránku"></telerik:NavigationNode>
-                                   
-            <telerik:NavigationNode ID="record"></telerik:NavigationNode>
-            
-            <telerik:NavigationNode ID="searchbox">
-                <NodeTemplate>
-                </NodeTemplate>
-            </telerik:NavigationNode>
-        </Nodes>
-    </telerik:RadNavigation>
+<telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">
+    <Nodes>
+        <telerik:NavigationNode ID="begin" Width="40px" Enabled="false" Visible="true">
+        </telerik:NavigationNode>
+        
+        <telerik:NavigationNode ID="record"></telerik:NavigationNode>
+
+        <telerik:NavigationNode ID="searchbox">
+            <NodeTemplate>
+            </NodeTemplate>
+        </telerik:NavigationNode>
+
+        
+    </Nodes>
+</telerik:RadNavigation>
 
 <asp:PlaceHolder ID="place0" runat="server" Visible="true"></asp:PlaceHolder>
 <asp:PlaceHolder ID="place1" runat="server" Visible="true"></asp:PlaceHolder>
 
-<telerik:RadTabStrip ID="tabs1" runat="server" Skin="Default" Width="100%" AutoPostBack="false" ShowBaseLine="true" EnableViewState="false">              
+<telerik:RadTabStrip ID="tabs1" runat="server" Skin="Default" Width="100%" AutoPostBack="false" ShowBaseLine="true" EnableViewState="false">
 </telerik:RadTabStrip>
 
 <asp:HiddenField ID="hidIsCanApprove" runat="server" />
 <asp:HiddenField ID="hidSource" runat="server" />
- <asp:HiddenField ID="hidParentWidth" runat="server" />
+<asp:HiddenField ID="hidParentWidth" runat="server" />
 <asp:HiddenField ID="hidDataPrefix" runat="server" />
 <asp:HiddenField ID="hidPlugin" runat="server" />
 <asp:HiddenField ID="hidPlugin_FileName" runat="server" />
@@ -53,9 +52,9 @@
         
         context["j03id"] = "<%=Factory.SysUser.PID%>";
         context["flag"] = "searchbox";
-        <%if Me.DataPrefix="p41" then%>
+        <%If Me.DataPrefix = "p41" Then%>
         context["j02id_explicit"]="<%=Factory.SysUser.j02ID%>";
-        <%end If%>
+        <%End If%>
     }
     
     function report() {
@@ -73,9 +72,9 @@
 
         <%If Me.hidSource.Value = "2" Then%>
         window.parent.sw_master(url, iconUrl, is_maximize);
-        <%else%>
+        <%Else%>
         sw_local(url, iconUrl, is_maximize);
-        <%end if%>
+        <%End If%>
         
     }
         
@@ -83,7 +82,7 @@
         
     function p31_entry_menu(p34id) {
         ///z menu1
-        <%If Me.DataPrefix="p41" then%>
+        <%If Me.DataPrefix = "p41" Then%>
         sw_decide("p31_record.aspx?pid=0&p41id=<%=Me.DataPID%>&p34id="+p34id,"Images/worksheet.png",true);
         <%End If%>
         <%If Me.DataPrefix = "p56" Then%>
@@ -110,7 +109,7 @@
             alert("Není vybrán záznam.");
             return
         }
-        <%If Me.DataPrefix="p41" then%>
+        <%If Me.DataPrefix = "p41" Then%>
         sw_decide("p41_create.aspx?clone=1&pid=" + pid,"Images/project.png",true);
         <%Else%>
         sw_decide("<%=Me.DataPrefix%>_record.aspx?clone=1&pid=" + pid,"Images/copy.png",true);
@@ -118,18 +117,18 @@
 
     }
     function record_new() {
-        <%If Me.DataPrefix="p41" then%>
+        <%If Me.DataPrefix = "p41" Then%>
         sw_decide("p41_create.aspx?client_family=1&pid=<%=Me.DataPID%>","Images/project.png",true);
-        <%end If%>
-        <%If Me.DataPrefix="p28" then%>
+        <%End If%>
+        <%If Me.DataPrefix = "p28" Then%>
         sw_decide("p28_record.aspx?pid=0","Images/contact.png",true);
-        <%end If%>
-        <%If Me.DataPrefix="j02" then%>
+        <%End If%>
+        <%If Me.DataPrefix = "j02" Then%>
         sw_decide("j02_record.aspx?pid=0","Images/person.png",true);
-        <%end If%>       
+        <%End If%>       
         <%If Me.DataPrefix = "o23" Then%>
         sw_decide("select_doctype.aspx?masterprefix=<%=Me.DataPrefix%>&masterpid=<%=Me.DataPID%>","Images/notepad.png",true);
-        <%end If%>
+        <%End If%>
 
     }
     function record_new_child(){
@@ -189,7 +188,7 @@
         sw_decide("p31_recalc.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=me.datapid%>","Images/recalc.png",true);
     }
     function menu_o23_record(pid) {
-        <%If Me.DataPrefix="o23" then%>
+        <%If Me.DataPrefix = "o23" Then%>
         sw_decide("select_doctype.aspx","Images/notepad.png",true);
         return;
         <%End If%>
@@ -223,7 +222,7 @@
 
     }
 
-    <%if me.DataPrefix="p41" then%>
+    <%If Me.DataPrefix = "p41" Then%>
     function menu_p40_record(p40id){            
         sw_decide("p40_record.aspx?p41id=<%=Me.DataPID%>&pid="+p40id,"Images/worksheet_recurrence.png",true);
     }
@@ -234,7 +233,7 @@
             return(false)
     }
    
-    <%end if%>
+    <%End If%>
     <%If Me.DataPrefix = "p28" Or Me.DataPrefix = "p41" Then%>
     function p30_binding() {
         sw_decide("p30_binding.aspx?masterprefix=<%=Me.DataPrefix%>&masterpid=<%=me.datapid%>", "Images/person.png", false);
@@ -250,7 +249,7 @@
         sw_decide("entity_modal_invoicing.aspx?prefix=<%=Me.DataPrefix%>&pids=<%=me.DataPID%>", "Images/invoice.png", true);
 
     }
-    <%end if%>
+    <%End If%>
     function menu_fullscreen(){
         
         window.open("<%=Me.DataPrefix%>_framework_detail.aspx?pid=<%=me.DataPID%>&tab=<%=Me.tabs1.SelectedTab.Value%>&saw=1","_blank");
