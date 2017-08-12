@@ -39,7 +39,9 @@
             With Master.Factory.j03UserBL
                 .InhaleUserParams(lisPars)
 
-                Me.chkRememberLastTab.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_menu-remember-tab", "0"))
+                If .GetUserParam(Me.CurrentPrefix + "_menu-remember-tab", "0") = "1" Then
+                    cmdClearLockedTab.Visible = True
+                End If
                 ''Me.chkShowLevel1.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_menu-show-level1", "0"))
                 Me.chkScheduler.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_menu-show-cal1", "1"))
                 basUI.SelectDropdownlistValue(Me.skin1, .GetUserParam(Me.CurrentPrefix + "_menu-tabskin", "Default"))
@@ -64,7 +66,7 @@
             End With
             colsSource.ClearSelection()
             If Me.CurrentPrefix = "p91" Then
-                Me.chkRememberLastTab.Visible = False
+                Me.cmdClearLockedTab.Visible = False
             End If
             Select Case Me.CurrentPrefix
                 Case "p41", "p56", "p91"
@@ -100,12 +102,15 @@
                 .SetUserParam(Me.CurrentPrefix + "_menu-tabskin", Me.skin1.SelectedValue)
                 .SetUserParam(Me.CurrentPrefix + "_menu-menuskin", Me.skin0.SelectedValue)
                 .SetUserParam(Me.CurrentPrefix + "_menu-x31id-plugin", Me.x31ID_Plugin.SelectedValue)
-                .SetUserParam(Me.CurrentPrefix + "_menu-remember-tab", BO.BAS.GB(Me.chkRememberLastTab.Checked))
-                ''.SetUserParam(Me.CurrentPrefix + "_menu-show-level1", BO.BAS.GB(Me.chkShowLevel1.Checked))
                 .SetUserParam(Me.CurrentPrefix + "_menu-show-cal1", BO.BAS.GB(Me.chkScheduler.Checked))
             End With
             Master.CloseAndRefreshParent("setting")
         End If
 
+    End Sub
+
+    Private Sub cmdClearLockedTab_Click(sender As Object, e As EventArgs) Handles cmdClearLockedTab.Click
+        Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_menu-remember-tab", "0")
+        Master.Notify("Vyčištěno")
     End Sub
 End Class

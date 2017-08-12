@@ -50,13 +50,13 @@ Partial Public Class entity_framework_detail_setting
     Protected WithEvents x31ID_Plugin As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''chkRememberLastTab control.
+    '''cmdClearLockedTab control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents chkRememberLastTab As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents cmdClearLockedTab As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''skin1 control.

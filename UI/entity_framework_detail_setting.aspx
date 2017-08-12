@@ -49,7 +49,8 @@
         </div>
         <div class="content">
             <div class="div6">
-                <asp:CheckBox ID="chkRememberLastTab" runat="server" Text="Pamatovat si poslední záložku na stránce" />
+                <asp:Button ID="cmdClearLockedTab" runat="server" Text="Vyčistit paměť o ukotvené záložce" CssClass="cmd" />
+                
             </div>
             <div class="div6">
                 <span>Vzhled (Skin) záložek:</span>
