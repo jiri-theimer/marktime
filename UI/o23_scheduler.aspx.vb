@@ -167,10 +167,8 @@ Public Class o23_scheduler
             cbxQueryB02ID.DataSource = Master.Factory.b02WorkflowStatusBL.GetList(c.b01ID)
             cbxQueryB02ID.DataBind()
             cbxQueryB02ID.Items.Insert(0, New ListItem("--Filtrovat aktuální stav--", ""))
-            cbxMyRole.DataSource = Master.Factory.x67EntityRoleBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = BO.x29IdEnum.o23Doc)
-            cbxMyRole.DataBind()
-            cbxMyRole.Items.Insert(0, New ListItem("--Filtrovat mojí roli--", ""))
-            cbxMyRole.Items.Add(New ListItem("Jsem vlastník (zakladatel) záznamu", "-1"))
+            
+            
         Else
             hidB01ID.Value = ""
         End If
