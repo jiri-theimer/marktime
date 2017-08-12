@@ -71,6 +71,9 @@
                     hidCal1ShallBeActive.Value = .GetUserParam("j02_menu-show-cal1", "1")
                     menu1.TabSkin = .GetUserParam("j02_menu-tabskin")
                     menu1.MenuSkin = .GetUserParam("p28_menu-menuskin")
+                    If .GetUserParam("j02_menu-remember-tab", "0") = "1" Then
+                        menu1.LockedTab = .GetUserParam("j02_framework_detail-tab")
+                    End If
                     ''menu1.ShowLevel1 = BO.BAS.BG(.GetUserParam("j02_menu-show-level1", "0"))
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("j02_framework_detail-chkFFShowFilledOnly", "0"))
                 End With

@@ -33,12 +33,17 @@
                     .Add(Me.CurrentMasterPrefix & "_menu-tabskin")
                     .Add(Me.CurrentMasterPrefix & "_menu-x31id-plugin")
                     .Add(Me.CurrentMasterPrefix & "_menu-menuskin")
+                    .Add(Me.CurrentMasterPrefix & "_menu-remember-tab")
+                    .Add(Me.CurrentMasterPrefix & "_framework_detail-tab")
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                     menu1.TabSkin = .GetUserParam(Me.CurrentMasterPrefix & "_menu-tabskin")
                     menu1.MenuSkin = .GetUserParam(Me.CurrentMasterPrefix & "_menu-menuskin")
                     menu1.x31ID_Plugin = .GetUserParam(Me.CurrentMasterPrefix & "_menu-x31id-plugin")
+                    If .GetUserParam(Me.CurrentMasterPrefix & "_menu-remember-tab", "0") = "1" Then
+                        menu1.LockedTab = .GetUserParam(Me.CurrentMasterPrefix & "_framework_detail-tab")
+                    End If
                 End With
             End With
 

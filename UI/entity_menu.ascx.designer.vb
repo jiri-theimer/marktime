@@ -138,4 +138,13 @@ Partial Public Class entity_menu
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidPlugin_Height As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidLockedTab control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidLockedTab As Global.System.Web.UI.WebControls.HiddenField
 End Class

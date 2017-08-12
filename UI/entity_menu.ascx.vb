@@ -25,6 +25,15 @@ Public Class entity_menu
             tabs1.FindTabByValue(value).Selected = True
         End Set
     End Property
+    Public Property LockedTab As String
+        Get
+            Return hidLockedTab.Value
+        End Get
+        Set(value As String)
+            hidLockedTab.Value = value
+        End Set
+    End Property
+   
     Public ReadOnly Property IsExactApprovingPerson As Boolean
         Get
             Return BO.BAS.BG(Me.hidIsCanApprove.Value)
@@ -188,10 +197,19 @@ Public Class entity_menu
         Dim cP42 As BO.p42ProjectType = Me.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
         p41_SetupTabs(cRecSum, cP42, cDisp)
         p41_SetupMenu(cRec, cP42, cDisp)
-        SetupMenu_thePage("p41_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value)
-
+        SetupMenu_thePage("p41_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
         Me.CurrentTab = strTabValue
+
+
         Handle_SelectedTab()
+
+    End Sub
+
+    Private Sub HighLight_LockedTab(strTab As String)
+        If strTab = "" Then Return
+        If Not tabs1.FindTabByValue(strTab) Is Nothing Then
+            tabs1.FindTabByValue(strTab).ImageUrl = "Images/lock.png"
+        End If
     End Sub
 
 
@@ -305,8 +323,9 @@ Public Class entity_menu
 
     End Sub
 
-    Private Sub SetupMenu_thePage(strReloadUrl As String)
+    Private Sub SetupMenu_thePage(strReloadUrl As String, strTabValue As String)
         Dim mi As NavigationNode = ami("STRÁNKA", "thePage", "", "", Nothing)
+        ami("Ukotvit vybranou záložku", "", "entity_menu_locktab.aspx?page=" & Server.UrlEncode(strReloadUrl) & "&prefix=" & hidDataPrefix.Value & "&tab=" & strTabValue, "Images/lock.png", mi)
         ami("Nastavení vzhledu stránky osoby", "", "javascript:page_setting()", "Images/setting.png", mi)
         Select Case Me.hidSource.Value
             Case "1"
@@ -355,7 +374,8 @@ Public Class entity_menu
         Dim tab As New RadTab(strName, strX61Code)
         tabs1.Tabs.Add(tab)
 
-        tab.NavigateUrl = cX61.GetPageUrl(Me.DataPrefix, Me.DataPID, Me.hidIsCanApprove.Value) & "&tab=" & strX61Code & "&savetab=1&source=" & Me.hidSource.Value
+        'tab.NavigateUrl = cX61.GetPageUrl(Me.DataPrefix, Me.DataPID, Me.hidIsCanApprove.Value) & "&tab=" & strX61Code & "&savetab=1&source=" & Me.hidSource.Value
+        tab.NavigateUrl = cX61.GetPageUrl(Me.DataPrefix, Me.DataPID, Me.hidIsCanApprove.Value) & "&tab=" & strX61Code & "&source=" & Me.hidSource.Value
 
         If tabs1.Tabs.Count = 0 Then tab.Selected = True
     End Sub
@@ -448,7 +468,7 @@ Public Class entity_menu
         If cDisp Is Nothing Then cDisp = Me.Factory.p28ContactBL.InhaleRecordDisposition(cRec)
         p28_SetupTabs(cRecSum)
         p28_SetupMenu(cRec, cDisp)
-        SetupMenu_thePage("p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value)
+        SetupMenu_thePage("p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
 
         Me.CurrentTab = strTabValue
         Handle_SelectedTab()
@@ -581,7 +601,7 @@ Public Class entity_menu
 
         j02_SetupTabs(cRec, cRecSum)
         j02_SetupMenu(cRec)
-        SetupMenu_thePage("j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value)
+        SetupMenu_thePage("j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
 
         Me.CurrentTab = strTabValue
         Handle_SelectedTab()
@@ -725,7 +745,7 @@ Public Class entity_menu
         cti(s, "o23")
 
         p56_SetupMenu(cRec, cP41, cP42, cDisp)
-        SetupMenu_thePage("p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value)
+        SetupMenu_thePage("p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
 
         Me.CurrentTab = strTabValue
         Handle_SelectedTab()
@@ -823,33 +843,16 @@ Public Class entity_menu
     Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
         Select Case hidSource.Value
             Case "1"
-                'With FNO("fs")
-                '    .ImageUrl = "Images/open_in_new_window.png"
-                '    .ToolTip = "Otevřít v nové záložce"
-                'End With
+               
             Case "2"
-                'With FNO("fs")
-                '    .ImageUrl = "Images/open_in_new_window.png"
-                '    .ToolTip = "Otevřít stránku v nové záložce prohlížeče"
-                'End With
-
                 If menu1.Skin <> "Black" Then
                     menu1.Skin = "Metro"
                 End If
 
-                'FNO("reload").Visible = False
-
             Case "3"
-                'With FNO("fs")
-                '    .NavigateUrl = "entity_framework.aspx?prefix=" & Me.DataPrefix
-                '    .ToolTip = "Přepnout do datového přehledu"
-                '    .ImageUrl = "Images/fullscreen.png"
-                '    .Text = "PŘEHLED"
-                '    .Width = Nothing
-                'End With
-                'FNO("reload").Visible = Not FNO("level1").Visible
-        End Select
 
+        End Select
+        HighLight_LockedTab(hidLockedTab.Value)
     End Sub
 
     Private Function FNO(strValue As String) As NavigationNode

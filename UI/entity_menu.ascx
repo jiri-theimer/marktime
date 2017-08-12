@@ -31,7 +31,7 @@
 <asp:HiddenField ID="hidPlugin" runat="server" />
 <asp:HiddenField ID="hidPlugin_FileName" runat="server" />
 <asp:HiddenField ID="hidPlugin_Height" runat="server" />
-
+<asp:HiddenField ID="hidLockedTab" runat="server" />
 
 <script type="text/javascript">
     function cbxSearch_OnClientSelectedIndexChanged(sender, eventArgs){

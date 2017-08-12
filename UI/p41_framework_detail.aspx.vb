@@ -57,7 +57,11 @@
                     End If
 
                     Dim strTab As String = Request.Item("tab")
-                    If strTab = "" And .GetUserParam("p41_menu-remember-tab", "0") = "1" Then strTab = .GetUserParam("p41_framework_detail-tab") 'logika přesměrování
+
+                    If strTab = "" And .GetUserParam("p41_menu-remember-tab", "0") = "1" Then
+                        strTab = .GetUserParam("p41_framework_detail-tab")  'záložka je ukotvená
+                    End If
+                    
                     Select Case strTab
                         Case "p31", "time", "expense", "fee", "kusovnik"
                             Server.Transfer("entity_framework_rec_p31.aspx?masterprefix=p41&masterpid=" & intPID.ToString & "&p31tabautoquery=" & strTab & "&source=" & menu1.PageSource, False)
@@ -76,7 +80,10 @@
                     menu1.MenuSkin = .GetUserParam("p41_menu-menuskin")
                     menu1.TabSkin = .GetUserParam("p41_menu-tabskin")
                     menu1.x31ID_Plugin = .GetUserParam("p41_menu-x31id-plugin")
-                    ''menu1.ShowLevel1 = BO.BAS.BG(.GetUserParam("p41_menu-show-level1", "0"))
+                    If .GetUserParam("p41_menu-remember-tab", "0") = "1" Then
+                        menu1.LockedTab = .GetUserParam("p41_framework_detail-tab")
+                    End If
+
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail-chkFFShowFilledOnly", "0"))
 
                 End With
