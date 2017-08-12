@@ -88,10 +88,11 @@ Public Class o23_scheduler
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_agendadays, .GetUserParam("entity_scheduler-agendadays", "20"))
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_timelinedays, .GetUserParam("entity_scheduler-timelinedays", "10"))
                     basUI.SelectDropdownlistValue(Me.cbxResourceView, .GetUserParam("entity_scheduler-resourceview-" & strX18ID, "1"))
-                    If panWorkflow.Visible Then
+                    If cbxQueryB02ID.Visible Then
                         basUI.SelectDropdownlistValue(Me.cbxQueryB02ID, .GetUserParam("o23_framework-filter_b02id-" & strX18ID))
-                        basUI.SelectDropdownlistValue(Me.cbxMyRole, .GetUserParam("o23_framework-filter_myrole-" & strX18ID))
+
                     End If
+                    basUI.SelectDropdownlistValue(Me.cbxMyRole, .GetUserParam("o23_framework-filter_myrole-" & strX18ID))
                 End With
             End With
 
@@ -162,7 +163,7 @@ Public Class o23_scheduler
 
         If c.b01ID <> 0 Then
             hidB01ID.Value = c.b01ID.ToString
-            panWorkflow.Visible = True
+            cbxQueryB02ID.Visible = True
             cbxQueryB02ID.DataSource = Master.Factory.b02WorkflowStatusBL.GetList(c.b01ID)
             cbxQueryB02ID.DataBind()
             cbxQueryB02ID.Items.Insert(0, New ListItem("--Filtrovat aktuální stav--", ""))
@@ -388,10 +389,11 @@ Public Class o23_scheduler
         Else
             scheduler1.TimeSlotContextMenus(0).FindItemByValue("o23").NavigateUrl = ""
         End If
-        If panWorkflow.Visible Then
+        If cbxQueryB02ID.Visible Then
             basUIMT.RenderQueryCombo(Me.cbxQueryB02ID)
-            basUIMT.RenderQueryCombo(Me.cbxMyRole)
+
         End If
+        basUIMT.RenderQueryCombo(Me.cbxMyRole)
     End Sub
 
 
@@ -436,17 +438,19 @@ Public Class o23_scheduler
         With mq
             .Closed = BO.BooleanQueryMode.NoQuery
             .x23ID = BO.BAS.IsNullInt(hidX23ID.Value)
-            If panWorkflow.Visible Then
+            If cbxQueryB02ID.Visible Then
                 If cbxQueryB02ID.SelectedIndex > 0 Then .b02IDs = BO.BAS.ConvertPIDs2List(cbxQueryB02ID.SelectedValue)
-                If cbxMyRole.SelectedIndex > 0 Then
-                    If cbxMyRole.SelectedValue = "-1" Then
-                        .Owners = BO.BAS.ConvertInt2List(Master.Factory.SysUser.j02ID)
-                    Else
-                        .x67ID_MyRole = BO.BAS.IsNullInt(Me.cbxMyRole.SelectedValue)
-                    End If
-
-                End If
             End If
+            Select Case Me.cbxMyRole.SelectedValue
+                Case "1"
+                    .Owners = BO.BAS.ConvertInt2List(Master.Factory.SysUser.j02ID)
+                Case "2"
+                    'řešitel
+                    .HasAnyX67Role = BO.BooleanQueryMode.TrueQuery
+                Case "3"
+                    'podřízení
+                    .OnlySlavesPersons = BO.BooleanQueryMode.TrueQuery
+            End Select
 
             .MyRecordsDisponible = True
 

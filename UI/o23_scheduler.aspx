@@ -137,7 +137,7 @@
                 d2.setDate(d2.getDate() - 1);
             }
 
-            
+
             var url = "o23_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&x18id=<%=Me.CurrentX18ID%>";
 
 
@@ -268,7 +268,7 @@
 
             location.replace("o23_scheduler.aspx?x18id=" + ctl.value);
         }
-        function switch2grid(){
+        function switch2grid() {
             location.replace("o23_fixwork.aspx?x18id=<%=me.CurrentX18ID%>");
         }
     </script>
@@ -283,30 +283,31 @@
         <div id="left_panel" style="float: left; width: 250px;">
             <div style="float: left;">
                 <img src="Images/calendar_32.png" />
-            </div>            
+            </div>
             <div class="div6" style="float: left;">
 
-                <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="false" BackColor="Yellow" onchange="x18id_onchange(this)" DataTextField="x18Name" DataValueField="pid" Style="width: 200px;" ToolTip="Typ dokumentu"></asp:DropDownList>                
+                <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="false" BackColor="Yellow" onchange="x18id_onchange(this)" DataTextField="x18Name" DataValueField="pid" Style="width: 200px;" ToolTip="Typ dokumentu"></asp:DropDownList>
             </div>
-            
+
 
             <div style="clear: both;"></div>
 
 
-            <div style="text-align:center;margin-top:40px;">
-                <button type="button" onclick="switch2grid()"><img src="Images/grid.png" />Přepnout do přehledu</button>
+            <div style="text-align: center; margin-top: 40px;">
+                <button type="button" onclick="switch2grid()">
+                    <img src="Images/grid.png" />Přepnout do přehledu</button>
             </div>
 
             <asp:Panel ID="panResources" runat="server" CssClass="div6">
                 <asp:DropDownList ID="cbxResourceView" runat="server" AutoPostBack="true">
                     <asp:ListItem Text="Bez členění podle zdrojů (osob)" Value=""></asp:ListItem>
                     <asp:ListItem Text="Naplánované zdroje (osoby) v řádcích" Value="1"></asp:ListItem>
-                    <asp:ListItem Text="Všechny zdroje (osoby) v řádcích" Value="2"></asp:ListItem>                    
+                    <asp:ListItem Text="Všechny zdroje (osoby) v řádcích" Value="2"></asp:ListItem>
                 </asp:DropDownList>
             </asp:Panel>
 
-            <div style="clear: both;margin-top:40px;"></div>
-            <asp:Panel ID="panPersons" runat="server" style="display:none;">
+            <div style="clear: both; margin-top: 40px;"></div>
+            <asp:Panel ID="panPersons" runat="server" Style="display: none;">
                 <div class="show_hide2" style="float: left; margin-top: 8px;">
                     <button type="button">
                         <img src="Images/arrow_down.gif" alt="Výběr osob" />
@@ -322,7 +323,7 @@
                 </div>
             </asp:Panel>
             <div style="clear: both;"></div>
-            <asp:Panel ID="panProjects" runat="server" style="display:none;">
+            <asp:Panel ID="panProjects" runat="server" Style="display: none;">
                 <div class="show_hide3" style="float: left; margin-top: 8px;">
                     <button type="button">
                         <img src="Images/arrow_down.gif" alt="Výběr projektů" />
@@ -337,16 +338,19 @@
                 </div>
             </asp:Panel>
 
-            
+            <div class="div6" style="margin-top: 20px;">
+                <asp:DropDownList ID="cbxMyRole" runat="server" AutoPostBack="true">
+                    <asp:ListItem Text="" Value=""></asp:ListItem>
+                    <asp:ListItem Text="Jsem zakladatelem dokumentu" Value="1"></asp:ListItem>
+                    <asp:ListItem Text="Jsem řešitelem" Value="2"></asp:ListItem>
+                    <asp:ListItem Text="Pouze mně podřízené osoby" Value="3"></asp:ListItem>
+                </asp:DropDownList>
+            </div>
 
-            <asp:Panel ID="panWorkflow" runat="server" style="margin-top:20px;" Visible="false">
-                    <div class="div6">
-                    <asp:DropDownList ID="cbxQueryB02ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="b02Name" style="width:180px;" ToolTip="Filtrovat podle aktuálního workflow stavu"></asp:DropDownList>
-                    </div>
-                    <div class="div6">
-                        <asp:DropDownList ID="cbxMyRole" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="x67Name" style="width:180px;" ToolTip="Filtrovat podle mé role v záznamu"></asp:DropDownList>
-                    </div>
-                </asp:Panel>
+            <div class="div6">
+                <asp:DropDownList ID="cbxQueryB02ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="b02Name" Style="width: 180px;" ToolTip="Filtrovat podle aktuálního workflow stavu"></asp:DropDownList>
+            </div>
+
 
             <div style="clear: both;"></div>
             <div class="show_hide1" style="float: left; margin-top: 50px;">
@@ -405,7 +409,7 @@
                                 <asp:ListItem Text="20" Value="20"></asp:ListItem>
                                 <asp:ListItem Text="30" Value="30"></asp:ListItem>
                                 <asp:ListItem Text="50" Value="50"></asp:ListItem>
-                                
+
 
                             </asp:DropDownList>
                         </div>
@@ -461,32 +465,32 @@
                 <TimelineView UserSelectable="true" NumberOfSlots="14" ColumnHeaderDateFormat="ddd d.M." ShowResourceHeaders="true" GroupingDirection="Vertical" GroupBy="resource1" />
                 <AgendaView UserSelectable="true" NumberOfDays="20" />
                 <MonthView UserSelectable="true" VisibleAppointmentsPerDay="4" />
-               <ResourceTypes>
-                   <telerik:ResourceType Name="resource1" ForeignKeyField="ResourceID" AllowMultipleValues="true" />
-               </ResourceTypes>
+                <ResourceTypes>
+                    <telerik:ResourceType Name="resource1" ForeignKeyField="ResourceID" AllowMultipleValues="true" />
+                </ResourceTypes>
                 <ResourceHeaderTemplate>
-                    
+
                     <span><%# Eval("Text")%></span>
                 </ResourceHeaderTemplate>
-                
+
                 <AppointmentTemplate>
-                   
+
                     <a class="reczoom" rel="<%# Eval("Description")%>">i</a>
                     <a href="javascript:re(<%# Eval("ID")%>)"><%# Eval("Subject")%></a>
-                    
+
 
                 </AppointmentTemplate>
 
                 <TimeSlotContextMenus>
                     <telerik:RadSchedulerContextMenu>
                         <Items>
-                            <telerik:RadMenuItem Text="Nový záznam" ImageUrl="Images/new.png"  Value="o23"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Nový záznam" ImageUrl="Images/new.png" Value="o23"></telerik:RadMenuItem>
                             <telerik:RadMenuItem IsSeparator="true" Text="."></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Jdi na DNES" Value="CommandGoToToday" />
                         </Items>
                     </telerik:RadSchedulerContextMenu>
                 </TimeSlotContextMenus>
-                
+
                 <ExportSettings OpenInNewWindow="true" FileName="MARKTIME_EXPORT">
                     <Pdf Author="MARKTIME" Creator="MARKITME" PaperSize="A4" />
                 </ExportSettings>
@@ -500,7 +504,7 @@
         </div>
 
     </div>
-    
+
     <asp:HiddenField ID="hidx18IsColors" runat="server" />
     <asp:HiddenField ID="hidX23ID" runat="server" />
 

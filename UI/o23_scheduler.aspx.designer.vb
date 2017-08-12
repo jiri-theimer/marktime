@@ -95,13 +95,13 @@ Partial Public Class o23_scheduler
     Protected WithEvents projects1 As Global.UI.projects
 
     '''<summary>
-    '''panWorkflow control.
+    '''cbxMyRole control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panWorkflow As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents cbxMyRole As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''cbxQueryB02ID control.
@@ -111,15 +111,6 @@ Partial Public Class o23_scheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cbxQueryB02ID As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cbxMyRole control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbxMyRole As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''entity_scheduler_daystarttime control.

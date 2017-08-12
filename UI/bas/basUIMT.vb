@@ -295,13 +295,11 @@ Public Class basUIMT
             If .Item("o23IsEncrypted") Then dataItem("systemcolumn").CssClass = "spy"
             If CType(BO.BAS.IsNullInt(.Item("o23LockedFlag")), BO.o23LockedTypeENUM) > BO.o23LockedTypeENUM._NotSpecified Then dataItem("systemcolumn").CssClass = "locked"
 
-            If .Item("IsClosed") Then
-                dataItem.Font.Strikeout = True
-
-            End If
+            
             If BO.BAS.IsNullInt(.Item("b02ID")) > 0 Then
                 If .Item("b02Color") & "" <> "" Then dataItem("systemcolumn").Style.Item("background-color") = .Item("b02Color")
-                dataItem.Font.Strikeout = False
+            Else
+                If .Item("IsClosed") Then dataItem.Font.Strikeout = True
             End If
             If strMobileLinkColumn <> "" Then
                 dataItem(strMobileLinkColumn).Text = "<a style='color:blue;text-decoration:underline;' href='javascript:re(" & cRec.Item("pid").ToString & ")'>" & dataItem(strMobileLinkColumn).Text & "</a>"
