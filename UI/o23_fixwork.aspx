@@ -335,14 +335,21 @@
 
                 </div>
 
-                <asp:Panel ID="panWorkflow" runat="server" CssClass="commandcell">
+                <div class="commandcell">
+                    
+                    <div>
+                        <asp:DropDownList ID="cbxMyRole" runat="server" AutoPostBack="true">
+                            <asp:ListItem Text="" Value=""></asp:ListItem>
+                            <asp:ListItem Text="Jsem zakladatelem dokumentu" Value="1"></asp:ListItem>
+                            <asp:ListItem Text="Jsem řešitelem" Value="2"></asp:ListItem>
+                            <asp:ListItem Text="Pouze mně podřízené osoby" Value="3"></asp:ListItem>
+                        </asp:DropDownList>
+
+                    </div>
                     <div>
                     <asp:DropDownList ID="cbxQueryB02ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="b02Name" style="width:180px;" ToolTip="Filtrovat podle aktuálního workflow stavu"></asp:DropDownList>
                     </div>
-                    <div>
-                        <asp:DropDownList ID="cbxMyRole" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="x67Name" style="width:180px;" ToolTip="Filtrovat podle mé role v záznamu"></asp:DropDownList>
-                    </div>
-                </asp:Panel>
+                </div>
 
 
 

@@ -40,6 +40,8 @@ Public Class myQueryO23
     Public Property CalendarDateFieldStart As String
     Public Property CalendarDateFieldEnd As String
     Public Property x67ID_MyRole As Integer
+    Public Property HasAnyX67Role As BO.BooleanQueryMode = BooleanQueryMode.NoQuery
+    Public Property OnlySlavesPersons As BO.BooleanQueryMode = BooleanQueryMode.NoQuery
 
     Public Property j70ID As Integer
     Public Property SpecificQuery As BO.myQueryO23_SpecificQuery = myQueryO23_SpecificQuery._NotSpecified

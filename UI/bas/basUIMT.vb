@@ -301,6 +301,7 @@ Public Class basUIMT
             End If
             If BO.BAS.IsNullInt(.Item("b02ID")) > 0 Then
                 If .Item("b02Color") & "" <> "" Then dataItem("systemcolumn").Style.Item("background-color") = .Item("b02Color")
+                dataItem.Font.Strikeout = False
             End If
             If strMobileLinkColumn <> "" Then
                 dataItem(strMobileLinkColumn).Text = "<a style='color:blue;text-decoration:underline;' href='javascript:re(" & cRec.Item("pid").ToString & ")'>" & dataItem(strMobileLinkColumn).Text & "</a>"

@@ -104,10 +104,11 @@ Public Class o23_fixwork
                         period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                         period1.SelectedValue = .GetUserParam("o23_fixwork-period-" & strX18ID)
                     End If
-                    If panWorkflow.Visible Then
+                    If cbxQueryB02ID.Visible Then
                         basUI.SelectDropdownlistValue(Me.cbxQueryB02ID, .GetUserParam("o23_fixwork-filter_b02id-" & strX18ID))
-                        basUI.SelectDropdownlistValue(Me.cbxMyRole, .GetUserParam("o23_fixwork-filter_myrole-" & strX18ID))
+
                     End If
+                    basUI.SelectDropdownlistValue(Me.cbxMyRole, .GetUserParam("o23_fixwork-filter_myrole-" & strX18ID))
                 End With
             End With
 
@@ -249,17 +250,20 @@ Public Class o23_fixwork
     Private Sub InhaleMyQuery(ByRef mq As BO.myQueryO23)
         With mq
             .x23ID = Me.CurrentX23ID
-            If panWorkflow.Visible Then
+            If cbxQueryB02ID.Visible Then
                 If cbxQueryB02ID.SelectedIndex > 0 Then .b02IDs = BO.BAS.ConvertPIDs2List(cbxQueryB02ID.SelectedValue)
-                If cbxMyRole.SelectedIndex > 0 Then
-                    If cbxMyRole.SelectedValue = "-1" Then
-                        .Owners = BO.BAS.ConvertInt2List(Master.Factory.SysUser.j02ID)
-                    Else
-                        .x67ID_MyRole = BO.BAS.IsNullInt(Me.cbxMyRole.SelectedValue)
-                    End If
 
-                End If
             End If
+            Select Case Me.cbxMyRole.SelectedValue
+                Case "1"
+                    .Owners = BO.BAS.ConvertInt2List(Master.Factory.SysUser.j02ID)
+                Case "2"
+                    'řešitel
+                    .HasAnyX67Role = BO.BooleanQueryMode.TrueQuery
+                Case "3"
+                    'podřízení
+                    .OnlySlavesPersons = BO.BooleanQueryMode.TrueQuery
+            End Select
 
             .MyRecordsDisponible = True
             .MG_GridSqlColumns = Me.hidCols.Value
@@ -372,16 +376,13 @@ Public Class o23_fixwork
             ''menu1.FindItemByValue("cmdWorkflow").ImageUrl = "Images/workflow.png"
             ''menu1.FindItemByValue("cmdWorkflow").NavigateUrl = "javascript:workflow()"
 
-            panWorkflow.Visible = True
+            cbxQueryB02ID.Visible = True
             cbxQueryB02ID.DataSource = Master.Factory.b02WorkflowStatusBL.GetList(c.b01ID)
             cbxQueryB02ID.DataBind()
             cbxQueryB02ID.Items.Insert(0, New ListItem("--Filtrovat aktuální stav--", ""))
-            cbxMyRole.DataSource = Master.Factory.x67EntityRoleBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = BO.x29IdEnum.o23Doc)
-            cbxMyRole.DataBind()
-            cbxMyRole.Items.Insert(0, New ListItem("--Filtrovat mojí roli--", ""))
-            cbxMyRole.Items.Add(New ListItem("Jsem vlastník (zakladatel) záznamu", "-1"))
+            
         Else
-            panWorkflow.Visible = False
+            cbxQueryB02ID.Visible = False
             hidB01ID.Value = ""
             ''menu1.FindItemByValue("cmdWorkflow").Text = "Doplnit komentář nebo přílohu"
             ''menu1.FindItemByValue("cmdWorkflow").ImageUrl = "Images/comment.png"
@@ -432,10 +433,11 @@ Public Class o23_fixwork
         If Me.cbxo23Validity.SelectedIndex > 0 Then
             Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/>" & Me.cbxo23Validity.SelectedItem.Text
         End If
-        If panWorkflow.Visible Then
+        If cbxQueryB02ID.Visible Then
             basUIMT.RenderQueryCombo(Me.cbxQueryB02ID)
-            basUIMT.RenderQueryCombo(Me.cbxMyRole)
+
         End If
+        basUIMT.RenderQueryCombo(Me.cbxMyRole)
     End Sub
 
     Private Sub GridExport(strFormat As String)
@@ -469,7 +471,7 @@ Public Class o23_fixwork
 
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
         Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
-        If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
+        
         If hidx18IsColors.Value = "1" And hidB01ID.Value = "" Then
             If Not cRec.Item("o23BackColor") Is System.DBNull.Value Then
                 dataItem.Item("systemcolumn").Style.Item("background-color") = cRec.Item("o23BackColor")
@@ -482,6 +484,8 @@ Public Class o23_fixwork
             If Not cRec.Item("b02Color") Is System.DBNull.Value Then
                 dataItem.Item("systemcolumn").Style.Item("background-color") = cRec.Item("b02Color")
             End If
+        Else
+            If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
         End If
         With dataItem.Item("systemcolumn")
             If cRec.Item("IsO27") Then
