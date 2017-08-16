@@ -450,6 +450,61 @@ Class mtService
         Return _factory.x18EntityCategoryBL.GetList(_mqDef)
     End Function
 
+    Public Function SaveExternalObject2Temp(strPrefix As String, strTempGUID As String, strExternalPID As String, uploadedTempFiles As List(Of String), fields As Dictionary(Of String, Object), strLogin As String, strPassword As String) As BO.ServiceResult Implements ImtService.SaveExternalObject2Temp
+        VerifyUser(strLogin, strPassword)
+        Dim sr As New BO.ServiceResult(), bolOK As Boolean
+
+        If Not uploadedTempFiles Is Nothing Then
+            Dim cF As New BO.clsFile    'temp nahrané soubory
+            For Each strFileName As String In uploadedTempFiles
+                Dim c As New BO.p85TempBox
+                c.p85GUID = strTempGUID
+                c.p85Prefix = "o27"
+                c.p85OtherKey1 = 1  'o13id=1
+                c.p85FreeText01 = strExternalPID
+                c.p85FreeText02 = strFileName
+                c.p85FreeNumber01 = cF.GetFileSize(_factory.x35GlobalParam.TempFolder & "\" & strFileName)
+                c.p85FreeText03 = cF.GetContentType(_factory.x35GlobalParam.TempFolder & "\" & strFileName)
+                If Right(LCase(strFileName), 3) = "msg" Then
+                    c.p85FreeText04 = "MS-Outlook"
+                End If
+
+                bolOK = _factory.p85TempBoxBL.Save(c)
+            Next
+        End If
+        If Not fields Is Nothing Then
+            For Each fld In fields
+                Dim c As New BO.p85TempBox
+                c.p85GUID = strTempGUID
+                c.p85FreeText01 = strExternalPID
+                c.p85FreeText02 = fld.Key
+                c.p85Prefix = strPrefix
+                c.p85FreeText03 = LCase(fld.Value.GetType().Name)
+                If Not fld.Value Is Nothing Then
+                    Select Case LCase(fld.Value.GetType().Name)
+                        Case "date", "datetime"
+                            c.p85FreeDate01 = fld.Value
+                        Case "int32"
+                            c.p85OtherKey1 = fld.Value
+                        Case "double"
+                            c.p85FreeFloat01 = fld.Value
+                        Case "boolean"
+                            c.p85FreeBoolean01 = fld.Value
+                        Case Else
+                            c.p85Message = fld.Value
+                    End Select
+                End If
+                bolOK = _factory.p85TempBoxBL.Save(c)
+            Next
+
+        End If
+
+        sr.IsSuccess = bolOK
+
+        Return sr
+
+    End Function
+
     Public Function SaveDocument(intPID As Integer, strExternalPID As String, uploadedTempFiles As List(Of String), fields As Dictionary(Of String, Object), strLogin As String, strPassword As String) As BO.ServiceResult Implements ImtService.SaveDocument
         VerifyUser(strLogin, strPassword)
 

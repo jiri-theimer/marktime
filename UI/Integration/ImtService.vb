@@ -90,6 +90,8 @@ Public Interface ImtService
     Function SaveDocument(intPID As Integer, strExternalPID As String, uploadedTempFiles As List(Of String), fields As Dictionary(Of String, Object), strLogin As String, strPassword As String) As BO.ServiceResult
     <OperationContract()>
     Function LoadMsOfficeBinding(strEntryID As String, strLogin As String, strPassword As String) As BO.MsOfficeBinding
+    <OperationContract()>
+    Function SaveExternalObject2Temp(strPrefix As String, strTempGUID As String, strExternalPID As String, uploadedTempFiles As List(Of String), fields As Dictionary(Of String, Object), strLogin As String, strPassword As String) As BO.ServiceResult
 End Interface
 
 
