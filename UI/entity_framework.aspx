@@ -13,11 +13,6 @@
         $(document).ready(function () {
 
 
-
-
-
-
-
             document.getElementById("<%=Me.hidUIFlag.ClientID%>").value = "";
             <%If _curIsExport = False Then%>
             _initResizing = "0";
@@ -326,12 +321,7 @@
                                         </div>
                                         <div class="content">
 
-                                            <div>
-
-                                                <asp:DropDownList ID="cbxQueryFlag" runat="server" AutoPostBack="true">
-                                                    <asp:ListItem Text="" Value=""></asp:ListItem>
-                                                </asp:DropDownList>
-                                            </div>
+                                            
                                             <div style="margin-top: 6px;">
                                                 <span>Filtrovat přehled podle období:</span>
                                                 <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období">
@@ -343,6 +333,12 @@
                                                     <img src="Images/label.png" />Štítky</button>
                                                 <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit štítkovací filtr" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
                                                 <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
+                                            </div>
+                                            <div>
+
+                                                <asp:DropDownList ID="cbxQueryFlag" runat="server" AutoPostBack="true">
+                                                    <asp:ListItem Text="" Value=""></asp:ListItem>
+                                                </asp:DropDownList>
                                             </div>
                                         </div>
                                     </div>

@@ -77,15 +77,6 @@ Partial Public Class entity_framework
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
-    '''cbxQueryFlag control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbxQueryFlag As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''cbxPeriodType control.
     '''</summary>
     '''<remarks>
@@ -111,6 +102,15 @@ Partial Public Class entity_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x18_querybuilder_info As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cbxQueryFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxQueryFlag As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''cmdApprove control.
