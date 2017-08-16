@@ -77,24 +77,6 @@ Partial Public Class entity_framework
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
-    '''cmdClearX18 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdClearX18 As Global.System.Web.UI.WebControls.ImageButton
-
-    '''<summary>
-    '''x18_querybuilder_info control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x18_querybuilder_info As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''cbxQueryFlag control.
     '''</summary>
     '''<remarks>
@@ -113,13 +95,22 @@ Partial Public Class entity_framework
     Protected WithEvents cbxPeriodType As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''period1 control.
+    '''cmdClearX18 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents period1 As Global.UI.periodcombo
+    Protected WithEvents cmdClearX18 As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
+    '''x18_querybuilder_info control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18_querybuilder_info As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''cmdApprove control.
@@ -257,22 +248,13 @@ Partial Public Class entity_framework
     Protected WithEvents designer1 As Global.UI.mygrid
 
     '''<summary>
-    '''MasterEntity control.
+    '''period1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents MasterEntity As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''CurrentPeriodQuery control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents CurrentPeriodQuery As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
     '''CurrentQuery control.
@@ -282,6 +264,15 @@ Partial Public Class entity_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents CurrentQuery As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''MasterEntity control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MasterEntity As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''cmdCĺearFilter control.

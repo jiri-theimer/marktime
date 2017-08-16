@@ -103,19 +103,24 @@ Class o42ImapRuleBL
                 Return False
             End Try
 
-            Try
-                _client.Login(.o41Login, .DecryptedPassword)
-            Catch ex As Rebex.Net.ImapException
-                _Error = ex.Message
-                _client = Nothing
-                Return False
-            End Try
+            If .o41Login <> "" Then
+                Try
+                    _client.Login(.o41Login, .DecryptedPassword)
+                Catch ex As Rebex.Net.ImapException
+                    _Error = ex.Message
+                    _client = Nothing
+                    Return False
+                End Try
 
-            If Not _client.IsAuthenticated() Then
-                _Error = "Bad login or password!"
-                _client.Disconnect()
-                Return False
+                If Not _client.IsAuthenticated() Then
+                    _Error = "Bad login or password!"
+                    _client.Disconnect()
+                    Return False
+                End If
             End If
+            
+
+            
             Try
                 _client.SelectFolder(.o41Folder)
             Catch ex As Exception

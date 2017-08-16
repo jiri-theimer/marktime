@@ -326,7 +326,7 @@ Public Class entity_menu
     Private Sub SetupMenu_thePage(strReloadUrl As String, strTabValue As String)
         Dim mi As NavigationNode = ami("STRÁNKA", "thePage", "", "", Nothing)
         ami("Ukotvit vybranou záložku", "", "entity_menu_locktab.aspx?page=" & Server.UrlEncode(strReloadUrl) & "&prefix=" & hidDataPrefix.Value & "&tab=" & strTabValue, "Images/lock.png", mi)
-        ami("Nastavení vzhledu stránky osoby", "", "javascript:page_setting()", "Images/setting.png", mi)
+        ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
         Select Case Me.hidSource.Value
             Case "1"
                 ami("Otevřít v nové záložce", "fs", "javascript:menu_fullscreen()", "Images/open_in_new_window.png", mi)

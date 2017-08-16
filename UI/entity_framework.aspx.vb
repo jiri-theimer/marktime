@@ -235,7 +235,7 @@ Public Class entity_framework
         Me.cbxQueryFlag.Visible = False
         With Me.cbxPeriodType.Items
             If .Count > 0 Then .Clear()
-            .Add(New ListItem("--Filtrovat období--", ""))
+            .Add(New ListItem("--Nefiltrovat--", ""))
             Select Case Me.CurrentX29ID
                 Case BO.x29IdEnum.p41Project
                     .Add(New ListItem("Založení projektu", "DateInsert"))
@@ -1074,11 +1074,11 @@ Public Class entity_framework
             
             .SetUserParam(Me.CurrentPrefix + "_framework-periodtype", Me.cbxPeriodType.SelectedValue)
         End With
-
+        ReloadPage()
         
-        RecalcVirtualRowCount()
-        grid1.Rebind(False)
-        hidUIFlag.Value = "period"
+        'RecalcVirtualRowCount()
+        'grid1.Rebind(False)
+        'hidUIFlag.Value = "period"
     End Sub
 
     Private Sub period1_OnChanged(DateFrom As Date, DateUntil As Date) Handles period1.OnChanged
@@ -1103,16 +1103,16 @@ Public Class entity_framework
                 .Visible = True
                 If .SelectedValue <> "" Then
                     .BackColor = basUI.ColorQueryRGB
-                    Me.CurrentPeriodQuery.Text = "<img src='Images/datepicker.png'/> " & Me.cbxPeriodType.SelectedItem.Text
-                    If Year(.DateFrom) = Year(.DateUntil) Then
-                        Me.CurrentPeriodQuery.Text += " " & Format(.DateFrom, "d.M") & "-" & Format(.DateUntil, "d.M.yyyy")
-                    Else
-                        Me.CurrentPeriodQuery.Text += " " & Format(.DateFrom, "d.M.yy") & "-" & Format(.DateUntil, "d.M.yyyy")
-                    End If
+                    ''    Me.CurrentPeriodQuery.Text = "<img src='Images/datepicker.png'/> " & Me.cbxPeriodType.SelectedItem.Text
+                    ''    If Year(.DateFrom) = Year(.DateUntil) Then
+                    ''        Me.CurrentPeriodQuery.Text += " " & Format(.DateFrom, "d.M") & "-" & Format(.DateUntil, "d.M.yyyy")
+                    ''    Else
+                    ''        Me.CurrentPeriodQuery.Text += " " & Format(.DateFrom, "d.M.yy") & "-" & Format(.DateUntil, "d.M.yyyy")
+                    ''    End If
 
                 Else
                     .BackColor = Nothing
-                    Me.CurrentPeriodQuery.Text = ""
+                    ''    Me.CurrentPeriodQuery.Text = ""
 
                 End If
             End With

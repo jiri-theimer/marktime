@@ -19,7 +19,12 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     
-    
+    <asp:Literal Text="Popisek přes literal:" runat="server"></asp:Literal>
+    <asp:TextBox ID="txtPokus" runat="server"></asp:TextBox>
+
+    <hr />
+    <asp:Literal Text="Popisek přes literal:" runat="server"></asp:Literal>
+    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
 
     <asp:Button ID="cmdPokus" runat="server" Text="Generovat" />
     <asp:Button ID="cmdFormat" runat="server" Text="Format date" />

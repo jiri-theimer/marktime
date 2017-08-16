@@ -80,7 +80,7 @@
 
             var url = "<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid + "&source=<%=opgLayout.SelectedValue%>";
             pane.set_contentUrl(url);
-           
+
 
         }
 
@@ -166,7 +166,7 @@
                 pane.set_contentUrl(url);
                 return;
             }
-            
+
             if (flag == "<%=Me.CurrentPrefix%>-create" || flag == "<%=Me.CurrentPrefix%>-save") {
                 location.replace("<%=Me.CurrentPrefix%>_framework.aspx?pid=" + pid);
                 return;
@@ -316,7 +316,7 @@
                 <div class="commandcell" style="padding-left: 4px;">
                     <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" CollapseAnimation-Duration="0" CollapseAnimation-Type="None" ClickToOpen="true">
                         <Items>
-                            <telerik:RadMenuItem Value="more" Text="Akce" ImageUrl="Images/arrow_down_menu.png" style="padding-right:0px">
+                            <telerik:RadMenuItem Value="more" Text="Akce" ImageUrl="Images/arrow_down_menu.png" Style="padding-right: 0px">
                                 <GroupSettings OffsetX="-135" />
                                 <ContentTemplate>
                                     <div class="content-box3">
@@ -325,48 +325,50 @@
                                             <span>Dodatečné filtrování záznamů</span>
                                         </div>
                                         <div class="content">
+
+                                            <div>
+
+                                                <asp:DropDownList ID="cbxQueryFlag" runat="server" AutoPostBack="true">
+                                                    <asp:ListItem Text="" Value=""></asp:ListItem>
+                                                </asp:DropDownList>
+                                            </div>
+                                            <div style="margin-top: 6px;">
+                                                <span>Filtrovat přehled podle období:</span>
+                                                <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období">
+                                                </asp:DropDownList>
+
+                                            </div>
                                             <div>
                                                 <button type="button" onclick="x18_querybuilder()">
                                                     <img src="Images/label.png" />Štítky</button>
                                                 <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit štítkovací filtr" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
                                                 <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
                                             </div>
-                                            <div style="margin-top: 20px;">
-
-                                                <asp:DropDownList ID="cbxQueryFlag" runat="server" AutoPostBack="true">
-                                                    <asp:ListItem Text="" Value=""></asp:ListItem>
-                                                </asp:DropDownList>
-                                            </div>
-                                            <div style="margin-top: 20px;">
-                                                <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období">
-                                                </asp:DropDownList>
-                                                <uc:periodcombo ID="period1" runat="server" Width="160px"></uc:periodcombo>
-                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="content-box3" style="margin-top: 20px;">
+                                    <div class="content-box3">
                                         <div class="title">
                                             <img src="Images/batch.png" />
                                             <span>Operace pro označené (zaškrtlé) záznamy</span>
                                         </div>
                                         <div class="content">
-                                            
-                                            <button type="button" id="buttonBatch" onclick="batch()" title="Hromadné operace nad označenými záznamy v přehledu" style="display: none;float:left;">Hromadné operace</button>
-                                           
-                                            <button id="cmdApprove" runat="server" type="button" visible="false" onclick="approve()" style="float:left;">Schválit/připravit k fakturaci</button>
-                                               
-                                            <button id="cmdInvoice" runat="server" type="button" visible="false" onclick="invoice()" style="float:left;">Zrychlená fakturace bez schvalování</button>
-                                               
-                                            <button type="button" onclick="report()" title="Tisková sestava" style="float:left;">Tisková sestava</button>
-                                            
-                                            <button type="button" id="buttonBatchMail" onclick="sendmail_batch()" style="display: none;float:left;">Hromadně odeslat faktury (e-mail)</button>
 
-                                            <button type="button" id="cmdSummary" runat="server" onclick="drilldown()" style="float:left;">WORKSHEET statistika</button>
+                                            <button type="button" id="buttonBatch" onclick="batch()" title="Hromadné operace nad označenými záznamy v přehledu" style="display: none; float: left;">Hromadné operace</button>
+
+                                            <button id="cmdApprove" runat="server" type="button" visible="false" onclick="approve()" style="float: left;">Schválit/připravit k fakturaci</button>
+
+                                            <button id="cmdInvoice" runat="server" type="button" visible="false" onclick="invoice()" style="float: left;">Zrychlená fakturace bez schvalování</button>
+
+                                            <button type="button" onclick="report()" title="Tisková sestava" style="float: left;">Tisková sestava</button>
+
+                                            <button type="button" id="buttonBatchMail" onclick="sendmail_batch()" style="display: none; float: left;">Hromadně odeslat faktury (e-mail)</button>
+
+                                            <button type="button" id="cmdSummary" runat="server" onclick="drilldown()" style="float: left;">WORKSHEET statistika</button>
 
                                         </div>
                                     </div>
-                                    <asp:Panel ID="panExport" runat="server" CssClass="content-box3" Style="margin-top: 20px;">
+                                    <asp:Panel ID="panExport" runat="server" CssClass="content-box3" Style="margin-top: 6px;">
                                         <div class="title">
                                             <img src="Images/export.png" />
                                             <span>Export záznamů v aktuálním přehledu</span>
@@ -389,7 +391,7 @@
 
                                         </div>
                                     </asp:Panel>
-                                    <div class="content-box3" style="margin-top: 20px;">
+                                    <div class="content-box3">
                                         <div class="title">
                                             <img src="Images/griddesigner.png" />
                                             <span>Nastavení přehledu</span>
@@ -397,13 +399,9 @@
                                         </div>
                                         <div class="content">
                                             <div class="div6">
-                                            <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField">
-                                            </asp:DropDownList>
+                                                <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField">
+                                                </asp:DropDownList>
 
-                                            
-                                            </div>
-
-                                            <div class="div6">
                                                 <span class="val">Stránkování přehledu:</span>
                                                 <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování" TabIndex="3">
                                                     <asp:ListItem Text="20"></asp:ListItem>
@@ -414,14 +412,14 @@
                                                 </asp:DropDownList>
                                                 <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="Auto-rozbalené souhrny" AutoPostBack="true" Checked="false" />
                                                 <div>
-                                                <asp:CheckBox ID="chkCheckboxSelector" runat="server" Text="Možnost označovat záznamy zaškrtnutím (checkbox)" AutoPostBack="true" />
-                                                    </div>
+                                                    <asp:CheckBox ID="chkCheckboxSelector" runat="server" Text="Možnost označovat záznamy zaškrtnutím (checkbox)" AutoPostBack="true" />
+                                                </div>
                                             </div>
 
 
                                         </div>
                                     </div>
-                                    <div class="content-box3" style="margin-top: 20px;">
+                                    <div class="content-box3">
                                         <div class="title">
                                             <img src="Images/saw_turn_on.png" /><img src="Images/saw_turn_off.png" />
                                             <span>Rozvržení panelů</span>
@@ -445,7 +443,13 @@
 
                 </div>
                 <div class="commandcell" style="padding-left: 4px;">
-                    <uc:mygrid ID="designer1" runat="server" Prefix="p41" width="170px"></uc:mygrid>
+                    <uc:mygrid ID="designer1" runat="server" Prefix="p41" Width="170px"></uc:mygrid>
+
+
+                </div>
+                <div class="commandcell" style="padding-left: 4px;">
+                    <uc:periodcombo ID="period1" runat="server" Width="160px"></uc:periodcombo>
+                    <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
                 </div>
 
             </asp:Panel>
@@ -455,13 +459,8 @@
                 <asp:Label ID="MasterEntity" runat="server" Visible="false"></asp:Label>
             </div>
 
-            <div style="float: left; padding-left: 6px;">
-                <asp:Label ID="CurrentPeriodQuery" runat="server" ForeColor="Red"></asp:Label>
-            </div>
-            <div style="float: left; padding-left: 6px;">
 
-                <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
-            </div>
+
             <div style="float: left; padding-left: 6px;">
                 <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="Vyčistit sloupcový filtr" Style="font-weight: bold; color: red;" Visible="false"></asp:LinkButton>
             </div>

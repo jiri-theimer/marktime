@@ -15039,6 +15039,11 @@ if @exchangedate is null
   set @exchangedate=@datSupply
  end
 
+if @j27id_dest=@j27id_domestic
+ begin
+  update p91invoice set p91ExchangeRate=1 where p91id=@p91id
+ end
+
 ----výchozí mìnový kurz pocházející z j27id worksheet záznamu-----------
 update p31worksheet set p31ExchangeRate_Invoice=dbo.get_exchange_rate(1,@exchangedate,j27ID_Billing_Orig,@j27id_dest)
 WHERE p91id=@p91id
