@@ -463,7 +463,8 @@ Public Class p31_subgrid
    
 
     Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
-        designer1.ReloadUrl = Request.Url.AbsoluteUri.ToString()
+        ''designer1.ReloadUrl = Request.Url.AbsoluteUri.ToString()
+        designer1.ReloadUrl = Request.Url.PathAndQuery
     End Sub
     Private Sub RefreshState()
         If Not Me.ExplicitMyQuery Is Nothing Then

@@ -115,6 +115,7 @@
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
         Dim lisTMP As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
         Dim mq As New BO.myQueryJ02
+        mq.Closed = BO.BooleanQueryMode.NoQuery
         mq.PIDs = lisTMP.Where(Function(p) p.p85OtherKey1 <> 0).Select(Function(r) r.p85OtherKey1).ToList
         If mq.PIDs.Count = 0 Then mq.AddItemToPIDs(-666)
         grid1.DataSource = Master.Factory.j02PersonBL.GetList(mq)

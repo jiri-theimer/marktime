@@ -57,6 +57,7 @@
         if (ctl.value != "")
             url = url + "j70id=" + ctl.value;
 
+        
         location.replace(url);
     }
 </script>

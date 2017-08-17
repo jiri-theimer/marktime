@@ -226,6 +226,7 @@
     <Content Include="freefields_checkboxlist.aspx" />
     <Content Include="imap_record.ascx" />
     <Content Include="import_object.aspx" />
+    <Content Include="import_object_item.ascx" />
     <Content Include="Integration\datovka_service_info.aspx" />
     <Content Include="Integration\datovka_upload_file.aspx" />
     <Content Include="Integration\datovka_upload_hierarchy.aspx" />
@@ -978,6 +979,13 @@
     <Compile Include="import_object.aspx.vb">
       <DependentUpon>import_object.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="import_object_item.ascx.designer.vb">
+      <DependentUpon>import_object_item.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="import_object_item.ascx.vb">
+      <DependentUpon>import_object_item.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Integration\datovka_service_info.aspx.designer.vb">
       <DependentUpon>datovka_service_info.aspx</DependentUpon>
