@@ -481,18 +481,20 @@ Class mtService
                 c.p85Prefix = strPrefix
                 c.p85FreeText03 = LCase(fld.Value.GetType().Name)
                 If Not fld.Value Is Nothing Then
-                    Select Case LCase(fld.Value.GetType().Name)
-                        Case "date", "datetime"
-                            c.p85FreeDate01 = fld.Value
-                        Case "int32"
-                            c.p85OtherKey1 = fld.Value
-                        Case "double"
-                            c.p85FreeFloat01 = fld.Value
-                        Case "boolean"
-                            c.p85FreeBoolean01 = fld.Value
-                        Case Else
-                            c.p85Message = fld.Value
-                    End Select
+                    If Not fld.Value Is System.DBNull.Value Then
+                        Select Case LCase(fld.Value.GetType().Name)
+                            Case "date", "datetime"
+                                c.p85FreeDate01 = fld.Value
+                            Case "int32"
+                                c.p85OtherKey1 = fld.Value
+                            Case "double"
+                                c.p85FreeFloat01 = fld.Value
+                            Case "boolean"
+                                c.p85FreeBoolean01 = fld.Value
+                            Case Else
+                                c.p85Message = fld.Value
+                        End Select
+                    End If
                 End If
                 bolOK = _factory.p85TempBoxBL.Save(c)
             Next

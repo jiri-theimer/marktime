@@ -32,6 +32,15 @@ Partial Public Class import_object
     Protected WithEvents cmdPopup As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
+    '''Button1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Button1 As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
     '''panO23 control.
     '''</summary>
     '''<remarks>

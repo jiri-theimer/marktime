@@ -28,7 +28,12 @@
 
         }
 
-
+        function close_curtab() {
+            
+            window.open('', '_parent', '');
+            window.close();
+            
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -42,6 +47,7 @@
                 <td>
                     <asp:Label ID="lblTopHeader" runat="server" CssClass="framework_header_span" Text="Založit z MS-OUTLOOK..."></asp:Label>
                     <button type="button" id="cmdPopup" runat="server" onclick="repeat_popup()" visible="false">Pokračovat</button>
+                    <button type="button" id="Button1" runat="server" onclick="close_curtab()" style="margin-left:100px;">Zavřít</button>
                 </td>
 
             </tr>
