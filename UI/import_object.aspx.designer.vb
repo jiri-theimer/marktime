@@ -41,6 +41,33 @@ Partial Public Class import_object
     Protected WithEvents Button1 As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
+    '''tabs1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tabs1 As Global.Telerik.Web.UI.RadTabStrip
+
+    '''<summary>
+    '''RadMultiPage1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadMultiPage1 As Global.Telerik.Web.UI.RadMultiPage
+
+    '''<summary>
+    '''prefix control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents prefix As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
     '''panO23 control.
     '''</summary>
     '''<remarks>
@@ -57,6 +84,87 @@ Partial Public Class import_object
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x18ID As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
+    '''b07 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents b07 As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
+    '''opgSearch control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents opgSearch As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
+    '''search_p41 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents search_p41 As Global.Telerik.Web.UI.RadComboBox
+
+    '''<summary>
+    '''search_p28 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents search_p28 As Global.Telerik.Web.UI.RadComboBox
+
+    '''<summary>
+    '''opgBodyFormat control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents opgBodyFormat As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
+    '''b07Value control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents b07Value As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''panBodyHTML control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panBodyHTML As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''b07BodyHTML control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents b07BodyHTML As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''io1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents io1 As Global.UI.import_object_item
 
     '''<summary>
     '''linkMSG control.
