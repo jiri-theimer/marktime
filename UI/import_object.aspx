@@ -125,11 +125,20 @@
 
 
                
-                <div class="div6">
-                    <uc:import_object_item ID="io1" runat="server"></uc:import_object_item>
-                </div>
-                <div class="div6">
+                <div class="content-box2">
+                    <div class="title">
+                        Přílohy
+                    </div>
+                    <div class="content">
+                        <uc:import_object_item ID="io1" runat="server"></uc:import_object_item>
+                    </div>
                     
+                </div>
+                <div class="content-box2">
+                    <div class="title">
+                        Uložit obsah jako
+                    </div>
+                    <div class="content">
                     <asp:RadioButtonList ID="opgBodyFormat" runat="server" AutoPostBack="true" RepeatDirection="Horizontal">
                         <asp:ListItem Text="Poštovní zpráva 1:1" Value="3" Selected="true"></asp:ListItem>
                         <asp:ListItem Text="Textový komentář (možnost upravit)" Value="1"></asp:ListItem>
@@ -139,6 +148,7 @@
                     <asp:panel ID="panBodyHTML" runat="server" style="background-color:lightskyblue">
                         <asp:Literal ID="b07BodyHTML" runat="server"></asp:Literal>
                     </asp:panel>
+                    </div>
                 </div>
                 
             </telerik:RadPageView>

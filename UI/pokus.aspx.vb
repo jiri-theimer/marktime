@@ -25,7 +25,7 @@ Public Class pokus
 
     
     Private Sub pokus_Load(sender As Object, e As EventArgs) Handles Me.Load
-        
+
     End Sub
 
     

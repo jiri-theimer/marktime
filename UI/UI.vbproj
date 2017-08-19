@@ -202,6 +202,7 @@
     <Content Include="barcode.aspx" />
     <Content Include="billingmemo.ascx" />
     <Content Include="blank.aspx" />
+    <Content Include="clue_b07_record.aspx" />
     <Content Include="clue_help.aspx" />
     <Content Include="clue_x18_record.aspx" />
     <Content Include="clue_p41_myworksheet.aspx" />
@@ -799,6 +800,13 @@
     <Compile Include="Clue.Master.vb">
       <DependentUpon>Clue.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="clue_b07_record.aspx.designer.vb">
+      <DependentUpon>clue_b07_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_b07_record.aspx.vb">
+      <DependentUpon>clue_b07_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="clue_help.aspx.designer.vb">
       <DependentUpon>clue_help.aspx</DependentUpon>

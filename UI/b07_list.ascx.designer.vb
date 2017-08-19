@@ -93,4 +93,13 @@ Partial Public Class b07_list
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidAttachmentsReadonly As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidIsClueTip control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidIsClueTip As Global.System.Web.UI.WebControls.HiddenField
 End Class

@@ -6,6 +6,7 @@
             
             <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
             <asp:Label ID="FileSize" runat="server"></asp:Label>
+            <asp:HiddenField ID="p85id" runat="server" />
         </div>
     </ItemTemplate>    
 </asp:Repeater>

@@ -61,8 +61,12 @@
                 receiver1.AddReceiver(c.j02ID_Owner, 0, False)
             End If
 
+            If Me.CurrentParentID > 0 Then
+                history1.RefreshOneCommentRecord(Master.Factory, Me.CurrentParentID)
+            Else
+                history1.Visible = False
+            End If
 
-            history1.RefreshData(Master.Factory, BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Me.CurrentRecordPID, Me.CurrentParentID)
         End If
     End Sub
 

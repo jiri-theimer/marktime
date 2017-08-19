@@ -465,7 +465,7 @@ Class mtService
                 c.p85FreeText02 = strFileName
                 Dim a() As String = Split(strFileName, "_xxx_")
                 If UBound(a) > 0 Then
-                    c.p85FreeText02 = a(1)  'uživatelský název souboru
+                    c.p85FreeText01 = a(1)  'uživatelský název souboru
                 End If
                 c.p85FreeNumber01 = cF.GetFileSize(_factory.x35GlobalParam.TempFolder & "\" & strFileName)
                 c.p85FreeText03 = cF.GetContentType(_factory.x35GlobalParam.TempFolder & "\" & strFileName)

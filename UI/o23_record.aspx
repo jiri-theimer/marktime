@@ -6,6 +6,7 @@
 <%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
 <%@ Register TagPrefix="uc" TagName="fileupload" Src="~/fileupload.ascx" %>
 <%@ Register TagPrefix="uc" TagName="fileupload_list" Src="~/fileupload_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="import_object_item" Src="~/import_object_item.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -304,7 +305,7 @@
         </table>
     </asp:Panel>
 
-
+    <uc:import_object_item ID="io1" runat="server" Visible="false"></uc:import_object_item>
     <asp:Panel ID="panUpload" runat="server" CssClass="content-box2">
         <div class="title">Nahrát přílohy dokumentu</div>
         <div class="content">

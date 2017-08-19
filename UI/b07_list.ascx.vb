@@ -28,6 +28,14 @@
             panHeader.Visible = value
         End Set
     End Property
+    Public Property IsClueTipInfo As Boolean
+        Get
+            Return BO.BAS.BG(hidIsClueTip.Value)
+        End Get
+        Set(value As Boolean)
+            hidIsClueTip.Value = BO.BAS.GB(value)
+        End Set
+    End Property
     Public ReadOnly Property RowsCount As Integer
         Get
             Return rp1.Items.Count
@@ -54,11 +62,27 @@
         cmdAdd.Attributes.Item("onclick") = Me.JS_Create
     End Sub
 
+    Public Sub RefreshOneCommentRecord(factory As BL.Factory, intB07ID As Integer)
+        _sysUser = factory.SysUser
+        Dim mq As New BO.myQueryB07
+        mq.AddItemToPIDs(intB07ID)
+
+        Dim lisB07 As IEnumerable(Of BO.b07Comment) = factory.b07CommentBL.GetList(mq)
+
+
+        rp1.DataSource = lisB07
+        rp1.DataBind()
+
+        panHeader.Visible = False
+
+
+    End Sub
     Public Sub RefreshData(factory As BL.Factory, x29id As BO.x29IdEnum, intRecordPID As Integer, Optional intSelectedB07ID As Integer = 0)
         _sysUser = factory.SysUser
         Dim mq As New BO.myQueryB07
         mq.RecordDataPID = intRecordPID
         mq.x29id = x29id
+        If intSelectedB07ID > 0 Then mq.AddItemToPIDs(intSelectedB07ID)
         Me.hidPrefix.Value = BO.BAS.GetDataPrefix(x29id)
         Dim lisB07 As IEnumerable(Of BO.b07Comment) = factory.b07CommentBL.GetList(mq)
 
@@ -91,34 +115,70 @@
                 .BackColor = Drawing.Color.LightSkyBlue
             End If
         End With
-        With CType(e.Item.FindControl("b07Value"), Label)
-            .Text = BO.BAS.CrLfText2Html(cRec.b07Value)
+        With CType(e.Item.FindControl("b07Value"), Literal)
+            If Len(cRec.b07Value) < 15000 Or hidIsClueTip.Value = "1" Then
+                .Text = BO.BAS.CrLfText2Html(cRec.b07Value)
+            Else
+                .Text = "..."
+            End If
+
+        End With
+        With CType(e.Item.FindControl("pan100"), Panel)
+            If hidIsClueTip.Value = "1" Then
+                .Style.Clear()
+            
+            End If
         End With
         With CType(e.Item.FindControl("Author"), Label)
             .Text = cRec.Author
         End With
-        If cRec.Avatar <> "" Then
-            With CType(e.Item.FindControl("imgPhoto"), Image)
-                .ImageUrl = "Plugins/Avatar/" & cRec.Avatar
-            End With
-        End If
-        CType(e.Item.FindControl("b07WorkflowInfo"), Label).Text = cRec.b07WorkflowInfo
-
-        With CType(e.Item.FindControl("aAnswer"), HyperLink)
-            If cRec.o43ID = 0 Then
-                .NavigateUrl = "javascript:" & Me.hidJS_Reaction.Value & "(" & cRec.PID.ToString & ")"
-            Else
+        With CType(e.Item.FindControl("clue1"), HyperLink)
+            If hidIsClueTip.Value = "1" Then
                 .Visible = False
+            Else
+                .Attributes.Item("rel") = "clue_b07_record.aspx?pid=" & cRec.PID.ToString
             End If
 
         End With
-        With CType(e.Item.FindControl("aDelete"), HyperLink)
-            If (cRec.j02ID_Owner = _sysUser.j02ID Or _sysUser.IsAdmin) And (cRec.b07Value <> "" Or cRec.o27ID > 0) Then
-                .Visible = True
-                .NavigateUrl = "javascript:trydeleteb07(" & cRec.PID.ToString & ")"
-            Else
+
+
+        With CType(e.Item.FindControl("imgPhoto"), Image)
+            If hidIsClueTip.Value = "1" Then
                 .Visible = False
+            Else
+                If cRec.Avatar <> "" Then
+                    .ImageUrl = "Plugins/Avatar/" & cRec.Avatar
+                End If
             End If
+        End With
+
+        CType(e.Item.FindControl("b07WorkflowInfo"), Label).Text = cRec.b07WorkflowInfo
+
+        With CType(e.Item.FindControl("aAnswer"), HyperLink)
+            If hidIsClueTip.Value = "1" Then
+                .Visible = False
+            Else
+                If cRec.o43ID = 0 Then
+                    .NavigateUrl = "javascript:" & Me.hidJS_Reaction.Value & "(" & cRec.PID.ToString & ")"
+                Else
+                    .Visible = False
+                End If
+            End If
+
+
+        End With
+        With CType(e.Item.FindControl("aDelete"), HyperLink)
+            If hidIsClueTip.Value = "1" Then
+                .Visible = False
+            Else
+                If (cRec.j02ID_Owner = _sysUser.j02ID Or _sysUser.IsAdmin) And (cRec.b07Value <> "" Or cRec.o27ID > 0) Then
+                    .Visible = True
+                    .NavigateUrl = "javascript:trydeleteb07(" & cRec.PID.ToString & ")"
+                Else
+                    .Visible = False
+                End If
+            End If
+
         End With
         With CType(e.Item.FindControl("aMSG"), HyperLink)
             If cRec.o43ID = 0 Then
@@ -166,7 +226,7 @@
 
         End With
         If cRec.PID = _lastB07ID Then
-            CType(e.Item.FindControl("b07Value"), Label).Text = ""
+            CType(e.Item.FindControl("b07Value"), Literal).Text = ""
             e.Item.FindControl("aAnswer").Visible = False
             e.Item.FindControl("Timestamp").Visible = False
             CType(e.Item.FindControl("Author"), Label).Text = "Komentář obsahuje více příloh:"

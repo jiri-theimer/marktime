@@ -320,6 +320,15 @@ Partial Public Class o23_record
     Protected WithEvents txtVerify As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''io1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents io1 As Global.UI.import_object_item
+
+    '''<summary>
     '''panUpload control.
     '''</summary>
     '''<remarks>

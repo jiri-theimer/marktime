@@ -33,7 +33,7 @@
 
             Dim strURL As String = ""
             tabs1.Tabs(1).Visible = False : RadMultiPage1.PageViews(1).Visible = False
-            io1.InhaleObjectRecord(hidGUID.Value, hidPrefix.Value)
+            io1.InhaleObjectRecord(hidGUID.Value, hidPrefix.Value, True)
             Select Case hidPrefix.Value
                 Case "p31"
                     tabs1.Tabs(0).Text = "Zapsat worksheet úkon"
@@ -125,5 +125,39 @@
                 io1.ShowHide_AttachmentCheckboxes(False)
         End Select
        
+    End Sub
+
+    Private Sub cmdSaveB07_Click(sender As Object, e As EventArgs) Handles cmdSaveB07.Click
+        Dim cRec As New BO.b07Comment
+        With cRec
+
+            Select Case Me.opgSearch.SelectedValue
+                Case "p41"
+                    .x29ID = BO.x29IdEnum.p41Project
+                    .b07RecordPID = BO.BAS.IsNullInt(search_p41.SelectedValue)
+                Case "p28"
+                    .x29ID = BO.x29IdEnum.p28Contact
+                    .b07RecordPID = BO.BAS.IsNullInt(search_p28.SelectedValue)
+            End Select
+            Select Case Me.opgBodyFormat.SelectedValue
+                Case "1"
+                    .b07Value = Me.b07Value.Text
+                Case "2"
+                    .b07Value = Me.b07BodyHTML.Text
+            End Select
+            If .b07RecordPID = 0 Then
+                Master.Notify("Musíte vybrat projekt nebo klienta.", NotifyLevel.ErrorMessage)
+                Return
+            End If
+        End With
+
+        io1.SetDeleted_UnCheckedFiles()
+        With Master.Factory.b07CommentBL
+            If .Save(cRec, hidGUID.Value, Nothing) Then
+                Response.Redirect(Me.opgSearch.SelectedValue & "_framework.aspx?pid=" & cRec.b07RecordPID.ToString)
+            Else
+                Master.Notify(Master.Factory.b07CommentBL.ErrorMessage, NotifyLevel.ErrorMessage)
+            End If
+        End With
     End Sub
 End Class

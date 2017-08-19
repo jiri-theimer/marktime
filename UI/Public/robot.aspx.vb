@@ -30,7 +30,7 @@
                 Handle_CnbKurzy()
             End If
 
-            If (Now > Today.AddHours(3) And Now < Today.AddHours(4)) Or Request.Item("ping") = "1" Then
+            If (Now > Today.AddMinutes(3 * 60) And Now < Today.AddMinutes(3 * 60 + 20)) Or Request.Item("ping") = "1" Then
                 'mezi třetí a čtvrtou hodinou ráno vyčistit temp tabulky
                 _Factory.p85TempBoxBL.Recovery_ClearCompleteTemp()
 
@@ -161,11 +161,11 @@
     Public Sub Handle_CentralPing()
         Dim strGUID As String = _Factory.x35GlobalParam.GetValueString("AppScope")
         Dim strName As String = _Factory.x35GlobalParam.GetValueString("AppName")
-        Dim s As String = "SELECT count(*) as PocetZaznamu,max(p31DateInsert) as PosledniZapis,count(distinct case when p31dateinsert between dateadd(day,-7,getdate()) and getdate() then j02id end) as PocetZapisovacu FROM p31Worksheet"
+        Dim s As String = "SELECT count(*) as PocetZaznamu,max(p31DateInsert) as PosledniZapis,count(distinct case when p31dateinsert between dateadd(day,-14,getdate()) and getdate() then j02id end) as PocetZapisovacu FROM p31Worksheet"
         Dim pars As New List(Of BO.PluginDbParameter)
         Dim dt As DataTable = _Factory.pluginBL.GetDataTable(s, pars)
 
-        s = "http://www.marktime50.net/mtrc/ping.aspx?guid=" & strGUID & "&name=" & Server.HtmlEncode(strName)
+        s = "http://www.marktime50.net/mtrc/ping.aspx?guid=" & strGUID & "&name=" & Server.HtmlEncode(strName) & "&verze=" & BO.ASS.GetUIVersion(True)
         For Each row As DataRow In dt.Rows
             s += "&poslednizapis=" & BO.BAS.FD(row.Item("PosledniZapis")) & "&pocetzaznamu=" & row.Item("PocetZaznamu").ToString & "&pocetzapisovacu=" & row.Item("PocetZapisovacu").ToString
         Next

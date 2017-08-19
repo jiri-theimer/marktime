@@ -2,23 +2,36 @@
     Inherits System.Web.UI.UserControl
     Public Property Factory As BL.Factory
     Private Property _lis As IEnumerable(Of BO.p85TempBox) = Nothing
-
+    Public ReadOnly Property GUID As String
+        Get
+            Return hidGUID.Value
+        End Get
+    End Property
+    Public ReadOnly Property FilesCount As Integer
+        Get
+            Return rp1.Items.Count
+        End Get
+    End Property
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
     End Sub
 
-    Public Sub InhaleObjectRecord(strGUID As String, strPrefix As String)
+    Public Sub InhaleObjectRecord(strGUID As String, strPrefix As String, bolShowFileCheckboxlist As Boolean)
         hidGUID.Value = strGUID
         hidPrefix.Value = strPrefix
 
         LoadList()
-
-        rp1.DataSource = _lis.Where(Function(p) p.p85Prefix = "o27")
-        rp1.DataBind()
+        If bolShowFileCheckboxlist Then
+            rp1.DataSource = _lis.Where(Function(p) p.p85Prefix = "o27")
+            rp1.DataBind()
+        Else
+            rp1.Visible = False
+        End If
+        
 
     End Sub
     Private Sub LoadList()
-        _lis = Me.Factory.p85TempBoxBL.GetList(hidGUID.Value)
+        _lis = Me.Factory.p85TempBoxBL.GetList(hidGUID.Value, True)
     End Sub
     Private Function GetRec(strKey As String) As BO.p85TempBox
         If _lis Is Nothing Then
@@ -38,6 +51,7 @@
             Return True
         End If
     End Function
+
     Public Sub ShowHide_AttachmentCheckboxes(bolShow As Boolean)
         For Each ri As RepeaterItem In rp1.Items
             CType(ri.FindControl("chk1"), CheckBox).Visible = bolShow
@@ -62,9 +76,12 @@
 
     Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound
         Dim cRec As BO.p85TempBox = CType(e.Item.DataItem, BO.p85TempBox)
-        
+        CType(e.Item.FindControl("p85id"), HiddenField).Value = cRec.PID.ToString
+        With CType(e.Item.FindControl("chk1"), CheckBox)
+            .Checked = Not cRec.p85IsDeleted
+        End With
         With CType(e.Item.FindControl("link1"), HyperLink)
-            .Text = cRec.p85FreeText02
+            .Text = cRec.p85FreeText01
             If LCase(.Text).IndexOf(".eml") > 0 Then
                 .Text = "EML soubor poštovní zprávy"
             End If
@@ -72,12 +89,31 @@
                 .Text = "Outlook MSG soubor poštovní zprávy"
             End If
             .Text = "<img src='Images/Files/" & BO.BAS.GetFileExtensionIcon(Right(cRec.p85FreeText02, 4)) & "'/>" & .Text
-            .NavigateUrl = "binaryfile.aspx?tempfile=" & cRec.p85FreeText01
+            .NavigateUrl = "binaryfile.aspx?tempfile=" & cRec.p85FreeText02
         End With
         With CType(e.Item.FindControl("FileSize"), Label)
             .Text = BO.BAS.FormatFileSize(CInt(cRec.p85FreeNumber01))
         End With
     End Sub
 
+    Public Sub SetDeleted_UnCheckedFiles()
+        LoadList()
 
+        For Each ri As RepeaterItem In rp1.Items
+            Dim intP85ID As Integer = CInt(CType(ri.FindControl("p85id"), HiddenField).Value)
+            If CType(ri.FindControl("chk1"), CheckBox).Checked Then
+                Me.Factory.p85TempBoxBL.UnDelete(_lis.Where(Function(p) p.PID = intP85ID).First)
+            Else
+                Me.Factory.p85TempBoxBL.Delete(_lis.Where(Function(p) p.PID = intP85ID).First)
+            End If
+        Next
+
+    End Sub
+    Public Sub ChangeGUID_Of_Files(strNewGUID As String)
+        LoadList()
+        For Each c In _lis.Where(Function(p) p.p85Prefix = "o27")
+            Me.Factory.p85TempBoxBL.UpdateGUID(c.PID, strNewGUID)
+
+        Next
+    End Sub
 End Class

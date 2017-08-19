@@ -121,6 +121,7 @@ Class o27AttachmentBL
 
         If Not cFile.FileExist(strSourceServerFullPath) Then
             _Error = "Předávaný soubor neexistuje."
+            Return False
         End If
         'Dim strDir As String = BO.AppAssembly.GetUploadFolder()
         Dim strDir As String = Me.Factory.x35GlobalParam.UploadFolder

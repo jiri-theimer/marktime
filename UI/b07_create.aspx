@@ -46,7 +46,7 @@
 
 
 
-    <uc:b07_list ID="history1" runat="server" ShowInsertButton="false" />
+    <uc:b07_list ID="history1" runat="server" ShowInsertButton="false" IsClueTipInfo="true" />
 
     <asp:HiddenField ID="hidPrefix" runat="server" />
     <asp:HiddenField ID="hidRecordPID" runat="server" />

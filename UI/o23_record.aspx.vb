@@ -35,9 +35,11 @@ Public Class o23_record
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Me.upload1.Factory = Master.Factory
         Me.uploadlist1.Factory = Master.Factory
+        io1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             Me.upload1.GUID = BO.BAS.GetGUID
             Me.uploadlist1.GUID = Me.upload1.GUID
+            
             With Master
                 .HeaderIcon = "Images/label_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
@@ -122,7 +124,11 @@ Public Class o23_record
                 Me.o23Name.Text += " KOPIE"
             End If
 
-
+            If Request.Item("guid_import") <> "" Then
+                io1.InhaleObjectRecord(Request.Item("guid_import"), "o23", False)
+                io1.ChangeGUID_Of_Files(upload1.GUID)
+                uploadlist1.RefreshData_TEMP()
+            End If
         End If
         If Not panHtmlEditor.Visible Then
             panHtmlEditor.Controls.Clear()
@@ -131,6 +137,8 @@ Public Class o23_record
             panUpload.Controls.Clear()
         End If
     End Sub
+
+    
 
     Private Sub Handle_Permissions(c As BO.x18EntityCategory)
         Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
@@ -374,7 +382,6 @@ Public Class o23_record
     End Sub
 
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
-       
         If Me.o23IsEncrypted.Checked Then
             If Not TestPassword() Then Return
         End If
@@ -437,9 +444,14 @@ Public Class o23_record
                         cB07.x29ID = BO.x29IdEnum.o23Doc
                         cB07.b07RecordPID = Master.DataPID
                         Master.Factory.b07CommentBL.Save(cB07, upload1.GUID, Nothing)
-                        'Master.Factory.o27AttachmentBL.UploadAndSaveUserControl(lisTempUpload, BO.x29IdEnum.b07Comment, intB07ID)
                     End If
-
+                End If
+                If io1.Visible And io1.FilesCount > 0 Then
+                    io1.SetDeleted_UnCheckedFiles()
+                    Dim cB07 As New BO.b07Comment
+                    cB07.x29ID = BO.x29IdEnum.o23Doc
+                    cB07.b07RecordPID = Master.DataPID
+                    Master.Factory.b07CommentBL.Save(cB07, io1.GUID, Nothing)
                 End If
                 Master.CloseAndRefreshParent("o23-save")
             Else

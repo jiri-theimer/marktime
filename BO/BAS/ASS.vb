@@ -16,7 +16,7 @@ Public Class ASS
         
     End Function
 
-    Public Shared Function GetUIVersion() As String
+    Public Shared Function GetUIVersion(Optional bolOnlyDateTime As Boolean = False) As String
         'Dim ass As [Assembly] = [Assembly].GetExecutingAssembly()
         'Dim a() As String = Split(ass.ToString, ",")
         'Dim strAppVer As String = a(1)
@@ -24,7 +24,12 @@ Public Class ASS
         Dim strFile As String = GetApplicationRootFolder() & "\bin\UI.dll"
         If System.IO.File.Exists(strFile) Then
             Dim info As New FileInfo(strFile)
-            Return strAppVer & ", build: " & Format(info.LastWriteTime, "dd.MM.yyyy HH:mm")
+            If bolOnlyDateTime Then
+                Return Format(info.LastWriteTime, "yyyy-MM-dd HH:mm")
+            Else
+                Return strAppVer & ", build: " & Format(info.LastWriteTime, "yyyy/MM/dd HH:mm")
+            End If
+
         Else
             Return strAppVer
         End If

@@ -58,6 +58,27 @@ Public Class p85TempBoxDL
             Return False
         End If
     End Function
+    Public Function UnDelete(cRec As BO.p85TempBox) As Boolean
+        Dim pars As New DbParameters
+        pars.Add("p85id", cRec.PID, DbType.Int32)
+        If _cDB.RunSQL("update p85Tempbox set p85IsDeleted=0 WHERE p85ID=@p85id", pars) Then
+            Return True
+        Else
+            _Error = _cDB.ErrorMessage
+            Return False
+        End If
+    End Function
+    Public Function UpdateGUID(intP85ID As Integer, strNewGUID As String) As Boolean
+        Dim pars As New DbParameters
+        pars.Add("p85id", intP85ID, DbType.Int32)
+        pars.Add("guid", strNewGUID, DbType.String)
+        If _cDB.RunSQL("update p85Tempbox set p85GUID=@guid WHERE p85ID=@p85id", pars) Then
+            Return True
+        Else
+            _Error = _cDB.ErrorMessage
+            Return False
+        End If
+    End Function
 
     Public Function GetList(strGUID As String, Optional bolIncludeDeleted As Boolean = False) As IEnumerable(Of BO.p85TempBox)
         Dim s As String = "SELECT *," & bas.RecTail("p85") & " FROM p85Tempbox WHERE p85GUID=@guid"

@@ -4,6 +4,8 @@
     Function Load(intPID As Integer) As BO.p85TempBox
     Function LoadByGUID(strGUID As String) As BO.p85TempBox
     Function Delete(cRec As BO.p85TempBox) As Boolean
+    Function UnDelete(cRec As BO.p85TempBox) As Boolean
+    Function UpdateGUID(intP85ID As Integer, strNewGUID As String) As Boolean
     Function Truncate(strGUID As String) As Boolean
     Function GetList(strGUID As String, Optional bolIncludeDeleted As Boolean = False) As IEnumerable(Of BO.p85TempBox)
     Sub Clone(strGUID_Source As String, strGUID_Dest As String)
@@ -49,6 +51,12 @@ Class p85TempBoxBL
             _Error = _cDL.ErrorMessage
             Return False
         End If
+    End Function
+    Public Function UnDelete(cRec As BO.p85TempBox) As Boolean Implements Ip85TempBoxBL.UnDelete
+        Return _cDL.UnDelete(cRec)
+    End Function
+    Public Function UpdateGUID(intP85ID As Integer, strNewGUID As String) As Boolean Implements Ip85TempBoxBL.UpdateGUID
+        Return _cDL.UpdateGUID(intP85ID, strNewGUID)
     End Function
     Public Function Truncate(strGUID As String) As Boolean Implements Ip85TempBoxBL.Truncate
         If _cDL.Truncate(strGUID) Then
