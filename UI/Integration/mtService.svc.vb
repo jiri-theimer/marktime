@@ -461,8 +461,12 @@ Class mtService
                 c.p85GUID = strTempGUID
                 c.p85Prefix = "o27"
                 c.p85OtherKey1 = 1  'o13id=1
-                c.p85FreeText01 = strExternalPID
+                c.p85FreeText01 = strFileName
                 c.p85FreeText02 = strFileName
+                Dim a() As String = Split(strFileName, "_xxx_")
+                If UBound(a) > 0 Then
+                    c.p85FreeText02 = a(1)  'uživatelský název souboru
+                End If
                 c.p85FreeNumber01 = cF.GetFileSize(_factory.x35GlobalParam.TempFolder & "\" & strFileName)
                 c.p85FreeText03 = cF.GetContentType(_factory.x35GlobalParam.TempFolder & "\" & strFileName)
                 If Right(LCase(strFileName), 3) = "msg" Then

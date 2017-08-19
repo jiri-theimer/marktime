@@ -82,8 +82,8 @@
 
         <telerik:RadTabStrip ID="tabs1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true">
             <Tabs>
-                <telerik:RadTab Text="Naimportovat jako dokument" Selected="true" Value="prefix" ImageUrl="Images/notepad.png"></telerik:RadTab>
-                <telerik:RadTab Text="Naimportovat pouze jako komentář s přílohou" Value="b07" ImageUrl="Images/comment.png"></telerik:RadTab>
+                <telerik:RadTab Text="Vytvořit dokument" Selected="true" Value="prefix" ImageUrl="Images/notepad.png"></telerik:RadTab>
+                <telerik:RadTab Text="Přiřadit jako poštu/komentář/přílohy" Value="b07" ImageUrl="Images/imap.png"></telerik:RadTab>
             </Tabs>
         </telerik:RadTabStrip>
 
@@ -98,43 +98,59 @@
             </telerik:RadPageView>
             <telerik:RadPageView ID="b07" runat="server">
                 <div class="div6">
-                    <asp:RadioButtonList ID="opgSearch" runat="server" AutoPostBack="true" RepeatDirection="Horizontal">
-                        <asp:ListItem Text="Projekt" Value="p41" Selected="True"></asp:ListItem>
-                        <asp:ListItem Text="Klient" Value="p28"></asp:ListItem>
-                    </asp:RadioButtonList>
+                    <asp:Button ID="cmdSaveB07" runat="server" Font-Size="Large" Text="Uložit změny" CssClass="cmd" />
+                    
+                </div>
                 
-                <telerik:RadComboBox ID="search_p41" runat="server" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat projekt..." Width="400px" OnClientItemsRequesting="project_OnClientItemsRequesting">
-                    <WebServiceSettings Method="LoadComboData" Path="~/Services/project_service.asmx" UseHttpGet="false" />
-                </telerik:RadComboBox>
-                <telerik:RadComboBox ID="search_p28" runat="server" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat klienta..." Width="400px" OnClientItemsRequesting="contact_OnClientItemsRequesting">
-                    <WebServiceSettings Method="LoadComboData" Path="~/Services/contact_service.asmx" UseHttpGet="false" />
-                </telerik:RadComboBox>
-                </div>
-                <div class="div6">
-                    <span class="lbl">Komentář:</span>
-                    <asp:RadioButtonList ID="opgBodyFormat" runat="server" AutoPostBack="true" RepeatDirection="Horizontal">
-                        <asp:ListItem Text="Jako TEXT" Value="1" Selected="true"></asp:ListItem>
-                        <asp:ListItem Text="Jako HTML" Value="2"></asp:ListItem>
-                        <asp:ListItem Text="Bez komentáře" Value="3"></asp:ListItem>
-                    </asp:RadioButtonList>
-                    <asp:TextBox ID="b07Value" runat="server" TextMode="MultiLine" Style="width: 100%; height: 300px; font-family: 'Courier New';"></asp:TextBox>
-                    <asp:panel ID="panBodyHTML" runat="server" CssClass="bigtext">
-                        <asp:Literal ID="b07BodyHTML" runat="server"></asp:Literal>
-                    </asp:panel>
-                </div>
+                    <div class="content-box2">
+                        <div class="title">
+                            Přiřadit
+                            
+                        </div>
+                        <div class="content">
+                            <asp:RadioButtonList ID="opgSearch" runat="server" AutoPostBack="true" RepeatDirection="Horizontal">
+                                <asp:ListItem Text="Projekt" Value="p41" Selected="True"></asp:ListItem>
+                                <asp:ListItem Text="Klient" Value="p28"></asp:ListItem>
+                            </asp:RadioButtonList>
+
+                            <telerik:RadComboBox ID="search_p41" runat="server" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat projekt..." Width="400px" OnClientItemsRequesting="project_OnClientItemsRequesting">
+                                <WebServiceSettings Method="LoadComboData" Path="~/Services/project_service.asmx" UseHttpGet="false" />
+                            </telerik:RadComboBox>
+                            <telerik:RadComboBox ID="search_p28" runat="server" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat klienta..." Width="400px" OnClientItemsRequesting="contact_OnClientItemsRequesting">
+                                <WebServiceSettings Method="LoadComboData" Path="~/Services/contact_service.asmx" UseHttpGet="false" />
+                            </telerik:RadComboBox>
+                        </div>
+                    </div>
+
+
+
+               
                 <div class="div6">
                     <uc:import_object_item ID="io1" runat="server"></uc:import_object_item>
                 </div>
+                <div class="div6">
+                    
+                    <asp:RadioButtonList ID="opgBodyFormat" runat="server" AutoPostBack="true" RepeatDirection="Horizontal">
+                        <asp:ListItem Text="Poštovní zpráva 1:1" Value="3" Selected="true"></asp:ListItem>
+                        <asp:ListItem Text="Textový komentář (možnost upravit)" Value="1"></asp:ListItem>
+                        <asp:ListItem Text="HTML komentář (bez úprav)" Value="2"></asp:ListItem>                        
+                    </asp:RadioButtonList>
+                    <asp:TextBox ID="b07Value" runat="server" TextMode="MultiLine" Style="width: 100%; height: 300px; font-family: 'Courier New';"></asp:TextBox>
+                    <asp:panel ID="panBodyHTML" runat="server" style="background-color:lightskyblue">
+                        <asp:Literal ID="b07BodyHTML" runat="server"></asp:Literal>
+                    </asp:panel>
+                </div>
+                
             </telerik:RadPageView>
         </telerik:RadMultiPage>
 
 
 
 
-        <div class="content-box2" style="margin-top: 20px;">
+        <asp:panel ID="panObject" runat="server" CssClass="content-box2" style="margin-top: 20px;">
             <div class="title">
                 <img src="Images/outlook.png" />
-                <asp:HyperLink ID="linkMSG" runat="server" Text="Otevřít v MS-OUTLOOK"></asp:HyperLink>
+                Zdrojový objekt
             </div>
             <div class="content">
                 <table cellpadding="8">
@@ -144,10 +160,20 @@
                         <td>
                             <asp:Label ID="Subject" runat="server" CssClass="valbold"></asp:Label>
                         </td>
+                        
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <asp:HyperLink ID="linkMSG" runat="server" Text="Otevřít v MS-OUTLOOK"></asp:HyperLink>
+                        </td>
                     </tr>
                 </table>
+                <div class="bigtext">
+                    <asp:Literal ID="Body" runat="server"></asp:Literal>
+                </div>
+                
             </div>
-        </div>
+        </asp:panel>
     </div>
 
     <asp:HiddenField ID="hidPopupUrl" runat="server" />

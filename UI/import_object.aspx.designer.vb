@@ -95,6 +95,15 @@ Partial Public Class import_object
     Protected WithEvents b07 As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
+    '''cmdSaveB07 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSaveB07 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''opgSearch control.
     '''</summary>
     '''<remarks>
@@ -120,6 +129,15 @@ Partial Public Class import_object
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents search_p28 As Global.Telerik.Web.UI.RadComboBox
+
+    '''<summary>
+    '''io1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents io1 As Global.UI.import_object_item
 
     '''<summary>
     '''opgBodyFormat control.
@@ -158,13 +176,22 @@ Partial Public Class import_object
     Protected WithEvents b07BodyHTML As Global.System.Web.UI.WebControls.Literal
 
     '''<summary>
-    '''io1 control.
+    '''panObject control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents io1 As Global.UI.import_object_item
+    Protected WithEvents panObject As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''Subject control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Subject As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''linkMSG control.
@@ -176,13 +203,13 @@ Partial Public Class import_object
     Protected WithEvents linkMSG As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''Subject control.
+    '''Body control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Subject As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents Body As Global.System.Web.UI.WebControls.Literal
 
     '''<summary>
     '''hidPopupUrl control.

@@ -33,13 +33,17 @@
 
             Dim strURL As String = ""
             tabs1.Tabs(1).Visible = False : RadMultiPage1.PageViews(1).Visible = False
+            io1.InhaleObjectRecord(hidGUID.Value, hidPrefix.Value)
             Select Case hidPrefix.Value
                 Case "p31"
                     tabs1.Tabs(0).Text = "Zapsat worksheet úkon"
+                    tabs1.Tabs(0).ImageUrl = "Images/worksheet.png"
                     strURL = "p31_record.aspx?pid=0&guid_import=" & hidGUID.Value
                     If hidP41ID.Value <> "" Then
                         strURL += "&p41id=" & hidP41ID.Value
                     End If
+                    Me.Subject.Text = BO.BAS.FD(io1.FindDate("p31Date"), False, True)
+                    Me.Body.Text = BO.BAS.CrLfText2Html(io1.FindString("p31Text"))
                 Case "o23"
                     tabs1.Tabs(1).Visible = True : RadMultiPage1.PageViews(1).Visible = True
                     tabs1.Tabs(0).Text = "Vytvořit dokument"
@@ -50,27 +54,39 @@
                     If lisX18.Count = 0 Then
                         Master.Notify("V databázi ani jeden mně dostupný typ dokumentu.")
                     End If
-                    io1.InhaleObjectRecord(hidGUID.Value, "o23")
+
                     Me.b07Value.Text = io1.FindString("o23Name")
                     If Me.b07Value.Text <> "" And io1.FindString("o23BigText") <> "" Then Me.b07Value.Text += vbCrLf & vbCrLf
                     Me.b07Value.Text += io1.FindString("o23BigText")
-                    Me.opgBodyFormat.Items(0).Text += " (" & Len(Me.b07Value.Text).ToString & " znaků)"
+                    Me.opgBodyFormat.Items.FindByValue("1").Text += " (" & Len(Me.b07Value.Text).ToString & " znaků)"
                     If io1.FindString("HTMLBody") <> "" Then
                         Dim cF As New BO.clsFile
                         Me.b07BodyHTML.Text = cF.GetFileContents(Master.Factory.x35GlobalParam.TempFolder & "\" & io1.FindString("HTMLBody"))
-                        opgBodyFormat.Items(1).Text += " (" & Len(Me.b07BodyHTML.Text).ToString & " znaků)"
+                        opgBodyFormat.Items.FindByValue("2").Text += " (" & Len(Me.b07BodyHTML.Text).ToString & " znaků)"
                     Else
-                        opgBodyFormat.Items(1).Enabled = False
+                        opgBodyFormat.Items.FindByValue("2").Enabled = False
                     End If
+                    If Not io1.IsMailMessage() Then
+                        opgBodyFormat.Items.FindByValue("3").Enabled = False
+                        opgBodyFormat.Items.FindByValue("1").Selected = True
+                    End If
+                    panObject.Visible = False
+                    'Me.Subject.Text = io1.FindString("o23Name")
+                    'Me.Body.Text = BO.BAS.CrLfText2Html(io1.FindString("o23BigText"))
                 Case "p28"
                     tabs1.Tabs(0).Text = "Založit klienta"
+                    tabs1.Tabs(0).ImageUrl = "Images/contact.png"
                     strURL = "p28_record.aspx?pid=0&guid_import=" & hidGUID.Value
+                    Me.Subject.Text = io1.FindString("p28CompanyName")
                 Case "p56"
                     tabs1.Tabs(0).Text = "Vytvořit úkol"
-                    strURL = "p56_record.aspx?pid=0&guid_import=" & hidGUID.Value
+                    tabs1.Tabs(0).ImageUrl = "Images/task.png"
+                    strURL = "p56_record.aspx?pid=0&masterprefix=p41&masterpid=0&guid_import=" & hidGUID.Value
                     If hidP41ID.Value <> "" Then
                         strURL += "&p41id=" & hidP41ID.Value
                     End If
+                    Me.Subject.Text = io1.FindString("p56Name")
+                    Me.Body.Text = BO.BAS.CrLfText2Html(io1.FindString("p56Description"))
             End Select
             hidPopupUrl.Value = strURL
         End If
@@ -99,10 +115,15 @@
                 search_p28.Visible = True
         End Select
         Me.panBodyHTML.Visible = False : Me.b07Value.Visible = False
-        If opgBodyFormat.SelectedValue = "1" Then
-            Me.b07Value.Visible = True
-        Else
-            Me.panBodyHTML.Visible = True
-        End If
+        io1.ShowHide_AttachmentCheckboxes(True)
+        Select Case Me.opgBodyFormat.SelectedValue
+            Case "1"
+                Me.b07Value.Visible = True
+            Case "2"
+                Me.panBodyHTML.Visible = True
+            Case "3"    'pošta 1:1
+                io1.ShowHide_AttachmentCheckboxes(False)
+        End Select
+       
     End Sub
 End Class
