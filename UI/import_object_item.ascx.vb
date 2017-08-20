@@ -52,11 +52,7 @@
         End If
     End Function
 
-    Public Sub ShowHide_AttachmentCheckboxes(bolShow As Boolean)
-        For Each ri As RepeaterItem In rp1.Items
-            CType(ri.FindControl("chk1"), CheckBox).Visible = bolShow
-        Next
-    End Sub
+    
     Public Function FindString(strKey As String) As String
         Return GetRec(strKey).p85Message
     End Function
@@ -77,9 +73,7 @@
     Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound
         Dim cRec As BO.p85TempBox = CType(e.Item.DataItem, BO.p85TempBox)
         CType(e.Item.FindControl("p85id"), HiddenField).Value = cRec.PID.ToString
-        With CType(e.Item.FindControl("chk1"), CheckBox)
-            .Checked = Not cRec.p85IsDeleted
-        End With
+        
         With CType(e.Item.FindControl("link1"), HyperLink)
             .Text = cRec.p85FreeText01
             If LCase(.Text).IndexOf(".eml") > 0 Then
@@ -96,24 +90,11 @@
         End With
     End Sub
 
-    Public Sub SetDeleted_UnCheckedFiles()
-        LoadList()
 
-        For Each ri As RepeaterItem In rp1.Items
-            Dim intP85ID As Integer = CInt(CType(ri.FindControl("p85id"), HiddenField).Value)
-            If CType(ri.FindControl("chk1"), CheckBox).Checked Then
-                Me.Factory.p85TempBoxBL.UnDelete(_lis.Where(Function(p) p.PID = intP85ID).First)
-            Else
-                Me.Factory.p85TempBoxBL.Delete(_lis.Where(Function(p) p.PID = intP85ID).First)
-            End If
-        Next
-
-    End Sub
-    Public Sub ChangeGUID_Of_Files(strNewGUID As String)
+    Public Sub PrepareTempFileUpload(strFileUploadGUID As String)
         LoadList()
         For Each c In _lis.Where(Function(p) p.p85Prefix = "o27")
-            Me.Factory.p85TempBoxBL.UpdateGUID(c.PID, strNewGUID)
-
+            Me.Factory.p85TempBoxBL.CloneOneRecord(c.PID, strFileUploadGUID)
         Next
     End Sub
 End Class

@@ -48,18 +48,18 @@
         End Get
     End Property
 
-    Private Property _o27ID As Integer
-    Public ReadOnly Property o27ID As Integer
-        Get
-            Return _o27ID
-        End Get
-    End Property
-    Private Property _o27OriginalFileName As String
-    Public ReadOnly Property o27OriginalFileName As String
-        Get
-            Return _o27OriginalFileName
-        End Get
-    End Property
+    ''Private Property _o27ID As Integer
+    ''Public ReadOnly Property o27ID As Integer
+    ''    Get
+    ''        Return _o27ID
+    ''    End Get
+    ''End Property
+    ''Private Property _o27OriginalFileName As String
+    ''Public ReadOnly Property o27OriginalFileName As String
+    ''    Get
+    ''        Return _o27OriginalFileName
+    ''    End Get
+    ''End Property
     Private Property _o43Attachments As String
     Public ReadOnly Property o43Attachments As String
         Get

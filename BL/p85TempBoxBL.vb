@@ -5,7 +5,7 @@
     Function LoadByGUID(strGUID As String) As BO.p85TempBox
     Function Delete(cRec As BO.p85TempBox) As Boolean
     Function UnDelete(cRec As BO.p85TempBox) As Boolean
-    Function UpdateGUID(intP85ID As Integer, strNewGUID As String) As Boolean
+    Function CloneOneRecord(intP85ID As Integer, strGUID_Dest As String) As Boolean
     Function Truncate(strGUID As String) As Boolean
     Function GetList(strGUID As String, Optional bolIncludeDeleted As Boolean = False) As IEnumerable(Of BO.p85TempBox)
     Sub Clone(strGUID_Source As String, strGUID_Dest As String)
@@ -55,9 +55,7 @@ Class p85TempBoxBL
     Public Function UnDelete(cRec As BO.p85TempBox) As Boolean Implements Ip85TempBoxBL.UnDelete
         Return _cDL.UnDelete(cRec)
     End Function
-    Public Function UpdateGUID(intP85ID As Integer, strNewGUID As String) As Boolean Implements Ip85TempBoxBL.UpdateGUID
-        Return _cDL.UpdateGUID(intP85ID, strNewGUID)
-    End Function
+    
     Public Function Truncate(strGUID As String) As Boolean Implements Ip85TempBoxBL.Truncate
         If _cDL.Truncate(strGUID) Then
             Return True
@@ -92,6 +90,9 @@ Class p85TempBoxBL
     Sub Clone(strGUID_Source As String, strGUID_Dest As String) Implements Ip85TempBoxBL.Clone
         _cDL.Clone(strGUID_Source, strGUID_Dest)
     End Sub
+    Function CloneOneRecord(intP85ID As Integer, strGUID_Dest As String) As Boolean Implements Ip85TempBoxBL.CloneOneRecord
+        Return _cDL.CloneOneRecord(intP85ID, strGUID_Dest)
+    End Function
     Function SetToDeposit(intDataPID As Integer) As String Implements Ip85TempBoxBL.SetToDeposit
         Return _cDL.SetToDeposit(intDataPID)
     End Function

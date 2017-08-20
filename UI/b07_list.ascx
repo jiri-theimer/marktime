@@ -2,8 +2,9 @@
 
 
 
-<asp:Panel ID="panHeader" runat="server" style="background: #F1F1F1;border-top: 1px solid silver;border-bottom: 1px solid silver;height: 20px;font-family: Arial;line-height: 20px;padding:6px;color: black;">
+<asp:Panel ID="panHeader" runat="server" Style="background: #F1F1F1; border-top: 1px solid silver; border-bottom: 1px solid silver; height: 20px; font-family: Arial; line-height: 20px; padding: 6px; color: black;">
     <img src="Images/comment.png" />
+    <img src="Images/attachment.png" />
     <asp:Label ID="lblHeader" runat="server" Text="Poznámky/komentáře/přílohy"></asp:Label>
     <button type="button" style="margin-left: 20px;" onclick="javascript:comment()" runat="server" id="cmdAdd" title="Přidat" class="button-link">
         <img src="Images/new.png" /></button>
@@ -11,7 +12,7 @@
 
 <asp:Repeater ID="rp1" runat="server">
     <ItemTemplate>
-       
+
         <asp:Panel ID="panRecord" runat="server" CssClass="box_comment">
             <table cellpadding="10" cellspacing="2">
                 <tr valign="top">
@@ -22,7 +23,7 @@
                         <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" title="Detail"></asp:HyperLink>
                         <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
                         <asp:Label ID="Author" runat="server" CssClass="timestamp" Style="padding-left: 6px;"></asp:Label>
-                        
+
                         <div style="padding-top: 4px;">
                             <asp:HyperLink ID="aMSG" runat="server" Text="<img src='Images/files/msg_24.png'/>Otevřít v MS-OUTLOOK" Visible="false"></asp:HyperLink>
                             <asp:HyperLink ID="aEML" runat="server" Text="<img src='Images/files/eml_24.png'/>EML" Visible="false"></asp:HyperLink>
@@ -31,15 +32,24 @@
                         <div>
                             <asp:Label ID="b07WorkflowInfo" runat="server" CssClass="val"></asp:Label>
                         </div>
-                        <asp:Panel ID="pan100" runat="server" style="padding-top: 4px;max-height:100px;overflow:auto;direction:rtl;">
-                            <div style="direction:ltr;">
-                            <asp:Literal ID="b07Value" runat="server"></asp:Literal>
-                          
-                            <asp:Image ID="img1" runat="server" AlternateText="File format" ImageUrl="Images/Files/other.png" Style="vertical-align: bottom;" />
-                            <asp:HyperLink ID="att1" runat="server" ToolTip="Náhled nebo stáhnout přílohu"></asp:HyperLink>
+                        <asp:Panel ID="pan100" runat="server" Style="padding-top: 4px; max-height: 100px; overflow: auto; direction: rtl;">
+                            <div style="direction: ltr;">
+                                <div>
+                                    <asp:Image ID="img1" runat="server" AlternateText="File format" ImageUrl="Images/Files/other.png" Style="vertical-align: bottom;" />
+                                    <asp:HyperLink ID="att1" runat="server" ToolTip="Náhled nebo stáhnout přílohu"></asp:HyperLink>
+                                    <asp:PlaceHolder ID="attPlace" runat="server"></asp:PlaceHolder>
+                                    <asp:Repeater ID="rpAtt" runat="server">
+                                        <ItemTemplate>
+                                            <img src="Images/Files/<%#Eval("ImageIcon")%>" />
+                                            <a href="javascript:file_preview('o27',<%#Eval("pid")%>)"><%#Eval("o27OriginalFileName")%></a>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </div>
+                                
+                                <asp:Literal ID="b07Value" runat="server"></asp:Literal>
                             </div>
                         </asp:Panel>
-                       
+
 
                         <div style="padding-top: 8px;">
 
@@ -53,7 +63,7 @@
                 </tr>
             </table>
         </asp:Panel>
-       
+
     </ItemTemplate>
 </asp:Repeater>
 

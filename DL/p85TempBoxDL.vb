@@ -68,16 +68,13 @@ Public Class p85TempBoxDL
             Return False
         End If
     End Function
-    Public Function UpdateGUID(intP85ID As Integer, strNewGUID As String) As Boolean
-        Dim pars As New DbParameters
-        pars.Add("p85id", intP85ID, DbType.Int32)
-        pars.Add("guid", strNewGUID, DbType.String)
-        If _cDB.RunSQL("update p85Tempbox set p85GUID=@guid WHERE p85ID=@p85id", pars) Then
-            Return True
-        Else
-            _Error = _cDB.ErrorMessage
-            Return False
-        End If
+    Public Function CloneOneRecord(intP85ID As Integer, strGUID_Dest As String) As Boolean
+        Dim cRec As BO.p85TempBox = Load(intP85ID)
+        If cRec Is Nothing Then Return False
+        cRec.p85GUID = strGUID_Dest
+        cRec.p85ClonePID = cRec.PID
+        cRec.SetPID(0)
+        Return Save(cRec)
     End Function
 
     Public Function GetList(strGUID As String, Optional bolIncludeDeleted As Boolean = False) As IEnumerable(Of BO.p85TempBox)

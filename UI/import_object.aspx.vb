@@ -7,6 +7,8 @@
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Me.upload1.Factory = Master.Factory
+        Me.uploadlist1.Factory = Master.Factory
         io1.Factory = Master.Factory
         Master.SiteMenuValue = "dashboard"
         If Not Page.IsPostBack Then
@@ -15,7 +17,8 @@
                 Return
             End If
 
-
+            Me.upload1.GUID = BO.BAS.GetGUID
+            Me.uploadlist1.GUID = Me.upload1.GUID
             hidGUID.Value = Request.Item("guid")
             hidPrefix.Value = Request.Item("prefix")
             Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(hidGUID.Value)
@@ -56,6 +59,7 @@
                     End If
 
                     Me.b07Value.Text = io1.FindString("o23Name")
+                    Me.b07Value_Mail.Text = io1.FindString("o23Name")
                     If Me.b07Value.Text <> "" And io1.FindString("o23BigText") <> "" Then Me.b07Value.Text += vbCrLf & vbCrLf
                     Me.b07Value.Text += io1.FindString("o23BigText")
                     Me.opgBodyFormat.Items.FindByValue("1").Text += " (" & Len(Me.b07Value.Text).ToString & " znaků)"
@@ -73,6 +77,8 @@
                     panObject.Visible = False
                     'Me.Subject.Text = io1.FindString("o23Name")
                     'Me.Body.Text = BO.BAS.CrLfText2Html(io1.FindString("o23BigText"))
+                    io1.PrepareTempFileUpload(upload1.GUID)
+                    uploadlist1.RefreshData_TEMP()
                 Case "p28"
                     tabs1.Tabs(0).Text = "Založit klienta"
                     tabs1.Tabs(0).ImageUrl = "Images/contact.png"
@@ -114,15 +120,15 @@
             Case "p28"
                 search_p28.Visible = True
         End Select
-        Me.panBodyHTML.Visible = False : Me.b07Value.Visible = False
-        io1.ShowHide_AttachmentCheckboxes(True)
+        Me.panBodyHTML.Visible = False : Me.b07Value.Visible = False : Me.b07Value_Mail.Visible = False
+
         Select Case Me.opgBodyFormat.SelectedValue
             Case "1"
                 Me.b07Value.Visible = True
             Case "2"
                 Me.panBodyHTML.Visible = True
             Case "3"    'pošta 1:1
-                io1.ShowHide_AttachmentCheckboxes(False)
+                Me.b07Value_Mail.Visible = True
         End Select
        
     End Sub
@@ -144,20 +150,31 @@
                     .b07Value = Me.b07Value.Text
                 Case "2"
                     .b07Value = Me.b07BodyHTML.Text
+                Case "3"
+                    .b07Value = Me.b07Value_Mail.Text
+
             End Select
             If .b07RecordPID = 0 Then
                 Master.Notify("Musíte vybrat projekt nebo klienta.", NotifyLevel.ErrorMessage)
                 Return
             End If
+            If Trim(.b07Value) = "" Then
+                Master.Notify("Chybí název/obsah komentáře.", NotifyLevel.ErrorMessage)
+                Return
+            End If
         End With
 
-        io1.SetDeleted_UnCheckedFiles()
+
         With Master.Factory.b07CommentBL
-            If .Save(cRec, hidGUID.Value, Nothing) Then
+            If .Save(cRec, upload1.GUID, Nothing) Then
                 Response.Redirect(Me.opgSearch.SelectedValue & "_framework.aspx?pid=" & cRec.b07RecordPID.ToString)
             Else
                 Master.Notify(Master.Factory.b07CommentBL.ErrorMessage, NotifyLevel.ErrorMessage)
             End If
         End With
+    End Sub
+
+    Private Sub upload1_AfterUploadAll() Handles upload1.AfterUploadAll
+        Me.uploadlist1.RefreshData_TEMP()
     End Sub
 End Class

@@ -1,7 +1,9 @@
 ﻿Public Class b07_list
     Inherits System.Web.UI.UserControl
     Private Property _intSelectedB07ID As Integer
-    Private Property _lastB07ID As Integer
+    ''Private Property _lastB07ID As Integer
+    ''Private Property _lastRI As RepeaterItem
+    Private Property _lisO27 As IEnumerable(Of BO.o27Attachment) = Nothing
     Private Property _sysUser As BO.j03UserSYS
 
     Public Property ShowInsertButton As Boolean
@@ -86,6 +88,11 @@
         Me.hidPrefix.Value = BO.BAS.GetDataPrefix(x29id)
         Dim lisB07 As IEnumerable(Of BO.b07Comment) = factory.b07CommentBL.GetList(mq)
 
+        Dim mqO27 As New BO.myQueryO27
+        mqO27.Record_x29ID = x29id
+        mqO27.Record_PID = intRecordPID
+        _lisO27 = factory.o27AttachmentBL.GetList(mqO27)
+
 
         Me.hidRecordPID.Value = intRecordPID.ToString
         _intSelectedB07ID = intSelectedB07ID
@@ -102,7 +109,42 @@
 
 
     Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound
-        Dim cRec As BO.b07Comment = CType(e.Item.DataItem, BO.b07Comment)
+        Dim cRec As BO.b07Comment = CType(e.Item.DataItem, BO.b07Comment), lisAtt As New List(Of String)
+
+        With CType(e.Item.FindControl("rpAtt"), Repeater)
+            .DataSource = _lisO27.Where(Function(p) p.b07ID = cRec.PID)
+            .DataBind()
+        End With
+        For Each cO27 In _lisO27.Where(Function(p) p.b07ID = cRec.PID)
+           
+            With CType(e.Item.FindControl("attPlace"), PlaceHolder)
+                lisAtt.Add("<a href=" & Chr(34) & "javascript:file_preview('o27'," & cO27.PID.ToString & ")" & Chr(34) & "><img src='Images/Files/" & BO.BAS.GetFileExtensionIcon(Right(cO27.o27OriginalFileName, 4)) & "/>" & cO27.o27OriginalFileName & "</a>")
+
+                .Controls.Add(New LiteralControl(String.Join("<br>", lisAtt)))
+
+            End With
+        Next
+        ''If cRec.PID = _lastB07ID Then
+
+        ''    With CType(_lastRI.FindControl("att2"), Literal)
+        ''        .Text += "<br><a href=" & Chr(34) & "javascript:file_preview('o27'," & cRec.o27ID.ToString & ")" & Chr(34) & ">"
+        ''        .Text += "<img src='Images/Files/" & BO.BAS.GetFileExtensionIcon(Right(cRec.o27OriginalFileName, 4)) & "/>"
+        ''        .Text += cRec.o27OriginalFileName & "</a>"
+        ''    End With
+        ''    CType(e.Item.FindControl("panRecord"), Panel).Controls.Clear()
+        ''    e.Item.Visible = False
+
+        ''    Return
+
+        ''    'CType(e.Item.FindControl("b07Value"), Literal).Text = ""
+        ''    'e.Item.FindControl("aAnswer").Visible = False
+        ''    'e.Item.FindControl("aDelete").Visible = False
+        ''    'e.Item.FindControl("clue1").Visible = False
+        ''    'e.Item.FindControl("Timestamp").Visible = False
+        ''    'e.Item.FindControl("Author").Visible = False
+        ''    'e.Item.FindControl("imgPhoto").Visible = False
+        ''    'CType(e.Item.FindControl("Author"), Label).Text = "Komentář obsahuje více příloh:"
+        ''End If
 
         With CType(e.Item.FindControl("panRecord"), Panel)
             If cRec.b07TreeLevel > 1 Then
@@ -171,7 +213,7 @@
             If hidIsClueTip.Value = "1" Then
                 .Visible = False
             Else
-                If (cRec.j02ID_Owner = _sysUser.j02ID Or _sysUser.IsAdmin) And (cRec.b07Value <> "" Or cRec.o27ID > 0) Then
+                If (cRec.j02ID_Owner = _sysUser.j02ID Or _sysUser.IsAdmin) And (cRec.b07Value <> "" Or lisAtt.Count > 0) Then
                     .Visible = True
                     .NavigateUrl = "javascript:trydeleteb07(" & cRec.PID.ToString & ")"
                 Else
@@ -208,29 +250,25 @@
             End If
         End With
         CType(e.Item.FindControl("Timestamp"), Label).Text = BO.BAS.FD(cRec.DateInsert, True, True)
-        With CType(e.Item.FindControl("att1"), HyperLink)
-            If cRec.o27ID > 0 Then
-                .Text = cRec.o27OriginalFileName
-                '.NavigateUrl = "binaryfile.aspx?prefix=o27&disposition=inline&pid=" & cRec.o27ID.ToString
-                If hidAttachmentsReadonly.Value = "1" Then
-                    .NavigateUrl = ""
-                Else
-                    .NavigateUrl = "javascript:file_preview('o27'," & cRec.o27ID.ToString & ")"
-                End If
+        ''With CType(e.Item.FindControl("att1"), HyperLink)
+        ''    If cRec.o27ID > 0 Then
+        ''        .Text = cRec.o27OriginalFileName
+        ''        '.NavigateUrl = "binaryfile.aspx?prefix=o27&disposition=inline&pid=" & cRec.o27ID.ToString
+        ''        If hidAttachmentsReadonly.Value = "1" Then
+        ''            .NavigateUrl = ""
+        ''        Else
+        ''            .NavigateUrl = "javascript:file_preview('o27'," & cRec.o27ID.ToString & ")"
+        ''        End If
 
-                CType(e.Item.FindControl("img1"), Image).ImageUrl = "Images/Files/" & BO.BAS.GetFileExtensionIcon(Right(cRec.o27OriginalFileName, 4))
-            Else
-                .Visible = False
-                e.Item.FindControl("img1").Visible = False
-            End If
+        ''        CType(e.Item.FindControl("img1"), Image).ImageUrl = "Images/Files/" & BO.BAS.GetFileExtensionIcon(Right(cRec.o27OriginalFileName, 4))
+        ''    Else
+        ''        .Visible = False
+        ''        e.Item.FindControl("img1").Visible = False
+        ''    End If
 
-        End With
-        If cRec.PID = _lastB07ID Then
-            CType(e.Item.FindControl("b07Value"), Literal).Text = ""
-            e.Item.FindControl("aAnswer").Visible = False
-            e.Item.FindControl("Timestamp").Visible = False
-            CType(e.Item.FindControl("Author"), Label).Text = "Komentář obsahuje více příloh:"
-        End If
-        _lastB07ID = cRec.PID
+        ''End With
+        
+        ''_lastB07ID = cRec.PID
+        ''_lastRI = e.Item
     End Sub
 End Class

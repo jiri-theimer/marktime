@@ -126,8 +126,9 @@ Public Class o23_record
 
             If Request.Item("guid_import") <> "" Then
                 io1.InhaleObjectRecord(Request.Item("guid_import"), "o23", False)
-                io1.ChangeGUID_Of_Files(upload1.GUID)
+                io1.PrepareTempFileUpload(upload1.GUID)
                 uploadlist1.RefreshData_TEMP()
+                panUpload.Visible = True
             End If
         End If
         If Not panHtmlEditor.Visible Then
@@ -446,13 +447,7 @@ Public Class o23_record
                         Master.Factory.b07CommentBL.Save(cB07, upload1.GUID, Nothing)
                     End If
                 End If
-                If io1.Visible And io1.FilesCount > 0 Then
-                    io1.SetDeleted_UnCheckedFiles()
-                    Dim cB07 As New BO.b07Comment
-                    cB07.x29ID = BO.x29IdEnum.o23Doc
-                    cB07.b07RecordPID = Master.DataPID
-                    Master.Factory.b07CommentBL.Save(cB07, io1.GUID, Nothing)
-                End If
+                
                 Master.CloseAndRefreshParent("o23-save")
             Else
                 Master.Notify(.ErrorMessage, 2)

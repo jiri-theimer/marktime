@@ -4,14 +4,14 @@
     <ItemTemplate>
         <asp:Image ID="img1" runat="server" AlternateText="File format" ImageUrl="Images/Files/other.png" Style="vertical-align: bottom;" />
 
-        <asp:ImageButton ID="cmdDownload" runat="server" ImageUrl="Images/download_24.png" CssClass="button-link" ToolTip="Stáhnout soubor/dokument" />
+        <asp:ImageButton ID="cmdDownload" runat="server" ImageUrl="Images/download.png" CssClass="button-link" ToolTip="Stáhnout soubor/dokument" />
 
 
         <asp:HyperLink ID="aPreview" runat="server" ToolTip="Náhled na soubor/dokument"></asp:HyperLink>
         <asp:HyperLink ID="cmdPdfExport" runat="server" Text="PDF" ToolTip="PDF export dokumentu" Target="_blank" ForeColor="red" Font-Bold="true"></asp:HyperLink>
         <asp:Label ID="FileSize" runat="server"></asp:Label>
 
-        <asp:ImageButton ID="cmdDelete" runat="server" ImageUrl="Images/attachment_delete_24.png" ToolTip="Odstranit" CommandName="delete" CssClass="button-link" />
+        <asp:ImageButton ID="cmdDelete" runat="server" ImageUrl="Images/delete.png" ToolTip="Odstranit" CommandName="delete" CssClass="button-link" />
         <asp:Label ID="version" runat="server" CssClass="badge1" Text="1"></asp:Label>
 
         <asp:Label ID="UserInsert" runat="server" Style="color: gray;"></asp:Label>

@@ -95,6 +95,24 @@ Partial Public Class import_object
     Protected WithEvents b07 As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
+    '''objectName control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents objectName As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''io1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents io1 As Global.UI.import_object_item
+
+    '''<summary>
     '''cmdSaveB07 control.
     '''</summary>
     '''<remarks>
@@ -131,15 +149,6 @@ Partial Public Class import_object
     Protected WithEvents search_p28 As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
-    '''io1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents io1 As Global.UI.import_object_item
-
-    '''<summary>
     '''opgBodyFormat control.
     '''</summary>
     '''<remarks>
@@ -147,6 +156,15 @@ Partial Public Class import_object
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents opgBodyFormat As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
+    '''b07Value_Mail control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents b07Value_Mail As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''b07Value control.
@@ -174,6 +192,24 @@ Partial Public Class import_object
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents b07BodyHTML As Global.System.Web.UI.WebControls.Literal
+
+    '''<summary>
+    '''uploadlist1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents uploadlist1 As Global.UI.fileupload_list
+
+    '''<summary>
+    '''upload1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents upload1 As Global.UI.fileupload
 
     '''<summary>
     '''panObject control.
