@@ -34,14 +34,14 @@
                         </div>
                         <asp:Panel ID="pan100" runat="server" Style="padding-top: 4px; max-height: 100px; overflow: auto; direction: rtl;">
                             <div style="direction: ltr;">
-                                <div>
-                                    <asp:Image ID="img1" runat="server" AlternateText="File format" ImageUrl="Images/Files/other.png" Style="vertical-align: bottom;" />
-                                    <asp:HyperLink ID="att1" runat="server" ToolTip="Náhled nebo stáhnout přílohu"></asp:HyperLink>
-                                    <asp:PlaceHolder ID="attPlace" runat="server"></asp:PlaceHolder>
+                                <div>                                    
                                     <asp:Repeater ID="rpAtt" runat="server">
                                         <ItemTemplate>
-                                            <img src="Images/Files/<%#Eval("ImageIcon")%>" />
+                                            <div>
+                                            <img src="Images/Files/<%#BO.BAS.GetFileExtensionIcon(Right(Eval("o27OriginalFileName"), 4))%>" />
                                             <a href="javascript:file_preview('o27',<%#Eval("pid")%>)"><%#Eval("o27OriginalFileName")%></a>
+                                            <span><%#BO.BAS.FormatFileSize(Eval("o27FileSize"))%></span>
+                                            </div>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </div>
