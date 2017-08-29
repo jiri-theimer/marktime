@@ -62,6 +62,11 @@
         sw_decide("report_modal.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>","Images/reporting.png",true);
 
     }
+    function plugin() {
+            
+        sw_decide("plugin_modal.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>","Images/plugin.png",true);
+
+    }
 
     function sw_decide(url, iconUrl, is_maximize) {
         var w=window.innerWidth;            

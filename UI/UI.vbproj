@@ -287,6 +287,7 @@
     <Content Include="p91_batch_sendmail.aspx" />
     <Content Include="p91_delete.aspx" />
     <Content Include="persons.ascx" />
+    <Content Include="plugin_modal.aspx" />
     <Content Include="projects.ascx" />
     <Content Include="select_doctype.aspx" />
     <Content Include="select_field.aspx" />
@@ -1404,6 +1405,13 @@
     <Compile Include="persons.ascx.vb">
       <DependentUpon>persons.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="plugin_modal.aspx.designer.vb">
+      <DependentUpon>plugin_modal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="plugin_modal.aspx.vb">
+      <DependentUpon>plugin_modal.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="projects.ascx.designer.vb">
       <DependentUpon>projects.ascx</DependentUpon>
