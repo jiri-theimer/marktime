@@ -59,6 +59,9 @@
             If _ValidFrom <= Now And _ValidUntil >= Now Then
                 Return False
             Else
+                If _ValidFrom.AddMinutes(-1) <= Now And _ValidUntil >= Now Then
+                    Return False    'o minutu to může být kvůli oddělenému DB a APP serveru
+                End If
                 Return True
             End If
         End Get

@@ -119,6 +119,7 @@
                 pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)
                 pars.Add("b01ID", BO.BAS.IsNullDBKey(.b01ID), DbType.Int32)
                 pars.Add("x38ID", BO.BAS.IsNullDBKey(.x38ID), DbType.Int32)
+                pars.Add("x31ID_Plugin", BO.BAS.IsNullDBKey(.x31ID_Plugin), DbType.Int32)
                 pars.Add("x18Icon", .x18Icon, DbType.String)
                 pars.Add("x18Icon32", .x18Icon32, DbType.String)
                 pars.Add("x18IsClueTip", .x18IsClueTip, DbType.Boolean)

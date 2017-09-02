@@ -40,6 +40,9 @@
                 Me.x23ID.DataSource = lis
                 Me.x23ID.DataBind()
 
+                Me.x31ID_Plugin.DataSource = .Factory.x31ReportBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = BO.x29IdEnum.o23Doc And p.x31FormatFlag = BO.x31FormatFlagENUM.ASPX)
+                Me.x31ID_Plugin.DataBind()
+                Me.x31ID_Plugin.Items.Insert(0, "")
             End With
 
             RefreshRecord()
@@ -102,7 +105,8 @@
             basUI.SelectDropdownlistValue(Me.x18MaxOneFileSize, .x18MaxOneFileSize.ToString)
             Me.x18AllowedFileExtensions.Text = .x18AllowedFileExtensions
             Me.x18IsAllowEncryption.Checked = .x18IsAllowEncryption
-            Me.x18JavascriptFile.Text = .x18JavascriptFile
+
+            basUI.SelectDropdownlistValue(Me.x31ID_Plugin, .x31ID_Plugin.ToString)
 
             roles1.InhaleInitialData(.PID)
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -306,7 +310,7 @@
             cRec.x18AllowedFileExtensions = Me.x18AllowedFileExtensions.Text
             cRec.x18MaxOneFileSize = BO.BAS.IsNullInt(Me.x18MaxOneFileSize.SelectedValue)
             cRec.x18IsAllowEncryption = Me.x18IsAllowEncryption.Checked
-            cRec.x18JavascriptFile = Me.x18JavascriptFile.Text
+            cRec.x31ID_Plugin = BO.BAS.IsNullInt(Me.x31ID_Plugin.SelectedValue)
 
             If .Save(cRec, lisX20, lisX69, lisX16, lisX17) Then
                 Master.DataPID = .LastSavedPID

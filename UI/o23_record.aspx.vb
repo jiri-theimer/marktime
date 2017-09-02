@@ -43,7 +43,7 @@ Public Class o23_record
             With Master
                 .HeaderIcon = "Images/label_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-                .HeaderText = "Položka"
+                .HeaderText = "Dokument"
                 hidGUID_x19.Value = BO.BAS.GetGUID()
                 Me.x23ID.DataSource = .Factory.x23EntityField_ComboBL.GetList(New BO.myQuery)
                 Me.x23ID.DataBind()
@@ -54,7 +54,12 @@ Public Class o23_record
                 If Request.Item("x18id") <> "" Then
                     hidX18ID.Value = Request.Item("x18id")
                     Dim c As BO.x18EntityCategory = .Factory.x18EntityCategoryBL.Load(Me.CurrentX18ID)
-
+                    If c.x31ID_Plugin <> 0 Then
+                        'přesměrovat na ASPX pluginu
+                        Dim cPlugin As BO.x31Report = .Factory.x31ReportBL.Load(c.x31ID_Plugin)
+                        Response.Redirect("/Plugins/" & cPlugin.x31FileName & "?blank=1&pid=" & .DataPID.ToString & "&x18id=" & c.PID.ToString & "&clone=" & Request.Item("clone"), True)
+                        Return
+                    End If
                     Handle_Permissions(c)
 
                     Me.x23ID.SelectedValue = c.x23ID.ToString

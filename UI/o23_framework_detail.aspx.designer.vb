@@ -95,6 +95,15 @@ Partial Public Class o23_framework_detail
     Protected WithEvents cmdEmail As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
+    '''cmdPlugin control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdPlugin As Global.Telerik.Web.UI.NavigationNode
+
+    '''<summary>
     '''cmdBarCode control.
     '''</summary>
     '''<remarks>

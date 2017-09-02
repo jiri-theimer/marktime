@@ -78,6 +78,11 @@
 
 
         }
+        function plugin() {
+            
+            sw_everywhere("plugin_modal.aspx?prefix=o23&pid=<%=Master.DataPID%>&x18id=<%=hidX18ID.Value%>","Images/plugin.png",true);
+
+        }
         function menu_fullscreen(){
             <%If hidSource.Value = "3" Then%>
             location.replace("o23_framework.aspx?pid=<%=Master.DataPID%>");
@@ -115,6 +120,8 @@
                     <telerik:NavigationNode ID="cmdWorkflow" Text="Zapsat komentář/souborovou přílohu" NavigateUrl="javascript:b07_create();" ImageUrl="Images/comment.png"></telerik:NavigationNode>
                     <telerik:NavigationNode ID="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report();" ImageUrl="Images/report.png"></telerik:NavigationNode>
                     <telerik:NavigationNode ID="cmdEmail" Text="Odeslat e-mail" NavigateUrl="javascript:sendmail();" ImageUrl="Images/email.png"></telerik:NavigationNode>
+
+                    <telerik:NavigationNode ID="cmdPlugin" Text="Plugin" NavigateUrl="javascript:plugin();" ImageUrl="Images/plugin.png"></telerik:NavigationNode>
 
                     <telerik:NavigationNode ID="cmdBarCode" Text="Čárový kód" NavigateUrl="javascript:barcode();" ImageUrl="Images/barcode.png"></telerik:NavigationNode>
                 </Nodes>

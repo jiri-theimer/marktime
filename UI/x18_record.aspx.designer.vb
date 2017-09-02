@@ -491,13 +491,13 @@ Partial Public Class x18_record
     Protected WithEvents x18ReportCodes As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''x18JavascriptFile control.
+    '''x31ID_Plugin control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents x18JavascriptFile As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents x31ID_Plugin As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''hidGUID_x16 control.

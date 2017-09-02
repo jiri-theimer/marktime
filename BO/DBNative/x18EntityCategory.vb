@@ -71,7 +71,7 @@ Public Class x18EntityCategory
     Public Property x18AllowedFileExtensions As String
     Public Property x18IsAllowEncryption As Boolean
     Public Property x18JavascriptFile As String
-
+    Public Property x31ID_Plugin As Integer
 
     Public ReadOnly Property x23Name As String
         Get

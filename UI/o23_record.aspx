@@ -157,7 +157,8 @@
                                 <TimePopupButton Visible="false" />
                                 <TimeView Interval="60" runat="server"></TimeView>
                             </telerik:RadDateTimePicker>
-                            <telerik:RadComboBox ID="cbxFF" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="400px"></telerik:RadComboBox>
+                            <telerik:RadComboBox ID="cbxFF" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="400px" OnClientSelectedIndexChanged="cbxFF_OnClientSelectedIndexChanged">                               
+                            </telerik:RadComboBox>
                             <button type="button" id="cmdChklist" runat="server" visible="false">...</button>
 
                             <asp:HiddenField runat="server" ID="x16Field" />
@@ -337,6 +338,13 @@
     <asp:HiddenField ID="hidx18CalendarFieldEnd" runat="server" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
+    <script type="text/javascript">
+        function cbxFF_OnClientSelectedIndexChanged(combo, eventArgs) {
+            var item = eventArgs.get_item();
+            //alert(item.get_text());
+            //alert(combo.get_id());
+        }
+    </script>
 </asp:Content>
 
 

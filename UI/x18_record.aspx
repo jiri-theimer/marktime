@@ -562,10 +562,10 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>Javascript soubor:</span>
+                                <span>Plugin nahrazující editační formulář dokumentu:</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="x18JavascriptFile" runat="server" Width="300px"></asp:TextBox>(Soubor je třeba na serveru nahrát do složky [Plugins].)
+                                <asp:DropDownList ID="x31ID_Plugin" runat="server" DataValueField="pid" DataTextField="x31Name"></asp:DropDownList>
                                 
                             </td>
                         </tr>
