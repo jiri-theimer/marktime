@@ -36,6 +36,8 @@ Public Class p32Activity
     Public Property p32FreeText03 As String
 
     Public Property p32IsSystemDefault As Boolean
+    Public Property p32IsAttendanceButton As Boolean
+
     Public Property p32ExternalPID As String
     Private Property _p34Name As String
     Public ReadOnly Property p34Name As String

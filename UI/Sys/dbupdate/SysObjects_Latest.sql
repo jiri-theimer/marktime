@@ -14665,7 +14665,7 @@ if @err_ret<>''
   return
 
 
-update p91Invoice set j27ID=@j27id,p91UserUpdate=@login,p91DateUpdate=getdate() WHERE p91ID=@p91id
+update p91Invoice set j27ID=@j27id,p91UserUpdate=@login,p91DateUpdate=getdate(),p91ExchangeRate=1,p91DateExchange=null WHERE p91ID=@p91id
 
 exec p91_recalc_amount @p91id
 
@@ -16406,7 +16406,7 @@ if @ref_pid is not null
  set @err_ret='Minimálnì jeden typ úkolu je svázaný s touto èíselnou øadou.'
 
 set @ref_pid=null
-SELECT TOP 1 @ref_pid=o24ID from o24NotepadType WHERE x38ID=@pid
+SELECT TOP 1 @ref_pid=x18ID from x18EntityCategory WHERE x38ID=@pid
 if @ref_pid is not null
  set @err_ret='Minimálnì jeden typ dokumentu je svázaný s touto èíselnou øadou.'
 

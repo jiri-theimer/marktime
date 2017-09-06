@@ -230,6 +230,15 @@ Partial Public Class report_modal
     Protected WithEvents cmdRefreshOnBehind As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''hidOutputFullPathPdf control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidOutputFullPathPdf As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

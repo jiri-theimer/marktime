@@ -23,10 +23,12 @@ Public Class binaryfile
             If Request.Item("tempfile") <> "" Then
                 strFullPath = factory.x35GlobalParam.TempFolder & "\" & Request.Item("tempfile")
                 strDestFileName = Request.Item("tempfile")
+                strContentType = (New BO.clsFile).GetContentType(strFullPath)
             End If
             If Request.Item("uploadedfile") <> "" Then
                 strFullPath = factory.x35GlobalParam.UploadFolder & "\" & Request.Item("uploadedfile")
                 strDestFileName = Request.Item("uploadedfile")
+                strContentType = (New BO.clsFile).GetContentType(strFullPath)
             End If
             If Request.Item("prefix") <> "" And (Request.Item("pid") <> "" Or Request.Item("guid") <> "") Then
                 Select Case Request.Item("prefix")

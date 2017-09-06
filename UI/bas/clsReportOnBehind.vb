@@ -35,6 +35,7 @@ Public Class clsReportOnBehind
 
         Using fs As New System.IO.FileStream(factory.x35GlobalParam.TempFolder & "\" & strOutputFileName, System.IO.FileMode.Create)
             fs.Write(result.DocumentBytes, 0, result.DocumentBytes.Length)
+            fs.Close()
             b = True
         End Using
         If b Then

@@ -38,9 +38,18 @@
             self.document.getElementById("divReportViewer").style.display = "none";
             <%end If%>
 
+
+            
         })
 
-
+        $(window).load(function () {
+            <%If hidOutputFullPathPdf.Value<>"" then%>
+            var s=document.getElementById("<%=hidOutputFullPathPdf.ClientID%>").value;
+            document.getElementById("<%=hidOutputFullPathPdf.ClientID%>").value="";
+            //location.replace("binaryfile.aspx?disposition=inline&tempfile="+s);
+            //dialog_master("fileupload_preview.aspx?tempfile=" + s,true);            dialog_master("binaryfile.aspx?disposition=inline&tempfile="+s,true);
+            <%end If%>
+        })
 
         function hardrefresh(pid, flag) {
 
@@ -149,7 +158,7 @@
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hidPIDS" runat="server" />
     <asp:LinkButton ID="cmdRefreshOnBehind" runat="server" Text="refreshonbehind" Style="display: none;"></asp:LinkButton>
-
+    <asp:HiddenField ID="hidOutputFullPathPdf" runat="server" />
 
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">

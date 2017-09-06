@@ -373,16 +373,23 @@ Public Class report_modal
                     MultiPidsGeneratePDF()
                     Return
                 End If
-                InhaleLic()
-                Dim doc1 As New ceTe.DynamicPDF.Merger.MergeDocument()
-                With doc1
-                    .Author = "MARKTIME 5.0"
-                    Dim strOutputFileName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False, Me.x31ID.SelectedItem.Text)
 
-                    .Append(Master.Factory.x35GlobalParam.TempFolder & "\" & GenerateOnePDF2Temp(Me.CurrentX31ID, strOutputFileName))
-                    .DrawToWeb(IIf(strOutputFileName = "", "MARKTIME_REPORT.pdf", strOutputFileName), True)
+                Dim strOutputFileName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False, Me.x31ID.SelectedItem.Text)
 
-                End With
+                hidOutputFullPathPdf.Value = GenerateOnePDF2Temp(Me.CurrentX31ID, GenerateOnePDF2Temp(Me.CurrentX31ID, strOutputFileName))
+
+                ''InhaleLic()
+                ''Dim doc1 As New ceTe.DynamicPDF.Merger.MergeDocument()
+                ''With doc1
+                ''    .Author = "MARKTIME 5.0"
+
+                ''    Dim strOutputFileName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False, Me.x31ID.SelectedItem.Text)
+
+                ''    .Append(Master.Factory.x35GlobalParam.TempFolder & "\" & GenerateOnePDF2Temp(Me.CurrentX31ID, strOutputFileName))
+
+                ''    .DrawToWeb(IIf(strOutputFileName = "", "MARKTIME_REPORT.pdf", strOutputFileName), True)
+
+                ''End With
 
         End Select
     End Sub

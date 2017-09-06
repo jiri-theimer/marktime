@@ -13,13 +13,17 @@
 
         If Not Page.IsPostBack Then
             With Master
-                If Request.Item("prefix") = "" Or Request.Item("pid") = "" Then
+                If (Request.Item("prefix") = "" Or Request.Item("pid") = "") And Request.Item("tempfile") = "" Then
                     .StopPage("prefix or pid missing...")
                 End If
                 .HeaderText = "Náhled na soubor/přílohu"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-                .AddToolbarButton("Stáhnout", "download", , "Images/download.png", False, "javascript:download2('prefix=" & Request.Item("prefix") & "&pid=" & Request.Item("pid") & "&disposition=attachment')")
-
+                If Request.Item("tempfile") <> "" Then
+                    .AddToolbarButton("Stáhnout", "download", , "Images/download.png", False, "javascript:download2('tempfile=" & Request.Item("tempfile") & "&disposition=attachment')")
+                Else
+                    .AddToolbarButton("Stáhnout", "download", , "Images/download.png", False, "javascript:download2('prefix=" & Request.Item("prefix") & "&pid=" & Request.Item("pid") & "&disposition=attachment')")
+                End If
+                
             End With
             ViewState("if1_height") = "90%"
             Dim mq As New BO.myQueryO27
@@ -44,6 +48,10 @@
                     ViewState("url") = "binaryfile.aspx?prefix=o27&disposition=inline&pid=" & cRec.PID.ToString
                 Case "p85"
                     ViewState("url") = "binaryfile.aspx?prefix=p85&disposition=inline&pid=" & Master.DataPID.ToString
+                Case ""
+                    If Request.Item("tempfile") <> "" Then
+                        ViewState("url") = "binaryfile.aspx?disposition=inline&tempfile=" & Request.Item("tempfile")
+                    End If
             End Select
 
 

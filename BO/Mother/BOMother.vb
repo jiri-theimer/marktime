@@ -16,27 +16,39 @@
         End Set
     End Property
     
-    Public ReadOnly Property DateUpdate As Date?
+    Public Property DateUpdate As Date?
         Get
             If _DateUpdate Is Nothing Then Return _DateInsert
             Return _DateUpdate
         End Get
+        Set(value As Date?)
+            'SET je tu pouze kvůli web service
+        End Set
     End Property
-    Public ReadOnly Property DateInsert As Date?
+    Public Property DateInsert As Date?
         Get
             Return _DateInsert
         End Get
+        Set(value As Date?)
+            'SET je tu pouze kvůli web service
+        End Set
     End Property
-    Public ReadOnly Property UserUpdate As String
+    Public Property UserUpdate As String
         Get
             If _UserUpdate = "" Then Return _UserInsert
             Return _UserUpdate
         End Get
+        Set(value As String)
+            'SET je tu pouze kvůli web service
+        End Set
     End Property
-    Public ReadOnly Property UserInsert As String
+    Public Property UserInsert As String
         Get
             Return _UserInsert
         End Get
+        Set(value As String)
+            'SET je tu pouze kvůli web service
+        End Set
     End Property
     Public Property ValidFrom As Date
         Get
@@ -54,7 +66,7 @@
             _ValidUntil = value
         End Set
     End Property
-    Public Overridable ReadOnly Property IsClosed As Boolean
+    Public Overridable Property IsClosed As Boolean
         Get
             If _ValidFrom <= Now And _ValidUntil >= Now Then
                 Return False
@@ -65,6 +77,9 @@
                 Return True
             End If
         End Get
+        Set(value As Boolean)
+            'SET je tu pouze kvůli web service
+        End Set
     End Property
     Public ReadOnly Property Timestamp As String
         Get
