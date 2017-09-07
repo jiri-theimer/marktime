@@ -68,8 +68,8 @@
         <telerik:RadPageView ID="Page1" runat="server">
             <table cellpadding="5" cellspacing="2">
                 <tr valign="top">
-                    <td>
-                        <uc:datalabel runat="server" ID="Datalabel1" Text="Výchozí obsah popisu úkonu:"></uc:datalabel>
+                    <td>                        
+                        <asp:Label runat="server" ID="Label6" Text="Výchozí obsah popisu úkonu:"></asp:Label>
                     </td>
                     <td>
                         <asp:TextBox ID="p32DefaultWorksheetText" runat="server" TextMode="MultiLine" Style="width: 500px; height: 50px;"></asp:TextBox>
@@ -77,7 +77,9 @@
                 </tr>
                 <tr valign="top">
                     <td>
-                        <uc:datalabel runat="server" ID="Datalabel5" Text="Nápověda pro zapisování úkonu:"></uc:datalabel>
+                        
+                        <asp:Label runat="server" ID="Label7" Text="Nápověda pro zapisování úkonu:"></asp:Label>
+                        
                     </td>
                     <td>
                         <asp:TextBox ID="p32HelpText" runat="server" Style="width: 500px; height: 140px;" TextMode="MultiLine"></asp:TextBox>
@@ -124,6 +126,18 @@
                     </td>
                     <td>
                         <uc:datacombo ID="p95id" Width="300px" runat="server" DataTextField="p95Name"></uc:datacombo>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:Label ID="lblp32AttendanceFlag" runat="server" Text="Rychlá volba v rozhraní docházky:"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="p32AttendanceFlag" runat="server">
+                            <asp:ListItem Text="" Value=""></asp:ListItem>
+                            <asp:ListItem Text="Tlačítko v docházce (bez přesného času od-do)" Value="1"></asp:ListItem>
+                            <asp:ListItem Text="Tlačítko v docházce (nabízet přesný čas od-do)" Value="2"></asp:ListItem>
+                        </asp:DropDownList>
                     </td>
                 </tr>
                 <tr>

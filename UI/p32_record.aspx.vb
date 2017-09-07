@@ -73,6 +73,7 @@
             Me.p32FreeText01.Text = .p32FreeText01
             Me.p32FreeText02.Text = .p32FreeText02
             Me.p32FreeText03.Text = .p32FreeText03
+            basUI.SelectDropdownlistValue(Me.p32AttendanceFlag, CInt(.p32AttendanceFlag).ToString)
 
             basUI.SetColorToPicker(Me.p32Color, .p32Color)
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -130,6 +131,7 @@
             cRec.ValidFrom = Master.RecordValidFrom
             cRec.ValidUntil = Master.RecordValidUntil
             cRec.p32ExternalPID = Me.p32ExternalPID.Text
+            cRec.p32AttendanceFlag = BO.BAS.IsNullInt(Me.p32AttendanceFlag.SelectedValue)
 
             If .Save(cRec) Then
                 Master.DataPID = .LastSavedPID

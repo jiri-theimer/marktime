@@ -1,4 +1,8 @@
-﻿
+﻿Public Enum p32AttendanceFlagENUM
+    _None = 0
+    HoursOnly = 1
+    TimeInterval = 2
+End Enum
 Public Class p32Activity
     Inherits BOMother
     Public Property p34ID As Integer
@@ -36,9 +40,9 @@ Public Class p32Activity
     Public Property p32FreeText03 As String
 
     Public Property p32IsSystemDefault As Boolean
-    Public Property p32IsAttendanceButton As Boolean
-
+    
     Public Property p32ExternalPID As String
+    Public Property p32AttendanceFlag As p32AttendanceFlagENUM = p32AttendanceFlagENUM._None
     Private Property _p34Name As String
     Public ReadOnly Property p34Name As String
         Get

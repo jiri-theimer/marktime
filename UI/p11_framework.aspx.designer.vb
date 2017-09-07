@@ -14,6 +14,24 @@ Option Explicit On
 Partial Public Class p11_framework
 
     '''<summary>
+    '''RadSplitter1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadSplitter1 As Global.Telerik.Web.UI.RadSplitter
+
+    '''<summary>
+    '''navigationPane control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents navigationPane As Global.Telerik.Web.UI.RadPane
+
+    '''<summary>
     '''img1 control.
     '''</summary>
     '''<remarks>
@@ -50,13 +68,22 @@ Partial Public Class p11_framework
     Protected WithEvents linkStart As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''timeStart control.
+    '''p11TodayStart control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents timeStart As Global.Telerik.Web.UI.RadDateTimePicker
+    Protected WithEvents p11TodayStart As Global.Telerik.Web.UI.RadDateTimePicker
+
+    '''<summary>
+    '''cmdSaveStart control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSaveStart As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''linkEnd control.
@@ -68,6 +95,60 @@ Partial Public Class p11_framework
     Protected WithEvents linkEnd As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''p11TodayEnd control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p11TodayEnd As Global.Telerik.Web.UI.RadDateTimePicker
+
+    '''<summary>
+    '''cmdSaveEnd control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSaveEnd As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''rp1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rp1 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
+    '''RadTabStrip1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadTabStrip1 As Global.Telerik.Web.UI.RadTabStrip
+
+    '''<summary>
+    '''RadMultiPage1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadMultiPage1 As Global.Telerik.Web.UI.RadMultiPage
+
+    '''<summary>
+    '''core control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents core As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
     '''gridP31 control.
     '''</summary>
     '''<remarks>
@@ -75,6 +156,24 @@ Partial Public Class p11_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents gridP31 As Global.UI.p31_subgrid
+
+    '''<summary>
+    '''RadPageView1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadPageView1 As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
+    '''p41ID_Default control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p41ID_Default As Global.UI.project
 
     '''<summary>
     '''hiddatapid_p31 control.
@@ -93,6 +192,15 @@ Partial Public Class p11_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents SharedCalendar As Global.Telerik.Web.UI.RadCalendar
+
+    '''<summary>
+    '''rightPane control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rightPane As Global.Telerik.Web.UI.RadPane
 
     '''<summary>
     '''Master property.

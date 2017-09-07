@@ -149,13 +149,13 @@ Partial Public Class p32_record
     Protected WithEvents Page1 As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
-    '''Datalabel1 control.
+    '''Label6 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Datalabel1 As Global.UI.datalabel
+    Protected WithEvents Label6 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''p32DefaultWorksheetText control.
@@ -167,13 +167,13 @@ Partial Public Class p32_record
     Protected WithEvents p32DefaultWorksheetText As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Datalabel5 control.
+    '''Label7 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Datalabel5 As Global.UI.datalabel
+    Protected WithEvents Label7 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''p32HelpText control.
@@ -300,6 +300,24 @@ Partial Public Class p32_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p95id As Global.UI.datacombo
+
+    '''<summary>
+    '''lblp32AttendanceFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblp32AttendanceFlag As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p32AttendanceFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p32AttendanceFlag As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''Datalabel4 control.
