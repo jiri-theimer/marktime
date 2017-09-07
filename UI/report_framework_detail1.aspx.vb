@@ -75,12 +75,14 @@ Public Class report_framework_detail1
     End Sub
 
     Private Sub RenderReport(Optional cRec As BO.x31Report = Nothing, Optional bolFirstRun As Boolean = False)
+        cmdPdfExport.Enabled = False : linkPrint.Enabled = False : linkMail.Enabled = False
+
         If cRec Is Nothing Then cRec = Master.Factory.x31ReportBL.Load(Me.CurrentX31ID)
         If cRec Is Nothing Then
             Master.StopPage("Nelze načíst sestavu.<hr>" & Master.Factory.x31ReportBL.ErrorMessage)
             Return
         End If
-        lblHeader.Text = BO.BAS.OM3(cRec.x31Name, 30)
+        lblHeader.Text = cRec.x31Name
         If cRec.x31FormatFlag <> BO.x31FormatFlagENUM.Telerik Then
             Master.StopPage("NOT TRDX format.")
         End If
@@ -102,7 +104,7 @@ Public Class report_framework_detail1
 
         Dim strXmlContent As String = cF.GetFileContents(strRepFullPath, , False), bolPeriod As Boolean = False
 
-     
+
         Dim xmlRepSource As New Telerik.Reporting.XmlReportSource()
         xmlRepSource.Xml = strXmlContent
 
@@ -125,7 +127,7 @@ Public Class report_framework_detail1
             End Select
 
         End If
-      
+
 
         If strXmlContent.IndexOf("@datfrom") > 0 Or strXmlContent.IndexOf("@datuntil") > 0 Or cRec.x31IsPeriodRequired Then
             If bolFirstRun Then
@@ -169,6 +171,7 @@ Public Class report_framework_detail1
 
         rv1.ReportSource = xmlRepSource
 
+        cmdPdfExport.Enabled = True : linkPrint.Enabled = True : linkMail.Enabled = True
     End Sub
 
     Private Sub report_framework_detail1_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
@@ -219,4 +222,37 @@ Public Class report_framework_detail1
         panFirstRun.Visible = False
         RenderReport(, False)
     End Sub
+
+    Private Sub cmdPdfExport_Click(sender As Object, e As EventArgs) Handles cmdPdfExport.Click
+
+        hidOutputFullPathPdf.Value = GenerateOnePDF2Temp(Me.CurrentX31ID, GenerateOnePDF2Temp(Me.CurrentX31ID, "MARKTIME_REPORT_" & Master.Factory.SysUser.j03Login & ".pdf"))
+
+    End Sub
+
+
+    Private Function GenerateOnePDF2Temp(intX31ID As Integer, Optional strOutputFileName As String = "") As String
+        Dim cRec As BO.x31Report = Master.Factory.x31ReportBL.Load(intX31ID)
+        Dim strRepFullPath As String = Master.Factory.x35GlobalParam.UploadFolder
+        If cRec.ReportFolder <> "" Then
+            strRepFullPath += "\" & cRec.ReportFolder
+        End If
+        strRepFullPath += "\" & cRec.ReportFileName
+        Dim cRep As New clsReportOnBehind()
+        cRep.Query_RecordPID = Master.DataPID
+        If Not ViewState("params") Is Nothing Then
+            cRep.OtherParams = ViewState("params")
+        End If
+        If period1.Visible Then
+            cRep.Query_DateFrom = period1.DateFrom
+            cRep.Query_DateUntil = period1.DateUntil
+        End If
+
+
+        strOutputFileName = cRep.GenerateReport2Temp(Master.Factory, strRepFullPath, , strOutputFileName)
+        If strOutputFileName = "" Then
+            Master.Notify("Chyba při generování PDF.", NotifyLevel.ErrorMessage) : Return ""
+        End If
+
+        Return strOutputFileName
+    End Function
 End Class

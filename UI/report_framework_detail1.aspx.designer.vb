@@ -32,6 +32,33 @@ Partial Public Class report_framework_detail1
     Protected WithEvents lblHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''linkPrint control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkPrint As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''cmdPdfExport control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdPdfExport As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''linkMail control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkMail As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''period1 control.
     '''</summary>
     '''<remarks>
@@ -165,6 +192,15 @@ Partial Public Class report_framework_detail1
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''hidOutputFullPathPdf control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidOutputFullPathPdf As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

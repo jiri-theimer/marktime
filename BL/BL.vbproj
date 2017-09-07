@@ -144,6 +144,7 @@
     <Compile Include="o40SmtpAccountBL.vb" />
     <Compile Include="o41InboxAccountBL.vb" />
     <Compile Include="o42ImapRuleBL.vb" />
+    <Compile Include="p11AttendanceBL.vb" />
     <Compile Include="p28ContactBL.vb" />
     <Compile Include="p29ContactTypeBL.vb" />
     <Compile Include="p30Contact_PersonBL.vb" />

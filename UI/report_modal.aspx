@@ -46,9 +46,24 @@
             <%If hidOutputFullPathPdf.Value<>"" then%>
             var s=document.getElementById("<%=hidOutputFullPathPdf.ClientID%>").value;
             document.getElementById("<%=hidOutputFullPathPdf.ClientID%>").value="";
-            //location.replace("binaryfile.aspx?disposition=inline&tempfile="+s);
-            //dialog_master("fileupload_preview.aspx?tempfile=" + s,true);            dialog_master("binaryfile.aspx?disposition=inline&tempfile="+s,true);
+            
+            dialog_master("binaryfile.aspx?disposition=inline&tempfile="+s,true);
+
             <%end If%>
+
+            try {
+                //hackování reportviewer - přednastavení pdf exportu jako default
+                $('[id*="ReportToolbar_ExportGr_FormatList_DropDownList"]')[0].selectedIndex =1;
+            
+                document.getElementById("MainContent_rv1_ReportToolbar_ExportGr_Export").className = "ActiveLink";
+            
+                ReportTextButton('MainContent_rv1_ReportToolbar_ExportGr_Export', 'Export', false, 'ActiveLink', 'DisabledLink');
+            }
+            catch (err) {
+                //nic
+            }
+           
+            
         })
 
         function hardrefresh(pid, flag) {
@@ -147,7 +162,7 @@
     <asp:HyperLink ID="cmdXlsResult" runat="server" Text="XLS výstup" Visible="false"></asp:HyperLink>
     
     <div id="divReportViewer" style="height: 300px;">
-        <telerik:ReportViewer ID="rv1" runat="server" Width="100%" Height="100%" ShowParametersButton="true" ShowHistoryButtons="false" ValidateRequestMode="Disabled">            
+        <telerik:ReportViewer ID="rv1" runat="server" Width="100%" Height="100%" ShowParametersButton="true" ShowHistoryButtons="false" ValidateRequestMode="Disabled" ShowExportGroup="true">                        
             <Resources PrintToolTip="Tisk" ExportSelectFormatText="Exportovat do zvoleného formátu" TogglePageLayoutToolTip="Přepnout na náhled k tisku" NextPageToolTip="Další strana" PreviousPageToolTip="Předchozí strana" RefreshToolTip="Obnovit" LastPageToolTip="Poslední strana" FirstPageToolTip="První strana" ></Resources>
         </telerik:ReportViewer>        
     </div>

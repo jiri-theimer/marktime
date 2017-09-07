@@ -5,6 +5,7 @@
     Private Property _b07 As Ib07CommentBL
     Private Property _j04 As Ij04UserRoleBL
     Private Property _j05 As Ij05MasterSlaveBL
+    Private Property _p11 As Ip11AttendanceBL
     Private Property _p40 As Ip40WorkSheet_RecurrenceBL
     Private Property _p41 As Ip41ProjectBL
     Private Property _p45 As Ip45BudgetBL
@@ -158,6 +159,12 @@
         Get
             If _j11 Is Nothing Then _j11 = New j11TeamBL(_cUser)
             Return _j11
+        End Get
+    End Property
+    Public ReadOnly Property p11AttendanceBL As Ip11AttendanceBL
+        Get
+            If _p11 Is Nothing Then _p11 = New p11AttendanceBL(_cUser)
+            Return _p11
         End Get
     End Property
     Public ReadOnly Property p40WorkSheet_RecurrenceBL As Ip40WorkSheet_RecurrenceBL
