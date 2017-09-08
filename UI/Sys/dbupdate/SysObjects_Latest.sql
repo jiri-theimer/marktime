@@ -1900,6 +1900,53 @@ END
 
 GO
 
+----------FN---------------p11_find_p41id_default-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p11_find_p41id_default') and type = 'FN')
+ drop function p11_find_p41id_default
+GO
+
+
+
+
+
+CREATE  FUNCTION [dbo].[p11_find_p41id_default](@j02id int)
+RETURNS int
+AS
+BEGIN
+  ---vrací ID projektu pro zapisování neproduktivních hodin v rozhraní docházky
+
+  declare @p41id int,@p42id int,@s varchar(10)
+
+  select @s=x35Value FROM x35GlobalParam WHERE x35Key like 'attendance_p41_default'
+
+  if @s is not null
+   select @p41id=convert(int,@s)
+
+  if @p41id is null
+   select TOP 1 @p42id=p42ID FROM p43ProjectType_Workload WHERE p34ID IN (select a.p34ID FROM p32Activity a INNER JOIN p34ActivityGroup b ON a.p34ID=b.p34ID WHERE a.p32AttendanceFlag=1 OR a.p32AttendanceFlag=2)
+
+  if not @p42id is null
+   select @p41ID=p41ID FROM p41Project WHERE p42ID=@p42id AND getdate() between p41ValidFrom and p41ValidUntil
+
+  
+  if @p41id is null
+   select TOP 1 @p41id=a.p41ID FROM p31Worksheet a INNER JOIN p41Project b ON a.p41ID=b.p41ID WHERE a.p32ID IN (select p32ID FROM p32Activity WHERE p32AttendanceFlag=1 OR p32AttendanceFlag=2) AND getdate() between b.p41ValidFrom AND b.p41ValidUntil ORDER BY a.p31ID DESC
+
+  
+  if @p41id is null
+   select TOP 1 @p41id=p41ID FROM p41Project WHERE p41Name like '%režij%' AND getdate() between p41ValidFrom and p41ValidUntil
+  
+  
+  
+  return(@p41id)
+   
+END
+
+
+
+GO
+
 ----------FN---------------p28_address_inline-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p28_address_inline') and type = 'FN')

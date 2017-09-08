@@ -230,7 +230,7 @@
                             <tr>
                                 <td>Výchozí projekt pro zapisování nefakturovatelných hodin:</td>
                                 <td>
-                                    <uc:project ID="p41ID_Default" runat="server" AutoPostBack="false" Flag="p31_entry" Width="330px" Text="Hledat projekt..." />
+                                    <uc:project ID="p41ID_Default" runat="server" AutoPostBack="true" Flag="p31_entry" Width="330px" Text="Hledat projekt..." />
                                 </td>
                             </tr>
                         </table>

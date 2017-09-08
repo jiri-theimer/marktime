@@ -29,6 +29,11 @@
             With Master.Factory.j03UserBL
                 .InhaleUserParams("p11_framework-p41id", "p11_framework-buttons")
                 Me.p41ID_Default.Value = .GetUserParam("p11_framework-p41id")
+                If Me.p41ID_Default.Value = "" Then
+                    'najít výchozí projekt pro neproduktivní hodiny
+                    Me.p41ID_Default.Value = Master.Factory.p11AttendanceBL.FindDefaultP41ID().ToString
+                    Master.Factory.j03UserBL.SetUserParam("p11_framework-p41id", Me.p41ID_Default.Value)
+                End If
                 If Me.p41ID_Default.Value <> "" Then
                     Me.p41ID_Default.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, BO.BAS.IsNullInt(Me.p41ID_Default.Value), True)
                 End If
@@ -194,7 +199,8 @@
     End Sub
 
     Private Sub cmdPrevDay_Click(sender As Object, e As ImageClickEventArgs) Handles cmdPrevDay.Click
-
+        Me.RadTabStrip1.SelectedIndex = 0
+        Me.RadMultiPage1.SelectedIndex = 0
         datToday.SelectedDate = CDate(datToday.SelectedDate).AddDays(-1)
         RefreshRecord()
     End Sub
@@ -291,4 +297,9 @@
         Next
         Return String.Join("|", lis)
     End Function
+
+    Private Sub p41ID_Default_AutoPostBack_SelectedIndexChanged(NewValue As String, OldValue As String) Handles p41ID_Default.AutoPostBack_SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("p11_framework-p41id", Me.p41ID_Default.Value)
+        RefreshButtons()
+    End Sub
 End Class

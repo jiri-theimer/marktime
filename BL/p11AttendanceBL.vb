@@ -6,6 +6,7 @@ Public Interface Ip11AttendanceBL
     Function LoadByPersonAndDate(intJ02ID As Integer, p11Date As Date) As BO.p11Attendance
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQuery, Optional intJ02ID As Integer = 0) As IEnumerable(Of BO.p11Attendance)
+    Function FindDefaultP41ID() As Integer
 End Interface
 Class p11AttendanceBL
     Inherits BLMother
@@ -45,5 +46,8 @@ Class p11AttendanceBL
     End Function
     Public Function GetList(mq As BO.myQuery, Optional intJ02ID As Integer = 0) As IEnumerable(Of BO.p11Attendance) Implements Ip11AttendanceBL.GetList
         Return _cDL.GetList(mq, intJ02ID)
+    End Function
+    Public Function FindDefaultP41ID() As Integer Implements Ip11AttendanceBL.FindDefaultP41ID
+        Return _cDL.FindDefaultP41ID()
     End Function
 End Class

@@ -4,6 +4,9 @@
     Public Sub New(ServiceUser As BO.j03UserSYS)
         _curUser = ServiceUser
     End Sub
+    Public Function FindDefaultP41ID() As Integer
+        Return _cDB.GetIntegerValueFROMSQL("select dbo.p11_find_p41id_default(" & _curUser.j02ID.ToString & ")")
+    End Function
     Public Function Load(intPID As Integer) As BO.p11Attendance
         Dim s As String = "SELECT a.*," & bas.RecTail("p11", "a")
         s += " FROM p11Attendance a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID"
