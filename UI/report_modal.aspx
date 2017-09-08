@@ -45,9 +45,18 @@
         $(window).load(function () {
             <%If hidOutputFullPathPdf.Value<>"" then%>
             var s=document.getElementById("<%=hidOutputFullPathPdf.ClientID%>").value;
-            document.getElementById("<%=hidOutputFullPathPdf.ClientID%>").value="";
-            
-            dialog_master("binaryfile.aspx?disposition=inline&tempfile="+s,true);
+            document.getElementById("<%=hidOutputFullPathPdf.ClientID%>").value="";                               
+            var url="binaryfile.aspx?disposition=inline&tempfile="+s;
+
+            <%If LCase(Request.Browser.Browser) = "ie" Then%>
+                
+                url="binaryfile.aspx?tempfile="+s;
+                alert("V prohlížeči Internet Explorer bohužel nefunguje PDF náhled.");
+                
+            <%End If%>
+             
+
+            dialog_master(url,true);
 
             <%end If%>
 
@@ -63,7 +72,8 @@
                 //nic
             }
            
-            
+            
+
         })
 
         function hardrefresh(pid, flag) {
