@@ -94,7 +94,7 @@
             If Not lis.Exists(Function(p) p.PID = cTemp.p85DataPID) Then
                 Dim c As BO.p32Activity = Master.Factory.p32ActivityBL.Load(cTemp.p85DataPID)
                 c.p32AttendanceFlag = cTemp.p85OtherKey1
-                c.UserInsert = "mybutton"
+                c.p32HelpText = "mybutton"
                 lis.Add(c)
             End If
         Next
@@ -124,7 +124,7 @@
                 End If
 
             End If
-            If cRec.UserInsert = "mybutton" Then
+            If cRec.p32HelpText = "mybutton" Then
                 .ForeColor = Drawing.Color.Blue
             End If
         End With
