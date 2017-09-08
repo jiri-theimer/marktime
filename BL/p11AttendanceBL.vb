@@ -25,7 +25,13 @@ Class p11AttendanceBL
         _cUser = ServiceUser
     End Sub
     Public Function Save(cRec As BO.p11Attendance) As Boolean Implements Ip11AttendanceBL.Save
-
+        With cRec
+            If Not .p11TodayEnd Is Nothing And Not .p11TodayStart Is Nothing Then
+                If .p11TodayStart >= .p11TodayEnd Then
+                    _Error = "Čas příchodu musí být menší než čas odchodu." : Return False
+                End If
+            End If
+        End With
         Return _cDL.Save(cRec)
     End Function
     Public Function Load(intPID As Integer) As BO.p11Attendance Implements Ip11AttendanceBL.Load

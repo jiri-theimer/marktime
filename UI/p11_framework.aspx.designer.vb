@@ -32,13 +32,13 @@ Partial Public Class p11_framework
     Protected WithEvents navigationPane As Global.Telerik.Web.UI.RadPane
 
     '''<summary>
-    '''img1 control.
+    '''cmdRefresh control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents img1 As Global.System.Web.UI.WebControls.Image
+    Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
     '''lblHeader control.
@@ -57,6 +57,24 @@ Partial Public Class p11_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents datToday As Global.Telerik.Web.UI.RadDatePicker
+
+    '''<summary>
+    '''cmdPrevDay control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdPrevDay As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
+    '''cmdNextDay control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdNextDay As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
     '''linkStart control.
@@ -167,6 +185,15 @@ Partial Public Class p11_framework
     Protected WithEvents RadPageView1 As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
+    '''cmdSaveSetting control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSaveSetting As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''p41ID_Default control.
     '''</summary>
     '''<remarks>
@@ -174,6 +201,24 @@ Partial Public Class p11_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p41ID_Default As Global.UI.project
+
+    '''<summary>
+    '''cmdAdd control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdAdd As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''rp2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rp2 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''hiddatapid_p31 control.

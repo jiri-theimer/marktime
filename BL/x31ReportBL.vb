@@ -149,14 +149,15 @@ Class x31ReportBL
         lisX31.Add(GPPS(-999, "Vlastní osobní stránka", "j03_mypage.aspx", -10, BO.x29IdEnum.j03User, "dashboard"))
         If _cUser.j04IsMenu_Worksheet Then
             lisX31.Add(GPPS(-2, "[WORKSHEET -> Zapisovat]", "p31_framework.aspx", -11, BO.x29IdEnum.p31Worksheet, "p31_framework"))
+            lisX31.Add(GPPS(-3, "[WORKSHEET -> Zapisovat přes DOCHÁZKu]", "p11_framework.aspx", -11, BO.x29IdEnum.p31Worksheet, "p11_framework"))
             lisX31.Add(GPPS(-3, "[WORKSHEET -> Zapisovat přes KALENDÁŘ]", "p31_scheduler.aspx", -11, BO.x29IdEnum.p31Worksheet, "p31_scheduler"))
             lisX31.Add(GPPS(-3, "[WORKSHEET -> Zapisovat přes DAYLINE]", "p31_timeline.aspx", -11, BO.x29IdEnum.p31Worksheet, "p31_timeline"))
 
             lisX31.Add(GPPS(-3, "[WORKSHEET -> Zapisovat přes STOPKY]", "p31_timer.aspx", -11, BO.x29IdEnum.p31Worksheet, "p31_timer"))
             lisX31.Add(GPPS(-3, "[WORKSHEET -> Přehledy záznamů]", "p31_grid.aspx", -11, BO.x29IdEnum.p31Worksheet, "p31_grid"))
             If Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
-                lisX31.Add(GPPS(-3, "[WORKSHEET -> Souhrny]", "p31_sumgrid.aspx", -11, BO.x29IdEnum.p31Worksheet, "p31_sumgrid"))
-                lisX31.Add(GPPS(-3, "[WORKSHEET -> PIVOT]", "p31_pivot.aspx", -11, BO.x29IdEnum.p31Worksheet, "p31_pivot"))
+                lisX31.Add(GPPS(-3, "[WORKSHEET -> Statistiky]", "p31_sumgrid.aspx", -11, BO.x29IdEnum.p31Worksheet, "p31_sumgrid"))
+
             End If
             lisX31.Add(GPPS(-3, "Schvalovat, připravit podklady k fakturaci", "approving_framework.aspx", -11, BO.x29IdEnum.p31Worksheet, "p31_approving"))
         End If
