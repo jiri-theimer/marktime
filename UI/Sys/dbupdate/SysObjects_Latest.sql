@@ -10746,6 +10746,13 @@ set @test_todo=1
 if @o28entryflag=1
  set @test_todo=0	--OK - právo zapisovat do projektu i všech úkolù 
 
+if @o28entryflag=1 and @j02id_sys<>@j02id_rec and @is_gr_p31_entry_all_projects=0	--liší se osoba uživatele a osoba úkonu a nemá právo zapisovat do všech projektù
+ begin
+  if not exists(select j05ID FROM j05MasterSlave WHERE j02ID_Master=@j02id_sys AND j02ID_Slave=@j02id_rec)
+   set @err='Nemáte oprávnìní vykazovat za osobu ['+@person+'], protože nejste jeho/její nadøízený.'
+   return
+ end
+
 if @o28entryflag=4	--OK - právo zapisovat do projektu pøes nadøízenou osobu
  begin
   if @j02id_sys=@j02id_rec
