@@ -211,7 +211,7 @@
         <asp:HiddenField ID="hidPageTitle" runat="server" />
         <asp:HiddenField ID="hidHRJS" runat="server" />
 
-        <telerik:RadWindow ID="okno_dialog" runat="server" Modal="true" KeepInScreenBounds="true" VisibleTitlebar="true" VisibleStatusbar="false" Skin="WebBlue" ShowContentDuringLoad="false" Width="700px" Height="400px" Behaviors="Close,Move,Maximize" IconUrl="Images/window.png">
+        <telerik:RadWindow ID="okno_dialog" runat="server" Modal="true" KeepInScreenBounds="true" VisibleTitlebar="true" VisibleStatusbar="false" Skin="WebBlue" ShowContentDuringLoad="false" Width="700px" Height="400px" Behaviors="Close,Maximize,Move,Reload" IconUrl="Images/window.png">
             <Shortcuts>
                 <telerik:WindowShortcut CommandName="Close" Shortcut="Esc" />
             </Shortcuts>

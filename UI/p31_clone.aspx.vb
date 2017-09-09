@@ -30,6 +30,16 @@
         Dim mq As New BO.myQueryP31
         mq.PIDs = pids
         Dim lis As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq)
+        With Master.Factory.SysUser
+            If Not (.IsMasterPerson Or Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Creator)) Then 'není nadřízenou osobu ani nemá právo zapisovat do všech projektů -> tak v kopírovaném záznamu předvyplnit
+                For Each c In lis
+                    If c.j02ID <> Master.Factory.SysUser.j02ID Then
+                        c.j02ID = Master.Factory.SysUser.j02ID
+                        c.Person = Master.Factory.SysUser.PersonDesc
+                    End If
+                Next
+            End If
+        End With
         If lis.Where(Function(p) p.p33ID <> 1).Count > 0 Then
             Master.Notify("Na vstupu jsou i jiné než časové úkony.<hr>Do hromadného kopírování lze zařadit pouze časové úkony.", NotifyLevel.InfoMessage)
         End If
@@ -103,7 +113,12 @@
                 c.Value_Orig_Entried = CType(ri.FindControl("p31Value_Orig"), TextBox).Text
                 c.p32ID = cRec.p32ID
                 c.p34ID = cRec.p34ID
-                c.j02ID = cRec.j02ID
+
+                If Not (Master.Factory.SysUser.IsMasterPerson Or Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Creator)) Then 'není nadřízenou osobu ani nemá právo zapisovat do všech projektů -> tak v kopírovaném záznamu předvyplnit
+                    c.j02ID = Master.Factory.SysUser.j02ID
+                Else
+                    c.j02ID = cRec.j02ID
+                End If
                 c.j02ID_ContactPerson = cRec.j02ID_ContactPerson
 
                 If Master.Factory.p31WorksheetBL.SaveOrigRecord(c, lisFF) Then
