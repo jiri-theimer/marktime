@@ -18,6 +18,10 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
+    <telerik:RadAutoCompleteBox ID="tags1" runat="server" RenderMode="Lightweight" EmptyMessage="Uveďte název štítku">     
+           
+    </telerik:RadAutoCompleteBox>
     
     <asp:Literal Text="Popisek přes literal:" runat="server"></asp:Literal>
     <asp:TextBox ID="txtPokus" runat="server"></asp:TextBox>

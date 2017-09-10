@@ -99,6 +99,7 @@
     <Compile Include="o40SmtpAccountDL.vb" />
     <Compile Include="o41InboxAccountDL.vb" />
     <Compile Include="o42ImapRuleDL.vb" />
+    <Compile Include="o51TagDL.vb" />
     <Compile Include="p11AttendanceDL.vb" />
     <Compile Include="p30Contact_PersonDL.vb" />
     <Compile Include="p35UnitDL.vb" />

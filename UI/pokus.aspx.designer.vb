@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class pokus
 
     '''<summary>
+    '''tags1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tags1 As Global.Telerik.Web.UI.RadAutoCompleteBox
+
+    '''<summary>
     '''txtPokus control.
     '''</summary>
     '''<remarks>
