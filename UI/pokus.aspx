@@ -20,12 +20,21 @@
             
             context["filterstring"] = sender.get_text();
         }
+
+        function entryAdding(sender, eventArgs) {            
+            if (eventArgs.get_entry().get_value() == "") {
+                eventArgs.set_cancel(true);
+            }
+            
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <telerik:RadAutoCompleteBox ID="tags1" runat="server" RenderMode="Lightweight" EmptyMessage="Uveďte název štítku" Width="400px">     
+    <telerik:RadAutoCompleteBox ID="tags1" runat="server" RenderMode="Lightweight" EmptyMessage="Uveďte název štítku" Width="400px" OnClientEntryAdding="entryAdding">     
         <WebServiceSettings Method="LoadComboData" Path="~/Services/tag_service.asmx"/>   
+        <Localization ShowAllResults="Zobrazit všechny výsledky" RemoveTokenTitle="Zrušit výběr štítku" />
+        
     </telerik:RadAutoCompleteBox>
     
     <asp:Literal Text="Popisek přes literal:" runat="server"></asp:Literal>

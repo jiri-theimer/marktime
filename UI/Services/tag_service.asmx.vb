@@ -19,8 +19,6 @@ Public Class tag_service
         'Dim filterString As String = DirectCast(context, Dictionary(Of String, Object))("filterstring").ToString()
         Dim filterString As String = DirectCast(context, Dictionary(Of String, Object))("Text").ToString()
 
-        ''Dim filterString As String = DirectCast(context, Dictionary(Of String, Object))("filterstring").ToString()
-        ''Dim strFlag As String = (DirectCast(contextDictionary("flag"), String)
         Dim strFlag As String = ""
 
         Dim factory As BL.Factory = Nothing
@@ -50,6 +48,7 @@ Public Class tag_service
         result = New List(Of AutoCompleteBoxItemData)(lis.Count)
         Dim itemData As New AutoCompleteBoxItemData()
         itemData.Enabled = False
+
         Select Case lis.Count
             Case 0
                 If (Len(filterString) > 0 And Len(filterString) < 15) Then itemData.Text = "Ani jeden štítek pro zadanou podmínku."
