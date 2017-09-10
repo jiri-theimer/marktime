@@ -7,20 +7,25 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
   
 
-      
-    </style>
-
     <script type="text/javascript">
         function gogo(par) {
             window.history.pushState({}, "Ahoj-titulek", "/pokus.aspx?gogo="+par);
             
         }
+
+        function requesting(sender, eventArgs) {
+            var context = eventArgs.get_context();
+            //Data passed to the service.
+            document.getElementById("<%=txtPokus.clientid%>").value = sender.get_text();
+            
+            context["filterstring"] = sender.get_text();
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <telerik:RadAutoCompleteBox ID="tags1" runat="server" RenderMode="Lightweight" EmptyMessage="Uveďte název štítku">     
-           
+    <telerik:RadAutoCompleteBox ID="tags1" runat="server" RenderMode="Lightweight" EmptyMessage="Uveďte název štítku" Width="400px">     
+        <WebServiceSettings Method="LoadComboData" Path="~/Services/tag_service.asmx"/>   
     </telerik:RadAutoCompleteBox>
     
     <asp:Literal Text="Popisek přes literal:" runat="server"></asp:Literal>

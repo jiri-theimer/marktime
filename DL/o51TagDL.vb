@@ -54,7 +54,7 @@
         ''strW += bas.ParseWhereValidity("o51", "a", myQuery)
         If myQuery.SearchExpression <> "" Then
             pars.Add("expr", myQuery.SearchExpression, DbType.String)
-            strW += " AND a.p51Name LIKE '%'+@expr+'%'"
+            strW += " AND a.o51Name LIKE '%'+@expr+'%'"
         End If
 
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
