@@ -50,7 +50,7 @@
                     </td>
                     <td>
                         <uc:datacombo ID="o23IDs_Tag" runat="server" DataTextField="NameWithCode" DataValueField="pid" AllowCheckboxes="true" Filter="Contains" Width="400px"></uc:datacombo>
-                        <button type="button" id="cmdX18_Items" runat="server" class="button-link" title="Nastavit položky štítku">
+                        <button type="button" id="cmdX18_Items" runat="server" class="button-link" title="Nastavit položky kategorií">
                             <img src="Images/settings.png" />
                         </button>
 

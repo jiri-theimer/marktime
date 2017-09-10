@@ -17,7 +17,7 @@
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true">
         <Tabs>
             <telerik:RadTab Text="<%$ Resources:common, vlastnosti %>" Selected="true" Value="core"></telerik:RadTab>
-            <telerik:RadTab Text="Štítky ({1}), uživatelská pole ({0})" Value="ff"></telerik:RadTab>
+            <telerik:RadTab Text="Kategorie ({1}), uživatelská pole ({0})" Value="ff"></telerik:RadTab>
             
             <telerik:RadTab Text="<%$ Resources:common, ostatni %>" Value="other"></telerik:RadTab>
         </Tabs>

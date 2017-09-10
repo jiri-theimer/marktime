@@ -9,7 +9,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <div class="div6">
-        <span class="val">Zaškrtněte alespoň jeden štítek</span>
+        <span class="val">Zaškrtněte alespoň jednu kategorii</span>
         <asp:Button ID="cmdUncheckAll" runat="server" CssClass="cmd" Text="Odškrtnout vše" />
         <asp:Button ID="cmdExpandAll" runat="server" CssClass="cmd" Text="Rozbalit vše" />
         <asp:Button ID="cmdCollapseAll" runat="server" CssClass="cmd" Text="Sbalit vše" />

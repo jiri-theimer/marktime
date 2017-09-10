@@ -192,10 +192,13 @@
   <data name="Schvalovat_Pripravit_Fakturaci" xml:space="preserve">
     <value>Approving| Prepare billing proposals</value>
   </data>
-  <data name="Stitky" xml:space="preserve">
-    <value>Labels</value>
+  <data name="Kategorie" xml:space="preserve">
+    <value>Categories</value>
   </data>
   <data name="ZalohoveFaktury" xml:space="preserve">
     <value>Proforma invoices</value>
+  </data>
+  <data name="UlozitJakoVychoziStranku" xml:space="preserve">
+    <value>This page save as my default</value>
   </data>
 </root>

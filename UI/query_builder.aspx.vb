@@ -280,7 +280,7 @@
                 lis.Add(New myItem(BO.x29IdEnum.System, "p91.p91Date", "Datum faktury", BO.x24IdENUM.tDateTime))
         End Select
 
-        lis.Add(New myItem(BO.x29IdEnum.o23Doc, "o23id", "Štítky (vybrané typy dokumentů)"))
+        lis.Add(New myItem(BO.x29IdEnum.o23Doc, "o23id", "Kategorie"))
 
         Dim lisFF As IEnumerable(Of BO.x28EntityField) = Master.Factory.x28EntityFieldBL.GetList(Me.CurrentX29ID, -1, True).Where(Function(p) p.x28Flag = BO.x28FlagENUM.UserField Or p.x28Query_Field <> "")
         For Each cField In lisFF

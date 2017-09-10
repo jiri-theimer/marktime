@@ -192,10 +192,13 @@
   <data name="Schvalovat_Pripravit_Fakturaci" xml:space="preserve">
     <value>Schvalovat | Připravit podklady k fakturaci</value>
   </data>
-  <data name="Stitky" xml:space="preserve">
-    <value>Štítky</value>
+  <data name="Kategorie" xml:space="preserve">
+    <value>Kategorie</value>
   </data>
   <data name="ZalohoveFaktury" xml:space="preserve">
     <value>Zálohové faktury</value>
+  </data>
+  <data name="UlozitJakoVychoziStranku" xml:space="preserve">
+    <value>Tuto stránku uložit jako mojí výchozí</value>
   </data>
 </root>

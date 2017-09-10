@@ -12,11 +12,7 @@
             sw_master(url, img, is_maximize);
         }
 
-        function personalpage() {
-            sw_master("j03_myprofile_defaultpage.aspx", "Images/plugin.png");
-
-
-        }
+        
         function report() {
             sw_master("report_modal.aspx?prefix=j02&pid=<%=Master.Factory.SysUser.j02ID%>", "Images/reporting.png", true);
 
@@ -402,8 +398,7 @@
                 <asp:Label ID="lblBuild" runat="server" Style="color: gray;" />
                 <a href="about.aspx" style="margin-left: 20px;">O aplikaci</a>
 
-                <span style="padding-left: 30px;">&nbsp</span>
-                <a href="javascript:personalpage()">Nastavit si startovací stránku</a>
+                
                 <span style="padding-left: 30px;">&nbsp</span>
                 <asp:HyperLink ID="cmdReadUpgradeInfo" runat="server" NavigateUrl="log_app_update.aspx" ImageUrl="Images/upgraded_32.png" ToolTip="Nedávno proběhla aktualizace MARKTIME. Přečti si informace o novinkách a změnách v systému."></asp:HyperLink>
 

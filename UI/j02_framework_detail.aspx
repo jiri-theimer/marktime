@@ -263,7 +263,7 @@
         <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">
             <div class="title">
                 <img src="Images/notepad.png"  /><span style="margin-right: 10px;">Dokumenty</span>
-                <img src="Images/label.png" /><span>Štítky</span>
+                <img src="Images/label.png" /><span>Kategorie</span>
             </div>
             <div class="content">
                 <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>

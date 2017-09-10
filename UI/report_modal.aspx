@@ -51,7 +51,7 @@
             <%If LCase(Request.Browser.Browser) = "ie" Then%>
                 
                 url="binaryfile.aspx?tempfile="+s;
-                alert("V prohlížeči Internet Explorer bohužel nefunguje PDF náhled.");
+                $.alert("V prohlížeči Internet Explorer bohužel nefunguje PDF náhled.");
                 
             <%End If%>
              

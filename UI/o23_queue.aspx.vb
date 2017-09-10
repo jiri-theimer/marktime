@@ -139,7 +139,7 @@ Public Class o23_queue
             .radGridOrig.MasterTableView.Name = "grid"
 
             Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(Me.CurrentX18ID)
-            lisX20X18 = lisX20X18.Where(Function(p) p.x20IsClosed = False And (p.x20GridColumnFlag = BO.x20GridColumnENUM.CategoryColumn Or p.x20GridColumnFlag = BO.x20GridColumnENUM.Both)).OrderBy(Function(p) p.x20IsMultiSelect).ThenBy(Function(p) p.x29ID)   'omezit pouze na otevřené vazby + vazby vyplňované přes záznam položky štítku
+            lisX20X18 = lisX20X18.Where(Function(p) p.x20IsClosed = False And (p.x20GridColumnFlag = BO.x20GridColumnENUM.CategoryColumn Or p.x20GridColumnFlag = BO.x20GridColumnENUM.Both)).OrderBy(Function(p) p.x20IsMultiSelect).ThenBy(Function(p) p.x29ID)   'omezit pouze na otevřené vazby + vazby vyplňované přes záznam položky kategorie
             For Each c In lisX20X18
                 .AddColumn("Entita" & c.x20ID.ToString, c.BindName, BO.cfENUM.AnyString, True, , "dbo.stitek_entity(a.o23ID," & c.x20ID.ToString & ")", , False, True)
                 lisSqlSEL.Add("dbo.stitek_entity(a.o23ID," & c.x20ID.ToString & ") as Entita" & c.x20ID.ToString)

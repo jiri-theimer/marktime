@@ -36,7 +36,7 @@
                 <div class="content">
                     <asp:RadioButtonList ID="x18IsManyItems" runat="server" RepeatDirection="Vertical" CellPadding="2" AutoPostBack="true">
                         <asp:ListItem Text="Dokument s formulářovými poli, přílohami a workflow šablonou (stovky i tisíce záznamů)" Value="1" Selected="true"></asp:ListItem>
-                        <asp:ListItem Text="Štítek pro kategorizaci projektů/klientů/úkolů...maximálně desítky záznamů" Value="0"></asp:ListItem>
+                        <asp:ListItem Text="Kategorizace projektů/klientů/úkolů...maximálně desítky záznamů" Value="0"></asp:ListItem>
                     </asp:RadioButtonList>
                 </div>
             </div>

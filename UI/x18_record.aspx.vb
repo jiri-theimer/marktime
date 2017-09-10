@@ -559,40 +559,40 @@
             cbx2.Items.FindByValue("2").Text = String.Format("Sloupec [{0}] v přehledu dokumentů", IIf(cRec.p85FreeText01 = "", cbx0.SelectedItem.Text, cRec.p85FreeText01))
             Select Case CType(cRec.p85OtherKey1, BO.x29IdEnum)
                 Case BO.x29IdEnum.p28Contact
-                    cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky štítků [{0}] v kartě klienta", strName)
+                    cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky dokumentů [{0}] v kartě klienta", strName)
                     cbx1.Items.FindByValue("2").Text = String.Format("Vazbu vyplňovat vyhledavačem klienta v záznamu dokumentu [{0}]", strName)
                     cbx2.Items.FindByValue("1").Text = String.Format("Sloupec [{0}] v přehledu klientů", strName)
 
                 Case BO.x29IdEnum.p41Project
-                    cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky štítků [{0}] v kartě projektu", strName)
+                    cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky dokumentů [{0}] v kartě projektu", strName)
                     cbx1.Items.FindByValue("2").Text = String.Format("Vazbu vyplňovat vyhledavačem projektu v záznamu dokumentu [{0}]", strName)
                     cbx2.Items.FindByValue("1").Text = String.Format("Sloupec [{0}] v přehledu projektů", strName)
                 Case BO.x29IdEnum.j02Person
-                    cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky štítků [{0}] v kartě osoby", strName)
+                    cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky dokumentů [{0}] v kartě osoby", strName)
                     cbx1.Items.FindByValue("2").Text = String.Format("Vazbu vyplňovat vyhledavačem osoby v záznamu dokumentu [{0}]", strName)
                     cbx2.Items.FindByValue("1").Text = String.Format("Sloupec [{0}] v přehledu osob", strName)
                 Case BO.x29IdEnum.p56Task
-                    cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky štítků [{0}] v kartě úkolu", strName)
+                    cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky dokumentů [{0}] v kartě úkolu", strName)
                     cbx1.Items.FindByValue("2").Text = String.Format("Vazbu vyplňovat vyhledavačem úkolu v záznamu dokumentu [{0}]", strName)
                     cbx2.Items.FindByValue("1").Text = String.Format("Sloupec [{0}] v přehledu úkolů", strName)
                 Case BO.x29IdEnum.o23Doc
-                    cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky štítků [{0}] v kartě dokumentu", strName)
+                    cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky dokumentů [{0}] v kartě dokumentu", strName)
                     cbx1.Items.FindByValue("2").Text = String.Format("Vazbu vyplňovat vyhledavačem dokumentu v záznamu dokumentu [{0}]", strName)
                     cbx2.Items.FindByValue("1").Text = String.Format("Sloupec [{0}] v přehledu dokumentů", strName)
                 Case BO.x29IdEnum.p31Worksheet
-                    cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky štítků [{0}] ve formuláři pro zápis worksheet úkonu", strName)
+                    cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky dokumentů [{0}] ve formuláři pro zápis worksheet úkonu", strName)
                     cbx2.Items.FindByValue("1").Text = String.Format("Sloupec [{0}] v přehledu worksheet úkonů", strName)
                     cbx2.Items.FindByValue("2").Enabled = False
                     cbx2.Items.FindByValue("3").Enabled = False
                    
                 Case BO.x29IdEnum.o22Milestone
-                    cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky štítků [{0}] v kartě kalendářové události", strName)
+                    cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky dokumentů [{0}] v kartě kalendářové události", strName)
                     cbx2.Items.FindByValue("1").Text = String.Format("Pole [{0}] v kalendáři událostí", strName)
                     cbx2.Items.FindByValue("2").Enabled = False
                     cbx2.Items.FindByValue("3").Enabled = False
                     
                 Case BO.x29IdEnum.p91Invoice
-                    cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky štítků [{0}] v kartě faktury", strName)
+                    cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky dokumentů [{0}] v kartě faktury", strName)
                     cbx2.Items.FindByValue("1").Text = String.Format("Sloupec [{0}] v přehledu faktur", strName)
                     cbx2.Items.FindByValue("2").Enabled = False
                     cbx2.Items.FindByValue("3").Enabled = False

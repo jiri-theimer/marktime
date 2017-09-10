@@ -11,7 +11,7 @@ Public Class x18_framework
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
-                .PageTitle = "Správa štítků"
+                .PageTitle = "Správa typů dokumentů"
                 .SiteMenuValue = "x18_framework"
                 If Not Request.UrlReferrer Is Nothing Then
                     If Request.UrlReferrer.AbsolutePath.IndexOf("admin") > 0 Or Request.Item("source") = "admin" Then
@@ -50,7 +50,7 @@ Public Class x18_framework
             .AddSystemColumn(20)
             .AddColumn("x18Name", "Název")
          
-            .AddColumn("TagOrDoc", "Dokument/Štítek", BO.cfENUM.AnyString)
+            .AddColumn("TagOrDoc", "Dokument/Kategorie", BO.cfENUM.AnyString)
             .AddColumn("Is_p41", "Projekty", BO.cfENUM.Checkbox)
             .AddColumn("Is_p28", "Klienti", BO.cfENUM.Checkbox)
             .AddColumn("Is_p56", "Úkoly", BO.cfENUM.Checkbox)

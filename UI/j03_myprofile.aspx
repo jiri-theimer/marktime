@@ -34,7 +34,7 @@
         function x40_edit() {
             var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
             if (pid == "" || pid == null) {
-                alert("Není vybrán záznam.");
+                $.alert("Není vybrán záznam.");
                 return
             }
             sw_master("x40_record.aspx?pid=" + pid, "Images/email.png");

@@ -169,14 +169,14 @@ Class x31ReportBL
             lisX31.Add(GPPS(-5, "[FAKTURY]", "p91_framework.aspx", -14, BO.x29IdEnum.p91Invoice, "p91"))
             lisX31.Add(GPPS(-998, "[Zálohové faktury]", "p90_framework.aspx", -30, BO.x29IdEnum.p90Proforma, "p90_framework"))
         End If
-        
+
         If _cUser.j04IsMenu_People Then
             lisX31.Add(GPPS(-5, "[LIDÉ]", "j02_framework.aspx", -14, BO.x29IdEnum.j02Person, "j02"))
         End If
         If Factory.TestPermission(BO.x53PermValEnum.GR_Navigator) Then
             lisX31.Add(GPPS(-5, "[NAVIGÁTOR]", "navigator.aspx", -14, BO.x29IdEnum.System, "navigator"))
         End If
-        
+
 
         lisX31.Add(GPPS(-998, "[Dokumenty - základní přehled]", "o23_framework.aspx", -30, BO.x29IdEnum.o23Doc, "o23"))
         lisX31.Add(GPPS(-998, "[Dokumenty]", "entity_framework.aspx?prefix=o23", -30, BO.x29IdEnum.o23Doc, "o23"))
@@ -187,11 +187,11 @@ Class x31ReportBL
             lisX31.Add(GPPS(-998, "[Administrace systému]", "admin_framework.aspx", -30, BO.x29IdEnum.System, "admin_framework"))
             lisX31.Add(GPPS(-998, "[Ceníky sazeb]", "p51_framework.aspx", -30, BO.x29IdEnum.p51PriceList, "p51_framework"))
         End If
-        
+
 
         ''lisX31.Add(GPPS(-998, "[Operativní plánování]", "p48_framework.aspx", -30, BO.x29IdEnum.p48OperativePlan, "p48_framework"))
 
-       
+
 
         Return lisX31
     End Function

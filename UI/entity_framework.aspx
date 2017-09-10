@@ -330,8 +330,8 @@
                                             </div>
                                             <div>
                                                 <button type="button" onclick="x18_querybuilder()">
-                                                    <img src="Images/label.png" />Štítky</button>
-                                                <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit štítkovací filtr" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
+                                                    <img src="Images/label.png" />Kategorie</button>
+                                                <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit filtr kategorií" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
                                                 <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
                                             </div>
                                             <div>

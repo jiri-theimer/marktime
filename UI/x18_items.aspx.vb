@@ -10,14 +10,14 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
-                .HeaderText = "Položky štítku (typu dokumentu)"
+                .HeaderText = "Položky kategorie"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .DataPID = 0 Then .StopPage("pid missing")
 
                 If Not .Factory.TestPermission(BO.x53PermValEnum.GR_X18_Admin) Then
                     If Not .Factory.x67EntityRoleBL.TestEntityRolePermission(BO.x29IdEnum.x18EntityCategory, .DataPID, 1, False) Then
-                        've štítkové roli má oprávnění být vlastníkem všech úkolů
-                        .StopPage("Nemáte oprávnění spravovat položky u tohoto štítku (typu dokumentu).")
+                        'v roli má oprávnění být vlastníkem všech úkolů
+                        .StopPage("Nemáte oprávnění spravovat položky u této kategorie (typu dokumentu).")
                     End If
                 End If
 

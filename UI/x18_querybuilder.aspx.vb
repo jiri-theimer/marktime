@@ -23,7 +23,7 @@ Public Class x18_querybuilder
 
             With Master
                 .HeaderIcon = "Images/query_32.png"
-                .HeaderText = "Filtrování podle štítků"
+                .HeaderText = "Filtrování podle kategorií"
                 .AddToolbarButton(Resources.grid_designer.Vybrat, "ok", , "Images/ok.png")
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
 
@@ -59,14 +59,14 @@ Public Class x18_querybuilder
 
     Private Sub SetupTree()
 
-        Dim nParent As RadTreeNode = WN0("Štítky", Me.hidPrefix.Value, Nothing)
+        Dim nParent As RadTreeNode = WN0("Kategorie", Me.hidPrefix.Value, Nothing)
         nParent.ImageUrl = "Images/folder.png"
         nParent.Checkable = False
         nParent.Expanded = True
         tr1.Nodes.Add(nParent)
         Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, Me.CurrentX29ID).Where(Function(p) p.x18IsManyItems = False)
         If lisX18.Count = 0 Then
-            Master.Notify(String.Format("Pro entitu [{0}] zatím neexistuje štítek (typ dokumentu).", BO.BAS.GetX29EntityAlias(Me.CurrentX29ID, False)))
+            Master.Notify(String.Format("Pro entitu [{0}] zatím nebyla zavedena žádná kategorie (typ dokumentu).", BO.BAS.GetX29EntityAlias(Me.CurrentX29ID, False)))
         End If
         For Each c In lisX18
             WN(c, hidPrefix.Value & "-" & Right("0000" & c.PID.ToString, 4), nParent)
@@ -76,7 +76,7 @@ Public Class x18_querybuilder
             Case BO.x29IdEnum.p41Project
                 lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1).Where(Function(p) p.x18IsManyItems = False)
                 If lisX18.Count > 0 Then
-                    nParent = WN0("Štítky klienta projektu", "p28", nParent)
+                    nParent = WN0("Kategorie klienta projektu", "p28", nParent)
                     For Each c In lisX18
                         WN(c, "p28-" & Right("0000" & c.PID.ToString, 4), nParent)
                     Next
@@ -86,7 +86,7 @@ Public Class x18_querybuilder
                 Dim nS As RadTreeNode = nParent
                 lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p41Project, -1).Where(Function(p) p.x18IsManyItems = False)
                 If lisX18.Count > 0 Then
-                    nParent = WN0("Štítky projektu", "p41", nS)
+                    nParent = WN0("Kategorie projektu", "p41", nS)
 
                     For Each c In lisX18
                         WN(c, "p41-" & Right("0000" & c.PID.ToString, 4), nParent)
@@ -94,7 +94,7 @@ Public Class x18_querybuilder
                 End If
                 lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1).Where(Function(p) p.x18IsManyItems = False)
                 If lisX18.Count > 0 Then
-                    nParent = WN0("Štítky klienta projektu", "p28", nS)
+                    nParent = WN0("Kategorie klienta projektu", "p28", nS)
 
                     For Each c In lisX18
                         WN(c, "p28-" & Right("0000" & c.PID.ToString, 4), nParent)
@@ -102,7 +102,7 @@ Public Class x18_querybuilder
                 End If
                 lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.j02Person, -1).Where(Function(p) p.x18IsManyItems = False)
                 If lisX18.Count > 0 Then
-                    nParent = WN0("Štítky osoby", "j02", nS)
+                    nParent = WN0("Kategorie osoby", "j02", nS)
 
                     For Each c In lisX18
                         WN(c, "j02-" & Right("0000" & c.PID.ToString, 4), nParent)
@@ -111,7 +111,7 @@ Public Class x18_querybuilder
             Case BO.x29IdEnum.p91Invoice
                 lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1).Where(Function(p) p.x18IsManyItems = False)
                 If lisX18.Count > 0 Then
-                    nParent = WN0("Štítky klienta faktury", "p28", nParent)
+                    nParent = WN0("Kategorie klienta faktury", "p28", nParent)
                     For Each c In lisX18
                         WN(c, "p28-" & Right("0000" & c.PID.ToString, 4), nParent)
                     Next
@@ -119,7 +119,7 @@ Public Class x18_querybuilder
             Case BO.x29IdEnum.p56Task
                 lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p41Project, -1).Where(Function(p) p.x18IsManyItems = False)
                 If lisX18.Count > 0 Then
-                    nParent = WN0("Štítky projektu", "p41", nParent)
+                    nParent = WN0("Kategorie projektu", "p41", nParent)
 
                     For Each c In lisX18
                         WN(c, "p41-" & Right("0000" & c.PID.ToString, 4), nParent)

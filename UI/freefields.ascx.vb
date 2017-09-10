@@ -113,7 +113,7 @@ Public Class freefields
     End Sub
     Public Sub FillData(ByVal listFF As IEnumerable(Of BO.FreeField), lisX20X18 As IEnumerable(Of BO.x20_join_x18), strDataTable As String, intDataPID As Integer, Optional strTempGUID As String = "")
         lisX20X18 = lisX20X18.Where(Function(p) p.x20IsClosed = False And p.x20EntryModeFlag = BO.x20EntryModeENUM.Combo)   'omezit pouze na otevřené vazby + vazby vyplňované přes combo
-        'strTempGUID je tu pouze pro agendu štítků
+        'strTempGUID je tu pouze pro agendu kategorií
         Me.DataTable = strDataTable
         Me.DataPID = intDataPID
 
@@ -121,11 +121,11 @@ Public Class freefields
         rpFF.DataBind()
 
         
-        Dim curTags As List(Of BO.x19EntityCategory_Binding) = GetTags()    'naposledy ve formuláři vyplněné štítky - pokud existují, mají přednost
+        Dim curTags As List(Of BO.x19EntityCategory_Binding) = GetTags()    'naposledy ve formuláři vyplněné kategorie - pokud existují, mají přednost
         rp1.DataSource = lisX20X18
         rp1.DataBind()
         If rp1.Items.Count = 0 Then
-            rp1.Visible = False 'žádné štítky/dokumenty k vyplnění
+            rp1.Visible = False 'žádné kategorie/dokumenty k vyplnění
         Else
             rp1.Visible = True
             If Me.DataPID <> 0 Then
@@ -142,7 +142,7 @@ Public Class freefields
                     ri.FindControl("cmdO23_Clear").Visible = False
                     If lis.Count > 0 Then
                         If ri.FindControl("o23IDs_Tag").Visible Then
-                            'štítek
+                            'kategorie
                             With CType(ri.FindControl("o23IDs_Tag"), UI.datacombo)
                                 If .AllowCheckboxes Then
                                     .SelectCheckboxItems(lis)
@@ -190,7 +190,7 @@ Public Class freefields
                 .Text = "<img src='Images/label.png'/>"
                 If cRec.x18IsManyItems Then .Text = "<img src='Images/notepad.png'/>"
             Else
-                .Text = "<img src='" & cRec.x18Icon & "' alt='Štítek'/>"
+                .Text = "<img src='" & cRec.x18Icon & "' alt='Kategorie'/>"
             End If
             If cRec.x20Name = "" Then
                 .Text += " " & cRec.x18Name & ":"
@@ -214,7 +214,7 @@ Public Class freefields
                 .Attributes.Item("onclick") = "o23_find_x18(" & cRec.x18ID.ToString & "," & cRec.x20ID.ToString & ")"
             End With
         Else
-            'štítek
+            'kategorie
             With CType(e.Item.FindControl("cmdX18_Items"), HtmlButton)
                 .Visible = True
                 .Attributes.Item("onclick") = "x18_items(" & cRec.x18ID.ToString & ")"

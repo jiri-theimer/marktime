@@ -25,7 +25,7 @@
         function record_edit() {
             var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
             if (pid == "" || pid == null) {
-                alert("Není vybrán záznam.");
+                $.alert("Není vybrán záznam.");
                 return
             }
             sw_master("p31_record.aspx?pid=" + pid, "Images/worksheet.png");
@@ -90,7 +90,7 @@
         function record_clone() {
             var pids = GetAllSelectedPIDs();
             if (pids == "" || pids == null) {
-                alert("Není vybrán záznam.");
+                $.alert("Není vybrán záznam.");
                 return
             }
             sw_master("p31_record.aspx?clone=1&pid=" + pids, "Images/worksheet.png");
@@ -100,7 +100,7 @@
         function record_split() {
             var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
             if (pid == "" || pid == null) {
-                alert("Není vybrán záznam.");
+                $.alert("Není vybrán záznam.");
                 return
             }
             sw_master("p31_record_split.aspx?pid=" + pid, "Images/worksheet.png");
@@ -132,7 +132,7 @@
         function approving() {
             var pids = GetAllSelectedPIDs();
             if (pids == "") {
-                alert("Není vybrán ani jeden záznam.");
+                $.alert("Není vybrán ani jeden záznam.");
                 return;
                 //return (false);
             }
@@ -156,7 +156,7 @@
         function drilldown_p31ids() {
             var pids = GetAllSelectedPIDs();
             if (pids == "") {
-                alert("Není vybrán ani jeden záznam.");
+                $.alert("Není vybrán ani jeden záznam.");
                 return;
             }
 
@@ -227,8 +227,8 @@
                                 </div>
                                 <div class="content">
                                     <div class="div6">
-                                        <button type="button" onclick="x18_querybuilder()"><img src="Images/label.png" />Štítky</button>
-                                        <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit štítkovací filtr" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
+                                        <button type="button" onclick="x18_querybuilder()"><img src="Images/label.png" />Kategorie</button>
+                                        <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit filtr kategorií" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
                                         <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
                                     </div>
                                     <div class="div6">

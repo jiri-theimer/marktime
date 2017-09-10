@@ -49,7 +49,7 @@
         <Tabs>
             <telerik:RadTab Text="Vlastnosti projektu" Selected="true" Value="core"></telerik:RadTab>
             <telerik:RadTab Text="Fakturační nastavení" Value="billing"></telerik:RadTab>
-            <telerik:RadTab Text="Štítky ({1}), uživatelská pole ({0})" Value="ff"></telerik:RadTab>
+            <telerik:RadTab Text="Kategorie ({1}), uživatelská pole ({0})" Value="ff"></telerik:RadTab>
             <telerik:RadTab Text="Ostatní" Value="other"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>

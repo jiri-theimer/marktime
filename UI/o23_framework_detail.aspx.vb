@@ -58,7 +58,7 @@
             If cX18.x18IsManyItems Then imgIcon32.ImageUrl = "Images/notepad_32.png"
         End If
         If Not cX18.x18IsManyItems Then
-            FNO("record").Text = "ZÁZNAM ŠTÍTKU"
+            FNO("record").Text = "ZÁZNAM DOKUMENTU"
         End If
         If cX18.b01ID <> 0 Then
             hidB01ID.Value = cX18.b01ID.ToString

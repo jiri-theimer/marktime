@@ -137,6 +137,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Kategorie.
+        '''</summary>
+        Friend Shared ReadOnly Property Kategorie() As String
+            Get
+                Return ResourceManager.GetString("Kategorie", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to DALŠÍ.
         '''</summary>
         Friend Shared ReadOnly Property Menu_DALSI() As String
@@ -272,11 +281,11 @@ Namespace Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Štítky.
+        '''  Looks up a localized string similar to Tuto stránku uložit jako mojí výchozí.
         '''</summary>
-        Friend Shared ReadOnly Property Stitky() As String
+        Friend Shared ReadOnly Property UlozitJakoVychoziStranku() As String
             Get
-                Return ResourceManager.GetString("Stitky", resourceCulture)
+                Return ResourceManager.GetString("UlozitJakoVychoziStranku", resourceCulture)
             End Get
         End Property
         

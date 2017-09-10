@@ -367,7 +367,6 @@
     <Content Include="j03_mypage_greeting.aspx" />
     <Content Include="j03_mypage_setting.aspx" />
     <Content Include="j03_myprofile.aspx" />
-    <Content Include="j03_myprofile_defaultpage.aspx" />
     <Content Include="j05_record.aspx" />
     <Content Include="j17_record.aspx" />
     <Content Include="j18_record.aspx" />
@@ -409,6 +408,7 @@
     <Content Include="query_builder.aspx" />
     <Content Include="Public\mtservice_recovery.aspx" />
     <Content Include="report_framework_detail4.aspx" />
+    <Content Include="Handler\handler_default_page.ashx" />
     <None Include="Service References\SpolehlivostDPH\rozhraniCRPDPH.wsdl" />
     <Content Include="searchbox.ascx" />
     <Content Include="Service References\SpolehlivostDPH\UI.SpolehlivostDPH.InformaceOPlatciType.datasource">
@@ -966,6 +966,9 @@
     </Compile>
     <Compile Include="Handler\handler_capacity_plan.ashx.vb">
       <DependentUpon>handler_capacity_plan.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\handler_default_page.ashx.vb">
+      <DependentUpon>handler_default_page.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handler\handler_p45_project.ashx.vb">
       <DependentUpon>handler_p45_project.ashx</DependentUpon>
@@ -2016,13 +2019,6 @@
     </Compile>
     <Compile Include="j03_myprofile.aspx.vb">
       <DependentUpon>j03_myprofile.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="j03_myprofile_defaultpage.aspx.designer.vb">
-      <DependentUpon>j03_myprofile_defaultpage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="j03_myprofile_defaultpage.aspx.vb">
-      <DependentUpon>j03_myprofile_defaultpage.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="j05_record.aspx.designer.vb">

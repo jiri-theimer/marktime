@@ -102,10 +102,12 @@ Public Class main_menu
 
         RenderDbMenu(factory, strLang)
 
+
         With factory.SysUser
             n = ai(.Person, "me", "", "")
             If .Person = "" Then n.Text = .j03Login
             If .j04IsMenu_MyProfile Then ai(Resources.Site.MujProfil, "cmdMyProfile", "j03_myprofile.aspx", "", n)
+            ai(Resources.Site.UlozitJakoVychoziStranku, "cmdDefaultPage", "javascript:defpage('" & Request.Url.PathAndQuery & "')", "", n)
             ai(Resources.Site.ZmenitHeslo, "cmdChangePassword", "changepassword.aspx", "", n)
             ai(Resources.Site.OdhlasitSe, "cmdLogout", "Account/Login.aspx?logout=1", "", n)
 

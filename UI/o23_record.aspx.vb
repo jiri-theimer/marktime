@@ -187,7 +187,7 @@ Public Class o23_record
             Return
         End If
         Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(Me.CurrentX18ID)
-        lisX20X18 = lisX20X18.Where(Function(p) p.x20IsClosed = False And p.x20EntryModeFlag = BO.x20EntryModeENUM.InsertUpdateWithoutCombo).OrderBy(Function(p) p.x20IsMultiSelect).ThenBy(Function(p) p.x29ID)   'omezit pouze na otevřené vazby + vazby vyplňované přes záznam položky štítku
+        lisX20X18 = lisX20X18.Where(Function(p) p.x20IsClosed = False And p.x20EntryModeFlag = BO.x20EntryModeENUM.InsertUpdateWithoutCombo).OrderBy(Function(p) p.x20IsMultiSelect).ThenBy(Function(p) p.x29ID)   'omezit pouze na otevřené vazby + vazby vyplňované přes záznam položky kategorie
         With opgX20ID
             .DataSource = lisX20X18
             .DataBind()
