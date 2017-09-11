@@ -535,6 +535,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Sys\sys_dbobjects.aspx" />
+    <Content Include="tag_binding.aspx" />
     <Content Include="timer.ascx" />
     <Content Include="timesheet_calendar.ascx" />
     <Content Include="treemenu.ascx" />
@@ -3066,6 +3067,13 @@
     <Compile Include="Sys\sys_dbobjects.aspx.vb">
       <DependentUpon>sys_dbobjects.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="tag_binding.aspx.designer.vb">
+      <DependentUpon>tag_binding.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="tag_binding.aspx.vb">
+      <DependentUpon>tag_binding.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="timer.ascx.designer.vb">
       <DependentUpon>timer.ascx</DependentUpon>

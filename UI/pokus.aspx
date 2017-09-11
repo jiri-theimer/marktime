@@ -18,7 +18,7 @@
             //Data passed to the service.
             document.getElementById("<%=txtPokus.clientid%>").value = sender.get_text();
             
-            context["filterstring"] = sender.get_text();
+            context["prefix"] = "p41";
         }
 
         function entryAdding(sender, eventArgs) {            
@@ -31,7 +31,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <telerik:RadAutoCompleteBox ID="tags1" runat="server" RenderMode="Lightweight" EmptyMessage="Uveďte název štítku" Width="400px" OnClientEntryAdding="entryAdding">     
+    <telerik:RadAutoCompleteBox ID="tags1" runat="server" RenderMode="Lightweight" EmptyMessage="Uveďte název štítku" Width="400px" OnClientEntryAdding="entryAdding" OnClientRequesting="requesting">     
         <WebServiceSettings Method="LoadComboData" Path="~/Services/tag_service.asmx"/>   
         <Localization ShowAllResults="Zobrazit všechny výsledky" RemoveTokenTitle="Zrušit výběr štítku" />
         

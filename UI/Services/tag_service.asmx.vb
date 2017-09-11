@@ -19,7 +19,7 @@ Public Class tag_service
         'Dim filterString As String = DirectCast(context, Dictionary(Of String, Object))("filterstring").ToString()
         Dim filterString As String = DirectCast(context, Dictionary(Of String, Object))("Text").ToString()
 
-        Dim strFlag As String = ""
+        Dim strPrefix As String = DirectCast(context, Dictionary(Of String, Object))("prefix").ToString()
 
         Dim factory As BL.Factory = Nothing
 
@@ -44,7 +44,7 @@ Public Class tag_service
         mq.TopRecordsOnly = 50
 
 
-        Dim lis As IEnumerable(Of BO.o51Tag) = factory.o51TagBL.GetList(mq)
+        Dim lis As IEnumerable(Of BO.o51Tag) = factory.o51TagBL.GetList(mq, strPrefix)
         result = New List(Of AutoCompleteBoxItemData)(lis.Count)
         Dim itemData As New AutoCompleteBoxItemData()
         itemData.Enabled = False
@@ -62,17 +62,7 @@ Public Class tag_service
 
         For Each c As BO.o51Tag In lis
             itemData = New AutoCompleteBoxItemData()
-            itemData.Value = c.PID.ToString
-            Select Case strFlag
-                Case "1"
-                    'zobrazovat u štítku timestamp
-                    itemData.Text = c.o51Name & " (" & c.Owner & "/" & BO.BAS.FD(c.DateInsert) & ")"
-                Case Else
-                    itemData.Text = c.o51Name
-            End Select
-
-
-
+            itemData.Text = c.o51Name
             itemData.Value = c.PID.ToString
             result.Add(itemData)
         Next

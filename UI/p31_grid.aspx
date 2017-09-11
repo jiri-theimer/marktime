@@ -12,7 +12,9 @@
         $(document).ready(function () {
             
 
-
+            <%If designer1.Visible then%>
+            document.getElementById("cmdMyGridDesigner").style.display = "block";
+            <%end If%>
 
            
 
@@ -292,6 +294,9 @@
                                             <asp:ListItem Text="500"></asp:ListItem>
                                         </asp:DropDownList>
                                     </div>
+                                    <div>
+                                                    <button type="button" id="cmdMyGridDesigner" onclick="mygrid_setting()" style="display:none;">Návrhář přehledu (sloupce a filtry)</button>
+                                                </div>
                                 </div>
                             </div>
                             <div class="content-box3">

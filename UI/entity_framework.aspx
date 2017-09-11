@@ -24,7 +24,9 @@
             <%If Me.CurrentPrefix = "p91" Then%>
             document.getElementById("buttonBatchMail").style.display = "block";
             <%End If%>
-
+            <%If designer1.Visible then%>
+            document.getElementById("cmdMyGridDesigner").style.display = "block";
+            <%end If%>
 
         });
 
@@ -398,7 +400,7 @@
                                                 <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField">
                                                 </asp:DropDownList>
 
-                                                <span class="val">Stránkování přehledu:</span>
+                                                <span class="val">Stránkování záznamů:</span>
                                                 <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování" TabIndex="3">
                                                     <asp:ListItem Text="20"></asp:ListItem>
                                                     <asp:ListItem Text="50" Selected="True"></asp:ListItem>
@@ -409,6 +411,9 @@
                                                 <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="Auto-rozbalené souhrny" AutoPostBack="true" Checked="false" />
                                                 <div>
                                                     <asp:CheckBox ID="chkCheckboxSelector" runat="server" Text="Možnost označovat záznamy zaškrtnutím (checkbox)" AutoPostBack="true" />
+                                                </div>
+                                                <div>
+                                                    <button type="button" id="cmdMyGridDesigner" onclick="mygrid_setting()" style="display:none;">Návrhář přehledu (sloupce a filtry)</button>
                                                 </div>
                                             </div>
 

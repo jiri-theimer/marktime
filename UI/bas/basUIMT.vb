@@ -91,8 +91,21 @@ Public Class basUIMT
             Next
             grid.SetFilterSetting(strFilterSetting, strFilterExpression)
 
-
+            If cJ70.j70OrderBy <> "" Then
+                Dim a() As String = Split(cJ70.j70OrderBy, ",")
+                For i As Integer = 0 To UBound(a)
+                    Dim strC As String = a(i)
+                    If strC.IndexOf(".") > 0 Then
+                        strC = Split(strC, ".")(1)
+                    End If
+                    Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strC And p.SqlSyntax_FROM <> "")
+                    If Not c Is Nothing Then
+                        lisSqlFROM.Add(c.SqlSyntax_FROM)
+                    End If
+                Next
+            End If
         End With
+        
 
         If lisSqlFROM.Count > 0 Then strGetAdditionalFROM = String.Join(" ", lisSqlFROM.Distinct)
         strGetSumCols = String.Join("|", lisSqlSumCols)
@@ -125,6 +138,9 @@ Public Class basUIMT
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
         If bolDT Then
             Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
+            If cRec.Item(0) Is System.DBNull.Value Then Return 'chybné SQL datového přehledu
+
+
             With cRec
                 If .Item("IsDraft") Then
                     dataItem("systemcolumn").CssClass = "draft"
@@ -220,6 +236,7 @@ Public Class basUIMT
 
         If bolDT Then
             Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
+            If cRec.Item(0) Is System.DBNull.Value Then Return 'chybné SQL datového přehledu
             If bolShowClueTip Then
                 With dataItem("systemcolumn")
                     .Text = "<a class='reczoom' title='Detail úkolu' rel='clue_p56_record.aspx?pid=" & cRec.Item("pid").ToString & "'>i</a>"
@@ -272,6 +289,7 @@ Public Class basUIMT
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
 
         Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
+        If cRec.Item(0) Is System.DBNull.Value Then Return 'chybné SQL datového přehledu
         If bolShowClueTip Then
             With dataItem("systemcolumn")
                 .Text = "<a class='reczoom' title='Detail dokumentu' rel='clue_o23_record.aspx?pid=" & cRec.Item("pid").ToString & "' style='margin-left:-10px;'>i</a>"
@@ -312,6 +330,9 @@ Public Class basUIMT
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
         If bolDT Then
             Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
+          
+            If cRec.Item(0) Is System.DBNull.Value Then Return 'chybné SQL datového přehledu
+
             If cRec.Item("IsDraft") Then dataItem("systemcolumn").CssClass = "draft"
             If Not cRec.Item("j13ID") Is System.DBNull.Value Then dataItem("systemcolumn").CssClass = "favourite"
             If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
@@ -342,6 +363,7 @@ Public Class basUIMT
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
 
         Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
+        If cRec.Item(0) Is System.DBNull.Value Then Return 'chybné SQL datového přehledu
 
         If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
         If Not cRec.Item("IsIntraPerson") Then
@@ -353,6 +375,7 @@ Public Class basUIMT
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
         If bolDT Then
             Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
+            If cRec.Item(0) Is System.DBNull.Value Then Return 'chybné SQL datového přehledu
 
             If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
             If cRec.Item("IsDraft") Then dataItem("systemcolumn").CssClass = "draft"
