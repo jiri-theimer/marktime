@@ -104,6 +104,15 @@ Partial Public Class o23_framework_detail
     Protected WithEvents cmdPlugin As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
+    '''cmdTags control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdTags As Global.Telerik.Web.UI.NavigationNode
+
+    '''<summary>
     '''cmdBarCode control.
     '''</summary>
     '''<remarks>
@@ -192,6 +201,15 @@ Partial Public Class o23_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents roles1 As Global.UI.entityrole_assign_inline
+
+    '''<summary>
+    '''tags1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tags1 As Global.UI.mytags
 
     '''<summary>
     '''panUpload control.

@@ -10,6 +10,7 @@
 <%@ Register TagPrefix="uc" TagName="plugin_datatable" Src="~/plugin_datatable.ascx" %>
 <%@ Register TagPrefix="uc" TagName="alertbox" Src="~/alertbox.ascx" %>
 <%@ Register TagPrefix="uc" TagName="mygrid" Src="~/mygrid.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" type="text/css" href="Plugins/Plugin.css" />
@@ -288,6 +289,9 @@
             </telerik:NavigationNode>
             <telerik:NavigationNode Text="DALŠÍ" ID="more">
                 <Nodes>
+                    <telerik:NavigationNode ID="cmdTags" Text="Štítky" ImageUrl="Images/tag.png" NavigateUrl="javascript:tags_assign()">
+                    </telerik:NavigationNode>
+
                     <telerik:NavigationNode ID="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()">
                     </telerik:NavigationNode>
 
@@ -558,8 +562,12 @@
                         <asp:Label ID="p91Text1" runat="server" CssClass="val" Style="font-family: 'Courier New'; word-wrap: break-word; display: block; font-size: 120%;"></asp:Label>
                     </div>
                 </asp:Panel>
-                
-                <asp:Panel ID="boxX18" runat="server" CssClass="content-box1" Style="clear: both;">
+
+                <div style="clear: both;">
+                <uc:mytags ID="tags1" runat="server" />
+                </div>
+
+                <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">
                     <div class="title">
                         <img src="Images/label.png" style="margin-right: 10px;" /><span>Kategorie</span>
                     </div>

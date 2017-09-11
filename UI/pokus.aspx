@@ -27,10 +27,13 @@
             }
             
         }
+        function stitky() {
+            window.open("tag_binding.aspx?prefix=p41&pids=11","_blank")
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
+    <a href="javascript:stitky()">Štítky</a>
     <telerik:RadAutoCompleteBox ID="tags1" runat="server" RenderMode="Lightweight" EmptyMessage="Uveďte název štítku" Width="400px" OnClientEntryAdding="entryAdding" OnClientRequesting="requesting">     
         <WebServiceSettings Method="LoadComboData" Path="~/Services/tag_service.asmx"/>   
         <Localization ShowAllResults="Zobrazit všechny výsledky" RemoveTokenTitle="Zrušit výběr štítku" />

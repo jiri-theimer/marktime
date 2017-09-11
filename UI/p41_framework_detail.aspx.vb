@@ -289,7 +289,8 @@
         Else
             cal1.Visible = False
         End If
-        
+
+        tags1.RefreshData(Master.Factory, "p41", cRec.PID)
 
         'RefreshP64(cRecSum)
 

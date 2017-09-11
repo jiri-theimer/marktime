@@ -284,13 +284,14 @@ Public Class entity_menu
             ami("WORKSHEET statistika projektu", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
         ami("Plugin", "cmdPlugin", "javascript:plugin();", "Images/plugin.png", mi, , True)
+        ami("Štítky", "cmdTags", "javascript:tags_menu();", "Images/tag.png", mi, , True)
         If cDisp.OwnerAccess Then
             ami("Kontaktní osoby projektu", "cmdP30", "javascript:p30_record(0);", "Images/person.png", mi, , True)
 
             'ami("Vytvořit šanon", "cmdP64", "javascript:p64_record(0);", "Images/binder.png", mi)
         End If
         If Not cRec.IsClosed Then
-            If cP42.p42IsModule_p56 Then ami("Vytvořit úkol", "cmdP56", "javascript:menu_p56_record(0);", "Images/person.png", mi, , True)
+            If cP42.p42IsModule_p56 Then ami("Vytvořit úkol", "cmdP56", "javascript:menu_p56_record(0);", "Images/task.png", mi, , True)
 
         End If
         If cP42.p42IsModule_o22 Then
@@ -572,6 +573,7 @@ Public Class entity_menu
             ami("WORKSHEET statistika klienta", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
         ami("Plugin", "cmdPlugin", "javascript:plugin();", "Images/plugin.png", mi, , True)
+        ami("Štítky", "cmdTags", "javascript:tags_menu();", "Images/tag.png", mi, , True)
 
         If Me.Factory.SysUser.j04IsMenu_Notepad Then
             ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi, , True)
@@ -640,6 +642,7 @@ Public Class entity_menu
                 ami("WORKSHEET statistika osoby", "cmdPivot", "p31_sumgrid.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
             End If
             ami("Plugin", "cmdPlugin", "javascript:plugin();", "Images/plugin.png", mi, , True)
+            ami("Štítky", "cmdTags", "javascript:tags_menu();", "Images/tag.png", mi, , True)
             If Me.Factory.TestPermission(BO.x53PermValEnum.GR_Admin) Then
                 ami("Přepočítat sazby rozpracovaných čas.úkonů", "cmdP31Recalc", "javascript:p31_recalc();", "Images/recalc.png", mi)
             End If
@@ -654,6 +657,8 @@ Public Class entity_menu
             ami("Historie odeslané pošty", "cmdX40", "x40_framework.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "Images/email.png", mi, , , "_top")
 
             ami("Historie aktivit osoby", "cmdLog", "javascript: timeline()", "Images/event.png", mi)
+        Else
+            ami("Štítky", "cmdTags", "javascript:tags_menu();", "Images/tag.png", mi, , True)
         End If
 
         ami("Doplnit poznámku, komentář, přílohu", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
@@ -826,6 +831,7 @@ Public Class entity_menu
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
             ami("WORKSHEET statistika úkolu", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
+        ami("Štítky", "cmdTags", "javascript:tags_menu();", "Images/tag.png", mi, , True)
 
         ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi, , True)
 

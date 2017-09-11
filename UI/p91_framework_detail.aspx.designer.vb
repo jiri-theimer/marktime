@@ -140,6 +140,15 @@ Partial Public Class p91_framework_detail
     Protected WithEvents more As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
+    '''cmdTags control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdTags As Global.Telerik.Web.UI.NavigationNode
+
+    '''<summary>
     '''switchHeight control.
     '''</summary>
     '''<remarks>
@@ -867,6 +876,15 @@ Partial Public Class p91_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p91Text1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''tags1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tags1 As Global.UI.mytags
 
     '''<summary>
     '''boxX18 control.

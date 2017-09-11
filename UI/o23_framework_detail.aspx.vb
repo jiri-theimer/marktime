@@ -130,7 +130,7 @@
             panUpload.Visible = False
         End If
         
-
+        tags1.RefreshData(Master.Factory, "o23", cRec.PID)
     End Sub
 
 

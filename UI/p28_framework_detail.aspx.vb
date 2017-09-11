@@ -254,7 +254,7 @@
             cal1.Visible = False
         End If
         
-
+        tags1.RefreshData(Master.Factory, "p28", cRec.PID)
        
     End Sub
 

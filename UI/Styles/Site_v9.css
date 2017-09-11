@@ -985,11 +985,27 @@ div.menu-group-item {
     border-width:1px;
     border-color:gray;
     vertical-align: middle;
-    border-radius: 6px;
-    margin-left: 1px;
+    border-radius: 6px;    
     background-color:whitesmoke;
     color:black;
     margin-left:10px;
+}
+
+.badge_tag {
+    display: inline-block;
+    min-width: 50px;
+    padding: 3px;
+    font-weight: normal;
+    line-height: 1;
+    text-align:center;
+    border:solid;
+    border-width:1px;
+    border-color:gray;
+    vertical-align: middle;
+    border-radius: 4px;    
+    background-color:khaki;
+    color:black;
+    margin-left:2px;
 }
 
 

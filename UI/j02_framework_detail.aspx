@@ -8,6 +8,7 @@
 <%@ Register TagPrefix="uc" TagName="alertbox" Src="~/alertbox.ascx" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="myscheduler" Src="~/myscheduler.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -131,6 +132,9 @@
             </table>
 
             <asp:Label ID="Mediums" runat="server" CssClass="val" ForeColor="Orange" Style="padding-left: 8px;"></asp:Label>
+            <div>
+                <uc:mytags ID="tags1" runat="server" />
+            </div>
             <div>
                 <asp:Label ID="Correspondence" runat="server"></asp:Label>
             </div>

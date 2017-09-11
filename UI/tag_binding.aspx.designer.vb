@@ -68,6 +68,150 @@ Partial Public Class tag_binding
     Protected WithEvents cbxScope As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
+    '''panEdidt control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panEdidt As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''cmdSave control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSave As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cbxFind control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxFind As Global.Telerik.Web.UI.RadComboBox
+
+    '''<summary>
+    '''panRecord control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panRecord As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''o51Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o51Name As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''o51ScopeFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o51ScopeFlag As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''panEntities control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panEntities As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''o51IsP41 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o51IsP41 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''o51IsP28 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o51IsP28 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''o51IsP56 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o51IsP56 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''o51IsP91 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o51IsP91 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''o51IsP31 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o51IsP31 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''o51IsO23 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o51IsO23 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''o51IsJ02 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o51IsJ02 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''o51IsP90 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o51IsP90 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''Timestamp control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Timestamp As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''hidPrefix control.
     '''</summary>
     '''<remarks>

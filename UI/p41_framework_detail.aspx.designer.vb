@@ -338,6 +338,15 @@ Partial Public Class p41_framework_detail
     Protected WithEvents Timestamp As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''tags1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tags1 As Global.UI.mytags
+
+    '''<summary>
     '''tree1 control.
     '''</summary>
     '''<remarks>

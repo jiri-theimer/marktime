@@ -178,6 +178,8 @@
         RefreshImapBox(cRec)
 
         comments1.RefreshData(Master.Factory, BO.x29IdEnum.p56Task, cRec.PID)
+
+        tags1.RefreshData(Master.Factory, "p56", cRec.PID)
     End Sub
     Private Sub RefreshImapBox(cRec As BO.p56Task)
         If cRec.o43ID <> 0 Then

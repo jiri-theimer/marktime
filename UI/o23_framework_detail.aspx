@@ -6,6 +6,7 @@
 <%@ Register TagPrefix="uc" TagName="entityrole_assign_inline" Src="~/entityrole_assign_inline.ascx" %>
 <%@ Register TagPrefix="uc" TagName="o23_record_readonly" Src="~/o23_record_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="fileupload_list" Src="~/fileupload_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
 
@@ -122,6 +123,8 @@
                     <telerik:NavigationNode ID="cmdEmail" Text="Odeslat e-mail" NavigateUrl="javascript:sendmail();" ImageUrl="Images/email.png"></telerik:NavigationNode>
 
                     <telerik:NavigationNode ID="cmdPlugin" Text="Plugin" NavigateUrl="javascript:plugin();" ImageUrl="Images/plugin.png"></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="cmdTags" Text="Štítky" NavigateUrl="javascript:tags_assign();" ImageUrl="Images/tag.png"></telerik:NavigationNode>
+                    
 
                     <telerik:NavigationNode ID="cmdBarCode" Text="Čárový kód" NavigateUrl="javascript:barcode();" ImageUrl="Images/barcode.png"></telerik:NavigationNode>
                 </Nodes>
@@ -154,6 +157,7 @@
     <div class="div6" style="border-top: dashed 1px silver;">
         <uc:entityrole_assign_inline ID="roles1" runat="server" EntityX29ID="o23Doc" NoDataText=""></uc:entityrole_assign_inline>
     </div>
+    <uc:mytags ID="tags1" runat="server" />
 
     <asp:Panel ID="panUpload" runat="server" CssClass="content-box2">
         <div class="title">

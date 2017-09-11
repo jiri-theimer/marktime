@@ -9,6 +9,7 @@
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="alertbox" Src="~/alertbox.ascx" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -137,7 +138,9 @@
             <div class="div6">
                 <uc:entityrole_assign_inline ID="roles_task" runat="server" EntityX29ID="p56Task" NoDataText=""></uc:entityrole_assign_inline>
             </div>
-
+            <div>
+                 <uc:mytags ID="tags1" runat="server" />
+            </div>
         </div>
     </div>
     <asp:Panel ID="boxX18" runat="server" CssClass="content-box1" Style="clear: both;">

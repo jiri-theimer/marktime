@@ -194,6 +194,15 @@ Partial Public Class p56_framework_detail
     Protected WithEvents roles_task As Global.UI.entityrole_assign_inline
 
     '''<summary>
+    '''tags1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tags1 As Global.UI.mytags
+
+    '''<summary>
     '''boxX18 control.
     '''</summary>
     '''<remarks>

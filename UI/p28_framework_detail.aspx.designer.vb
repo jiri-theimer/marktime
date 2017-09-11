@@ -203,6 +203,15 @@ Partial Public Class p28_framework_detail
     Protected WithEvents linkDIC As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''tags1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tags1 As Global.UI.mytags
+
+    '''<summary>
     '''tree1 control.
     '''</summary>
     '''<remarks>

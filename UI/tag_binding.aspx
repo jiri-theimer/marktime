@@ -17,28 +17,48 @@
             }
 
         }
+
+        function tags1_showall() {
+            var autoComplete = $find("<%= tags1.ClientID%>")
+            autoComplete.query("top100-" + document.getElementById("<%=hidPrefix.ClientID%>").value);
+            
+        }
+        function cbxFind_OnClientItemsRequesting(sender, eventArgs) {
+            var context = eventArgs.get_context();
+            var combo = $find("<%= cbxFind.ClientID%>");
+
+            context["filterstring"] = eventArgs.get_text();
+
+            
+            context["prefix"] = "all";
+            
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-
-
-    <telerik:RadAutoCompleteBox ID="tags1" runat="server" RenderMode="Lightweight" EmptyMessage="Uveďte název štítku" Width="400px" OnClientEntryAdding="entryAdding" OnClientRequesting="requesting">     
-        <WebServiceSettings Method="LoadComboData" Path="~/Services/tag_service.asmx"/>   
+    
+    <div style="padding:10px;">
+    <telerik:RadAutoCompleteBox ID="tags1" runat="server" RenderMode="Lightweight" EmptyMessage="Napište pár písmen k nalezení štítku" Width="450px" OnClientEntryAdding="entryAdding" OnClientRequesting="requesting">     
+        <WebServiceSettings Method="LoadTokenData" Path="~/Services/tag_service.asmx"/>   
         <Localization ShowAllResults="Zobrazit všechny výsledky" RemoveTokenTitle="Vyjmout štítek z výběru" />
         
     </telerik:RadAutoCompleteBox>
+        <button type="button" onclick="tags1_showall()">Rozbalit vše</button>
+    </div>
 
-    <asp:Panel ID="panCreate" runat="server" CssClass="content-box2">
+    <asp:Panel ID="panCreate" runat="server" CssClass="content-box2" style="width:450px;padding:10px;margin-top:50px;">
         <div class="title">
+            <img src="Images/new.png" />
             Vytvořit nový štítek
-            <asp:Button ID="cmdCreate" runat="server" CssClass="cmd" Text="Uložit" />
+            <asp:Button ID="cmdCreate" runat="server" CssClass="cmd" Text="Uložit a přidat" />
         </div>
         <div class="content">
-            <asp:TextBox ID="txtCreate" runat="server" Width="200px"></asp:TextBox>
+            <span>Název štítku:</span>
+            <asp:TextBox ID="txtCreate" runat="server" Width="400px"></asp:TextBox>
             <div>
-            <asp:CheckBox ID="chkCreate4All" runat="server" CssClass="chk" Text="Pro všechny entity" Checked="true" AutoPostBack="true" />
+            <asp:CheckBox ID="chkCreate4All" runat="server" CssClass="chk" Text="Použitelný pro všechny entity" Checked="true" AutoPostBack="true" />
             <telerik:RadComboBox ID="cbxScope" runat="server" CheckBoxes="true" Visible="false">
                 <Items>
                     <telerik:RadComboBoxItem Text="Projekty" Value="p41"/>
@@ -50,11 +70,43 @@
                     <telerik:RadComboBoxItem Text="Dokumenty" Value="o23"/>
                     <telerik:RadComboBoxItem Text="Zálohy" Value="p90"/>
                 </Items>
+                <Localization AllItemsCheckedString="Všechny položky zaškrtnuty" ItemsCheckedString="x zaškrtnuto" />
             </telerik:RadComboBox>
             </div>
         </div>
     </asp:Panel>
 
+    <asp:Panel ID="panEdidt" runat="server" CssClass="content-box2" style="width:450px;padding:10px;margin-top:50px;">
+        <div class="title">
+            <img src="Images/edit.png" />
+            Upravit vybraný štítek
+            <asp:Button ID="cmdSave" runat="server" CssClass="cmd" Text="Uložit změny" />
+        </div>
+        <div class="content">
+            <telerik:RadComboBox ID="cbxFind" runat="server" AutoPostBack="true" Text="Najít štítek..." Width="350px" OnClientItemsRequesting="cbxFind_OnClientItemsRequesting" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true">                
+                <WebServiceSettings Method="LoadComboData" Path="~/Services/tag_service.asmx" UseHttpGet="false" />
+            </telerik:RadComboBox>
+
+            <asp:panel ID="panRecord" runat="server" CssClass="div6">
+                <asp:TextBox ID="o51Name" runat="server" Width="300px"></asp:TextBox>
+                <div>
+                    <asp:CheckBox ID="o51ScopeFlag" runat="server" CssClass="chk" Text="Použitelný pro všechny entity" Checked="true" AutoPostBack="true" />
+            
+                </div>
+                <asp:Panel ID="panEntities" runat="server">
+                    <asp:CheckBox ID="o51IsP41" Text="Projekty" runat="server" />
+                    <asp:CheckBox ID="o51IsP28" Text="Klienti" runat="server" />
+                    <asp:CheckBox ID="o51IsP56" Text="Úkoly" runat="server" />
+                    <asp:CheckBox ID="o51IsP91" Text="Faktury" runat="server" />
+                    <asp:CheckBox ID="o51IsP31" Text="Worksheet" runat="server" />
+                    <asp:CheckBox ID="o51IsO23" Text="Dokumenty" runat="server" />
+                    <asp:CheckBox ID="o51IsJ02" Text="Osoby" runat="server" />
+                    <asp:CheckBox ID="o51IsP90" Text="Zálohy" runat="server" />
+                </asp:Panel>
+            </asp:panel>
+            <asp:label ID="Timestamp" runat="server" CssClass="timestamp"></asp:label>
+        </div>
+    </asp:Panel>
 
     <asp:HiddenField ID="hidPrefix" runat="server" />
     <asp:HiddenField ID="hidPIDs" runat="server" />

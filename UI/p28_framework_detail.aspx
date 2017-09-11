@@ -14,6 +14,7 @@
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="treemenu" Src="~/treemenu.ascx" %>
 <%@ Register TagPrefix="uc" TagName="myscheduler" Src="~/myscheduler.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -154,6 +155,7 @@
                         </td>
                     </tr>
                 </table>
+                <uc:mytags ID="tags1" runat="server" />
                 <uc:treemenu ID="tree1" runat="server" Visible="false" />
             </div>
             <div style="float: left;">

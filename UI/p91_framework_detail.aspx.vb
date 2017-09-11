@@ -264,7 +264,7 @@ Public Class p91_framework_detail
         Else
             Me.chkFFShowFilledOnly.Visible = False : Me.ff1.Visible = False
         End If
-
+        tags1.RefreshData(Master.Factory, "p91", cRec.PID)
     End Sub
 
     Private Sub HandleDirectReports(intP92ID As Integer)

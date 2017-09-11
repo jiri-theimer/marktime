@@ -252,7 +252,7 @@
         Else
             cal1.Visible = False
         End If
-
+        tags1.RefreshData(Master.Factory, "j02", cRec.PID)
     End Sub
 
     Private Sub Handle_Permissions(cRec As BO.j02Person)

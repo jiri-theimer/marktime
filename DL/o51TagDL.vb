@@ -7,9 +7,12 @@
         Dim s As String = "select a.*," & bas.RecTail("o51", "a") & ",j02.j02LastName+' '+j02.j02FirstName as _Owner FROM o51Tag a INNER JOIN j02Person j02 ON a.j02ID_Owner=j02.J02ID WHERE a.o51id=@o51id"
         Return _cDB.GetRecord(Of BO.o51Tag)(s, New With {.o51id = intPID})
     End Function
-    Public Function LoadByName(strName As String) As BO.o51Tag
-        Dim s As String = "select a.*," & bas.RecTail("o51", "a") & ",j02.j02LastName+' '+j02.j02FirstName as _Owner FROM o51Tag a INNER JOIN j02Person j02 ON a.j02ID_Owner=j02.J02ID WHERE a.o51Name LIKE @o51name"
-        Return _cDB.GetRecord(Of BO.o51Tag)(s, New With {.o51name = strName})
+    Public Function LoadByName(strName As String, intExcludePID As Integer) As BO.o51Tag
+        Dim s As String = "select a.*," & bas.RecTail("o51", "a") & ",j02.j02LastName+' '+j02.j02FirstName as _Owner FROM o51Tag a INNER JOIN j02Person j02 ON a.j02ID_Owner=j02.J02ID WHERE a.o51Name LIKE @expr AND a.o51ID<>@o51id"
+        Dim pars As New DbParameters()
+        pars.Add("expr", strName, DbType.String)
+        pars.Add("o51id", intExcludePID, DbType.Int32)
+        Return _cDB.GetRecord(Of BO.o51Tag)(s, pars)
     End Function
 
     Public Function Save(cRec As BO.o51Tag) As Boolean
@@ -24,6 +27,7 @@
             With pars
                 .Add("j02ID_Owner", BO.BAS.IsNullDBKey(cRec.j02ID_Owner), DbType.Int32)
                 .Add("o51name", cRec.o51Name, DbType.String, , , True, "Název")
+                .Add("o51ScopeFlag", cRec.o51ScopeFlag, DbType.Int32)
                 .Add("o51IsP41", cRec.o51IsP41, DbType.Boolean)
                 .Add("o51IsP28", cRec.o51IsP28, DbType.Boolean)
                 .Add("o51IsP91", cRec.o51IsP91, DbType.Boolean)
@@ -69,10 +73,17 @@
             pars.Add("expr", myQuery.SearchExpression, DbType.String)
             strW += " AND a.o51Name LIKE '%'+@expr+'%'"
         End If
-        If strPrefix <> "" Then
-            strW += " AND (a.o51Is" & UCase(strPrefix) & "=1 OR a.o51ScopeFlag=1)"
-        Else
-            strW += " AND a.o51ScopeFlag=1"
+        If strPrefix <> "all" Then
+            If strPrefix <> "" Then
+                strW += " AND (a.o51Is" & UCase(strPrefix) & "=1 OR a.o51ScopeFlag=1)"
+            Else
+                strW += " AND a.o51ScopeFlag=1"
+            End If
+        End If
+        
+        If myQuery.j02ID_Owner <> 0 Then
+            strW += " AND a.j02ID_Owner=@owner"
+            pars.Add("owner", _curUser.j02ID, DbType.Int32)
         End If
 
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
@@ -90,6 +101,24 @@
         Dim pars As New DbParameters, intX29ID As Integer = CInt(BO.BAS.GetX29FromPrefix(strPrefix))
         pars.Add("recpid", intRecordPID, DbType.Int32)
         pars.Add("x29id", intX29ID, DbType.Int32)
-        Return _cDB.GetList(Of BO.o52TagBinding)("select a.*,o51.o51Name as _o51Name FROM o52TagBinding a inner join o51Tag o51 on a.o51ID=o51.o51ID WHERE a.o52RecordPID=@o51id AND a.x29ID=@x29id ORDER BY o51.o51Name", pars)
+        Return _cDB.GetList(Of BO.o52TagBinding)("select a.*,o51.o51Name as _o51Name FROM o52TagBinding a inner join o51Tag o51 on a.o51ID=o51.o51ID WHERE a.o52RecordPID=@recpid AND a.x29ID=@x29id ORDER BY o51.o51Name", pars)
+    End Function
+
+    Public Function SaveBinding(strPrefix As String, intRecordPID As Integer, o51IDs As List(Of Integer)) As Boolean
+        Dim pars As New DbParameters, intX29ID As Integer = CInt(BO.BAS.GetX29FromPrefix(strPrefix))
+        pars.Add("recpid", intRecordPID, DbType.Int32)
+        pars.Add("x29id", intX29ID, DbType.Int32)
+
+        If o51IDs.Count = 0 Then
+            Return _cDB.RunSQL("if exists(select o52ID FROM o52TagBinding WHERE o52RecordPID=@recpid AND x29ID=@x29id) DELETE FROM o52TagBinding WHERE o52RecordPID=@recpid AND x29ID=@x29id", pars)
+        End If
+
+        Dim strO51IDs As String = String.Join(",", o51IDs)
+        pars.Add("login", _curUser.j03Login, DbType.String)
+        _cDB.RunSQL("if exists(select o52ID FROM o52TagBinding WHERE o52RecordPID=@recpid AND x29ID=@x29id AND o51ID NOT IN (" & strO51IDs & ")) DELETE FROM o52TagBinding WHERE o52RecordPID=@recpid AND x29ID=@x29id AND o51ID NOT IN (" & strO51IDs & ")", pars)
+        _cDB.RunSQL("INSERT INTO o52TagBinding(o51ID,o52RecordPID,x29ID,o52DateInsert,o52DateUpdate,o52UserInsert,o52UserUpdate) SELECT o51ID,@recpid,@x29id,getdate(),getdate(),@login,@login FROM o51Tag WHERE o51ID IN (" & strO51IDs & ") AND o51ID NOT IN (select o51ID FROM o52TagBinding WHERE o52RecordPID=@recpid AND x29ID=@x29id)", pars)
+
+        Return _cDB.RunSQL("UPDATE o52TagBinding set o52DateUpdate=getdate(),o52UserUpdate=@login WHERE o52RecordPID=@recpid AND x29ID=@x29id", pars)
+       
     End Function
 End Class

@@ -263,6 +263,7 @@
     <Content Include="mobile_workflow_history.ascx" />
     <Content Include="mygrid.ascx" />
     <Content Include="myscheduler.ascx" />
+    <Content Include="mytags.ascx" />
     <Content Include="navigator.aspx" />
     <Content Include="o23_framework.aspx" />
     <Content Include="o23_list.ascx" />
@@ -1242,6 +1243,13 @@
     </Compile>
     <Compile Include="myscheduler.ascx.vb">
       <DependentUpon>myscheduler.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="mytags.ascx.designer.vb">
+      <DependentUpon>mytags.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="mytags.ascx.vb">
+      <DependentUpon>mytags.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="navigator.aspx.designer.vb">
