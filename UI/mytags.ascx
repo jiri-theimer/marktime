@@ -12,6 +12,7 @@
 <asp:HiddenField ID="hidRecordPID" runat="server" Value="0" />
 <asp:HiddenField ID="hidMode" runat="server" Value="0" />
 <asp:HiddenField ID="hidO51IDs" runat="server" />
+<asp:HiddenField ID="hidNeed2save" runat="server" Value="0" />
 <asp:Button ID="cmdRefresh" runat="server" style="display:none;" />
 <script type="text/javascript">
     

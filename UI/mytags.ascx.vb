@@ -4,6 +4,14 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
     End Sub
+    Public ReadOnly Property IsNeed2Save As Boolean
+        Get
+            Return BO.BAS.BG(hidNeed2save.Value)
+        End Get
+    End Property
+
+
+
     Public Property Prefix As String
         Get
             Return hidPrefix.Value
@@ -64,6 +72,7 @@
     End Sub
 
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
+        hidNeed2save.Value = "1"
         Dim lis As New List(Of BO.o52TagBinding)
         For Each intO51ID As Integer In BO.BAS.ConvertPIDs2List(hidO51IDs.Value, ",")
             Dim c As New BO.o52TagBinding

@@ -537,7 +537,7 @@
 
     <div style="clear: both;"></div>
     <div class="div6">
-
+        <uc:mytags ID="tags1" ModeUi="1" Prefix="p31" runat="server" />
         <a href="javascript:setting()" style="text-align: right; float: right;"><%=resources.p31_record.Nastaveni %></a>
     </div>
 

@@ -68,6 +68,15 @@ Partial Public Class mytags
     Protected WithEvents hidO51IDs As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidNeed2save control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidNeed2save As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''cmdRefresh control.
     '''</summary>
     '''<remarks>

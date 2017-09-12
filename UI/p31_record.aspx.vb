@@ -154,7 +154,7 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         ff1.Factory = Master.Factory
-
+        tags1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             If Request.Item("clone") = "1" Then
                 If Request.Item("pid").IndexOf(",") > 0 Then Server.Transfer("p31_clone.aspx?pids=" & Request.Item("pid")) 'hromadné kopírování záznamů
@@ -613,7 +613,7 @@
                 Master.ChangeToolbarSkin("BlackMetroTouch")
             End If
         End With
-
+        tags1.RefreshData(cRec.PID)
 
     End Sub
 
@@ -1025,6 +1025,10 @@
                 If Me.GuidApprove <> "" And Not bolNewRec Then
                     Master.Factory.p31WorksheetBL.UpdateTemp_After_EditOrig(Master.DataPID, Me.GuidApprove) 'záznam otevřený k editaci ze schvalovacího dialogu
                 End If
+                If tags1.IsNeed2Save Or Master.IsRecordClone Then
+                    Master.Factory.o51TagBL.SaveBinding("p31", Master.DataPID, tags1.Geto51IDs())
+                End If
+
                 If Not bolNewRec Or ff1.TagsCount > 0 Then
                     If ff1.TagsCount > 0 Then Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p31Worksheet, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs())
                 End If
