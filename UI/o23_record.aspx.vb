@@ -35,6 +35,7 @@ Public Class o23_record
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Me.upload1.Factory = Master.Factory
         Me.uploadlist1.Factory = Master.Factory
+        tags1.Factory = Master.Factory
         io1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             Me.upload1.GUID = BO.BAS.GetGUID
@@ -330,7 +331,7 @@ Public Class o23_record
                 End If
             End With
         End If
-
+        tags1.RefreshData(Master.DataPID)
 
     End Sub
 
@@ -443,6 +444,7 @@ Public Class o23_record
                     End If
 
                 End If
+                Master.Factory.o51TagBL.SaveBinding("o23", Master.DataPID, tags1.Geto51IDs())
                 If panUpload.Visible Then
                     Dim lisTempUpload As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(upload1.GUID, False)
                     If uploadlist1.ItemsCount > 0 Then

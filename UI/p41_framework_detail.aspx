@@ -208,7 +208,7 @@
                 </tr>
 
             </table>
-            <uc:mytags ID="tags1" runat="server" />
+            <uc:mytags ID="tags1" Prefix="p41" runat="server" />
 
             <uc:treemenu ID="tree1" runat="server" Visible="false" />
             <asp:HyperLink ID="linkBatchUpdateChilds" runat="server" Text="Aktualizovat nastavení pod-projektů" NavigateUrl="javascript:batch_update_childs()" Visible="false"></asp:HyperLink>

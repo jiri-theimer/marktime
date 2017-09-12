@@ -12,6 +12,7 @@ Public Class p91_framework_detail
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         ff1.Factory = Master.Factory
         designer1.Factory = Master.Factory
+        tags1.Factory = Master.Factory
 
         If Not Page.IsPostBack Then
             Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString
@@ -264,7 +265,7 @@ Public Class p91_framework_detail
         Else
             Me.chkFFShowFilledOnly.Visible = False : Me.ff1.Visible = False
         End If
-        tags1.RefreshData(Master.Factory, "p91", cRec.PID)
+        tags1.RefreshData(cRec.PID)
     End Sub
 
     Private Sub HandleDirectReports(intP92ID As Integer)

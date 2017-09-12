@@ -155,7 +155,7 @@
                         </td>
                     </tr>
                 </table>
-                <uc:mytags ID="tags1" runat="server" />
+                <uc:mytags ID="tags1" runat="server" Prefix="p28" />
                 <uc:treemenu ID="tree1" runat="server" Visible="false" />
             </div>
             <div style="float: left;">

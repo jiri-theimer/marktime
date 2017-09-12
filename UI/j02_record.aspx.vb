@@ -16,6 +16,8 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         ff1.Factory = Master.Factory
+        tags1.Factory = Master.Factory
+
         If Not Page.IsPostBack Then
             Me.hidGUID.Value = Request.Item("guid")
             If Request.Item("iscontact") = "1" Then
@@ -101,7 +103,7 @@
             Master.Timestamp = .Timestamp
 
             
-            
+            tags1.RefreshData(cRec.PID)
 
             'val1.InitVals(.ValidFrom, .ValidUntil, .DateInsert)
         End With
@@ -173,6 +175,7 @@
             If .Save(cRec, lisFF) Then
                 Master.DataPID = .LastSavedPID
                 Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.j02Person, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs)
+                Master.Factory.o51TagBL.SaveBinding("j02", Master.DataPID, tags1.Geto51IDs())
                 If Me.hidGUID.Value <> "" Then
                     Dim c As BO.j02Person = Master.Factory.j02PersonBL.Load(Master.DataPID)
                     Dim cTemp As New BO.p85TempBox

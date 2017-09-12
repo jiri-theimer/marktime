@@ -8,6 +8,7 @@
         menu1.DataPrefix = "p41"
         ff1.Factory = Master.Factory
         p31summary1.Factory = Master.Factory
+        tags1.Factory = Master.Factory
     End Sub
 
     
@@ -290,7 +291,7 @@
             cal1.Visible = False
         End If
 
-        tags1.RefreshData(Master.Factory, "p41", cRec.PID)
+        tags1.RefreshData(cRec.PID)
 
         'RefreshP64(cRecSum)
 

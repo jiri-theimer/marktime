@@ -7,6 +7,7 @@
 <%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
 <%@ Register TagPrefix="uc" TagName="entityrole_assign" Src="~/entityrole_assign.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -127,6 +128,7 @@
                     </td>
                 </tr>
             </table>
+            <uc:mytags ID="tags1" IsEditMode="true" Prefix="p56" runat="server" />
 
             <asp:Panel ID="panRoles" runat="server" CssClass="content-box2">
                 <div class="title">

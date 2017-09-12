@@ -48,4 +48,31 @@ Partial Public Class mytags
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidRecordPID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidEditMode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidEditMode As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidO51IDs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidO51IDs As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''cmdRefresh control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
 End Class

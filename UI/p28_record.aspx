@@ -8,7 +8,7 @@
 <%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
 <%@ Register TagPrefix="uc" TagName="entityrole_assign" Src="~/entityrole_assign.ascx" %>
 <%@ Register TagPrefix="uc" TagName="contact" Src="~/contact.ascx" %>
-
+<%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
@@ -257,6 +257,7 @@
                     </table>
                 </asp:Panel>
             </div>
+            <uc:mytags ID="tags1" IsEditMode="true" Prefix="p28" runat="server" />
 
             <div class="content-box2" style="padding-top: 10px;">
                 <div class="title">

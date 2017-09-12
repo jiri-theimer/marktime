@@ -569,6 +569,8 @@
         Dim strColumnNames As String = "Client,p41Name"
         CreateQuery("Otevřené projekty", BO.x29IdEnum.p41Project, 1, strColumnNames)
         CreateQuery("Projekty v archivu", BO.x29IdEnum.p41Project, 2, strColumnNames)
+        CreateQuery("Strom", BO.x29IdEnum.p41Project, 0, "Client,p41TreePath")
+        CreateQuery("Štítky", BO.x29IdEnum.p41Project, 0, "Client,p41Name,Tags")
         CreateQuery("Můj seznam oblíbených", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 20)
         CreateQuery("Obsahují rozpracovanost (čeká na schvalování)", BO.x29IdEnum.p41Project, 0, "Client,p41Name,WIP_Hodiny,WIP_Castka", "_other", 3)
         CreateQuery("Obsahují schválené úkony (čeká na fakturaci)", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 5)
@@ -579,22 +581,25 @@
         CreateQuery("Projekty v režimu DRAFT", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 11)
         CreateQuery("Není přiřazen ceník sazeb", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 13)
         CreateQuery("Projekty s kontaktní osobou", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 16)
-        CreateQuery("Má nad sebou nadřízený projekt", BO.x29IdEnum.p41Project, 0, "Client,p41TreePath", "_other", 18)
-        CreateQuery("Má pod sebou podřízené projekty", BO.x29IdEnum.p41Project, 0, "Client,p41TreePath", "_other", 19)
+        'CreateQuery("Má nad sebou nadřízený projekt", BO.x29IdEnum.p41Project, 0, "Client,p41TreePath", "_other", 18)
+        'CreateQuery("Má pod sebou podřízené projekty", BO.x29IdEnum.p41Project, 0, "Client,p41TreePath", "_other", 19)
 
         strColumnNames = "p28Name"
         CreateQuery("Otevření klienti", BO.x29IdEnum.p28Contact, 1, strColumnNames)
         CreateQuery("Klienti v archivu", BO.x29IdEnum.p28Contact, 2, strColumnNames)
-        CreateQuery("Rozpracovanost (čeká na schvalování)", BO.x29IdEnum.p28Contact, 0, strColumnNames, "_other", 3)
+        CreateQuery("Strom", BO.x29IdEnum.p28Contact, 0, "p28TreePath")
+        CreateQuery("Štítky", BO.x29IdEnum.p28Contact, 0, "p28Name,Tags")
+        CreateQuery("Rozpracovanost (čeká na schvalování)", BO.x29IdEnum.p28Contact, 0, "p28Name,WIP_Hodiny", "_other", 3)
         CreateQuery("Schválené úkony (čeká na fakturaci)", BO.x29IdEnum.p28Contact, 0, strColumnNames, "_other", 5)
         CreateQuery("Klienti s kontaktní osobou", BO.x29IdEnum.p28Contact, 0, strColumnNames, "_other", 16)
-        CreateQuery("Má nad sebou nadřízeného klienta", BO.x29IdEnum.p28Contact, 0, "p28TreePath", "_other", 25)
-        CreateQuery("Má pod sebou podřízené klienty", BO.x29IdEnum.p28Contact, 0, "p28TreePath", "_other", 26)
+        'CreateQuery("Má nad sebou nadřízeného klienta", BO.x29IdEnum.p28Contact, 0, "p28TreePath", "_other", 25)
+        'CreateQuery("Má pod sebou podřízené klienty", BO.x29IdEnum.p28Contact, 0, "p28TreePath", "_other", 26)
 
         strColumnNames = "FullNameDesc"
         CreateQuery("Otevřené osoby (uživatelé)", BO.x29IdEnum.j02Person, 1, strColumnNames, "_other", 6)
         CreateQuery("Kontaktní osoby", BO.x29IdEnum.j02Person, 0, strColumnNames, "_other", 7)
         CreateQuery("Osoby v archivu", BO.x29IdEnum.j02Person, 2, strColumnNames)
+        CreateQuery("Štítky", BO.x29IdEnum.j02Person, 0, "FullNameDesc,Tags")
         CreateQuery("Rozpracovanost (čeká na schvalování)", BO.x29IdEnum.j02Person, 0, strColumnNames, "_other", 3)
         CreateQuery("Schválené úkony (čeká na fakturaci)", BO.x29IdEnum.j02Person, 0, strColumnNames, "_other", 5)
 

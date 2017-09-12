@@ -5,7 +5,7 @@
 <%@ Register TagPrefix="uc" TagName="pageheader" Src="~/pageheader.ascx" %>
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
-
+<%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
@@ -174,6 +174,7 @@
                 </tr>
 
             </table>
+            <uc:mytags ID="tags1" IsEditMode="true" Prefix="j02" runat="server" />
         </telerik:RadPageView>
         <telerik:RadPageView ID="ff" runat="server">
 

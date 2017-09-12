@@ -7,6 +7,7 @@
 <%@ Register TagPrefix="uc" TagName="contact" Src="~/contact.ascx" %>
 <%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -141,6 +142,8 @@
             <div>
                 <asp:TextBox ID="p90text2" runat="server" TextMode="MultiLine" Style="height: 30px; width: 100%;"></asp:TextBox>
             </div>
+            <uc:mytags ID="tags1" IsEditMode="true" Prefix="p90" runat="server" />
+
             <div class="content-box2" style="margin-top:10px;">
                 <div class="title">
                     Úhrada zálohy

@@ -11,7 +11,7 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         roles1.Factory = Master.Factory
         ff1.Factory = Master.Factory
-
+        tags1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             With Master
                 .neededPermission = BO.x53PermValEnum.GR_P41_Draft_Creator
@@ -144,6 +144,7 @@
             roles1.InhaleInitialData(cRec.PID)
             Master.DataPID = cRec.PID
             Handle_FF()
+            tags1.RefreshData(cRec.PID)
             Master.DataPID = 0
             Return
         End If
@@ -349,6 +350,7 @@
             With Master.Factory.p41ProjectBL
                 If .Save(cRec, Nothing, Nothing, lisX69, lisFF) Then
                     Master.DataPID = .LastSavedPID
+                    Master.Factory.o51TagBL.SaveBinding("p41", Master.DataPID, tags1.Geto51IDs())
                     If ff1.GetTags.Count > 0 Then Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p41Project, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs)
                     Master.CloseAndRefreshParent("p41-create")
                 Else

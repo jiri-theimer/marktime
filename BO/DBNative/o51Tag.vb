@@ -11,6 +11,8 @@
     Public Property o51IsJ02 As Boolean
     Public Property o51IsO23 As Boolean
     Public Property o51IsP31 As Boolean
+    Public Property o51BackColor As String
+    Public Property o51ForeColor As String
 
     Private Property _Owner As String
     Public ReadOnly Property Owner As String

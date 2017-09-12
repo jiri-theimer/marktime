@@ -68,6 +68,24 @@ Partial Public Class tag_binding
     Protected WithEvents cbxScope As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
+    '''colBackColor control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents colBackColor As Global.Telerik.Web.UI.RadColorPicker
+
+    '''<summary>
+    '''colForeColor control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents colForeColor As Global.Telerik.Web.UI.RadColorPicker
+
+    '''<summary>
     '''panEdidt control.
     '''</summary>
     '''<remarks>
@@ -203,6 +221,24 @@ Partial Public Class tag_binding
     Protected WithEvents o51IsP90 As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''o51BackColor control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o51BackColor As Global.Telerik.Web.UI.RadColorPicker
+
+    '''<summary>
+    '''o51ForeColor control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o51ForeColor As Global.Telerik.Web.UI.RadColorPicker
+
+    '''<summary>
     '''Timestamp control.
     '''</summary>
     '''<remarks>
@@ -228,6 +264,24 @@ Partial Public Class tag_binding
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidPIDs As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidMode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidMode As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidO51IDs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidO51IDs As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

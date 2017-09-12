@@ -10,6 +10,7 @@
 <%@ Register TagPrefix="uc" TagName="entityrole_assign_preview" Src="~/entityrole_assign_preview.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
 <%@ Register TagPrefix="uc" TagName="project" Src="~/project.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -159,11 +160,14 @@
                     </div>
                 </div>
             </div>
+            <uc:mytags ID="tags1" IsEditMode="true" Prefix="p41" runat="server" />
+
             <div class="div6">
                 <img src="Images/tree.png" />
                 <asp:Label ID="lblParent" runat="server" CssClass="lbl" Text="Nadřízený projekt:"></asp:Label>
                  <uc:project ID="p41ParentID" runat="server" Width="400px" />
             </div>
+            
         </telerik:RadPageView>
 
         <telerik:RadPageView ID="billing" runat="server">

@@ -139,7 +139,7 @@
                 <uc:entityrole_assign_inline ID="roles_task" runat="server" EntityX29ID="p56Task" NoDataText=""></uc:entityrole_assign_inline>
             </div>
             <div>
-                 <uc:mytags ID="tags1" runat="server" />
+                 <uc:mytags ID="tags1" runat="server" Prefix="p56" />
             </div>
         </div>
     </div>

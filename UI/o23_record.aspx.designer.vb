@@ -266,6 +266,15 @@ Partial Public Class o23_record
     Protected WithEvents j02ID_Owner As Global.UI.person
 
     '''<summary>
+    '''tags1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tags1 As Global.UI.mytags
+
+    '''<summary>
     '''o23IsEncrypted control.
     '''</summary>
     '''<remarks>

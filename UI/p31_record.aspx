@@ -8,6 +8,7 @@
 <%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
 <%@ Register TagPrefix="uc" TagName="project" Src="~/project.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">

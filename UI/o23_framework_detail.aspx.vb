@@ -13,11 +13,13 @@
 
     Private Sub o23_framework_detail_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
+
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         rec1.Factory = Master.Factory
         Me.Fileupload_list__readonly.Factory = Master.Factory
+        tags1.Factory = Master.Factory
 
         If Not Page.IsPostBack Then
             ViewState("verified") = ""
@@ -130,7 +132,7 @@
             panUpload.Visible = False
         End If
         
-        tags1.RefreshData(Master.Factory, "o23", cRec.PID)
+        tags1.RefreshData(cRec.PID)
     End Sub
 
 

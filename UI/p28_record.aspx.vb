@@ -10,6 +10,7 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         ff1.Factory = Master.Factory
         roles1.Factory = Master.Factory
+        tags1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             ViewState("guid_o37") = BO.BAS.GetGUID()
             ViewState("guid_o32") = BO.BAS.GetGUID()
@@ -222,7 +223,7 @@
         Next
 
         roles1.InhaleInitialData(cRec.PID)
-
+        tags1.RefreshData(cRec.PID)
         
         RefreshTempO37()
 

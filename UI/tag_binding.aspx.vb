@@ -10,7 +10,7 @@
         If Not Page.IsPostBack Then
             hidPrefix.Value = Request.Item("prefix")
             hidPIDs.Value = Request.Item("pids")
-
+            hidMode.Value = Request.Item("mode")
             With Master
                 If hidPrefix.Value = "" Or hidPIDs.Value = "" Then
                     .StopPage("prefix or pid is missing.")
@@ -21,8 +21,13 @@
                     .HeaderText = String.Format("Oštítkovat {0}", .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(hidPrefix.Value), CInt(hidPIDs.Value)))
                 End If
                 .HeaderIcon = "Images/tag_32.png"
+                If hidMode.Value = "1" Then
+                    hidO51IDs.Value = Request.Item("o51ids")
+                    .AddToolbarButton("OK", "ok", , "Images/ok.png", False, "javascript:close_and_refresh()")
+                Else
+                    .AddToolbarButton("Uložit změny", "ok", , "Images/save.png")
+                End If
 
-                .AddToolbarButton("Uložit změny", "ok", , "Images/save.png")
             End With
 
             RefreshRecord()
@@ -30,13 +35,26 @@
     End Sub
 
     Private Sub RefreshRecord()
-        Dim strPID As String = Split(hidPIDs.Value, ",")(0)
-        Dim lis As IEnumerable(Of BO.o52TagBinding) = Master.Factory.o51TagBL.GetList_o52(hidPrefix.Value, CInt(strPID))
-        With tags1.Entries
-            For Each c In lis
-                .Add(New Telerik.Web.UI.AutoCompleteBoxEntry(c.o51Name, c.o51ID.ToString))
-            Next
-        End With
+        If hidMode.Value = "1" Then
+            If hidO51IDs.Value = "" Then Return
+            Dim mq As New BO.myQuery
+            mq.PIDs = BO.BAS.ConvertPIDs2List(hidO51IDs.Value)
+            Dim lis As IEnumerable(Of BO.o51Tag) = Master.Factory.o51TagBL.GetList(mq, "all")
+            With tags1.Entries
+                For Each c In lis
+                    .Add(New Telerik.Web.UI.AutoCompleteBoxEntry(c.o51Name, c.PID.ToString))
+                Next
+            End With
+        Else
+            Dim strPID As String = Split(hidPIDs.Value, ",")(0)
+            Dim lis As IEnumerable(Of BO.o52TagBinding) = Master.Factory.o51TagBL.GetList_o52(hidPrefix.Value, CInt(strPID))
+            With tags1.Entries
+                For Each c In lis
+                    .Add(New Telerik.Web.UI.AutoCompleteBoxEntry(c.o51Name, c.o51ID.ToString))
+                Next
+            End With
+        End If
+        
 
     End Sub
 
@@ -75,6 +93,8 @@
             c.o51IsO23 = Me.cbxScope.Items.FindItemByValue("o23").Checked
             c.o51IsP31 = Me.cbxScope.Items.FindItemByValue("p31").Checked
         End If
+        c.o51BackColor = basUI.GetColorFromPicker(Me.colBackColor)
+        c.o51ForeColor = basUI.GetColorFromPicker(Me.colForeColor)
         With Master.Factory.o51TagBL
             If .Save(c) Then
                 c = .LoadByName(c.o51Name, 0)
@@ -125,6 +145,9 @@
                 Me.o51IsP91.Checked = .o51IsP91
             End If
             Me.Timestamp.Text = .Timestamp
+           
+            basUI.SetColorToPicker(Me.o51BackColor, .o51BackColor)
+            basUI.SetColorToPicker(Me.o51ForeColor, .o51ForeColor)
         End With
 
 
@@ -149,7 +172,8 @@
                 .o51IsP90 = Me.o51IsP90.Checked
                 .o51IsP91 = Me.o51IsP91.Checked
             End If
-            
+            .o51BackColor = basUI.GetColorFromPicker(Me.o51BackColor)
+            .o51ForeColor = basUI.GetColorFromPicker(Me.o51ForeColor)
         End With
         With Master.Factory.o51TagBL
             If .Save(cRec) Then

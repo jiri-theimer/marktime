@@ -15,6 +15,7 @@
         menu1.Factory = Master.Factory
         menu1.DataPrefix = "j02"
         ff1.Factory = Master.Factory
+        tags1.Factory = Master.Factory
     End Sub
    
 
@@ -252,7 +253,7 @@
         Else
             cal1.Visible = False
         End If
-        tags1.RefreshData(Master.Factory, "j02", cRec.PID)
+        tags1.RefreshData(cRec.PID)
     End Sub
 
     Private Sub Handle_Permissions(cRec As BO.j02Person)

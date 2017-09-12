@@ -564,7 +564,7 @@
                 </asp:Panel>
 
                 <div style="clear: both;">
-                <uc:mytags ID="tags1" runat="server" />
+                <uc:mytags ID="tags1" runat="server" Prefix="p91" />
                 </div>
 
                 <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">

@@ -18,6 +18,7 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         roles1.Factory = Master.Factory
         ff1.Factory = Master.Factory
+        tags1.Factory = Master.Factory
 
         If Not Page.IsPostBack Then
             With Master
@@ -145,6 +146,7 @@
             Master.Timestamp = .Timestamp
         End With
         roles1.InhaleInitialData(cRec.PID)
+        tags1.RefreshData(cRec.PID)
     End Sub
 
     Private Sub Handle_Permissions(cRec As BO.p56Task)
@@ -340,6 +342,7 @@
             If .Save(cRec, lisX69, lisFF, "") Then
                 Dim bolNew As Boolean = Master.IsRecordNew
                 Master.DataPID = .LastSavedPID
+                Master.Factory.o51TagBL.SaveBinding("p56", Master.DataPID, tags1.Geto51IDs())
                 If Not bolNew Or ff1.TagsCount > 0 Then
                     Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p56Task, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs)
                 End If

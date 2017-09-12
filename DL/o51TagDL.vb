@@ -36,7 +36,8 @@
                 .Add("o51IsO23", cRec.o51IsO23, DbType.Boolean)
                 .Add("o51IsP56", cRec.o51IsP56, DbType.Boolean)
                 .Add("o51IsP90", cRec.o51IsP90, DbType.Boolean)
-
+                .Add("o51BackColor", cRec.o51BackColor, DbType.String)
+                .Add("o51ForeColor", cRec.o51ForeColor, DbType.String)
                 .Add("o51validfrom", cRec.ValidFrom, DbType.DateTime)
                 .Add("o51validuntil", cRec.ValidUntil, DbType.DateTime)
             End With
@@ -101,7 +102,7 @@
         Dim pars As New DbParameters, intX29ID As Integer = CInt(BO.BAS.GetX29FromPrefix(strPrefix))
         pars.Add("recpid", intRecordPID, DbType.Int32)
         pars.Add("x29id", intX29ID, DbType.Int32)
-        Return _cDB.GetList(Of BO.o52TagBinding)("select a.*,o51.o51Name as _o51Name FROM o52TagBinding a inner join o51Tag o51 on a.o51ID=o51.o51ID WHERE a.o52RecordPID=@recpid AND a.x29ID=@x29id ORDER BY o51.o51Name", pars)
+        Return _cDB.GetList(Of BO.o52TagBinding)("select a.*,o51.o51Name,o51.o51ForeColor,o51.o51BackColor FROM o52TagBinding a inner join o51Tag o51 on a.o51ID=o51.o51ID WHERE a.o52RecordPID=@recpid AND a.x29ID=@x29id ORDER BY o51.o51Name", pars)
     End Function
 
     Public Function SaveBinding(strPrefix As String, intRecordPID As Integer, o51IDs As List(Of Integer)) As Boolean

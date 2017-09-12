@@ -133,7 +133,7 @@
 
             <asp:Label ID="Mediums" runat="server" CssClass="val" ForeColor="Orange" Style="padding-left: 8px;"></asp:Label>
             <div>
-                <uc:mytags ID="tags1" runat="server" />
+                <uc:mytags ID="tags1" runat="server" Prefix="j02" />
             </div>
             <div>
                 <asp:Label ID="Correspondence" runat="server"></asp:Label>

@@ -7,6 +7,7 @@
         menu1.Factory = Master.Factory
         menu1.DataPrefix = "p56"
         ff1.Factory = Master.Factory
+        tags1.Factory = Master.Factory
     End Sub
 
     
@@ -179,7 +180,7 @@
 
         comments1.RefreshData(Master.Factory, BO.x29IdEnum.p56Task, cRec.PID)
 
-        tags1.RefreshData(Master.Factory, "p56", cRec.PID)
+        tags1.RefreshData(cRec.PID)
     End Sub
     Private Sub RefreshImapBox(cRec As BO.p56Task)
         If cRec.o43ID <> 0 Then

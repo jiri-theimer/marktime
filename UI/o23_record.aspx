@@ -7,6 +7,7 @@
 <%@ Register TagPrefix="uc" TagName="fileupload" Src="~/fileupload.ascx" %>
 <%@ Register TagPrefix="uc" TagName="fileupload_list" Src="~/fileupload_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="import_object_item" Src="~/import_object_item.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -284,6 +285,8 @@
         <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu:" CssClass="lblReq" Style="padding-right: 30px;"></asp:Label>
         <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
     </div>
+    <uc:mytags ID="tags1" IsEditMode="true" Prefix="o23" runat="server" />
+
     <div class="div6">
         <asp:CheckBox ID="o23IsEncrypted" runat="server" Text="Obsah zašifrovat a ochránit heslem" AutoPostBack="true" />
     </div>

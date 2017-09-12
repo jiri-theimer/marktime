@@ -77,13 +77,13 @@
             .ClearColumns()
             .DataKeyNames = "pid"
             .radGridOrig.ShowFooter = False
-            .PageSize = 250
+            .PageSize = 500
             .AllowMultiSelect = True
             .AddCheckboxSelector()
             .AddSystemColumn(5)
             .AddColumn("p31Date", "Datum", BO.cfENUM.DateOnly)
             .AddColumn("Person", "Osoba")
-
+            .AllowCustomPaging = True
             Select Case Me.CurrentPrefix
                 Case "p41"
                 Case Else
@@ -136,7 +136,7 @@
         Dim mq As New BO.myQueryP31
         InhaleMyQuery(mq)
         With mq
-            .MG_PageSize = 250
+            .MG_PageSize = 500
             .MG_CurrentPageIndex = grid1.radGridOrig.MasterTableView.CurrentPageIndex
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
 
@@ -154,7 +154,9 @@
         Dim cSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, False, False)
         If Not cSum Is Nothing Then
             grid1.VirtualRowCount = cSum.RowsCount
-
+            If grid1.VirtualRowCount = 500 Then
+                Master.Notify("Najednou lze maximálně přepočítat sazbu u 500 úkonů.", NotifyLevel.InfoMessage)
+            End If
         Else
 
             grid1.VirtualRowCount = 0

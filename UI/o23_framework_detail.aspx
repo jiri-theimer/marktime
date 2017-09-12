@@ -157,7 +157,7 @@
     <div class="div6" style="border-top: dashed 1px silver;">
         <uc:entityrole_assign_inline ID="roles1" runat="server" EntityX29ID="o23Doc" NoDataText=""></uc:entityrole_assign_inline>
     </div>
-    <uc:mytags ID="tags1" runat="server" />
+    <uc:mytags ID="tags1" Prefix="o23" runat="server" />
 
     <asp:Panel ID="panUpload" runat="server" CssClass="content-box2">
         <div class="title">

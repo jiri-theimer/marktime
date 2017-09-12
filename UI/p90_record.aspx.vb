@@ -8,6 +8,7 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         ff1.Factory = Master.Factory
+        tags1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             ViewState("guid_p82") = BO.BAS.GetGUID()
             With Master
@@ -121,6 +122,7 @@
             Master.Factory.p85TempBoxBL.Save(cTemp)
         Next
         RefreshTempP82()
+        tags1.RefreshData(cRec.PID)
     End Sub
     Private Sub RefreshTempP82()
         Me.rpP82.DataSource = Master.Factory.p85TempBoxBL.GetList(ViewState("guid_p82"))
@@ -199,6 +201,7 @@
 
             If .Save(cRec, lisFF, lisP82) Then
                 Master.DataPID = .LastSavedPID
+                Master.Factory.o51TagBL.SaveBinding("p90", Master.DataPID, tags1.Geto51IDs())
                 Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p90Proforma, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs)
                 Master.CloseAndRefreshParent("p90-save")
             Else

@@ -419,6 +419,15 @@ Partial Public Class j02_record
     Protected WithEvents j02EmailSignature As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''tags1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tags1 As Global.UI.mytags
+
+    '''<summary>
     '''ff control.
     '''</summary>
     '''<remarks>
