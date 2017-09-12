@@ -12,6 +12,8 @@
             <asp:ListItem Text="100 dní" Value="100"></asp:ListItem>
         </asp:DropDownList>
         <asp:DropDownList ID="cbxFirstDay" runat="server" AutoPostBack="true" ToolTip="První zobrazený den vůči dnešku" Style="margin-left: 10px;">
+            <asp:ListItem Text="-30" Value="-30"></asp:ListItem>
+            <asp:ListItem Text="-14" Value="-14"></asp:ListItem>
             <asp:ListItem Text="-5" Value="-5"></asp:ListItem>
             <asp:ListItem Text="-1" Value="-1" Selected="true"></asp:ListItem>
             <asp:ListItem Text="0" Value="0"></asp:ListItem>            

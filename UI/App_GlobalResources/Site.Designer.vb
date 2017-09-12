@@ -281,7 +281,7 @@ Namespace Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Tuto stránku uložit jako mojí výchozí.
+        '''  Looks up a localized string similar to Tuto stránku uložit jako mojí domovskou.
         '''</summary>
         Friend Shared ReadOnly Property UlozitJakoVychoziStranku() As String
             Get
