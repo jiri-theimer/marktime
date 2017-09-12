@@ -142,7 +142,7 @@
             <div>
                 <asp:TextBox ID="p90text2" runat="server" TextMode="MultiLine" Style="height: 30px; width: 100%;"></asp:TextBox>
             </div>
-            <uc:mytags ID="tags1" IsEditMode="true" Prefix="p90" runat="server" />
+            <uc:mytags ID="tags1" ModeUi="1" Prefix="p90" runat="server" />
 
             <div class="content-box2" style="margin-top:10px;">
                 <div class="title">

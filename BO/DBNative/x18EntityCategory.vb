@@ -136,7 +136,7 @@ Public Class x18EntityCategory
 
     Public ReadOnly Property TagOrDoc As String
         Get
-            If Me.x18IsManyItems Then Return "Dokument" Else Return "Štítek"
+            If Me.x18IsManyItems Then Return "Typ dokumentu" Else Return "Kategorie"
         End Get
     End Property
 End Class

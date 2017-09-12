@@ -3,6 +3,7 @@
 <%@ MasterType VirtualPath="~/Clue.Master" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -30,6 +31,7 @@
         <div>
             <asp:Image ID="img1" runat="server" ImageUrl="Images/task_32.png" />
             <asp:Label ID="ph1" runat="server" CssClass="clue_header_span"></asp:Label>
+            <uc:mytags ID="tags1" ModeUi="2" Prefix="p56" runat="server" />
         </div>
         <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
         <div class="content-box2">
@@ -131,6 +133,7 @@
                     </tr>
 
                 </table>
+                
             </div>
         </div>
 

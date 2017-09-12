@@ -562,10 +562,7 @@
                         <asp:Label ID="p91Text1" runat="server" CssClass="val" Style="font-family: 'Courier New'; word-wrap: break-word; display: block; font-size: 120%;"></asp:Label>
                     </div>
                 </asp:Panel>
-
-                <div style="clear: both;">
-                <uc:mytags ID="tags1" runat="server" Prefix="p91" />
-                </div>
+                             
 
                 <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">
                     <div class="title">
@@ -576,7 +573,9 @@
                     </div>
 
                 </asp:Panel>
-
+                <div class="div6" style="clear:both;">
+                <uc:mytags ID="tags1" runat="server" Prefix="p91" />
+                </div>
 
 
                 <uc:b07_list ID="comments1" runat="server" ShowHeader="false" ShowInsertButton="false" JS_Reaction="b07_reaction" />
@@ -676,16 +675,14 @@
                     </tr>
 
                 </table>
-
-
-
+                
                 <div class="content-box2">
                     <div class="title">Technický text faktury</div>
                     <div class="content" style="background-color: #ffffcc;">
                         <asp:Label ID="p91Text2" runat="server" Style="font-family: 'Courier New'; word-wrap: break-word; display: block; font-size: 120%;"></asp:Label>
                     </div>
                 </div>
-
+                
 
                 <asp:Panel ID="panRoles" runat="server" CssClass="content-box1">
                     <div class="title">

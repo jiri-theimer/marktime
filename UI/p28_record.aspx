@@ -257,7 +257,7 @@
                     </table>
                 </asp:Panel>
             </div>
-            <uc:mytags ID="tags1" IsEditMode="true" Prefix="p28" runat="server" />
+            <uc:mytags ID="tags1" ModeUi="1" Prefix="p28" runat="server" />
 
             <div class="content-box2" style="padding-top: 10px;">
                 <div class="title">

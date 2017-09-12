@@ -12,22 +12,26 @@
             hidPrefix.Value = value
         End Set
     End Property
-    Public Property IsEditMode As Boolean
+    Public Property ModeUi As Integer   '0 - readonly + odkaz, 1 - v editačním formuláři, 2 - pouze readonly
         Get
-            Return BO.BAS.BG(hidEditMode.Value)
+            Return BO.BAS.IsNullInt(hidMode.Value)
         End Get
-        Set(value As Boolean)
-            hidEditMode.Value = BO.BAS.GB(value)
+        Set(value As Integer)
+            hidMode.Value = value.ToString
         End Set
     End Property
 
     Public Sub RefreshData(intRecordPID As Integer)
+        If hidMode.Value = "2" Then
+            cmdTags.Visible = False   'readonly režim
+        End If
         hidRecordPID.Value = intRecordPID.ToString
         If intRecordPID > 0 Then
             Dim lis As IEnumerable(Of BO.o52TagBinding) = Me.Factory.o51TagBL.GetList_o52(hidPrefix.Value, intRecordPID)
-            If hidEditMode.Value = "1" Then
+            If hidMode.Value = "1" Then
                 hidO51IDs.Value = String.Join(",", lis.Select(Function(p) p.o51ID))
             End If
+
             rp1.DataSource = lis
         Else
             rp1.DataSource = Nothing

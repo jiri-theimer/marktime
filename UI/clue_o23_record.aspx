@@ -3,7 +3,7 @@
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="entityrole_assign_inline" Src="~/entityrole_assign_inline.ascx" %>
 <%@ Register TagPrefix="uc" TagName="o23_record_readonly" Src="~/o23_record_readonly.ascx" %>
-
+<%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -34,6 +34,7 @@
         <div>
             <img src="Images/notepad_32.png" />
             <asp:Label ID="ph1" runat="server" CssClass="clue_header_span"></asp:Label>
+             <uc:mytags ID="tags1" ModeUi="2" Prefix="o23" runat="server" />
             <a  href="javascript:go2module()">Skočit na stránku dokumentu</a>
         </div>
         <asp:panel ID="panUpload" runat="server" CssClass="div6" Visible="false">
@@ -46,9 +47,11 @@
         <div class="div6">
             <uc:o23_record_readonly ID="rec1" runat="server" />
         </div>
+    
         <div class="div6">
             <uc:entityrole_assign_inline ID="roles1" runat="server" EntityX29ID="o23Doc" NoDataText=""></uc:entityrole_assign_inline>
         </div>
+        
 
         <div style="clear: both;"></div>
         <uc:b07_list ID="comments1" runat="server" ShowHeader="true" ShowInsertButton="false" />

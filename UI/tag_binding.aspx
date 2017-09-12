@@ -59,7 +59,7 @@
 
     <div style="padding: 10px;">
 
-        <telerik:RadAutoCompleteBox ID="tags1" runat="server" RenderMode="Lightweight" EmptyMessage="Napište pár písmen k nalezení štítku" Width="450px" OnClientEntryAdding="entryAdding" OnClientRequesting="requesting">
+        <telerik:RadAutoCompleteBox ID="tags1" runat="server" RenderMode="Lightweight" EmptyMessage="Napište pár písmen k dohledání štítku" Width="450px" OnClientEntryAdding="entryAdding" OnClientRequesting="requesting">
             <WebServiceSettings Method="LoadTokenData" Path="~/Services/tag_service.asmx" />
             <Localization ShowAllResults="Zobrazit všechny výsledky" RemoveTokenTitle="Vyjmout štítek z výběru" />
 

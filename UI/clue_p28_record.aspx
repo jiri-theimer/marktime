@@ -4,6 +4,7 @@
 <%@ Register TagPrefix="uc" TagName="p28_address" Src="~/p28_address.ascx" %>
 <%@ Register TagPrefix="uc" TagName="p28_medium" Src="~/p28_medium.ascx" %>
 <%@ Register TagPrefix="uc" TagName="contactpersons" Src="~/contactpersons.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
@@ -13,6 +14,7 @@
         <div>
             <img src="Images/contact_32.png" />
             <asp:Label ID="ph1" runat="server" CssClass="clue_header_span"></asp:Label>
+            <uc:mytags ID="tags1" ModeUi="2" Prefix="p28" runat="server" />
         </div>
         <div class="content-box2">
             <div class="title">
@@ -41,7 +43,7 @@
                         </td>
                     </tr>
                 </table>
-
+                
             </div>
         </div>
         <asp:Panel ID="panP30" runat="server" CssClass="content-box2">

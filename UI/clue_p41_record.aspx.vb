@@ -7,6 +7,7 @@
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        tags1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             Master.DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
             If Master.DataPID = 0 Then Master.StopPage("pid is missing", , , False)
@@ -66,7 +67,7 @@
 
         Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p41Project, cRec.PID)
         Me.roles_project.RefreshData(lisX69, cRec.PID)
-
+        tags1.RefreshData(cRec.PID)
     End Sub
 
     Private Sub cmdFavourite_Click(sender As Object, e As ImageClickEventArgs) Handles cmdFavourite.Click

@@ -285,7 +285,7 @@
         <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu:" CssClass="lblReq" Style="padding-right: 30px;"></asp:Label>
         <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
     </div>
-    <uc:mytags ID="tags1" IsEditMode="true" Prefix="o23" runat="server" />
+    <uc:mytags ID="tags1" ModeUi="1" Prefix="o23" runat="server" />
 
     <div class="div6">
         <asp:CheckBox ID="o23IsEncrypted" runat="server" Text="Obsah zašifrovat a ochránit heslem" AutoPostBack="true" />

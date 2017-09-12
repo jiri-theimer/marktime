@@ -128,7 +128,7 @@
                     </td>
                 </tr>
             </table>
-            <uc:mytags ID="tags1" IsEditMode="true" Prefix="p56" runat="server" />
+            <uc:mytags ID="tags1" ModeUi="1" Prefix="p56" runat="server" />
 
             <asp:Panel ID="panRoles" runat="server" CssClass="content-box2">
                 <div class="title">

@@ -50,13 +50,13 @@ Partial Public Class mytags
     Protected WithEvents hidRecordPID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidEditMode control.
+    '''hidMode control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidEditMode As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidMode As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidO51IDs control.

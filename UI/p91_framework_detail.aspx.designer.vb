@@ -878,15 +878,6 @@ Partial Public Class p91_framework_detail
     Protected WithEvents p91Text1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''tags1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents tags1 As Global.UI.mytags
-
-    '''<summary>
     '''boxX18 control.
     '''</summary>
     '''<remarks>
@@ -903,6 +894,15 @@ Partial Public Class p91_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents labels1 As Global.UI.x18_readonly
+
+    '''<summary>
+    '''tags1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tags1 As Global.UI.mytags
 
     '''<summary>
     '''comments1 control.

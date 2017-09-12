@@ -3,7 +3,7 @@
 <%@ MasterType VirtualPath="~/Clue.Master" %>
 <%@ Register TagPrefix="uc" TagName="contactpersons" Src="~/contactpersons.ascx" %>
 <%@ Register TagPrefix="uc" TagName="entityrole_assign_inline" Src="~/entityrole_assign_inline.ascx" %>
-
+<%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
@@ -12,6 +12,7 @@
         <div>
             <img src="Images/project_32.png" />
             <asp:Label ID="ph1" runat="server" CssClass="clue_header_span"></asp:Label>
+            <uc:mytags ID="tags1" ModeUi="2" Prefix="p41" runat="server" />
         </div>
 
         <div class="content-box2">
@@ -67,7 +68,9 @@
                     </tr>
 
                 </table>
+                
             </div>
+            
         </div>
         <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
         <div class="content-box2">

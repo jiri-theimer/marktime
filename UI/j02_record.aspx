@@ -174,7 +174,7 @@
                 </tr>
 
             </table>
-            <uc:mytags ID="tags1" IsEditMode="true" Prefix="j02" runat="server" />
+            <uc:mytags ID="tags1" ModeUi="1" Prefix="j02" runat="server" />
         </telerik:RadPageView>
         <telerik:RadPageView ID="ff" runat="server">
 

@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="clue_j02_record.aspx.vb" Inherits="UI.clue_j02_record" %>
+<%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 
 <%@ MasterType VirtualPath="~/Clue.Master" %>
 
@@ -11,6 +12,7 @@
             <img src="Images/person_32.png" />
             <asp:Label ID="ph1" runat="server" CssClass="clue_header_span"></asp:Label>
             <asp:HyperLink ID="j02Email" runat="server"></asp:HyperLink>
+            <uc:mytags ID="tags1" ModeUi="2" Prefix="j02" runat="server" />
         </div>
         <asp:Panel ID="panIntraOnly" runat="server" CssClass="content-box2">
             <div class="title">
@@ -62,6 +64,7 @@
                     <asp:Label ID="j04Name" runat="server" CssClass="valboldblue"></asp:Label>
 
                 </fieldset>
+                
             </div>
         </asp:Panel>
         <asp:Panel ID="panContacts" runat="server" CssClass="content-box2">

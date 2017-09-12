@@ -156,7 +156,7 @@
                     </div>
                 </div>
             </div>
-            <uc:mytags ID="tags1" IsEditMode="true" Prefix="p41" runat="server" />
+            <uc:mytags ID="tags1" ModeUi="1" Prefix="p41" runat="server" />
 
             <div style="margin-top: 30px;border-top:dashed 1px gray;">
                 <br />

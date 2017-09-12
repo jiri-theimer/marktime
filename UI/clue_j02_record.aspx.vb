@@ -3,6 +3,7 @@
    
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        tags1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             Master.DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
             If Master.DataPID = 0 Then Master.StopPage("pid is missing", , , False)
@@ -49,6 +50,7 @@
         Me.rpP30.DataSource = Master.Factory.p30Contact_PersonBL.GetList(0, 0, cRec.PID)
         Me.rpP30.DataBind()
         If rpP30.Items.Count > 0 Then panContacts.Visible = True
+        tags1.RefreshData(cRec.PID)
     End Sub
 
     Private Sub rpP30_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP30.ItemDataBound

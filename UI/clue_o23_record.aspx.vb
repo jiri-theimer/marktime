@@ -3,6 +3,7 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         rec1.Factory = Master.Factory
+        tags1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             Master.DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
             If Master.DataPID = 0 Then Master.StopPage("pid is missing", , , False)
@@ -20,6 +21,7 @@
         Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.o23Doc, cRec.PID)
         roles1.RefreshData(lisX69, cRec.PID)
         comments1.RefreshData(Master.Factory, BO.x29IdEnum.o23Doc, cRec.PID)
+        tags1.RefreshData(cRec.PID)
 
         panUpload.Visible = False
         If cX18.x18UploadFlag = BO.x18UploadENUM.FileSystemUpload And cRec.o23LockedFlag <> BO.o23LockedTypeENUM.LockAllFiles Then

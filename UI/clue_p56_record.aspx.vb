@@ -2,12 +2,13 @@
     Inherits System.Web.UI.Page
  
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        tags1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             Master.DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-            
+
             RefreshRecord()
 
-            
+
 
         End If
     End Sub
@@ -109,6 +110,7 @@
        
         labels1.RefreshData(Master.Factory, BO.x29IdEnum.p56Task, Master.DataPID, True)
         Me.comments1.RefreshData(Master.Factory, BO.x29IdEnum.p56Task, Master.DataPID)
+        tags1.RefreshData(Master.DataPID)
     End Sub
 
     
