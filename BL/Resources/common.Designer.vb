@@ -596,6 +596,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Štítky.
+        '''</summary>
+        Public Shared ReadOnly Property Stitky() As String
+            Get
+                Return ResourceManager.GetString("Stitky", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Středisko.
         '''</summary>
         Public Shared ReadOnly Property Stredisko() As String

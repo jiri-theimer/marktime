@@ -387,4 +387,7 @@
   <data name="VykazaneVydaje" xml:space="preserve">
     <value>Vykázané výdaje</value>
   </data>
+  <data name="Stitky" xml:space="preserve">
+    <value>Štítky</value>
+  </data>
 </root>

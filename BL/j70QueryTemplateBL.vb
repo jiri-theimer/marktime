@@ -484,7 +484,8 @@ Class j70QueryTemplateBL
             .Add(AGC(My.Resources.common.NakladovyCenik, "p51Name_Internal", , , "p51internal.p51Name", , "LEFT OUTER JOIN p51PriceList p51internal ON a.p51ID_Internal=p51internal.p51ID"))
             .Add(AGC(My.Resources.common.TypFaktury, "p92Name"))
             .Add(AGC("Fakturační poznámka", "p41BillingMemo", , , "a.p41BillingMemo"))
-            .Add(AGC("Štítky", "Tags", , , "dbo.tag_values_inline(141,a.p41ID)"))
+            .Add(AGC(My.Resources.common.Stitky, "TagsHtml", , , "dbo.tag_values_inline_html(141,a.p41ID)"))
+            .Add(AGC(My.Resources.common.Stitky + " (text)", "TagsText", , , "dbo.tag_values_inline(141,a.p41ID)"))
 
 
             .Add(AGC(My.Resources.common.PlanStart, "p41PlanFrom", BO.cfENUM.DateOnly, , "a.p41PlanFrom"))
@@ -539,7 +540,9 @@ Class j70QueryTemplateBL
             .Add(AGC(My.Resources.common.DIC, "p28VatID", , , "a.p28VatID"))
             .Add(AGC(My.Resources.common.Typ, "p29Name"))
             .Add(AGC("Fakturační poznámka", "p28BillingMemo", , , "a.p28BillingMemo"))
-            .Add(AGC("Štítky", "Tags", , , "dbo.tag_values_inline(328,a.p28ID)"))
+            .Add(AGC(My.Resources.common.Stitky, "TagsHtml", , , "dbo.tag_values_inline_html(328,a.p28ID)"))
+            .Add(AGC(My.Resources.common.Stitky + " (text)", "TagsText", , , "dbo.tag_values_inline(328,a.p28ID)"))
+
 
             ''.Add(AGC("Nadřízený klient", "ParentContact", , , "p28parent.p28Name", , "LEFT OUTER JOIN p28Contact p28parent ON a.p28ParentID=p28parent.p28ID"))
             .Add(AGC("Město", "Adress1_City", , , "pa.o38City", , "LEFT OUTER JOIN view_PrimaryAddress pa ON a.p28ID=pa.p28ID"))
@@ -607,7 +610,8 @@ Class j70QueryTemplateBL
             .Add(AGC("Fond", "c21Name"))
             .Add(AGC("Středisko", "j18Name"))
 
-            .Add(AGC("Štítky", "Tags", , , "dbo.tag_values_inline(102,a.j02ID)"))
+            .Add(AGC(My.Resources.common.Stitky, "TagsHtml", , , "dbo.tag_values_inline_html(102,a.j02ID)"))
+            .Add(AGC(My.Resources.common.Stitky + " (text)", "TagsText", , , "dbo.tag_values_inline(102,a.j02ID)"))
 
             .Add(AGC("Mobil", "j02Mobile"))
             .Add(AGC("Pevná", "j02Phone"))
@@ -670,7 +674,8 @@ Class j70QueryTemplateBL
             .Add(AGC(My.Resources.common.KodDokladu, "p31Code"))
             .Add(AGC(My.Resources.common.KontaktniOsoba, "ContactPerson", , , "cp.j02LastName+char(32)+cp.j02FirstName"))
 
-            .Add(AGC("Štítky", "Tags", , , "dbo.tag_values_inline(331,a.p31ID)"))
+            .Add(AGC(My.Resources.common.Stitky, "TagsHtml", , , "dbo.tag_values_inline_html(331,a.p31ID)"))
+            .Add(AGC(My.Resources.common.Stitky + " (text)", "TagsText", , , "dbo.tag_values_inline(331,a.p31ID)"))
 
             .Add(AGC(My.Resources.common.VykazanaHodnota, "p31Value_Orig", BO.cfENUM.Numeric2, , , True, , "Vykázáno"))
             .Add(AGC(My.Resources.common.VykazaneHodiny, "p31Hours_Orig", BO.cfENUM.Numeric2, , , True, , "Vykázáno"))
@@ -778,7 +783,8 @@ Class j70QueryTemplateBL
 
             .Add(AGC("Text", "p91Text1"))
 
-            .Add(AGC("Štítky", "Tags", , , "dbo.tag_values_inline(391,a.p91ID)"))
+            .Add(AGC(My.Resources.common.Stitky, "TagsHtml", , , "dbo.tag_values_inline_html(391,a.p91ID)"))
+            .Add(AGC(My.Resources.common.Stitky + " (text)", "TagsText", , , "dbo.tag_values_inline(391,a.p91ID)"))
 
             .Add(AGC("Ulice klienta", "p91ClientAddress1_Street"))
             .Add(AGC("Město klienta", "p91ClientAddress1_City"))
@@ -813,7 +819,8 @@ Class j70QueryTemplateBL
             .Add(AGC(My.Resources.common.Termin, "p56PlanUntil", BO.cfENUM.DateTime, , , , , "Plán úkolu"))
             .Add(AGC(My.Resources.common.PlanStart, "p56PlanFrom", BO.cfENUM.DateTime, , , , , "Plán úkolu"))
 
-            .Add(AGC("Štítky", "Tags", , , "dbo.tag_values_inline(356,a.p56ID)"))
+            .Add(AGC(My.Resources.common.Stitky, "TagsHtml", , , "dbo.tag_values_inline_html(356,a.p56ID)"))
+            .Add(AGC(My.Resources.common.Stitky + " (text)", "TagsText", , , "dbo.tag_values_inline(356,a.p56ID)"))
 
             .Add(AGC("Hotovo%", "p56CompletePercent", BO.cfENUM.Numeric0))
 
@@ -846,7 +853,8 @@ Class j70QueryTemplateBL
             
             .Add(AGC("Příjemci", "ReceiversInLine", , , "dbo.o23_getroles_inline(a.o23ID)"))
 
-            .Add(AGC("Štítky", "Tags", , , "dbo.tag_values_inline(223,a.o23ID)"))
+            .Add(AGC(My.Resources.common.Stitky, "TagsHtml", , , "dbo.tag_values_inline_html(223,a.o23ID)"))
+            .Add(AGC(My.Resources.common.Stitky + " (text)", "TagsText", , , "dbo.tag_values_inline(223,a.o23ID)"))
 
             .Add(AGC("Datum", "o23FreeDate01", BO.cfENUM.DateTime))
             .Add(AGC("Připomenutí", "o23ReminderDate", BO.cfENUM.DateTime))
