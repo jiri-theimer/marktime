@@ -439,32 +439,32 @@ Class j70QueryTemplateBL
                 lis.Add(col)
             End If
         Next
-        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Factory.x18EntityCategoryBL.GetList(, x29id, -1), x As Integer = 0
+        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Factory.x18EntityCategoryBL.GetList(, x29id, -1).Where(Function(p) p.x18IsManyItems = False), x As Integer = 0
         For Each c In lisX18
             x += 1
             Dim strSql As String = "dbo.stitek_hodnoty(" & c.PID.ToString & "," & CInt(x29id).ToString & ",a." & BO.BAS.GetDataPrefix(x29id) & "ID)"
-            lis.Add(AGC(Left(c.x18Name, 20), "tag" & x.ToString & "_" & c.PID.ToString, BO.cfENUM.AnyString, , strSql, , , "Dokument", , ))
+            lis.Add(AGC(Left(c.x18Name, 20), "tag" & x.ToString & "_" & c.PID.ToString, BO.cfENUM.AnyString, , strSql, , , "Kategorie (typ dokumentu)", , ))
         Next
         Select Case x29id
             Case BO.x29IdEnum.p41Project
-                lisX18 = Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1)
+                lisX18 = Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1).Where(Function(p) p.x18IsManyItems = False)
                 For Each c In lisX18
                     x += 1
                     Dim strSql As String = "dbo.stitek_hodnoty(" & c.PID.ToString & ",328,a.p28ID_Client)"
-                    lis.Add(AGC(Left(c.x18Name, 20), "tag" & x.ToString & "_" & c.PID.ToString, BO.cfENUM.AnyString, , strSql, , , "Dokument klienta projektu", , ))
+                    lis.Add(AGC(Left(c.x18Name, 20), "tag" & x.ToString & "_" & c.PID.ToString, BO.cfENUM.AnyString, , strSql, , , "Kategorie klienta projektu", , ))
                 Next
             Case BO.x29IdEnum.p31Worksheet
-                lisX18 = Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p41Project, -1)
+                lisX18 = Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p41Project, -1).Where(Function(p) p.x18IsManyItems = False)
                 For Each c In lisX18
                     x += 1
                     Dim strSql As String = "dbo.stitek_hodnoty(" & c.PID.ToString & ",141,a.p41ID)"
-                    lis.Add(AGC(Left(c.x18Name, 20), "tag" & x.ToString & "_" & c.PID.ToString, BO.cfENUM.AnyString, , strSql, , , "Dokument projektu", , ))
+                    lis.Add(AGC(Left(c.x18Name, 20), "tag" & x.ToString & "_" & c.PID.ToString, BO.cfENUM.AnyString, , strSql, , , "Kategorie projektu", , ))
                 Next
-                lisX18 = Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1)
+                lisX18 = Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1).Where(Function(p) p.x18IsManyItems = False)
                 For Each c In lisX18
                     x += 1
                     Dim strSql As String = "dbo.stitek_hodnoty(" & c.PID.ToString & ",328,p41.p28ID_Client)"
-                    lis.Add(AGC(Left(c.x18Name, 20), "tag" & x.ToString & "_" & c.PID.ToString, BO.cfENUM.AnyString, , strSql, , , "Dokument klienta projektu", , ))
+                    lis.Add(AGC(Left(c.x18Name, 20), "tag" & x.ToString & "_" & c.PID.ToString, BO.cfENUM.AnyString, , strSql, , , "Kategorie klienta projektu", , ))
                 Next
         End Select
     End Sub
