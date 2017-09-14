@@ -27,6 +27,7 @@
             With pars
                 .Add("j02ID_Owner", BO.BAS.IsNullDBKey(cRec.j02ID_Owner), DbType.Int32)
                 .Add("o51name", cRec.o51Name, DbType.String, , , True, "Název")
+                .Add("o51Description", cRec.o51Description, DbType.String, , , True, "Popis")
                 .Add("o51ScopeFlag", cRec.o51ScopeFlag, DbType.Int32)
                 .Add("o51IsP41", cRec.o51IsP41, DbType.Boolean)
                 .Add("o51IsP28", cRec.o51IsP28, DbType.Boolean)
@@ -63,7 +64,7 @@
 
     End Function
 
-    Public Function GetList(myQuery As BO.myQuery, strPrefix As String) As IEnumerable(Of BO.o51Tag)
+    Public Function GetList(myQuery As BO.myQuery, strPrefix As String, usedInO52 As BO.BooleanQueryMode) As IEnumerable(Of BO.o51Tag)
         Dim s As String = "select a.*," & bas.RecTail("o51", "a") & ",j02.j02LastName+' '+j02.j02FirstName as _Owner FROM o51Tag a INNER JOIN j02Person j02 ON a.j02ID_Owner=j02.J02ID"
 
         Dim pars As New DbParameters
@@ -81,7 +82,12 @@
                 strW += " AND a.o51ScopeFlag=1"
             End If
         End If
-        
+        Select Case usedInO52
+            Case BO.BooleanQueryMode.TrueQuery
+                strW += " AND a.o51ID IN (select o51ID FROM o52TagBinding)"
+            Case BO.BooleanQueryMode.FalseQuery
+                strW += " AND a.o51ID NOT IN (select o51ID FROM o52TagBinding)"
+        End Select
         If myQuery.j02ID_Owner <> 0 Then
             strW += " AND a.j02ID_Owner=@owner"
             pars.Add("owner", _curUser.j02ID, DbType.Int32)

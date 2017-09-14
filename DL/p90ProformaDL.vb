@@ -187,6 +187,9 @@
                 pars.Add("j27id", .j27ID, DbType.Int32)
                 strW += " AND a.j27ID=@j27id"
             End If
+            If Not .o51IDs Is Nothing Then
+                If .o51IDs.Count > 0 Then strW += " AND a.p90ID IN (SELECT o52RecordPID FROM o52TagBinding WHERE x29ID=390 AND o51ID IN (" & String.Join(",", .o51IDs) & "))"
+            End If
             If Year(.DateFrom) > 2000 Or Year(.DateUntil) < 2100 Then
                 pars.Add("d1", .DateFrom, DbType.DateTime)
                 pars.Add("d2", .DateUntil, DbType.DateTime)

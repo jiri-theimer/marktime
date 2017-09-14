@@ -44,5 +44,6 @@ Public Class myQueryP91
     Public Property j02ID_ExplicitQueryFor As Integer = 0   'ID osoby, z jejíhož pohledu se mají odfiltrovat faktury, pokud je 0, pak přihlášený uživatel
     Public Property PeriodType As myQueryP91_PeriodType = myQueryP91_PeriodType.p91DateSupply
     Public Property QuickQuery As myQueryP91_QuickQuery = myQueryP91_QuickQuery._NotSpecified
-    Public Property x18Value As String  'filtrování podle štítků
+    Public Property x18Value As String  'filtrování podle kategorií
+    Public Property o51IDs As List(Of Integer)  'filtrování podle štítků
 End Class

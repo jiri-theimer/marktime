@@ -88,6 +88,7 @@ Public Class entity_framework
                     .Add(Me.CurrentPrefix + "_framework-layout")
                     .Add("x18_querybuilder-value-" & Me.CurrentPrefix & "-grid")
                     .Add("x18_querybuilder-text-" & Me.CurrentPrefix & "-grid")
+                    .Add("o51_querybuilder-" & Me.CurrentPrefix)
                 End With
                 cbxGroupBy.DataSource = .Factory.j70QueryTemplateBL.GroupByPallet(Me.CurrentX29ID)
                 cbxGroupBy.DataBind()
@@ -142,6 +143,10 @@ Public Class entity_framework
                     End If
                     hidX18_value.Value = .GetUserParam("x18_querybuilder-value-" & Me.CurrentPrefix & "-grid")
                     Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-" & Me.CurrentPrefix & "-grid")
+
+                    Dim cPT As BO.QueryByTags = Master.Factory.o51TagBL.ParseQueryByTags(Me.CurrentPrefix, .GetUserParam("o51_querybuilder-" & Me.CurrentPrefix))
+                    hidO51IDs.Value = cPT.o51IDsInline
+                    Me.o51_querybuilder_info.Text = cPT.HtmlInline
                 End With
             End With
 
@@ -538,6 +543,9 @@ Public Class entity_framework
                 End If
             End If
             .x18Value = Me.hidX18_value.Value
+            If hidO51IDs.Value <> "" Then
+                .o51IDs = BO.BAS.ConvertPIDs2List(hidO51IDs.Value)
+            End If
         End With
 
     End Sub
@@ -580,6 +588,9 @@ Public Class entity_framework
             .SpecificQuery = BO.myQueryO23_SpecificQuery.AllowedForRead
 
             .x18Value = Me.hidX18_value.Value
+            If hidO51IDs.Value <> "" Then
+                .o51IDs = BO.BAS.ConvertPIDs2List(hidO51IDs.Value)
+            End If
         End With
 
     End Sub
@@ -619,6 +630,9 @@ Public Class entity_framework
             .j70ID = designer1.CurrentJ70ID
             .SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
             .x18Value = Me.hidX18_value.Value
+            If hidO51IDs.Value <> "" Then
+                .o51IDs = BO.BAS.ConvertPIDs2List(hidO51IDs.Value)
+            End If
         End With
     End Sub
     Private Sub InhaleMyQuery_p41(ByRef mq As BO.myQueryP41)
@@ -656,6 +670,9 @@ Public Class entity_framework
             .SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
             .j70ID = designer1.CurrentJ70ID
             .x18Value = Me.hidX18_value.Value
+            If hidO51IDs.Value <> "" Then
+                .o51IDs = BO.BAS.ConvertPIDs2List(hidO51IDs.Value)
+            End If
         End With
     End Sub
     Private Sub InhaleMyQuery_p28(ByRef mq As BO.myQueryP28)
@@ -687,7 +704,9 @@ Public Class entity_framework
             .SpecificQuery = BO.myQueryP28_SpecificQuery.AllowedForRead
             .j70ID = designer1.CurrentJ70ID
             .x18Value = Me.hidX18_value.Value
-
+            If hidO51IDs.Value <> "" Then
+                .o51IDs = BO.BAS.ConvertPIDs2List(hidO51IDs.Value)
+            End If
         End With
 
     End Sub
@@ -732,6 +751,9 @@ Public Class entity_framework
             End Select
             .j70ID = designer1.CurrentJ70ID
             .x18Value = Me.hidX18_value.Value
+            If hidO51IDs.Value <> "" Then
+                .o51IDs = BO.BAS.ConvertPIDs2List(hidO51IDs.Value)
+            End If
         End With
     End Sub
     Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
@@ -1144,6 +1166,12 @@ Public Class entity_framework
         Else
             cmdClearX18.Visible = False
         End If
+        If hidO51IDs.Value <> "" Then
+            Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/>" & Me.o51_querybuilder_info.Text & "<a href='javascript:clear_o51()' title='Zrušit filtr štítků'><img src='Images/delete.png'></a>"
+            cmdClearO51.Visible = True
+        Else
+            cmdClearO51.Visible = False
+        End If
         If panSearchbox.Visible Then
             Select Case Me.CurrentPrefix
                 Case "p41"
@@ -1209,6 +1237,13 @@ Public Class entity_framework
         With Master.Factory.j03UserBL
             .SetUserParam("x18_querybuilder-value-" & Me.CurrentPrefix & "-grid", "")
             .SetUserParam("x18_querybuilder-text-" & Me.CurrentPrefix & "-grid", "")
+        End With
+        ReloadPage()
+    End Sub
+
+    Private Sub cmdClearO51_Click(sender As Object, e As ImageClickEventArgs) Handles cmdClearO51.Click
+        With Master.Factory.j03UserBL
+            .SetUserParam("o51_querybuilder-" & Me.CurrentPrefix, "")
         End With
         ReloadPage()
     End Sub

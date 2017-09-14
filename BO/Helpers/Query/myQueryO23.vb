@@ -48,7 +48,7 @@ Public Class myQueryO23
     Public Property x18Value As String
     Public Property x20ID_Bound As Integer
     Public Property x20ID_UnBound As Integer
-
+    Public Property o51IDs As List(Of Integer)
 
     Public Sub New(intX23ID As Integer)
         Me.x23ID = intX23ID

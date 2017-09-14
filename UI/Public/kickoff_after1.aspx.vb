@@ -571,6 +571,7 @@
         CreateQuery("Projekty v archivu", BO.x29IdEnum.p41Project, 2, strColumnNames)
         CreateQuery("Strom", BO.x29IdEnum.p41Project, 0, "Client,p41TreePath")
         CreateQuery("Štítky", BO.x29IdEnum.p41Project, 0, "Client,p41Name,TagsHtml")
+        CreateQuery("Naposledy založené", BO.x29IdEnum.p41Project, 0, "Client,p41Name,p41DateInsert,p41UserInsert", , , , "a.p41DateInsert DESC")
         CreateQuery("Můj seznam oblíbených", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 20)
         CreateQuery("Obsahují rozpracovanost (čeká na schvalování)", BO.x29IdEnum.p41Project, 0, "Client,p41Name,WIP_Hodiny,WIP_Castka", "_other", 3)
         CreateQuery("Obsahují schválené úkony (čeká na fakturaci)", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 5)
@@ -589,6 +590,7 @@
         CreateQuery("Klienti v archivu", BO.x29IdEnum.p28Contact, 2, strColumnNames)
         CreateQuery("Strom", BO.x29IdEnum.p28Contact, 0, "p28TreePath")
         CreateQuery("Štítky", BO.x29IdEnum.p28Contact, 0, "p28Name,TagsHtml")
+        CreateQuery("Naposledy založené", BO.x29IdEnum.p28Contact, 0, "p28Name,p28DateInsert,p28UserInsert", , , , "a.p28DateInsert DESC")
         CreateQuery("Rozpracovanost (čeká na schvalování)", BO.x29IdEnum.p28Contact, 0, "p28Name,WIP_Hodiny", "_other", 3)
         CreateQuery("Schválené úkony (čeká na fakturaci)", BO.x29IdEnum.p28Contact, 0, strColumnNames, "_other", 5)
         CreateQuery("Klienti s kontaktní osobou", BO.x29IdEnum.p28Contact, 0, strColumnNames, "_other", 16)
@@ -645,7 +647,7 @@
         End If
     End Function
 
-    Private Sub CreateQuery(strJ70Name As String, x29ID As BO.x29IdEnum, intBinFlag As Integer, strColumnNames As String, Optional strJ71Field As String = "", Optional intJ71RecordPID As Integer = 0, Optional strJ71RecordName As String = "")
+    Private Sub CreateQuery(strJ70Name As String, x29ID As BO.x29IdEnum, intBinFlag As Integer, strColumnNames As String, Optional strJ71Field As String = "", Optional intJ71RecordPID As Integer = 0, Optional strJ71RecordName As String = "", Optional strJ70OrderBy As String = "")
         Dim mqJ02 As New BO.myQueryJ02
         mqJ02.IntraPersons = BO.myQueryJ02_IntraPersons.IntraOnly
         mqJ02.Closed = BO.BooleanQueryMode.FalseQuery
@@ -674,6 +676,7 @@
         c.j03ID = intJ03ID
         c.x29ID = x29ID
         c.j70ColumnNames = strColumnNames
+        c.j70OrderBy = strJ70OrderBy
 
         Dim lisJ71 As New List(Of BO.j71QueryTemplate_Item)
         If strJ71Field <> "" Then

@@ -39,7 +39,7 @@
             If hidO51IDs.Value = "" Then Return
             Dim mq As New BO.myQuery
             mq.PIDs = BO.BAS.ConvertPIDs2List(hidO51IDs.Value)
-            Dim lis As IEnumerable(Of BO.o51Tag) = Master.Factory.o51TagBL.GetList(mq, "all")
+            Dim lis As IEnumerable(Of BO.o51Tag) = Master.Factory.o51TagBL.GetList(mq, "all", BO.BooleanQueryMode.NoQuery)
             With tags1.Entries
                 For Each c In lis
                     .Add(New Telerik.Web.UI.AutoCompleteBoxEntry(c.o51Name, c.PID.ToString))

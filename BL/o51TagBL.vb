@@ -5,9 +5,10 @@ Public Interface Io51TagBL
     Function Load(intPID As Integer) As BO.o51Tag
     Function LoadByName(strName As String, intExcludePID As Integer) As BO.o51Tag
     Function Delete(intPID As Integer) As Boolean
-    Function GetList(mq As BO.myQuery, strPrefix As String) As IEnumerable(Of BO.o51Tag)
+    Function GetList(mq As BO.myQuery, strPrefix As String, usedInO52 As BO.BooleanQueryMode) As IEnumerable(Of BO.o51Tag)
     Function GetList_o52(strPrefix As String, intRecordPID As Integer) As IEnumerable(Of BO.o52TagBinding)
     Function SaveBinding(strPrefix As String, intRecordPID As Integer, o51IDs As List(Of Integer)) As Boolean
+    Function ParseQueryByTags(strParsePrefix As String, strQuery As String) As BO.QueryByTags
 End Interface
 Class o51TagBL
     Inherits BLMother
@@ -57,13 +58,53 @@ Class o51TagBL
     Public Function Delete(intPID As Integer) As Boolean Implements Io51TagBL.Delete
         Return _cDL.Delete(intPID)
     End Function
-    Public Function GetList(mq As BO.myQuery, strPrefix As String) As IEnumerable(Of BO.o51Tag) Implements Io51TagBL.GetList
-        Return _cDL.GetList(mq, strPrefix)
+    Public Function GetList(mq As BO.myQuery, strPrefix As String, usedInO52 As BO.BooleanQueryMode) As IEnumerable(Of BO.o51Tag) Implements Io51TagBL.GetList
+        Return _cDL.GetList(mq, strPrefix, usedInO52)
     End Function
     Public Function GetList_o52(strPrefix As String, intRecordPID As Integer) As IEnumerable(Of BO.o52TagBinding) Implements Io51TagBL.GetList_o52
         Return _cDL.GetList_o52(strPrefix, intRecordPID)
     End Function
     Public Function SaveBinding(strPrefix As String, intRecordPID As Integer, o51IDs As List(Of Integer)) As Boolean Implements Io51TagBL.SaveBinding
         Return _cDL.SaveBinding(strPrefix, intRecordPID, o51IDs)
+    End Function
+
+    Public Function ParseQueryByTags(strParsePrefix As String, strQuery As String) As BO.QueryByTags Implements Io51TagBL.ParseQueryByTags
+        Dim ret As New BO.QueryByTags
+        If strQuery = "" Then Return ret
+
+        Dim sis As List(Of String) = BO.BAS.ConvertDelimitedString2List(strQuery)
+        Dim pids As New List(Of Integer)
+        For Each s In sis
+            If Left(s, 3) = strParsePrefix Then
+                pids.Add(CInt(Right(s, Len(s) - 4)))
+            End If
+        Next
+        If pids.Count = 0 Then Return ret
+
+        Dim mq As New BO.myQuery
+        mq.PIDs = pids
+        Dim lis As IEnumerable(Of BO.o51Tag) = GetList(mq, "all", BO.BooleanQueryMode.NoQuery)
+        sis = New List(Of String)
+
+        For Each c In lis
+            Dim s As String = "<span class='badge_tag'"
+            If c.o51BackColor <> "" Or c.o51ForeColor <> "" Then
+                s += " style='"
+                If c.o51BackColor <> "" Then
+                    s += "background-color:" & c.o51BackColor & ";"
+                End If
+                If c.o51ForeColor <> "" Then
+                    s += ";color:" & c.o51ForeColor & ";"
+                End If
+                s += "'"
+            End If
+            s += ">" & c.o51Name & "</span>"
+            sis.Add(s)
+        Next
+        ret.TextInline = String.Join(", ", lis.Select(Function(p) p.o51Name))
+        ret.o51IDs = pids
+        ret.o51IDsInline = String.Join(",", pids)
+        ret.HtmlInline = String.Join("", sis)
+        Return ret
     End Function
 End Class

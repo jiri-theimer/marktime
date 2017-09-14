@@ -291,6 +291,14 @@
             sw_master("x18_querybuilder.aspx?key=grid&prefix=<%=Me.CurrentPrefix%>", "Images/query.png");
 
         }
+        function o51_querybuilder() {
+            sw_master("o51_querybuilder.aspx?prefix=<%=Me.CurrentPrefix%>", "Images/query.png");
+
+        }
+        function clear_o51() {
+            var clickButton = document.getElementById("<%=cmdClearO51.ClientID%>");
+            clickButton.click();
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -331,8 +339,14 @@
 
                                             </div>
                                             <div>
-                                                <button type="button" onclick="x18_querybuilder()">
-                                                    <img src="Images/label.png" />Kategorie</button>
+                                                <button type="button" onclick="o51_querybuilder()" style="width:90px;">
+                                                    <img src="Images/query.png"/>Štítky</button>
+                                                <asp:ImageButton ID="cmdClearO51" runat="server" ToolTip="Vyčistit filtr štítků" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
+                                                <asp:Label ID="o51_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
+                                            </div>
+                                            <div>
+                                                <button type="button" onclick="x18_querybuilder()" style="width:90px;">
+                                                    <img src="Images/query.png" />Kategorie</button>
                                                 <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit filtr kategorií" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
                                                 <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
                                             </div>
@@ -487,7 +501,8 @@
             <asp:HiddenField ID="hidContentPaneWidth" runat="server" />
             <asp:HiddenField ID="hidContentPaneDefUrl" runat="server" />
             <asp:HiddenField ID="hidX18_value" runat="server" />
-
+            <asp:HiddenField ID="hidO51IDs" runat="server" />
+            
         </telerik:RadPane>
         <telerik:RadSplitBar ID="RadSplitbar1" runat="server" CollapseMode="Forward">
         </telerik:RadSplitBar>

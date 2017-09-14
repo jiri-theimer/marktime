@@ -275,6 +275,15 @@ Partial Public Class p28_record
     Protected WithEvents p28SupplierID As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''tags1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tags1 As Global.UI.mytags
+
+    '''<summary>
     '''chkDefineLimits control.
     '''</summary>
     '''<remarks>
@@ -363,15 +372,6 @@ Partial Public Class p28_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents rpO37 As Global.System.Web.UI.WebControls.Repeater
-
-    '''<summary>
-    '''tags1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents tags1 As Global.UI.mytags
 
     '''<summary>
     '''Label2 control.

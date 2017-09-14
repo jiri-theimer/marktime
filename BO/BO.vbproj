@@ -146,6 +146,7 @@
     <Compile Include="Helpers\MsOfficeBinding.vb" />
     <Compile Include="Helpers\p56TaskSum.vb" />
     <Compile Include="Helpers\PersonOrTeam.vb" />
+    <Compile Include="Helpers\QueryByTags.vb" />
     <Compile Include="Helpers\Query\myQueryO23.vb" />
     <Compile Include="Helpers\Roles4Notification.vb" />
     <Compile Include="Helpers\SchedulerItem.vb" />

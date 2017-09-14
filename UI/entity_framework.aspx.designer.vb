@@ -86,6 +86,24 @@ Partial Public Class entity_framework
     Protected WithEvents cbxPeriodType As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''cmdClearO51 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdClearO51 As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
+    '''o51_querybuilder_info control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o51_querybuilder_info As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''cmdClearX18 control.
     '''</summary>
     '''<remarks>
@@ -426,6 +444,15 @@ Partial Public Class entity_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidX18_value As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidO51IDs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidO51IDs As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''RadSplitbar1 control.

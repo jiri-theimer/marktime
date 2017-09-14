@@ -523,6 +523,8 @@
             If .Save(cRec, lisO37, lisO32, lisP30, lisX69, lisFF) Then
                 Dim bolNew As Boolean = Master.IsRecordNew
                 Master.DataPID = .LastSavedPID
+
+                Master.Factory.o51TagBL.SaveBinding("p28", Master.DataPID, tags1.Geto51IDs())
                 If Not bolNew Or ff1.GetX20IDs.Count > 0 Then
                     Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p28Contact, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs)
                 End If

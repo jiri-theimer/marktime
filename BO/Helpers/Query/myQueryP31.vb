@@ -68,5 +68,6 @@ Public Class myQueryP31
 
     Public Property TabAutoQuery As String  'možné hodnoty: time, expense, fee, kusovnik
     Public Property PeriodType As myQueryP31_Period = myQueryP31_Period.p31Date
-    Public Property x18Value As String  'filtrování podle štítků
+    Public Property x18Value As String  'filtrování podle kategorií
+    Public Property o51IDs As List(Of Integer)  'filtrování podle štítků
 End Class

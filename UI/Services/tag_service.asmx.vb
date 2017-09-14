@@ -52,7 +52,7 @@ Public Class tag_service
 
 
 
-        Dim lis As IEnumerable(Of BO.o51Tag) = factory.o51TagBL.GetList(mq, strPrefix)
+        Dim lis As IEnumerable(Of BO.o51Tag) = factory.o51TagBL.GetList(mq, strPrefix, BO.BooleanQueryMode.NoQuery)
         result = New List(Of AutoCompleteBoxItemData)(lis.Count)
         Dim itemData As New AutoCompleteBoxItemData()
         itemData.Enabled = False
@@ -114,7 +114,7 @@ Public Class tag_service
 
 
 
-        Dim lis As IEnumerable(Of BO.o51Tag) = factory.o51TagBL.GetList(mq, strPrefix)
+        Dim lis As IEnumerable(Of BO.o51Tag) = factory.o51TagBL.GetList(mq, strPrefix, BO.BooleanQueryMode.NoQuery)
         result = New List(Of RadComboBoxItemData)(lis.Count)
         Dim itemData As New RadComboBoxItemData()
         itemData.Enabled = False

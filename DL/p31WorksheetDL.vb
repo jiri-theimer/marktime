@@ -488,6 +488,9 @@
             If .x18Value <> "" Then
                 s.Append(bas.CompleteX18QuerySql("p31", .x18Value)) 'filtr podle štítků
             End If
+            If Not .o51IDs Is Nothing Then
+                If .o51IDs.Count > 0 Then s.Append(" AND a.p31ID IN (SELECT o52RecordPID FROM o52TagBinding WHERE x29ID=331 AND o51ID IN (" & String.Join(",", .o51IDs) & "))")
+            End If
         End With
 
         Return bas.TrimWHERE(s.ToString)

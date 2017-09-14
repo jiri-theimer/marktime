@@ -50,5 +50,6 @@ Public Class myQueryP28
     Public Property TreeIndexFrom As Integer
     Public Property TreeIndexUntil As Integer
     Public Property p28TreeLevel As Integer = -1
-    Public Property x18Value As String  'filtrování podle štítků
+    Public Property x18Value As String  'filtrování podle kategorií
+    Public Property o51IDs As List(Of Integer)  'filtrování podle štítků
 End Class

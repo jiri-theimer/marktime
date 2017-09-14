@@ -333,6 +333,9 @@
                 s.Append(")")
                 pars.Add("expr", .SearchExpression, DbType.String)
             End If
+            If Not .o51IDs Is Nothing Then
+                If .o51IDs.Count > 0 Then s.Append(" AND a.p28ID IN (SELECT o52RecordPID FROM o52TagBinding WHERE x29ID=328 AND o51ID IN (" & String.Join(",", .o51IDs) & "))")
+            End If
             If .x18Value <> "" Then
                 s.Append(bas.CompleteX18QuerySql("p28", .x18Value))
             End If

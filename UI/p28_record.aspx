@@ -188,10 +188,11 @@
                 <asp:TextBox ID="p28SupplierID" runat="server"></asp:TextBox>
             </div>
             <div id="search_dupl_result" style="position: relative; left: 0px; top: 0px; z-index: 1000;"></div>
-
+            <uc:mytags ID="tags1" ModeUi="1" Prefix="p28" runat="server" />
             <div class="div6">
                 <asp:CheckBox ID="chkDefineLimits" runat="server" AutoPostBack="true" Text="Definovat limity k upozornění" CssClass="chk" />
             </div>
+            
             <asp:Panel ID="panLimits" runat="server">
                 <div class="div6">
                     <asp:Label ID="lblLimitHours" runat="server" CssClass="lbl" Text="Limitní objem rozpracovaných hodin na projektech, po jehož překročení systém odešle notifikaci (upozornění):"></asp:Label>
@@ -257,7 +258,7 @@
                     </table>
                 </asp:Panel>
             </div>
-            <uc:mytags ID="tags1" ModeUi="1" Prefix="p28" runat="server" />
+            
 
             <div class="content-box2" style="padding-top: 10px;">
                 <div class="title">

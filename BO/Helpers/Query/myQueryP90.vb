@@ -9,4 +9,6 @@
     Public Property j27ID As Integer
 
     Public Property IsP99Bounded As BO.BooleanQueryMode = BooleanQueryMode.NoQuery
+
+    Public Property o51IDs As List(Of Integer)  'filtrování podle štítků
 End Class
