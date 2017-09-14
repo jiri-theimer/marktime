@@ -75,6 +75,7 @@ Public Class p31_grid
                     .Add("x18_querybuilder-value-p31-p31grid")
                     .Add("x18_querybuilder-text-p31-p31grid")
                     .Add("p31_grid-query-on-top")
+                    .Add("o51_querybuilder-p31")
                 End With
                 cbxGroupBy.DataSource = .Factory.j70QueryTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet)
                 cbxGroupBy.DataBind()
@@ -94,6 +95,9 @@ Public Class p31_grid
                     hidX18_value.Value = .GetUserParam("x18_querybuilder-value-p31-p31grid")
                     Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-p31-p31grid")
 
+                    Dim cPT As BO.QueryByTags = Master.Factory.o51TagBL.ParseQueryByTags("p31", .GetUserParam("o51_querybuilder-p31"))
+                    hidO51IDs.Value = cPT.o51IDsInline
+                    Me.o51_querybuilder_info.Text = cPT.HtmlInline
                 End With
 
 
@@ -379,6 +383,9 @@ Public Class p31_grid
             
             .TabAutoQuery = cbxTabQueryFlag.SelectedValue
             .x18Value = Me.hidX18_value.Value
+            If hidO51IDs.Value <> "" Then
+                .o51IDs = BO.BAS.ConvertPIDs2List(hidO51IDs.Value)
+            End If
         End With
         If Not Page.IsPostBack Then
             If Request.Item("pid") <> "" Then
@@ -453,6 +460,12 @@ Public Class p31_grid
                 .BackColor = Nothing
             End If
         End With
+        If hidO51IDs.Value <> "" Then
+            Me.CurrentQuery.Text += Me.o51_querybuilder_info.Text & "<a href='javascript:clear_o51()' title='Zrušit filtr štítků'><img src='Images/delete.png'></a>"
+            cmdClearO51.Visible = True
+        Else
+            cmdClearO51.Visible = False
+        End If
         If hidX18_value.Value <> "" Then
             Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/><img src='Images/label.png'/>" & Me.x18_querybuilder_info.Text
             cmdClearX18.Visible = True
@@ -591,4 +604,10 @@ Public Class p31_grid
         ReloadPage()
     End Sub
     
+    Private Sub cmdClearO51_Click(sender As Object, e As ImageClickEventArgs) Handles cmdClearO51.Click
+        With Master.Factory.j03UserBL
+            .SetUserParam("o51_querybuilder-p31", "")
+        End With
+        ReloadPage()
+    End Sub
 End Class

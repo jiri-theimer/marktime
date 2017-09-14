@@ -1167,7 +1167,7 @@ Public Class entity_framework
             cmdClearX18.Visible = False
         End If
         If hidO51IDs.Value <> "" Then
-            Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/>" & Me.o51_querybuilder_info.Text & "<a href='javascript:clear_o51()' title='Zrušit filtr štítků'><img src='Images/delete.png'></a>"
+            Me.CurrentQuery.Text += Me.o51_querybuilder_info.Text & "<a href='javascript:clear_o51()' title='Zrušit filtr štítků'><img src='Images/delete.png'></a>"
             cmdClearO51.Visible = True
         Else
             cmdClearO51.Visible = False

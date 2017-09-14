@@ -51,6 +51,15 @@
             window.parent.hardrefresh_mytags(o51ids);
             window.close();
         }
+        function trydel() {
+
+            if (confirm("Opravdu nenávratně odstranit tento štítek?")) {
+                return (true);
+            }
+            else {
+                return (false);
+            }
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
@@ -142,7 +151,7 @@
     <asp:Panel ID="panEdidt" runat="server" CssClass="content-box2" Style="width: 450px; padding: 10px; margin-top: 50px;">
         <div class="title">
             <img src="Images/edit.png" />
-            Upravit vybraný štítek
+            Upravit nebo odstranit vybraný štítek
             <asp:Button ID="cmdSave" runat="server" CssClass="cmd" Text="Uložit změny" />
         </div>
         <div class="content">
@@ -208,6 +217,9 @@
                         </td>
                     </tr>
                 </table>
+                <div>
+                    <asp:Button ID="cmdDelete" runat="server" Text="Odstranit štítek" CssClass="cmd" OnClientClick="return trydel();" />
+                </div>
             </asp:Panel>
 
             <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>

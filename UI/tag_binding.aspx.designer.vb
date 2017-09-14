@@ -239,6 +239,15 @@ Partial Public Class tag_binding
     Protected WithEvents o51ForeColor As Global.Telerik.Web.UI.RadColorPicker
 
     '''<summary>
+    '''cmdDelete control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdDelete As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''Timestamp control.
     '''</summary>
     '''<remarks>

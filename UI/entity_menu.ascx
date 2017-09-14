@@ -71,7 +71,7 @@
 
     function sw_decide(url, iconUrl, is_maximize) {
         var w=window.innerWidth;      
-        alert(w);
+        
         if (w<1100){
             window.parent.sw_master(url, iconUrl, is_maximize);
             return;

@@ -183,4 +183,14 @@
             End If
         End With
     End Sub
+
+    Private Sub cmdDelete_Click(sender As Object, e As EventArgs) Handles cmdDelete.Click
+        With Master.Factory.o51TagBL
+            If .Delete(BO.BAS.IsNullInt(Me.cbxFind.SelectedValue)) Then
+                Me.cbxFind.Text = "" : Me.cbxFind.SelectedValue = ""
+            Else
+                Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
+            End If
+        End With
+    End Sub
 End Class

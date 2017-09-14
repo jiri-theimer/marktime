@@ -10,13 +10,13 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            
 
-            <%If designer1.Visible then%>
+
+            <%If designer1.Visible Then%>
             document.getElementById("cmdMyGridDesigner").style.display = "block";
-            <%end If%>
+            <%End If%>
 
-           
+
 
         });
 
@@ -123,7 +123,7 @@
 
         }
 
-       
+
 
         function periodcombo_setting() {
 
@@ -144,7 +144,7 @@
 
         }
 
-        
+
         function drilldown() {
 
             var masterprefix = document.getElementById("<%=Me.hidMasterPrefix.ClientID%>").value;
@@ -166,9 +166,17 @@
 
 
         }
-        function x18_querybuilder() {            
+        function x18_querybuilder() {
             sw_master("x18_querybuilder.aspx?key=p31grid&prefix=p31", "Images/query.png");
 
+        }
+        function o51_querybuilder() {
+            sw_master("o51_querybuilder.aspx?prefix=p31", "Images/query.png");
+
+        }
+        function clear_o51() {
+            var clickButton = document.getElementById("<%=cmdClearO51.ClientID%>");
+            clickButton.click();
         }
 
     </script>
@@ -184,8 +192,8 @@
 
 
 
-        <div class="commandcell" style="padding-left: 10px;padding-right:10px;">
-            <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období" style="width:120px;">
+        <div class="commandcell" style="padding-left: 10px; padding-right: 10px;">
+            <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období" Style="width: 120px;">
                 <asp:ListItem Text="Datum úkonu:" Value="p31Date" Selected="true"></asp:ListItem>
                 <asp:ListItem Text="Datum založení:" Value="p31DateInsert"></asp:ListItem>
                 <asp:ListItem Text="Vystavení faktury:" Value="p91Date"></asp:ListItem>
@@ -193,10 +201,10 @@
             </asp:DropDownList>
             <uc:periodcombo ID="period1" runat="server" Width="180px"></uc:periodcombo>
         </div>
-        
-       
+
+
         <div class="commandcell">
-            <uc:mygrid id="designer1" runat="server" prefix="p31" masterprefix="" x36key="p31-j70id"></uc:mygrid>
+            <uc:mygrid ID="designer1" runat="server" Prefix="p31" MasterPrefix="" x36Key="p31-j70id"></uc:mygrid>
         </div>
 
 
@@ -212,7 +220,7 @@
                             <telerik:RadMenuItem Value="cmdSplit" Text="<%$Resources:p31_grid,Rozdelit %>" NavigateUrl="javascript:record_split();" ImageUrl="Images/split.png"></telerik:RadMenuItem>
                         </Items>
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Vybrané záznamy" Value="recs" ImageUrl="Images/arrow_down_menu.png">
+                    <telerik:RadMenuItem Text="Akce pro vybrané záznamy" Value="recs" ImageUrl="Images/arrow_down_menu.png">
                         <Items>
                             <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat záznamy" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdApprove" Text="Schvalovat/pře-schvalovat/fakturovat úkony" NavigateUrl="javascript:approving();" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
@@ -229,7 +237,14 @@
                                 </div>
                                 <div class="content">
                                     <div class="div6">
-                                        <button type="button" onclick="x18_querybuilder()"><img src="Images/label.png" />Kategorie</button>
+                                        <button type="button" onclick="o51_querybuilder()" style="width: 90px;">
+                                            <img src="Images/query.png" />Štítky</button>
+                                        <asp:ImageButton ID="cmdClearO51" runat="server" ToolTip="Vyčistit filtr štítků" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
+                                        <asp:Label ID="o51_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
+                                    </div>
+                                    <div class="div6">
+                                        <button type="button" onclick="x18_querybuilder()" style="width: 90px;">
+                                            <img src="Images/query.png" />Kategorie</button>
                                         <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit filtr kategorií" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
                                         <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
                                     </div>
@@ -243,8 +258,8 @@
                                             <asp:ListItem Text="Pouze kusovník" Value="kusovnik"></asp:ListItem>
                                         </asp:DropDownList>
                                     </div>
-                                    
-                                    
+
+
                                 </div>
                             </div>
 
@@ -282,7 +297,7 @@
                                             <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="<%$Resources:p31_framework,AutoRozbaleneSouhrny %>" AutoPostBack="true" Checked="true" />
                                         </div>
                                     </asp:Panel>
-                                   
+
 
                                     <div class="div6" style="float: left;">
                                         <asp:Label ID="lblPaging" runat="server" CssClass="val" Text="<%$Resources:common,PocetZaznamuNaStranku %>"></asp:Label>
@@ -295,8 +310,8 @@
                                         </asp:DropDownList>
                                     </div>
                                     <div>
-                                                    <button type="button" id="cmdMyGridDesigner" onclick="mygrid_setting()" style="display:none;">Návrhář přehledu (sloupce a filtry)</button>
-                                                </div>
+                                        <button type="button" id="cmdMyGridDesigner" onclick="mygrid_setting()" style="display: none;">Návrhář přehledu (sloupce a filtry)</button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="content-box3">
@@ -304,7 +319,7 @@
                                 <div class="content">
                                     <div class="div6">
                                         <asp:HyperLink ID="cmdSummary" runat="server" NavigateUrl="javascript:drilldown()" Text="<img src='Images/pivot.png'/> Statistika aktuálního přehledu"></asp:HyperLink>
-                                        
+
 
                                     </div>
                                 </div>
@@ -317,7 +332,7 @@
 
                 </Items>
             </telerik:RadMenu>
-            
+
         </div>
 
 
@@ -342,7 +357,7 @@
         <div style="clear: both;"></div>
 
         <div style="float: left; padding-left: 6px;" id="divCurrentQuery">
-            
+
             <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
         </div>
         <div style="float: left;">
@@ -350,7 +365,7 @@
         </div>
         <div style="clear: both;"></div>
     </div>
-    
+
 
 
     <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
@@ -375,7 +390,7 @@
     <asp:HiddenField ID="hidSGV" runat="server" />
     <asp:HiddenField ID="hidUIFlag" runat="server" />
     <asp:HiddenField ID="hidX18_value" runat="server" />
-    
+    <asp:HiddenField ID="hidO51IDs" runat="server" />
 
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 </asp:Content>

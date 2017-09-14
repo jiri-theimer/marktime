@@ -238,7 +238,7 @@
 
             If .p28ID <> 0 Then
                 pars.Add("p28id", .p28ID, DbType.Int32)
-                strW += " AND a.p91ID IN (select x1.p91ID FROM p31Worksheet x1 INNER JOIN p41Project x2 ON x1.p41ID=x2.p41ID WHERE x2.p28ID_Client=@p28id)"
+                strW += " AND (a.p28ID=@p28id OR a.p91ID IN (select x1.p91ID FROM p31Worksheet x1 INNER JOIN p41Project x2 ON x1.p41ID=x2.p41ID WHERE x2.p28ID_Client=@p28id))"
             End If
             If .o38ID <> 0 Then
                 pars.Add("o38id", .o38ID, DbType.Int32)
@@ -426,7 +426,7 @@
             End If
 
         End With
-
+        
         Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())
         If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
     End Function

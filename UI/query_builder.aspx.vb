@@ -972,6 +972,13 @@
 
     Private Sub SubmitQuery()
         Master.Factory.j03UserBL.SetUserParam(CStr(ViewState("x36key")), Master.DataPID.ToString)
+        If ViewState("x36key") = Me.CurrentPrefix & "-j70id" Then
+            Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix & "_framework-sort", "")
+        End If
+        If ViewState("x36key") = Me.CurrentPrefix & "_subgrid-j70id" Then
+            Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix & "_subgrid-sort", "")
+        End If
+       
         Master.CloseAndRefreshParent("j70-run")
     End Sub
     Private Sub cmdAddX69_Click(sender As Object, e As EventArgs) Handles cmdAddX69.Click

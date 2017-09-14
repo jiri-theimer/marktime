@@ -3684,6 +3684,118 @@ END
 
 GO
 
+----------FN---------------tag_values_inline-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('tag_values_inline') and type = 'FN')
+ drop function tag_values_inline
+GO
+
+
+
+CREATE    FUNCTION [dbo].[tag_values_inline](@x29id int,@recpid int)
+RETURNS nvarchar(2000)
+AS
+BEGIN
+  ---vrací èárkou oddìlené hodnoty štítkù
+
+ DECLARE @s nvarchar(2000) 
+
+
+select top 10 @s=COALESCE(@s + ', ', '')+o51.o51Name
+FROM o52TagBinding a INNER JOIN o51Tag o51 ON a.o51ID=o51.o51ID
+where a.o52RecordPID=@recpid AND a.x29ID=@x29id
+ORDER BY o51.o51Name
+
+
+
+RETURN(@s)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
+----------FN---------------tag_values_inline_html-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('tag_values_inline_html') and type = 'FN')
+ drop function tag_values_inline_html
+GO
+
+
+CREATE    FUNCTION [dbo].[tag_values_inline_html](@x29id int,@recpid int)
+RETURNS nvarchar(2000)
+AS
+BEGIN
+  ---vrací èárkou oddìlené hodnoty štítkù
+
+ DECLARE @s nvarchar(2000) 
+
+
+select top 10 @s=COALESCE(@s + ' ', '')+'<div class='+char(34)+'badge_tag'+char(34)+'style='+char(34)+case when o51.o51BackColor is null then '' else +'background-color:'+o51.o51BackColor+';' end+case when o51.o51ForeColor is null then '' else+'color:'+o51.o51ForeColor end+';'+char(34)+'>'+o51.o51Name+'</div>'
+FROM o52TagBinding a INNER JOIN o51Tag o51 ON a.o51ID=o51.o51ID
+where a.o52RecordPID=@recpid AND a.x29ID=@x29id
+ORDER BY o51.o51Name
+
+
+
+RETURN(@s)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------x28_getFirstUsableField-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('x28_getFirstUsableField') and type = 'FN')
@@ -5085,6 +5197,9 @@ BEGIN TRY
 
 	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=102))
 	 DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=102)
+
+	if exists(select o52ID FROM o52TagBinding WHERE x29ID=102 AND o52RecordPID=@pid)
+	 DELETE FROM o52TagBinding WHERE x29ID=102 AND o52RecordPID=@pid
 
 	if exists(SELECT p30ID FROM p30Contact_Person WHERE j02ID=@pid)
 	 DELETE FROM p30Contact_Person WHERE j02ID=@pid
@@ -6852,7 +6967,8 @@ BEGIN TRY
 	if exists(select b07ID FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid)
 	 DELETE FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid	
 
-	
+	if exists(select o52ID FROM o52TagBinding WHERE x29ID=223 AND o52RecordPID=@pid)
+	 DELETE FROM o52TagBinding WHERE x29ID=223 AND o52RecordPID=@pid
 
     if exists(select o23ID FROM o23BigData WHERE o23ID=@pid)
 	 DELETE FROM o23BigData WHERE o23ID=@pid
@@ -7258,6 +7374,60 @@ END CATCH
 
 GO
 
+----------P---------------o51_delete-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('o51_delete') and type = 'P')
+ drop procedure o51_delete
+GO
+
+
+
+
+CREATE   procedure [dbo].[o51_delete]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int					--o51ID
+,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+
+AS
+--odstranìní záznamu štítku z tabulky o51Tag
+
+if isnull(@err_ret,'')<>''
+ return 
+
+BEGIN TRANSACTION
+
+BEGIN TRY
+	DELETE FROM o52TagBinding WHERE o51ID=@pid
+
+	
+	delete from o51Tag where o51ID=@pid
+
+	COMMIT TRANSACTION
+
+END TRY
+BEGIN CATCH
+  set @err_ret=dbo.parse_errinfo(ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE())
+  ROLLBACK TRANSACTION
+  
+END CATCH  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------P---------------p11_delete-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p11_delete') and type = 'P')
@@ -7554,6 +7724,9 @@ BEGIN TRY
 
 	if exists(select p28ID FROM p28Contact_FreeField WHERE p28ID=@pid)
 	 DELETE FROM p28Contact_FreeField WHERE p28ID=@pid
+
+	if exists(select o52ID FROM o52TagBinding WHERE x29ID=328 AND o52RecordPID=@pid)
+	 DELETE FROM o52TagBinding WHERE x29ID=328 AND o52RecordPID=@pid
 
 	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=328))
 	 DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=328)
@@ -8360,6 +8533,9 @@ BEGIN TRY
 
 	if exists(select p31ID FROM p31worksheet_FreeField WHERE p31ID=@pid)
 	 DELETE FROM p31WorkSheet_FreeField WHERE p31ID=@pid
+
+	if exists(select o52ID FROM o52TagBinding WHERE x29ID=331 AND o52RecordPID=@pid)
+	 DELETE FROM o52TagBinding WHERE x29ID=331 AND o52RecordPID=@pid
 
 	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=331))
 	 DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=331)
@@ -11754,6 +11930,9 @@ BEGIN TRY
 	if exists(select p41ID FROM p41Project_FreeField WHERE p41ID=@pid)
 	 DELETE FROM p41Project_FreeField WHERE p41ID=@pid
 
+	if exists(select o52ID FROM o52TagBinding WHERE x29ID=141 AND o52RecordPID=@pid)
+	 DELETE FROM o52TagBinding WHERE x29ID=141 AND o52RecordPID=@pid
+
 	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=141))
 	 DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=141)
 
@@ -12826,6 +13005,9 @@ BEGIN TRY
 	if exists(select p56ID FROM p56Task_FreeField WHERE p56ID=@pid)
 	 DELETE FROM p56Task_FreeField WHERE p56ID=@pid
 
+	if exists(select o52ID FROM o52TagBinding WHERE x29ID=356 AND o52RecordPID=@pid)
+	 DELETE FROM o52TagBinding WHERE x29ID=356 AND o52RecordPID=@pid
+
 	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=356))
 	 DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=356)
 
@@ -13575,6 +13757,9 @@ if exists(select p82ID FROM p82Proforma_Payment WHERE p90ID=@pid)
 
 if exists(select p90ID FROM p90Proforma_FreeField WHERE p90ID=@pid)
   delete from p90Proforma_FreeField where p90id=@pid
+
+if exists(select o52ID FROM o52TagBinding WHERE x29ID=390 AND o52RecordPID=@pid)
+ DELETE FROM o52TagBinding WHERE x29ID=390 AND o52RecordPID=@pid
 
 if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=390))
  DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=390)
@@ -14419,6 +14604,9 @@ if exists(select p96ID FROM p96Invoice_ExchangeRate where p91ID=@pid)
 
 if exists(select p91ID FROM p91Invoice_FreeField WHERE p91ID=@pid)
   delete from p91Invoice_FreeField where p91id=@pid
+
+if exists(select o52ID FROM o52TagBinding WHERE x29ID=391 AND o52RecordPID=@pid)
+ DELETE FROM o52TagBinding WHERE x29ID=391 AND o52RecordPID=@pid
 
 if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=391))
  DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=391)
