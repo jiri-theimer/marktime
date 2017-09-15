@@ -10,9 +10,8 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="content-box2" style="margin-top:20px;">
-        <div class="title">
-            <img src="Images/recurrence.png" />
-            Matka (šablona) opakovaných projektů
+        <div class="title">            
+            Matka (šablona), která opakovaně rodí instance tohoto projektu
         </div>
         <div class="content">
             <div class="div6">
@@ -25,9 +24,17 @@
                     <asp:TextBox ID="p41RecurNameMask" runat="server" Width="300px"></asp:TextBox>
                 </div>
                 <div class="div6">
-                    <span>Úvodní rozhodné datum tohoto projektu:</span>
+                    <span>Rozhodné datum tohoto projektu:</span>
                     <telerik:RadDateInput ID="p41RecurBaseDate" runat="server" DisplayDateFormat="d.M.yyyy" DateFormat="d.M.yyyy" Width="100px"></telerik:RadDateInput>
-
+                    <div>
+                        <i>U měsíčního opakování musí být datum vždy první den v měsíci.</i>
+                    </div>
+                    <div>
+                        <i>U čtvrtletního opakování musí být datum první den kvartálu, tedy jedno z následujících: 1.1., 1.4., 1.7., 1.9.</i>
+                    </div>                    
+                    <div>
+                        <i>U ročního opakování musí být datum vždy první den v roce.</i>
+                    </div>
                 </div>
             </asp:Panel>
         </div>

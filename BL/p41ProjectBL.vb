@@ -131,6 +131,14 @@ Class p41ProjectBL
                 If .p41RecurBaseDate Is Nothing Then
                     _Error = "Chybí úvodní rozhodné datum u šablony opakovaného projektu." : Return False
                 End If
+                .p41RecurBaseDate = DateSerial(Year(.p41RecurBaseDate), Month(.p41RecurBaseDate), 1)
+                Dim cP65 As BO.p65Recurrence = Me.Factory.p65RecurrenceBL.Load(.p65ID), intM As Integer = Month(.p41RecurBaseDate)
+                If cP65.p65RecurFlag = BO.RecurrenceType.Year Then
+                    .p41RecurBaseDate = DateSerial(Year(.p41RecurBaseDate), 1, 1)
+                End If
+                If cP65.p65RecurFlag = BO.RecurrenceType.Quarter And intM <> 1 And intM <> 4 And intM <> 7 And intM <> 9 Then
+                    _Error = "Chybně zadané rozhodné datum." : Return False
+                End If
             End If
         End With
         If Not lisFF Is Nothing Then

@@ -175,6 +175,7 @@
 
             Me.imgDraft.Visible = .p41IsDraft
             If .p41IsDraft Then imgRecord.ImageUrl = "Images/draft.png"
+            If .p65ID > 0 Then imgRecord.ImageUrl = "Images/recurrence.png"
             If cRec.p41ParentID <> 0 Then
                 RenderTree(cRec, cRecSum)
             End If

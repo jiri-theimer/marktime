@@ -302,9 +302,7 @@ Public Class entity_menu
         If cP42.p42IsModule_o23 Then
             ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi, , True)
         End If
-        If cP42.p42IsModule_p48 Then
-            ami("Operativní plán projektu", "cmdP48", "javascript:p48_plan();", "Images/oplan.png", mi, , True)
-        End If
+        
         If cDisp.OwnerAccess Then
             ami("Nastavit jako opakovaný projekt", "cmdRecurrence", "javascript:menu_p41_recur();", "Images/recurrence.png", mi, , True)
         End If
@@ -318,6 +316,9 @@ Public Class entity_menu
         End If
 
         If cRec.b01ID = 0 Then ami("Doplnit poznámku, komentář, přílohu", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
+        If cP42.p42IsModule_p48 Then
+            ami("Operativní plán projektu", "cmdP48", "javascript:p48_plan();", "Images/oplan.png", mi, , True)
+        End If
         ami("Historie odeslané pošty", "cmdX40", "x40_framework.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "Images/email.png", mi, , , "_top")
         If cDisp.OwnerAccess Then
             ami("Historie záznamu", "cmdLog", "javascript: timeline()", "Images/event.png", mi)
