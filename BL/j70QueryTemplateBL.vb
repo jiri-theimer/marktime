@@ -486,7 +486,7 @@ Class j70QueryTemplateBL
             .Add(AGC("Fakturační poznámka", "p41BillingMemo", , , "a.p41BillingMemo"))
             .Add(AGC(My.Resources.common.Stitky, "TagsHtml", , , "dbo.tag_values_inline_html(141,a.p41ID)"))
             .Add(AGC(My.Resources.common.Stitky + " (text)", "TagsText", , , "dbo.tag_values_inline(141,a.p41ID)"))
-
+            .Add(AGC("Otevřené úkoly", "PendingTasks", , , "dbo.p41_get_tasks_inline_html(a.p41ID)"))
 
             .Add(AGC(My.Resources.common.PlanStart, "p41PlanFrom", BO.cfENUM.DateOnly, , "a.p41PlanFrom"))
             .Add(AGC(My.Resources.common.PlanEnd, "p41PlanUntil", BO.cfENUM.DateOnly, , "a.p41PlanUntil"))

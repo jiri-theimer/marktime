@@ -81,6 +81,12 @@
 
         }
 
+        function send_url_to_pane(url) {
+            var splitter = $find("<%= RadSplitter1.ClientID %>");
+            var pane = splitter.getPaneById("<%=contentPane.ClientID%>");            
+            pane.set_contentUrl(url);
+        }
+
         function RowDoubleClick(sender, args) {
 
             var pid = args.getDataKeyValue("pid");

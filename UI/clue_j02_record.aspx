@@ -11,7 +11,7 @@
         <div>
             <img src="Images/person_32.png" />
             <asp:Label ID="ph1" runat="server" CssClass="clue_header_span"></asp:Label>
-            <asp:HyperLink ID="j02Email" runat="server"></asp:HyperLink>
+            <asp:HyperLink ID="j02Email" runat="server" CssClass="wake_link"></asp:HyperLink>
             <uc:mytags ID="tags1" ModeUi="2" Prefix="j02" runat="server" />
         </div>
         <asp:Panel ID="panIntraOnly" runat="server" CssClass="content-box2">
@@ -76,7 +76,7 @@
                     <ItemTemplate>
                         <div class="div6">
                             <asp:image ID="imgBind" runat="server" ImageUrl="Images/contact.png" />
-                            <asp:hyperlink ID="BindLink" runat="server" Target="_top"></asp:hyperlink>
+                            <asp:hyperlink ID="BindLink" runat="server" Target="_top" CssClass="value_link"></asp:hyperlink>
                             <asp:Label ID="p27Name" runat="server"></asp:Label>
                         </div>
                     </ItemTemplate>

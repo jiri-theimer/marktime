@@ -291,7 +291,10 @@
             cal1.Visible = False
         End If
 
-        tags1.RefreshData(cRec.PID)
+        If cRecSum.o52_Exist Then
+            tags1.RefreshData(cRec.PID)
+        End If
+
 
         'RefreshP64(cRecSum)
 

@@ -8,7 +8,7 @@
 
             <asp:Label ID="Person" runat="server" CssClass="valbold"></asp:Label>
 
-            <asp:HyperLink ID="j02Email" runat="server"></asp:HyperLink>
+            <asp:HyperLink ID="j02Email" runat="server" CssClass="wake_link"></asp:HyperLink>
 
             <asp:Label ID="j02JobTitle" runat="server" Font-Italic="true"></asp:Label>
             <asp:Label ID="j02Mobile" runat="server"></asp:Label>

@@ -132,13 +132,13 @@
                     </td>
                     <td>
 
-                        <asp:HyperLink ID="Client" runat="server" NavigateUrl="#" Target="_top"></asp:HyperLink>
+                        <asp:HyperLink ID="Client" runat="server" NavigateUrl="#" Target="_top" CssClass="value_link"></asp:HyperLink>
                         <asp:HyperLink ID="clue_client" runat="server" CssClass="reczoom" Text="i" title="Detail klienta"></asp:HyperLink>
                         <asp:Image ID="imgFlag_Client" runat="server" />
 
 
                         <asp:Label ID="lblClientBilling" runat="server" Text="Odběratel faktury:" CssClass="lbl" Visible="false"></asp:Label>
-                        <asp:HyperLink ID="ClientBilling" runat="server" NavigateUrl="#" Target="_top" Visible="false"></asp:HyperLink>
+                        <asp:HyperLink ID="ClientBilling" runat="server" NavigateUrl="#" Target="_top" Visible="false" CssClass="value_link"></asp:HyperLink>
                     </td>
 
                 </tr>

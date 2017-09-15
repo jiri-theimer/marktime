@@ -368,7 +368,7 @@
                                 <asp:Repeater ID="rpProject" runat="server">
                                     <ItemTemplate>
                                         <div>
-                                            <asp:HyperLink ID="p41Name" runat="server" NavigateUrl="#" Target="_parent"></asp:HyperLink>
+                                            <asp:HyperLink ID="p41Name" runat="server" NavigateUrl="#" Target="_parent" CssClass="value_link"></asp:HyperLink>
                                             <asp:HyperLink ID="clue_project" runat="server" CssClass="reczoom" Text="i" title="Detail projektu"></asp:HyperLink>
                                         </div>
                                     </ItemTemplate>
@@ -395,7 +395,7 @@
                         </td>
                         <td>
 
-                            <asp:HyperLink ID="Client" runat="server" NavigateUrl="#" Target="_parent"></asp:HyperLink>
+                            <asp:HyperLink ID="Client" runat="server" NavigateUrl="#" Target="_parent" CssClass="value_link"></asp:HyperLink>
                             <asp:HyperLink ID="clue_client" runat="server" CssClass="reczoom" Text="i" title="Detail klienta"></asp:HyperLink>
                             <asp:Label ID="p91ClientPerson" runat="server" ToolTip="Kontaktní osoba klienta"></asp:Label>
                             <div>

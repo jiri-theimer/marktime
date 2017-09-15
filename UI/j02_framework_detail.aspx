@@ -109,7 +109,7 @@
                         <asp:Label ID="lblEmail" runat="server" Text="E-mail:" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
-                        <asp:HyperLink ID="j02Email" runat="server"></asp:HyperLink>
+                        <asp:HyperLink ID="j02Email" runat="server" CssClass="wake_link"></asp:HyperLink>
 
                     </td>
                     <td>
@@ -248,7 +248,7 @@
             <asp:Repeater ID="rpP30" runat="server">
                 <ItemTemplate>
                     <div class="div6">
-                        <asp:HyperLink ID="ContactLink" runat="server" Target="_top"></asp:HyperLink>
+                        <asp:HyperLink ID="ContactLink" runat="server" Target="_top" CssClass="value_link"></asp:HyperLink>
 
 
                     </div>

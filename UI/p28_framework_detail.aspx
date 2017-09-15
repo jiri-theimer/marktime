@@ -144,11 +144,11 @@
 
                         </td>
                         <td>
-                            <asp:HyperLink ID="linkIC" runat="server" Target="_blank" ToolTip="JUSTICE.cz" Visible="false"></asp:HyperLink>
+                            <asp:HyperLink ID="linkIC" runat="server" Target="_blank" ToolTip="JUSTICE.cz" Visible="false" CssClass="value_link"></asp:HyperLink>
                             <asp:HyperLink ID="linkARES" runat="server" Text="ARES" Target="_blank" Visible="false"></asp:HyperLink>
 
                             <span style="margin-left: 20px;">DIČ:</span>
-                            <asp:HyperLink ID="linkDIC" runat="server" ToolTip="Ověření subjektu v DPH registrech" Visible="false"></asp:HyperLink>
+                            <asp:HyperLink ID="linkDIC" runat="server" ToolTip="Ověření subjektu v DPH registrech" Visible="false" CssClass="value_link"></asp:HyperLink>
 
 
 
@@ -247,7 +247,7 @@
                     <div style="padding: 5px; float: left;">
                         <asp:HyperLink ID="clue_project" runat="server" CssClass="reczoom" Text="i" title="Detail projektu"></asp:HyperLink>
 
-                        <asp:HyperLink ID="aProject" runat="server" Target="_top"></asp:HyperLink>
+                        <asp:HyperLink ID="aProject" runat="server" Target="_top" CssClass="value_link"></asp:HyperLink>
 
                     </div>
                 </ItemTemplate>

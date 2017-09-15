@@ -17,8 +17,6 @@ div.right_panel {
 }
 
 
-
-
 a:hover {
     color: #1d60ff;
     text-decoration: none;
@@ -27,6 +25,29 @@ a:hover {
 a:active {
     color: #034af3;
 }
+
+A.wake_link {
+    
+    color:gray;
+    text-decoration: none;
+}
+
+A.wake_link:hover {
+    color: #1d60ff;    
+    text-decoration: underline;
+}
+
+A.value_link {
+    font-weight:bold;
+    color:#4f94d3;
+    text-decoration: none;
+}
+
+A.value_link:hover {
+    color: #1d60ff;    
+    text-decoration: underline;
+}
+
 
 p {
     margin-bottom: 10px;
@@ -1006,6 +1027,18 @@ div.menu-group-item {
     background-color:khaki;
     color:black;
     margin-left:2px;
+}
+
+.badge_square {
+    display: inline-block;
+    width:10px;
+    height:10px;    
+    line-height: 1;    
+    border:solid;
+    border-width:1px;
+    border-color:gray;    
+    border-radius: 4px;   
+      
 }
 
 

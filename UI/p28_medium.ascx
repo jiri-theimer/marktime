@@ -9,7 +9,7 @@
                     </td>
                     <td>
                         <asp:Label ID="o32Value" runat="server"></asp:Label>
-                        <asp:HyperLink ID="aLink" runat="server"></asp:HyperLink>
+                        <asp:HyperLink ID="aLink" runat="server" CssClass="wake_link"></asp:HyperLink>
                     </td>
 
                     <td>

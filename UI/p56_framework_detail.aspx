@@ -22,19 +22,18 @@
 
         }
         function hardrefresh(pid, flag) {
+            if (parent.window.document.URL.indexOf("p56_framework") > 0) {
+                if (flag == "p56-save" || flag == "workflow-dialog") {
+                    parent.window.location.replace("p56_framework.aspx?pid=" + pid);
+                    return;
+                }
 
-            if (flag == "p56-save" || flag == "workflow-dialog") {
-                parent.window.location.replace("p56_framework.aspx?pid=" + pid);
-                return;
+                if (flag == "p56-delete") {
+                    parent.window.location.replace("p56_framework.aspx");
+                    return;
+                }
             }
-            if (flag == "p56-delete") {
-                parent.window.location.replace("p56_framework.aspx");
-                return;
-            }
-
-
             location.replace("p56_framework_detail.aspx?pid=<%=master.datapid%>&source=<%=menu1.PageSource%>");
-
         }
 
         function p56_record_new(p41id) {
@@ -98,7 +97,7 @@
 
                     </td>
                     <td>
-                        <asp:HyperLink ID="Project" runat="server" NavigateUrl="#" Target="_parent"></asp:HyperLink>
+                        <asp:HyperLink ID="Project" runat="server" NavigateUrl="#" Target="_parent" CssClass="value_link"></asp:HyperLink>
                         <asp:HyperLink ID="clue_project" runat="server" CssClass="reczoom" Text="i" title="Detail projektu"></asp:HyperLink>
                     </td>
 
@@ -139,13 +138,13 @@
                 <uc:entityrole_assign_inline ID="roles_task" runat="server" EntityX29ID="p56Task" NoDataText=""></uc:entityrole_assign_inline>
             </div>
             <div>
-                 <uc:mytags ID="tags1" runat="server" Prefix="p56" />
+                <uc:mytags ID="tags1" runat="server" Prefix="p56" />
             </div>
         </div>
     </div>
     <asp:Panel ID="boxX18" runat="server" CssClass="content-box1" Style="clear: both;">
         <div class="title">
-            <img src="Images/notepad.png"  /><span style="margin-right: 10px;">Dokumenty</span>
+            <img src="Images/notepad.png" /><span style="margin-right: 10px;">Dokumenty</span>
             <img src="Images/label.png" /><span>Kategorie</span>
         </div>
         <div class="content">
@@ -232,7 +231,7 @@
 
     </asp:Panel>
 
-    
+
     <asp:Panel ID="boxIMAP" runat="server" CssClass="content-box1" Visible="false">
         <div class="title">
             <img src="Images/imap.png" style="margin-right: 10px;" />
@@ -244,8 +243,8 @@
     </asp:Panel>
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
 
-    
-    <asp:Panel ID="panDescription" runat="server" CssClass="content-box1" Style="width: 99%; max-width: none;clear:both;">
+
+    <asp:Panel ID="panDescription" runat="server" CssClass="content-box1" Style="width: 99%; max-width: none; clear: both;">
         <div class="title">Podrobný popis</div>
         <div class="content" style="background-color: #ffffcc; max-height: 120px; overflow: auto;">
             <asp:Label ID="p56Description" runat="server" CssClass="val" Style="font-family: 'Courier New'; word-wrap: break-word; display: block; font-size: 120%;"></asp:Label>
@@ -253,7 +252,7 @@
     </asp:Panel>
 
     <div style="clear: both;">
-    <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
+        <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
     </div>
     <asp:HiddenField ID="hidCurP41ID" runat="server" />
 </asp:Content>
