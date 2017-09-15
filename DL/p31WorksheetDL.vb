@@ -1160,45 +1160,45 @@
     End Function
 
     Public Function GetList_ApprovingFramework(x29id As BO.x29IdEnum, myQuery As BO.myQueryP31, Optional strX18Value As String = "") As IEnumerable(Of BO.ApprovingFramework)
+        Dim s As New System.Text.StringBuilder
         Dim pars As New DbParameters
-        Dim s As String = ""
         Select Case x29id
             Case BO.x29IdEnum.p41Project
-                s += "select min(a.p41ID) as PID,min(p41.p41Code) as Code,min(isnull(p41.p41NameShort,p41.p41Name)) as Project,min(p28.p28Name) as Client"
+                s.Append("select min(a.p41ID) as PID,min(p41.p41Code) as Code,min(isnull(p41.p41NameShort,p41.p41Name)) as Project,min(p28.p28Name) as Client")
             Case BO.x29IdEnum.p28Contact
-                s += "select min(p28.p28ID) as PID,min(p28.p28Code) as Code,min(p28.p28Name) as Client"
+                s.Append("select min(p28.p28ID) as PID,min(p28.p28Code) as Code,min(p28.p28Name) as Client")
             Case BO.x29IdEnum.j02Person
-                s += "select min(j02.j02ID) as PID,min(j02.j02Code) as Code,min(j02.j02LastName+' '+j02.j02FirstName) as Person"
+                s.Append("select min(j02.j02ID) as PID,min(j02.j02Code) as Code,min(j02.j02LastName+' '+j02.j02FirstName) as Person")
             Case BO.x29IdEnum.p56Task
-                s += "select min(a.p56ID) as PID,min(p56.p56Name+' ('+p56.p56Code+')') as Task, min(p56.p56Code) as Code,min(isnull(p41.p41NameShort,p41.p41Name)) as Project,min(p28.p28Name) as Client"
+                s.Append("select min(a.p56ID) as PID,min(p56.p56Name+' ('+p56.p56Code+')') as Task, min(p56.p56Code) as Code,min(isnull(p41.p41NameShort,p41.p41Name)) as Project,min(p28.p28Name) as Client")
         End Select
-        s += ",min(j27.j27Code) as j27Code,SUM(case when a.p71ID IS NULL and a.p31hours_orig<>0 THEN a.p31hours_orig END) as rozpracovano_hodiny"
-        s += ",MIN(case when a.p71ID IS NULL THEN p31Date END) as rozpracovano_prvni"
-        s += ",MAX(case when a.p71ID IS NULL THEN p31Date END) as rozpracovano_posledni"
-        s += ",SUM(case when a.p71ID IS NULL AND p34.p33ID=1 THEN a.p31Amount_WithoutVat_Orig END) as rozpracovano_honorar"
-        s += ",SUM(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 THEN p31Amount_WithoutVat_Orig END) as rozpracovano_vydaje"
-        s += ",SUM(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 THEN p31Amount_WithoutVat_Orig END) as rozpracovano_odmeny"
-        s += ",SUM(case when a.p71ID IS NULL THEN a.p31Amount_WithoutVat_Orig END) as rozpracovano_celkem"
-        s += ",SUM(case when a.p71ID IS NULL THEN 1 END) as rozpracovano_pocet"
-        s += ",SUM(case when a.p71ID IS NULL AND p34.p33ID=3 THEN a.p31Amount_WithoutVat_Orig END) as rozpracovano_kusovnik_honorar"
-        s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=4 AND a.p91ID IS NULL THEN a.p31Hours_Approved_Billing END) as schvaleno_hodiny_fakturovat"
-        s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=4 AND p34.p33ID=1 THEN p31Amount_WithoutVat_Approved END) as schvaleno_honorar_fakturovat"
-        s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=4 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 THEN p31Amount_WithoutVat_Approved END) as schvaleno_vydaje_fakturovat"
-        s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=4 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 THEN p31Amount_WithoutVat_Approved END) as schvaleno_odmeny_fakturovat"
-        s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=4 AND a.p91ID IS NULL THEN a.p31Amount_WithoutVat_Approved END) as schvaleno_celkem_fakturovat"
-        s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=6 AND a.p91ID IS NULL THEN (case when a.p31Value_FixPrice is null or a.p31Value_FixPrice=0 then a.p31hours_orig else a.p31Value_FixPrice end) END) as schvaleno_hodiny_pausal"
-        s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove IN (2,3) AND a.p91ID IS NULL THEN a.p31Hours_Orig END) as schvaleno_hodiny_odpis"
-        s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=7 AND a.p91ID IS NULL THEN a.p31Hours_Approved_Billing END) as schvaleno_hodiny_pozdeji"
-        s += ",SUM(case when a.p71ID=1 AND a.p91ID IS NULL THEN 1 END) as schvaleno_pocet"
-        s += ",MIN(case when a.p71ID=1 AND a.p91ID IS NULL THEN p31Date END) as schvaleno_prvni"
-        s += ",MAX(case when a.p71ID=1 AND a.p91ID IS NULL THEN p31Date END) as schvaleno_posledni"
-        s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=4 AND p34.p33ID=3 THEN p31Amount_WithoutVat_Approved END) as schvaleno_kusovnik_honorar"
-        s += " from p31WorkSheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID"
-        s += " INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID"
+        s.Append(",min(j27.j27Code) as j27Code,SUM(case when a.p71ID IS NULL and a.p31hours_orig<>0 THEN a.p31hours_orig END) as rozpracovano_hodiny")
+        s.Append(",MIN(case when a.p71ID IS NULL THEN p31Date END) as rozpracovano_prvni")
+        s.Append(",MAX(case when a.p71ID IS NULL THEN p31Date END) as rozpracovano_posledni")
+        s.Append(",SUM(case when a.p71ID IS NULL AND p34.p33ID=1 THEN a.p31Amount_WithoutVat_Orig END) as rozpracovano_honorar")
+        s.Append(",SUM(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 THEN p31Amount_WithoutVat_Orig END) as rozpracovano_vydaje")
+        s.Append(",SUM(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 THEN p31Amount_WithoutVat_Orig END) as rozpracovano_odmeny")
+        s.Append(",SUM(case when a.p71ID IS NULL THEN a.p31Amount_WithoutVat_Orig END) as rozpracovano_celkem")
+        s.Append(",SUM(case when a.p71ID IS NULL THEN 1 END) as rozpracovano_pocet")
+        s.Append(",SUM(case when a.p71ID IS NULL AND p34.p33ID=3 THEN a.p31Amount_WithoutVat_Orig END) as rozpracovano_kusovnik_honorar")
+        s.Append(",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=4 AND a.p91ID IS NULL THEN a.p31Hours_Approved_Billing END) as schvaleno_hodiny_fakturovat")
+        s.Append(",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=4 AND p34.p33ID=1 THEN p31Amount_WithoutVat_Approved END) as schvaleno_honorar_fakturovat")
+        s.Append(",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=4 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 THEN p31Amount_WithoutVat_Approved END) as schvaleno_vydaje_fakturovat")
+        s.Append(",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=4 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 THEN p31Amount_WithoutVat_Approved END) as schvaleno_odmeny_fakturovat")
+        s.Append(",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=4 AND a.p91ID IS NULL THEN a.p31Amount_WithoutVat_Approved END) as schvaleno_celkem_fakturovat")
+        s.Append(",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=6 AND a.p91ID IS NULL THEN (case when a.p31Value_FixPrice is null or a.p31Value_FixPrice=0 then a.p31hours_orig else a.p31Value_FixPrice end) END) as schvaleno_hodiny_pausal")
+        s.Append(",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove IN (2,3) AND a.p91ID IS NULL THEN a.p31Hours_Orig END) as schvaleno_hodiny_odpis")
+        s.Append(",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=7 AND a.p91ID IS NULL THEN a.p31Hours_Approved_Billing END) as schvaleno_hodiny_pozdeji")
+        s.Append(",SUM(case when a.p71ID=1 AND a.p91ID IS NULL THEN 1 END) as schvaleno_pocet")
+        s.Append(",MIN(case when a.p71ID=1 AND a.p91ID IS NULL THEN p31Date END) as schvaleno_prvni")
+        s.Append(",MAX(case when a.p71ID=1 AND a.p91ID IS NULL THEN p31Date END) as schvaleno_posledni")
+        s.Append(",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=4 AND p34.p33ID=3 THEN p31Amount_WithoutVat_Approved END) as schvaleno_kusovnik_honorar")
+        s.Append(" from p31WorkSheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID")
+        s.Append(" INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID")
         If x29id = BO.x29IdEnum.p56Task Then
-            s += " INNER JOIN p56Task p56 ON a.p56ID=p56.p56ID"
+            s.Append(" INNER JOIN p56Task p56 ON a.p56ID=p56.p56ID")
         End If
-        s += " LEFT OUTER JOIN j27Currency j27 ON a.j27ID_Billing_Orig=j27.j27ID"
+        s.Append(" LEFT OUTER JOIN j27Currency j27 ON a.j27ID_Billing_Orig=j27.j27ID")
         If Not (BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Owner)) Then
             ''Dim strJ11IDs As String = ""
             ''If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
@@ -1206,14 +1206,14 @@
             ''s += " LEFT OUTER JOIN ("
             ''s += "SELECT distinct p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID"
             ''s += ") zbytek ON a.p31ID=zbytek.p31ID"
-            Dim ss As New Text.StringBuilder
-            AppendSqlFrom_ProjectRoles(ss, "zo28.o28PermFlag>0")
-            s += ss.ToString
+            'Dim ss As New Text.StringBuilder
+            AppendSqlFrom_ProjectRoles(s, "zo28.o28PermFlag>0")
+            's.Append(ss.ToString)
         End If
 
 
         Dim strW As String = GetSQLWHERE(myQuery, pars)
-        If strW <> "" Then s += " WHERE " & strW
+        If strW <> "" Then s.Append(" WHERE " & strW)
 
         ''If intJ70ID <> 0 Then
         ''    Dim strInW As String = bas.CompleteSqlJ70(_cDB, intJ70ID, _curUser)
@@ -1233,34 +1233,34 @@
             Dim strInW As String = bas.TrimWHERE(bas.CompleteX18QuerySql(BO.BAS.GetDataPrefix(x29id), strX18Value))
             Select Case x29id
                 Case BO.x29IdEnum.p41Project And strInW <> ""
-                    s += " AND a.p41ID IN (SELECT a.p41ID FROM p41Project a LEFT OUTER JOIN p41Project_FreeField p41free ON a.p41ID=p41free.p41ID WHERE " & strInW & ")"
+                    s.Append(" AND a.p41ID IN (SELECT a.p41ID FROM p41Project a LEFT OUTER JOIN p41Project_FreeField p41free ON a.p41ID=p41free.p41ID WHERE " & strInW & ")")
                 Case BO.x29IdEnum.p28Contact And strInW <> ""
-                    s += " AND p41.p28ID_Client IN (SELECT a.p28ID FROM p28Contact a LEFT OUTER JOIN p28Contact_FreeField p28free ON a.p28ID=p28free.p28ID WHERE " & strInW & ")"
+                    s.Append(" AND p41.p28ID_Client IN (SELECT a.p28ID FROM p28Contact a LEFT OUTER JOIN p28Contact_FreeField p28free ON a.p28ID=p28free.p28ID WHERE " & strInW & ")")
                 Case BO.x29IdEnum.j02Person And strInW <> ""
-                    s += " AND a.j02ID IN (SELECT a.j02ID FROM j02Person a LEFT OUTER JOIN j02Person_FreeField j02free ON a.j02ID=j02free.j02ID WHERE " & strInW & ")"
+                    s.Append(" AND a.j02ID IN (SELECT a.j02ID FROM j02Person a LEFT OUTER JOIN j02Person_FreeField j02free ON a.j02ID=j02free.j02ID WHERE " & strInW & ")")
                 Case BO.x29IdEnum.p56Task And strInW <> ""
-                    s += " AND a.p56ID IN (SELECT a.p56ID FROM p56Task a LEFT OUTER JOIN p56Task_FreeField p56free ON a.p56ID=p56free.p56ID WHERE " & strInW & ")"
+                    s.Append(" AND a.p56ID IN (SELECT a.p56ID FROM p56Task a LEFT OUTER JOIN p56Task_FreeField p56free ON a.p56ID=p56free.p56ID WHERE " & strInW & ")")
                 Case Else
             End Select
         End If
 
         Select Case x29id
             Case BO.x29IdEnum.p41Project
-                s += " GROUP BY a.p41ID,a.j27ID_Billing_Orig"
-                s += " ORDER BY min(p28.p28Name),min(p41.p41Name),a.j27ID_Billing_Orig"
+                s.Append(" GROUP BY a.p41ID,a.j27ID_Billing_Orig")
+                s.Append(" ORDER BY min(p28.p28Name),min(p41.p41Name),a.j27ID_Billing_Orig")
             Case BO.x29IdEnum.p28Contact
-                s += " GROUP BY p41.p28ID_Client,a.j27ID_Billing_Orig,a.j27ID_Billing_Orig"
-                s += " ORDER BY min(p28.p28Name)"
+                s.Append(" GROUP BY p41.p28ID_Client,a.j27ID_Billing_Orig,a.j27ID_Billing_Orig")
+                s.Append(" ORDER BY min(p28.p28Name)")
             Case BO.x29IdEnum.j02Person
-                s += " GROUP BY a.j02ID,a.j27ID_Billing_Orig"
-                s += " ORDER BY min(j02.j02LastName+' '+j02.j02FirstName),a.j27ID_Billing_Orig"
+                s.Append(" GROUP BY a.j02ID,a.j27ID_Billing_Orig")
+                s.Append(" ORDER BY min(j02.j02LastName+' '+j02.j02FirstName),a.j27ID_Billing_Orig")
             Case BO.x29IdEnum.p56Task
-                s += " GROUP BY a.p56ID,a.j27ID_Billing_Orig"
-                s += " ORDER BY min(p28.p28Name),min(p41.p41Name),min(p56.p56Name),a.j27ID_Billing_Orig"
+                s.Append(" GROUP BY a.p56ID,a.j27ID_Billing_Orig")
+                s.Append(" ORDER BY min(p28.p28Name),min(p41.p41Name),min(p56.p56Name),a.j27ID_Billing_Orig")
         End Select
 
 
-        Return _cDB.GetList(Of BO.ApprovingFramework)(s, pars)
+        Return _cDB.GetList(Of BO.ApprovingFramework)(s.ToString, pars)
     End Function
 
     Public Function LoadRate(bolCostRate As Boolean, dat As Date, intJ02ID As Integer, intP41ID As Integer, intP32ID As Integer, ByRef intRetJ27ID As Integer) As Double
