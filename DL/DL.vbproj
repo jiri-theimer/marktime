@@ -109,7 +109,6 @@
     <Compile Include="p59PriorityDL.vb" />
     <Compile Include="p61ActivityClusterDL.vb" />
     <Compile Include="p63OverheadDL.vb" />
-    <Compile Include="p64BinderDL.vb" />
     <Compile Include="p80InvoiceAmountStructureDL.vb" />
     <Compile Include="p98Invoice_Round_Setting_TemplateDL.vb" />
     <Compile Include="x18EntityCategoryDL.vb" />

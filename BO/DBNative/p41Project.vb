@@ -29,7 +29,13 @@ Public Class p41Project
     Public Property p41ParentID As Integer
     Public Property p41BillingMemo As String
     Public Property p72ID_NonBillable As BO.p72IdENUM
-    ''Public Property p41IsEntryP31ByStranger As Boolean
+
+    Public Property p65ID As Integer
+    Public Property p41RecurNameMask As String
+    Public Property p41RecurBaseDate As Date?
+    Public Property p41RecurMotherID As Integer
+
+
     Protected Property _p41Code As String
     Public Property p41Code As String
         Get

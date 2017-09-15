@@ -31,6 +31,12 @@
     Public Property p56CompletePercent As Integer
     Public Property p56RatingValue As Integer?
     Public Property p56ExternalPID As String
+
+    Public Property p65ID As Integer
+    Public Property p56RecurNameMask As String
+    Public Property p56RecurBaseDate As Date?
+    Public Property p56RecurMotherID As Integer
+
     Friend Property _ReceiversInLine As String
     Public ReadOnly Property ReceiversInLine As String
         Get

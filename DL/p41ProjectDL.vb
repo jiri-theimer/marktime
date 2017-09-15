@@ -1,6 +1,5 @@
 ﻿Public Class p41ProjectDL
     Inherits DLMother
-
     Public Sub New(ServiceUser As BO.j03UserSYS)
         _curUser = ServiceUser
     End Sub
@@ -539,12 +538,14 @@
     End Function
 
     Private Function GetSF() As String
-        Dim s As String = "a.p42ID,a.j02ID_Owner,a.p41Name,a.p41NameShort,a.p41Code as _p41Code,a.p41IsDraft,a.p28ID_Client,a.p28ID_Billing,a.p87ID,a.p51ID_Billing,a.p51ID_Internal,a.p92ID,a.b02ID,a.j18ID,a.p61ID,a.p41InvoiceDefaultText1,a.p41InvoiceDefaultText2,a.p41InvoiceMaturityDays,a.p41WorksheetOperFlag,a.p41PlanFrom,a.p41PlanUntil,a.p41LimitHours_Notification,a.p41LimitFee_Notification"
-        s += ",p28client.p28Name as _Client,p51billing.p51Name as _p51Name_Billing"
-        s += ",a.p41TreeLevel as _p41TreeLevel,a.p41TreeIndex as _p41TreeIndex,a.p41TreePrev as _p41TreePrev,a.p41TreeNext as _p41TreeNext,a.p41TreePath as _p41TreePath"
-        s += ",p42.p42Name as _p42Name,p92.p92Name as _p92Name,b02.b02Name as _b02Name,j18.j18Name as _j18Name,a.p41ExternalPID,a.p41ParentID,a.p41BillingMemo," & bas.RecTail("p41", "a")
-        s += ",j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p28client.p87ID as _p87ID_Client,p42.b01ID as _b01ID,a.p41IsNoNotify,a.p41RobotAddress,a.p72ID_NonBillable,a.j02ID_ContactPerson_DefaultInWorksheet,a.j02ID_ContactPerson_DefaultInInvoice"
-        Return s
+        Dim s As New System.Text.StringBuilder
+        s.Append("a.p42ID,a.j02ID_Owner,a.p41Name,a.p41NameShort,a.p41Code as _p41Code,a.p41IsDraft,a.p28ID_Client,a.p28ID_Billing,a.p87ID,a.p51ID_Billing,a.p51ID_Internal,a.p92ID,a.b02ID,a.j18ID,a.p61ID,a.p41InvoiceDefaultText1,a.p41InvoiceDefaultText2,a.p41InvoiceMaturityDays,a.p41WorksheetOperFlag,a.p41PlanFrom,a.p41PlanUntil,a.p41LimitHours_Notification,a.p41LimitFee_Notification")
+        s.Append(",p28client.p28Name as _Client,p51billing.p51Name as _p51Name_Billing")
+        s.Append(",a.p41TreeLevel as _p41TreeLevel,a.p41TreeIndex as _p41TreeIndex,a.p41TreePrev as _p41TreePrev,a.p41TreeNext as _p41TreeNext,a.p41TreePath as _p41TreePath")
+        s.Append(",a.p65ID,a.p41RecurNameMask,a.p41RecurBaseDate,a.p41RecurMotherID")
+        s.Append(",p42.p42Name as _p42Name,p92.p92Name as _p92Name,b02.b02Name as _b02Name,j18.j18Name as _j18Name,a.p41ExternalPID,a.p41ParentID,a.p41BillingMemo," & bas.RecTail("p41", "a"))
+        s.Append(",j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p28client.p87ID as _p87ID_Client,p42.b01ID as _b01ID,a.p41IsNoNotify,a.p41RobotAddress,a.p72ID_NonBillable,a.j02ID_ContactPerson_DefaultInWorksheet,a.j02ID_ContactPerson_DefaultInInvoice")
+        Return s.ToString
     End Function
     Private Function GetSQLPart1(intTOP As Integer) As String
         Dim s As String = "SELECT"
@@ -554,22 +555,23 @@
 
     End Function
     Private Function GetSQLPart2(mq As BO.myQueryP41) As String
-        Dim s As String = "FROM p41Project a INNER JOIN p42ProjectType p42 ON a.p42ID=p42.p42ID"
-        s += " LEFT OUTER JOIN p28Contact p28client ON a.p28ID_Client=p28client.p28ID"
-        ''s += " LEFT OUTER JOIN p28Contact p28billing ON a.p28ID_Billing=p28billing.p28ID"
-        s += " LEFT OUTER JOIN p51PriceList p51billing ON a.p51ID_Billing=p51billing.p51ID"
-        ''s += " LEFT OUTER JOIN p51PriceList p51internal ON a.p51ID_Internal=p51internal.p51ID"
-        ''s += " LEFT OUTER JOIN p41Project p41parent ON a.p41ParentID=p41parent.p41ID"
-        s += " LEFT OUTER JOIN p92InvoiceType p92 ON a.p92ID=p92.p92ID"
-        s += " LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID"
-        s += " LEFT OUTER JOIN p87BillingLanguage p87 ON a.p87ID=p87.p87ID"
-        s += " LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
-        s += " LEFT OUTER JOIN j18Region j18 ON a.j18ID=j18.j18ID"
-        s += " LEFT OUTER JOIN p41Project_FreeField p41free ON a.p41ID=p41free.p41ID"
+        Dim s As New System.Text.StringBuilder
+
+        s.Append("FROM p41Project a INNER JOIN p42ProjectType p42 ON a.p42ID=p42.p42ID")
+        s.Append(" LEFT OUTER JOIN p28Contact p28client ON a.p28ID_Client=p28client.p28ID")
+
+        s.Append(" LEFT OUTER JOIN p51PriceList p51billing ON a.p51ID_Billing=p51billing.p51ID")
+
+        s.Append(" LEFT OUTER JOIN p92InvoiceType p92 ON a.p92ID=p92.p92ID")
+        s.Append(" LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID")
+        s.Append(" LEFT OUTER JOIN p87BillingLanguage p87 ON a.p87ID=p87.p87ID")
+        s.Append(" LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID")
+        s.Append(" LEFT OUTER JOIN j18Region j18 ON a.j18ID=j18.j18ID")
+        s.Append(" LEFT OUTER JOIN p41Project_FreeField p41free ON a.p41ID=p41free.p41ID")
         If Not mq Is Nothing Then
-            If mq.MG_AdditionalSqlFROM <> "" Then s += " " & mq.MG_AdditionalSqlFROM
+            If mq.MG_AdditionalSqlFROM <> "" Then s.Append(" " & mq.MG_AdditionalSqlFROM)
         End If
-        Return s
+        Return s.ToString
 
     End Function
 
