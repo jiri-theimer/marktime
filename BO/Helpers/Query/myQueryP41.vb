@@ -53,6 +53,7 @@ Public Class myQueryP41
     Public Property TreeIndexUntil As Integer
     Public Property p41TreeLevel As Integer = -1
     Public Property IsFavourite As BO.BooleanQueryMode = BooleanQueryMode.NoQuery
+    Public IsRecurrenceMother As BO.BooleanQueryMode = BooleanQueryMode.NoQuery
 
     Public Property j70ID As Integer
     Public Property p41WorksheetOperFlag As BO.p41WorksheetOperFlagEnum = p41WorksheetOperFlagEnum._NotSpecified

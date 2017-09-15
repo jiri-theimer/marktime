@@ -74,6 +74,16 @@
         End If
     End Sub
 
+    Private Sub Handle_Recurrence_p41()
+        Dim mq As New BO.myQueryP41
+        mq.IsRecurrenceMother = BO.BooleanQueryMode.TrueQuery
+        Dim lisP41 As IEnumerable(Of BO.p41Project) = _Factory.p41ProjectBL.GetList(mq)
+        If lisP41.Count = 0 Then Return
+        For Each c In lisP41
+
+        Next
+    End Sub
+
     Private Sub Handle_p40Queue()
         Dim datNow As Date = Now
         If Request.Item("now") <> "" Then
