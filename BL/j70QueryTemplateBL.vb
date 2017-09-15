@@ -496,6 +496,7 @@ Class j70QueryTemplateBL
             .Add(AGC("Odběratel faktury", "InvoiceClient", , , "p28billing.p28Name", , "LEFT OUTER JOIN p28Contact p28billing ON a.p28ID_Billing=p28billing.p28ID"))
 
             .Add(AGC("Stromový název", "p41TreePath", , True, "a.p41TreePath", , , "Strom"))
+            .Add(AGC("Odkaz na pod-projekty", "ChildProjectsInline", , , "dbo.p41_get_childs_inline_html(a.p41ID)", , , "Strom"))
             .Add(AGC("Strom index", "p41TreeIndex", , True, "a.p41TreeIndex", , , "Strom"))
             .Add(AGC("Strom level", "p41TreeLevel", , True, "a.p41TreeLevel", , , "Strom"))
             .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName", , , "Záznam"))
@@ -565,6 +566,7 @@ Class j70QueryTemplateBL
 
             .Add(AGC("Fakt.kontaktní osoba", "FakturacniKontaktniOsoba", , , "fko.Person", , "LEFT OUTER JOIN view_p28_contactpersons_invoice fko ON a.p28ID=fko.p28ID"))
             .Add(AGC("Stromový název", "p28TreePath", , True, "a.p28TreePath", , , "Strom"))
+            .Add(AGC("Odkaz na podřízené klienty", "ChildContactsInline", , , "dbo.p28_get_childs_inline_html(a.p28ID)", , , "Strom"))
             .Add(AGC("Strom index", "p28TreeIndex", , True, "a.p28TreeIndex", , , "Strom"))
             .Add(AGC("Strom level", "p28TreeLevel", , True, "a.p28TreeLevel", , , "Strom"))
             .Add(AGC(My.Resources.common.Zalozeno, "p28DateInsert", BO.cfENUM.DateTime, , "a.p28DateInsert", , , "Záznam"))

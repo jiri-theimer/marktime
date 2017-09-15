@@ -71,6 +71,10 @@
                 pars.Add("p72ID_NonBillable", BO.BAS.IsNullDBKey(.p72ID_NonBillable), DbType.Int32)
                 pars.Add("j02ID_ContactPerson_DefaultInWorksheet", BO.BAS.IsNullDBKey(.j02ID_ContactPerson_DefaultInWorksheet), DbType.Int32)
                 pars.Add("j02ID_ContactPerson_DefaultInInvoice", BO.BAS.IsNullDBKey(.j02ID_ContactPerson_DefaultInInvoice), DbType.Int32)
+                pars.Add("p65ID", BO.BAS.IsNullDBKey(.p65ID), DbType.Int32)
+                pars.Add("p41RecurNameMask", .p41RecurNameMask, DbType.String)
+                pars.Add("p41RecurBaseDate", .p41RecurBaseDate, DbType.DateTime)
+                pars.Add("p41RecurMotherID", BO.BAS.IsNullDBKey(.p41RecurMotherID), DbType.Int32)
 
                 pars.Add("p41Code", .p41Code, DbType.String)
                 pars.Add("p41Name", .p41Name, DbType.String, , , True, "Název projektu")
@@ -210,7 +214,7 @@
                     End Select
                 End If
             End If
-            .MG_GridSqlColumns += ",a.p41ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p41ValidFrom AND a.p41ValidUntil THEN 0 else 1 END) as IsClosed,a.p41IsDraft as IsDraft,j13.j13ID,a.p41TreeLevel as TreeLevel"
+            .MG_GridSqlColumns += ",a.p41ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p41ValidFrom AND a.p41ValidUntil THEN 0 else 1 END) as IsClosed,a.p41IsDraft as IsDraft,j13.j13ID,a.p41TreeLevel as TreeLevel,a.p65ID"
             .MG_AdditionalSqlFROM += " LEFT OUTER JOIN (SELECT j13ID,p41ID FROM j13FavourteProject WHERE j03ID=" & _curUser.PID.ToString & ") j13 ON a.p41ID=j13.p41ID"
         End With
 

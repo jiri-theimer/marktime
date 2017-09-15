@@ -41,8 +41,7 @@
             Me.j18ID.DataBind()
             Me.p61ID.DataSource = Master.Factory.p61ActivityClusterBL.GetList(New BO.myQuery)
             Me.p61ID.DataBind()
-            
-
+           
             RefreshRecord()
         End If
     End Sub
@@ -135,6 +134,7 @@
 
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
             Me.p41BillingMemo.Text = .p41BillingMemo
+            
         End With
         roles1.InhaleInitialData(cRec.PID)
         tags1.RefreshData(cRec.PID)
@@ -201,6 +201,7 @@
         Me.panLimits.Visible = Me.chkDefineLimits.Checked
 
         RefreshState_Pricelist()
+      
     End Sub
 
     Private Sub RefreshState_Pricelist()
@@ -312,6 +313,7 @@
 
             .p41ParentID = BO.BAS.IsNullInt(Me.p41ParentID.Value)
             .p41BillingMemo = Trim(Me.p41BillingMemo.Text)
+            
         End With
 
         Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()

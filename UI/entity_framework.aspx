@@ -83,7 +83,8 @@
 
         function send_url_to_pane(url) {
             var splitter = $find("<%= RadSplitter1.ClientID %>");
-            var pane = splitter.getPaneById("<%=contentPane.ClientID%>");            
+            var pane = splitter.getPaneById("<%=contentPane.ClientID%>");
+            url = url + "&source=<%=opgLayout.SelectedValue%>";            
             pane.set_contentUrl(url);
         }
 

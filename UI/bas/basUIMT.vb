@@ -345,7 +345,9 @@ Public Class basUIMT
                     Case Is > 1 : dataItem.ForeColor = TreeColorLevel2
                 End Select
             End If
-            
+            If Not cRec.Item("p65ID") Is System.DBNull.Value Then
+                dataItem("systemcolumn").CssClass = "recurrence"
+            End If
 
 
 

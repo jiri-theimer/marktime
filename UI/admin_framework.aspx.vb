@@ -231,6 +231,7 @@ Public Class admin_framework
 
             .AddItem("Číselné řady", "x38", NU("x38"), "other")
             .AddItem("Střediska", "j18", NU("j18"), "other")
+            .AddItem("Pravidla opakovaných úkolů a projektů", "p65", NU("p65"), "other")
             .AddItem("Regiony", "j17", NU("j17"), "other")
             .AddItem("Textové šablony", "j61", NU("j61"), "other")
             .AddItem("Plánovač úloh", "x48", NU("x48"), "other")
@@ -407,6 +408,8 @@ Public Class admin_framework
                 Case "p63"
                     .AddColumn("NameWithRate", "Název pravidla")
                     .AddColumn("p32Name", "Aktivita")
+                Case "p65"
+                    .AddColumn("p65Name", "Název pravidla")
                 Case "p80"
                     .AddColumn("p80Name", "Název pravidla")
                     .AddColumn("p80IsFeeSeparate", "Pevné odměny 1:1", BO.cfENUM.Checkbox)
@@ -754,6 +757,9 @@ Public Class admin_framework
                     grid1.DataSource = lis
                 Case "p63"
                     Dim lis As IEnumerable(Of BO.p63Overhead) = .p63OverheadBL.GetList(mqDef)
+                    grid1.DataSource = lis
+                Case "p65"
+                    Dim lis As IEnumerable(Of BO.p65Recurrence) = .p65RecurrenceBL.GetList(mqDef)
                     grid1.DataSource = lis
                 Case "p80"
                     Dim lis As IEnumerable(Of BO.p80InvoiceAmountStructure) = .p80InvoiceAmountStructureBL.GetList(mqDef)

@@ -30,6 +30,8 @@
             pars.Add("p65Name", .p65Name, DbType.String, , , True, "Název")
             pars.Add("p65RecurGenToBase_D", .p65RecurGenToBase_D, DbType.Int32)
             pars.Add("p65RecurGenToBase_M", .p65RecurGenToBase_M, DbType.Int32)
+            pars.Add("p65IsPlanUntil", .p65IsPlanUntil, DbType.Boolean)
+            pars.Add("p65IsPlanFrom", .p65IsPlanFrom, DbType.Boolean)
             pars.Add("p65RecurPlanFromToBase_D", .p65RecurPlanFromToBase_D, DbType.Int32)
             pars.Add("p65RecurPlanFromToBase_M", .p65RecurPlanFromToBase_M, DbType.Int32)
             pars.Add("p65RecurPlanUntilToBase_D", .p65RecurPlanUntilToBase_D, DbType.Int32)

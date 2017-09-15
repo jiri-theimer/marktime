@@ -233,6 +233,9 @@
     function menu_p40_record(p40id){            
         sw_decide("p40_record.aspx?p41id=<%=Me.DataPID%>&pid="+p40id,"Images/worksheet_recurrence.png",true);
     }
+    function menu_p41_recur(){
+        sw_decide("p41_recurrence.aspx?pid=<%=Me.DataPID%>","Images/recurrence.png",true);
+    }
 
     function menu_p56_record(pid,bolReturnFalse) {
         sw_decide("p56_record.aspx?masterprefix=p41&masterpid=<%=Me.DataPID%>&pid="+pid,"Images/task.png",true);

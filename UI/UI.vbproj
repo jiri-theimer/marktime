@@ -285,6 +285,8 @@
     <Content Include="p31_sumgrid.aspx" />
     <Content Include="p31_sumgrid_pivot.aspx" />
     <Content Include="p40_chrono.aspx" />
+    <Content Include="p41_recurrence.aspx" />
+    <Content Include="p65_record.aspx" />
     <Content Include="p91_batch_sendmail.aspx" />
     <Content Include="p91_delete.aspx" />
     <Content Include="persons.ascx" />
@@ -1397,6 +1399,20 @@
     <Compile Include="p40_chrono.aspx.vb">
       <DependentUpon>p40_chrono.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="p41_recurrence.aspx.designer.vb">
+      <DependentUpon>p41_recurrence.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p41_recurrence.aspx.vb">
+      <DependentUpon>p41_recurrence.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p65_record.aspx.designer.vb">
+      <DependentUpon>p65_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p65_record.aspx.vb">
+      <DependentUpon>p65_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p91_batch_sendmail.aspx.designer.vb">
       <DependentUpon>p91_batch_sendmail.aspx</DependentUpon>

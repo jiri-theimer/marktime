@@ -53,6 +53,7 @@
             Me.p41PlanFrom.SelectedDate = DateSerial(Year(Now), Month(Now), Day(Now))
             Me.p41PlanUntil.SelectedDate = DateSerial(Year(Now), Month(Now), Day(Now)).AddMonths(2)
             
+
             TryInhaleInitialData()
 
             If Request.Item("clone") <> "1" Then
@@ -279,6 +280,7 @@
                 Me.p51ID_Billing.Visible = False
 
         End Select
+       
     End Sub
 
     Private Sub chkPlanDates_CheckedChanged(sender As Object, e As EventArgs) Handles chkPlanDates.CheckedChanged
@@ -341,6 +343,7 @@
                 .p41ExternalPID = Me.p41ExternalPID.Text
                 .p41WorksheetOperFlag = CType(p41WorksheetOperFlag.SelectedValue, BO.p41WorksheetOperFlagEnum)
                 .p41BillingMemo = Trim(Me.p41BillingMemo.Text)
+                
             End With
 
             Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()

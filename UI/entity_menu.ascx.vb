@@ -305,7 +305,9 @@ Public Class entity_menu
         If cP42.p42IsModule_p48 Then
             ami("Operativní plán projektu", "cmdP48", "javascript:p48_plan();", "Images/oplan.png", mi, , True)
         End If
-
+        If cDisp.OwnerAccess Then
+            ami("Nastavit jako opakovaný projekt", "cmdRecurrence", "javascript:menu_p41_recur();", "Images/recurrence.png", mi, , True)
+        End If
         If cP42.p42IsModule_p31 Then
             If cDisp.OwnerAccess Then
                 ami("Definovat opakovanou odměnu/paušál/úkon", "cmdP40Create", "javascript:menu_p40_record(0);", "Images/worksheet_recurrence.png", mi, , True)

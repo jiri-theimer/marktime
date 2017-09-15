@@ -158,7 +158,7 @@
             </div>
             <uc:mytags ID="tags1" ModeUi="1" Prefix="p41" runat="server" />
 
-            <div style="margin-top: 30px;border-top:dashed 1px gray;">
+            <div style="margin-top: 30px; border-top: dashed 1px gray;">
                 <br />
                 <img src="Images/tree.png" />
                 <asp:Label ID="lblParent" runat="server" CssClass="lbl" Text="Nadřízený projekt:"></asp:Label>
@@ -361,6 +361,7 @@
                     </td>
                 </tr>
             </table>
+            
         </telerik:RadPageView>
     </telerik:RadMultiPage>
     <asp:HiddenField ID="hidP51ID_Tailor" runat="server" />

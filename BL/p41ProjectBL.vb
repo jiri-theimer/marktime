@@ -127,6 +127,11 @@ Class p41ProjectBL
                     _Error = "Externí kód projektu musí být jedinečný!" : Return False
                 End If
             End If
+            If .p65ID > 0 Then
+                If .p41RecurBaseDate Is Nothing Then
+                    _Error = "Chybí úvodní rozhodné datum u šablony opakovaného projektu." : Return False
+                End If
+            End If
         End With
         If Not lisFF Is Nothing Then
             If Not BL.BAS.ValidateFF(lisFF) Then
