@@ -2,7 +2,7 @@
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-
+<%@ Register TagPrefix="uc" TagName="panelmenu" Src="~/panelmenu.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -12,6 +12,7 @@
 
         }
         function sendmail() {
+            
             sw_master("sendmail.aspx", "Images/email.png")
 
 
@@ -44,55 +45,48 @@
             sw_master("report_modal.aspx?prefix=j02&pid=<%=Master.Factory.SysUser.j02ID%>", "Images/reporting.png", true);
 
         }
+        function smtp_account() {
+            sw_master("o40_record.aspx?myaccount=1", "Images/outlook.png", true);
+
+        }
         function sweep() {
-            hardrefresh("", "sweep");
+            $.confirm("V mém profilu dojde k vyčištění následujících dat:<hr>Informace o naposledy navštívených stránkách (projekt/klient/úkol/faktura/osoba.<br>Adhoc nastavené třídění v přehledech.<br>Šířka levého panelu.<br>Naposledy nastavená domovská stránka.", function (bool) {
+                if (bool)
+                 hardrefresh("", "sweep");
+                
+            });
+            
+          
+            
         }
         function trydelavatar() {
-
-            if (confirm("Opravdu odstranit obrázek?")) {
-
+            if (confirm("Opravdu odstranit obrázek?")) {                
                 return (true);
             }
             else {
                 return (false);
             }
+            
+
+            
         }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div style="padding: 10px; background: white;">
-        <table cellpadding="5">
-            <tr>
-                <td>
-                    <img src="Images/user_32.png" />
-                </td>
-                <td>
-                    <asp:HyperLink ID="j02clue" runat="server" CssClass="reczoom" Text="i"></asp:HyperLink>
+    <div style="clear: both; width: 100%;"></div>
+
+    <div class="left_panel">
+
+        <uc:panelmenu ID="panelmenu1" runat="server" Width="350px"></uc:panelmenu>
+
+      
+    </div>
+    <div class="right_panel" style="margin-left: 350px;background-color:white;">
+    
+       <div class="div6">
+           <asp:HyperLink ID="j02clue" runat="server" CssClass="reczoom" Text="i"></asp:HyperLink>
                     <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span" Style="font-size: 200%;" Text="Můj profil"></asp:Label>
-                    
-                </td>
-                <td>
-                    <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" EnableRoundedCorners="false" EnableShadows="false" ClickToOpen="true" Style="z-index: 2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
-                        <Items>
-                            <telerik:RadMenuItem Text="Akce v mém profilu" ImageUrl="Images/menuarrow.png">
-                                <Items>
-                                    <telerik:RadMenuItem Text="Osobní tiskové sestavy" Value="report" NavigateUrl="javascript:report()" ImageUrl="Images/report.png"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem Text="Nastavit si startovací (výchozí) stránku" Value="clone" NavigateUrl="javascript:personalpage()" ImageUrl="Images/plugin.png"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem Text="Odeslat e-mail" Value="clone" NavigateUrl="javascript:sendmail()" ImageUrl="Images/email.png"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem Text="Vyčistit paměť (cache) v mém uživatelském profilu" Value="clone" NavigateUrl="javascript:sweep()" ImageUrl="Images/sweep.png"></telerik:RadMenuItem>
-                                    
-                                </Items>
-                            </telerik:RadMenuItem>
-                           
-                        </Items>
-                    </telerik:RadMenu>
-                </td>
-              
-            </tr>
-        </table>
+       </div>
 
 
         <table cellpadding="10" cellspacing="2">
@@ -218,6 +212,14 @@
 
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <asp:Label ID="Label7" Text="SMTP účet:" runat="server" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:Label ID="SmtpAccount" CssClass="val" runat="server"></asp:Label>
+                        </td>
+                    </tr>
                     <tr valign="top">
                         <td>
                             <asp:Label ID="Label2" Text="Podpis pro e-mail:" runat="server" CssClass="lbl" AssociatedControlID="j02EmailSignature"></asp:Label>
@@ -273,7 +275,7 @@
                         <Localization Add="Přidat" Delete="Odstranit" Select="Vybrat" Remove="Odstranit" />
                     </telerik:RadUpload>
                     <asp:Button ID="cmdUploadAvatar" runat="server" Text="Nahrát na server" CssClass="cmd" />
-                <asp:Button ID="cmdDeleteAvatar" runat="server" CssClass="cmd" Text="Odstranit obrázek" Visible="false" OnClientClick="return trydelavatar();" />
+                <asp:Button ID="cmdDeleteAvatar" runat="server" CssClass="cmd" Text="Odstranit obrázek" Visible="false" OnClientClick="return trydelavatar()" />
                     <asp:Image ID="imgAvatar" runat="server" ImageUrl="Images/nophoto.png" />
                     <asp:HiddenField ID="j02AvatarImage" runat="server" />
             </div>

@@ -23,6 +23,15 @@ Partial Public Class p56_framework_detail
     Protected WithEvents menu1 As Global.UI.entity_menu
 
     '''<summary>
+    '''imgRecord control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents imgRecord As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
     '''boxCoreTitle control.
     '''</summary>
     '''<remarks>
@@ -381,6 +390,42 @@ Partial Public Class p56_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents imap1 As Global.UI.imap_record
+
+    '''<summary>
+    '''panRecurrence control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panRecurrence As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''RecurrenceType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RecurrenceType As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p56RecurNameMask control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p56RecurNameMask As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p56RecurBaseDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p56RecurBaseDate As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''alert1 control.

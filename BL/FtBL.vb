@@ -25,6 +25,8 @@
     Function GetList_X61(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x61PageTab)
     Function GetList_Emails(strFilterExpression As String, intTOP As Integer) As IEnumerable(Of BO.GetString)
     Function FulltextSearch(input As BO.FullTextQueryInput) As List(Of BO.FullTextRecord)
+    Function AppendRobotLog(cRec As BO.j91RobotLog) As Boolean
+    Function GetLastRobotRun(TaskFlag As BO.j91RobotTaskFlag) As BO.j91RobotLog
 End Interface
 Class FtBL
     Inherits BLMother
@@ -170,5 +172,11 @@ Class FtBL
     End Function
     Public Function FullTextSearch(input As BO.FullTextQueryInput) As List(Of BO.FullTextRecord) Implements IFtBL.FulltextSearch
         Return _cDL.FullTextSearch(input)
+    End Function
+    Public Function AppendRobotLog(cRec As BO.j91RobotLog) As Boolean Implements IFtBL.AppendRobotLog
+        Return _cDL.AppendRobotLog(cRec)
+    End Function
+    Public Function GetLastRobotRun(TaskFlag As BO.j91RobotTaskFlag) As BO.j91RobotLog Implements IFtBL.GetLastRobotRun
+        Return _cDL.GetLastRobotRun(CInt(TaskFlag))
     End Function
 End Class

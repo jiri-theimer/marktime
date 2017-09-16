@@ -514,8 +514,15 @@
             If Not .o51IDs Is Nothing Then
                 If .o51IDs.Count > 0 Then s.Append(" AND a.p41ID IN (SELECT o52RecordPID FROM o52TagBinding WHERE x29ID=141 AND o51ID IN (" & String.Join(",", .o51IDs) & "))")
             End If
-            If .IsRecurrenceMother > BO.BooleanQueryMode.NoQuery Then
+            If .IsRecurrenceMother = BO.BooleanQueryMode.TrueQuery Then
                 s.Append(" AND a.p65ID IS NOT NULL")
+            End If
+            If .IsRecurrenceChild = BO.BooleanQueryMode.TrueQuery Then
+                s.Append(" AND a.p41RecurMotherID IS NOT NULL AND a.p41RecurBaseDate IS NOT NULL")
+            End If
+            If .p41RecurMotherID <> 0 Then
+                s.Append(" AND a.p41RecurMotherID=@motherid")
+                pars.Add("motherid", .p41RecurMotherID, DbType.UInt32)
             End If
         End With
         Return bas.TrimWHERE(s.ToString)

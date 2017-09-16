@@ -53,7 +53,6 @@ Public Class myQueryP41
     Public Property TreeIndexUntil As Integer
     Public Property p41TreeLevel As Integer = -1
     Public Property IsFavourite As BO.BooleanQueryMode = BooleanQueryMode.NoQuery
-    Public IsRecurrenceMother As BO.BooleanQueryMode = BooleanQueryMode.NoQuery
 
     Public Property j70ID As Integer
     Public Property p41WorksheetOperFlag As BO.p41WorksheetOperFlagEnum = p41WorksheetOperFlagEnum._NotSpecified
@@ -70,4 +69,8 @@ Public Class myQueryP41
     Public Property p41ExternalPID As String
     Public Property x18Value As String  'filtrování podle typu dokumentu
     Public Property o51IDs As List(Of Integer)  'filtrování podle štítků
+
+    Public Property IsRecurrenceMother As BO.BooleanQueryMode = BooleanQueryMode.NoQuery
+    Public Property IsRecurrenceChild As BO.BooleanQueryMode = BooleanQueryMode.NoQuery
+    Public Property p41RecurMotherID As Integer
 End Class

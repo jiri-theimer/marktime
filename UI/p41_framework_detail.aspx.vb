@@ -175,7 +175,13 @@
 
             Me.imgDraft.Visible = .p41IsDraft
             If .p41IsDraft Then imgRecord.ImageUrl = "Images/draft.png"
-            If .p65ID > 0 Then imgRecord.ImageUrl = "Images/recurrence.png"
+            If .p65ID > 0 Then
+                panRecurrence.Visible = True
+                imgRecord.ImageUrl = "Images/recurrence.png"
+                Me.RecurrenceType.Text = Master.Factory.p65RecurrenceBL.Load(.p65ID).p65Name
+                Me.p41RecurNameMask.Text = .p41RecurNameMask
+                Me.p41RecurBaseDate.Text = BO.BAS.FD(.p41RecurBaseDate)
+            End If
             If cRec.p41ParentID <> 0 Then
                 RenderTree(cRec, cRecSum)
             End If

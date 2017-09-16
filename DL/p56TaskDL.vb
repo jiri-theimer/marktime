@@ -73,6 +73,11 @@
                 pars.Add("p56ReminderDate", BO.BAS.IsNullDBDate(.p56ReminderDate), DbType.DateTime)
                 pars.Add("p56IsNoNotify", .p56IsNoNotify, DbType.Boolean)
 
+                pars.Add("p65ID", BO.BAS.IsNullDBKey(.p65ID), DbType.Int32)
+                pars.Add("p56RecurNameMask", .p56RecurNameMask, DbType.String)
+                pars.Add("p56RecurBaseDate", .p56RecurBaseDate, DbType.DateTime)
+                pars.Add("p56RecurMotherID", BO.BAS.IsNullDBKey(.p56RecurMotherID), DbType.Int32)
+
                 pars.Add("p56validfrom", .ValidFrom, DbType.DateTime)
                 pars.Add("p56validuntil", .ValidUntil, DbType.DateTime)
 
@@ -117,101 +122,102 @@
 
 
     Private Function GetSQLWHERE(myQuery As BO.myQueryP56, ByRef pars As DL.DbParameters) As String
-        Dim strW As String = bas.ParseWhereMultiPIDs("a.p56ID", myQuery)
-        strW += bas.ParseWhereValidity("p56", "a", myQuery)
+        Dim s As New System.Text.StringBuilder
+        s.Append(bas.ParseWhereMultiPIDs("a.p56ID", myQuery))
+        s.Append(bas.ParseWhereValidity("p56", "a", myQuery))
         With myQuery
             If .p41ID <> 0 Then
                 pars.Add("p41id", .p41ID, DbType.Int32)
                 If Not .IsIncludeChildProjects Then
-                    strW += " AND a.p41ID=@p41id"
+                    s.Append(" AND a.p41ID=@p41id")
                 Else
-                    strW += " AND (a.p41ID=@p41id OR a.p41ID IN (SELECT p41ID FROM p41Project WHERE p41TreeIndex BETWEEN (select p41TreePrev FROM p41Project WHERE p41ID=@p41id) AND (select p41TreeNext FROM p41Project WHERE p41ID=@p41id)))"
+                    s.Append(" AND (a.p41ID=@p41id OR a.p41ID IN (SELECT p41ID FROM p41Project WHERE p41TreeIndex BETWEEN (select p41TreePrev FROM p41Project WHERE p41ID=@p41id) AND (select p41TreeNext FROM p41Project WHERE p41ID=@p41id)))")
                 End If
             End If
             If Not .p41IDs Is Nothing Then
                 If .p41IDs.Count > 0 Then
                     If Not .IsIncludeChildProjects Then
-                        strW += " AND a.p41ID IN (" & String.Join(",", .p41IDs) & ")"
+                        s.Append(" AND a.p41ID IN (" & String.Join(",", .p41IDs) & ")")
                     Else
-                        strW += " AND (a.p41ID IN (" & String.Join(",", .p41IDs) & ") OR a.p41ID IN (SELECT p41ID FROM p41Project WHERE p41TreeIndex BETWEEN (select p41TreePrev FROM p41Project WHERE p41ID IN (" & String.Join(",", .p41IDs) & ")) AND (select p41TreeNext FROM p41Project WHERE p41ID IN (" & String.Join(",", .p41IDs) & "))))"
+                        s.Append(" AND (a.p41ID IN (" & String.Join(",", .p41IDs) & ") OR a.p41ID IN (SELECT p41ID FROM p41Project WHERE p41TreeIndex BETWEEN (select p41TreePrev FROM p41Project WHERE p41ID IN (" & String.Join(",", .p41IDs) & ")) AND (select p41TreeNext FROM p41Project WHERE p41ID IN (" & String.Join(",", .p41IDs) & "))))")
                     End If
                 End If
             End If
 
             If .j02ID_Owner <> 0 Then
                 pars.Add("ownerid", .j02ID_Owner, DbType.Int32)
-                strW += " AND a.j02ID_Owner=@ownerid"
+                s.Append(" AND a.j02ID_Owner=@ownerid")
             End If
             If .o22ID <> 0 Then
                 pars.Add("o22id", .o22ID, DbType.Int32)
-                strW += " AND a.o22ID=@o22id"
+                s.Append(" AND a.o22ID=@o22id")
             End If
             If .p57ID <> 0 Then
                 pars.Add("p57id", .p57ID, DbType.Int32)
-                strW += " AND a.p57ID=@p57id"
+                s.Append(" AND a.p57ID=@p57id")
             End If
-          
+
             If .b02ID <> 0 Then
                 pars.Add("b02id", .b02ID, DbType.Int32)
-                strW += " AND a.b02ID=@b02id"
+                s.Append(" AND a.b02ID=@b02id")
             End If
             If .p28ID <> 0 Then
                 pars.Add("p28id", .p28ID, DbType.Int32)
-                strW += " AND p41.p28ID_Client=@p28id"
+                s.Append(" AND p41.p28ID_Client=@p28id")
             End If
             If .j02ID <> 0 Then
                 'bráno z pohledu, kde je daná osoba příjemcém/řešitelem úkolu
                 pars.Add("j02id", .j02ID, DbType.Int32)
-                strW += " AND (a.p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356 AND (x69.j02ID=@j02id OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id)))"   'obdržel nějakou (jakoukoliv) roli v úkolu
-                strW += " OR (a.j02ID_Owner=@j02id AND a.p56ID NOT IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356))"
-                strW += ")"
+                s.Append(" AND (a.p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356 AND (x69.j02ID=@j02id OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id)))")   'obdržel nějakou (jakoukoliv) roli v úkolu
+                s.Append(" OR (a.j02ID_Owner=@j02id AND a.p56ID NOT IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356))")
+                s.Append(")")
             End If
             If Not .j02IDs Is Nothing Then
                 If .j02IDs.Count > 0 Then
-                    strW += " AND (a.p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356 AND (x69.j02ID IN (" & String.Join(",", .j02IDs) & ") OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID IN (" & String.Join(",", .j02IDs) & "))))"   'obdržel nějakou (jakoukoliv) roli v úkolu
-                    strW += " OR (a.j02ID_Owner IN (" & String.Join(",", .j02IDs) & ") AND a.p56ID NOT IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356))"
-                    strW += ")"
+                    s.Append(" AND (a.p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356 AND (x69.j02ID IN (" & String.Join(",", .j02IDs) & ") OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID IN (" & String.Join(",", .j02IDs) & "))))")   'obdržel nějakou (jakoukoliv) roli v úkolu
+                    s.Append(" OR (a.j02ID_Owner IN (" & String.Join(",", .j02IDs) & ") AND a.p56ID NOT IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356))")
+                    s.Append(")")
                 End If
             End If
             If Not .Owners Is Nothing Then
                 If .Owners.Count > 0 Then
-                    strW += " AND a.j02ID_Owner IN (" & String.Join(",", .Owners) & ")"
+                    s.Append(" AND a.j02ID_Owner IN (" & String.Join(",", .Owners) & ")")
                 End If
             End If
             If Not .DateInsertFrom Is Nothing Then
                 If Year(.DateInsertFrom) > 1900 Then
                     pars.Add("d1", .DateInsertFrom)
                     pars.Add("d2", .DateInsertUntil)
-                    strW += " AND a.p56DateInsert BETWEEN @d1 AND @d2"
+                    s.Append(" AND a.p56DateInsert BETWEEN @d1 AND @d2")
                 End If
             End If
             If Not .p31Date_D1 Is Nothing Then
                 If Year(.p31Date_D1) > 1900 Then
                     pars.Add("dp31f1", .p31Date_D1)
                     pars.Add("dp31f2", .p31Date_D2)
-                    strW += " AND a.p56ID IN (SELECT p56ID FROM p31Worksheet WHERE p56ID IS NOT NULL AND p31Date BETWEEN @dp31f1 AND @dp31f2)"
+                    s.Append(" AND a.p56ID IN (SELECT p56ID FROM p31Worksheet WHERE p56ID IS NOT NULL AND p31Date BETWEEN @dp31f1 AND @dp31f2)")
                 End If
             End If
             If Not .p56PlanFrom_D1 Is Nothing Then
                 If Year(.p56PlanFrom_D1) > 1900 Then
                     pars.Add("dpf1", .p56PlanFrom_D1)
                     pars.Add("dpf2", .p56PlanFrom_D2)
-                    strW += " AND a.p56PlanFrom BETWEEN @dpf1 AND @dpf2"
+                    s.Append(" AND a.p56PlanFrom BETWEEN @dpf1 AND @dpf2")
                 End If
             End If
             If Not .p56PlanUntil_D1 Is Nothing Then
                 If Year(.p56PlanUntil_D1) > 1900 Then
                     pars.Add("dpu1", .p56PlanUntil_D1)
                     pars.Add("dpu2", .p56PlanUntil_D2)
-                    strW += " AND a.p56PlanUntil BETWEEN @dpu1 AND @dpu2"
+                    s.Append(" AND a.p56PlanUntil BETWEEN @dpu1 AND @dpu2")
                 End If
-                
+
             End If
             Select Case .TerminNeniVyplnen
                 Case BO.BooleanQueryMode.TrueQuery
-                    strW += " AND a.p56PlanUntil IS NULL"
+                    s.Append(" AND a.p56PlanUntil IS NULL")
                 Case BO.BooleanQueryMode.FalseQuery
-                    strW += " AND a.p56PlanUntil IS NOT NULL"
+                    s.Append(" AND a.p56PlanUntil IS NOT NULL")
             End Select
             If .SpecificQuery > BO.myQueryP56_SpecificQuery._NotSpecified Then
                 If .j02ID_ExplicitQueryFor > 0 Then
@@ -223,46 +229,46 @@
             If .j70ID > 0 Then
                 Dim strQueryW As String = bas.CompleteSqlJ70(_cDB, .j70ID, _curUser)
                 If strQueryW <> "" Then
-                    strW += " AND " & strQueryW
+                    s.Append(" AND " & strQueryW)
                 End If
             End If
 
             Select Case .SpecificQuery
                 Case BO.myQueryP56_SpecificQuery.AllowedForWorksheetEntry
-                    strW += " AND a.p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID INNER JOIN x68EntityRole_Permission x68 ON x67.x67ID=x68.x67ID WHERE x67.x29ID=356 AND x68.x53ID=63 AND (x69.j02ID=@j02id_query OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_query)))"          'Zapisovat k úkolu worksheet úkony
+                    s.Append(" AND a.p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID INNER JOIN x68EntityRole_Permission x68 ON x67.x67ID=x68.x67ID WHERE x67.x29ID=356 AND x68.x53ID=63 AND (x69.j02ID=@j02id_query OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_query)))")          'Zapisovat k úkolu worksheet úkony
                 Case BO.myQueryP56_SpecificQuery.AllowedForRead
                     If Not (BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P41_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P41_Owner)) Then
                         'pokud má právo číst nebo vlastnit všechny projekty, vztahuje se to i na úkoly
-                        strW += " AND (a.j02ID_Owner=@j02id_query"
+                        s.Append(" AND (a.j02ID_Owner=@j02id_query")
 
                         Dim strInnerW As String = ""
                         If .p41ID > 0 Then
                             strInnerW = " AND x69.x69RecordPID=@p41id"
                         End If
-                        strW += " OR a.p41ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID INNER JOIN x68EntityRole_Permission x68 ON x67.x67ID=x68.x67ID WHERE x67.x29ID=141 AND x68.x53ID IN (3,9)" & strInnerW & " AND (x69.j02ID=@j02id_query OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_query)))"    'Oprávnění vlastníka nebo uzavíratele ke všem úkolům v projektu
+                        s.Append(" OR a.p41ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID INNER JOIN x68EntityRole_Permission x68 ON x67.x67ID=x68.x67ID WHERE x67.x29ID=141 AND x68.x53ID IN (3,9)" & strInnerW & " AND (x69.j02ID=@j02id_query OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_query)))")    'Oprávnění vlastníka nebo uzavíratele ke všem úkolům v projektu
 
-                        strW += " OR a.p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356 AND (x69.j02ID=@j02id_query OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_query)))"   'obdržel nějakou (jakoukoliv) roli v úkolu
-                        strW += ")"
+                        s.Append(" OR a.p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356 AND (x69.j02ID=@j02id_query OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_query)))")   'obdržel nějakou (jakoukoliv) roli v úkolu
+                        s.Append(")")
                     End If
             End Select
             If .ColumnFilteringExpression <> "" Then
-                strW += " AND " & .ColumnFilteringExpression
+                s.Append(" AND " & .ColumnFilteringExpression)
             End If
             If .SearchExpression <> "" Then
-                strW += " AND ("
+                s.Append(" AND (")
                 'něco jako fulltext
-                strW += "a.p56Name LIKE '%'+@expr+'%' OR a.p56Description LIKE '%'+@expr+'%' OR p41.p41Name LIKE '%'+@expr+'%' OR a.p56Code LIKE @expr+'%' OR p41.p41NameShort LIKE '%'+@expr+'%' OR p28client.p28Name LIKE '%'+@expr+'%' OR p28client.p28CompanyShortName LIKE '%'+@expr+'%'"
-                strW += ")"
+                s.Append("a.p56Name LIKE '%'+@expr+'%' OR a.p56Description LIKE '%'+@expr+'%' OR p41.p41Name LIKE '%'+@expr+'%' OR a.p56Code LIKE @expr+'%' OR p41.p41NameShort LIKE '%'+@expr+'%' OR p28client.p28Name LIKE '%'+@expr+'%' OR p28client.p28CompanyShortName LIKE '%'+@expr+'%'")
+                s.Append(")")
                 pars.Add("expr", .SearchExpression, DbType.String)
             End If
             If Not .o51IDs Is Nothing Then
-                If .o51IDs.Count > 0 Then strW += " AND a.p56ID IN (SELECT o52RecordPID FROM o52TagBinding WHERE x29ID=356 AND o51ID IN (" & String.Join(",", .o51IDs) & "))"
+                If .o51IDs.Count > 0 Then s.Append(" AND a.p56ID IN (SELECT o52RecordPID FROM o52TagBinding WHERE x29ID=356 AND o51ID IN (" & String.Join(",", .o51IDs) & "))")
             End If
             If .x18Value <> "" Then
-                strW += bas.CompleteX18QuerySql("p56", .x18Value)
+                s.Append(bas.CompleteX18QuerySql("p56", .x18Value))
             End If
         End With
-        Return bas.TrimWHERE(strW)
+        Return bas.TrimWHERE(s.ToString)
     End Function
 
     Public Function GetList(myQuery As BO.myQueryP56, bolInhaleReceiversInLine As Boolean) As IEnumerable(Of BO.p56Task)
@@ -318,7 +324,7 @@
             End If
 
             .MG_GridSqlColumns += ",a.p56ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p56ValidFrom AND a.p56ValidUntil THEN 0 else 1 END) as IsClosed"
-            .MG_GridSqlColumns += ",a.p56PlanUntil as p56PlanUntil_Grid,a.b02ID as b02ID_Grid,b02Color as b02Color_Grid,a.o43ID"
+            .MG_GridSqlColumns += ",a.p56PlanUntil as p56PlanUntil_Grid,a.b02ID as b02ID_Grid,b02Color as b02Color_Grid,a.o43ID,a.p65ID"
         End With
         
 
@@ -468,8 +474,14 @@
     End Function
 
     Private Function GetSF() As String
-        Dim s As String = "a.p41ID,a.o22ID,a.p57ID,a.j02ID_Owner,a.b02ID,a.p59ID_Submitter,a.p59ID_Receiver,a.o43ID,a.p56Name,a.p56NameShort,a.p56Code,a.p56Description,a.p56Ordinary,a.p56PlanFrom,a.p56PlanUntil,a.p56ReminderDate,a.p56Plan_Hours,a.p56Plan_Expenses,a.p56RatingValue,a.p56CompletePercent,a.p56ExternalPID,a.p56IsPlan_Hours_Ceiling,a.p56IsPlan_Expenses_Ceiling,a.p56IsHtml,a.p56IsNoNotify"
-        Return s & "," & bas.RecTail("p56", "a") & ",p28client.p28Name as _Client,p57.p57Name as _p57Name,p59submitter.p59Name as _p59NameSubmitter,isnull(p41.p41NameShort,p41.p41Name) as _p41Name,p41.p41Code as _p41Code,o22.o22Name as _o22Name,b02.b02Name as _b02Name,b02.b02Color as _b02Color,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p57.p57IsHelpdesk as _p57IsHelpdesk,p57.b01ID as _b01ID,p57.p57PlanDatesEntryFlag as _p57PlanDatesEntryFlag"
+        Dim s As New System.Text.StringBuilder
+
+        s.Append(bas.RecTail("p56", "a"))
+        s.Append(",a.p41ID,a.o22ID,a.p57ID,a.j02ID_Owner,a.b02ID,a.p59ID_Submitter,a.p59ID_Receiver,a.o43ID,a.p56Name,a.p56NameShort,a.p56Code,a.p56Description,a.p56Ordinary,a.p56PlanFrom,a.p56PlanUntil,a.p56ReminderDate,a.p56Plan_Hours,a.p56Plan_Expenses,a.p56RatingValue,a.p56CompletePercent,a.p56ExternalPID,a.p56IsPlan_Hours_Ceiling,a.p56IsPlan_Expenses_Ceiling,a.p56IsHtml,a.p56IsNoNotify")
+        s.Append(",p28client.p28Name as _Client,p57.p57Name as _p57Name,p59submitter.p59Name as _p59NameSubmitter,isnull(p41.p41NameShort,p41.p41Name) as _p41Name,p41.p41Code as _p41Code,o22.o22Name as _o22Name,b02.b02Name as _b02Name,b02.b02Color as _b02Color,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p57.p57IsHelpdesk as _p57IsHelpdesk,p57.b01ID as _b01ID,p57.p57PlanDatesEntryFlag as _p57PlanDatesEntryFlag")
+        s.Append(",a.p65ID,a.p56RecurNameMask,a.p56RecurBaseDate,a.p56RecurMotherID")
+        Return s.ToString
+
     End Function
     Private Function GetSQLPart1(intTOP As Integer) As String
         Dim s As String = "SELECT"
@@ -478,30 +490,31 @@
         Return s
     End Function
     Private Function GetSQLPart2(mq As BO.myQueryP56) As String
-        Dim s As String = "FROM p56Task a INNER JOIN p57TaskType p57 ON a.p57ID=p57.p57ID"
-        s += " INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID"
-        s += " LEFT OUTER JOIN o22Milestone o22 ON a.o22ID=o22.o22ID"
-        s += " LEFT OUTER JOIN p59Priority p59submitter ON a.p59ID_Submitter=p59submitter.p59ID"
-        s += " LEFT OUTER JOIN p28Contact p28client ON p41.p28ID_Client=p28client.p28ID"
-        s += " LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID"
-        s += " LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
-        s += " LEFT OUTER JOIN p56Task_FreeField p56free ON a.p56ID=p56free.p56ID"
+        Dim s As New System.Text.StringBuilder
+        s.Append("FROM p56Task a INNER JOIN p57TaskType p57 ON a.p57ID=p57.p57ID")
+        s.Append(" INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID")
+        s.Append(" LEFT OUTER JOIN o22Milestone o22 ON a.o22ID=o22.o22ID")
+        s.Append(" LEFT OUTER JOIN p59Priority p59submitter ON a.p59ID_Submitter=p59submitter.p59ID")
+        s.Append(" LEFT OUTER JOIN p28Contact p28client ON p41.p28ID_Client=p28client.p28ID")
+        s.Append(" LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID")
+        s.Append(" LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID")
+        s.Append(" LEFT OUTER JOIN p56Task_FreeField p56free ON a.p56ID=p56free.p56ID")
         If Not mq Is Nothing Then
             With mq
                 If Not String.IsNullOrEmpty(.MG_GridSqlColumns) Then
                     If .MG_GridSqlColumns.IndexOf("p31.") > 0 Then
-                        s += " LEFT OUTER JOIN (SELECT xa.p56ID,COUNT(xa.p31ID) as p31RowsCount,sum(case when xc.p33ID=1 then p31Hours_Orig end) as Hours_Orig,sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=1 then p31Value_Orig end) as Expenses_Orig,sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=2 then p31Value_Orig end) as Incomes_Orig"
-                        s += " FROM p31Worksheet xa INNER JOIN p32Activity xb ON xa.p32ID=xb.p32ID INNER JOIN p34ActivityGroup xc ON xb.p34ID=xc.p34ID WHERE xa.p56ID IS NOT NULL GROUP BY xa.p56ID) p31 ON a.p56ID=p31.p56ID"
+                        s.Append(" LEFT OUTER JOIN (SELECT xa.p56ID,COUNT(xa.p31ID) as p31RowsCount,sum(case when xc.p33ID=1 then p31Hours_Orig end) as Hours_Orig,sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=1 then p31Value_Orig end) as Expenses_Orig,sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=2 then p31Value_Orig end) as Incomes_Orig")
+                        s.Append(" FROM p31Worksheet xa INNER JOIN p32Activity xb ON xa.p32ID=xb.p32ID INNER JOIN p34ActivityGroup xc ON xb.p34ID=xc.p34ID WHERE xa.p56ID IS NOT NULL GROUP BY xa.p56ID) p31 ON a.p56ID=p31.p56ID")
                     End If
                 End If
-                
+
                 If .MG_AdditionalSqlFROM <> "" Then
-                    s += " " & .MG_AdditionalSqlFROM
+                    s.Append(" " & .MG_AdditionalSqlFROM)
                 End If
             End With
         End If
-        
-        Return s
+
+        Return s.ToString
     End Function
 
     Public Function GetRolesInline(intPID As Integer) As String        

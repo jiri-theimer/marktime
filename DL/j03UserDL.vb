@@ -267,7 +267,8 @@ Public Class j03UserDL
         Return _cDB.GetList(Of BO.x36UserParam)(s, pars)
     End Function
     Public Function SYS_DeleteAllUserParams(intJ03ID As Integer) As Boolean
-        Return _cDB.RunSQL("DELETE FROM x36UserParam WHERE j03ID=" & intJ03ID.ToString)
+        'vymazat vše kromě vlastních časových období
+        Return _cDB.RunSQL("DELETE FROM x36UserParam WHERE x36Key <> 'periodcombo-custom_query' AND j03ID=" & intJ03ID.ToString)
 
     End Function
     Public Function SYS_SetUserParam(intJ03ID As Integer, strKey As String, strValue As String) As Boolean

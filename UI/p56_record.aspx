@@ -36,7 +36,7 @@
 
                     </td>
                 </tr>
-              
+
                 <tr>
                     <td>
                         <asp:Label ID="lblProject" runat="server" CssClass="lbl" Text="Projekt:"></asp:Label>
@@ -94,7 +94,7 @@
                 </tr>
 
 
-                
+
 
 
                 <tr>
@@ -141,9 +141,10 @@
                 </div>
             </asp:Panel>
 
-            <asp:Panel ID="panBudget" runat="server" CssClass="content-box2" style="margin-top:6px;">
-                <div class="title"><img src="Images/plan.png" width="16px" height="16px" />Plán/limity úkolu</div>
-                 
+            <asp:Panel ID="panBudget" runat="server" CssClass="content-box2" Style="margin-top: 6px;">
+                <div class="title">
+                    <img src="Images/plan.png" width="16px" height="16px" />Plán/limity úkolu</div>
+
                 <div class="content">
                     <table>
                         <tr>
@@ -153,7 +154,7 @@
                             <td>
                                 <telerik:RadNumericTextBox ID="p56Plan_Hours" runat="server" NumberFormat-DecimalDigits="2" Width="70px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
 
-                                
+
                             </td>
                             <td>
                                 <asp:CheckBox ID="p56IsPlan_Hours_Ceiling" runat="server" Text="Zákaz překročit plán" />
@@ -165,7 +166,7 @@
                             </td>
                             <td>
                                 <telerik:RadNumericTextBox ID="p56Plan_Expenses" runat="server" NumberFormat-DecimalDigits="2" Width="90px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
-                                
+
                             </td>
                             <td>
                                 <asp:CheckBox ID="p56IsPlan_Expenses_Ceiling" runat="server" Text="Zákaz překročit plán" />
@@ -175,7 +176,7 @@
                 </div>
 
             </asp:Panel>
-            <asp:Panel ID="panDescription" runat="server" CssClass="content-box2" style="margin-top:6px;">
+            <asp:Panel ID="panDescription" runat="server" CssClass="content-box2" Style="margin-top: 6px;">
                 <div class="title">Podrobný popis/zadání úkolu</div>
                 <div class="content">
                     <asp:TextBox ID="p56Description" runat="server" Style="height: 90px; width: 99%;" TextMode="MultiLine"></asp:TextBox>
@@ -237,6 +238,38 @@
                     </td>
                 </tr>
             </table>
+
+            <div class="content-box2" style="margin-top: 20px;">
+                <div class="title">
+                    Matka (šablona), která opakovaně rodí instance tohoto úkolu
+                </div>
+                <div class="content">
+                    <div class="div6">
+                        <span>Typ opakování:</span>
+                        <asp:DropDownList ID="p65ID" runat="server" DataTextField="NameWithFlag" DataValueField="pid" AutoPostBack="true"></asp:DropDownList>
+                    </div>
+                    <asp:Panel ID="panRecurrence" runat="server">
+                        <div class="div6">
+                            <span>Maska názvu nových úkolů:</span>
+                            <asp:TextBox ID="p56RecurNameMask" runat="server" Width="300px"></asp:TextBox>
+                        </div>
+                        <div class="div6">
+                            <span>Rozhodné datum tohoto úkolu:</span>
+                            <telerik:RadDateInput ID="p56RecurBaseDate" runat="server" DisplayDateFormat="d.M.yyyy" DateFormat="d.M.yyyy" Width="100px"></telerik:RadDateInput>
+                            <div>
+                                <i>U měsíčního opakování musí být datum vždy první den v měsíci.</i>
+                            </div>
+                            <div>
+                                <i>U čtvrtletního opakování musí být datum první den kvartálu, tedy jedno z následujících: 1.1., 1.4., 1.7., 1.9.</i>
+                            </div>
+                            <div>
+                                <i>U ročního opakování musí být datum vždy první den v roce.</i>
+                            </div>
+                        </div>
+                    </asp:Panel>
+                </div>
+            </div>
+
         </telerik:RadPageView>
     </telerik:RadMultiPage>
 </asp:Content>

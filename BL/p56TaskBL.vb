@@ -87,7 +87,19 @@ Class p56TaskBL
             If .p56IsPlan_Expenses_Ceiling And .p56Plan_Expenses = 0 Then _Error = "Chybí zadání plánu peněžních výdajů." : Return False
             If .p56IsPlan_Hours_Ceiling And .p56Plan_Hours = 0 Then _Error = "Chybí zadání plánu hodin." : Return False
 
-
+            If .p65ID > 0 Then
+                If .p56RecurBaseDate Is Nothing Then
+                    _Error = "Chybí úvodní rozhodné datum u šablony opakovaného projektu." : Return False
+                End If
+                .p56RecurBaseDate = DateSerial(Year(.p56RecurBaseDate), Month(.p56RecurBaseDate), 1)
+                Dim cP65 As BO.p65Recurrence = Me.Factory.p65RecurrenceBL.Load(.p65ID), intM As Integer = Month(.p56RecurBaseDate)
+                If cP65.p65RecurFlag = BO.RecurrenceType.Year Then
+                    .p56RecurBaseDate = DateSerial(Year(.p56RecurBaseDate), 1, 1)
+                End If
+                If cP65.p65RecurFlag = BO.RecurrenceType.Quarter And intM <> 1 And intM <> 4 And intM <> 7 And intM <> 9 Then
+                    _Error = "Chybně zadané rozhodné datum." : Return False
+                End If
+            End If
         End With
         Dim cP57 As BO.p57TaskType = Me.Factory.p57TaskTypeBL.Load(cRec.p57ID)
         If cP57 Is Nothing Then _Error = "Chybí typ úkolu" : Return False

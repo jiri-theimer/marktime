@@ -1,8 +1,12 @@
 ﻿Public Class robot
     Inherits System.Web.UI.Page
-    Private _Factory As BL.Factory
+    Private Property _Factory As BL.Factory
+    Private Property _BatchGuid As String = ""
+    Private Property _curNow As Date = Now
+
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        _BatchGuid = Format(Now, "dd.MM.yyyy HH:mm:ss")
 
         If Not Page.IsPostBack Then
             If Request.Item("blank") = "1" Then panModal.Visible = True
@@ -13,7 +17,18 @@
                 Response.Write("Service user not exists!")
                 Return
             End If
-            Handle_p40Queue()
+
+            _curNow = Now
+            Dim bolNowExplicit As Boolean = False
+            If Request.Item("now") <> "" Then
+                bolNowExplicit = True
+                _curNow = BO.BAS.ConvertString2Date(Request.Item("now"))
+            End If
+
+            If IsTime4Run(BO.j91RobotTaskFlag.p40, 20) Or bolNowExplicit Then
+                Handle_p40Queue()   'stačí jednou za 20 minut
+            End If
+
 
             Handle_MailQueque()
 
@@ -26,8 +41,13 @@
 
             Handle_SqlTasks()
 
-            If Now > Today.AddHours(15) And Now < Today.AddHours(17) And Now.DayOfWeek <> DayOfWeek.Sunday And Now.DayOfWeek <> DayOfWeek.Saturday Then
-                Handle_CnbKurzy()
+            Handle_Recurrence_p41()
+
+
+            If _curNow > Today.AddHours(15) And _curNow < Today.AddHours(17) And _curNow.DayOfWeek <> DayOfWeek.Sunday And _curNow.DayOfWeek <> DayOfWeek.Saturday Then
+                If IsTime4Run(BO.j91RobotTaskFlag.CnbKurzy, 40) Then
+                    Handle_CnbKurzy()
+                End If
             End If
 
             If (Now > Today.AddMinutes(3 * 60) And Now < Today.AddMinutes(3 * 60 + 20)) Or Request.Item("ping") = "1" Then
@@ -36,13 +56,14 @@
 
                 Handle_CentralPing()
             End If
-            If BO.ASS.GetConfigVal("autobackup", "1") = "1" Then
-                If Now > Today.AddDays(1).AddMinutes(-15) Then
-                    'zbývá 15 minut do půlnoci na zálohování
+            If BO.ASS.GetConfigVal("autobackup", "1") = "1" And Now > Today.AddDays(1).AddMinutes(-60) Then
+                'zbývá 60 minut do půlnoci na zálohování
+                If IsTime4Run(BO.j91RobotTaskFlag.DbBackup, 60 * 5) Then  'stačí jednou za 5 hodin
                     Handle_DbBackup()
                 End If
             End If
-            
+
+
 
             log4net.LogManager.GetLogger("robotlog").Info("End")
 
@@ -65,6 +86,8 @@
         mq.TopRecordsOnly = 10
 
         Dim lisX40 As IEnumerable(Of BO.x40MailQueue) = _Factory.x40MailQueueBL.GetList(mq)
+        WL(BO.j91RobotTaskFlag.MailQueue, "", String.Format("Počet zpráv k odeslání:{0}", lisX40.Count))
+
         If lisX40.Count > 0 Then
             've frontě čekají smtp zprávy k odeslání - maximálně 10 zpráv najednou
             For Each cMessage In lisX40
@@ -77,27 +100,77 @@
     Private Sub Handle_Recurrence_p41()
         Dim mq As New BO.myQueryP41
         mq.IsRecurrenceMother = BO.BooleanQueryMode.TrueQuery
-        Dim lisP41 As IEnumerable(Of BO.p41Project) = _Factory.p41ProjectBL.GetList(mq)
-        If lisP41.Count = 0 Then Return
-        For Each c In lisP41
+        Dim lisMothers As IEnumerable(Of BO.p41Project) = _Factory.p41ProjectBL.GetList(mq)
+        WL(BO.j91RobotTaskFlag.RecurrenceP41, "", String.Format("Počet projektů (matek): {0}", lisMothers.Count))
+        If lisMothers.Count = 0 Then Return
+        mq = New BO.myQueryP41
+        mq.IsRecurrenceChild = BO.BooleanQueryMode.TrueQuery
+        Dim lisChilds As IEnumerable(Of BO.p41Project) = _Factory.p41ProjectBL.GetList(mq)
+        Dim lisP65 As IEnumerable(Of BO.p65Recurrence) = _Factory.p65RecurrenceBL.GetList(New BO.myQuery)
 
+        For Each c In lisMothers
+            Dim cP65 As BO.p65Recurrence = lisP65.First(Function(p) p.PID = c.p65ID)
+            Dim datBase As Date = DateSerial(Year(Now), Month(Now), 1), bolNeed2Gen As Boolean = False
+            If cP65.p65RecurFlag = BO.RecurrenceType.Year Then
+                datBase = DateSerial(Year(Now), 1, 1)
+            End If
+            If cP65.p65RecurFlag = BO.RecurrenceType.Quarter Then
+                Select Case Month(Now)
+                    Case 1, 2, 3 : datBase = DateSerial(Year(Now), 1, 1)
+                    Case 4, 5, 6 : datBase = DateSerial(Year(Now), 4, 1)
+                    Case 7, 8, 9 : datBase = DateSerial(Year(Now), 7, 1)
+                    Case Else : datBase = DateSerial(Year(Now), 12, 1)
+                End Select
+
+            End If
+            Dim datGen As Date = datBase.AddMonths(cP65.p65RecurGenToBase_M).AddDays(cP65.p65RecurGenToBase_D)
+            If lisChilds.Where(Function(p) p.p41RecurMotherID = c.PID And p.p41RecurBaseDate = datBase).Count = 0 And datGen <= _curNow Then
+                'potomek ještě neexistuje a nastal čas ho vygenerovat
+                Dim datPlanUntil As Date = Nothing
+                If cP65.p65IsPlanUntil Then datPlanUntil = datBase.AddMonths(cP65.p65RecurPlanUntilToBase_M).AddDays(cP65.p65RecurPlanUntilToBase_D)
+
+                Dim cNew As New BO.p41Project, intMotherPID As Integer = c.PID
+                cNew = c
+                With cNew
+                    .p41RecurMotherID = intMotherPID
+                    .p41RecurBaseDate = datBase
+                    .p65ID = 0 : .p41Code = "" : .ValidFrom = _curNow
+                    If c.p41RecurNameMask <> "" Then .p41Name = c.p41RecurNameMask
+                    If cP65.p65IsPlanUntil Or cP65.p65IsPlanFrom Then
+                        .p41PlanUntil = datBase.AddMonths(cP65.p65RecurPlanUntilToBase_M).AddDays(cP65.p65RecurPlanUntilToBase_D)
+                    Else
+                        .p41PlanUntil = Nothing
+                    End If
+                    If cP65.p65IsPlanFrom Or cP65.p65IsPlanUntil Then
+                        .p41PlanFrom = datBase.AddMonths(cP65.p65RecurPlanFromToBase_M).AddDays(cP65.p65RecurPlanFromToBase_D)
+                    Else
+                        .p41PlanFrom = Nothing
+                    End If
+                    .SetPID(0)
+                End With
+                Dim lisFF As List(Of BO.FreeField) = _Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p41Project, intMotherPID, c.p42ID)
+                If _Factory.p41ProjectBL.Save(cNew, Nothing, Nothing, _Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p41Project, intMotherPID).ToList, lisFF) Then
+                    WL(BO.j91RobotTaskFlag.RecurrenceP41, "", "Mother: " & c.FullName & ", child: " & _Factory.p41ProjectBL.LastSavedPID.ToString & "/" & cNew.p41Name)
+                Else
+                    WL(BO.j91RobotTaskFlag.RecurrenceP41, "Mother: " & c.FullName & ", child: " & cNew.p41Name & ": " & _Factory.p41ProjectBL.ErrorMessage, "")
+                End If
+
+            End If
         Next
     End Sub
 
     Private Sub Handle_p40Queue()
-        Dim datNow As Date = Now
-        If Request.Item("now") <> "" Then
-            datNow = BO.BAS.ConvertString2Date(Request.Item("now"))
-        End If
-        Dim lisP40 As IEnumerable(Of BO.p40WorkSheet_Recurrence) = _Factory.p40WorkSheet_RecurrenceBL.GetList_WaitingForGenerate(datNow)
+
+        Dim lisP40 As IEnumerable(Of BO.p40WorkSheet_Recurrence) = _Factory.p40WorkSheet_RecurrenceBL.GetList_WaitingForGenerate(_curNow)
+        WL(BO.j91RobotTaskFlag.p40, "", String.Format("Počet p40 záznamů :{0}", lisP40.Count))
         If lisP40.Count = 0 Then Return
 
-        log4net.LogManager.GetLogger("robotlog").Info("p40-GetList_WaitingForGenerate, records: " & lisP40.Count.ToString)
+
 
         Dim lisP53 As IEnumerable(Of BO.p53VatRate) = _Factory.p53VatRateBL.GetList(New BO.myQuery)
 
         For Each cRec In lisP40
-            Dim cP39 As BO.p39WorkSheet_Recurrence_Plan = _Factory.p40WorkSheet_RecurrenceBL.LoadP39_FirstWaiting(cRec.PID, datNow)
+            Dim cP39 As BO.p39WorkSheet_Recurrence_Plan = _Factory.p40WorkSheet_RecurrenceBL.LoadP39_FirstWaiting(cRec.PID, _curNow)
             If Not cP39 Is Nothing Then
                 'vygenerovat úkon
                 Dim cP34 As BO.p34ActivityGroup = _Factory.p34ActivityGroupBL.Load(cRec.p34ID)
@@ -127,14 +200,16 @@
                         End If
 
                     End If
-                    
+
                 End With
                 Dim bol As Boolean = _Factory.p31WorksheetBL.SaveOrigRecord(cP31, Nothing)
                 If bol Then
-                    log4net.LogManager.GetLogger("robotlog").Info("p40-new robot worksheet record,p39ID=" & cP39.p39ID.ToString & ", p31ID=" & _Factory.p31WorksheetBL.LastSavedPID.ToString)
+                    WL(BO.j91RobotTaskFlag.p40, "", "p40-new robot worksheet record,p39ID=" & cP39.p39ID.ToString & ", p31ID=" & _Factory.p31WorksheetBL.LastSavedPID.ToString)
+
                     _Factory.p40WorkSheet_RecurrenceBL.Update_p31Instance(cP39.p39ID, _Factory.p31WorksheetBL.LastSavedPID, "")
                 Else
-                    log4net.LogManager.GetLogger("robotlog").Info("p40-new robot worksheet record,p39ID=" & cP39.p39ID.ToString & ", ERROR=" & _Factory.p31WorksheetBL.ErrorMessage)
+                    WL(BO.j91RobotTaskFlag.p40, "", "p40-new robot worksheet record,p39ID=" & cP39.p39ID.ToString & ", ERROR=" & _Factory.p31WorksheetBL.ErrorMessage)
+
                     _Factory.p40WorkSheet_RecurrenceBL.Update_p31Instance(cP39.p39ID, 0, _Factory.p31WorksheetBL.ErrorMessage)
                 End If
             End If
@@ -154,6 +229,8 @@
 
     Public Sub Handle_ImapRobot()
         Dim lis As IEnumerable(Of BO.o41InboxAccount) = _Factory.o41InboxAccountBL.GetList(New BO.myQuery)
+        WL(BO.j91RobotTaskFlag.ImapImport, "", String.Format("Počet imap účtů: {0}", lis.Count))
+
         For Each c In lis
             _Factory.o42ImapRuleBL.HandleWaitingImapMessages(c)
         Next
@@ -164,6 +241,7 @@
         Dim datImport As Date = DateSerial(Year(Now), Month(Now), Day(Now))
 
         Dim lisM62 As IEnumerable(Of BO.m62ExchangeRate) = _Factory.m62ExchangeRateBL.GetList().Where(Function(p) p.m62RateType = BO.m62RateTypeENUM.InvoiceRate And p.m62Date = datImport And p.UserInsert = "robot")
+        WL(BO.j91RobotTaskFlag.CnbKurzy, "", String.Format("Počet měn: {0}."))
         If lisM62.Count = 0 Then
             _Factory.m62ExchangeRateBL.ImportRateList_CNB(datImport)
         End If
@@ -180,12 +258,17 @@
             s += "&poslednizapis=" & BO.BAS.FD(row.Item("PosledniZapis")) & "&pocetzaznamu=" & row.Item("PocetZaznamu").ToString & "&pocetzapisovacu=" & row.Item("PocetZapisovacu").ToString
         Next
 
+
         Dim rq As System.Net.HttpWebRequest = System.Net.HttpWebRequest.Create(s)
         Dim rs As System.Net.HttpWebResponse = rq.GetResponse()
+
+        WL(BO.j91RobotTaskFlag.CentralPing, "", "")
     End Sub
 
     Public Sub Handle_ScheduledReports()
         Dim lis As IEnumerable(Of BO.x31Report) = _Factory.x31ReportBL.GetList(New BO.myQuery).Where(Function(p) p.x31IsScheduling = True And p.x31SchedulingReceivers <> "")
+        WL(BO.j91RobotTaskFlag.ScheduledReports, "", String.Format("Počet sestav: {0}", lis.Count))
+
         For Each c In lis
             If _Factory.x31ReportBL.IsWaiting4AutoGenerate(c) Then
 
@@ -215,9 +298,13 @@
                     If intMessageID > 0 Then
                         _Factory.x31ReportBL.UpdateLastScheduledRun(c.PID, Now)
                         If Not .SendMessageFromQueque(intMessageID) Then
+                            WL(BO.j91RobotTaskFlag.ScheduledReports, .ErrorMessage, "")
                             Response.Write(.ErrorMessage)
+                        Else
+                            WL(BO.j91RobotTaskFlag.ScheduledReports, "", String.Format("Odeslán report ", message.Subject))
                         End If
                     Else
+                        WL(BO.j91RobotTaskFlag.ScheduledReports, .ErrorMessage, "")
                         Response.Write(.ErrorMessage)
                     End If
                 End With
@@ -232,16 +319,20 @@
 
     Public Sub Handle_SqlTasks()
         Dim lis As IEnumerable(Of BO.x48SqlTask) = _Factory.x48SqlTaskBL.GetList(New BO.myQuery)
+        WL(BO.j91RobotTaskFlag.SqlTasks, "", String.Format("Počet sql úloh k zpracování: {0}", lis.Count))
         For Each c In lis
             If _Factory.x48SqlTaskBL.IsWaiting4AutoGenerate(c) Then
-                log4net.LogManager.GetLogger("robotlog").Info("SqlTask: " & c.x48Name)
+                WL(BO.j91RobotTaskFlag.SqlTasks, "", "SqlTask: " & c.x48Name)
+
                 Dim dt As DataTable = _Factory.pluginBL.GetDataTable(c.x48Sql, Nothing)
                 If _Factory.pluginBL.ErrorMessage <> "" Then
-                    log4net.LogManager.GetLogger("robotlog").Error(_Factory.pluginBL.ErrorMessage)
+                    WL(BO.j91RobotTaskFlag.SqlTasks, _Factory.pluginBL.ErrorMessage, "")
+
                     Continue For 'Chyba v SQL -> jít na další úlohu nebo končit
                 End If
                 If c.x48MailBody = "" And c.x48MailSubject = "" Then
-                    log4net.LogManager.GetLogger("robotlog").Info("Sql result: " & dt.Rows.Count.ToString & " rows.")
+                    WL(BO.j91RobotTaskFlag.SqlTasks, "", "Sql result: " & dt.Rows.Count.ToString & " rows.")
+
                     Continue For 'Nemá se posílat mail zpráva ->jít na další úlohu nebo končit
 
 
@@ -333,13 +424,13 @@
                 Try
                     System.IO.Directory.CreateDirectory(strDir)
                 Catch ex As Exception
-                    log4net.LogManager.GetLogger("robotlog").Error("Handle_DbBackup: " & ex.Message)
+                    WL(BO.j91RobotTaskFlag.DbBackup, "Handle_DbBackup: " & ex.Message, "")
                     Return
                 End Try
             End If
             bolTestFileSystem = True
         End If
-        
+
         Dim strBackupFileName As String = "MARKTIME50_Backup_day" & Weekday(Now, Microsoft.VisualBasic.FirstDayOfWeek.Monday).ToString & ".bak"
 
         If bolTestFileSystem Then
@@ -353,18 +444,18 @@
                         Try
                             System.IO.File.Delete(strDir & "\" & strBackupFileName)
                         Catch ex As Exception
-                            log4net.LogManager.GetLogger("robotlog").Error("Nelze odstranit starý backup soubor: " & strDir & "\" & strBackupFileName)
+                            WL(BO.j91RobotTaskFlag.DbBackup, "Nelze odstranit starý backup soubor: " & strDir & "\" & strBackupFileName, "")
                             Return
                         End Try
                     End If
                 End If
             End If
         End If
-        
+
 
         Dim strRet As String = cBL.CreateDbBackup(, strDir, strBackupFileName, bolTestFileSystem)
         If strRet <> strBackupFileName Then
-            log4net.LogManager.GetLogger("robotlog").Error("Handle_DbBackup: " & strRet)
+            WL(BO.j91RobotTaskFlag.DbBackup, "Handle_DbBackup: " & strRet, "")
         Else
             If bolTestFileSystem Then
                 Dim cF As New BO.clsFile
@@ -379,7 +470,34 @@
                 System.IO.File.Delete(strDir & "\" & strBackupFileName)
             End If
         End If
-        
+
         strRet = cBL.CreateDbBackup(System.Configuration.ConfigurationManager.ConnectionStrings.Item("ApplicationServices").ToString, strDir, strBackupFileName, bolTestFileSystem)
     End Sub
+
+    Private Sub WL(Task As BO.j91RobotTaskFlag, strError As String, strInfo As String)
+        Dim c As New BO.j91RobotLog
+        c.j91BatchGuid = _BatchGuid
+        c.j91Account = _Factory.SysUser.j03Login
+        c.j91Date = Now
+        c.j91ErrorMessage = strError
+        c.j91InfoMessage = strInfo
+        c.j91TaskFlag = Task
+
+        _Factory.ftBL.AppendRobotLog(c)
+        If strError <> "" Then
+            log4net.LogManager.GetLogger("robotlog").Error("Robot task " & CInt(Task).ToString & ": " & strError)
+        End If
+        ''If strInfo <> "" Then
+        ''    log4net.LogManager.GetLogger("robotlog").Info(strInfo)
+        ''End If
+    End Sub
+
+    Private Function IsTime4Run(TaskFlag As BO.j91RobotTaskFlag, dblMinIntervalMinutes As Double) As Boolean
+        Dim c As BO.j91RobotLog = _Factory.ftBL.GetLastRobotRun(TaskFlag)
+        If c Is Nothing Then Return True
+        If c.j91Date.AddMinutes(dblMinIntervalMinutes) < _curNow Then
+            Return False
+        End If
+        Return True
+    End Function
 End Class

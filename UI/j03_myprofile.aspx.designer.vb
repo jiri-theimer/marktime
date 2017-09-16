@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class j03_myprofile
 
     '''<summary>
+    '''panelmenu1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panelmenu1 As Global.UI.panelmenu
+
+    '''<summary>
     '''j02clue control.
     '''</summary>
     '''<remarks>
@@ -30,15 +39,6 @@ Partial Public Class j03_myprofile
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblHeader As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''recmenu1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents recmenu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
     '''lblLogin control.
@@ -264,6 +264,24 @@ Partial Public Class j03_myprofile
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblEmailInfo As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Label7 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label7 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''SmtpAccount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SmtpAccount As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''Label2 control.

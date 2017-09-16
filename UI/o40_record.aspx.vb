@@ -9,11 +9,19 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
-                .EnableRecordValidity = True
-                .neededPermission = BO.x53PermValEnum.GR_Admin
+                If Request.Item("myaccount") = "1" Then
+                    Dim cJ02 As BO.j02Person = .Factory.j02PersonBL.Load(.Factory.SysUser.j02ID)
+                    .DataPID = cJ02.o40ID
+                    hidMyAccount.Value = "1"
+                Else
+                    .EnableRecordValidity = True
+                    .neededPermission = BO.x53PermValEnum.GR_Admin
+                    .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
+                End If
+                
                 .HeaderIcon = "Images/settings_32.png"
-                .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-                .HeaderText = "IMAP účet"
+
+                .HeaderText = "SMTP účet"
 
 
             End With
@@ -35,6 +43,10 @@
         If Master.DataPID = 0 Then
             o40Password.Visible = True
             cmdTest.Visible = False
+            If hidMyAccount.Value = "1" Then
+                Me.o40EmailAddress.Text = Master.Factory.SysUser.PersonEmail
+                Me.o40Name.Text = Master.Factory.SysUser.Person & " via MARKTIME"
+            End If
             Return
         Else
             o40Password.Visible = False
@@ -98,6 +110,15 @@
 
             If .Save(cRec) Then
                 Master.DataPID = .LastSavedPID
+                If hidMyAccount.Value = "1" Then
+                    With Master.Factory.j02PersonBL
+                        Dim cJ02 As BO.j02Person = .Load(Master.Factory.SysUser.j02ID)
+                        cJ02.o40ID = Master.DataPID
+                        .Save(cJ02, Nothing)
+                    End With
+
+
+                End If
                 Master.CloseAndRefreshParent("o40-save")
             Else
                 Master.Notify(.ErrorMessage, 2)
@@ -118,6 +139,7 @@
         Else
             cmdChangePWD.Visible = True
         End If
+        If hidMyAccount.Value = "1" Then Master.HideShowToolbarButton("bin", False)
     End Sub
 
     Private Sub cmdTest_Click(sender As Object, e As EventArgs) Handles cmdTest.Click

@@ -88,6 +88,7 @@
     <Compile Include="DBNative\j62MenuHome.vb" />
     <Compile Include="DBNative\j70QueryTemplate.vb" />
     <Compile Include="DBNative\j71QueryTemplate_Item.vb" />
+    <Compile Include="DBNative\j91RobotLog.vb" />
     <Compile Include="DBNative\m62ExchangeRate.vb" />
     <Compile Include="DBNative\o20Milestone_Receiver.vb" />
     <Compile Include="DBNative\o21MilestoneType.vb" />

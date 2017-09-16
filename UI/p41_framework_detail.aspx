@@ -99,7 +99,7 @@
             <asp:Label ID="boxCoreTitle" Text="Záznam projektu" runat="server" meta:resourcekey="boxCoreTitle"></asp:Label>
 
             <asp:ImageButton ID="cmdFavourite" runat="server" ImageUrl="Images/not_favourite.png" ToolTip="Zařadit do mých oblíbených projektů" CssClass="button-link" Style="float: right;" />
-
+            
 
         </div>
         <div class="content">
@@ -297,6 +297,26 @@
         </div>
         <div class="content" style="background-color:#ffffcc;" >
             <asp:Label ID="p41BillingMemo" runat="server" ForeColor="Black" Font-Italic="true" Font-Size="Larger" ></asp:Label>
+        </div>
+    </asp:Panel>
+    <asp:Panel ID="panRecurrence" runat="server" CssClass="content-box1" Visible="false">
+        <div class="title">
+            <img src="Images/recurrence.png" style="margin-right: 10px;" />
+            <span>Matka opakovaných projektů</span>
+        </div>
+        <div class="content">
+            <div class="div6">
+                <span>Typ opakování:</span>
+                <asp:Label ID="RecurrenceType" runat="server" CssClass="valbold"></asp:Label>
+            </div>
+            <div class="div6">
+                <span>Maska názvu nových projektů:</span>
+                <asp:Label ID="p41RecurNameMask" runat="server" CssClass="valbold"></asp:Label>
+            </div>
+            <div class="div6">
+                <span>Rozhodné datum:</span>
+                <asp:Label ID="p41RecurBaseDate" runat="server" CssClass="valbold"></asp:Label>
+            </div>
         </div>
     </asp:Panel>
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>

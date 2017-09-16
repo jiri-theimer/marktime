@@ -84,6 +84,13 @@
         If Not cDisp.ReadAccess Then Master.StopPage("Nedisponujete oprávněním číst tento úkol.")
 
         With cRec
+            If .p65ID > 0 Then
+                imgRecord.ImageUrl = "Images/recurrence.png"
+                panRecurrence.Visible = True
+                Me.RecurrenceType.Text = Master.Factory.p65RecurrenceBL.Load(.p65ID).p65Name
+                Me.p56RecurNameMask.Text = .p56RecurNameMask
+                Me.p56RecurBaseDate.Text = BO.BAS.FD(.p56RecurBaseDate)
+            End If
             Me.boxCoreTitle.Text = .p57Name & " (" & .p56Code & ")"
             If .b02ID <> 0 Then
                 Me.boxCoreTitle.Text += ": " & .b02Name
@@ -104,7 +111,7 @@
                 Me.lblp59NameSubmitter.Visible = False
             End If
 
-           
+
 
             If .p56Description <> "" Then
                 panDescription.Visible = True : Me.p56Description.Text = BO.BAS.CrLfText2Html(.p56Description)

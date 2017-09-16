@@ -34,7 +34,20 @@ Public Class panelmenu
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
     End Sub
-
+    Public Sub AddSeparator(strParentNodeValue As String)
+        Dim n As New RadPanelItem()
+        n.IsSeparator = True
+        n.Text = "-"
+       
+        If strParentNodeValue = "" Then
+            menu1.Items.Add(n)
+        Else
+            Dim nParent As RadPanelItem = menu1.FindItemByValue(strParentNodeValue)
+            If Not nParent Is Nothing Then
+                nParent.Items.Add(n)
+            End If
+        End If
+    End Sub
     Public Overloads Sub AddItem(n As RadPanelItem, Optional strParentNodeValue As String = "")
         If strParentNodeValue = "" Then
             menu1.Items.Add(n)
@@ -52,6 +65,7 @@ Public Class panelmenu
         n.ToolTip = strToolTip
         n.Target = strTarget
         n.SelectedCssClass = "panelmenu_selectedrow"
+
         If strParentNodeValue = "" Then
             menu1.Items.Add(n)
         Else

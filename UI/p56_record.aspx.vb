@@ -52,7 +52,9 @@
                 Me.p59ID_Submitter.DataSource = .Factory.p59PriorityBL.GetList(New BO.myQuery)
                 Me.p59ID_Submitter.DataBind()
             End With
-
+            Me.p65ID.DataSource = Master.Factory.p65RecurrenceBL.GetList(New BO.myQuery)
+            Me.p65ID.DataBind()
+            Me.p65ID.Items.Insert(0, "--Úkol není matkou opakovaných úkolů--")
 
             RefreshRecord()
 
@@ -144,6 +146,13 @@
             Me.p56IsPlan_Expenses_Ceiling.Checked = .p56IsPlan_Expenses_Ceiling
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
             Master.Timestamp = .Timestamp
+
+            Me.p56RecurNameMask.Text = .p56RecurNameMask
+            basUI.SelectDropdownlistValue(Me.p65ID, .p65ID.ToString)
+            If Not .p56RecurBaseDate Is Nothing Then Me.p56RecurBaseDate.SelectedDate = .p56RecurBaseDate
+            If .p65ID > 0 Then
+                chkMore.Checked = True
+            End If
         End With
         roles1.InhaleInitialData(cRec.PID)
         tags1.RefreshData(cRec.PID)
@@ -253,7 +262,11 @@
         Else
             Me.lblO22ID.Visible = False : Me.o22ID.Visible = False
         End If
-
+        If Me.p65ID.SelectedIndex > 0 Then
+            panRecurrence.Visible = True
+        Else
+            panRecurrence.Visible = False
+        End If
 
 
     End Sub
@@ -323,6 +336,12 @@
                 .p56Plan_Expenses = BO.BAS.IsNullNum(Me.p56Plan_Expenses.Value)
                 .p56CompletePercent = BO.BAS.IsNullInt(Me.p56CompletePercent.Value)
                 .p56ExternalPID = Me.p56ExternalPID.Text
+
+                .p65ID = BO.BAS.IsNullInt(Me.p65ID.SelectedValue)
+                If .p65ID <> 0 Then
+                    .p56RecurBaseDate = Me.p56RecurBaseDate.SelectedDate
+                    .p56RecurNameMask = Me.p56RecurNameMask.Text
+                End If
 
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil

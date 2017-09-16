@@ -259,6 +259,9 @@ Public Class basUIMT
                 If Not .Item("o43ID") Is System.DBNull.Value Then
                     dataItem("systemcolumn").CssClass = "imap"
                 End If
+                If Not cRec.Item("p65ID") Is System.DBNull.Value Then
+                    dataItem("systemcolumn").CssClass = "recurrence"
+                End If
             End With
         Else
             Dim cRec As BO.p56Task = CType(e.Item.DataItem, BO.p56Task)

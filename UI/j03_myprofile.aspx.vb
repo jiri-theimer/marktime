@@ -11,7 +11,6 @@
             With Master
                 .PageTitle = "Můj profil v MARKTIME"
                 .SiteMenuValue = "cmdMyProfile"
-                recmenu1.FindItemByValue("report").Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_X31_Personal)
             End With
             With Master.Factory.j03UserBL
                 .InhaleUserParams("handler_search_project-toprecs")
@@ -25,6 +24,22 @@
                 Master.Notify("Osobní profil byl aktualizován.", NotifyLevel.InfoMessage)
             End If
 
+
+            With Me.panelmenu1
+                .AddItem("Můj profil", "root")
+                If Master.Factory.TestPermission(BO.x53PermValEnum.GR_X31_Personal) Then
+                    .AddItem("Osobní tiskové sestavy", "report", "javascript:report()", "root", "Images/report.png")
+                    .AddSeparator("root")
+                End If
+                .AddItem("Odeslat e-mail", "sendmail", "javascript:sendmail()", "root", "Images/email.png")
+                .AddItem("Nastavit poštovní účet pro odeslanou poštu (SMTP)", "smtp", "javascript:smtp_account()", "root", "Images/outlook.png")
+                '.AddItem("Nastavit si poštovní účet pro přijatou poštu (IMAP)", "imap", "javascript:imap_account()", "root", "Images/imap.png")
+                .AddSeparator("root")
+                .AddItem("Vyčistit paměť (cache) mého profilu", "sendmail", "javascript:sweep()", "root", "Images/sweep.png")
+                .AddSeparator("root")
+                .AddItem("Změnit přístupové heslo", "pwd", "changepassword.aspx", "root", "Images/password.png")
+                .ExpandAll()
+            End With
         End If
     End Sub
 
@@ -63,6 +78,12 @@
                 Me.j02Phone.Text = .j02Phone
                 Me.j02Office.Text = .j02Office
                 Me.j02EmailSignature.Text = .j02EmailSignature
+                If .o40ID = 0 Then
+                    Me.SmtpAccount.Text = Master.Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress") & " | REPLY adresa: " & Me.j02Email.Text
+                Else
+                    Me.SmtpAccount.Text = "<a href='javascript:smtp_account()'>" & Master.Factory.o40SmtpAccountBL.Load(.o40ID).o40Name & "</a>"
+                End If
+
                 If .j02AvatarImage <> "" Then                    
                     imgAvatar.ImageUrl = "Plugins/Avatar/" & .j02AvatarImage
                     cmdDeleteAvatar.Visible = True
@@ -114,16 +135,22 @@
     End Sub
 
     Private Sub cmdRefreshOnBehind_Click(sender As Object, e As EventArgs) Handles cmdRefreshOnBehind.Click
-        If Me.hidHardRefreshFlag.Value = "send-mail" Then
-            Master.Notify("Poštovní zpráva byla odeslána.", NotifyLevel.InfoMessage)
-        End If
-        If Me.hidHardRefreshFlag.Value = "sweep" Then
-            If Master.Factory.j03UserBL.DeleteAllUserParams(Master.Factory.SysUser.PID) Then
-                Master.Notify("Paměť uživatelského profilu byla vyčištěna.")
-            End If
-        End If
+        Select Case Me.hidHardRefreshFlag.Value
+            Case "send-mail"
+                Master.Notify("Poštovní zpráva byla odeslána.", NotifyLevel.InfoMessage)
+            Case "sweep"
+                If Master.Factory.j03UserBL.DeleteAllUserParams(Master.Factory.SysUser.PID) Then
+                    Master.Notify("Paměť uživatelského profilu byla vyčištěna.")
+                End If
+                RefreshRecord()
+            Case ""
+            Case Else
+                RefreshRecord()
+        End Select
+        
         hidHardRefreshFlag.Value = ""
         hidHardRefreshPID.Value = ""
+
     End Sub
 
     ''Private Sub SetupGrid()

@@ -56,7 +56,7 @@
 
     <div class="content-box1">
         <div class="title">
-            <img src="Images/properties.png" style="margin-right: 10px;" />
+            <asp:Image ID="imgRecord" runat="server" Style="margin-right: 10px;" ImageUrl="Images/properties.png" />
             <asp:Label ID="boxCoreTitle" Text="Karta úkolu" runat="server"></asp:Label>
 
 
@@ -239,6 +239,26 @@
         </div>
         <div class="content">
             <uc:imap_record ID="imap1" runat="server"></uc:imap_record>
+        </div>
+    </asp:Panel>
+    <asp:Panel ID="panRecurrence" runat="server" CssClass="content-box1" Visible="false">
+        <div class="title">
+            <img src="Images/recurrence.png" style="margin-right: 10px;" />
+            <span>Matka opakovaných úkolů</span>
+        </div>
+        <div class="content">
+            <div class="div6">
+                <span>Typ opakování:</span>
+                <asp:Label ID="RecurrenceType" runat="server" CssClass="valbold"></asp:Label>
+            </div>
+            <div class="div6">
+                <span>Maska názvu nových úkolů:</span>
+                <asp:Label ID="p56RecurNameMask" runat="server" CssClass="valbold"></asp:Label>
+            </div>
+            <div class="div6">
+                <span>Rozhodné datum:</span>
+                <asp:Label ID="p56RecurBaseDate" runat="server" CssClass="valbold"></asp:Label>
+            </div>
         </div>
     </asp:Panel>
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>

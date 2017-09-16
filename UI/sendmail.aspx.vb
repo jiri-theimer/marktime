@@ -28,10 +28,18 @@
         Me.uploadlist1.Factory = Master.Factory
 
         If Not Page.IsPostBack Then
-            txtSender.Text = Master.Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress")
-            If txtSender.Text <> Master.Factory.SysUser.PersonEmail Then
-                lblReplyTo.Text = Master.Factory.SysUser.PersonEmail
+            Dim cJ02 As BO.j02Person = Master.Factory.j02PersonBL.Load(Master.Factory.SysUser.j02ID)
+            If cJ02.o40ID = 0 Then
+                txtSender.Text = Master.Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress")
+                If txtSender.Text <> Master.Factory.SysUser.PersonEmail Then
+                    lblReplyTo.Text = String.Format("REPLY adresa: {0}", Master.Factory.SysUser.PersonEmail)
+                End If
+            Else
+                txtSender.Text = cJ02.j02Email
+
             End If
+
+           
 
             If Request.Item("prefix") <> "" Then
                 Me.CurrentX29ID = BO.BAS.GetX29FromPrefix(Request.Item("prefix"))

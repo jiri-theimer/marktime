@@ -191,4 +191,20 @@ Public Class FtDL
         Return ret
 
     End Function
+
+    Public Function AppendRobotLog(cRec As BO.j91RobotLog) As Boolean
+        Dim pars As New DbParameters
+        With cRec
+            pars.Add("guid", .j91BatchGuid, DbType.String)
+            pars.Add("taskflag", CInt(.j91TaskFlag), DbType.Int32)
+            pars.Add("info", .j91InfoMessage, DbType.String)
+            pars.Add("account", _curUser.j03Login, DbType.String)
+            pars.Add("err", .j91ErrorMessage, DbType.String)
+        End With
+
+        Return _cDB.RunSQL("INSERT INTO j91RobotLog(j91Date,j91BatchGuid,j91TaskFlag,j91InfoMessage,j91ErrorMessage,j91Account) VALUES(getdate(),@guid,@taskflag,@info,@err,@account)", pars)
+    End Function
+    Public Function GetLastRobotRun(intTaskFlag As Integer) As BO.j91RobotLog
+        Return _cDB.GetRecord(Of BO.j91RobotLog)("SELECT TOP 1 * FROM j91RobotLog WHERE j91TaskFlag=@taskflag AND j91ErrorMessage IS NULL ORDER BY j91ID DESC", New With {.taskflag = intTaskFlag})
+    End Function
 End Class

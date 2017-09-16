@@ -85,7 +85,7 @@
     </table>
     <p></p>
     <asp:Button ID="cmdTest" runat="server" CssClass="cmd" Text="Otestovat připojení k účtu" />
-
+    <asp:HiddenField ID="hidMyAccount" runat="server" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

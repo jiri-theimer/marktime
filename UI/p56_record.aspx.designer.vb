@@ -446,6 +446,42 @@ Partial Public Class p56_record
     Protected WithEvents p56ExternalPID As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''p65ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p65ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''panRecurrence control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panRecurrence As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''p56RecurNameMask control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p56RecurNameMask As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''p56RecurBaseDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p56RecurBaseDate As Global.Telerik.Web.UI.RadDateInput
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>
