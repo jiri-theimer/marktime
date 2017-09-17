@@ -49,7 +49,7 @@
     p92InvoiceType = 392
     p89ProformaType = 389
     p87BillingLanguage = 387
-    p64Binder = 364
+
     p29ContactType = 329
     c21FondCalendar = 421
     p34ActivityGroup = 334

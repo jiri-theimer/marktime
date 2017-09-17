@@ -30,7 +30,8 @@ Public Enum myQueryP41_QuickQuery
     WithChildProject = 19
     Favourites = 20
     WithBillingMemo = 21
-    WithBinder = 22
+
+    Is_RecurMother = 22
 End Enum
 Public Class myQueryP41
     Inherits myQuery

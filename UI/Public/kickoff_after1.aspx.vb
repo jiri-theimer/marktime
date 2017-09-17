@@ -579,6 +579,7 @@
         CreateQuery("Projekty s vystavenou fakturou", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 15)
         CreateQuery("Došlo k překročení limitu rozpracovanosti", BO.x29IdEnum.p41Project, 0, "Client,p41Name,p41LimitHours_Notification,p41LimitFee_Notification,WIP_Hodiny,WIP_Castka", "_other", 4)
 
+        CreateQuery("Matky opakovaných projektů", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 22)
         CreateQuery("Projekty s opakovanou paušální odměnou", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 10)
         CreateQuery("Projekty v režimu DRAFT", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 11)
         CreateQuery("Není přiřazen ceník sazeb", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 13)
@@ -637,6 +638,7 @@
         CreateQuery("Vyplněn plán/limit hodin", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 9)
         CreateQuery("Vyplněn termín dokončení", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 6)
         CreateQuery("Je po termínu dokončení", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 7)
+        CreateQuery("Matky opakovaných úkolů", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 13)
 
     End Sub
 

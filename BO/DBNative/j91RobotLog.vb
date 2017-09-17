@@ -9,7 +9,8 @@
     CentralPing = 7
     DbBackup = 8
     RecurrenceP41 = 9
-
+    RecurrenceP56 = 10
+    ClearTemp = 11
 End Enum
 Public Class j91RobotLog
     Public Property j91ID As Integer

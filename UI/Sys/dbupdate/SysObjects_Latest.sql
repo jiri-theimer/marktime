@@ -2003,6 +2003,65 @@ END
 
 GO
 
+----------FN---------------p28_get_childs_inline_html-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p28_get_childs_inline_html') and type = 'FN')
+ drop function p28_get_childs_inline_html
+GO
+
+
+
+
+
+create    FUNCTION [dbo].[p28_get_childs_inline_html](@p28id int)
+RETURNS varchar(5000)
+AS
+BEGIN
+  ---vrací èárkou html seznam pod-klientù v klientovi @p28id
+
+ DECLARE @s nvarchar(2000) 
+
+
+select top 20 @s=COALESCE(@s + ' ', '')+'<div><a href='+char(34)+'javascript: send_url_to_pane('+char(39)+'p28_framework_detail.aspx?pid='+convert(varchar(10),b.p28ID)+char(39)+')'+char(34)+'>'+left(b.p28Name,30)+'</a></div>'
+FROM p28Contact a INNER JOIN p28Contact b ON a.p28ID=b.p28ParentID
+where a.p28ID=@p28id
+ORDER BY b.p28Name
+
+
+
+RETURN(@s)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------p28_getonerole_inline-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p28_getonerole_inline') and type = 'FN')
@@ -2538,6 +2597,65 @@ END
 
 GO
 
+----------FN---------------p41_get_childs_inline_html-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p41_get_childs_inline_html') and type = 'FN')
+ drop function p41_get_childs_inline_html
+GO
+
+
+
+
+
+CREATE    FUNCTION [dbo].[p41_get_childs_inline_html](@p41id int)
+RETURNS varchar(5000)
+AS
+BEGIN
+  ---vrací èárkou html seznam pod-projektù v projektu @p41id
+
+ DECLARE @s nvarchar(2000) 
+
+
+select top 20 @s=COALESCE(@s + ' ', '')+'<div><a href='+char(34)+'javascript: send_url_to_pane('+char(39)+'p41_framework_detail.aspx?pid='+convert(varchar(10),b.p41ID)+char(39)+')'+char(34)+'>'+left(isnull(b.p41NameShort,b.p41Name),30)+'</a></div>'
+FROM p41Project a INNER JOIN p41Project b ON a.p41ID=b.p41ParentID
+where a.p41ID=@p41id
+ORDER BY isnull(b.p41NameShort,b.p41Name)
+
+
+
+RETURN(@s)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------p41_get_one_role_inline-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p41_get_one_role_inline') and type = 'FN')
@@ -2793,6 +2911,65 @@ BEGIN
 RETURN(@ret)
    
 END
+
+GO
+
+----------FN---------------p41_get_tasks_inline_html-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p41_get_tasks_inline_html') and type = 'FN')
+ drop function p41_get_tasks_inline_html
+GO
+
+
+
+
+
+CREATE    FUNCTION [dbo].[p41_get_tasks_inline_html](@p41id int)
+RETURNS varchar(5000)
+AS
+BEGIN
+  ---vrací èárkou html seznam otevøených úkolù v projektu @p41id
+
+ DECLARE @s nvarchar(2000) 
+
+
+select top 20 @s=COALESCE(@s + ' ', '')+'<div><span class='+char(34)+'badge_square'+char(34)+' style='+char(34)+case when b02.b02Color is null then '' else +'background-color:'+b02.b02Color+';' end+char(34)+'></span><a href='+char(34)+'javascript: send_url_to_pane('+char(39)+'p56_framework_detail.aspx?pid='+convert(varchar(10),a.p56ID)+char(39)+')'+char(34)+'>'+case when len(a.p56Name)>20 then left(a.p56Name,20)+'...' else a.p56Name end+'</a></div>'
+FROM p56Task a INNER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID
+where a.p41ID=@p41id AND getdate() between a.p56ValidFrom AND a.p56ValidUntil
+ORDER BY a.p56Name
+
+
+
+RETURN(@s)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 GO
 
@@ -7220,9 +7397,6 @@ AS
 --odstranìní záznamu role z tabulky o40SmtpAccount
 
 
-if exists(select j02ID FROM j02Person WHERE o40ID=@pid)
- set @err_ret='Minimálnì jeden osobní profil je svázán s tímto SMTP úètem.'
-
 if exists(select b01ID FROM b01WorkflowTemplate WHERE o40ID=@pid)
  set @err_ret='Minimálnì jedna workflow šablona má vazbu s tímto SMTP úètem.'
 
@@ -7232,6 +7406,11 @@ if isnull(@err_ret,'')<>''
 BEGIN TRANSACTION
 
 BEGIN TRY
+	if exists(select j02ID FROM j02Person WHERE o40ID=@pid)
+	 UPDATE j02Person SET o40ID=null WHERE o40ID=@pid
+
+	UPDATE x40MailQueue SET o40ID=NULL WHERE o40ID=@pid
+
 	DELETE FROM o40SmtpAccount WHERE o40ID=@pid
 
 	
@@ -11704,9 +11883,9 @@ CREATE    PROCEDURE [dbo].[p41_aftersave]
 AS
 
 ---automaticky se spouští po uložení záznamu projektu
-declare @p41code varchar(50),@x38id int,@x38id_draft int,@p51id_billing int,@name nvarchar(200),@p28id_client int,@isdraft bit
+declare @p41code varchar(50),@x38id int,@x38id_draft int,@p51id_billing int,@name nvarchar(200),@p28id_client int,@isdraft bit,@p41RecurMotherID int
 
-select @p41code=p41Code,@x38id=p42.x38ID,@x38id_draft=p42.x38ID_Draft,@p51id_billing=a.p51ID_Billing,@name=a.p41Name,@p28id_client=a.p28ID_Client,@isdraft=a.p41IsDraft
+select @p41code=p41Code,@x38id=p42.x38ID,@x38id_draft=p42.x38ID_Draft,@p51id_billing=a.p51ID_Billing,@name=a.p41Name,@p28id_client=a.p28ID_Client,@isdraft=a.p41IsDraft,@p41RecurMotherID=a.p41RecurMotherID
 FROM
 p41Project a INNER JOIN p42ProjectType p42 ON a.p42ID=p42.p42ID
 WHERE a.p41ID=@p41id
@@ -11737,6 +11916,11 @@ if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND (p41ParentID IS NO
  exec [p41_recalc_tree]	---aktualizovat stromovou strukturu projektù
 else
  update p41Project set p41TreePath=isnull(p41NameShort,p41name) WHERE p41ID=@p41id
+
+if @p41RecurMotherID is not null AND CHARINDEX(']',@name)>0
+ update p41Project set p41Name=dbo.get_parsed_text_with_period(p41Name,p41RecurBaseDate,0) WHERE p41ID=@p41id
+ 
+
 
 exec [x90_appendlog] 141,@p41id,@j03id_sys
 
@@ -11961,8 +12145,6 @@ BEGIN TRY
 	if exists(select a.x69ID FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE a.x69RecordPID=@pid AND b.x29ID=141)
 	 DELETE a FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE a.x69RecordPID=@pid AND b.x29ID=141
 
-	if exists(select p64ID FROM p64Binder WHERE p41ID=@pid)
-	 DELETE FROM p64Binder WHERE p41ID=@pid
 	
 	DELETE FROM x90EntityLog WHERE x29ID=141 AND x90RecordPID=@pid
 
@@ -12131,7 +12313,7 @@ declare @p56_actual_count int,@p56_closed_count int,@o22_actual_count int,@p91_c
 declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
 declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
 declare @o23_count int,@p45_count int
-declare @last_invoice varchar(100),@last_wip_worksheet varchar(100),@p64_exist bit
+declare @last_invoice varchar(100),@last_wip_worksheet varchar(100),@o52_exist bit
 declare @p42IsModule_p31 bit,@p42IsModule_p56 bit,@p42IsModule_o23 bit,@p42IsModule_p45 bit,@p28id_client int
 
 select @p42IsModule_p31=a.p42IsModule_p31,@p42IsModule_p56=a.p42IsModule_p56,@p42IsModule_o23=a.p42IsModule_o23,@p42IsModule_p45=p42IsModule_p45,@p28id_client=b.p28ID_Client
@@ -12210,10 +12392,10 @@ end
 if exists(select b07ID from b07Comment WHERE x29ID=141 AND b07RecordPID=@pid)
  select @b07_count=count(b07ID) FROM b07Comment WHERE x29ID=141 AND b07RecordPID=@pid
 
-if exists(select p64ID FROM p64Binder WHERE p41ID=@pid)
- set @p64_exist=1
+if exists(select o52ID FROM o52TagBinding WHERE x29ID=141 AND o52RecordPID=@pid)
+ set @o52_exist=1
 else
- set @p64_exist=0
+ set @o52_exist=0
 
 if @p42IsModule_o23=1
 begin
@@ -12256,7 +12438,7 @@ select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@p45_count,0) as p45_Count
 ,@last_invoice as Last_Invoice
 ,@last_wip_worksheet as Last_Wip_Worksheet
-,@p64_exist as p64_Exist
+,@o52_exist as o52_Exist
 
 GO
 
@@ -12939,9 +13121,9 @@ CREATE    PROCEDURE [dbo].[p56_aftersave]
 AS
 
 ---automaticky se spouští po uložení záznamu projektu
-declare @p56code varchar(50),@x38id int
+declare @p56code varchar(50),@x38id int,@name nvarchar(200),@p56RecurMotherID int
 
-select @p56code=p56Code,@x38id=p57.x38ID
+select @p56code=p56Code,@x38id=p57.x38ID,@name=a.p56Name,@p56RecurMotherID=a.p56RecurMotherID
 FROM
 p56Task a INNER JOIN p57TaskType p57 ON a.p57ID=p57.p57ID
 WHERE a.p56ID=@p56id
@@ -12952,6 +13134,10 @@ if left(@p56code,4)='TEMP' OR @p56code is null
   if @p56code<>''
    UPDATE p56Task SET p56Code=@p56code WHERE p56ID=@p56id 
  end 
+
+if @p56RecurMotherID is not null AND CHARINDEX(']',@name)>0
+ update p56Task set p56Name=dbo.get_parsed_text_with_period(p56Name,p56RecurBaseDate,0) WHERE p56ID=@p56id
+ 
 
 
 declare @j02id int
@@ -13402,10 +13588,10 @@ DELETE FROM p63Overhead WHERE p63ID=@pid
 
 GO
 
-----------P---------------p64_delete-------------------------
+----------P---------------p65_delete-------------------------
 
-if exists (select 1 from sysobjects where  id = object_id('p64_delete') and type = 'P')
- drop procedure p64_delete
+if exists (select 1 from sysobjects where  id = object_id('p65_delete') and type = 'P')
+ drop procedure p65_delete
 GO
 
 
@@ -13414,21 +13600,27 @@ GO
 
 
 
-CREATE   procedure [dbo].[p64_delete]
+
+CREATE   procedure [dbo].[p65_delete]
 @j03id_sys int				--pøihlášený uživatel
-,@pid int					--p64ID
+,@pid int					--p65ID
 ,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
 
 AS
---odstranìní záznamu  z tabulky p64Binder
+--odstranìní záznamu  z tabulky p65Recurrence
 
+if exists(select p41ID FROM p41Project WHERE p65ID=@pid)
+ set @err_ret='Existuje minimálnì jeden projekt svázaný s tímto pravidlem opakování.'
 
+if exists(select p56ID FROM p56Task WHERE p65ID=@pid)
+ set @err_ret='Existuje minimálnì jeden úkol svázaný s tímto pravidlem opakování.'
 
 
 if isnull(@err_ret,'')<>''
  return 
 
-DELETE FROM p64Binder WHERE p64ID=@pid
+DELETE FROM p65Recurrence WHERE p65ID=@pid
+
 
 
 

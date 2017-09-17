@@ -18,6 +18,7 @@ Public Enum myQueryP56_QuickQuery
     Is_PlanExpenses = 10
     Is_OverPlanHours = 11
     Is_OverPlanEpenses = 12
+    Is_RecurMother = 13
 End Enum
 Public Class myQueryP56
     Inherits myQuery

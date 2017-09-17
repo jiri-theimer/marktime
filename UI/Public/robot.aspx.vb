@@ -44,17 +44,22 @@
             Handle_Recurrence_p41()
 
 
-            If _curNow > Today.AddHours(15) And _curNow < Today.AddHours(17) And _curNow.DayOfWeek <> DayOfWeek.Sunday And _curNow.DayOfWeek <> DayOfWeek.Saturday Then
-                If IsTime4Run(BO.j91RobotTaskFlag.CnbKurzy, 40) Then
+            If _curNow > Today.AddHours(15) And _curNow < Today.AddHours(18) And _curNow.DayOfWeek <> DayOfWeek.Sunday And _curNow.DayOfWeek <> DayOfWeek.Saturday Then
+                If IsTime4Run(BO.j91RobotTaskFlag.CnbKurzy, 60) Then
                     Handle_CnbKurzy()
                 End If
             End If
 
-            If (Now > Today.AddMinutes(3 * 60) And Now < Today.AddMinutes(3 * 60 + 20)) Or Request.Item("ping") = "1" Then
-                'mezi třetí a čtvrtou hodinou ráno vyčistit temp tabulky
-                _Factory.p85TempBoxBL.Recovery_ClearCompleteTemp()
+            If (Now > Today.AddMinutes(2 * 60) And Now < Today.AddMinutes(3 * 60 + 20)) Or Request.Item("ping") = "1" Then
+                'mezi druhou a čtvrtou hodinou ráno vyčistit temp tabulky
+                If IsTime4Run(BO.j91RobotTaskFlag.ClearTemp, 60 * 8) Then
+                    _Factory.p85TempBoxBL.Recovery_ClearCompleteTemp()
+                    WL(BO.j91RobotTaskFlag.ClearTemp, "", "Clear TEMP")
+                End If
+                If IsTime4Run(BO.j91RobotTaskFlag.CentralPing, 60 * 8) Then
+                    Handle_CentralPing()
+                End If
 
-                Handle_CentralPing()
             End If
             If BO.ASS.GetConfigVal("autobackup", "1") = "1" And Now > Today.AddDays(1).AddMinutes(-60) Then
                 'zbývá 60 minut do půlnoci na zálohování
@@ -229,7 +234,7 @@
 
     Public Sub Handle_ImapRobot()
         Dim lis As IEnumerable(Of BO.o41InboxAccount) = _Factory.o41InboxAccountBL.GetList(New BO.myQuery)
-        WL(BO.j91RobotTaskFlag.ImapImport, "", String.Format("Počet imap účtů: {0}", lis.Count))
+        WL(BO.j91RobotTaskFlag.ImapImport, "", String.Format("IMAP robot, Počet imap účtů: {0}", lis.Count))
 
         For Each c In lis
             _Factory.o42ImapRuleBL.HandleWaitingImapMessages(c)
@@ -241,7 +246,7 @@
         Dim datImport As Date = DateSerial(Year(Now), Month(Now), Day(Now))
 
         Dim lisM62 As IEnumerable(Of BO.m62ExchangeRate) = _Factory.m62ExchangeRateBL.GetList().Where(Function(p) p.m62RateType = BO.m62RateTypeENUM.InvoiceRate And p.m62Date = datImport And p.UserInsert = "robot")
-        WL(BO.j91RobotTaskFlag.CnbKurzy, "", String.Format("Počet měn: {0}."))
+        WL(BO.j91RobotTaskFlag.CnbKurzy, "", String.Format("CNB import, Počet měn: {0}."))
         If lisM62.Count = 0 Then
             _Factory.m62ExchangeRateBL.ImportRateList_CNB(datImport)
         End If
@@ -262,7 +267,8 @@
         Dim rq As System.Net.HttpWebRequest = System.Net.HttpWebRequest.Create(s)
         Dim rs As System.Net.HttpWebResponse = rq.GetResponse()
 
-        WL(BO.j91RobotTaskFlag.CentralPing, "", "")
+        WL(BO.j91RobotTaskFlag.CentralPing, "", String.Format("Central PING, name={0}", strName))
+
     End Sub
 
     Public Sub Handle_ScheduledReports()

@@ -559,6 +559,8 @@
                 Return "ISNULL(a.p56Plan_Hours,0)>0 AND a.P56ID IN (SELECT p56ID FROM p31Worksheet WHERE p56ID=a.p56ID GROUP BY p56ID HAVING sum(p31Hours_Orig)>a.p56Plan_Hours)"
             Case BO.myQueryP56_QuickQuery.Is_OverPlanEpenses
                 Return "ISNULL(a.p56Plan_Expenses,0)>0 AND a.P56ID IN (SELECT p56ID FROM p31Worksheet xa INNER JOIN p32Activity xb ON xa.p32ID=xb.p32ID INNER JOIN p34ActivityGroup xc ON xb.p34ID=xc.p34ID WHERE xa.p56ID=a.p56ID AND xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=1 GROUP BY xa.p56ID HAVING sum(xa.p31Amount_WithoutVat_Orig)>a.p56Plan_Expenses)"
+            Case BO.myQueryP56_QuickQuery.Is_RecurMother
+                Return "a.p65ID IS NOT NULL"
             Case Else
                 Return ""
         End Select
@@ -719,8 +721,9 @@
                 Return "a.p41ID IN (SELECT p41ID FROM j13FavourteProject WHERE j03ID=" & cUser.PID.ToString & ")"
             Case BO.myQueryP41_QuickQuery.WithBillingMemo
                 Return "a.p41BillingMemo IS NOT NULL"
-            Case BO.myQueryP41_QuickQuery.WithBinder
-                Return "a.p41ID IN (SELECT p41ID FROM p64Binder)"
+            
+            Case BO.myQueryP41_QuickQuery.Is_RecurMother
+                Return "a.p65ID IS NOT NULL"
             Case Else
                 Return ""
         End Select

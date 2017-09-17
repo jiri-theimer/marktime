@@ -306,21 +306,7 @@
         'RefreshP64(cRecSum)
 
     End Sub
-    'Private Sub RefreshP64(cRecSum As BO.p41ProjectSum)
-    '    If cRecSum.p64_Exist Then
-    '        boxP64.Visible = True
-    '        Dim mq As New BO.myQuery
-    '        mq.Closed = BO.BooleanQueryMode.NoQuery
-    '        Dim lis As IEnumerable(Of BO.p64Binder) = Master.Factory.p64BinderBL.GetList(Master.DataPID, mq)
-    '        rpP64.DataSource = lis
-    '        rpP64.DataBind()
-    '        With Me.boxP64Title
-    '            .Text = BO.BAS.OM2(.Text, lis.Count.ToString)
-    '        End With
-    '    Else
-    '        boxP64.Visible = False
-    '    End If
-    'End Sub
+  
 
     Private Sub RefreshP40(cRecSum As BO.p41ProjectSum)
         If cRecSum.p40_Exist Then
@@ -481,14 +467,7 @@
     End Sub
 
     
-    'Private Sub rpP64_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP64.ItemDataBound
-    '    Dim cRec As BO.p64Binder = CType(e.Item.DataItem, BO.p64Binder)
-    '    With CType(e.Item.FindControl("p64Name"), HyperLink)
-    '        .Text = cRec.p64Ordinary.ToString & " - " & cRec.p64Name & " (" & cRec.p64ArabicCode & ")"
-    '        .NavigateUrl = "javascript:p64_record(" & cRec.PID.ToString & ")"
-    '        If cRec.IsClosed Then .Font.Strikeout = True
-    '    End With
-    'End Sub
+  
 
    
 End Class

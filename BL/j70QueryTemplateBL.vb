@@ -96,7 +96,7 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(7, "Obsahují úkoly (otevřené nebo uzavřené)"))
                 lis.Add(New BO.OtherQueryItem(6, "Obsahují otevřené úkoly"))
                 lis.Add(New BO.OtherQueryItem(9, "Mají vazbu na minimálně jeden dokument"))
-                lis.Add(New BO.OtherQueryItem(10, "Obsahují opakované odměny/paušály"))
+                lis.Add(New BO.OtherQueryItem(10, "Obsahují opakované paušální odměny"))
                 lis.Add(New BO.OtherQueryItem(11, "Projekty v režimu DRAFT"))
                 lis.Add(New BO.OtherQueryItem(12, "Projekty mimo režim DRAFT"))
                 lis.Add(New BO.OtherQueryItem(13, "Není přiřazen ceník k projektu ani ke klientovi projektu"))
@@ -107,6 +107,7 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(19, "Má pod-projekty"))
                 lis.Add(New BO.OtherQueryItem(20, "Moje oblíbené projekty"))
                 lis.Add(New BO.OtherQueryItem(21, "Vyplněna fakturační poznámka projektu"))
+                lis.Add(New BO.OtherQueryItem(22, "Je matkou opakovaných projektů"))
 
             Case BO.x29IdEnum.p28Contact
                 lis.Add(New BO.OtherQueryItem(3, "Projekty klienta obsahují rozpracované úkony, které čekají na schvalování"))
@@ -169,6 +170,7 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(10, "Vyplněn plán/limit výdajů"))
                 lis.Add(New BO.OtherQueryItem(11, "Došlo k překročení plánu/limitu hodin"))
                 lis.Add(New BO.OtherQueryItem(12, "Došlo k překročení plánu/limitu výdajů"))
+                lis.Add(New BO.OtherQueryItem(13, "Je matkou opakovaných úkolů"))
             Case BO.x29IdEnum.o23Doc
                 lis.Add(New BO.OtherQueryItem(3, "Dokument byl svázán s projektem"))
                 lis.Add(New BO.OtherQueryItem(4, "Dokument čeká na vazbu s projektem"))

@@ -70,7 +70,6 @@
             Case "p49" : Return x29IdEnum.p49FinancialPlan
             Case "p48" : Return x29IdEnum.p48OperativePlan
             Case "p47" : Return x29IdEnum.p47CapacityPlan
-            Case "p64" : Return x29IdEnum.p64Binder
             Case "x18" : Return x29IdEnum.x18EntityCategory
             Case "p32" : Return x29IdEnum.p32Activity
             Case "p34" : Return x29IdEnum.p34ActivityGroup
