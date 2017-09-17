@@ -31,10 +31,14 @@
                     .AddItem("Osobní tiskové sestavy", "report", "javascript:report()", "root", "Images/report.png")
                     .AddSeparator("root")
                 End If
+                .AddItem("Úkoly", "tasks", "p56_framework.aspx", "root", "Images/task.png")
+                .AddItem("Můj kalendář", "scheduler", "entity_scheduler.aspx", "root", "Images/calendar.png")
+                .AddSeparator("root")
                 .AddItem("Odeslat e-mail", "sendmail", "javascript:sendmail()", "root", "Images/email.png")
                 .AddItem("Nastavit poštovní účet pro odeslanou poštu (SMTP)", "smtp", "javascript:smtp_account()", "root", "Images/outlook.png")
                 '.AddItem("Nastavit si poštovní účet pro přijatou poštu (IMAP)", "imap", "javascript:imap_account()", "root", "Images/imap.png")
                 .AddSeparator("root")
+               
                 .AddItem("Vyčistit paměť (cache) mého profilu", "sendmail", "javascript:sweep()", "root", "Images/sweep.png")
                 .AddSeparator("root")
                 .AddItem("Změnit přístupové heslo", "pwd", "changepassword.aspx", "root", "Images/password.png")

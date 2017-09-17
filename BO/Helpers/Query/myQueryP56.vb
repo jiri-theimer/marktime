@@ -46,4 +46,8 @@ Public Class myQueryP56
     Public Property x18Value As String  'filtrování podle kategorií
     Public Property o51IDs As List(Of Integer)  'filtrování podle štítků
     Public Property TerminNeniVyplnen As BooleanQueryMode = BooleanQueryMode.NoQuery
+
+    Public Property IsRecurrenceMother As BO.BooleanQueryMode = BooleanQueryMode.NoQuery
+    Public Property IsRecurrenceChild As BO.BooleanQueryMode = BooleanQueryMode.NoQuery
+    Public Property p56RecurMotherID As Integer
 End Class

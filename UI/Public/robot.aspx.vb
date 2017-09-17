@@ -41,12 +41,24 @@
 
             Handle_SqlTasks()
 
-            Handle_Recurrence_p41()
+            If IsTime4Run(BO.j91RobotTaskFlag.RecurrenceP41, 60) Or Request.Item("recur") = "1" Then   'opakované projekty a úkoly stačí jednou za hodinu
+                Handle_Recurrence_p41()
+                Handle_Recurrence_p56()
+            End If
+
+
 
 
             If _curNow > Today.AddHours(15) And _curNow < Today.AddHours(18) And _curNow.DayOfWeek <> DayOfWeek.Sunday And _curNow.DayOfWeek <> DayOfWeek.Saturday Then
                 If IsTime4Run(BO.j91RobotTaskFlag.CnbKurzy, 60) Then
                     Handle_CnbKurzy()
+                End If
+            End If
+
+            If BO.ASS.GetConfigVal("autobackup", "1") = "1" And Now > Today.AddDays(1).AddMinutes(-60) Then
+                'zbývá 60 minut do půlnoci na zálohování
+                If IsTime4Run(BO.j91RobotTaskFlag.DbBackup, 60 * 5) Then  'stačí jednou za 5 hodin
+                    Handle_DbBackup()
                 End If
             End If
 
@@ -61,14 +73,6 @@
                 End If
 
             End If
-            If BO.ASS.GetConfigVal("autobackup", "1") = "1" And Now > Today.AddDays(1).AddMinutes(-60) Then
-                'zbývá 60 minut do půlnoci na zálohování
-                If IsTime4Run(BO.j91RobotTaskFlag.DbBackup, 60 * 5) Then  'stačí jednou za 5 hodin
-                    Handle_DbBackup()
-                End If
-            End If
-
-
 
             log4net.LogManager.GetLogger("robotlog").Info("End")
 
@@ -158,6 +162,67 @@
                     WL(BO.j91RobotTaskFlag.RecurrenceP41, "", "Mother: " & c.FullName & ", child: " & _Factory.p41ProjectBL.LastSavedPID.ToString & "/" & cNew.p41Name)
                 Else
                     WL(BO.j91RobotTaskFlag.RecurrenceP41, "Mother: " & c.FullName & ", child: " & cNew.p41Name & ": " & _Factory.p41ProjectBL.ErrorMessage, "")
+                End If
+
+            End If
+        Next
+    End Sub
+    Private Sub Handle_Recurrence_p56()
+        Dim mq As New BO.myQueryP56
+        mq.IsRecurrenceMother = BO.BooleanQueryMode.TrueQuery
+        Dim lisMothers As IEnumerable(Of BO.p56Task) = _Factory.p56TaskBL.GetList(mq)
+        WL(BO.j91RobotTaskFlag.RecurrenceP56, "", String.Format("Počet úkolů (matek): {0}", lisMothers.Count))
+        If lisMothers.Count = 0 Then Return
+        mq = New BO.myQueryP56
+        mq.IsRecurrenceChild = BO.BooleanQueryMode.TrueQuery
+        Dim lisChilds As IEnumerable(Of BO.p56Task) = _Factory.p56TaskBL.GetList(mq)
+        Dim lisP65 As IEnumerable(Of BO.p65Recurrence) = _Factory.p65RecurrenceBL.GetList(New BO.myQuery)
+
+        For Each c In lisMothers
+            Dim cP65 As BO.p65Recurrence = lisP65.First(Function(p) p.PID = c.p65ID)
+            Dim datBase As Date = DateSerial(Year(Now), Month(Now), 1), bolNeed2Gen As Boolean = False
+            If cP65.p65RecurFlag = BO.RecurrenceType.Year Then
+                datBase = DateSerial(Year(Now), 1, 1)
+            End If
+            If cP65.p65RecurFlag = BO.RecurrenceType.Quarter Then
+                Select Case Month(Now)
+                    Case 1, 2, 3 : datBase = DateSerial(Year(Now), 1, 1)
+                    Case 4, 5, 6 : datBase = DateSerial(Year(Now), 4, 1)
+                    Case 7, 8, 9 : datBase = DateSerial(Year(Now), 7, 1)
+                    Case Else : datBase = DateSerial(Year(Now), 12, 1)
+                End Select
+
+            End If
+            Dim datGen As Date = datBase.AddMonths(cP65.p65RecurGenToBase_M).AddDays(cP65.p65RecurGenToBase_D)
+            If lisChilds.Where(Function(p) p.p56RecurMotherID = c.PID And p.p56RecurBaseDate = datBase).Count = 0 And datGen <= _curNow Then
+                'potomek ještě neexistuje a nastal čas ho vygenerovat
+                Dim datPlanUntil As Date = Nothing
+                If cP65.p65IsPlanUntil Then datPlanUntil = datBase.AddMonths(cP65.p65RecurPlanUntilToBase_M).AddDays(cP65.p65RecurPlanUntilToBase_D)
+
+                Dim cNew As New BO.p56Task, intMotherPID As Integer = c.PID
+                cNew = c
+                With cNew
+                    .p56RecurMotherID = intMotherPID
+                    .p56RecurBaseDate = datBase
+                    .p65ID = 0 : .p56Code = "" : .ValidFrom = _curNow
+                    If c.p56RecurNameMask <> "" Then .p56Name = c.p56RecurNameMask
+                    If cP65.p65IsPlanUntil Or cP65.p65IsPlanFrom Then
+                        .p56PlanUntil = datBase.AddMonths(cP65.p65RecurPlanUntilToBase_M).AddDays(cP65.p65RecurPlanUntilToBase_D)
+                    Else
+                        .p56PlanUntil = Nothing
+                    End If
+                    If cP65.p65IsPlanFrom Or cP65.p65IsPlanUntil Then
+                        .p56PlanFrom = datBase.AddMonths(cP65.p65RecurPlanFromToBase_M).AddDays(cP65.p65RecurPlanFromToBase_D)
+                    Else
+                        .p56PlanFrom = Nothing
+                    End If
+                    .SetPID(0)
+                End With
+                Dim lisFF As List(Of BO.FreeField) = _Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p56Task, intMotherPID, c.p57ID)
+                If _Factory.p56TaskBL.Save(cNew, _Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p56Task, intMotherPID).ToList, lisFF, "") Then
+                    WL(BO.j91RobotTaskFlag.RecurrenceP56, "", "Mother: " & c.FullName & ", child: " & _Factory.p56TaskBL.LastSavedPID.ToString & "/" & cNew.p41Name)
+                Else
+                    WL(BO.j91RobotTaskFlag.RecurrenceP56, "Mother: " & c.FullName & ", child: " & cNew.p56Name & ": " & _Factory.p56TaskBL.ErrorMessage, "")
                 End If
 
             End If
@@ -501,7 +566,7 @@
     Private Function IsTime4Run(TaskFlag As BO.j91RobotTaskFlag, dblMinIntervalMinutes As Double) As Boolean
         Dim c As BO.j91RobotLog = _Factory.ftBL.GetLastRobotRun(TaskFlag)
         If c Is Nothing Then Return True
-        If c.j91Date.AddMinutes(dblMinIntervalMinutes) < _curNow Then
+        If c.j91Date.AddMinutes(dblMinIntervalMinutes) > _curNow Then
             Return False
         End If
         Return True

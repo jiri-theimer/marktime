@@ -20,10 +20,10 @@ Public Class Global_asax
 
     End Sub
 
-    Sub Session_Start(ByVal sender As Object, ByVal e As EventArgs)
-        ' Fires when the session is started
-       
-    End Sub
+    ''Sub Session_Start(ByVal sender As Object, ByVal e As EventArgs)
+    ''    ' Fires when the session is started
+
+    ''End Sub
 
     Sub Application_BeginRequest(ByVal sender As Object, ByVal e As EventArgs)
         Dim cook As HttpCookie = HttpContext.Current.Request.Cookies("MT50-CultureInfo")
@@ -54,27 +54,27 @@ Public Class Global_asax
 
     
 
-    Sub Application_Error(ByVal sender As Object, ByVal e As EventArgs)
-        ' Fires when an error occurs
-        ''Dim exc As Exception = Server.GetLastError
-        ''If TypeOf exc Is HttpException Then
-        ''    If exc.Message.Contains("NoCatch") Or exc.Message.Contains("maxUrlLength") Then
-        ''        Return
-        ''    End If
+    ''Sub Application_Error(ByVal sender As Object, ByVal e As EventArgs)
+    ''    ' Fires when an error occurs
+    ''    ''Dim exc As Exception = Server.GetLastError
+    ''    ''If TypeOf exc Is HttpException Then
+    ''    ''    If exc.Message.Contains("NoCatch") Or exc.Message.Contains("maxUrlLength") Then
+    ''    ''        Return
+    ''    ''    End If
 
-        ''    'Redirect HTTP errors to HttpError page
-        ''    Server.Transfer("ErrorPage.aspx")
-        ''End If
-        
-    End Sub
+    ''    ''    'Redirect HTTP errors to HttpError page
+    ''    ''    Server.Transfer("ErrorPage.aspx")
+    ''    ''End If
 
-    Sub Session_End(ByVal sender As Object, ByVal e As EventArgs)
-        ' Fires when the session ends
-    End Sub
+    ''End Sub
 
-    Sub Application_End(ByVal sender As Object, ByVal e As EventArgs)
-        ' Fires when the application ends
-    End Sub
+    ''Sub Session_End(ByVal sender As Object, ByVal e As EventArgs)
+    ''    ' Fires when the session ends
+    ''End Sub
+
+    ''Sub Application_End(ByVal sender As Object, ByVal e As EventArgs)
+    ''    ' Fires when the application ends
+    ''End Sub
 
     Private Function RegisterCacheEntry(strHostURL As String, intCacheTimeout As Integer) As Boolean
 

@@ -267,6 +267,16 @@
             If .x18Value <> "" Then
                 s.Append(bas.CompleteX18QuerySql("p56", .x18Value))
             End If
+            If .IsRecurrenceMother = BO.BooleanQueryMode.TrueQuery Then
+                s.Append(" AND a.p65ID IS NOT NULL")
+            End If
+            If .IsRecurrenceChild = BO.BooleanQueryMode.TrueQuery Then
+                s.Append(" AND a.p56RecurMotherID IS NOT NULL AND a.p56RecurBaseDate IS NOT NULL")
+            End If
+            If .p56RecurMotherID <> 0 Then
+                s.Append(" AND a.p56RecurMotherID=@motherid")
+                pars.Add("motherid", .p56RecurMotherID, DbType.UInt32)
+            End If
         End With
         Return bas.TrimWHERE(s.ToString)
     End Function
