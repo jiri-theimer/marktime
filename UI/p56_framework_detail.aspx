@@ -259,6 +259,14 @@
                 <span>Rozhodné datum:</span>
                 <asp:Label ID="p56RecurBaseDate" runat="server" CssClass="valbold"></asp:Label>
             </div>
+            <div class="div6">
+                <span>Naposledy vygenerovaný potomek:</span>
+                <asp:HyperLink ID="LastChild" runat="server" NavigateUrl="#" CssClass="value_link"></asp:HyperLink>
+            </div>
+            <div class="div6">
+                <span>Generování příštího potomka:</span>
+                <asp:Label ID="lblNextGen" runat="server" CssClass="valbold"></asp:Label>
+            </div>
         </div>
     </asp:Panel>
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>

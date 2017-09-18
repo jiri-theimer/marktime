@@ -314,8 +314,16 @@
                 <asp:Label ID="p41RecurNameMask" runat="server" CssClass="valbold"></asp:Label>
             </div>
             <div class="div6">
-                <span>Rozhodné datum:</span>
+                <span>Rozhodné datum:</span>                
                 <asp:Label ID="p41RecurBaseDate" runat="server" CssClass="valbold"></asp:Label>
+            </div>
+            <div class="div6">
+                <span>Naposledy vygenerovaný potomek:</span>
+                <asp:HyperLink ID="LastChild" runat="server" NavigateUrl="#" CssClass="value_link"></asp:HyperLink>
+            </div>
+            <div class="div6">
+                <span>Generování příštího potomka:</span>
+                <asp:Label ID="lblNextGen" runat="server" CssClass="valbold"></asp:Label>
             </div>
         </div>
     </asp:Panel>

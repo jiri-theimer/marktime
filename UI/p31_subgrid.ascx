@@ -37,7 +37,7 @@
                     <Items>
                         <telerik:RadMenuItem Text="Kopírovat" Value="clone" NavigateUrl="javascript:p31_clone()"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Text="Schvalovat/pře-schvalovat označené" Value="cmdApprove" NavigateUrl="javascript:approving()"></telerik:RadMenuItem>
-
+                        <telerik:RadMenuItem Value="cmdSummary" Text="Statistiky" NavigateUrl="javascript:drilldown_p31ids();"></telerik:RadMenuItem>
 
                     </Items>
                 </telerik:RadMenuItem>
@@ -253,17 +253,30 @@
         return (false);
     }
 
-    function drilldown() {
+    function drilldown(p31ids) {
         var j70id = "<%=designer1.CurrentJ70ID%>";
 
         var w = screen.availWidth - 100;
         var masterprefix = "<%=BO.BAS.GetDataPrefix(Me.EntityX29ID)%>";
         var masterpid = document.getElementById("<%=me.hidMasterDataPID.ClientID%>").value;
         var queryflag = document.getElementById("<%=hidMasterTabAutoQueryFlag.ClientID%>").value;
+        var url = "p31_sumgrid.aspx?j70id=" + j70id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&p31tabautoquery=" + queryflag;
+        if (p31ids != null)
+            url = url + "&p31ids=" + p31ids;
 
-        window.open("p31_sumgrid.aspx?j70id=" + j70id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&p31tabautoquery=" + queryflag, "_top");
+        window.open(url, "_top");
        
     }
 
+    function drilldown_p31ids() {
+        var pids = GetAllSelectedPIDs();
+        if (pids == "") {
+            $.alert("Není vybrán ani jeden záznam.");
+            return;
+        }
+        drilldown(pids);
+        
 
+
+    }
 </script>

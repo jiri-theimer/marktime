@@ -248,6 +248,15 @@ Partial Public Class p31_sumgrid
     Protected WithEvents hidMasterPID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidP31IDs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidP31IDs As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''hidFrom control.
     '''</summary>
     '''<remarks>

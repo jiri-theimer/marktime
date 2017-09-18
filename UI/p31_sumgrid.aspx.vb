@@ -24,6 +24,7 @@ Public Class p31_sumgrid
 
             hidMasterPID.Value = Request.Item("masterpid")
             hidMasterPrefix.Value = Request.Item("masterprefix")
+            hidP31IDs.Value = Request.Item("p31ids")
 
             If hidMasterPrefix.Value <> "" Then
                 panQueryByEntity.Visible = True
@@ -132,6 +133,9 @@ Public Class p31_sumgrid
                 Case Else
 
             End Select
+            If hidP31IDs.Value <> "" Then
+                .PIDs = BO.BAS.ConvertPIDs2List(hidP31IDs.Value) 'na vstupu jsou vybrané p31ID
+            End If
             .j70ID = query1.CurrentJ70ID
 
             '.ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
@@ -180,7 +184,8 @@ Public Class p31_sumgrid
                 If hidDD2.Value <> "" Then
                     strSGA += "->" & dataItem.Item(hidDD2.Value).Text
                 End If
-                .Text = "<a href='javascript:go2grid(" + Chr(34) + dataItem.GetDataKeyValue("pid").ToString + Chr(34) + "," + Chr(34) + strSGA + Chr(34) + ")'><img src='Images/worksheet.png' title='Přejít na přehled worksheet záznamů'></a>"
+                .Text = "<a href='javascript:go2grid(" + Chr(34) + dataItem.GetDataKeyValue("pid").ToString + Chr(34) + "," + Chr(34) + strSGA + Chr(34) + ")'><img src='Images/zoom.png' title='Worksheet přehled'></a>"
+                '.Text = "<button type='button' class='button-link-grid' onclick='go2grid(" + Chr(34) + dataItem.GetDataKeyValue("pid").ToString + Chr(34) + "," + Chr(34) + strSGA + Chr(34) + ")'><img src='Images/zoom.png' title='Přejít na přehled worksheet záznamů'></button>"
             End With
         End If
     End Sub
@@ -540,7 +545,10 @@ Public Class p31_sumgrid
         Dim s As String = "p31_sumgrid.aspx"
         If Me.hidMasterPrefix.Value <> "" Then
             s += "?masterprefix=" & hidMasterPrefix.Value & "&masterpid=" & Me.hidMasterPID.Value
+        Else
+            s += "?1=1"
         End If
+        If hidP31IDs.Value <> "" Then s += "&p31ids=" & Me.hidP31IDs.Value
         Return s
     End Function
 

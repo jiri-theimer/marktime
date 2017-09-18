@@ -248,6 +248,15 @@ Partial Public Class p31_grid
     Protected WithEvents linkDrillDown As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''cmdDrillDownClear control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdDrillDownClear As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
     '''CurrentQuery control.
     '''</summary>
     '''<remarks>
@@ -318,6 +327,15 @@ Partial Public Class p31_grid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidDrillDownField As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidDrillDownP31IDs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidDrillDownP31IDs As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidMasterPrefix control.

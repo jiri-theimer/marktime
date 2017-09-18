@@ -132,7 +132,7 @@
             </telerik:RadMenu>
 
         </div>
-
+        <div style="clear: both;"></div>
 
         <asp:Panel ID="panQueryByEntity" runat="server" CssClass="div6" Visible="false">
             <table cellpadding="0">
@@ -150,7 +150,7 @@
             <asp:Label ID="lblQuery" runat="server" CssClass="valboldred"></asp:Label>
         </asp:Panel>
 
-        <div style="clear: both;"></div>
+        
 
         <div style="float: left; padding-left: 6px;">
             
@@ -170,6 +170,7 @@
     
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
+    <asp:HiddenField ID="hidP31IDs" runat="server" />
     <asp:HiddenField ID="hidFrom" runat="server" />
     <asp:HiddenField ID="hidSGF" runat="server" />
     <asp:HiddenField ID="hidDD1" runat="server" />
@@ -226,8 +227,16 @@
             var j70id = "<%=query1.CurrentJ70ID%>";
             var masterprefix = document.getElementById("<%=hidMasterPrefix.ClientID%>").value;
             var masterpid = document.getElementById("<%=hidMasterPID.ClientID%>").value;
+            var p31ids = document.getElementById("<%=hidP31IDs.ClientID%>").value;
+            var url = "p31_grid.aspx?sgf=" + sgf + "&sgv=" + pid + "&sga=" + encodeURI(sga);
+            if (masterprefix != "") {
+                url = url + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid
+            }
 
-            location.replace("p31_grid.aspx?sgf=" + sgf + "&sgv=" + pid + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&sga=" + encodeURI(sga));
+            if (p31ids != "") {
+                url = url + "&drilldown_p31ids=" + p31ids;
+            }
+            location.replace(url);
         }
 
        
@@ -244,7 +253,8 @@
         function pivot() {
             var masterprefix = document.getElementById("<%=hidMasterPrefix.ClientID%>").value;
             var masterpid = document.getElementById("<%=hidMasterPID.ClientID%>").value;
-            sw_master("p31_sumgrid.aspx?pivot=1" + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid, "Images/pivot.png", true);
+            var p31ids = document.getElementById("<%=hidP31IDs.ClientID%>").value;
+            sw_master("p31_sumgrid.aspx?pivot=1" + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid+"&p31ids="+p31ids, "Images/pivot.png", true);
 
         }
         function templatebuilder() {

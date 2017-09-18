@@ -145,13 +145,16 @@
         }
 
 
-        function drilldown() {
+        function drilldown(p31ids) {
 
             var masterprefix = document.getElementById("<%=Me.hidMasterPrefix.ClientID%>").value;
             var masterpid = document.getElementById("<%=Me.hidMasterPID.ClientID%>").value;
             var tabqueryflag = document.getElementById("<%=Me.cbxTabQueryFlag.ClientID%>").value;
+            var url = "p31_sumgrid.aspx?masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&tabqueryflag=" + tabqueryflag;
+            if (p31ids != "")
+                url = url + "&p31ids=" + p31ids;
 
-            location.replace("p31_sumgrid.aspx?masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&tabqueryflag=" + tabqueryflag);
+            location.replace(url);
 
 
         }
@@ -161,8 +164,8 @@
                 $.alert("Není vybrán ani jeden záznam.");
                 return;
             }
-
-            location.replace("p31_sumgrid.aspx?masterprefix=p31&masterpid=" + pids);
+            drilldown(pids);
+            //location.replace("p31_sumgrid.aspx?p31ids=" + pids);
 
 
         }
@@ -224,7 +227,7 @@
                         <Items>
                             <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat záznamy" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdApprove" Text="Schvalovat/pře-schvalovat/fakturovat úkony" NavigateUrl="javascript:approving();" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdSummary" Text="Statistika výběru" NavigateUrl="javascript:drilldown_p31ids();" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Value="cmdSummary" Text="Statistiky" NavigateUrl="javascript:drilldown_p31ids();" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
                         </Items>
                     </telerik:RadMenuItem>
                     <telerik:RadMenuItem Text="Další akce" Value="more" ImageUrl="Images/arrow_down_menu.png">
@@ -338,20 +341,14 @@
 
         <div style="clear: both;"></div>
         <asp:Panel ID="panAdditionalQuery" runat="server" CssClass="div6" Visible="false">
-            <table cellpadding="0">
-                <tr>
-                    <td>
-                        <asp:Image ID="imgEntity" runat="server" />
-                    </td>
-                    <td style="padding-left: 10px;">
-
-                        <asp:HyperLink ID="MasterRecord" runat="server"></asp:HyperLink>
-
-                    </td>
-                </tr>
-            </table>
-            <asp:Label ID="lblDrillDown" runat="server" CssClass="valboldred"></asp:Label>
+            
+                <asp:Image ID="imgEntity" runat="server" />
+                <asp:HyperLink ID="MasterRecord" runat="server"></asp:HyperLink>
+          
+            
+            <asp:Label ID="lblDrillDown" runat="server" CssClass="valboldred" style="margin-left:20px;"></asp:Label>
             <asp:HyperLink ID="linkDrillDown" runat="server"></asp:HyperLink>
+            <asp:ImageButton ID="cmdDrillDownClear" runat="server" ToolTip="Zrušit filtr pro statistiku" ImageUrl="Images/delete.png" Visible="false" />
         </asp:Panel>
 
         <div style="clear: both;"></div>
@@ -376,6 +373,7 @@
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hidDefaultSorting" runat="server" />
     <asp:HiddenField ID="hidDrillDownField" runat="server" />
+    <asp:HiddenField ID="hidDrillDownP31IDs" runat="server" />
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
     <asp:HiddenField ID="hidCols" runat="server" />

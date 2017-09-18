@@ -572,6 +572,24 @@ Partial Public Class p41_framework_detail
     Protected WithEvents p41RecurBaseDate As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''LastChild control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents LastChild As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''lblNextGen control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblNextGen As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''alert1 control.
     '''</summary>
     '''<remarks>

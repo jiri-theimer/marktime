@@ -85,11 +85,9 @@
 
         With cRec
             If .p65ID > 0 Then
-                imgRecord.ImageUrl = "Images/recurrence.png"
-                panRecurrence.Visible = True
-                Me.RecurrenceType.Text = Master.Factory.p65RecurrenceBL.Load(.p65ID).p65Name
-                Me.p56RecurNameMask.Text = .p56RecurNameMask
-                Me.p56RecurBaseDate.Text = BO.BAS.FD(.p56RecurBaseDate)
+                RenderRecurrence(cRec)
+            Else
+                panRecurrence.Controls.Clear()
             End If
             Me.boxCoreTitle.Text = .p57Name & " (" & .p56Code & ")"
             If .b02ID <> 0 Then
@@ -197,5 +195,29 @@
         Else
             boxIMAP.Visible = False
         End If
+    End Sub
+
+    Private Sub RenderRecurrence(cRec As BO.p56Task)
+        panRecurrence.Visible = True
+        imgRecord.ImageUrl = "Images/recurrence.png"
+        With cRec
+            Me.RecurrenceType.Text = Master.Factory.p65RecurrenceBL.Load(.p65ID).p65Name
+            Me.p56RecurNameMask.Text = .p56RecurNameMask
+            Me.p56RecurBaseDate.Text = BO.BAS.FD(.p56RecurBaseDate)
+            Dim mq As New BO.myQueryP56
+            mq.p56RecurMotherID = .PID
+            Dim lis As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList(mq).OrderByDescending(Function(p) p.PID)
+            Dim cP65 As BO.p65Recurrence = Master.Factory.p65RecurrenceBL.Load(cRec.p65ID)
+            Dim datNextBaseDate = Master.Factory.p65RecurrenceBL.CalculateNextBaseDate(cP65, cRec.p56RecurBaseDate)
+            If lis.Count > 0 Then
+                LastChild.Text = lis(0).p56Name
+                LastChild.NavigateUrl = "p56_framework_detail.aspx?pid=" & lis(0).PID.ToString
+                datNextBaseDate = Master.Factory.p65RecurrenceBL.CalculateNextBaseDate(cP65, lis(0).p56RecurBaseDate)
+            End If
+            Dim c As BO.RecurrenceCalculation = Master.Factory.p65RecurrenceBL.CalculateDates(cP65, datNextBaseDate)
+            lblNextGen.Text = BO.BAS.FD(c.DatGen, , True)
+            If c.DatGen <= Now Then lblNextGen.Text += " - > " & BO.BAS.FD(Now)
+        End With
+
     End Sub
 End Class

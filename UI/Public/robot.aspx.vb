@@ -119,43 +119,47 @@
 
         For Each c In lisMothers
             Dim cP65 As BO.p65Recurrence = lisP65.First(Function(p) p.PID = c.p65ID)
-            Dim datBase As Date = DateSerial(Year(Now), Month(Now), 1), bolNeed2Gen As Boolean = False
-            If cP65.p65RecurFlag = BO.RecurrenceType.Year Then
-                datBase = DateSerial(Year(Now), 1, 1)
-            End If
-            If cP65.p65RecurFlag = BO.RecurrenceType.Quarter Then
-                Select Case Month(Now)
-                    Case 1, 2, 3 : datBase = DateSerial(Year(Now), 1, 1)
-                    Case 4, 5, 6 : datBase = DateSerial(Year(Now), 4, 1)
-                    Case 7, 8, 9 : datBase = DateSerial(Year(Now), 7, 1)
-                    Case Else : datBase = DateSerial(Year(Now), 12, 1)
-                End Select
+            Dim cRD As BO.RecurrenceCalculation = _Factory.p65RecurrenceBL.CalculateDates(cP65, Now)
+            'Dim datBase As Date = DateSerial(Year(Now), Month(Now), 1), bolNeed2Gen As Boolean = False
+            'If cP65.p65RecurFlag = BO.RecurrenceType.Year Then
+            '    datBase = DateSerial(Year(Now), 1, 1)
+            'End If
+            'If cP65.p65RecurFlag = BO.RecurrenceType.Quarter Then
+            '    Select Case Month(Now)
+            '        Case 1, 2, 3 : datBase = DateSerial(Year(Now), 1, 1)
+            '        Case 4, 5, 6 : datBase = DateSerial(Year(Now), 4, 1)
+            '        Case 7, 8, 9 : datBase = DateSerial(Year(Now), 7, 1)
+            '        Case Else : datBase = DateSerial(Year(Now), 12, 1)
+            '    End Select
 
-            End If
-            Dim datGen As Date = datBase.AddMonths(cP65.p65RecurGenToBase_M).AddDays(cP65.p65RecurGenToBase_D)
-            If lisChilds.Where(Function(p) p.p41RecurMotherID = c.PID And p.p41RecurBaseDate = datBase).Count = 0 And datGen <= _curNow Then
+            'End If
+            'Dim datGen As Date = datBase.AddMonths(cP65.p65RecurGenToBase_M).AddDays(cP65.p65RecurGenToBase_D)
+            If lisChilds.Where(Function(p) p.p41RecurMotherID = c.PID And p.p41RecurBaseDate = cRD.DatBase).Count = 0 And cRD.DatGen <= _curNow Then
                 'potomek ještě neexistuje a nastal čas ho vygenerovat
-                Dim datPlanUntil As Date = Nothing
-                If cP65.p65IsPlanUntil Then datPlanUntil = datBase.AddMonths(cP65.p65RecurPlanUntilToBase_M).AddDays(cP65.p65RecurPlanUntilToBase_D)
+                'Dim datPlanUntil As Date = Nothing
+                'If cP65.p65IsPlanUntil Then datPlanUntil = cRD.DatBase.AddMonths(cP65.p65RecurPlanUntilToBase_M).AddDays(cP65.p65RecurPlanUntilToBase_D)
 
                 Dim cNew As New BO.p41Project, intMotherPID As Integer = c.PID
                 cNew = c
                 With cNew
                     .p41RecurMotherID = intMotherPID
-                    .p41RecurBaseDate = datBase
+                    .p41RecurBaseDate = cRD.DatBase
                     .p65ID = 0 : .p41Code = "" : .ValidFrom = _curNow
                     If c.p41RecurNameMask <> "" Then .p41Name = c.p41RecurNameMask
-                    If cP65.p65IsPlanUntil Or cP65.p65IsPlanFrom Then
-                        .p41PlanUntil = datBase.AddMonths(cP65.p65RecurPlanUntilToBase_M).AddDays(cP65.p65RecurPlanUntilToBase_D)
-                    Else
-                        .p41PlanUntil = Nothing
-                    End If
-                    If cP65.p65IsPlanFrom Or cP65.p65IsPlanUntil Then
-                        .p41PlanFrom = datBase.AddMonths(cP65.p65RecurPlanFromToBase_M).AddDays(cP65.p65RecurPlanFromToBase_D)
-                    Else
-                        .p41PlanFrom = Nothing
-                    End If
+                    'If cP65.p65IsPlanUntil Or cP65.p65IsPlanFrom Then
+                    '    .p41PlanUntil = cRD.DatBase.AddMonths(cP65.p65RecurPlanUntilToBase_M).AddDays(cP65.p65RecurPlanUntilToBase_D)
+                    'Else
+                    '    .p41PlanUntil = Nothing
+                    'End If
+                    .p41PlanUntil = cRD.DatPlanUntil
+                    .p41PlanFrom = cRD.DatPlanFrom
                     .SetPID(0)
+                    'If cP65.p65IsPlanFrom Or cP65.p65IsPlanUntil Then
+                    '    .p41PlanFrom = cRD.DatBase.AddMonths(cP65.p65RecurPlanFromToBase_M).AddDays(cP65.p65RecurPlanFromToBase_D)
+                    'Else
+                    '    .p41PlanFrom = Nothing
+                    'End If
+
                 End With
                 Dim lisFF As List(Of BO.FreeField) = _Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p41Project, intMotherPID, c.p42ID)
                 If _Factory.p41ProjectBL.Save(cNew, Nothing, Nothing, _Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p41Project, intMotherPID).ToList, lisFF) Then
@@ -180,43 +184,47 @@
 
         For Each c In lisMothers
             Dim cP65 As BO.p65Recurrence = lisP65.First(Function(p) p.PID = c.p65ID)
-            Dim datBase As Date = DateSerial(Year(Now), Month(Now), 1), bolNeed2Gen As Boolean = False
-            If cP65.p65RecurFlag = BO.RecurrenceType.Year Then
-                datBase = DateSerial(Year(Now), 1, 1)
-            End If
-            If cP65.p65RecurFlag = BO.RecurrenceType.Quarter Then
-                Select Case Month(Now)
-                    Case 1, 2, 3 : datBase = DateSerial(Year(Now), 1, 1)
-                    Case 4, 5, 6 : datBase = DateSerial(Year(Now), 4, 1)
-                    Case 7, 8, 9 : datBase = DateSerial(Year(Now), 7, 1)
-                    Case Else : datBase = DateSerial(Year(Now), 12, 1)
-                End Select
+            Dim cRD As BO.RecurrenceCalculation = _Factory.p65RecurrenceBL.CalculateDates(cP65, Now)
+            'Dim datBase As Date = DateSerial(Year(Now), Month(Now), 1), bolNeed2Gen As Boolean = False
+            'If cP65.p65RecurFlag = BO.RecurrenceType.Year Then
+            '    datBase = DateSerial(Year(Now), 1, 1)
+            'End If
+            'If cP65.p65RecurFlag = BO.RecurrenceType.Quarter Then
+            '    Select Case Month(Now)
+            '        Case 1, 2, 3 : datBase = DateSerial(Year(Now), 1, 1)
+            '        Case 4, 5, 6 : datBase = DateSerial(Year(Now), 4, 1)
+            '        Case 7, 8, 9 : datBase = DateSerial(Year(Now), 7, 1)
+            '        Case Else : datBase = DateSerial(Year(Now), 12, 1)
+            '    End Select
 
-            End If
-            Dim datGen As Date = datBase.AddMonths(cP65.p65RecurGenToBase_M).AddDays(cP65.p65RecurGenToBase_D)
-            If lisChilds.Where(Function(p) p.p56RecurMotherID = c.PID And p.p56RecurBaseDate = datBase).Count = 0 And datGen <= _curNow Then
+            'End If
+            'Dim datGen As Date = datBase.AddMonths(cP65.p65RecurGenToBase_M).AddDays(cP65.p65RecurGenToBase_D)
+            If lisChilds.Where(Function(p) p.p56RecurMotherID = c.PID And p.p56RecurBaseDate = cRD.DatBase).Count = 0 And cRD.DatGen <= _curNow Then
                 'potomek ještě neexistuje a nastal čas ho vygenerovat
-                Dim datPlanUntil As Date = Nothing
-                If cP65.p65IsPlanUntil Then datPlanUntil = datBase.AddMonths(cP65.p65RecurPlanUntilToBase_M).AddDays(cP65.p65RecurPlanUntilToBase_D)
+                'Dim datPlanUntil As Date = Nothing
+                'If cP65.p65IsPlanUntil Then datPlanUntil = datBase.AddMonths(cP65.p65RecurPlanUntilToBase_M).AddDays(cP65.p65RecurPlanUntilToBase_D)
 
                 Dim cNew As New BO.p56Task, intMotherPID As Integer = c.PID
                 cNew = c
                 With cNew
                     .p56RecurMotherID = intMotherPID
-                    .p56RecurBaseDate = datBase
+                    .p56RecurBaseDate = cRD.DatBase
                     .p65ID = 0 : .p56Code = "" : .ValidFrom = _curNow
                     If c.p56RecurNameMask <> "" Then .p56Name = c.p56RecurNameMask
-                    If cP65.p65IsPlanUntil Or cP65.p65IsPlanFrom Then
-                        .p56PlanUntil = datBase.AddMonths(cP65.p65RecurPlanUntilToBase_M).AddDays(cP65.p65RecurPlanUntilToBase_D)
-                    Else
-                        .p56PlanUntil = Nothing
-                    End If
-                    If cP65.p65IsPlanFrom Or cP65.p65IsPlanUntil Then
-                        .p56PlanFrom = datBase.AddMonths(cP65.p65RecurPlanFromToBase_M).AddDays(cP65.p65RecurPlanFromToBase_D)
-                    Else
-                        .p56PlanFrom = Nothing
-                    End If
+                    .p56PlanUntil = cRD.DatPlanUntil
+                    .p56PlanFrom = cRD.DatPlanFrom
                     .SetPID(0)
+                    'If cP65.p65IsPlanUntil Or cP65.p65IsPlanFrom Then
+                    '    .p56PlanUntil = datBase.AddMonths(cP65.p65RecurPlanUntilToBase_M).AddDays(cP65.p65RecurPlanUntilToBase_D)
+                    'Else
+                    '    .p56PlanUntil = Nothing
+                    'End If
+                    'If cP65.p65IsPlanFrom Or cP65.p65IsPlanUntil Then
+                    '    .p56PlanFrom = datBase.AddMonths(cP65.p65RecurPlanFromToBase_M).AddDays(cP65.p65RecurPlanFromToBase_D)
+                    'Else
+                    '    .p56PlanFrom = Nothing
+                    'End If
+
                 End With
                 Dim lisFF As List(Of BO.FreeField) = _Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p56Task, intMotherPID, c.p57ID)
                 If _Factory.p56TaskBL.Save(cNew, _Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p56Task, intMotherPID).ToList, lisFF, "") Then

@@ -522,7 +522,7 @@
             End If
             If .p41RecurMotherID <> 0 Then
                 s.Append(" AND a.p41RecurMotherID=@motherid")
-                pars.Add("motherid", .p41RecurMotherID, DbType.UInt32)
+                pars.Add("motherid", .p41RecurMotherID, DbType.Int32)
             End If
         End With
         Return bas.TrimWHERE(s.ToString)

@@ -161,8 +161,9 @@ Public Class p31_subgrid
             End With
             panExport.Visible = Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
             cmdSummary.Visible = Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
+            If Not cmdSummary.Visible Then recmenu1.FindItemByValue("cmdSummary").Visible = False
             designer1.Visible = panExport.Visible
-           
+
 
             RecalcVirtualRowCount()
             SetupP31Grid()

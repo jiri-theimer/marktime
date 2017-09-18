@@ -50,6 +50,7 @@ Public Class p31_grid
                 hidSGF.Value = Request.Item("sgf")
                 hidSGV.Value = Request.Item("sgv")
                 hidSGA.Value = Server.UrlDecode(Request.Item("sga"))
+                hidDrillDownP31IDs.Value = Request.Item("drilldown_p31ids")
             End If
             If Request.Item("aw") <> "" Then
                 Me.hidMasterAW.Value = Replace(Server.UrlDecode(Request.Item("aw")), "xxx", "=")
@@ -158,7 +159,9 @@ Public Class p31_grid
         'End If
     End Sub
     Private Sub SetupSG()
-        panAdditionalQuery.Visible = True
+        panAdditionalQuery.Visible = True : cmdDrillDownClear.Visible = True
+        
+
         Dim a() As String = Split(hidSGF.Value, "|"), b() As String = Split(hidSGV.Value, "|"), lis As List(Of BO.GridColumn) = Master.Factory.j70QueryTemplateBL.ColumnsPallete(BO.x29IdEnum.p31Worksheet), strW As String = ""
         For i As Integer = 0 To UBound(a)
             Dim strF As String = a(i)
@@ -196,9 +199,15 @@ Public Class p31_grid
         Else
             hidMasterAW.Value += " AND (" & strW & ")"
         End If
-        lblDrillDown.Text = "<img src='Images/pivot.png' style='padding-right:6px;'/>" & lblDrillDown.Text
+        lblDrillDown.Text = "<img src='Images/pivot.png' style='padding-right:6px;'/>" & lblDrillDown.Text & ":"
         linkDrillDown.Text = hidSGA.Value
         linkDrillDown.NavigateUrl = "p31_sumgrid.aspx?masterprefix=" + Me.CurrentMasterPrefix + "&masterpid=" + Me.CurrentMasterPID.ToString & "&tabqueryflag=" + Me.cbxTabQueryFlag.SelectedValue & "&pid=" & hidSGV.Value
+
+        If hidDrillDownP31IDs.Value <> "" Then
+            'na vstupu výběr p31ids
+            linkDrillDown.NavigateUrl += "&p31ids=" & hidDrillDownP31IDs.Value
+          
+        End If
     End Sub
     
     
@@ -386,6 +395,9 @@ Public Class p31_grid
             If hidO51IDs.Value <> "" Then
                 .o51IDs = BO.BAS.ConvertPIDs2List(hidO51IDs.Value)
             End If
+            If hidDrillDownP31IDs.Value <> "" Then
+                mq.PIDs = BO.BAS.ConvertPIDs2List(hidDrillDownP31IDs.Value)
+            End If
         End With
         If Not Page.IsPostBack Then
             If Request.Item("pid") <> "" Then
@@ -432,6 +444,7 @@ Public Class p31_grid
             s = basUI.AddQuerystring2Page(s, "sgf=" & hidSGF.Value & "&sgv=" & hidSGV.Value & "&sga=" & hidSGA.Value)
         End If
         Return "p31_grid.aspx" & s
+        
     End Function
 
     Private Sub p31_grid_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
@@ -608,6 +621,13 @@ Public Class p31_grid
         With Master.Factory.j03UserBL
             .SetUserParam("o51_querybuilder-p31", "")
         End With
+        ReloadPage()
+    End Sub
+
+    Private Sub cmdDrillDownClear_Click(sender As Object, e As ImageClickEventArgs) Handles cmdDrillDownClear.Click
+        hidSGF.Value = ""
+        hidSGV.Value = ""
+        hidDrillDownP31IDs.Value = ""
         ReloadPage()
     End Sub
 End Class
