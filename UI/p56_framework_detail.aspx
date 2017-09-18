@@ -261,7 +261,7 @@
             </div>
             <div class="div6">
                 <span>Naposledy vygenerovaný potomek:</span>
-                <asp:HyperLink ID="LastChild" runat="server" NavigateUrl="#" CssClass="value_link"></asp:HyperLink>
+                <asp:HyperLink ID="LastChild" runat="server" NavigateUrl="#" CssClass="value_link" Target="_top"></asp:HyperLink>
             </div>
             <div class="div6">
                 <span>Generování příštího potomka:</span>

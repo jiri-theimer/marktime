@@ -319,7 +319,7 @@
             Dim datNextBaseDate = Master.Factory.p65RecurrenceBL.CalculateNextBaseDate(cP65, cRec.p41RecurBaseDate)
             If lis.Count > 0 Then
                 LastChild.Text = lis(0).PrefferedName
-                LastChild.NavigateUrl = "p41_framework_detail.aspx?pid=" & lis(0).PID.ToString
+                LastChild.NavigateUrl = "p41_framework.aspx?pid=" & lis(0).PID.ToString
                 datNextBaseDate = Master.Factory.p65RecurrenceBL.CalculateNextBaseDate(cP65, lis(0).p41RecurBaseDate)
             End If
             Dim c As BO.RecurrenceCalculation = Master.Factory.p65RecurrenceBL.CalculateDates(cP65, datNextBaseDate)

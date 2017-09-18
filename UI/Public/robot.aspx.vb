@@ -25,9 +25,7 @@
                 _curNow = BO.BAS.ConvertString2Date(Request.Item("now"))
             End If
 
-            If IsTime4Run(BO.j91RobotTaskFlag.p40, 20) Or bolNowExplicit Then
-                Handle_p40Queue()   'stačí jednou za 20 minut
-            End If
+            
 
 
             Handle_MailQueque()
@@ -41,9 +39,10 @@
 
             Handle_SqlTasks()
 
-            If IsTime4Run(BO.j91RobotTaskFlag.RecurrenceP41, 60) Or Request.Item("recur") = "1" Then   'opakované projekty a úkoly stačí jednou za hodinu
+            If IsTime4Run(BO.j91RobotTaskFlag.RecurrenceP41, 60) Or Request.Item("recur") = "1" Or bolNowExplicit Then   'opakované worksheet úkony, projekty a úkoly stačí jednou za hodinu
                 Handle_Recurrence_p41()
                 Handle_Recurrence_p56()
+                Handle_p40Queue()   'opakované paušální úkony
             End If
 
 
