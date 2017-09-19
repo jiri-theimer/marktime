@@ -120,6 +120,15 @@
 
             dialog_master("report_modal.aspx?prefix=app&guid=<%=viewstate("guid")%>", true);
         }
+        function tags() {
+            var pids = GetAllSelectedPIDs();
+            if (pids == "" || pids == null) {
+                $.alert("Není vybrán záznam.");
+                return
+            }
+            dialog_master("tag_binding.aspx?prefix=p31&pids=" + pids, "Images/tag.png");
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
@@ -283,6 +292,9 @@
                                 <div class="div6">
                                     <asp:Button ID="cmdBatch_7" Text="[Fakturovat později]" runat="server" CssClass="cmd" Width="280px" />
 
+                                </div>
+                                <div class="div6">
+                                    <button id="cmdTags" type="button" onclick="tags()" style="width:280px">Oštítkovat</button>
                                 </div>
                                 <div class="div6">
                                     <asp:Button ID="cmdBatch_8" Text="Nahodit úroveň schvalování #0" runat="server" CssClass="cmd" Width="280px" />
