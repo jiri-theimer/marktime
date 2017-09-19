@@ -76,7 +76,7 @@
 
                         <td style="max-width: 500px; padding: 4px;">
                             <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" title="Detail úkolu"></asp:HyperLink>
-                            <asp:HyperLink ID="link1" runat="server" Target="_top"></asp:HyperLink>
+                            <asp:HyperLink ID="link1" runat="server" Target="_top" CssClass="value_link"></asp:HyperLink>
                             <div>
                                 <asp:Label ID="p56PlanUntil" runat="server" ToolTip="Termín úkolu"></asp:Label>
                                 <asp:Image ID="img1" runat="server" ImageUrl="Images/reminder.png" ToolTip="Připomenutí" />

@@ -306,6 +306,15 @@
             var clickButton = document.getElementById("<%=cmdClearO51.ClientID%>");
             clickButton.click();
         }
+        function tags() {
+            var pids = GetAllSelectedPIDs();
+            if (pids == "" || pids == null) {
+                $.alert("Není vybrán záznam.");
+                return
+            }
+            sw_master("tag_binding.aspx?prefix=<%=me.CurrentPrefix%>&pids=" + pids, "Images/tag.png");
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -372,7 +381,7 @@
                                             <span>Operace pro označené (zaškrtlé) záznamy</span>
                                         </div>
                                         <div class="content">
-
+                                            <button type="button" onclick="tags()" style="float:left;">Oštítkovat</button>
                                             <button type="button" id="buttonBatch" onclick="batch()" title="Hromadné operace nad označenými záznamy v přehledu" style="display: none; float: left;">Hromadné operace</button>
 
                                             <button id="cmdApprove" runat="server" type="button" visible="false" onclick="approve()" style="float: left;">Schválit/připravit k fakturaci</button>

@@ -128,4 +128,29 @@
         Return _cDB.RunSQL("UPDATE o52TagBinding set o52DateUpdate=getdate(),o52UserUpdate=@login WHERE o52RecordPID=@recpid AND x29ID=@x29id", pars)
        
     End Function
+
+    Public Function SaveBatch(strPrefix As String, pids As List(Of Integer), o51IDs As List(Of Integer), bolReplace As Boolean) As Boolean
+        Dim pars As New DbParameters, intX29ID As Integer = CInt(BO.BAS.GetX29FromPrefix(strPrefix))
+
+        pars.Add("x29id", intX29ID, DbType.Int32)
+        If bolReplace Then
+            _cDB.RunSQL("DELETE FROM o52TagBinding WHERE x29ID=@x29id AND o52RecordPID IN (" & String.Join(",", pids) & ")", pars)
+        End If
+        If o51IDs.Count = 0 Then Return True
+
+        Dim strO51IDs As String = String.Join(",", o51IDs)
+        For Each intPID As Integer In pids
+            pars = New DbParameters
+            pars.Add("x29id", intX29ID, DbType.Int32)
+            pars.Add("login", _curUser.j03Login, DbType.String)
+            pars.Add("recpid", intPID, DbType.Int32)
+            _cDB.RunSQL("INSERT INTO o52TagBinding(o51ID,o52RecordPID,x29ID,o52DateInsert,o52DateUpdate,o52UserInsert,o52UserUpdate) SELECT o51ID,@recpid,@x29id,getdate(),getdate(),@login,@login FROM o51Tag WHERE o51ID IN (" & strO51IDs & ") AND o51ID NOT IN (select o51ID FROM o52TagBinding WHERE o52RecordPID=@recpid AND x29ID=@x29id)", pars)
+
+        Next
+        
+
+        
+        Return _cDB.RunSQL("UPDATE o52TagBinding set o52DateUpdate=getdate(),o52UserUpdate=@login WHERE o52RecordPID IN (" & String.Join(",", pids) & ") AND x29ID=@x29id", pars)
+
+    End Function
 End Class

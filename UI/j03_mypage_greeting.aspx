@@ -256,7 +256,7 @@
                     <asp:Repeater ID="rpP39" runat="server">
                         <ItemTemplate>
                             <div class="div6">
-                                <asp:HyperLink ID="cmdProject" runat="server"></asp:HyperLink>
+                                <asp:HyperLink ID="cmdProject" runat="server" CssClass="value_link"></asp:HyperLink>
 
                                 <asp:Label ID="p39Text" runat="server" Font-Italic="true"></asp:Label>
                             </div>
@@ -290,7 +290,7 @@
                                     </td>
 
                                     <td>
-                                        <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
+                                        <asp:HyperLink ID="link1" runat="server" CssClass="value_link"></asp:HyperLink>
                                         <asp:Label ID="lbl2" runat="server"></asp:Label>
                                     </td>
 

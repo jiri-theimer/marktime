@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class tag_binding
 
     '''<summary>
+    '''opgMulti control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents opgMulti As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
     '''tags1 control.
     '''</summary>
     '''<remarks>

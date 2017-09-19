@@ -65,7 +65,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-
+    <asp:RadioButtonList ID="opgMulti" runat="server" RepeatDirection="Vertical" Visible="false">
+        <asp:ListItem Text="Vybrané štítky přidat" Value="1"></asp:ListItem>
+        <asp:ListItem Text="Vybranými štítky nahradit stávající" Value="2" Selected="true"></asp:ListItem>
+        <asp:ListItem Text="U záznamů vyčistit oštítkování" Value="3"></asp:ListItem>
+    </asp:RadioButtonList>
     <div style="padding: 10px;">
 
         <telerik:RadAutoCompleteBox ID="tags1" runat="server" RenderMode="Lightweight" EmptyMessage="Napište pár písmen k dohledání štítku" Width="450px" OnClientEntryAdding="entryAdding" OnClientRequesting="requesting">

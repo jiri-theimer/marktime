@@ -15,16 +15,19 @@
                 If hidPrefix.Value = "" Or hidPIDs.Value = "" Then
                     .StopPage("prefix or pid is missing.")
                 End If
-                If hidPIDs.Value.IndexOf(".") > 0 Then
+                If hidPIDs.Value.IndexOf(",") > 0 Then
                     .HeaderText = "Oštítkovat vybrané záznamy"
+                    Me.opgMulti.Visible = True
                 Else
                     .HeaderText = String.Format("Oštítkovat {0}", .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(hidPrefix.Value), CInt(hidPIDs.Value)))
                 End If
                 .HeaderIcon = "Images/tag_32.png"
                 If hidMode.Value = "1" Then
+                    'voláno z editačního formuláře projektu/klienta/úkolu -> nedochází přímo k uložení do db
                     hidO51IDs.Value = Request.Item("o51ids")
                     .AddToolbarButton("OK", "ok", , "Images/ok.png", False, "javascript:close_and_refresh()")
                 Else
+                    'volá se ze stránky projektu/klienta/faktury/osoby -> přímé uložení do db
                     .AddToolbarButton("Uložit změny", "ok", , "Images/save.png")
                 End If
 
@@ -35,6 +38,8 @@
     End Sub
 
     Private Sub RefreshRecord()
+        If hidPIDs.Value.IndexOf(",") > 0 Then Return 'u hromadných operace nepředvyplňovat štítky
+
         If hidMode.Value = "1" Then
             If hidO51IDs.Value = "" Then Return
             Dim mq As New BO.myQuery
@@ -54,7 +59,7 @@
                 Next
             End With
         End If
-        
+
 
     End Sub
 
@@ -114,13 +119,33 @@
             For i As Integer = 0 To tags1.Entries.Count - 1
                 o51IDs.Add(CInt(tags1.Entries.Item(i).Value))
             Next
-            
-            For Each intRecordPID As Integer In pids
-                If Not Master.Factory.o51TagBL.SaveBinding(hidPrefix.Value, intRecordPID, o51IDs) Then
+            If pids.Count > 0 Then
+                Dim bolReplace As Boolean = False
+                If (opgMulti.SelectedValue = "1" Or opgMulti.SelectedValue = "2") And o51IDs.Count = 0 Then
+                    Master.Notify("Musíte vybrat minimálně jeden štítek.", NotifyLevel.ErrorMessage)
+                    Return
+                End If
+                If opgMulti.SelectedValue = "2" Then
+                    bolReplace = True
+                End If
+                If opgMulti.SelectedValue = "3" Then
+                    bolReplace = True
+                    o51IDs.Clear()
+                End If
+                If Not Master.Factory.o51TagBL.SaveBatch(hidPrefix.Value, pids, o51IDs, bolReplace) Then
                     Master.Notify(Master.Factory.o51TagBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else
                     Master.CloseAndRefreshParent()
                 End If
+            Else
+                If Not Master.Factory.o51TagBL.SaveBinding(hidPrefix.Value, pids(0), o51IDs) Then
+                    Master.Notify(Master.Factory.o51TagBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                Else
+                    Master.CloseAndRefreshParent()
+                End If
+            End If
+            For Each intRecordPID As Integer In pids
+
             Next
         End If
     End Sub

@@ -8,6 +8,7 @@ Public Interface Io51TagBL
     Function GetList(mq As BO.myQuery, strPrefix As String, usedInO52 As BO.BooleanQueryMode) As IEnumerable(Of BO.o51Tag)
     Function GetList_o52(strPrefix As String, intRecordPID As Integer) As IEnumerable(Of BO.o52TagBinding)
     Function SaveBinding(strPrefix As String, intRecordPID As Integer, o51IDs As List(Of Integer)) As Boolean
+    Function SaveBatch(strPrefix As String, pids As List(Of Integer), o51IDs As List(Of Integer), bolReplace As Boolean) As Boolean
     Function ParseQueryByTags(strParsePrefix As String, strQuery As String) As BO.QueryByTags
 End Interface
 Class o51TagBL
@@ -67,7 +68,15 @@ Class o51TagBL
     Public Function SaveBinding(strPrefix As String, intRecordPID As Integer, o51IDs As List(Of Integer)) As Boolean Implements Io51TagBL.SaveBinding
         Return _cDL.SaveBinding(strPrefix, intRecordPID, o51IDs)
     End Function
-
+    Public Function SaveBatch(strPrefix As String, pids As List(Of Integer), o51IDs As List(Of Integer), bolReplace As Boolean) As Boolean Implements Io51TagBL.SaveBatch
+        If pids.Count = 0 Then
+            _Error = "Na vstupu chybí předané záznamy." : Return False
+        End If
+        If o51IDs.Count = 0 And bolReplace = False Then
+            _Error = "Na vstupu chybí vybrané štítky." : Return False
+        End If
+        Return _cDL.SaveBatch(strPrefix, pids, o51IDs, bolReplace)
+    End Function
     Public Function ParseQueryByTags(strParsePrefix As String, strQuery As String) As BO.QueryByTags Implements Io51TagBL.ParseQueryByTags
         Dim ret As New BO.QueryByTags
         If strQuery = "" Then Return ret
