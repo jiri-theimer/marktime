@@ -33,11 +33,11 @@
             .x47RecordPID = intRecordPID
             If Not String.IsNullOrEmpty(strDescription) Then .x47Description = strDescription
         End With
-
-        If Factory.x47EventLogBL.AppendToLog(cLogEvent) Then
+        Dim intX47ID As Integer = Factory.x47EventLogBL.AppendToLog(cLogEvent)
+        If intX47ID > 0 Then
             If bolStopAutoNotification Then Return 'u tohoto záznamu se systém nemá pokoušet o notifikaci
             'notifikovat událost mailem
-            Dim cX47 As BO.x47EventLog = Factory.x47EventLogBL.Load(Factory.x47EventLogBL.LastSavedPID)
+            Dim cX47 As BO.x47EventLog = Factory.x47EventLogBL.Load(intX47ID)
             If cX47.x45IsAllowNotification Then 'zjistit, zda událost má globálně povolenou notifikaci
                 If Not lisExplicitNotifyReceivers Is Nothing Then
                     If lisExplicitNotifyReceivers.Count = 0 Then lisExplicitNotifyReceivers = Nothing

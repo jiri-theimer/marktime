@@ -1,7 +1,7 @@
 ﻿
 Public Interface Ix47EventLogBL
     Inherits IFMother
-    Function AppendToLog(cRec As BO.x47EventLog) As Boolean
+    Function AppendToLog(cRec As BO.x47EventLog) As Integer
     Function Load(intPID As Integer) As BO.x47EventLog
     Function GetList(mq As BO.myQueryX47, Optional intTopRecs As Integer = 0) As IEnumerable(Of BO.x47EventLog)
     Function GetObjectAlias(x29id As BO.x29IdEnum, intRecordPID As Integer) As String
@@ -24,7 +24,7 @@ Class x47EventLogBL
         _cDL = New DL.x47EventLogDL(ServiceUser)
         _cUser = ServiceUser
     End Sub
-    Public Function AppendToLog(cRec As BO.x47EventLog) As Boolean Implements Ix47EventLogBL.AppendToLog
+    Public Function AppendToLog(cRec As BO.x47EventLog) As Integer Implements Ix47EventLogBL.AppendToLog
         Dim bolDeleteEvent As Boolean = False
         With cRec
             If .x29ID = BO.x29IdEnum._NotSpecified Then
@@ -66,7 +66,7 @@ Class x47EventLogBL
                         If c.p41ID > 0 Then .x29ID_Reference = BO.x29IdEnum.p41Project : .x47RecordPID_Reference = c.p41ID
                     Case BO.x29IdEnum.o23Doc
                         Dim c As BO.o23Doc = Factory.o23DocBL.Load(.x47RecordPID)
-                        
+
                     Case BO.x29IdEnum.b07Comment
                         Dim c As BO.b07Comment = Factory.b07CommentBL.Load(.x47RecordPID)
                         .x29ID_Reference = c.x29ID
@@ -80,7 +80,7 @@ Class x47EventLogBL
                         If c.p56ID > 0 Then .x29ID_Reference = BO.x29IdEnum.p56Task : .x47RecordPID_Reference = c.p56ID
                 End Select
             End If
-            
+
 
         End With
 

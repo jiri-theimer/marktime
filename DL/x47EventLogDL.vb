@@ -11,9 +11,9 @@
         Return _cDB.GetRecord(Of BO.x47EventLog)(s, New With {.x47id = intPID})
     End Function
    
-    Public Function Create(cRec As BO.x47EventLog) As Boolean
-        Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
-      
+    Public Function Create(cRec As BO.x47EventLog) As Integer
+        Dim pars As New DbParameters()
+
         With cRec
             pars.Add("j03ID", _curUser.PID, DbType.Int32)
             pars.Add("x45ID", BO.BAS.IsNullDBKey(.x45ID), DbType.Int32)
@@ -24,13 +24,19 @@
             pars.Add("x47Name", .x47Name, DbType.String)
             pars.Add("x47NameReference", .x47NameReference, DbType.String)
             pars.Add("x47Description", .x47Description, DbType.String)
+            pars.Add("@ret_x47id", , DbType.Int32, ParameterDirection.Output)
         End With
-
-        If _cDB.SaveRecord("x47EventLog", pars, True, strW, True, _curUser.j03Login) Then
-            Return True
+        If _cDB.RunSP("x47_appendlog", pars) Then
+            Return pars.Get(Of Int32)("ret_x47id")
         Else
-            Return False
+            Return 0
         End If
+
+        'If _cDB.SaveRecord("x47EventLog", pars, True, strW, True, _curUser.j03Login) Then
+        '    Return True
+        'Else
+        '    Return False
+        'End If
 
     End Function
 
