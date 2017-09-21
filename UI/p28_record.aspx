@@ -23,7 +23,7 @@
         function hardrefresh(pid, flag, codeValue) {
             if (flag == "record-code") {
                 document.getElementById("<%=Me.p28Code.ClientID%>").innerText = codeValue;
-                alert("Změna kódu záznamu byla uložena.")
+                $.alert("Změna kódu záznamu byla uložena.")
             }
 
             document.getElementById("<%=HardRefreshPID.ClientID%>").value = pid;

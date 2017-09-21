@@ -17,7 +17,9 @@
 
             RefreshRecord()
 
-           
+            If Master.IsRecordClone Then
+                Master.DataPID = 0
+            End If
         End If
     End Sub
 

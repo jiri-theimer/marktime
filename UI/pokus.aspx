@@ -8,53 +8,29 @@
   
 
     <script type="text/javascript">
-        function gogo(par) {
-            window.history.pushState({}, "Ahoj-titulek", "/pokus.aspx?gogo="+par);
-            
-        }
-
-        function requesting(sender, eventArgs) {
-            var context = eventArgs.get_context();
-            //Data passed to the service.
-            document.getElementById("<%=txtPokus.clientid%>").value = sender.get_text();
-            
-            context["prefix"] = "p41";
-        }
-
-        function entryAdding(sender, eventArgs) {            
-            if (eventArgs.get_entry().get_value() == "") {
-                eventArgs.set_cancel(true);
-            }
-            
-        }
-        function stitky() {
-            window.open("tag_binding.aspx?prefix=p41&pids=11","_blank")
-        }
+     
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <a href="javascript:stitky()">Štítky</a>
-    <telerik:RadAutoCompleteBox ID="tags1" runat="server" RenderMode="Lightweight" EmptyMessage="Uveďte název štítku" Width="400px" OnClientEntryAdding="entryAdding" OnClientRequesting="requesting">     
-        <WebServiceSettings Method="LoadComboData" Path="~/Services/tag_service.asmx"/>   
-        <Localization ShowAllResults="Zobrazit všechny výsledky" RemoveTokenTitle="Zrušit výběr štítku" />
-        
-    </telerik:RadAutoCompleteBox>
+
     
-    <asp:Literal Text="Popisek přes literal:" runat="server"></asp:Literal>
-    <asp:TextBox ID="txtPokus" runat="server"></asp:TextBox>
+    
+    <asp:TextBox ID="txtMaskaFolders" runat="server" Width="300px" ></asp:TextBox>
 
     <hr />
-    <asp:Literal Text="Popisek přes literal:" runat="server"></asp:Literal>
-    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+    <asp:Button ID="cmdFolders" runat="server" Text="Přejmenovat složky" />
 
-    <asp:Button ID="cmdPokus" runat="server" Text="Generovat" />
-    <asp:Button ID="cmdFormat" runat="server" Text="Format date" />
-
-    <hr />
-    <span>j02ids:</span><asp:TextBox ID="txt1" runat="server" text="MM/DD/YYYY"></asp:TextBox>
-    <span>j11ids:</span><asp:TextBox ID="txt2" runat="server" Text=""></asp:TextBox>
-    <hr />
-    <asp:TextBox ID="txt3" runat="server" Width="800px" Height="100px"></asp:TextBox>
+    <table>
+    <asp:Repeater ID="rp1" runat="server">
+        <ItemTemplate>
+            <tr>
+                <td>
+                    <asp:Label ID="Project" runat="server"></asp:Label>
+                </td>
+            </tr>
+        </ItemTemplate>
+    </asp:Repeater>
+    </table>
 </asp:Content>
 
 

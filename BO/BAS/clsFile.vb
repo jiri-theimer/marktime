@@ -239,10 +239,14 @@ Public Class clsFile
                 securityRules.AddAccessRule(New FileSystemAccessRule(strIdentity, FileSystemRights.FullControl, AccessControlType.Allow))
             End If
         Next
+        If Directory.Exists(strDir) Then
+            Directory.SetAccessControl(strDir, securityRules)
+        Else
+            Dim di As DirectoryInfo = Directory.CreateDirectory(strDir, securityRules)
+
+        End If
+
         
-
-        Dim di As DirectoryInfo = Directory.CreateDirectory(strDir, securityRules)
-
 
         Return True
     End Function

@@ -29,18 +29,27 @@ Public Class pokus
     End Sub
 
     
-    Private Sub cmdPokus_Click(sender As Object, e As EventArgs) Handles cmdPokus.Click
-        Dim j02ids As List(Of Integer) = BO.BAS.ConvertPIDs2List(Me.txt1.Text)
-        Dim j11ids As List(Of Integer) = BO.BAS.ConvertPIDs2List(Me.txt2.Text)
-        Master.Notify(Master.Factory.j02PersonBL.GetEmails_j02_join_j11(j02ids, j11ids).Count)
+    
 
-        txt3.Text = String.Join(",", Master.Factory.j02PersonBL.GetEmails_j02_join_j11(j02ids, j11ids).Select(Function(p) p.x43Email))
+    Private Sub cmdFolders_Click(sender As Object, e As EventArgs) Handles cmdFolders.Click
+
+        'System.IO.Directory.Move("c:\temp\hovado", "c:\temp\beast")
+
+        Dim cF As New BO.clsFile
+
+        If System.IO.File.Exists("c:\temp\beast\MTInfo.txt") Then
+            System.IO.File.SetAttributes("c:\temp\beast\MTInfo.txt", IO.FileAttributes.Normal)
+        End If
+        If Not cF.SaveText2File("c:\temp\beast\MTInfo.txt", "Byl jsem tu " & Now.ToString, False, , False) Then
+            Master.Notify(cF.ErrorMessage)
+        End If
 
 
-    End Sub
+        System.IO.File.SetAttributes("c:\temp\beast\MTInfo.txt", IO.FileAttributes.Hidden)
 
-    Private Sub cmdFormat_Click(sender As Object, e As EventArgs) Handles cmdFormat.Click
-        Dim d As Date = DateSerial(2017, 8, 31)
-        Me.txt2.Text = Right("0" & Month(d).ToString, 2) & "/" & Right("0" & Day(d).ToString, 2) & "/" & Year(d).ToString
+        Dim lis As New List(Of String)
+        lis.Add("MtHovadoNesmysl")
+        cF.CreateDirectoryWithSecurity("c:\temp\hovado2", lis, True, False)
+      
     End Sub
 End Class

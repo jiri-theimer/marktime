@@ -91,6 +91,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="f01FolderBL.vb" />
     <Compile Include="j77WorksheetStatTemplateBL.vb" />
     <Compile Include="Mother\b01WorkflowTemplateBL.vb" />
     <Compile Include="b02WorkflowStatusBL.vb" />

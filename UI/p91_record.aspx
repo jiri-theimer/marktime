@@ -19,7 +19,7 @@
         function hardrefresh(pid, flag, codeValue) {
             if (flag == "record-code") {
                 document.getElementById("<%=Me.p91Code.ClientID%>").innerText = codeValue;
-                alert("Změna čísla faktury byla uložena.")
+                $.alert("Změna čísla faktury byla uložena.")
                 return;
             }
 

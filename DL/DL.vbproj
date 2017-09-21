@@ -85,6 +85,7 @@
     <Compile Include="BAS\clsSqlSyntax.vb" />
     <Compile Include="c21FondCalendarDL.vb" />
     <Compile Include="c26HolidayDL.vb" />
+    <Compile Include="f01FolderDL.vb" />
     <Compile Include="FtDL.vb" />
     <Compile Include="j05MasterSlaveDL.vb" />
     <Compile Include="j17CountryDL.vb" />

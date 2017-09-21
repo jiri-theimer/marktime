@@ -34,7 +34,7 @@
         function hardrefresh(pid, flag, codeValue) {
             if (flag == "record-code") {
                 document.getElementById("<%=me.p41code.ClientID%>").innerText = codeValue;
-                alert("Změna kódu záznamu byla uložena.")
+                $.alert("Změna kódu záznamu byla uložena.")
                 return;
             }
 

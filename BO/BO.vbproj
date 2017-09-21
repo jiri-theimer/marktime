@@ -79,6 +79,8 @@
     <Compile Include="DBNative\c21FondCalendar.vb" />
     <Compile Include="DBNative\c22FondCalendar_Date.vb" />
     <Compile Include="DBNative\c26Holiday.vb" />
+    <Compile Include="DBNative\f01Folder.vb" />
+    <Compile Include="DBNative\f02FolderType.vb" />
     <Compile Include="DBNative\j05MasterSlave.vb" />
     <Compile Include="DBNative\j07PersonPosition.vb" />
     <Compile Include="DBNative\j17Country.vb" />
