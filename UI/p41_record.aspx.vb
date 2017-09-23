@@ -53,8 +53,9 @@
         Me.p51ID_Billing.DataBind()
 
         Me.p51ID_Internal.DataSource = lis.Where(Function(p) p.p51IsInternalPriceList = True And p.p51IsMasterPriceList = False And p.p51IsCustomTailor = False)
-        Me.p51ID_Internal.DataBind()
 
+        Me.p51ID_Internal.DataBind()
+        Me.p51ID_Internal.ChangeItemText("", "--Dědit z nastavení systému--")
 
     End Sub
     Private Sub Handle_Permissions(cRec As BO.p41Project)
@@ -121,6 +122,8 @@
             Me.p41InvoiceDefaultText1.Text = .p41InvoiceDefaultText1
             Me.p41InvoiceDefaultText2.Text = .p41InvoiceDefaultText2
             basUI.SelectDropdownlistValue(Me.p72ID_NonBillable, CInt(.p72ID_NonBillable).ToString)
+            basUI.SelectDropdownlistValue(Me.p72ID_BillableHours, CInt(.p72ID_BillableHours).ToString)
+
 
             Me.p41LimitHours_Notification.Value = .p41LimitHours_Notification
             Me.p41LimitFee_Notification.Value = .p41LimitFee_Notification
@@ -292,6 +295,7 @@
             .p92ID = BO.BAS.IsNullInt(Me.p92id.SelectedValue)
             .p41InvoiceMaturityDays = BO.BAS.IsNullInt(Me.p41InvoiceMaturityDays.Value)
             .p72ID_NonBillable = BO.BAS.IsNullInt(Me.p72ID_NonBillable.SelectedValue)
+            .p72ID_BillableHours = BO.BAS.IsNullInt(Me.p72ID_BillableHours.SelectedValue)
 
             .p41InvoiceDefaultText1 = Me.p41InvoiceDefaultText1.Text
             .p41InvoiceDefaultText2 = Me.p41InvoiceDefaultText2.Text

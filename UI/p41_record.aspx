@@ -253,10 +253,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <asp:Label ID="Label1" runat="server" Text="Fakt. status pro nefakturovatelné úkony:" CssClass="lbl"></asp:Label>
-                        </td>
-                        <td>
+                        <td colspan="2">
+                            <asp:Label ID="Label1" runat="server" Text="Výchozí fakturační status pro nefakturovatelné úkony:" CssClass="lbl"></asp:Label>
+                      
                             <asp:DropDownList ID="p72ID_NonBillable" runat="server">
                                 <asp:ListItem Text="--Rozhodne systém--" Value=""></asp:ListItem>
                                 <asp:ListItem Text="Zahrnout do paušálu" Value="6"></asp:ListItem>
@@ -266,11 +265,21 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td colspan="2">
+                            <asp:Label ID="Label4" runat="server" Text="Výchozí fakturační status pro fakturovatelné hodiny:" CssClass="lbl"></asp:Label>
+                      
+                            <asp:DropDownList ID="p72ID_BillableHours" runat="server">
+                                <asp:ListItem Text="--Rozhodne systém--" Value=""></asp:ListItem>
+                                <asp:ListItem Text="Zahrnout do paušálu" Value="6"></asp:ListItem>
+                                <asp:ListItem Text="Viditelný odpis" Value="2"></asp:ListItem>
+                                <asp:ListItem Text="Skrytý odpis" Value="3"></asp:ListItem>
+                            </asp:DropDownList>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
                             <asp:Label ID="lblp51ID_Internal" runat="server" Text="Ceník nákladových sazeb projektu:" CssClass="lbl"></asp:Label>
 
-                        </td>
-                        <td>
                             <uc:datacombo ID="p51ID_Internal" runat="server" DataTextField="NameWithCurr" AutoPostBack="false" DataValueField="pid" IsFirstEmptyRow="true" Width="300px" />
                         </td>
                     </tr>

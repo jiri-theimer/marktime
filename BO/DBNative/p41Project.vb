@@ -29,6 +29,7 @@ Public Class p41Project
     Public Property p41ParentID As Integer
     Public Property p41BillingMemo As String
     Public Property p72ID_NonBillable As BO.p72IdENUM
+    Public Property p72ID_BillableHours As BO.p72IdENUM
 
     Public Property p65ID As Integer
     Public Property p41RecurNameMask As String

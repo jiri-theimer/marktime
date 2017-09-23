@@ -207,10 +207,10 @@ Public Class p31_approving_step3
         
     End Sub
     Private Sub SetupTempData()
-        Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).Where(Function(p) p.p85Prefix = "")
+        Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).Where(Function(p) p.p85Prefix = ""), intLastP41ID As Integer = 0
         For Each cTemp In lis
             Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.Load(cTemp.p85DataPID)
-            Dim bolOK As Boolean = True
+            Dim bolOK As Boolean = True, intP41ID As Integer = cRec.p41ID
             If cRec.p91ID > 0 Or cRec.p31IsPlanRecord Then bolOK = False
             If bolOK Then
                 Dim cApprove As New BO.p31WorksheetApproveInput(cRec.PID, cRec.p33ID)
@@ -247,6 +247,14 @@ Public Class p31_approving_step3
                                             Else
                                                 .Rate_Billing_Approved = 0
                                                 .Value_Approved_Billing = 0
+                                            End If
+                                        Else
+                                            'fakturovatelné hodiny mohou být záměrně nulovány do paušálu nebo odpisu
+                                            If intP41ID <> intLastP41ID Then
+                                                Dim cP41 As BO.p41Project = Master.Factory.p41ProjectBL.Load(intP41ID)
+                                                If cP41.p72ID_BillableHours > BO.p72IdENUM._NotSpecified Then
+                                                    .p72id = cP41.p72ID_BillableHours   'v projektu je explicitně nastavený fakturační status, kterým se mají nulovat fakturovatelné hodiny
+                                                End If
                                             End If
                                         End If
                                     Case BO.p33IdENUM.PenizeBezDPH
@@ -296,7 +304,7 @@ Public Class p31_approving_step3
                 End If
             End If
 
-
+            intLastP41ID = intP41ID
         Next
 
 

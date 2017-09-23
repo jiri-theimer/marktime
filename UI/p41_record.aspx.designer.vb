@@ -509,6 +509,24 @@ Partial Public Class p41_record
     Protected WithEvents p72ID_NonBillable As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''Label4 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p72ID_BillableHours control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p72ID_BillableHours As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''lblp51ID_Internal control.
     '''</summary>
     '''<remarks>
