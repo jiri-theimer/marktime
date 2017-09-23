@@ -14,9 +14,7 @@
 
             InhaleGridHeight();
 
-            <%If ViewState("can_continue") = "1" And Me.chkSkipThisStep.Checked Then%>
-            <%=Me.ClientScript.GetPostBackEventReference(Me.cmdAutoContinue, "", False)%>;
-            <%End If%>
+            
         });
 
         function InhaleGridHeight() {
@@ -73,9 +71,7 @@
                         <uc:billingmemo ID="bm1" runat="server" />
                     </td>
 
-                    <td>
-                        <asp:CheckBox ID="chkSkipThisStep" runat="server" Text="Tento krok příště automaticky přeskakovat" Font-Bold="true" />
-                    </td>
+                   
                 </tr>
             </table>
         </div>
@@ -90,7 +86,7 @@
     </asp:Panel>
     <asp:HiddenField ID="hidGridHeight" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
-    <asp:Button ID="cmdAutoContinue" runat="server" Style="display: none;" />
+    
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

@@ -10,7 +10,6 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
-                ViewState("can_continue") = "0"
                 ViewState("masterprefix") = Request.Item("masterprefix")
                 ViewState("masterpid") = Request.Item("masterpid")
                 ViewState("pids") = Request.Item("pids")
@@ -44,16 +43,12 @@
                 With lisPars
                     .Add("p31_grid-period")
                     .Add("periodcombo-custom_query")
-                    .Add("p31_approving_step2-chkSkipThisStep")
                 End With
-                Me.chkSkipThisStep.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p31_approving_step2-chkSkipThisStep", "0"))
+
                 .AddToolbarButton("Pokračovat", "continue", , "Images/continue.png")
             End With
 
-            If Me.chkSkipThisStep.Checked Then
-                Me.panContainer.Style.Item("display") = "none"
-                Master.RadToolbar.Visible = False
-            End If
+            
             
             SetupGrid()
 
@@ -104,7 +99,7 @@
         End With
         InhaleMyQuery(mq)
 
-        Dim lis As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq)
+        Dim lis As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq), bolAutoContinue As Boolean = True
 
 
         Me.CountAll.Text = lis.Count.ToString
@@ -118,14 +113,19 @@
             Else
                 Master.Notify("Z výběru worksheet úkonů pro schvalování jich systém několik zamítnul (" & intRefused.ToString & " - odlišené červeným písmem). Pravděpodobně se jedná o již vyfakturované úkony.", NotifyLevel.InfoMessage)
             End If
-        Else
-            ViewState("can_continue") = "1"
+            bolAutoContinue = False
+
         End If
 
         grid1.DataSource = lis.Where(Function(p) p.p91ID = 0 Or p.p31IsPlanRecord = False)
 
         If lis.Where(Function(p) p.p91ID = 0 Or p.p31IsPlanRecord = False).Count = 0 Then
-            ViewState("can_continue") = "0"
+            bolAutoContinue = False
+        End If
+
+        If bolAutoContinue Then
+            Handle_Continue(lis.Where(Function(p) p.p91ID = 0 Or p.p31IsPlanRecord = False).Select(Function(p) p.PID).ToList)
+            Return
         End If
 
         Dim p41ids As List(Of Integer) = lis.Select(Function(p) p.p41ID).Distinct.ToList
@@ -146,8 +146,7 @@
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
         If strButtonValue = "continue" Then
-            Master.Factory.j03UserBL.SetUserParam("p31_approving_step2-chkSkipThisStep", BO.BAS.GB(Me.chkSkipThisStep.Checked))
-            Handle_Continue(False)
+            Handle_Continue(Nothing)
         End If
     End Sub
 
@@ -155,8 +154,8 @@
         RefreshRecord()
     End Sub
 
-    Private Sub Handle_Continue(bolAutoPilot As Boolean)
-        Dim lisP31IDs As List(Of Integer) = grid1.GetAllPIDs()
+    Private Sub Handle_Continue(lisP31IDs As List(Of Integer))
+        If lisP31IDs Is Nothing Then lisP31IDs = grid1.GetAllPIDs()
         If lisP31IDs.Count = 0 Then
             Master.Notify("Žádné úkony pro schvalování.", NotifyLevel.WarningMessage) : Return
         End If
@@ -176,7 +175,7 @@
 
         End With
 
-        Dim strURL As String = "p31_approving_step3.aspx?guid=" & ViewState("guid") & "&gridheight=" & Me.hidGridHeight.Value
+        Dim strURL As String = "p31_approving_step3.aspx?guid=" & ViewState("guid")
         If ViewState("clearapprove") = "1" Then
             strURL += "&clearapprove=1"
         End If
@@ -196,7 +195,5 @@
 
     
 
-    Private Sub cmdAutoContinue_Click(sender As Object, e As EventArgs) Handles cmdAutoContinue.Click
-        Handle_Continue(True)
-    End Sub
+   
 End Class

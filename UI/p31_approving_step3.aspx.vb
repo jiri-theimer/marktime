@@ -316,19 +316,19 @@ Public Class p31_approving_step3
         Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 5000, False, True, , , , , strF)
         Me.hidFrom.Value = strF
 
-        If Not Page.IsPostBack Then
-            Dim intGridHeight As Integer = BO.BAS.IsNullInt(Request.Item("gridheight").Replace(".", ","))
-            Dim intFraHeight As Integer = 500
-            If intGridHeight > 0 Then intFraHeight = intGridHeight + 50
-            Dim strGridHeight As String = "75%", strFraheight As String = "80%"
-            If intGridHeight > 0 Then
-                strGridHeight = intGridHeight.ToString & "px"
-                strFraheight = intFraHeight.ToString & "px"
-            End If
+        ''If Not Page.IsPostBack Then
+        ''    Dim intGridHeight As Integer = BO.BAS.IsNullInt(Request.Item("gridheight").Replace(".", ","))
+        ''    Dim intFraHeight As Integer = 500
+        ''    If intGridHeight > 0 Then intFraHeight = intGridHeight + 50
+        ''    Dim strGridHeight As String = "75%", strFraheight As String = "80%"
+        ''    If intGridHeight > 0 Then
+        ''        strGridHeight = intGridHeight.ToString & "px"
+        ''        strFraheight = intFraHeight.ToString & "px"
+        ''    End If
 
-            fraSubform.Attributes.Item("height") = strFraheight
-            RadMultiPage1.PageViews(0).Height = Unit.Parse(strFraheight)
-        End If
+        ''    ''fraSubform.Attributes.Item("height") = strFraheight
+        ''    ''RadMultiPage1.PageViews(0).Height = Unit.Parse(strFraheight)
+        ''End If
 
 
         grid1.radGridOrig.MasterTableView.AllowFilteringByColumn = Me.chkAutoFilter.Checked

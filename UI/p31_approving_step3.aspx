@@ -15,18 +15,30 @@
 
             $(".slidingDiv2").hide();
 
-
-
-
-
             $('.show_hide2').click(function () {
-
-
 
                 $(".slidingDiv2").slideToggle();
             });
 
 
+
+            var h1 = new Number;
+            var h2 = new Number;
+            var h3 = new Number;
+
+            h1 = $(window).height();
+           
+            var ss = self.document.getElementById("<%=RadMultiPage1.ClientID%>");
+            var offset = $(ss).offset();
+
+            h2 = offset.top;
+
+            h3 = h1 - h2 - 10;
+
+            
+            document.getElementById("<%=RadMultiPage1.ClientID%>").style.height = h3 + "px";
+            
+           
 
 
         });
@@ -241,8 +253,7 @@
 
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
     <div style="clear: both;"></div>
-
-
+    
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr valign="top">
             <td style="min-width: 400px; min-height: 450px;">
@@ -313,7 +324,7 @@
                         <uc:billingmemo ID="bm1" runat="server" />
                     </telerik:RadPageView>
                 </telerik:RadMultiPage>
-
+                
             </td>
             <td>
                 <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>

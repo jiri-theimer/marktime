@@ -68,15 +68,6 @@ Partial Public Class p31_approving_step2
     Protected WithEvents bm1 As Global.UI.billingmemo
 
     '''<summary>
-    '''chkSkipThisStep control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkSkipThisStep As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
     '''grid1 control.
     '''</summary>
     '''<remarks>
@@ -111,15 +102,6 @@ Partial Public Class p31_approving_step2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''cmdAutoContinue control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdAutoContinue As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''Master property.
