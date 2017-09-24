@@ -6,6 +6,7 @@ Public Class b06WorkflowStep
     Inherits BOMother
     Public Property b02ID As Integer
     Public Property b02ID_Target As Integer
+    Public Property f02ID As Integer
     Public Property b06Code As String
     Public Property b06Name As String
     Public Property b06IsManualStep As Boolean
@@ -24,9 +25,7 @@ Public Class b06WorkflowStep
     Public Property b06ValidateAutoMoveSQL As String
     Public Property b06ValidateBeforeErrorMessage As String
     Public Property b06IsRunOneInstanceOnly As Boolean  'zda je povoleno spustit krok pouze jednou
-    Public Property b06CreateDirectory As String
-    Public Property b06CreateSubdirectory As String
-
+ 
 
 
     Private Property _TargetStatus As String

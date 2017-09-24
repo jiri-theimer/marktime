@@ -260,13 +260,14 @@ Class b06WorkflowStepBL
         If cB06.b06RunSQL <> "" Then
             _cDL.RunSQL(cB06.b06RunSQL, intRecordPID)
         End If
+
         _cDL.RunB09Commands(intRecordPID, x29id, cB06.PID)
 
         Dim lisB10 As IEnumerable(Of BO.b10WorkflowCommandCatalog_Binding) = GetList_B10(cB06.PID).Where(Function(p) p.x18ID <> 0) 'zakládání dokumentů
 
         If lisB10.Count > 0 Then
             Dim objects As List(Of Object) = GetObjects(intRecordPID, x29id, 0)
-            Dim cM As New BO.clsMergeContent, strDirs As String = cB06.b06CreateDirectory
+            Dim cM As New BO.clsMergeContent
 
             For Each cB10 In lisB10
                 Dim cDoc As New BO.o23Doc
@@ -285,16 +286,19 @@ Class b06WorkflowStepBL
                 Factory.o23DocBL.Save(cDoc, cB10.x18ID, Nothing, lisX19, lisX20.Select(Function(p) p.x20ID).ToList, "")
             Next
         End If
-        
-
-        If cB06.b06CreateDirectory <> "" Then
-            CreateDirectories(intRecordPID, cB06, x29id)
+        If cB06.f02ID <> 0 Then
+            'založit složku
+            Dim cF01 As New BO.f01Folder
+            cF01.f02ID = cB06.f02ID
+            cF01.f01RecordPID = intRecordPID
+            Factory.f01FolderBL.CreateUpdateFolder(cF01)
         End If
+        
 
         If Not bolStopAutoNotification Then
             'test případné mailové notifikace
             Dim objects As List(Of Object) = GetObjects(intRecordPID, x29id, intP41ID_Ref)
-           
+
 
             Handle_Notification(cB06, intRecordPID, x29id, intJ02ID_Owner, objects, intP41ID_Ref, strComment)
         End If
@@ -319,29 +323,29 @@ Class b06WorkflowStepBL
         If intP41ID_Ref <> 0 Then objects.Add(Factory.p41ProjectBL.Load(intP41ID_Ref))
         Return objects
     End Function
-    Private Sub CreateDirectories(intRecordPID As Integer, cB06 As BO.b06WorkflowStep, x29id As BO.x29IdEnum)
-        _Error = ""
-        With cB06
-            If Trim(.b06CreateDirectory) = "" Then Return
-        End With
+    ''Private Sub CreateDirectories(intRecordPID As Integer, cB06 As BO.b06WorkflowStep, x29id As BO.x29IdEnum)
+    ''    _Error = ""
+    ''    With cB06
+    ''        If Trim(.b06CreateDirectory) = "" Then Return
+    ''    End With
 
-        Dim objects As List(Of Object) = GetObjects(intRecordPID, x29id, 0)
-        Dim cM As New BO.clsMergeContent, strDirs As String = cB06.b06CreateDirectory
-        strDirs = cM.MergeContent(objects, strDirs, "")
+    ''    Dim objects As List(Of Object) = GetObjects(intRecordPID, x29id, 0)
+    ''    Dim cM As New BO.clsMergeContent, strDirs As String = cB06.b06CreateDirectory
+    ''    strDirs = cM.MergeContent(objects, strDirs, "")
 
-        Try
-            For Each strDir As String In BO.BAS.ConvertDelimitedString2List(strDirs, ";")
-                If Not System.IO.Directory.Exists(strDir) Then
-                    System.IO.Directory.CreateDirectory(strDir)
-                End If
-            Next
-            
+    ''    Try
+    ''        For Each strDir As String In BO.BAS.ConvertDelimitedString2List(strDirs, ";")
+    ''            If Not System.IO.Directory.Exists(strDir) Then
+    ''                System.IO.Directory.CreateDirectory(strDir)
+    ''            End If
+    ''        Next
 
-        Catch ex As Exception
-            _Error += " | " & ex.Message
-        End Try
 
-    End Sub
+    ''    Catch ex As Exception
+    ''        _Error += " | " & ex.Message
+    ''    End Try
+
+    ''End Sub
   
 
     Private Sub Handle_Notification(cB06 As BO.b06WorkflowStep, intRecordPID As Integer, x29id As BO.x29IdEnum, intJ02ID_Owner As Integer, objects As List(Of Object), intP41ID_Ref As Integer, strComment As String)

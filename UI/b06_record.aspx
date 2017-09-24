@@ -293,20 +293,7 @@
                 </div>
             </div>
             
-            <div class="content-box2" style="margin-top:40px;">
-                <div class="title">
-                    <img src="Images/folder.png" />
-                    Krok zakládá file-system složky
-                </div>
-                <div class="content">
-                    <div class="div6">
-                        
-                        <asp:TextBox ID="b06CreateDirectory" runat="server" Width="600px"></asp:TextBox>(oddělovač je středník)
-                        
-                    </div>
-                </div>
-            </div>
-
+            
 
         </telerik:RadPageView>
 

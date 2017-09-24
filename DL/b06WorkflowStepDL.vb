@@ -29,6 +29,7 @@
                 pars.Add("x67ID_Direct", BO.BAS.IsNullDBKey(.x67ID_Direct), DbType.Int32)
                 pars.Add("j11ID_Direct", BO.BAS.IsNullDBKey(.j11ID_Direct), DbType.Int32)
                 pars.Add("b02ID_LastReceiver_ReturnTo", BO.BAS.IsNullDBKey(.b02ID_LastReceiver_ReturnTo), DbType.Int32)
+                pars.Add("f02ID", BO.BAS.IsNullDBKey(.f02ID), DbType.Int32)
                 pars.Add("b06Name", .b06Name, DbType.String, , , True, "Název")
                 pars.Add("b06Code", .b06Code, DbType.String)
                 pars.Add("b06RunSQL", .b06RunSQL, DbType.String, , , True, "Spouštět SQL dotaz")
@@ -48,8 +49,6 @@
                 pars.Add("b06NomineeFlag", CInt(.b06NomineeFlag), DbType.Int32)
                 
                 pars.Add("b06IsRunOneInstanceOnly", .b06IsRunOneInstanceOnly, DbType.Boolean)
-                pars.Add("b06CreateDirectory", .b06CreateDirectory, DbType.String)
-                pars.Add("b06CreateSubdirectory", .b06CreateSubdirectory, DbType.String)
 
                 pars.Add("b06validfrom", cRec.ValidFrom, DbType.DateTime)
                 pars.Add("b06validuntil", cRec.ValidUntil, DbType.DateTime)

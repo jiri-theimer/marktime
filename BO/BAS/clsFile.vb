@@ -130,6 +130,15 @@ Public Class clsFile
         End Try
         Return False
     End Function
+    Public Function RenameFolder(strSourceDir As String, strDestDir As String) As Boolean
+        Try
+            Directory.Move(strSourceDir, strDestDir)
+            Return True
+        Catch ex As Exception
+            _Error = ex.Message
+        End Try
+        Return False
+    End Function
     Public Function CopyFile(ByVal FullPath As String, ByVal NewPath As String) As Boolean
         Try
             File.Copy(FullPath, NewPath, True)
@@ -145,15 +154,20 @@ Public Class clsFile
         Return File.Exists(FullPath)
     End Function
 
-    Public Function GetFileListFromDir(ByVal strDir As String, ByVal strMask As String) As List(Of String)
+    Public Function GetFileListFromDir(ByVal strDir As String, ByVal strMask As String, Optional so As SearchOption = SearchOption.AllDirectories) As List(Of String)
         Dim lis As New List(Of String)
         If Not IO.Directory.Exists(strDir) Then Return lis
 
         Dim di As New IO.DirectoryInfo(strDir)
-        Dim diar1 As IO.FileInfo() = di.GetFiles(strMask)
+        Dim diar1 As IO.FileInfo() = di.GetFiles(strMask, so)
         Dim dra As IO.FileInfo, s As String = ""
         For Each dra In diar1
-            lis.Add(dra.Name)
+            If so = SearchOption.TopDirectoryOnly Then
+                lis.Add(dra.Name)
+            Else
+                lis.Add(dra.FullName)
+            End If
+
         Next
         Return lis
 

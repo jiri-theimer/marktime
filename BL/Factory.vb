@@ -1,6 +1,7 @@
 ﻿Public Class Factory
     Private Property _cUser As BO.j03UserSYS  'přihlášený uživatel, který volá factory
     Private Property _p31 As Ip31WorksheetBL
+    Private Property _f01 As If01FolderBL
     Private Property _p36 As Ip36LockPeriodBL
     Private Property _b07 As Ib07CommentBL
     Private Property _j04 As Ij04UserRoleBL
@@ -355,6 +356,12 @@
         Get
             If _p36 Is Nothing Then _p36 = New p36LockPeriodBL(_cUser)
             Return _p36
+        End Get
+    End Property
+    Public ReadOnly Property f01FolderBL As If01FolderBL
+        Get
+            If _f01 Is Nothing Then _f01 = New f01FolderBL(_cUser)
+            Return _f01
         End Get
     End Property
     Public ReadOnly Property p34ActivityGroupBL As Ip34ActivityGroupBL

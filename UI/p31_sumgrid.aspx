@@ -48,7 +48,7 @@
                 <Items>
 
 
-                    <telerik:RadMenuItem Text="Akce nad přehledem" ImageUrl="Images/menuarrow.png" Value="more" PostBack="false">
+                    <telerik:RadMenuItem Text="Akce nad statistikou" ImageUrl="Images/menuarrow.png" Value="more" PostBack="false">
                         <GroupSettings OffsetX="-250" />
                         <ContentTemplate>                            
                             <div class="content-box3">
@@ -123,7 +123,7 @@
 
                                     </div>
                                     <div class="div6">
-                                        <asp:CheckBox ID="chkFirstLastCount" runat="server" AutoPostBack="true" Text="Zobrazovat sloupce [Datum prvního úkonu], [Datum posledního úkonu]" CssClass="chk" Checked="true" />
+                                        <asp:CheckBox ID="chkFirstLastCount" runat="server" AutoPostBack="true" Text="Zobrazovat sloupce: [Datum prvního úkonu], [Datum posledního úkonu] a [Počet]" CssClass="chk" Checked="true" />
                                     </div>
                                 </div>
                         </ContentTemplate>

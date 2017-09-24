@@ -11,6 +11,7 @@ End Enum
 Public Class p42ProjectType
     Inherits BOMother
     Public Property b01ID As Integer
+    Public Property f02ID As Integer
     Public Property x38ID As Integer
     Public Property x38ID_Draft As Integer
     Public Property p42Name As String

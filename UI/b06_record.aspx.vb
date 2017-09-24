@@ -135,7 +135,7 @@
             Else
                 Me.chkDirectNominee.Checked = False
             End If
-            Me.b06CreateDirectory.Text = .b06CreateDirectory
+
             basUI.SelectDropdownlistValue(Me.b06NomineeFlag, CInt(.b06NomineeFlag).ToString)
 
             Master.Timestamp = .Timestamp
@@ -255,8 +255,6 @@
                 .b02ID_Target = BO.BAS.IsNullInt(b02ID_Target.SelectedValue)
 
                 .b06IsRunOneInstanceOnly = Me.b06IsRunOneInstanceOnly.Checked
-
-                .b06CreateDirectory = Me.b06CreateDirectory.Text
 
 
                 .ValidFrom = Master.RecordValidFrom

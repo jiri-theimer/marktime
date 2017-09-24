@@ -40,6 +40,8 @@
         Me.x38ID_Draft.DataBind()
         Me.b01ID.DataSource = Master.Factory.b01WorkflowTemplateBL.GetList().Where(Function(p) p.x29ID = BO.x29IdEnum.p41Project)
         Me.b01ID.DataBind()
+        Me.f02ID.DataSource = Master.Factory.f01FolderBL.GetList_f02(New BO.myQuery)
+        Me.f02ID.DataBind()
 
 
         If Master.DataPID = 0 Then
@@ -54,6 +56,7 @@
             Me.b01ID.SelectedValue = .b01ID.ToString
             Me.x38ID.SelectedValue = .x38ID.ToString
             Me.x38ID_Draft.SelectedValue = .x38ID_Draft.ToString
+            Me.f02ID.SelectedValue = .f02ID.ToString
             Me.p42IsDefault.Checked = .p42IsDefault
             Me.p42IsModule_p31.Checked = .p42IsModule_p31
             Me.p42IsModule_o23.Checked = .p42IsModule_o23
@@ -98,6 +101,7 @@
             cRec.b01ID = BO.BAS.IsNullInt(Me.b01ID.SelectedValue)
             cRec.x38ID = BO.BAS.IsNullInt(Me.x38ID.SelectedValue)
             cRec.x38ID_Draft = BO.BAS.IsNullInt(Me.x38ID_Draft.SelectedValue)
+            cRec.f02ID = BO.BAS.IsNullInt(Me.f02ID.SelectedValue)
             cRec.p42IsDefault = Me.p42IsDefault.Checked
             cRec.ValidFrom = Master.RecordValidFrom
             cRec.ValidUntil = Master.RecordValidUntil

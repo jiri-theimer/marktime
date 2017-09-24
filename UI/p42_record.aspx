@@ -78,6 +78,16 @@
     <table cellpadding="3" cellspacing="2">     
         <tr>
             <td>
+                <asp:Label ID="lblF02ID" Text="V projektu založit složku:" runat="server" CssClass="lbl"></asp:Label>
+            </td>
+            <td>
+                <uc:datacombo ID="f02ID" runat="server" AutoPostBack="false" DataTextField="f02Name" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
+
+
+            </td>
+        </tr>   
+        <tr>
+            <td>
                 <asp:Label ID="lblB01ID" Text="Workflow šablona:" runat="server" CssClass="lbl"></asp:Label>
             </td>
             <td>
@@ -97,6 +107,7 @@
                 // -->
             </td>
         </tr>
+        
         <tr>
             <td>
                 <asp:Label ID="lblOrdinary" Text="Index pořadí:" runat="server" CssClass="lbl" AssociatedControlID="p42Ordinary"></asp:Label>

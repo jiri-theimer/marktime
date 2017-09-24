@@ -158,6 +158,24 @@ Partial Public Class p42_record
     Protected WithEvents p34ids As Global.System.Web.UI.WebControls.CheckBoxList
 
     '''<summary>
+    '''lblF02ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblF02ID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''f02ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents f02ID As Global.UI.datacombo
+
+    '''<summary>
     '''lblB01ID control.
     '''</summary>
     '''<remarks>

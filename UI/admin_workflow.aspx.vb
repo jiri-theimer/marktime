@@ -396,8 +396,7 @@ Public Class admin_workflow
             End If
 
             c.b06Code = dbRow.Item("b06Code") & ""
-            c.b06CreateDirectory = dbRow.Item("b06CreateDirectory") & ""
-            c.b06CreateSubdirectory = dbRow.Item("b06CreateSubdirectory") & ""
+            
             c.b06IsCommentRequired = dbRow.Item("b06IsCommentRequired")
             c.b06IsKickOffStep = dbRow.Item("b06IsKickOffStep")
             c.b06IsManualStep = dbRow.Item("b06IsManualStep")

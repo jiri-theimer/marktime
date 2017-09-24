@@ -21,6 +21,7 @@
             End If
             With cRec
                 pars.Add("b01ID", BO.BAS.IsNullDBKey(.b01ID), DbType.Int32)
+                pars.Add("f02ID", BO.BAS.IsNullDBKey(.f02ID), DbType.Int32)
                 pars.Add("x38ID", BO.BAS.IsNullDBKey(.x38ID), DbType.Int32)
                 pars.Add("x38ID_Draft", BO.BAS.IsNullDBKey(.x38ID_Draft), DbType.Int32)
                 pars.Add("p42Name", .p42Name, DbType.String, , , True, "Název")

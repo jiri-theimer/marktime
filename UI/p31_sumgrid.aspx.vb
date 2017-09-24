@@ -161,20 +161,31 @@ Public Class p31_sumgrid
             .x18Value = Me.hidX18_value.Value
         End With
     End Sub
+
+
     
 
     Private Sub grid1_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles grid1.ItemDataBound
 
         If _curIsExport Then
+            e.Item.HorizontalAlign = HorizontalAlign.Left
+
             If TypeOf e.Item Is GridHeaderItem Then
                 e.Item.BackColor = Drawing.Color.Silver
             End If
             If TypeOf e.Item Is GridGroupHeaderItem Then
-                e.Item.BackColor = Drawing.Color.WhiteSmoke
+                e.Item.BackColor = Drawing.Color.LightBlue
+
             End If
-            If TypeOf e.Item Is GridDataItem Or TypeOf e.Item Is GridHeaderItem Then
-                ''e.Item.Cells(0).Visible = False
+            If TypeOf e.Item Is GridGroupFooterItem Then
+                e.Item.BackColor = Drawing.Color.LightYellow
             End If
+            If TypeOf e.Item Is GridFooterItem Then
+                e.Item.HorizontalAlign = HorizontalAlign.Right
+            End If
+            grid1.radGridOrig.GroupingEnabled = False
+
+            
         Else
             If Not TypeOf e.Item Is GridDataItem Then Return
             Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
@@ -362,6 +373,9 @@ Public Class p31_sumgrid
             .AllowMultiSelect = False
             .AddSystemColumn(22)
 
+           
+
+
             .AddColumn(Me.CurrentDD1.ColumnName, Me.CurrentDD1.ColumnHeader)
             If Not Me.CurrentDD2 Is Nothing Then
                 .AddColumn(Me.CurrentDD2.ColumnName, Me.CurrentDD2.ColumnHeader)
@@ -377,8 +391,9 @@ Public Class p31_sumgrid
                 Next
             End If
 
-            .AddColumn("RecsCount", "Počet", BO.cfENUM.Numeric0, True, , , , True)
+
             If chkFirstLastCount.Checked Then
+                .AddColumn("RecsCount", "Počet", BO.cfENUM.Numeric0, True, , , , True)
                 .AddColumn("RecFirst", "První", BO.cfENUM.DateOnly, True)
                 .AddColumn("RecLast", "Poslední", BO.cfENUM.DateOnly, True)
             End If
@@ -419,7 +434,7 @@ Public Class p31_sumgrid
 
             .GroupByExpressions.Add(GGE)
         End With
-
+        
     End Sub
 
     Private Sub GridExport(strFormat As String)
@@ -568,4 +583,5 @@ Public Class p31_sumgrid
         ReloadPage()
     End Sub
   
+    
 End Class

@@ -58,7 +58,7 @@ Class p41ProjectBL
         Return _cDL.LoadSumRow(intPID)
     End Function
 
-    Private Function ValidateBeforeSave(ByRef cRec As BO.p41Project, lisO39 As List(Of BO.o39Project_Address), lisP30 As List(Of BO.p30Contact_Person), lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField)) As Boolean
+    Private Function ValidateBeforeSave(ByRef cRec As BO.p41Project, cP42 As BO.p42ProjectType, lisO39 As List(Of BO.o39Project_Address), lisP30 As List(Of BO.p30Contact_Person), lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField)) As Boolean
         If cRec.PID = 0 Then
             'ověřit, jakým způsobem může zakládat nové projekty
             With Factory
@@ -74,9 +74,6 @@ Class p41ProjectBL
             End With
         End If
         With cRec
-            If .p42ID = 0 Then
-                _Error = "Chybí typ projektu!" : Return False
-            End If
             If Trim(.p41Name) = "" Then
                 _Error = "Chybí název projektu!" : Return False
             End If
@@ -102,8 +99,7 @@ Class p41ProjectBL
                 If .p41ParentID = .PID Then _Error = "Nadřízený záznam se musí lišit od podřízeného." : Return False
             End If
             If .ValidUntil <= Now Then
-                'pokud o přesun projektu do archivu
-                Dim cP42 As BO.p42ProjectType = Factory.p42ProjectTypeBL.Load(.p42ID)
+                'pokus o přesun projektu do archivu
                 Select Case cP42.p42ArchiveFlag
                     Case BO.p42ArchiveFlagENUM.NoArchive_Waiting_Invoice
                         If _cDL.ExistWaitingWorksheetForInvoicing(.PID) Then
@@ -163,7 +159,12 @@ Class p41ProjectBL
         With cRec
             If .PID = 0 And .j02ID_Owner = 0 Then .j02ID_Owner = _cUser.j02ID
         End With
-        If Not ValidateBeforeSave(cRec, lisO39, lisP30, lisX69, lisFF) Then
+        If cRec.p42ID = 0 Then
+            _Error = "Chybí typ projektu." : Return False
+        End If
+        Dim cP42 As BO.p42ProjectType = Me.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
+
+        If Not ValidateBeforeSave(cRec, cP42, lisO39, lisP30, lisX69, lisFF) Then
             Return False
         End If
         If Not Me.RaiseAppEvent_TailoringTestBeforeSave(cRec, lisFF, "p41_beforesave") Then Return False
@@ -172,17 +173,20 @@ Class p41ProjectBL
         If _cDL.Save(cRec, lisO39, lisP30, lisX69, lisFF, _LastSavedPID) Then
             Me.RaiseAppEvent_TailoringAfterSave(_LastSavedPID, "p41_aftersave")
             If cRec.PID = 0 Then
-                Dim cP42 As BO.p42ProjectType = Me.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
                 If cP42.b01ID > 0 Then
                     InhaleDefaultWorkflowMove(_LastSavedPID, cP42.b01ID)    'je třeba nahodit výchozí workflow stav
                 End If
+                Handle_ProjectFolder(_LastSavedPID, cP42)
+                
                 Me.RaiseAppEvent(BO.x45IDEnum.p41_new, _LastSavedPID, , , cRec.p41IsNoNotify)
             Else
                 If cRec.b01ID > 0 And cRec.b02ID = 0 Then
                     InhaleDefaultWorkflowMove(cRec.PID, cRec.b01ID) 'chybí hodnota workflow stavu
                 End If
+                Handle_ProjectFolder(_LastSavedPID, cP42)
                 Me.RaiseAppEvent(BO.x45IDEnum.p41_update, _LastSavedPID, , , cRec.p41IsNoNotify)
             End If
+
             Return True
         Else
             Return False
@@ -190,6 +194,13 @@ Class p41ProjectBL
 
 
     End Function
+    Private Sub Handle_ProjectFolder(intP41ID As Integer, cP42 As BO.p42ProjectType)
+        If cP42.f02ID = 0 Then Return
+        Dim cF01 As New BO.f01Folder    'založit složku
+        cF01.f02ID = cP42.f02ID
+        cF01.f01RecordPID = intP41ID
+        Factory.f01FolderBL.CreateUpdateFolder(cF01)
+    End Sub
 
     Private Sub InhaleDefaultWorkflowMove(intP41ID As Integer, intB01ID As Integer)
         Dim cB06 As BO.b06WorkflowStep = Me.Factory.b06WorkflowStepBL.LoadKickOffStep(intB01ID)

@@ -22,5 +22,6 @@
     Public Property Last_Invoice As String
     Public Property Last_Wip_Worksheet As String
     Public Property o52_Exist As Boolean
+    Public Property f01_Exist As Boolean
 
 End Class
