@@ -154,11 +154,14 @@ Public Class clsFile
         Return File.Exists(FullPath)
     End Function
 
+
     Public Function GetFileListFromDir(ByVal strDir As String, ByVal strMask As String, Optional so As SearchOption = SearchOption.AllDirectories) As List(Of String)
         Dim lis As New List(Of String)
         If Not IO.Directory.Exists(strDir) Then Return lis
 
+
         Dim di As New IO.DirectoryInfo(strDir)
+
         Dim diar1 As IO.FileInfo() = di.GetFiles(strMask, so)
         Dim dra As IO.FileInfo, s As String = ""
         For Each dra In diar1
@@ -264,6 +267,8 @@ Public Class clsFile
 
         Return True
     End Function
+
+
 End Class
 
 

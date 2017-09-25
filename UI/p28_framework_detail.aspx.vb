@@ -256,6 +256,8 @@
         End If
         If cRecSum.o52_Exist Then
             tags1.RefreshData(cRec.PID)
+        Else
+            tags1.RecordPID = cRec.PID
         End If
 
        

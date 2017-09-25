@@ -299,6 +299,8 @@
 
         If cRecSum.o52_Exist Then
             tags1.RefreshData(cRec.PID)
+        Else
+            tags1.RecordPID = cRec.PID
         End If
         If cRecSum.f01_Exist Then
             folder1.RefreshData(cRec.PID)

@@ -40,7 +40,7 @@
         Me.x38ID_Draft.DataBind()
         Me.b01ID.DataSource = Master.Factory.b01WorkflowTemplateBL.GetList().Where(Function(p) p.x29ID = BO.x29IdEnum.p41Project)
         Me.b01ID.DataBind()
-        Me.f02ID.DataSource = Master.Factory.f01FolderBL.GetList_f02(New BO.myQuery)
+        Me.f02ID.DataSource = Master.Factory.f01FolderBL.GetList_f02(New BO.myQuery).Where(Function(p) p.f02ParentID = 0)
         Me.f02ID.DataBind()
 
 

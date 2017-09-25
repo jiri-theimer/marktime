@@ -119,7 +119,7 @@
             For i As Integer = 0 To tags1.Entries.Count - 1
                 o51IDs.Add(CInt(tags1.Entries.Item(i).Value))
             Next
-            If pids.Count > 0 Then
+            If pids.Count > 1 Then
                 Dim bolReplace As Boolean = False
                 If (opgMulti.SelectedValue = "1" Or opgMulti.SelectedValue = "2") And o51IDs.Count = 0 Then
                     Master.Notify("Musíte vybrat minimálně jeden štítek.", NotifyLevel.ErrorMessage)

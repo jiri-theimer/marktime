@@ -20,6 +20,14 @@
             hidPrefix.Value = value
         End Set
     End Property
+    Public Property RecordPID As Integer
+        Get
+            Return BO.BAS.IsNullInt(hidRecordPID.Value)
+        End Get
+        Set(value As Integer)
+            hidRecordPID.Value = value.ToString
+        End Set
+    End Property
     Public Property ModeUi As Integer   '0 - readonly + odkaz, 1 - v editačním formuláři, 2 - pouze readonly
         Get
             Return BO.BAS.IsNullInt(hidMode.Value)
