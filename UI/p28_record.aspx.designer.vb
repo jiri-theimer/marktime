@@ -626,6 +626,24 @@ Partial Public Class p28_record
     Protected WithEvents p28InvoiceDefaultText2 As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lblJ61ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblJ61ID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''j61ID_Invoice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j61ID_Invoice As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''lblP63ID control.
     '''</summary>
     '''<remarks>

@@ -100,7 +100,7 @@
                 pars.Add("p28ParentID", BO.BAS.IsNullDBKey(.p28ParentID), DbType.Int32)
                 pars.Add("j02ID_ContactPerson_DefaultInWorksheet", BO.BAS.IsNullDBKey(.j02ID_ContactPerson_DefaultInWorksheet), DbType.Int32)
                 pars.Add("j02ID_ContactPerson_DefaultInInvoice", BO.BAS.IsNullDBKey(.j02ID_ContactPerson_DefaultInInvoice), DbType.Int32)
-
+                pars.Add("j61ID_Invoice", BO.BAS.IsNullDBKey(.j61ID_Invoice), DbType.Int32)
 
                 pars.Add("p28Code", .p28Code, DbType.String)
                 pars.Add("p28SupplierFlag", .p28SupplierFlag, DbType.Int32)
@@ -371,7 +371,7 @@
     End Function
 
     Public Function GetGridDataSource(myQuery As BO.myQueryP28) As DataTable
-        Dim s As String = ""
+        Dim s As New System.Text.StringBuilder
         With myQuery
             If Not System.String.IsNullOrEmpty(.MG_GridGroupByField) Then
                 If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 Then
@@ -404,23 +404,23 @@
             If .MG_PageSize > 0 Then
                 Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
-                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & .MG_GridSqlColumns & " " & GetSQLPart2(myQuery)
-                If strW <> "" Then s += " WHERE " & strW
+                s.Append("WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & .MG_GridSqlColumns & " " & GetSQLPart2(myQuery))
+                If strW <> "" Then s.Append(" WHERE " & strW)
 
-                s += ") SELECT * FROM rst"
+                s.Append(") SELECT * FROM rst")
                 pars.Add("start", intStart, DbType.Int32)
                 pars.Add("end", (intStart + .MG_PageSize - 1), DbType.Int32)
-                s += " WHERE RowIndex BETWEEN @start AND @end"
+                s.Append(" WHERE RowIndex BETWEEN @start AND @end")
             Else
                 'bez stránkování
-                s = "SELECT " & .MG_GridSqlColumns & " " & GetSQLPart2(myQuery)
-                If strW <> "" Then s += " WHERE " & strW
-                s += " ORDER BY " & strORDERBY
+                s.Append("SELECT " & .MG_GridSqlColumns & " " & GetSQLPart2(myQuery))
+                If strW <> "" Then s.Append(" WHERE " & strW)
+                s.Append(" ORDER BY " & strORDERBY)
             End If
 
         End With
 
-        Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())
+        Dim ds As DataSet = _cDB.GetDataSet(s.ToString, , pars.Convert2PluginDbParameters())
         If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
     End Function
 
@@ -476,26 +476,28 @@
         Return s
     End Function
     Private Function GetSF() As String
-        Dim s As String = "a.p29ID,a.p92ID,a.j02ID_Owner,a.p87ID,a.p51ID_Billing,a.p51ID_Internal,a.b02ID,a.p63ID,a.p28IsCompany,a.p28IsDraft,a.p28Code,a.p28FirstName,a.p28LastName,a.p28TitleBeforeName,a.p28TitleAfterName,a.p28RegID,a.p28VatID,a.p28Person_BirthRegID,a.p28CompanyName,a.p28CompanyShortName,a.p28InvoiceDefaultText1,a.p28InvoiceDefaultText2,a.p28InvoiceMaturityDays,a.p28LimitHours_Notification,a.p28LimitFee_Notification,a.p28AvatarImage"
-        s += ",a.p28Name as _p28name,p29.p29Name as _p29Name,p92.p92Name as _p92Name,b02.b02Name as _b02Name,p87.p87Name as _p87Name,a.p28RobotAddress,a.p28SupplierID,a.p28SupplierFlag,a.p28ExternalPID"
-        s += ",a.p28TreeLevel as _p28TreeLevel,a.p28TreeIndex as _p28TreeIndex,a.p28TreePrev as _p28TreePrev,a.p28TreeNext as _p28TreeNext,a.p28TreePath as _p28TreePath"
-        s += ",p51billing.p51Name as _p51Name_Billing,p51internal.p51Name as _p51Name_Internal,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,a.p28ParentID,a.p28BillingMemo,a.p28Pohoda_VatCode,a.j02ID_ContactPerson_DefaultInWorksheet,a.j02ID_ContactPerson_DefaultInInvoice," & bas.RecTail("p28", "a")
-        Return s
+        Dim s As New System.Text.StringBuilder
+        s.Append("a.p29ID,a.p92ID,a.j02ID_Owner,a.p87ID,a.p51ID_Billing,a.p51ID_Internal,a.b02ID,a.p63ID,a.p28IsCompany,a.p28IsDraft,a.p28Code,a.p28FirstName,a.p28LastName,a.p28TitleBeforeName,a.p28TitleAfterName,a.p28RegID,a.p28VatID,a.p28Person_BirthRegID,a.p28CompanyName,a.p28CompanyShortName,a.p28InvoiceDefaultText1,a.p28InvoiceDefaultText2,a.p28InvoiceMaturityDays,a.p28LimitHours_Notification,a.p28LimitFee_Notification,a.p28AvatarImage")
+        s.Append(",a.p28Name as _p28name,p29.p29Name as _p29Name,p92.p92Name as _p92Name,b02.b02Name as _b02Name,p87.p87Name as _p87Name,a.p28RobotAddress,a.p28SupplierID,a.p28SupplierFlag,a.p28ExternalPID")
+        s.Append(",a.p28TreeLevel as _p28TreeLevel,a.p28TreeIndex as _p28TreeIndex,a.p28TreePrev as _p28TreePrev,a.p28TreeNext as _p28TreeNext,a.p28TreePath as _p28TreePath")
+        s.Append(",p51billing.p51Name as _p51Name_Billing,p51internal.p51Name as _p51Name_Internal,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,a.p28ParentID,a.p28BillingMemo,a.p28Pohoda_VatCode,a.j02ID_ContactPerson_DefaultInWorksheet,a.j02ID_ContactPerson_DefaultInInvoice,a.j61ID_Invoice," & bas.RecTail("p28", "a"))
+        Return s.ToString
     End Function
     Private Function GetSQLPart2(mq As BO.myQueryP28) As String
-        Dim s As String = "FROM p28Contact a LEFT OUTER JOIN p29ContactType p29 ON a.p29ID=p29.p29ID"
-        s += " LEFT OUTER JOIN p87BillingLanguage p87 ON a.p87ID=p87.p87ID"
-        s += " LEFT OUTER JOIN p92InvoiceType p92 ON a.p92ID=p92.p92ID"
-        s += " LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID"
-        s += " LEFT OUTER JOIN p51PriceList p51billing ON a.p51ID_Billing=p51billing.p51ID"
-        s += " LEFT OUTER JOIN p51PriceList p51internal ON a.p51ID_Internal=p51internal.p51ID"
-        s += " LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
-        s += " LEFT OUTER JOIN p28Contact_FreeField p28free ON a.p28ID=p28free.p28ID"
+        Dim s As New System.Text.StringBuilder
+        s.Append("FROM p28Contact a LEFT OUTER JOIN p29ContactType p29 ON a.p29ID=p29.p29ID")
+        s.Append(" LEFT OUTER JOIN p87BillingLanguage p87 ON a.p87ID=p87.p87ID")
+        s.Append(" LEFT OUTER JOIN p92InvoiceType p92 ON a.p92ID=p92.p92ID")
+        s.Append(" LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID")
+        s.Append(" LEFT OUTER JOIN p51PriceList p51billing ON a.p51ID_Billing=p51billing.p51ID")
+        s.Append(" LEFT OUTER JOIN p51PriceList p51internal ON a.p51ID_Internal=p51internal.p51ID")
+        s.Append(" LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID")
+        s.Append(" LEFT OUTER JOIN p28Contact_FreeField p28free ON a.p28ID=p28free.p28ID")
         ''s += " LEFT OUTER JOIN (SELECT p28ID as ParentID,p28Name as ParentContact FROM p28Contact) p28parent ON a.p28ParentID=p28parent.ParentID"
         If Not mq Is Nothing Then
-            If mq.MG_AdditionalSqlFROM <> "" Then s += " " & mq.MG_AdditionalSqlFROM
+            If mq.MG_AdditionalSqlFROM <> "" Then s.Append(" " & mq.MG_AdditionalSqlFROM)
         End If
-        Return s
+        Return s.ToString
     End Function
 
     Public Sub UpdateSelectedRole(intX67ID As Integer, lisX69 As List(Of BO.x69EntityRole_Assign), intP28ID As Integer)

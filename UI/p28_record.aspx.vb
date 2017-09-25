@@ -39,6 +39,9 @@
             
             Me.p63ID.DataSource = Master.Factory.p63OverheadBL.GetList(New BO.myQuery)
             Me.p63ID.DataBind()
+            Me.j61ID_Invoice.DataSource = Master.Factory.j61TextTemplateBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = BO.x29IdEnum.p91Invoice)
+            Me.j61ID_Invoice.DataBind()
+            Me.j61ID_Invoice.Items.Insert(0, "")
             
             If Me.p92id.Visible Then
                 Me.p92id.DataSource = Master.Factory.p92InvoiceTypeBL.GetList(New BO.myQuery).Where(Function(p) p.p92InvoiceType = BO.p92InvoiceTypeENUM.ClientInvoice)
@@ -129,6 +132,7 @@
             End If
             Me.p51ID_Internal.SelectedValue = .p51ID_Internal.ToString
             Me.p63ID.SelectedValue = .p63ID.ToString
+            basUI.SelectDropdownlistValue(Me.j61ID_Invoice, .j61ID_Invoice.ToString)
 
             Me.p87ID.SelectedValue = .p87ID.ToString
             Me.p92id.SelectedValue = .p92ID.ToString
@@ -420,6 +424,7 @@
                 .j02ID_Owner = BO.BAS.IsNullInt(Me.j02ID_Owner.Value)
                 .p29ID = BO.BAS.IsNullInt(Me.p29ID.SelectedValue)
                 .p63ID = BO.BAS.IsNullInt(Me.p63ID.SelectedValue)
+                .j61ID_Invoice = BO.BAS.IsNullInt(Me.j61ID_Invoice.SelectedValue)
                 .p28ParentID = BO.BAS.IsNullInt(Me.p28ParentID.Value)
                 If .p28IsCompany Then
                     .p28CompanyName = Me.p28CompanyName.Text

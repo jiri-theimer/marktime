@@ -454,6 +454,14 @@
                 </tr>
                 <tr>
                     <td>
+                        <asp:Label ID="lblJ61ID" runat="server" Text="Textová e-mail šablona:" CssClass="lbl"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="j61ID_Invoice" runat="server" DataTextField="j61Name" DataValueField="pid" Width="300px"></asp:DropDownList>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <asp:Label ID="lblP63ID" runat="server" Text="Režijní přirážka k faktuře:" CssClass="lbl"></asp:Label>
                     </td>
                     <td>

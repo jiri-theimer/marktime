@@ -11,17 +11,17 @@
     <script type="text/javascript">
         function j61_create() {
            
-            dialog_master("j61_record.aspx?pid=0&x29id=940", true);
+            dialog_master("j61_record.aspx?pid=0&prefix="+document.getElementById("<%=hidPrefix.ClientID%>").value, true);
             return (false);
         }
         function j61_edit() {
 
-            dialog_master("j61_record.aspx?pid=<%=me.j61id.selectedvalue%>&x29id=940", true);
+            dialog_master("j61_record.aspx?pid=<%=me.j61id.selectedvalue%>", true);
             return (false);
         }
         function j61_clone() {
 
-            dialog_master("j61_record.aspx?clone=1&pid=<%=me.j61id.selectedvalue%>&x29id=940", true);
+            dialog_master("j61_record.aspx?clone=1&pid=<%=me.j61id.selectedvalue%>", true);
             return (false);
         }
         function p30_create() {

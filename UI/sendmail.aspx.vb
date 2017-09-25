@@ -59,6 +59,8 @@
             Me.upload1.GUID = BO.BAS.GetGUID
             Me.uploadlist1.GUID = Me.upload1.GUID
 
+            SetupTemplates()
+
             Select Case Me.CurrentPrefix
                 Case "p28"
                     hidMasterPrefix_p30.Value = "p28"
@@ -90,6 +92,12 @@
                             If Me.txtTo.Text.IndexOf(s) < 0 Then Me.txtTo.Text += "," & s
                         End If
                     End If
+                    Dim cP28 As BO.p28Contact = Master.Factory.p28ContactBL.Load(cP91.p28ID)
+                    If Not cP28 Is Nothing Then
+                        basUI.SelectDropdownlistValue(Me.j61ID, cP28.PID)
+                        Handle_ChangeJ61ID()
+                    End If
+
             End Select
             If Me.hidMasterPrefix_p30.Value <> "" Then
                 linkNewPerson.Text = BO.BAS.OM2(Me.linkNewPerson.Text, Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(hidMasterPrefix_p30.Value), BO.BAS.IsNullInt(hidMasterPID_p30.Value), False))
@@ -118,8 +126,8 @@
                 Me.txtBody.Text += vbCrLf & vbCrLf & Master.Factory.j02PersonBL.Load(Master.Factory.SysUser.j02ID).j02EmailSignature
             End If
 
-            SetupTemplates()
 
+            
             If Request.Item("x31id") <> "" Then
                 GenerateReportOnBehind(BO.BAS.IsNullInt(Request.Item("x31id")))
             End If
@@ -130,9 +138,11 @@
     End Sub
     
     Private Sub SetupTemplates()
-        Me.j61ID.DataSource = Master.Factory.j61TextTemplateBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = BO.x29IdEnum.x40MailQueue)
+        Me.j61ID.DataSource = Master.Factory.j61TextTemplateBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = Me.CurrentX29ID)
         Me.j61ID.DataBind()
         Me.j61ID.Items.Insert(0, "--Vyberte pojmenovanou šablonu zprávy/textu--")
+
+        
     End Sub
 
     Private Sub SetupCombos()

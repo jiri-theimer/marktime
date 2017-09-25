@@ -28,6 +28,9 @@
         If Master.DataPID = 0 Then
             Me.j02ID_Owner.Value = Master.Factory.SysUser.j02ID.ToString
             Me.j02ID_Owner.Text = Master.Factory.SysUser.PersonDesc
+            If Request.Item("prefix") <> "" Then
+                basUI.SelectDropdownlistValue(Me.x29ID, CInt(BO.BAS.GetX29FromPrefix(Request.Item("prefix"))))
+            End If
             Return
         End If
 
@@ -50,7 +53,7 @@
             Me.j61MailTO.Text = .j61MailTO
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
         End With
-        Me.x29ID.Enabled = False
+
 
         roles1.InhaleInitialData(cRec.PID)
     End Sub

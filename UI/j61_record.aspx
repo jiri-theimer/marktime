@@ -26,8 +26,13 @@
                     </td>
                     <td>
                         <asp:DropDownList ID="x29ID" runat="server" DataTextField="x29Name" DataValueField="x29ID" AutoPostBack="true">
-                            <asp:ListItem Text="E-mail zpráva" Value="940"></asp:ListItem>
-
+                            <asp:ListItem Text="" Value=""></asp:ListItem>
+                            <asp:ListItem Text="Osobní" Value="102"></asp:ListItem>
+                            <asp:ListItem Text="Faktura" Value="391"></asp:ListItem>
+                            <asp:ListItem Text="Klient" Value="328"></asp:ListItem>
+                            <asp:ListItem Text="Projekt" Value="141"></asp:ListItem>
+                            <asp:ListItem Text="Úkol" Value="356"></asp:ListItem>
+                            <asp:ListItem Text="Dokument" Value="223"></asp:ListItem>
                         </asp:DropDownList>
 
                     </td>
