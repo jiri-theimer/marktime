@@ -1,6 +1,6 @@
 ﻿Public Interface Ix18EntityCategoryBL
     Inherits ifMother
-    Function Save(cRec As BO.x18EntityCategory, lisX20 As List(Of BO.x20EntiyToCategory), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting), lisX17 As List(Of BO.x17EntityCategory_Folder)) As Boolean
+    Function Save(cRec As BO.x18EntityCategory, lisX20 As List(Of BO.x20EntiyToCategory), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting)) As Boolean
     Function Load(intPID As Integer) As BO.x18EntityCategory
     Function LoadByX23ID(intX23ID As Integer) As BO.x18EntityCategory
     Function Delete(intPID As Integer) As Boolean
@@ -17,7 +17,7 @@
     Function GetList_x19(x20IDs As List(Of Integer), bolInhaleRecordAlias As Boolean) As IEnumerable(Of BO.x19EntityCategory_Binding)
     Function GetList_O23(x29id As BO.x29IdEnum) As IEnumerable(Of BO.o23Doc)
     Function GetList_x16(intX18ID As Integer) As IEnumerable(Of BO.x16EntityCategory_FieldSetting)
-    Function GetList_x17(intX18ID As Integer) As IEnumerable(Of BO.x17EntityCategory_Folder)
+    ''Function GetList_x17(intX18ID As Integer) As IEnumerable(Of BO.x17EntityCategory_Folder)
     Function InhaleDisposition(cRec As BO.x18EntityCategory) As BO.x18RecordDisposition
 End Interface
 Class x18EntityCategoryBL
@@ -44,7 +44,7 @@ Class x18EntityCategoryBL
         Return _cDL.LoadByX23ID(intX23ID)
     End Function
 
-    Public Function Save(cRec As BO.x18EntityCategory, lisX20 As List(Of BO.x20EntiyToCategory), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting), lisX17 As List(Of BO.x17EntityCategory_Folder)) As Boolean Implements Ix18EntityCategoryBL.Save
+    Public Function Save(cRec As BO.x18EntityCategory, lisX20 As List(Of BO.x20EntiyToCategory), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting)) As Boolean Implements Ix18EntityCategoryBL.Save
         With cRec
             If Trim(.x18Name) = "" Then
                 _Error = "Chybí název typu dokumentu." : Return False
@@ -106,7 +106,7 @@ Class x18EntityCategoryBL
 
 
 
-        If _cDL.Save(cRec, lisX20, lisX69, lisX16, lisX17) Then
+        If _cDL.Save(cRec, lisX20, lisX69, lisX16) Then
             Dim cX23 As BO.x23EntityField_Combo = Factory.x23EntityField_ComboBL.Load(cRec.x23ID)
             If cX23.x23Ordinary = -666 Then
                 cX23.x23Name = cRec.x18Name
@@ -167,9 +167,9 @@ Class x18EntityCategoryBL
     Public Function GetList_x16(intX18ID As Integer) As IEnumerable(Of BO.x16EntityCategory_FieldSetting) Implements Ix18EntityCategoryBL.GetList_x16
         Return _cDL.GetList_x16(intX18ID)
     End Function
-    Public Function GetList_x17(intX18ID As Integer) As IEnumerable(Of BO.x17EntityCategory_Folder) Implements Ix18EntityCategoryBL.GetList_x17
-        Return _cDL.GetList_x17(intX18ID)
-    End Function
+    ''Public Function GetList_x17(intX18ID As Integer) As IEnumerable(Of BO.x17EntityCategory_Folder) Implements Ix18EntityCategoryBL.GetList_x17
+    ''    Return _cDL.GetList_x17(intX18ID)
+    ''End Function
 
     Public Function InhaleDisposition(cRec As BO.x18EntityCategory) As BO.x18RecordDisposition Implements Ix18EntityCategoryBL.InhaleDisposition
         Dim c As New BO.x18RecordDisposition

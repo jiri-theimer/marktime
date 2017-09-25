@@ -347,6 +347,15 @@ Partial Public Class p41_framework_detail
     Protected WithEvents tags1 As Global.UI.mytags
 
     '''<summary>
+    '''folder1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents folder1 As Global.UI.f01folder
+
+    '''<summary>
     '''tree1 control.
     '''</summary>
     '''<remarks>

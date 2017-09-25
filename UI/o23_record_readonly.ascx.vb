@@ -71,17 +71,8 @@
             Me.Timestamp.Text = .Timestamp
         End With
 
-        Dim s As String = Me.Factory.o23DocBL.LoadFolders(cRec.PID)
-        If s = "" Then
-            rpFolders.Visible = False
-        Else
-            Dim lis As List(Of String) = BO.BAS.ConvertDelimitedString2List(s, "|")
-            If lis.Count > 0 Then
-                rpFolders.DataSource = lis.Take(1)
-                rpFolders.DataBind()
-            End If
-            
-        End If
+        ''Dim s As String = Me.Factory.o23DocBL.LoadFolders(cRec.PID)
+        
 
         If bolShowBoundEntities Then
             'Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Me.Factory.x18EntityCategoryBL.GetList_x20_join_x18(Me.X18ID).Where(Function(p) p.x20EntryModeFlag = BO.x20EntryModeENUM.InsertUpdateWithoutCombo Or p.x20EntryModeFlag = BO.x20EntryModeENUM.ExternalByWorkflow)
@@ -100,12 +91,7 @@
         RefreshUserFields()
     End Sub
 
-    Private Sub rpFolders_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpFolders.ItemDataBound
-        With CType(e.Item.FindControl("link1"), HyperLink)
-            .NavigateUrl = "file:///" & CType(e.Item.DataItem, String)
-            .Text = CType(e.Item.DataItem, String)
-        End With
-    End Sub
+    
 
     Private Sub RefreshUserFields()
         Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Me.Factory.x18EntityCategoryBL.GetList_x16(Me.X18ID)

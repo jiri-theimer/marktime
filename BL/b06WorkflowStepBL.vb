@@ -288,10 +288,7 @@ Class b06WorkflowStepBL
         End If
         If cB06.f02ID <> 0 Then
             'založit složku
-            Dim cF01 As New BO.f01Folder
-            cF01.f02ID = cB06.f02ID
-            cF01.f01RecordPID = intRecordPID
-            Factory.f01FolderBL.CreateUpdateFolder(cF01)
+            Factory.f01FolderBL.CreateUpdateFolder(intRecordPID, cB06.f02ID)
         End If
         
 

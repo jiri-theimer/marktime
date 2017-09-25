@@ -176,14 +176,18 @@ Class p41ProjectBL
                 If cP42.b01ID > 0 Then
                     InhaleDefaultWorkflowMove(_LastSavedPID, cP42.b01ID)    'je třeba nahodit výchozí workflow stav
                 End If
-                Handle_ProjectFolder(_LastSavedPID, cP42)
-                
+                If cP42.f02ID <> 0 Then
+                    Factory.f01FolderBL.CreateUpdateFolder(_LastSavedPID, cP42.f02ID)
+                End If
+
                 Me.RaiseAppEvent(BO.x45IDEnum.p41_new, _LastSavedPID, , , cRec.p41IsNoNotify)
             Else
                 If cRec.b01ID > 0 And cRec.b02ID = 0 Then
                     InhaleDefaultWorkflowMove(cRec.PID, cRec.b01ID) 'chybí hodnota workflow stavu
                 End If
-                Handle_ProjectFolder(_LastSavedPID, cP42)
+                If cP42.f02ID <> 0 Then
+                    Factory.f01FolderBL.CreateUpdateFolder(_LastSavedPID, cP42.f02ID)
+                End If
                 Me.RaiseAppEvent(BO.x45IDEnum.p41_update, _LastSavedPID, , , cRec.p41IsNoNotify)
             End If
 
@@ -194,13 +198,7 @@ Class p41ProjectBL
 
 
     End Function
-    Private Sub Handle_ProjectFolder(intP41ID As Integer, cP42 As BO.p42ProjectType)
-        If cP42.f02ID = 0 Then Return
-        Dim cF01 As New BO.f01Folder    'založit složku
-        cF01.f02ID = cP42.f02ID
-        cF01.f01RecordPID = intP41ID
-        Factory.f01FolderBL.CreateUpdateFolder(cF01)
-    End Sub
+   
 
     Private Sub InhaleDefaultWorkflowMove(intP41ID As Integer, intB01ID As Integer)
         Dim cB06 As BO.b06WorkflowStep = Me.Factory.b06WorkflowStepBL.LoadKickOffStep(intB01ID)

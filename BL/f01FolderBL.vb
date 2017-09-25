@@ -1,8 +1,9 @@
 ﻿
 Public Interface If01FolderBL
     Inherits IFMother
-    Function CreateUpdateFolder(cRec As BO.f01Folder) As Boolean
+    Function CreateUpdateFolder(intRecordPID As Integer, intF02ID As Integer) As Boolean
     Function Load(intPID As Integer) As BO.f01Folder
+    Function LoadByEntity(intRecordPID As Integer, intF02ID As Integer) As BO.f01Folder
     Function Load_f02(intF02ID As Integer) As BO.f02FolderType
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQuery, Optional intRecordPID As Integer = 0, Optional x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified) As IEnumerable(Of BO.f01Folder)
@@ -26,12 +27,17 @@ Class f01FolderBL
         _cDL = New DL.f01FolderDL(ServiceUser)
         _cUser = ServiceUser
     End Sub
-    Public Function CreateUpdateFolder(cRec As BO.f01Folder) As Boolean Implements If01FolderBL.CreateUpdateFolder
-        With cRec
-            If .f01RecordPID = 0 Then
-                _Error = "Chybí f01RecordPID." : Return False
-            End If
-        End With
+    Public Function CreateUpdateFolder(intRecordPID As Integer, intF02ID As Integer) As Boolean Implements If01FolderBL.CreateUpdateFolder
+        If intRecordPID = 0 Or intF02ID = 0 Then
+            _Error = "Na vstupu chybí f01RecordPID nebo intF02ID." : Return False
+        End If
+        Dim cRec As BO.f01Folder = LoadByEntity(intRecordPID, intF02ID)
+        If cRec Is Nothing Then
+            cRec = New BO.f01Folder
+            cRec.f01RecordPID = intRecordPID
+            cRec.f02ID = intF02ID
+        End If
+
         Dim mq As New BO.myQuery
         mq.Closed = BO.BooleanQueryMode.NoQuery
         Dim lisF02 As IEnumerable(Of BO.f02FolderType) = GetList_f02(mq)
@@ -76,7 +82,7 @@ Class f01FolderBL
                 _cF.RenameFolder(strExistingFolder, dirs(0)) 'složka projektu již existuje s jiným názvem -> je nutné ji přejmenovat
                 If lisChilds.Count = 0 Then Return True
             End If
-           
+
         End If
 
         For Each c In lisChilds  'případné pod-složky
@@ -133,6 +139,9 @@ Class f01FolderBL
     End Function
     Public Function Load(intPID As Integer) As BO.f01Folder Implements If01FolderBL.Load
         Return _cDL.Load(intPID)
+    End Function
+    Function LoadByEntity(intRecordPID As Integer, intF02ID As Integer) As BO.f01Folder Implements If01FolderBL.LoadByEntity
+        Return _cDL.LoadByEntity(intRecordPID, intF02ID)
     End Function
     Public Function Load_f02(intF02ID As Integer) As BO.f02FolderType Implements If01FolderBL.Load_f02
         Return _cDL.Load_f02(intF02ID)

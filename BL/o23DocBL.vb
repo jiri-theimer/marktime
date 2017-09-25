@@ -5,10 +5,10 @@
     Function LoadByCode(strCode As String, intX23ID As Integer) As BO.o23Doc
     Function LoadByExternalPID(strExternalPID As String) As BO.o23Doc
     Function LoadHtmlContent(intPID As Integer) As String
-    Function LoadFolders(intPID As Integer) As String
+    ''Function LoadFolders(intPID As Integer) As String
     Function GetEntityPidByX20ID(intO23ID As Integer, intX20ID As Integer) As Integer
     Function SaveHtmlContent(intPID As Integer, strHtmlContent As String, Optional strPlainText As String = "") As Boolean
-    Function SaveFolders(intPID As Integer, strFoldersByPipes As String) As Boolean
+    ''Function SaveFolders(intPID As Integer, strFoldersByPipes As String) As Boolean
     Function Delete(intPID As Integer) As Boolean
     Function GetList(myQuery As BO.myQueryO23) As IEnumerable(Of BO.o23Doc)
     Function GetDataTable4Grid(myQuery As BO.myQueryO23) As DataTable
@@ -109,7 +109,7 @@ Class o23DocBL
             Me.RaiseAppEvent_TailoringAfterSave(into23ID, "o23_aftersave")
             If intX18ID <> 0 Then
                 Dim cX18 As BO.x18EntityCategory = Me.Factory.x18EntityCategoryBL.Load(intX18ID)
-                Handle_CreateFileSystemFolders(intO23ID, cX18)
+                ''Handle_CreateFileSystemFolders(intO23ID, cX18)
                
                 Dim intB01ID As Integer = cX18.b01ID
                 If cRec.PID = 0 Then
@@ -128,44 +128,44 @@ Class o23DocBL
     Public Function GetEntityPidByX20ID(intO23ID As Integer, intX20ID As Integer) As Integer Implements Io23DocBL.GetEntityPidByX20ID
         Return _cDL.GetEntityPidByX20ID(intO23ID, intX20ID)
     End Function
-    Private Sub Handle_CreateFileSystemFolders(intO23ID As Integer, cX18 As BO.x18EntityCategory)
-        Dim lisX17 As IEnumerable(Of BO.x17EntityCategory_Folder) = Me.Factory.x18EntityCategoryBL.GetList_x17(cX18.PID)
-        If lisX17.Count = 0 Then Return
-        Dim objects As New List(Of Object)
-        If lisX17.Where(Function(p) p.x17Path.IndexOf("%]") > 0).Count > 0 Then
-            Dim lisX20 As IEnumerable(Of BO.x20EntiyToCategory) = Me.Factory.x18EntityCategoryBL.GetList_x20(cX18.PID)
-            For Each cX20 In lisX20
-                Select Case cX20.x29ID
-                    Case BO.x29IdEnum.p56Task
-                        objects.Add(Factory.p56TaskBL.Load(GetEntityPidByX20ID(intO23ID, cX20.x20ID)))
-                    Case BO.x29IdEnum.j02Person
-                        objects.Add(Factory.j02PersonBL.Load(GetEntityPidByX20ID(intO23ID, cX20.x20ID)))
-                    Case BO.x29IdEnum.p41Project
-                        objects.Add(Factory.p41ProjectBL.Load(GetEntityPidByX20ID(intO23ID, cX20.x20ID)))
-                    Case BO.x29IdEnum.p28Contact
-                        objects.Add(Factory.p28ContactBL.Load(GetEntityPidByX20ID(intO23ID, cX20.x20ID)))
-                    Case BO.x29IdEnum.p91Invoice
-                        objects.Add(Factory.p91InvoiceBL.Load(GetEntityPidByX20ID(intO23ID, cX20.x20ID)))
-                    Case BO.x29IdEnum.o23Doc
-                        objects.Add(Factory.o23DocBL.Load(GetEntityPidByX20ID(intO23ID, cX20.x20ID)))
-                End Select
-            Next
-        End If
+    ''Private Sub Handle_CreateFileSystemFolders(intO23ID As Integer, cX18 As BO.x18EntityCategory)
+    ''    Dim lisX17 As IEnumerable(Of BO.x17EntityCategory_Folder) = Me.Factory.x18EntityCategoryBL.GetList_x17(cX18.PID)
+    ''    If lisX17.Count = 0 Then Return
+    ''    Dim objects As New List(Of Object)
+    ''    If lisX17.Where(Function(p) p.x17Path.IndexOf("%]") > 0).Count > 0 Then
+    ''        Dim lisX20 As IEnumerable(Of BO.x20EntiyToCategory) = Me.Factory.x18EntityCategoryBL.GetList_x20(cX18.PID)
+    ''        For Each cX20 In lisX20
+    ''            Select Case cX20.x29ID
+    ''                Case BO.x29IdEnum.p56Task
+    ''                    objects.Add(Factory.p56TaskBL.Load(GetEntityPidByX20ID(intO23ID, cX20.x20ID)))
+    ''                Case BO.x29IdEnum.j02Person
+    ''                    objects.Add(Factory.j02PersonBL.Load(GetEntityPidByX20ID(intO23ID, cX20.x20ID)))
+    ''                Case BO.x29IdEnum.p41Project
+    ''                    objects.Add(Factory.p41ProjectBL.Load(GetEntityPidByX20ID(intO23ID, cX20.x20ID)))
+    ''                Case BO.x29IdEnum.p28Contact
+    ''                    objects.Add(Factory.p28ContactBL.Load(GetEntityPidByX20ID(intO23ID, cX20.x20ID)))
+    ''                Case BO.x29IdEnum.p91Invoice
+    ''                    objects.Add(Factory.p91InvoiceBL.Load(GetEntityPidByX20ID(intO23ID, cX20.x20ID)))
+    ''                Case BO.x29IdEnum.o23Doc
+    ''                    objects.Add(Factory.o23DocBL.Load(GetEntityPidByX20ID(intO23ID, cX20.x20ID)))
+    ''            End Select
+    ''        Next
+    ''    End If
 
-        Dim folders As New List(Of String)
-        For Each c In lisX17
-            Dim strDir As String = c.x17Path
-            If strDir.IndexOf("%]") > 0 Then
-                Dim cM As New BO.clsMergeContent
-                strDir = cM.MergeContent(objects, strDir, "")
-            End If
-            If Not System.IO.Directory.Exists(strDir) Then
-                System.IO.Directory.CreateDirectory(strDir)
-                folders.Add(strDir)
-            End If
-        Next
-        Me.SaveFolders(intO23ID, String.Join("|", folders))
-    End Sub
+    ''    Dim folders As New List(Of String)
+    ''    For Each c In lisX17
+    ''        Dim strDir As String = c.x17Path
+    ''        If strDir.IndexOf("%]") > 0 Then
+    ''            Dim cM As New BO.clsMergeContent
+    ''            strDir = cM.MergeContent(objects, strDir, "")
+    ''        End If
+    ''        If Not System.IO.Directory.Exists(strDir) Then
+    ''            System.IO.Directory.CreateDirectory(strDir)
+    ''            folders.Add(strDir)
+    ''        End If
+    ''    Next
+    ''    Me.SaveFolders(intO23ID, String.Join("|", folders))
+    ''End Sub
     Private Sub InhaleDefaultWorkflowMove(into23ID As Integer, intB01ID As Integer)
         Dim cB06 As BO.b06WorkflowStep = Me.Factory.b06WorkflowStepBL.LoadKickOffStep(intB01ID)
         If cB06 Is Nothing Then Return
@@ -211,15 +211,15 @@ Class o23DocBL
     Public Function LoadHtmlContent(intPID As Integer) As String Implements Io23DocBL.LoadHtmlContent
         Return _cDL.LoadHtmlContent(intPID)
     End Function
-    Public Function LoadFolders(intPID As Integer) As String Implements Io23DocBL.LoadFolders
-        Return _cDL.LoadFolders(intPID)
-    End Function
+    ''Public Function LoadFolders(intPID As Integer) As String Implements Io23DocBL.LoadFolders
+    ''    Return _cDL.LoadFolders(intPID)
+    ''End Function
     Public Function SaveHtmlContent(intPID As Integer, strHtmlContent As String, Optional strPlainText As String = "") As Boolean Implements Io23DocBL.SaveHtmlContent
         Return _cDL.SaveHtmlContent(intPID, strHtmlContent, strPlainText)
     End Function
-    Public Function SaveFolders(intPID As Integer, strFoldersByPipes As String) As Boolean Implements Io23DocBL.SaveFolders
-        Return _cDL.SaveFolders(intPID, strFoldersByPipes)
-    End Function
+    ''Public Function SaveFolders(intPID As Integer, strFoldersByPipes As String) As Boolean Implements Io23DocBL.SaveFolders
+    ''    Return _cDL.SaveFolders(intPID, strFoldersByPipes)
+    ''End Function
     Public Sub Handle_Reminder() Implements Io23DocBL.Handle_Reminder
         Dim d1 As Date = DateAdd(DateInterval.Day, -2, Now)
         Dim d2 As Date = Now

@@ -356,35 +356,7 @@
 
                 </div>
             </div>
-            <div class="content-box2" style="margin-top:20px;">
-                <div class="title">V záznamu dokumentu zakládat složky</div>
-                <div class="content">
-                    <div class="div6">
-                        <asp:Button ID="cmdAddX17" runat="server" CssClass="cmd" Text="Přidat složku" />
-                    </div>
-                    <table>  
-                                 
-                        <asp:Repeater ID="rpX17" runat="server">
-                            <ItemTemplate>
-                                <tr valign="top">
-                                    <td>                                        
-                                        <asp:TextBox ID="x17Path" runat="server" Width="500px" ToolTip="Cesta"></asp:TextBox>
-                                    </td>
-                                    
-                                    
-                                    <td>
-                                        <telerik:RadNumericTextBox ID="x17Ordinary" ToolTip="Pořadí" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
-                                    </td>
-                                    <td>
-                                        <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit položku" CssClass="button-link" />
-                                        <asp:HiddenField ID="p85id" runat="server" />
-                                    </td>
-                                </tr>
-                            </ItemTemplate>
-                        </asp:Repeater>
-                    </table>
-                </div>
-            </div>
+            
 
             <div class="content-box2" style="margin-top: 60px;">
                 <div class="title">Různé</div>
@@ -577,7 +549,7 @@
     </telerik:RadMultiPage>
 
     <asp:HiddenField ID="hidGUID_x16" runat="server" />
-    <asp:HiddenField ID="hidGUID_x17" runat="server" />
+    
     <asp:HiddenField ID="hidGUID_x20" runat="server" />
     <asp:HiddenField ID="HardRefreshPID" runat="server" />
     <asp:Button ID="cmdHardRefresh" runat="server" Style="display: none;" />

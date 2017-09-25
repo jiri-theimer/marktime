@@ -275,24 +275,6 @@ Partial Public Class x18_record
     Protected WithEvents x18AllowedFileExtensions As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''cmdAddX17 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdAddX17 As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''rpX17 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rpX17 As Global.System.Web.UI.WebControls.Repeater
-
-    '''<summary>
     '''x18GridColsFlag control.
     '''</summary>
     '''<remarks>
@@ -507,15 +489,6 @@ Partial Public Class x18_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidGUID_x16 As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidGUID_x17 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidGUID_x17 As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidGUID_x20 control.

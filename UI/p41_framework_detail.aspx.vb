@@ -9,6 +9,7 @@
         ff1.Factory = Master.Factory
         p31summary1.Factory = Master.Factory
         tags1.Factory = Master.Factory
+        folder1.Factory = Master.Factory
     End Sub
 
     
@@ -299,7 +300,9 @@
         If cRecSum.o52_Exist Then
             tags1.RefreshData(cRec.PID)
         End If
-
+        If cRecSum.f01_Exist Then
+            folder1.RefreshData(cRec.PID)
+        End If
 
         'RefreshP64(cRecSum)
 

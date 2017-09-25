@@ -87,14 +87,7 @@
         </ItemTemplate>
     </asp:Repeater>
 </table>
-<asp:Repeater ID="rpFolders" runat="server">
-    <ItemTemplate>
-        <div class="div6" style="border-top:dashed 1px silver;">
-            <img src="Images/folder.png" />
-            <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
-        </div>
-    </ItemTemplate>
-</asp:Repeater>
+
 
 <asp:Panel ID="panWorksheetGrid" runat="server" CssClass="div6" Visible="false">
     <img src="Images/worksheet.png" />

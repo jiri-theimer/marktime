@@ -222,6 +222,7 @@
     <Content Include="entity_modal_invoicing.aspx" />
     <Content Include="entity_scheduler.aspx" />
     <Content Include="ErrorPage.aspx" />
+    <Content Include="f01folder.ascx" />
     <Content Include="fileupload_preview.aspx" />
     <Content Include="flexibee.aspx" />
     <Content Include="freefields_checkboxlist.aspx" />
@@ -945,6 +946,13 @@
     </Compile>
     <Compile Include="ErrorPage.aspx.vb">
       <DependentUpon>ErrorPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="f01folder.ascx.designer.vb">
+      <DependentUpon>f01folder.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="f01folder.ascx.vb">
+      <DependentUpon>f01folder.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="fileupload_preview.aspx.designer.vb">

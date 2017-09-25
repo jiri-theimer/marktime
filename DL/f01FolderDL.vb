@@ -10,6 +10,14 @@
 
         Return _cDB.GetRecord(Of BO.f01Folder)(s, New With {.f01id = intPID})
     End Function
+    Public Function LoadByEntity(intRecordPID As Integer, intF02ID As Integer) As BO.f01Folder
+        Dim pars As New DbParameters
+        pars.Add("recpid", intRecordPID, DbType.Int32)
+        pars.Add("f02id", intF02ID, DbType.Int32)
+        Dim s As String = GetSQLPart1() & " WHERE a.f01RecordPID=@recpid AND a.f02ID=@f02id"
+
+        Return _cDB.GetRecord(Of BO.f01Folder)(s, pars)
+    End Function
     Public Function Load_f02(intF02ID As Integer) As BO.f02FolderType
         Dim s As String = "select *," & bas.RecTail("f02") & " FROM f02FolderType WHERE f02ID=@f02id"
 

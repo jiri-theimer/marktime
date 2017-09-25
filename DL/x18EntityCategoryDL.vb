@@ -99,7 +99,7 @@
         Return True
     End Function
 
-    Public Function Save(cRec As BO.x18EntityCategory, lisX20 As List(Of BO.x20EntiyToCategory), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting), lisX17 As List(Of BO.x17EntityCategory_Folder)) As Boolean
+    Public Function Save(cRec As BO.x18EntityCategory, lisX20 As List(Of BO.x20EntiyToCategory), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting)) As Boolean
         Using sc As New Transactions.TransactionScope()     'ukládání podléhá transakci
             Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
             If cRec.PID <> 0 Then
@@ -192,20 +192,20 @@
                         _cDB.SaveRecord("x16EntityCategory_FieldSetting", pars, True, "", False, "", False)
                     Next
                 End If
-                If Not lisX17 Is Nothing Then
-                    _cDB.RunSQL("DELETE FROM x17EntityCategory_Folder WHERE x18ID=" & intX18ID.ToString)
-                    For Each c In lisX17
-                        pars = New DbParameters
-                        pars.Add("x18ID", intX18ID, DbType.Int32)
-                        pars.Add("x17Name", c.x17Name, DbType.String)
-                        pars.Add("x17Path", c.x17Path, DbType.String)
-                        pars.Add("x17Ordinary", c.x17Ordinary, DbType.Int32)
-                        pars.Add("j11ID_Read", BO.BAS.IsNullDBKey(c.j11ID_Read), DbType.Int32)
-                        pars.Add("j11ID_FullControl", BO.BAS.IsNullDBKey(c.j11ID_FullControl), DbType.Int32)
-                        pars.Add("j11ID_CreateFiles", BO.BAS.IsNullDBKey(c.j11ID_CreateFiles), DbType.Int32)
-                        _cDB.SaveRecord("x17EntityCategory_Folder", pars, True, "", False, "", False)
-                    Next
-                End If
+                ''If Not lisX17 Is Nothing Then
+                ''    _cDB.RunSQL("DELETE FROM x17EntityCategory_Folder WHERE x18ID=" & intX18ID.ToString)
+                ''    For Each c In lisX17
+                ''        pars = New DbParameters
+                ''        pars.Add("x18ID", intX18ID, DbType.Int32)
+                ''        pars.Add("x17Name", c.x17Name, DbType.String)
+                ''        pars.Add("x17Path", c.x17Path, DbType.String)
+                ''        pars.Add("x17Ordinary", c.x17Ordinary, DbType.Int32)
+                ''        pars.Add("j11ID_Read", BO.BAS.IsNullDBKey(c.j11ID_Read), DbType.Int32)
+                ''        pars.Add("j11ID_FullControl", BO.BAS.IsNullDBKey(c.j11ID_FullControl), DbType.Int32)
+                ''        pars.Add("j11ID_CreateFiles", BO.BAS.IsNullDBKey(c.j11ID_CreateFiles), DbType.Int32)
+                ''        _cDB.SaveRecord("x17EntityCategory_Folder", pars, True, "", False, "", False)
+                ''    Next
+                ''End If
                 If Not lisX69 Is Nothing Then   'přiřazení rolí k štítku
                     bas.SaveX69(_cDB, BO.x29IdEnum.x18EntityCategory, intX18ID, lisX69, bolINSERT)
                 End If
@@ -343,15 +343,15 @@
         s += " ORDER BY x16Ordinary"
         Return _cDB.GetList(Of BO.x16EntityCategory_FieldSetting)(s, pars)
     End Function
-    Public Function GetList_x17(intX18ID As Integer) As IEnumerable(Of BO.x17EntityCategory_Folder)
-        Dim s As String = "SELECT * FROM x17EntityCategory_Folder", pars As New DbParameters
-        If intX18ID > 0 Then
-            s += " WHERE x18ID=@x18id"
-            pars.Add("x18id", intX18ID, DbType.Int32)
-        End If
-        s += " ORDER BY x18ID,x17Ordinary"
-        Return _cDB.GetList(Of BO.x17EntityCategory_Folder)(s, pars)
-    End Function
+    ''Public Function GetList_x17(intX18ID As Integer) As IEnumerable(Of BO.x17EntityCategory_Folder)
+    ''    Dim s As String = "SELECT * FROM x17EntityCategory_Folder", pars As New DbParameters
+    ''    If intX18ID > 0 Then
+    ''        s += " WHERE x18ID=@x18id"
+    ''        pars.Add("x18id", intX18ID, DbType.Int32)
+    ''    End If
+    ''    s += " ORDER BY x18ID,x17Ordinary"
+    ''    Return _cDB.GetList(Of BO.x17EntityCategory_Folder)(s, pars)
+    ''End Function
     Private Function GetSQLPart1_x19(bolInhaleRecordAlias As Boolean) As String
         Dim s As String = "SELECT a.*," & bas.RecTail("x19", "a") & ",o23.o23Name as _o23Name,o23.o23Name+isnull(' ('+o23.o23Code+')','') as _NameWithCode,x20.x18ID as _x18ID,isnull(x18.x18NameShort,x18.x18Name) as _x18Name,x18.x18Icon as _x18Icon,o23.o23ForeColor as _ForeColor,o23.o23BackColor as _BackColor,x20.x29ID as _x29ID,x20.x20Name as _x20Name,x20.x20IsMultiselect as _x20IsMultiselect,x20.x20EntityPageFlag as _x20EntityPageFlag"
         If bolInhaleRecordAlias Then

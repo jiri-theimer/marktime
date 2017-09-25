@@ -7913,6 +7913,9 @@ BEGIN TRY
 	if exists(select p30ID FROM p30Contact_Person where p28ID=@pid)
 	 DELETE FROM p30Contact_Person where p28ID=@pid
 
+	if exists(select a.f01ID FROM f01Folder a INNER JOIN f02FolderType b ON a.f02ID=b.f02ID WHERE a.f01RecordPID=@pid AND b.x29ID=328)
+	 DELETE FROM f01Folder WHERE f01RecordPID=@pid AND f02ID IN (select f02ID FROM f02FolderType WHERE x29ID=328)
+
 	if exists(select a.x69ID FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE a.x69RecordPID=@pid AND b.x29ID=328)
 	 DELETE a FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE a.x69RecordPID=@pid AND b.x29ID=328
 
@@ -7965,7 +7968,7 @@ declare @p56_actual_count int,@p56_closed_count int,@o22_actual_count int,@p91_c
 declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
 declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
 declare @o23_count int,@p41_actual_count int,@p41_closed_count int, @o48_exist bit,@p90_count int
-declare @last_invoice varchar(100),@last_wip_worksheet as varchar(100)
+declare @last_invoice varchar(100),@last_wip_worksheet as varchar(100),@f01_exist bit,@o52_exist bit
 
 SELECT @p56_actual_count=sum(case when getdate() BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
 ,@p56_closed_count=sum(case when getdate() NOT BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
@@ -8041,6 +8044,15 @@ set @o48_exist=0
 if exists(select o48ID FROM o48IsirMonitoring WHERE p28ID=@pid)
  set @o48_exist=1
 
+if exists(select o52ID FROM o52TagBinding WHERE x29ID=328 AND o52RecordPID=@pid)
+ set @o52_exist=1
+else
+ set @o52_exist=0
+
+if exists(select a.f01ID FROM f01Folder a INNER JOIN f02FolderType b ON a.f02ID=b.f02ID WHERE b.x29ID=328 AND a.f01RecordPID=@pid)
+ set @f01_exist=1
+else
+ set @f01_exist=0
 
 if @p91_count>0
  select TOP 1 @last_invoice=p91Code+'/'+convert(varchar(10),p91DateSupply,104) FROM p91Invoice WHERE p28ID=@pid ORDER BY p91ID DESC
@@ -8071,6 +8083,8 @@ select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,@last_invoice as Last_Invoice
 ,@last_wip_worksheet as Last_Wip_Worksheet
 ,@p90_count as p90_Count
+,@o52_exist as o52_Exist
+,@f01_exist as f01_Exist
 
 GO
 
@@ -8525,7 +8539,7 @@ AS
 
 set @err_ret=''
 
-declare @p41id_def int,@j02id_def int,@p31id_template int,@d1 datetime,@d2 datetime,@p72id int,@p33id int
+declare @p41id_def int,@j02id_def int,@p31id_template int,@d1 datetime,@d2 datetime,@p72id int,@p33id int,@half_day bit
 declare @p31date datetime,@p41id int,@j02id int,@p31id_new int,@value float,@p31text nvarchar(255)
 declare @b10Worksheet_ProjectFlag int,@b10Worksheet_PersonFlag int,@b10Worksheet_DateFlag int,@b10Worksheet_Text nvarchar(255),@b10Worksheet_HoursFlag int
 
@@ -8568,7 +8582,7 @@ if @record_prefix='o23'	---dokument
    select @j02id=j02ID_Owner FROM o23Doc WHERE o23ID=@record_pid
   
   if @b10Worksheet_DateFlag=2	---datum naèíst z workflow
-   select @d1=o23FreeDate01,@d2=o23FreeDate02 FROM o23Doc WHERE o23ID=@record_pid
+   select @d1=o23FreeDate01,@d2=o23FreeDate02,@half_day=o23FreeBoolean01 FROM o23Doc WHERE o23ID=@record_pid
 
  end
 
@@ -8594,6 +8608,9 @@ BEGIN
    begin
     select @value=dbo.j02_c21_get_hours_for_day(@j02id,@p31date)
 
+	if @half_day=1
+	 set @value=@value/convert(float,2)
+	 
 	if @value>0
 	 set @go=1	---je pracovní den
 	else
@@ -12142,6 +12159,9 @@ BEGIN TRY
 	if exists(select j13ID FROM j13FavourteProject WHERE p41ID=@pid)
 	 DELETE FROM j13FavourteProject WHERE p41ID=@pid
 
+	if exists(select a.f01ID FROM f01Folder a INNER JOIN f02FolderType b ON a.f02ID=b.f02ID WHERE a.f01RecordPID=@pid AND b.x29ID=141)
+	 DELETE FROM f01Folder WHERE f01RecordPID=@pid AND f02ID IN (select f02ID FROM f02FolderType WHERE x29ID=141)
+
 	if exists(select a.x69ID FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE a.x69RecordPID=@pid AND b.x29ID=141)
 	 DELETE a FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE a.x69RecordPID=@pid AND b.x29ID=141
 
@@ -12313,7 +12333,7 @@ declare @p56_actual_count int,@p56_closed_count int,@o22_actual_count int,@p91_c
 declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
 declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
 declare @o23_count int,@p45_count int
-declare @last_invoice varchar(100),@last_wip_worksheet varchar(100),@o52_exist bit
+declare @last_invoice varchar(100),@last_wip_worksheet varchar(100),@o52_exist bit,@f01_exist bit
 declare @p42IsModule_p31 bit,@p42IsModule_p56 bit,@p42IsModule_o23 bit,@p42IsModule_p45 bit,@p28id_client int
 
 select @p42IsModule_p31=a.p42IsModule_p31,@p42IsModule_p56=a.p42IsModule_p56,@p42IsModule_o23=a.p42IsModule_o23,@p42IsModule_p45=p42IsModule_p45,@p28id_client=b.p28ID_Client
@@ -12397,6 +12417,11 @@ if exists(select o52ID FROM o52TagBinding WHERE x29ID=141 AND o52RecordPID=@pid)
 else
  set @o52_exist=0
 
+if exists(select a.f01ID FROM f01Folder a INNER JOIN f02FolderType b ON a.f02ID=b.f02ID WHERE b.x29ID=141 AND a.f01RecordPID=@pid)
+ set @f01_exist=1
+else
+ set @f01_exist=0
+
 if @p42IsModule_o23=1
 begin
 
@@ -12439,6 +12464,7 @@ select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,@last_invoice as Last_Invoice
 ,@last_wip_worksheet as Last_Wip_Worksheet
 ,@o52_exist as o52_Exist
+,@f01_exist as f01_Exist
 
 GO
 
@@ -14070,6 +14096,9 @@ if exists(select p91ID FROM p91Invoice WHERE p91ID=@p91id AND (p91Code LIKE 'TEM
 ---automaticky se spouští po uložení záznamu faktury
 if @recalc_amount=1
  exec p91_recalc_amount @p91id
+
+
+
 
 
 
@@ -16227,10 +16256,20 @@ if exists(select x47ID FROM x47EventLog where x29ID=356 and x45ID=35601 and x47D
    update x47EventLog set x47Description='deleted' where x29ID=356 and x45ID=35601 and x47RecordPID NOT IN (SELECT p56ID FROM p56Task)
 
 
+
 update a set x47Name=b.p91Code,x47NameReference=b.p91Client
-FROM
-x47EventLog a INNER JOIN p91Invoice b ON a.x47RecordPID=b.p91ID
-where a.x29ID=391
+from x47EventLog a INNER JOIN p91Invoice b ON a.x47RecordPID=b.p91ID
+WHERE a.x29ID=391
+
+
+update a set x47Name=b.p41Name,x47NameReference=c.p28Name
+from x47EventLog a INNER JOIN p41Project b ON a.x47RecordPID=b.p41ID
+LEFT OUTER JOIN p28Contact c ON b.p28ID_Client=c.p28ID
+WHERE a.x29ID=141
+
+update a set x47Name=b.p28Name
+from x47EventLog a INNER JOIN p28Contact b ON a.x47RecordPID=b.p28ID
+WHERE a.x29ID=328
 
 GO
 
@@ -17095,6 +17134,48 @@ END CATCH
 
 
 
+
+
+
+
+GO
+
+----------P---------------x47_appendlog-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('x47_appendlog') and type = 'P')
+ drop procedure x47_appendlog
+GO
+
+
+
+
+
+
+CREATE PROCEDURE [dbo].[x47_appendlog]
+@j03ID int
+,@x45ID int
+,@x29ID int
+,@x29ID_Reference int
+,@x47RecordPID int
+,@x47RecordPID_Reference int
+,@x47Name varchar(200)
+,@x47NameReference varchar(200)
+,@x47Description varchar(200)
+,@ret_x47id INT OUTPUT
+AS
+
+declare @login varchar(50)
+
+select @login=j03Login FROM j03User WHERE j03ID=@j03ID
+
+if exists(select x47ID FROM x47EventLog WHERE x29ID=@x29ID AND x47RecordPID=@x47RecordPID)
+ UPDATE x47EventLog set x47Name=@x47Name,x47NameReference=@x47NameReference WHERE x29ID=@x29ID AND x47RecordPID=@x47RecordPID
+
+
+INSERT INTO x47EventLog(x45ID,x29ID,x29ID_Reference,j03ID,x47RecordPID,x47RecordPID_Reference,x47Name,x47NameReference,x47Description,x47DateInsert,x47UserInsert,x47DateUpdate,x47UserUpdate)
+VALUES(@x45ID,@x29ID,@x29ID_Reference,@j03ID,@x47RecordPID,@x47RecordPID_Reference,@x47Name,@x47NameReference,@x47Description,getdate(),@login,getdate(),@login)
+
+set @ret_x47id=@@IDENTITY
 
 
 
