@@ -207,6 +207,9 @@ Class j70QueryTemplateBL
         If c.j70MasterPrefix <> "" Then
             c.j70IsFilteringByColumn = False
         End If
+        If c.j70MasterPrefix = "approving_step3" Then
+            c.j70ScrollingFlag = BO.j70ScrollingFlagENUM.StaticHeaders  'schvalování úkonů
+        End If
 
         Select Case x29id
             Case BO.x29IdEnum.p31Worksheet
