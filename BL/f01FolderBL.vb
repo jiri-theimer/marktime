@@ -125,7 +125,7 @@ Class f01FolderBL
     End Function
     Private Function FindExistingFolder(cF02 As BO.f02FolderType, cRec As BO.f01Folder) As String
         Dim strPrefix As String = BO.BAS.GetDataPrefix(cF02.x29ID)
-        Dim marks As List(Of String) = _cF.GetFileListFromDir(cF02.f02RootPath, "info.mt", IO.SearchOption.AllDirectories)
+        Dim marks As List(Of String) = _cF.GetFileListFromDir(cF02.f02RootPath, "info.mt", IO.SearchOption.AllDirectories, True)
         If marks.Count > 0 Then
             'otestovat, zda již dříve nebyla vytvořena složka pro entituy x29ID a PID
             For Each s In marks

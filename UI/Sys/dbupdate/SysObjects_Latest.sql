@@ -6464,7 +6464,11 @@ CREATE   procedure [dbo].[j61_delete]
 
 AS
 --odstranìní záznamu textové šablony z tabulky j61TextTemplate
+declare @ref_pid int
 
+SELECT TOP 1 @ref_pid=p28ID from p28Contact WHERE j61ID_Invoice=@pid
+if @ref_pid is not null
+ set @err_ret='Minimálnì jeden klient má vazbu na tuto textovou šablonu ('+dbo.GetObjectAlias('p28',@ref_pid)+')'
 
 if isnull(@err_ret,'')<>''
  return 
