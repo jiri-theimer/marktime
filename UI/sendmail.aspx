@@ -127,7 +127,7 @@
         <div class="title">
             Obsah zprávy (Body)
            
-            <asp:DropDownList ID="j61ID" runat="server" AutoPostBack="true" DataValueField="PID" DataTextField="j61Name" style="width:350px;"></asp:DropDownList>
+            <asp:DropDownList ID="j61ID" runat="server" AutoPostBack="true" DataValueField="PID" DataTextField="j61Name" style="width:350px;" ToolTip="Šablona zprávy"></asp:DropDownList>
 
             
                 <asp:ImageButton ID="cmdEdit" runat="server" ImageUrl="Images/edit.png" ToolTip="Upravit šablonu" OnClientClick="return j61_edit()" CssClass="button-link" />

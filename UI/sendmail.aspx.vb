@@ -92,11 +92,14 @@
                             If Me.txtTo.Text.IndexOf(s) < 0 Then Me.txtTo.Text += "," & s
                         End If
                     End If
-                    Dim cP28 As BO.p28Contact = Master.Factory.p28ContactBL.Load(cP91.p28ID)
-                    If Not cP28 Is Nothing Then
-                        basUI.SelectDropdownlistValue(Me.j61ID, cP28.PID)
-                        Handle_ChangeJ61ID()
+                    If cP91.p28ID <> 0 Then
+                        Dim cP28 As BO.p28Contact = Master.Factory.p28ContactBL.Load(cP91.p28ID)
+                        If cP28.j61ID_Invoice <> 0 Then
+                            basUI.SelectDropdownlistValue(Me.j61ID, cP28.j61ID_Invoice)
+                            Handle_ChangeJ61ID()
+                        End If
                     End If
+                    
 
             End Select
             If Me.hidMasterPrefix_p30.Value <> "" Then

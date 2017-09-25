@@ -12,7 +12,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <div class="content-box2">
-        <div class="title">Text zprávy</div>
+        <div class="title">Výchozí text zprávy</div>
         <div class="content">
             <asp:textbox ID="txtBody" runat="server" TextMode="MultiLine" Width="99%" Height="100px"></asp:textbox>
             <div>
@@ -32,6 +32,7 @@
             <th>Sestava faktury</th>
             <th>Sestava přílohy</th>
             <th>Předmět zprávy</th>
+            <th>Text zprávy</th>
         </tr>
         <asp:Repeater ID="rp1" runat="server">
             <ItemTemplate>
@@ -54,7 +55,9 @@
                     <td>
                         <asp:TextBox ID="txtSubject" runat="server" Width="200px"></asp:TextBox>
                     </td>
-                   
+                    <td>
+                        <asp:DropDownList ID="j61ID" runat="server" DataTextField="j61Name" DataValueField="pid" Width="200px"></asp:DropDownList>
+                    </td>
                 </tr>
                 
             </ItemTemplate>
