@@ -253,12 +253,13 @@ Public Class main_menu
             ns.Add(c.PID, n)
         Next
 
-        ''For Each n In nSeps
-        ''    If n.Nodes.Count = 0 Then
-        ''        menu1.FindNodeByText(n.Text).Visible = False
-        ''        menu1.FindNodeByText(n.Text).Text = ""
-        ''    End If
-        ''Next
+        For Each n In nSeps
+            If n.Nodes.Count = 0 Then
+                menu1.Nodes.Remove(n)
+                'menu1.FindNodeByText(n.Text).Visible = False
+                'menu1.FindNodeByText(n.Text).Text = ""
+            End If
+        Next
     End Sub
 
     ''Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender

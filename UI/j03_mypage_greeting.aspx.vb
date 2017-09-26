@@ -58,7 +58,7 @@
                 cal1.MaxTopRecs = BO.BAS.IsNullInt(.j03UserBL.GetUserParam("myscheduler-maxtoprecs-j02", "10"))
                 cal1.NumberOfDays = BO.BAS.IsNullInt(.j03UserBL.GetUserParam("myscheduler-numberofdays-j02", "10"))
                 cal1.FirstDayMinus = BO.BAS.IsNullInt(.j03UserBL.GetUserParam("myscheduler-firstday", "-1"))
-                chkX18.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkX18", "1"))
+                chkX18.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkX18", "0"))
              
 
                 panSearch_j02.Visible = .SysUser.j04IsMenu_People
