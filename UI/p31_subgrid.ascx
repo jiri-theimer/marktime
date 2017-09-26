@@ -37,6 +37,7 @@
                     <Items>
                         <telerik:RadMenuItem Text="Kopírovat" Value="clone" NavigateUrl="javascript:p31_clone()"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Text="Schvalovat/pře-schvalovat označené" Value="cmdApprove" NavigateUrl="javascript:approving()"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdMove" Text="Přesunout na jiný projekt" NavigateUrl="javascript:move2project_p31ids();" ImageUrl="Images/cut.png" Visible="false"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdSummary" Text="Statistiky" NavigateUrl="javascript:drilldown_p31ids();"></telerik:RadMenuItem>
 
                     </Items>
@@ -278,5 +279,13 @@
         
 
 
+    }
+    function move2project_p31ids() {
+        var pids = GetAllSelectedPIDs();
+        if (pids == "") {
+            $.alert("Není vybrán ani jeden záznam.");
+            return;
+        }
+        sw_decide("p31_move2project.aspx?p31ids=" + pids, "Images/cut.png");
     }
 </script>

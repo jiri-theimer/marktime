@@ -107,6 +107,14 @@
             sw_master("tag_binding.aspx?prefix=p31&pids=" + pids, "Images/tag.png");
 
         }
+        function move2project() {
+            var pids = GetAllSelectedPIDs();
+            if (pids == "" || pids == null) {
+                $.alert("Není vybrán záznam.");
+                return
+            }
+            sw_master("p31_move2project.aspx?p31ids=" + pids, "Images/cut.png");
+        }
 
         function record_split() {
             var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
@@ -236,6 +244,7 @@
                         <Items>
                             <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat záznamy" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdApprove" Text="Schvalovat/pře-schvalovat/fakturovat úkony" NavigateUrl="javascript:approving();" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Value="cmdMove" Text="Přesunout na jiný projekt" NavigateUrl="javascript:move2project();" ImageUrl="Images/cut.png" Visible="false"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdApprove" Text="Oštítkovat" NavigateUrl="javascript:tags();" ImageUrl="Images/tag.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdSummary" Text="Statistiky" NavigateUrl="javascript:drilldown_p31ids();" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
                         </Items>

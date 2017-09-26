@@ -16,8 +16,13 @@
             End With
             With Master
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-                If .DataPID = 0 Then .StopPage("pid missing")
-                .HeaderText = "Přesunout worksheet na jiný projekt | " & .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix("p41"), .DataPID)
+                hidP31IDs.Value = Request.Item("p31ids")
+
+                If .DataPID = 0 And hidP31IDs.Value = "" Then .StopPage("pid or p31ids missing")
+                If .DataPID <> 0 Then
+                    .HeaderText = "Přesunout worksheet na jiný projekt | " & .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix("p41"), .DataPID)
+                End If
+
 
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
                 period1.SetupData(.Factory, .Factory.j03UserBL.GetUserParam("periodcombo-custom_query"))
@@ -28,6 +33,7 @@
             SetupGrid()
             RecalcVirtualRowCount()
 
+            
         End If
     End Sub
     Private Sub SetupGrid()
@@ -40,8 +46,14 @@
             .AddCheckboxSelector()
             .AddSystemColumn(5)
             .AddColumn("p31Date", "Datum", BO.cfENUM.DateOnly)
-            .AddColumn("Person", "Osoba")
-            .AddColumn("p34Name", "Sešit")
+            .AddColumn("Person", "Jméno")
+            If hidP31IDs.Value = "" Then
+                .AddColumn("p34Name", "Sešit")
+            Else
+                .AddColumn("ClientName", "Klient")
+                .AddColumn("p41Name", "Projekt")
+            End If
+
             .AddColumn("p32Name", "Aktivita")
             .AddColumn("p31Hours_Orig", "Hodiny", BO.cfENUM.Numeric2)
             .AddColumn("p31Rate_Billing_Orig", "Sazba", BO.cfENUM.Numeric2)
@@ -52,13 +64,19 @@
     End Sub
 
     Private Sub InhaleMyQuery(ByRef mq As BO.myQueryP31)
-        mq.p41ID = Master.DataPID
+        If Master.DataPID <> 0 Then
+            mq.p41ID = Master.DataPID
+        End If
+        If hidP31IDs.Value <> "" Then
+            mq.PIDs = BO.BAS.ConvertPIDs2List(hidP31IDs.Value, ",")
+        End If
+
         mq.QuickQuery = BO.myQueryP31_QuickQuery.EditingOrMovedToBin
         mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
-       
+
         mq.DateFrom = period1.DateFrom
         mq.DateUntil = period1.DateUntil
-        
+
     End Sub
 
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
@@ -66,7 +84,7 @@
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
-        If Master.DataPID = 0 Then Return
+        If Master.DataPID = 0 And hidP31IDs.Value = "" Then Return
         Dim mq As New BO.myQueryP31
         InhaleMyQuery(mq)
         With mq
@@ -81,7 +99,7 @@
 
 
     Public Sub RecalcVirtualRowCount()
-        If Master.DataPID = 0 Then Return
+        If Master.DataPID = 0 And hidP31IDs.Value = "" Then Return
         Dim mq As New BO.myQueryP31
         InhaleMyQuery(mq)
 
@@ -109,15 +127,25 @@
                 .BackColor = Nothing
             End If
         End With
+        If Not Page.IsPostBack And hidP31IDs.Value <> "" Then
+            For Each ri As Telerik.Web.UI.GridDataItem In grid1.radGridOrig.MasterTableView.Items
+                ri.Selected = True
+            Next
+        End If
     End Sub
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
         If strButtonValue = "ok" Then
             Dim intDestP41ID As Integer = BO.BAS.IsNullInt(Me.p41id.Value)
+            If intDestP41ID = 0 Then
+                Master.Notify("Musíte vybrat cílový projekt.", NotifyLevel.WarningMessage)
+                Return
+            End If
             If intDestP41ID = Master.DataPID Then
                 Master.Notify("Cílový projet se musí lišit od aktuálního.", NotifyLevel.WarningMessage)
                 Return
             End If
+
 
             Dim pids As List(Of Integer) = grid1.GetSelectedPIDs()
            

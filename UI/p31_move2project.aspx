@@ -48,6 +48,7 @@
      <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hiddatapid_p31" runat="server" />
+    <asp:HiddenField ID="hidP31IDs" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
