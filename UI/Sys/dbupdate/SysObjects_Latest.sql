@@ -17975,6 +17975,35 @@ GROUP BY a.p41ID
 
 GO
 
+----------V---------------view_p91_sendbyemail-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('view_p91_sendbyemail') and type = 'V')
+ drop view view_p91_sendbyemail
+GO
+
+
+
+
+
+CREATE VIEW [dbo].[view_p91_sendbyemail]
+as
+select a.p91ID
+,x40.x40WhenProceeded as Kdy_Odeslano
+,x40.x40DateInsert as Kdy_Zahajeno
+,case when x40.x40State=3 then 'Odesláno' when x40.x40State=1 then 'Odesílá se' when x40.x40State=2 then 'Chyba' when x40.x40State=4 then 'Zastaveno' end as AktualniStav
+,x40.x40Recipient as Komu
+from
+p91Invoice a
+INNER JOIN x40MailQueue x40 ON a.p91ID=x40.x40RecordPID
+WHERE x40.x40ID IN (select max(x40ID) FROM x40MailQueue WHERE x29ID=391 GROUP BY x40RecordPID)
+
+
+
+
+
+
+GO
+
 ----------V---------------view_PrimaryAddress-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('view_PrimaryAddress') and type = 'V')

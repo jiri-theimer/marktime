@@ -10,6 +10,14 @@
 
         Return _cDB.GetRecord(Of BO.x40MailQueue)(s, New With {.pid = intPID})
     End Function
+    Public Function LoadByEntity(intRecordPID As Integer, x29ID As BO.x29IdEnum) As BO.x40MailQueue
+        Dim pars As New DbParameters
+        pars.Add("recpid", intRecordPID, DbType.Int32)
+        pars.Add("x29id", CInt(x29ID), DbType.Int32)
+        Dim s As String = GetSQLPart1(1) & " WHERE a.x40RecordPID=@recpid AND a.x29ID=@x29id ORDER BY a.x40ID DESC"
+
+        Return _cDB.GetRecord(Of BO.x40MailQueue)(s, pars)
+    End Function
     Public Function LoadByMessageID(strMesageID As String) As BO.x40MailQueue
         Dim s As String = GetSQLPart1() & " WHERE a.x40MessageID = @messageid"
 

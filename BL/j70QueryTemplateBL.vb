@@ -801,6 +801,11 @@ Class j70QueryTemplateBL
             .Add(AGC("IČ klienta", "p91Client_RegID"))
             .Add(AGC("DIČ klienta", "p91Client_VatID"))
 
+            .Add(AGC("Čas odeslání", "VomKdyOdeslano", BO.cfENUM.DateTime, , "vom.Kdy_Odeslano", , "LEFT OUTER JOIN view_p91_sendbyemail vom ON a.p91ID=vom.p91ID", "Elektronicky odesláno"))
+            .Add(AGC("Stav odeslání", "VomStav", , , "vom.AktualniStav", , "LEFT OUTER JOIN view_p91_sendbyemail vom ON a.p91ID=vom.p91ID", "Elektronicky odesláno"))
+            .Add(AGC("Komu odesláno", "VomKomu", , , "vom.Komu", , "LEFT OUTER JOIN view_p91_sendbyemail vom ON a.p91ID=vom.p91ID", "Elektronicky odesláno"))
+            .Add(AGC("Vloženo do fronty", "VomDateInsert", BO.cfENUM.DateTime, , "vom.Kdy_Zahajeno", , "LEFT OUTER JOIN view_p91_sendbyemail vom ON a.p91ID=vom.p91ID", "Elektronicky odesláno"))
+
             .Add(AGC("Vlastník záznamu", "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
             .Add(AGC("Založeno", "p91DateInsert", BO.cfENUM.DateTime))
             .Add(AGC("Založil", "p91UserInsert"))

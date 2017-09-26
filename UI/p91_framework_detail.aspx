@@ -219,6 +219,10 @@
 
 
         }
+        function x40_record(x40id) {
+            sw_decide("x40_record.aspx?pid="+x40id, "Images/email.png")
+
+        }
 
         function cbxSearch_OnClientSelectedIndexChanged(sender, eventArgs){
             var combo = sender;
@@ -575,6 +579,7 @@
                 </asp:Panel>
                 <div class="div6" style="clear:both;">
                 <uc:mytags ID="tags1" runat="server" Prefix="p91" />
+                <asp:HyperLink ID="linkLastX40" runat="server" Visible="false" style="margin-left:40px;font-weight:bold;" ToolTip="Pokus o odeslání faktury elektronicky"></asp:HyperLink>
                 </div>
 
 

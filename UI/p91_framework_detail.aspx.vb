@@ -266,6 +266,18 @@ Public Class p91_framework_detail
             Me.chkFFShowFilledOnly.Visible = False : Me.ff1.Visible = False
         End If
         tags1.RefreshData(cRec.PID)
+        RenderLastX40(cRec.PID)
+    End Sub
+    Private Sub RenderLastX40(intP91ID As Integer)
+        Dim cX40 As BO.x40MailQueue = Master.Factory.x40MailQueueBL.LoadByEntity(intP91ID, BO.x29IdEnum.p91Invoice)
+        If Not cX40 Is Nothing Then
+            With linkLastX40
+                .Visible = True
+                .Text = "<img src='Images/email.png'/> " & cX40.StatusAlias & ": " & BO.BAS.FD(cX40.x40WhenProceeded, True, True) & " (" & cX40.x40Recipient & ")"
+                .NavigateUrl = "javascript:x40_record(" & cX40.PID.ToString & ")"
+                .Style.Item("color") = cX40.StatusColor
+            End With
+        End If
     End Sub
 
     Private Sub HandleDirectReports(intP92ID As Integer)
