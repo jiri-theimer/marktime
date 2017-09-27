@@ -237,7 +237,8 @@ Public Class p91_framework_detail
             Me.p91Client.Text = .p91Client
             Me.ClientAddress.Text = .p91ClientAddress1_Street & ", " & .p91ClientAddress1_City & ", " & .p91ClientAddress1_ZIP & " " & .p91ClientAddress1_Country
             Me.ClientIDs.Text = .p91Client_VatID & " | " & .p91Client_RegID
-            lblTimestamp.Text = .Timestamp
+
+            Me.linkTimestamp.Text = .Timestamp
         End With
 
 

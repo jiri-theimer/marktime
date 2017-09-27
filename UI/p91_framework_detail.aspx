@@ -261,6 +261,9 @@
         function barcode() {
             sw_decide("barcode.aspx?prefix=p91&pid=<%=master.datapid%>", "Images/barcode.png", true);
         }
+        function changelog() {
+            window.top.sw_everywhere("changelog.aspx?prefix=p91&pid=<%=Master.DataPID%>", "Images/log.png")        
+        }
     </script>
 
 </asp:Content>
@@ -589,7 +592,7 @@
                     <asp:Label ID="p92ReportConstantText" runat="server" CssClass="val"></asp:Label>
                 </div>
                 <div class="div6">
-                    <asp:Label ID="lblTimestamp" runat="server" CssClass="timestamp"></asp:Label>
+                    <asp:HyperLink ID="linkTimestamp" runat="server" CssClass="wake_link" NavigateUrl="javascript:changelog()" ToolTip="CHANGE-LOG"></asp:HyperLink>
                 </div>
             </telerik:RadPageView>
             <telerik:RadPageView ID="p31" runat="server">
