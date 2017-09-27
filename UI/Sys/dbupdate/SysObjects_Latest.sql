@@ -5271,13 +5271,100 @@ AS
 
 if exists(select j03ID FROM j03User WHERE j02ID=@j02id)
  UPDATE a set j03ValidFrom=b.j02ValidFrom,j03ValidUntil=b.j02ValidUntil FROM j03User a INNER JOIN j02Person b ON a.j02ID=b.j02ID WHERE a.j02ID=@j02id
- 
 
-exec [x90_appendlog] 102,@j02id,@j03id_sys
+
+exec dbo.j02_append_log @j02id
+
 
 
 exec [j02_recovery]
 
+
+
+
+GO
+
+----------P---------------j02_append_log-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('j02_append_log') and type = 'P')
+ drop procedure j02_append_log
+GO
+
+
+CREATE    PROCEDURE [dbo].[j02_append_log]
+@j02id int
+AS
+
+INSERT INTO [dbo].[j02Person_Log]
+           ([j02ID]
+           ,[j07ID]
+           ,[c21ID]
+           ,[j18ID]
+           ,[j17ID]
+           ,[o40ID]
+           ,[p72ID_NonBillable]
+           ,[j02FirstName]
+           ,[j02LastName]
+           ,[j02TitleBeforeName]
+           ,[j02TitleAfterName]
+           ,[j02Code]
+           ,[j02JobTitle]
+           ,[j02Email]
+           ,[j02Mobile]
+           ,[j02Phone]
+           ,[j02Office]
+           ,[j02IsIntraPerson]
+           ,[j02Description]
+           ,[j02AvatarImage]
+           ,[j02EmailSignature]
+           ,[j02RobotAddress]
+           ,[j02DateInsert]
+           ,[j02UserInsert]
+           ,[j02DateUpdate]
+           ,[j02UserUpdate]
+           ,[j02ValidFrom]
+           ,[j02ValidUntil]
+           ,[j02ExternalPID]
+           ,[j02TimesheetEntryDaysBackLimit]
+           ,[j02TimesheetEntryDaysBackLimit_p34IDs]
+           ,[j02Salutation]
+           ,[j02WorksheetAccessFlag]
+           ,[j02DomainAccount])
+SELECT [j02ID]
+           ,[j07ID]
+           ,[c21ID]
+           ,[j18ID]
+           ,[j17ID]
+           ,[o40ID]
+           ,[p72ID_NonBillable]
+           ,[j02FirstName]
+           ,[j02LastName]
+           ,[j02TitleBeforeName]
+           ,[j02TitleAfterName]
+           ,[j02Code]
+           ,[j02JobTitle]
+           ,[j02Email]
+           ,[j02Mobile]
+           ,[j02Phone]
+           ,[j02Office]
+           ,[j02IsIntraPerson]
+           ,[j02Description]
+           ,[j02AvatarImage]
+           ,[j02EmailSignature]
+           ,[j02RobotAddress]
+           ,[j02DateInsert]
+           ,[j02UserInsert]
+           ,[j02DateUpdate]
+           ,[j02UserUpdate]
+           ,[j02ValidFrom]
+           ,[j02ValidUntil]
+           ,[j02ExternalPID]
+           ,[j02TimesheetEntryDaysBackLimit]
+           ,[j02TimesheetEntryDaysBackLimit_p34IDs]
+           ,[j02Salutation]
+           ,[j02WorksheetAccessFlag]
+           ,[j02DomainAccount]
+FROM j02Person WHERE j02ID=@j02id
 
 
 
@@ -5405,8 +5492,7 @@ BEGIN TRY
 	 DELETE FROM j74SavedGridColTemplate WHERE j02ID_Owner=@pid
 
 
-	DELETE FROM x90EntityLog WHERE x29ID=102 AND x90RecordPID=@pid
-
+	
 
 	DELETE FROM j02Person WHERE j02ID=@pid
 
@@ -5433,6 +5519,51 @@ END CATCH
 
 
 
+
+GO
+
+----------P---------------j02_changelog-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('j02_changelog') and type = 'P')
+ drop procedure j02_changelog
+GO
+
+
+CREATE procedure [dbo].[j02_changelog]
+@j02id int
+AS
+
+SELECT a.RowID as pid
+,row_number() over (order by a.RowID) as Verze
+,a.j02DateInsert as Založeno
+,a.j02UserInsert as Založil
+,a.j02DateUpdate as Aktualizováno
+,a.j02UserUpdate as Aktualizoval
+,a.j02TitleBeforeName as [Titul]
+,a.j02FirstName as [Jméno]
+,a.j02LastName as [Pøíjmení]
+,a.j02TitleAfterName as [Titul za jménem]
+,a.j02Email as [E-mail]
+,j07.j07Name as [Pozice]
+,c21.c21Name as [Fond]
+,j18.j18Name as [Støedisko]
+,a.j02Code as [Kód]
+,a.j02Mobile as [Mobil]
+,a.j02Office as [Kanceláø]
+,o40.o40Name as [SMTP úèet]
+,a.j02AvatarImage as [Avatar]
+,a.j02IsIntraPerson as [Interní osoba]
+,a.j02EmailSignature as [E-mail podpis]
+,a.j02ExternalPID as [Externí klíè]
+,a.j02ValidUntil as [Platnost záznamu]
+FROM
+j02Person_Log a
+LEFT OUTER JOIN j07PersonPosition j07 ON a.j07ID=j07.j07ID
+LEFT OUTER JOIN j18Region j18 ON a.j18ID=j18.j18ID
+LEFT OUTER JOIN c21FondCalendar c21 ON a.c21ID=c21.c21ID
+LEFT OUTER JOIN o40SmtpAccount o40 ON a.o40ID=o40.o40ID
+WHERE a.j02ID=@j02id
+ORDER BY a.RowID DESC
 
 GO
 
@@ -7098,7 +7229,7 @@ if ISNUMERIC(@o23code)=1 and @o23ArabicCode is null
   update o23Doc set o23ArabicCode=case when @num<1000 then dbo.ConvertNumberToRoman(@num) else null end WHERE o23ID=@o23id
  end
 
-exec [x90_appendlog] 223,@o23id,@j03id_sys
+
  
  
 
@@ -7738,9 +7869,128 @@ if exists(select p28ID FROM p28Contact WHERE p28ID=@p28id AND (p28ParentID IS NO
 else
  update p28Contact set p28TreePath=isnull(p28CompanyShortName,p28Name) WHERE p28ID=@p28id
 
-exec [x90_appendlog] 328,@p28id,@j03id_sys
+
+exec dbo.p28_append_log @p28id
+
  
  
+
+
+
+
+GO
+
+----------P---------------p28_append_log-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p28_append_log') and type = 'P')
+ drop procedure p28_append_log
+GO
+
+
+CREATE    PROCEDURE [dbo].[p28_append_log]
+@p28id int
+AS
+
+INSERT INTO [dbo].[p28Contact_Log]
+           ([p28ID]
+           ,[p29ID]
+           ,[p92ID]
+           ,[p87ID]
+           ,[p51ID_Billing]
+           ,[p51ID_Internal]
+           ,[j02ID_Owner]
+           ,[b02ID]
+           ,[p63ID]
+           ,[j61ID_Invoice]
+           ,[p28IsDraft]
+           ,[p28IsCompany]
+           ,[p28Name]
+           ,[p28Code]
+           ,[p28FirstName]
+           ,[p28LastName]
+           ,[p28TitleBeforeName]
+           ,[p28TitleAfterName]
+           ,[p28RegID]
+           ,[p28VatID]
+           ,[p28CompanyName]
+           ,[p28CompanyShortName]
+           ,[p28InvoiceDefaultText1]
+           ,[p28InvoiceDefaultText2]
+           ,[p28InvoiceMaturityDays]
+           ,[p28LimitHours_Notification]
+           ,[p28LimitFee_Notification]
+           ,[p28AvatarImage]
+           ,[p28SupplierFlag]
+           ,[p28SupplierID]
+           ,[p28RobotAddress]
+           ,[p28DateInsert]
+           ,[p28UserInsert]
+           ,[p28DateUpdate]
+           ,[p28UserUpdate]
+           ,[p28ValidFrom]
+           ,[p28ValidUntil]
+           ,[p28Person_BirthRegID]
+           ,[p28ExternalPID]
+           ,[p28ParentID]
+           ,[p28BillingMemo]
+           ,[p28TreeLevel]
+           ,[p28TreeIndex]
+           ,[p28TreePrev]
+           ,[p28TreeNext]
+           ,[p28TreePath]
+           ,[p28Pohoda_VatCode]
+           ,[j02ID_ContactPerson_DefaultInWorksheet]
+           ,[j02ID_ContactPerson_DefaultInInvoice])
+SELECT [p28ID]
+           ,[p29ID]
+           ,[p92ID]
+           ,[p87ID]
+           ,[p51ID_Billing]
+           ,[p51ID_Internal]
+           ,[j02ID_Owner]
+           ,[b02ID]
+           ,[p63ID]
+           ,[j61ID_Invoice]
+           ,[p28IsDraft]
+           ,[p28IsCompany]
+           ,[p28Name]
+           ,[p28Code]
+           ,[p28FirstName]
+           ,[p28LastName]
+           ,[p28TitleBeforeName]
+           ,[p28TitleAfterName]
+           ,[p28RegID]
+           ,[p28VatID]
+           ,[p28CompanyName]
+           ,[p28CompanyShortName]
+           ,[p28InvoiceDefaultText1]
+           ,[p28InvoiceDefaultText2]
+           ,[p28InvoiceMaturityDays]
+           ,[p28LimitHours_Notification]
+           ,[p28LimitFee_Notification]
+           ,[p28AvatarImage]
+           ,[p28SupplierFlag]
+           ,[p28SupplierID]
+           ,[p28RobotAddress]
+           ,[p28DateInsert]
+           ,[p28UserInsert]
+           ,[p28DateUpdate]
+           ,[p28UserUpdate]
+           ,[p28ValidFrom]
+           ,[p28ValidUntil]
+           ,[p28Person_BirthRegID]
+           ,[p28ExternalPID]
+           ,[p28ParentID]
+           ,[p28BillingMemo]
+           ,[p28TreeLevel]
+           ,[p28TreeIndex]
+           ,[p28TreePrev]
+           ,[p28TreeNext]
+           ,[p28TreePath]
+           ,[p28Pohoda_VatCode]
+           ,[j02ID_ContactPerson_DefaultInWorksheet]
+           ,[j02ID_ContactPerson_DefaultInInvoice]
+FROM p28Contact WHERE p28ID=@p28id
 
 
 
@@ -7924,7 +8174,7 @@ BEGIN TRY
 	 DELETE a FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE a.x69RecordPID=@pid AND b.x29ID=328
 
 
-	DELETE FROM x90EntityLog WHERE x29ID=328 AND x90RecordPID=@pid
+	
 
 	delete from p28Contact WHERE p28ID=@pid
 
@@ -7951,6 +8201,55 @@ END CATCH
 
 
 
+
+GO
+
+----------P---------------p28_changelog-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p28_changelog') and type = 'P')
+ drop procedure p28_changelog
+GO
+
+
+CREATE procedure [dbo].[p28_changelog]
+@p28id int
+AS
+
+SELECT a.RowID as pid
+,row_number() over (order by a.RowID) as Verze
+,a.p28DateInsert as Založeno
+,a.p28UserInsert as Založil
+,a.p28DateUpdate as Aktualizováno
+,a.p28UserUpdate as Aktualizoval
+,a.p28Name as [Název]
+,a.p28CompanyShortName as [Zkrácený název]
+,p29.p29Name as [Typ klienta]
+,a.p28Code as [Kód]
+,a.p28RegID as [IÈ]
+,a.p28VatID as [DIÈ]
+,p51Billing.p51Name as [Fakturaèní ceník]
+,p87.p87Name as [Fakturaèní jazyk]
+,b02.b02Name as [Stav]
+,a.p28LimitHours_Notification as [Limit rozpracovaných hodin]
+,a.p28LimitFee_Notification as [Limit rozpracovaného honoráøe]
+,a.p28BillingMemo as [Fakturaèní poznámka]
+,a.p28ExternalPID as [Externí klíè]
+,parent.p28Name as [Nadøízený klient]
+,p92.p92Name as [Typ faktury]
+,a.p28InvoiceMaturityDays as [Výchozí splatnost]
+,a.p28InvoiceDefaultText1 as [Text faktury]
+,a.p28IsDraft as [DRAFT záznam]
+,a.p28ValidUntil as [Platnost záznamu]
+FROM
+p28Contact_Log a
+LEFT OUTER JOIN p51PriceList p51Billing ON a.p51ID_Billing=p51Billing.p51ID
+LEFT OUTER JOIN p87BillingLanguage p87 ON a.p87ID=p87.p87ID
+LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID
+LEFT OUTER JOIN p29ContactType p29 ON a.p29ID=p29.p29ID
+LEFT OUTER JOIN p28Contact parent ON a.p28ParentID=parent.p28ID
+LEFT OUTER JOIN p92InvoiceType p92 ON a.p92ID=p92.p92ID
+WHERE a.p28ID=@p28id
+ORDER BY a.RowID DESC
 
 GO
 
@@ -11942,9 +12241,124 @@ if @p41RecurMotherID is not null AND CHARINDEX(']',@name)>0
  update p41Project set p41Name=dbo.get_parsed_text_with_period(p41Name,p41RecurBaseDate,0) WHERE p41ID=@p41id
  
 
+ exec dbo.p41_append_log @p41id
 
-exec [x90_appendlog] 141,@p41id,@j03id_sys
 
+
+
+GO
+
+----------P---------------p41_append_log-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p41_append_log') and type = 'P')
+ drop procedure p41_append_log
+GO
+
+
+
+CREATE    PROCEDURE [dbo].[p41_append_log]
+@p41id int
+AS
+
+INSERT INTO [dbo].[p41Project_Log]
+           ([p41ID]
+           ,[p42ID]
+           ,[j02ID_Owner]
+           ,[p41Name]
+           ,[p41NameShort]
+           ,[p41Code]
+           ,[p28ID_Client]
+           ,[p28ID_Billing]
+           ,[p87ID]
+           ,[p51ID_Billing]
+           ,[p51ID_Internal]
+           ,[p92ID]
+           ,[b02ID]
+           ,[p61ID]
+           ,[j18ID]
+           ,[p65ID]
+           ,[p72ID_NonBillable]
+           ,[p72ID_BillableHours]
+           ,[p41IsDraft]
+           ,[p41InvoiceDefaultText1]
+           ,[p41InvoiceDefaultText2]
+           ,[p41InvoiceMaturityDays]
+           ,[p41WorksheetOperFlag]
+           ,[p41PlanFrom]
+           ,[p41PlanUntil]
+           ,[p41LimitHours_Notification]
+           ,[p41LimitFee_Notification]
+           ,[p41RobotAddress]
+           ,[p41DateInsert]
+           ,[p41UserInsert]
+           ,[p41DateUpdate]
+           ,[p41UserUpdate]
+           ,[p41ValidFrom]
+           ,[p41ValidUntil]
+           ,[p41ExternalPID]
+           ,[p41ParentID]
+           ,[p41BillingMemo]
+           ,[p41IsNoNotify]
+           ,[p41TreeLevel]
+           ,[p41TreeIndex]
+           ,[p41TreePrev]
+           ,[p41TreeNext]
+           ,[p41TreePath]
+           ,[j02ID_ContactPerson_DefaultInWorksheet]
+           ,[j02ID_ContactPerson_DefaultInInvoice]
+           ,[p41RecurNameMask]
+           ,[p41RecurBaseDate]
+           ,[p41RecurMotherID])
+SELECT [p41ID]
+           ,[p42ID]
+           ,[j02ID_Owner]
+           ,[p41Name]
+           ,[p41NameShort]
+           ,[p41Code]
+           ,[p28ID_Client]
+           ,[p28ID_Billing]
+           ,[p87ID]
+           ,[p51ID_Billing]
+           ,[p51ID_Internal]
+           ,[p92ID]
+           ,[b02ID]
+           ,[p61ID]
+           ,[j18ID]
+           ,[p65ID]
+           ,[p72ID_NonBillable]
+           ,[p72ID_BillableHours]
+           ,[p41IsDraft]
+           ,[p41InvoiceDefaultText1]
+           ,[p41InvoiceDefaultText2]
+           ,[p41InvoiceMaturityDays]
+           ,[p41WorksheetOperFlag]
+           ,[p41PlanFrom]
+           ,[p41PlanUntil]
+           ,[p41LimitHours_Notification]
+           ,[p41LimitFee_Notification]
+           ,[p41RobotAddress]
+           ,[p41DateInsert]
+           ,[p41UserInsert]
+           ,[p41DateUpdate]
+           ,[p41UserUpdate]
+           ,[p41ValidFrom]
+           ,[p41ValidUntil]
+           ,[p41ExternalPID]
+           ,[p41ParentID]
+           ,[p41BillingMemo]
+           ,[p41IsNoNotify]
+           ,[p41TreeLevel]
+           ,[p41TreeIndex]
+           ,[p41TreePrev]
+           ,[p41TreeNext]
+           ,[p41TreePath]
+           ,[j02ID_ContactPerson_DefaultInWorksheet]
+           ,[j02ID_ContactPerson_DefaultInInvoice]
+           ,[p41RecurNameMask]
+           ,[p41RecurBaseDate]
+           ,[p41RecurMotherID]
+FROM
+p41Project WHERE p41ID=@p41id
 
 GO
 
@@ -12170,8 +12584,6 @@ BEGIN TRY
 	 DELETE a FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE a.x69RecordPID=@pid AND b.x29ID=141
 
 	
-	DELETE FROM x90EntityLog WHERE x29ID=141 AND x90RecordPID=@pid
-
 	
 	delete from p41Project WHERE p41ID=@pid
 
@@ -12316,6 +12728,67 @@ LEFT OUTER JOIN p70BillingStatus p70 ON a.p70ID=p70.p70ID
 WHERE p34.p33ID=1 AND a.p41ID=@pid AND p91.p91DateSupply between @datfrom and @datuntil AND a.p70ID=6
 ORDER BY p91.p91Code,a.p31Date
 
+
+GO
+
+----------P---------------p41_changelog-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p41_changelog') and type = 'P')
+ drop procedure p41_changelog
+GO
+
+
+
+CREATE procedure [dbo].[p41_changelog]
+@p41id int
+AS
+
+SELECT a.RowID as pid
+,row_number() over (order by a.RowID) as Verze
+,a.p41DateInsert as Založeno
+,a.p41UserInsert as Založil
+,a.p41DateUpdate as Aktualizováno
+,a.p41UserUpdate as Aktualizoval
+,a.p41Name as [Název]
+,a.p41NameShort as [Zkrácený název]
+,p42.p42Name as [Typ projektu]
+,a.p41Code as [Kód]
+,p28Client.p28Name as [Klient projektu]
+,p28Invoice.p28Name as [Odbìratel faktury]
+,p51Billing.p51Name as [Fakturaèní ceník]
+,p87.p87Name as [Fakturaèní jazyk]
+,j18.j18Name as [Støedisko]
+,b02.b02Name as [Stav]
+,a.p41IsDraft as [Je draft]
+,a.p41PlanFrom as [Plánované zahájení]
+,a.p41PlanUntil as [Plánované dokonèení]
+,a.p41LimitHours_Notification as [Limit rozpracovaných hodin]
+,a.p41LimitFee_Notification as [Limit rozpracovaného honoráøe]
+,a.p41BillingMemo as [Fakturaèní poznámka]
+,a.p41ExternalPID as [Externí klíè]
+,parent.p41Code+' - '+parent.p41Name as [Nadøízený projekt]
+,p92.p92Name as [Typ faktury]
+,a.p41InvoiceMaturityDays as [Výchozí splatnost]
+,a.p41InvoiceDefaultText1 as [Text faktury]
+,a.p41IsNoNotify as [Vypnout notifikaci]
+,p65.p65Name as [Šablona opakování]
+,p61.p61Name as [Výbìr povolených aktivit]
+,a.p41ValidUntil as [Platnost záznamu]
+FROM
+p41Project_Log a
+LEFT OUTER JOIN p28Contact p28Client ON a.p28ID_Client=p28Client.p28ID
+LEFT OUTER JOIN p28Contact p28Invoice ON a.p28ID_Billing=p28Invoice.p28ID
+LEFT OUTER JOIN p51PriceList p51Billing ON a.p51ID_Billing=p51Billing.p51ID
+LEFT OUTER JOIN p87BillingLanguage p87 ON a.p87ID=p87.p87ID
+LEFT OUTER JOIN j18Region j18 ON a.j18ID=j18.j18ID
+LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID
+LEFT OUTER JOIN p42ProjectType p42 ON a.p42ID=p42.p42ID
+LEFT OUTER JOIN p41Project parent ON a.p41ParentID=parent.p41ID
+LEFT OUTER JOIN p92InvoiceType p92 ON a.p92ID=p92.p92ID
+LEFT OUTER JOIN p65Recurrence p65 ON a.p65ID=p65.p65ID
+LEFT OUTER JOIN p61ActivityCluster p61 ON a.p61ID=p61.p61ID
+WHERE a.p41ID=@p41id
+ORDER BY a.RowID DESC
 
 GO
 
@@ -13169,12 +13642,108 @@ if @p56RecurMotherID is not null AND CHARINDEX(']',@name)>0
  update p56Task set p56Name=dbo.get_parsed_text_with_period(p56Name,p56RecurBaseDate,0) WHERE p56ID=@p56id
  
 
+exec dbo.p56_append_log @p56id
 
 declare @j02id int
 select @j02id=j02ID FROM j03User WHERE j03ID=@j03id_sys
 
 exec j03_recovery_cache @j03id_sys,@j02id
 
+
+
+
+GO
+
+----------P---------------p56_append_log-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p56_append_log') and type = 'P')
+ drop procedure p56_append_log
+GO
+
+
+
+
+
+CREATE    PROCEDURE [dbo].[p56_append_log]
+@p56id int
+AS
+
+INSERT INTO [dbo].[p56Task_Log]
+           ([p56ID]
+           ,[p41ID]
+           ,[p57ID]
+           ,[o22ID]
+           ,[j02ID_Owner]
+           ,[b02ID]
+           ,[p65ID]
+           ,[o43ID]
+           ,[p59ID_Submitter]
+           ,[p59ID_Receiver]
+           ,[p56Name]
+           ,[p56NameShort]
+           ,[p56Code]
+           ,[p56Description]
+           ,[p56Ordinary]
+           ,[p56PlanFrom]
+           ,[p56PlanUntil]
+           ,[p56ReminderDate]
+           ,[p56Plan_Hours]
+           ,[p56Plan_Expenses]
+           ,[p56CompletePercent]
+           ,[p56RatingValue]
+           ,[p56DateInsert]
+           ,[p56UserInsert]
+           ,[p56DateUpdate]
+           ,[p56UserUpdate]
+           ,[p56ValidFrom]
+           ,[p56ValidUntil]
+           ,[p56ExternalPID]
+           ,[p56IsPlan_Hours_Ceiling]
+           ,[p56IsPlan_Expenses_Ceiling]
+           ,[p56IsHtml]
+           ,[p56DescriptionHtml]
+           ,[p56IsNoNotify]
+           ,[p56RecurNameMask]
+           ,[p56RecurBaseDate]
+           ,[p56RecurMotherID])
+SELECT [p56ID]
+           ,[p41ID]
+           ,[p57ID]
+           ,[o22ID]
+           ,[j02ID_Owner]
+           ,[b02ID]
+           ,[p65ID]
+           ,[o43ID]
+           ,[p59ID_Submitter]
+           ,[p59ID_Receiver]
+           ,[p56Name]
+           ,[p56NameShort]
+           ,[p56Code]
+           ,[p56Description]
+           ,[p56Ordinary]
+           ,[p56PlanFrom]
+           ,[p56PlanUntil]
+           ,[p56ReminderDate]
+           ,[p56Plan_Hours]
+           ,[p56Plan_Expenses]
+           ,[p56CompletePercent]
+           ,[p56RatingValue]
+           ,[p56DateInsert]
+           ,[p56UserInsert]
+           ,[p56DateUpdate]
+           ,[p56UserUpdate]
+           ,[p56ValidFrom]
+           ,[p56ValidUntil]
+           ,[p56ExternalPID]
+           ,[p56IsPlan_Hours_Ceiling]
+           ,[p56IsPlan_Expenses_Ceiling]
+           ,[p56IsHtml]
+           ,[p56DescriptionHtml]
+           ,[p56IsNoNotify]
+           ,[p56RecurNameMask]
+           ,[p56RecurBaseDate]
+           ,[p56RecurMotherID]
+FROM p56Task WHERE p56ID=@p56id
 
 
 
@@ -13243,7 +13812,7 @@ BEGIN TRY
 	 DELETE a FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE a.x69RecordPID=@pid AND b.x29ID=356
 
 	
-	DELETE FROM x90EntityLog WHERE x29ID=356 AND x90RecordPID=@pid
+	
 
 
 	delete from p56Task WHERE p56ID=@pid
@@ -13271,6 +13840,56 @@ END CATCH
 
 
 
+
+
+GO
+
+----------P---------------p56_changelog-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p56_changelog') and type = 'P')
+ drop procedure p56_changelog
+GO
+
+
+
+
+CREATE procedure [dbo].[p56_changelog]
+@p56id int
+AS
+
+SELECT a.RowID as pid
+,row_number() over (order by a.RowID) as Verze
+,a.p56DateInsert as Založeno
+,a.p56UserInsert as Založil
+,a.p56DateUpdate as Aktualizováno
+,a.p56UserUpdate as Aktualizoval
+,a.p56Name as [Název]
+,a.p56NameShort as [Zkrácený název]
+,b02.b02Name as [Stav]
+,p57.p57Name as [Typ úkolu]
+,a.p56Code as [Kód]
+,p41.p41Name as [Projekt]
+,o22.o22Name as [Milník úkolu]
+,p65.p65Name as [Šablona opakování]
+
+,a.p56Description as [Podrobný popis]
+,a.p56PlanFrom as [Plánované zahájení]
+,a.p56PlanUntil as [Plánované dokonèení]
+,a.p56Plan_Hours as [Plán hodin]
+,a.p56Plan_Expenses as [Plán výdajù]
+,a.p56IsPlan_Hours_Ceiling as [Pøekroèit hodiny]
+,a.p56IsPlan_Expenses_Ceiling as [Pøekroèit výdaje]
+,a.p56ExternalPID as [Externí klíè]
+,a.p56ValidUntil as [Platnost záznamu]
+FROM
+p56Task_Log a
+LEFT OUTER JOIN p41Project p41 ON a.p41ID=p41.p41ID
+LEFT OUTER JOIN p57TaskType p57 ON a.p57ID=p57.p57ID
+LEFT OUTER JOIN o22Milestone o22 ON a.o22ID=o22.o22ID
+LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID
+LEFT OUTER JOIN p65Recurrence p65 ON a.p65ID=p65.p65ID
+WHERE a.p56ID=@p56id
+ORDER BY a.RowID DESC
 
 
 GO
@@ -13993,7 +14612,7 @@ if exists(select a.x69ID FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b 
   DELETE a FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE a.x69RecordPID=@pid AND b.x29ID=390
 
 
-DELETE FROM x90EntityLog WHERE x29ID=390 AND x90RecordPID=@pid
+
 
 
 delete from p90Proforma where p90ID=@pid
@@ -14108,6 +14727,175 @@ if @recalc_amount=1
 
 
 
+GO
+
+----------P---------------p91_append_log-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p91_append_log') and type = 'P')
+ drop procedure p91_append_log
+GO
+
+
+
+
+
+CREATE    PROCEDURE [dbo].[p91_append_log]
+@p91id int
+AS
+
+INSERT INTO [dbo].[p91Invoice_Log]
+           ([p91ID]
+           ,[p92ID]
+           ,[p28ID]
+           ,[j27ID]
+           ,[j19ID]
+           ,[j02ID_Owner]
+           ,[p41ID_First]
+           ,[p91ID_CreditNoteBind]
+           ,[b02ID]
+           ,[j17ID]
+           ,[o38ID_Primary]
+           ,[o38ID_Delivery]
+           ,[x15ID]
+           ,[p98ID]
+           ,[j02ID_ContactPerson]
+           ,[p63ID]
+           ,[p80ID]
+           ,[p91FixedVatRate]
+           ,[p91Code]
+           ,[p91IsDraft]
+           ,[p91Date]
+           ,[p91DateBilled]
+           ,[p91DateMaturity]
+           ,[p91DateSupply]
+           ,[p91DateExchange]
+           ,[p91ExchangeRate]
+           ,[p91Datep31_From]
+           ,[p91Datep31_Until]
+           ,[p91Amount_WithoutVat]
+           ,[p91Amount_Vat]
+           ,[p91Amount_Billed]
+           ,[p91Amount_WithVat]
+           ,[p91Amount_Debt]
+           ,[p91RoundFitAmount]
+           ,[p91Text1]
+           ,[p91Text2]
+           ,[p91ProformaAmount]
+           ,[p91ProformaBilledAmount]
+           ,[p91Amount_WithoutVat_None]
+           ,[p91VatRate_Low]
+           ,[p91Amount_WithVat_Low]
+           ,[p91Amount_WithoutVat_Low]
+           ,[p91Amount_Vat_Low]
+           ,[p91VatRate_Standard]
+           ,[p91Amount_WithVat_Standard]
+           ,[p91Amount_WithoutVat_Standard]
+           ,[p91Amount_Vat_Standard]
+           ,[p91VatRate_Special]
+           ,[p91Amount_WithVat_Special]
+           ,[p91Amount_WithoutVat_Special]
+           ,[p91Amount_Vat_Special]
+           ,[p91Amount_TotalDue]
+           ,[p91ProformaAmount_VatRate]
+           ,[p91ProformaAmount_Vat_Standard]
+           ,[p91ProformaAmount_WithoutVat_None]
+           ,[p91ProformaAmount_Vat_Low]
+           ,[p91ProformaAmount_WithoutVat_Low]
+           ,[p91ProformaAmount_WithoutVat_Standard]
+           ,[p91DateInsert]
+           ,[p91UserInsert]
+           ,[p91DateUpdate]
+           ,[p91UserUpdate]
+           ,[p91ValidFrom]
+           ,[p91ValidUntil]
+           ,[p91Client]
+           ,[p91ClientPerson]
+           ,[p91ClientPerson_Salutation]
+           ,[p91Client_RegID]
+           ,[p91Client_VatID]
+           ,[p91ClientAddress1_Street]
+           ,[p91ClientAddress1_City]
+           ,[p91ClientAddress1_ZIP]
+           ,[p91ClientAddress1_Country]
+           ,[p91ClientAddress2]
+           ,[j27ID_Domestic])
+SELECT [p91ID]
+           ,[p92ID]
+           ,[p28ID]
+           ,[j27ID]
+           ,[j19ID]
+           ,[j02ID_Owner]
+           ,[p41ID_First]
+           ,[p91ID_CreditNoteBind]
+           ,[b02ID]
+           ,[j17ID]
+           ,[o38ID_Primary]
+           ,[o38ID_Delivery]
+           ,[x15ID]
+           ,[p98ID]
+           ,[j02ID_ContactPerson]
+           ,[p63ID]
+           ,[p80ID]
+           ,[p91FixedVatRate]
+           ,[p91Code]
+           ,[p91IsDraft]
+           ,[p91Date]
+           ,[p91DateBilled]
+           ,[p91DateMaturity]
+           ,[p91DateSupply]
+           ,[p91DateExchange]
+           ,[p91ExchangeRate]
+           ,[p91Datep31_From]
+           ,[p91Datep31_Until]
+           ,[p91Amount_WithoutVat]
+           ,[p91Amount_Vat]
+           ,[p91Amount_Billed]
+           ,[p91Amount_WithVat]
+           ,[p91Amount_Debt]
+           ,[p91RoundFitAmount]
+           ,[p91Text1]
+           ,[p91Text2]
+           ,[p91ProformaAmount]
+           ,[p91ProformaBilledAmount]
+           ,[p91Amount_WithoutVat_None]
+           ,[p91VatRate_Low]
+           ,[p91Amount_WithVat_Low]
+           ,[p91Amount_WithoutVat_Low]
+           ,[p91Amount_Vat_Low]
+           ,[p91VatRate_Standard]
+           ,[p91Amount_WithVat_Standard]
+           ,[p91Amount_WithoutVat_Standard]
+           ,[p91Amount_Vat_Standard]
+           ,[p91VatRate_Special]
+           ,[p91Amount_WithVat_Special]
+           ,[p91Amount_WithoutVat_Special]
+           ,[p91Amount_Vat_Special]
+           ,[p91Amount_TotalDue]
+           ,[p91ProformaAmount_VatRate]
+           ,[p91ProformaAmount_Vat_Standard]
+           ,[p91ProformaAmount_WithoutVat_None]
+           ,[p91ProformaAmount_Vat_Low]
+           ,[p91ProformaAmount_WithoutVat_Low]
+           ,[p91ProformaAmount_WithoutVat_Standard]
+           ,[p91DateInsert]
+           ,[p91UserInsert]
+           ,[p91DateUpdate]
+           ,[p91UserUpdate]
+           ,[p91ValidFrom]
+           ,[p91ValidUntil]
+           ,[p91Client]
+           ,[p91ClientPerson]
+           ,[p91ClientPerson_Salutation]
+           ,[p91Client_RegID]
+           ,[p91Client_VatID]
+           ,[p91ClientAddress1_Street]
+           ,[p91ClientAddress1_City]
+           ,[p91ClientAddress1_ZIP]
+           ,[p91ClientAddress1_Country]
+           ,[p91ClientAddress2]
+           ,[j27ID_Domestic]
+FROM
+p91Invoice WHERE p91ID=@p91id
 
 
 GO
@@ -14849,7 +15637,7 @@ if exists(select a.x69ID FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b 
   DELETE a FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE a.x69RecordPID=@pid AND b.x29ID=391
 
 
-DELETE FROM x90EntityLog WHERE x29ID=391 AND x90RecordPID=@pid
+
 
 
 delete from p91Invoice where p91id=@pid
@@ -15328,6 +16116,86 @@ exec p91_recalc_amount @p91id
 
 
 
+
+
+GO
+
+----------P---------------p91_changelog-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p91_changelog') and type = 'P')
+ drop procedure p91_changelog
+GO
+
+
+
+CREATE procedure [dbo].[p91_changelog]
+@p91id int
+AS
+
+SELECT a.RowID as pid
+,row_number() over (order by a.RowID) as Verze
+,a.p91DateInsert as Založeno
+,a.p91UserInsert as Založil
+,a.p91DateUpdate as Aktualizováno
+,a.p91UserUpdate as Aktualizoval
+,a.p91Code as [Kód]
+,a.p91Client as [Klient]
+,p92.p92Name as [Typ faktury]
+,a.p91Code as [Kód]
+,j27.j27Code as [Mìna]
+,a.p91ExchangeRate as [Mìnový kurz]
+,a.p91DateExchange as [Datum kurzu]
+,a.p91Amount_WithoutVat as [Celkem bez DPH]
+,a.p91Amount_Vat as [Celkem DPH]
+,a.p91Amount_WithVat as [Celkem vè.DPH]
+,a.p91Amount_Debt as [Dluh]
+,a.p91RoundFitAmount as [Haléøové zaokrouhlení]
+,a.p91Amount_TotalDue as [Celkem k úhradì]
+,a.p91Amount_Billed as [Již uhrazeno]
+,a.p91Text1 as [Text faktury]
+,a.p91Text2 as [Technický text]
+,a.p91ProformaBilledAmount as [Spárovaná úhrada zálohy]
+,b02.b02Name as [Stav]
+,a.p91IsDraft as [Je draft]
+,j17.j17Name as [DPH region]
+,a.p91Date as [Vystaveno]
+,a.p91DateMaturity as [Splatnost]
+,a.p91DateSupply as [DUZP]
+,a.p91DateBilled as [Poslední úhrada]
+,a.p91Datep31_From as [Worksheet od]
+,a.p91Datep31_Until as [Worksheet do]
+,a.p91Client_RegID as [IÈ klienta]
+,a.p91Client_VatID as [DIÈ klienta]
+,a.p91ClientAddress1_Street as [Ulice klienta]
+,a.p91ClientAddress1_City as [Mìsto klienta]
+,a.p91ClientAddress1_ZIP as [PSÈ klienta]
+,a.p91ClientPerson as [Osoba klienta]
+,p63.p63Name as [Režijní pøirážka]
+,p80.p80Name as [Struktura rozpisu]
+,a.p91FixedVatRate as [Fixní DPH sazba]
+,p98.p98Name as [Zaokrouhovací pravidlo]
+,j27domestic.j27Code as [Domácí mìna]
+,a.p91Amount_WithoutVat_Standard as [Základ zvýšené DPH]
+,a.p91VatRate_Standard as [Sazba zvýšení DPH]
+,a.p91Amount_WithoutVat_None as [Základ nulová DPH]
+,a.p91Amount_WithoutVat_Low as [Základ snížená DPH]
+,a.p91VatRate_Low as [Sazba snížené DPH]
+,a.p91Amount_WithoutVat_Standard as [Základ zvýšená DPH]
+,a.p91ValidUntil as [Platnost záznamu]
+FROM
+p91Invoice_Log a
+LEFT OUTER JOIN j27Currency j27 ON a.j27ID=j27.j27ID
+LEFT OUTER JOIN j27Currency j27domestic ON a.j27ID_Domestic=j27domestic.j27ID
+LEFT OUTER JOIN x15VatRateType x15 ON a.x15ID=x15.x15ID
+LEFT OUTER JOIN p98Invoice_Round_Setting_Template p98 ON a.p98ID=p98.p98ID
+LEFT OUTER JOIN p63Overhead p63 ON a.p63ID=p63.p63ID
+LEFT OUTER JOIN p80InvoiceAmountStructure p80 ON a.p80ID=p80.p80ID
+LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID
+LEFT OUTER JOIN p41Project p41 ON a.p41ID_First=p41.p41ID
+LEFT OUTER JOIN p92InvoiceType p92 ON a.p92ID=p92.p92ID
+LEFT OUTER JOIN j17Country j17 ON a.j17ID=j17.j17ID
+WHERE a.p91ID=@p91id
+ORDER BY a.RowID DESC
 
 
 GO
@@ -15856,7 +16724,7 @@ if @p92invoicetype=2
 	exec p91_fpr_recalc_invoice @p51id,@p91id
   end
   
-
+exec dbo.p91_append_log @p91id
 
 
 
@@ -17445,66 +18313,6 @@ END CATCH
 
 
 
-
-
-
-
-
-GO
-
-----------P---------------x90_appendlog-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('x90_appendlog') and type = 'P')
- drop procedure x90_appendlog
-GO
-
-
-
-
-CREATE PROCEDURE [dbo].[x90_appendlog]
-@x29id int
-,@pid int
-,@j03id_sys int
-
-AS
-
-declare @j02id_sys int,@validfrom datetime,@validuntil datetime,@dateinsert datetime,@x90id_last int,@validfrom_last datetime,@validuntil_last datetime
-
-select @j02id_sys=dbo.j03_getj02id(@j03id_sys)
-
-if @x29id=141
- select @validfrom=p41ValidFrom,@validuntil=p41ValidUntil,@dateinsert=p41DateInsert FROM p41Project WHERE p41ID=@pid
-
-if @x29id=328
- select @validfrom=p28ValidFrom,@validuntil=p28ValidUntil,@dateinsert=p28DateInsert FROM p28Contact WHERE p28ID=@pid
-
-if @x29id=102
- select @validfrom=j02ValidFrom,@validuntil=j02ValidUntil,@dateinsert=j02DateInsert FROM j02Person WHERE j02ID=@pid
-
-
-declare @flag int
-set @flag=2
-
-select TOP 1 @x90id_last=x90ID,@validfrom_last=x90RecordValidFrom,@validuntil_last=x90RecordValidUntil
-FROM x90EntityLog
-WHERE x29ID=@x29id AND x90RecordPID=@pid
-ORDER BY x90ID DESC
-
-if @validuntil<>@validuntil_last AND getdate()>=@validuntil
- set @flag=3	---záznam byl pøesunut do koše
-
-if @validuntil<>@validuntil_last AND getdate()<@validuntil
- set @flag=4	---záznam byl obnoven z koše
-
-if not exists(select x90ID FROM x90EntityLog WHERE x29ID=@x29id AND x90RecordPID=@pid AND x90EventFlag=1)
-BEGIN
- INSERT INTO x90EntityLog(x29ID,x90RecordPID,j03ID_Author,x90Date,x90EventFlag,j02ID_Author,x90RecordValidFrom,x90RecordValidUntil) VALUES(@x29id,@pid,@j03id_sys,@dateinsert,1,@j02id_sys,@dateinsert,convert(datetime,'01.01.3000',104))
-END
-
-
-
-INSERT INTO x90EntityLog(x29ID,x90RecordPID,j03ID_Author,x90Date,x90EventFlag,j02ID_Author,x90RecordValidFrom,x90RecordValidUntil)
-VALUES(@x29id,@pid,@j03id_sys,getdate(),@flag,@j02id_sys,@validfrom,@validuntil)
 
 
 

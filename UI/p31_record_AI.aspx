@@ -40,7 +40,9 @@
             dialog_master("b07_create.aspx?parentpid=" + b07id + "&masterprefix=p31&masterpid=<%=master.datapid%>", true)
 
         }
-
+        function changelog() {
+            location.replace("changelog.aspx?prefix=p31&pid=<%=Master.DataPID%>");
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
@@ -299,7 +301,7 @@
         </tr>
     </table>
     <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
-    <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
+    <asp:HyperLink ID="linkTimestamp" runat="server" CssClass="wake_link" ToolTip="CHANGE-LOG" NavigateUrl="javascript:changelog()" ></asp:HyperLink>
     
 
 

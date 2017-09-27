@@ -133,7 +133,7 @@
             basUI.SelectDropdownlistValue(Me.p41WorksheetOperFlag, CInt(.p41WorksheetOperFlag).ToString)
             Me.p41IsNoNotify.Checked = .p41IsNoNotify
             ''Me.p41IsEntryP31ByStranger.Checked = .p41IsEntryP31ByStranger
-            Master.Timestamp = .Timestamp
+            Master.Timestamp = .Timestamp & " <a href='javascript:changelog()' class='wake_link'>CHANGE-LOG</a>"
 
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
             Me.p41BillingMemo.Text = .p41BillingMemo

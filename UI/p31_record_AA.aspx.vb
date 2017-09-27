@@ -208,7 +208,7 @@
            
             labels1.RefreshData(Master.Factory, BO.x29IdEnum.p31Worksheet, .PID)
 
-            Me.Timestamp.Text = .Timestamp & " | Vlastník záznamu: <span class='val'>" & .Owner & "</span>"
+            Me.linkTimestamp.Text = .Timestamp & " | Vlastník záznamu: <span class='val'>" & .Owner & "</span>"
             Master.HeaderText = .p34Name & " | " & BO.BAS.FD(.p31Date) & " | " & .Person & " | " & .p41Name
 
             Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p31Worksheet, Master.DataPID, cRec.p34ID)

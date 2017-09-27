@@ -300,7 +300,9 @@
             var p34id = "<%=Me.p34ID.SelectedValue%>";
             dialog_master("p49_bind.aspx?p34id="+p34id+"&p41id="+p41id, true);
         }
-
+        function changelog() {
+            dialog_master("changelog.aspx?prefix=p31&pid=<%=Master.DataPID%>", true)
+        }
        
     </script>
 </asp:Content>

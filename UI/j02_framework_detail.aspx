@@ -208,7 +208,7 @@
                 <img src="Images/slave.png" /><span>Podřízení:</span>
                 <asp:Repeater ID="rpSlaves" runat="server">
                     <ItemTemplate>
-                        <a href="javascript:j05_record(<%#Eval("pid")%>)"><%#Eval("PersonSlave")%><%#Eval("TeamSlave")%></a>
+                        <a class="value_link" href="javascript:j05_record(<%#Eval("pid")%>)"><%#Eval("PersonSlave")%><%#Eval("TeamSlave")%></a>
                     </ItemTemplate>
                 </asp:Repeater>
                 <asp:Label ID="SlavesInLine" runat="server"></asp:Label>
@@ -217,7 +217,7 @@
                 <img src="Images/master.png" /><span>Nadřízení:</span>
                 <asp:Repeater ID="rpMasters" runat="server">
                     <ItemTemplate>
-                        <a href="javascript:j05_record(<%#Eval("pid")%>)"><%#Eval("PersonMaster")%></a>
+                        <a class="value_link" href="javascript:j05_record(<%#Eval("pid")%>)"><%#Eval("PersonMaster")%></a>
                     </ItemTemplate>
                 </asp:Repeater>
             </asp:Panel>

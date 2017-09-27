@@ -477,6 +477,7 @@
                 If Not Master.IsRecordClone Then Server.Transfer("p31_record_AA.aspx?pid=" & Master.DataPID.ToString)
             Case BO.p31RecordDisposition.CanEdit, BO.p31RecordDisposition.CanApproveAndEdit
                 'zbývá právo k editaci - lze pokračovat dál
+
             Case Else
                 Master.StopPage("Nelze zjistit oprávnění k záznamu.")
         End Select
@@ -607,7 +608,7 @@
             End If
 
 
-            Master.Timestamp = .Timestamp & " | Vlastník záznamu: <span class='val'>" & .Owner & "</span>"
+            Master.Timestamp = .Timestamp & " | Vlastník záznamu: <span class='val'>" & .Owner & "</span> | <a href='javascript:changelog()' class='wake_link'>CHANGE-LOG</a>"
             Master.HeaderText = .p34Name & " | " & BO.BAS.FD(.p31Date) & " | " & .Person & " | " & .p41Name
             If .IsClosed Then
                 Master.ChangeToolbarSkin("BlackMetroTouch")

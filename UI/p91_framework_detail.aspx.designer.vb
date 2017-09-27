@@ -221,6 +221,15 @@ Partial Public Class p91_framework_detail
     Protected WithEvents cmdPohoda As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
+    '''cmdLog control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdLog As Global.Telerik.Web.UI.NavigationNode
+
+    '''<summary>
     '''cmdBarCode control.
     '''</summary>
     '''<remarks>

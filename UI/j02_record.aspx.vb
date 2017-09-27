@@ -100,7 +100,7 @@
             basUI.SelectDropdownlistValue(Me.j02WorksheetAccessFlag, CInt(.j02WorksheetAccessFlag).ToString)
             basUI.SelectDropdownlistValue(Me.p72ID_NonBillable, CInt(.p72ID_NonBillable).ToString)
             Me.j02AvatarImage.Value = .j02AvatarImage
-            Master.Timestamp = .Timestamp
+            Master.Timestamp = .Timestamp & " <a href='javascript:changelog()' class='wake_link'>CHANGE-LOG</a>"
 
             
             tags1.RefreshData(cRec.PID)

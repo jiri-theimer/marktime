@@ -26,6 +26,9 @@
 
 
         }
+        function changelog() {
+            dialog_master("changelog.aspx?prefix=p91&pid=<%=Master.DataPID%>", true)
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">

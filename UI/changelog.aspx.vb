@@ -18,10 +18,26 @@
                     .InhaleUserParams("changelog-view")
                     basUI.SelectRadiolistValue(Me.opgView, .GetUserParam("changelog-view", "2"))
                 End With
+
                 Select Case hidPrefix.Value
-                    Case "p41" : Me.Timestamp.Text = .Factory.p41ProjectBL.Load(.DataPID).Timestamp
+                    Case "p41"
+                        Dim c As BO.p41Project = .Factory.p41ProjectBL.Load(.DataPID)
+                        Me.Timestamp.Text = c.Timestamp
+                        Dim cDISP As BO.p41RecordDisposition = .Factory.p41ProjectBL.InhaleRecordDisposition(c)
+                        If Not cDISP.OwnerAccess Then .StopPage("K projektu nemáte dostatečné oprávnění.")
+
                     Case "p28" : Me.Timestamp.Text = .Factory.p28ContactBL.Load(.DataPID).Timestamp
                     Case "j02" : Me.Timestamp.Text = .Factory.j02PersonBL.Load(.DataPID).Timestamp
+                    Case "p91" : Me.Timestamp.Text = .Factory.p91InvoiceBL.Load(.DataPID).Timestamp
+                    Case "p56" : Me.Timestamp.Text = .Factory.p56TaskBL.Load(.DataPID).Timestamp
+                    Case "p31"
+                        If Not .Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
+                            .StopPage("K této funkci nemáte dostatečné oprávnění.")
+                        End If
+                        Dim cDISP As BO.p31WorksheetDisposition = .Factory.p31WorksheetBL.InhaleRecordDisposition(.DataPID)
+                        If cDISP.RecordDisposition = BO.p31RecordDisposition._NoAccess Then
+                            .StopPage("K záznamu nemáte oprávnění.")
+                        End If
                 End Select
             End With
 

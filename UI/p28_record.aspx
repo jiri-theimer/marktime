@@ -63,7 +63,9 @@
             dialog_master("vat_registration.aspx?vat=" + dic, true);
 
         }
-
+        function changelog() {
+            dialog_master("changelog.aspx?prefix=p28&pid=<%=Master.DataPID%>", true)
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">

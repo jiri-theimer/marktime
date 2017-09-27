@@ -590,13 +590,13 @@ Partial Public Class p31_record_AI
     Protected WithEvents labels1 As Global.UI.x18_readonly
 
     '''<summary>
-    '''Timestamp control.
+    '''linkTimestamp control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Timestamp As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents linkTimestamp As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''comments1 control.

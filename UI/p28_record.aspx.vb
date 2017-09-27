@@ -150,7 +150,7 @@
             basUI.SelectRadiolistValue(Me.p28SupplierFlag, .p28SupplierFlag)
             Me.p28SupplierID.Text = .p28SupplierID
             Me.p28ExternalPID.Text = .p28ExternalPID
-            Master.Timestamp = .Timestamp
+            Master.Timestamp = .Timestamp & " <a href='javascript:changelog()' class='wake_link'>CHANGE-LOG</a>"
 
             If .p28ParentID <> 0 Then
                 Me.p28ParentID.Value = .p28ParentID

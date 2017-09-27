@@ -55,6 +55,9 @@
         function source_record() {
             sw_everywhere("p31_record.aspx?pid=<%=Master.DataPID%>&edit_approve=1","Images/worksheet.png", true);
         }
+        function changelog() {
+            location.replace("changelog.aspx?prefix=p31&pid=<%=Master.DataPID%>");
+        }
 
     </script>
 </asp:Content>
@@ -302,7 +305,7 @@
         </div>
     </asp:panel>
     <div class="div6">
-<asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
+    <asp:HyperLink ID="linkTimestamp" runat="server" CssClass="wake_link" ToolTip="CHANGE-LOG" NavigateUrl="javascript:changelog()" ></asp:HyperLink>
     </div>
     
     

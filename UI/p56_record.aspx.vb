@@ -145,7 +145,7 @@
             Me.p56IsPlan_Hours_Ceiling.Checked = .p56IsPlan_Hours_Ceiling
             Me.p56IsPlan_Expenses_Ceiling.Checked = .p56IsPlan_Expenses_Ceiling
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
-            Master.Timestamp = .Timestamp
+            Master.Timestamp = .Timestamp & " <a href='javascript:changelog()' class='wake_link'>CHANGE-LOG</a>"
 
             Me.p56RecurNameMask.Text = .p56RecurNameMask
             basUI.SelectDropdownlistValue(Me.p65ID, .p65ID.ToString)

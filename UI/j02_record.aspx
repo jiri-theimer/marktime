@@ -343,5 +343,8 @@
 
 
         <%End If%>
+        function changelog() {
+            dialog_master("changelog.aspx?prefix=j02&pid=<%=Master.DataPID%>", true)
+        }
     </script>
 </asp:Content>

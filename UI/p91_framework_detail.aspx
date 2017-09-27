@@ -312,6 +312,7 @@
 
                     <telerik:NavigationNode ID="cmdAboImport" Text="Import úhrad z ABO souboru" NavigateUrl="javascript:abo_import();" ImageUrl="Images/payment.png"></telerik:NavigationNode>
                     <telerik:NavigationNode ID="cmdPohoda" Text="Export do účetnictví POHODA" NavigateUrl="javascript:export_pohoda();" ImageUrl="Images/license.png"></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="cmdLog" Text="Historie záznamu" NavigateUrl="javascript:changelog();" ImageUrl="Images/log.png"></telerik:NavigationNode>
 
                     <telerik:NavigationNode ID="cmdBarCode" Text="Čárový kód" NavigateUrl="javascript:barcode();" ImageUrl="Images/barcode.png"></telerik:NavigationNode>
                 </Nodes>

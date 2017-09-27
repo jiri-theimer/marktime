@@ -90,7 +90,7 @@
             End If
 
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
-            Master.Timestamp = .Timestamp
+            Master.Timestamp = .Timestamp & " <a href='javascript:changelog()' class='wake_link'>CHANGE-LOG</a>"
 
         End With
         roles1.InhaleInitialData(cRec.PID)

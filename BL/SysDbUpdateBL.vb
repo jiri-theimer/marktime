@@ -346,7 +346,7 @@
         Next
         If bolFoundTable Then Return False
 
-        Dim cF As New clsDBField, s As String = ""
+        Dim cF As New clsDBField, s As String = "", bolPK As Boolean = False
         s = vbCrLf & "CREATE TABLE dbo.[" & strTable & "] ("
 
         Dim bolFoundInCatalog As Boolean
@@ -418,9 +418,13 @@
                     Else
                         s += " IDENTITY (1, 1)"
                     End If
-
-                    If LCase(cF.Name) = LCase(Left(strTable, 3)) & "id" Then
+                    If LCase(cF.Name) = "rowid" And Not bolPK Then
                         s += " CONSTRAINT " & cF.Name & "_PK_SCRIPT_" & strTable & " PRIMARY KEY CLUSTERED"
+                        bolPK = True
+                    End If
+                    If LCase(cF.Name) = LCase(Left(strTable, 3)) & "id" And Not bolPK Then
+                        s += " CONSTRAINT " & cF.Name & "_PK_SCRIPT_" & strTable & " PRIMARY KEY CLUSTERED"
+                        bolPK = True
                     End If
                     s += ","
 
