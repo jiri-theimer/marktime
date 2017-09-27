@@ -179,16 +179,7 @@
         End If
     End Function
 
-    Shared Function GetList_x90(cDB As DbHandler, x29id As BO.x29IdEnum, intPID As Integer, datFrom As Date, datUntil As Date) As IEnumerable(Of BO.x90EntityLog)
-        Dim s As String = "select a.*,j02.j02LastName+' '+j02.j02FirstName as Person FROM x90EntityLog a INNER JOIN j02Person j02 ON a.j02ID_Author=j02.j02ID WHERE a.x90RecordPID=@pid AND a.x29ID=@x29id AND a.x90Date BETWEEN @datfrom AND @datuntil"
-        Dim pars As New DbParameters
-        pars.Add("x29id", x29id, DbType.Int32)
-        pars.Add("pid", intPID, DbType.Int32)
-        pars.Add("datfrom", datFrom, DbType.DateTime)
-        pars.Add("datuntil", datUntil, DbType.DateTime)
-
-        Return cDB.GetList(Of BO.x90EntityLog)(s, pars)
-    End Function
+    
 
     Shared Function ClearSqlForAttacks(strSQL As String) As String
         strSQL = Replace(Trim(strSQL), "DROP", "##", , , CompareMethod.Text)  'očištění SQL

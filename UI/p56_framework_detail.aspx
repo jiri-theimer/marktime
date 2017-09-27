@@ -129,7 +129,7 @@
                     </td>
                     <td>
                         <asp:Label ID="Owner" runat="server" CssClass="valbold"></asp:Label>
-                        <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
+                        <asp:HyperLink ID="linkTimestamp" runat="server" CssClass="wake_link"></asp:HyperLink>
 
                     </td>
                 </tr>

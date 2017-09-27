@@ -152,6 +152,9 @@
             Me.j02Email.Text = .j02Email
             Me.j02Code.Text = .j02Code
             Me.j02Email.NavigateUrl = "mailto:" & .j02Email
+            Me.linkTimestamp.Text = .UserInsert & "/" & .DateInsert
+            Me.linkTimestamp.ToolTip = "CHANGE-LOG"
+            Me.linkTimestamp.NavigateUrl = "javascript:changelog()"
             If .j02Phone <> "" Then
                 Me.Mediums.Text += " | " & .j02Phone
             End If

@@ -103,7 +103,11 @@
             If .b02ID <> 0 Then
                 Me.boxCoreTitle.Text += ": " & .b02Name
             End If
-
+            Me.Owner.Text = .Owner : Me.linkTimestamp.Text = .UserInsert & "/" & .DateInsert
+            If cDisp.OwnerAccess Then
+                Me.linkTimestamp.ToolTip = "CHANGE-LOG"
+                Me.linkTimestamp.NavigateUrl = "javascript:changelog()"
+            End If
             Me.Contact.Text = .p28Name
             If .p28Code <> "" Then
                 Me.Contact.Text += " <span style='color:gray;padding-left:10px;'>" & .p28Code & "</span>"

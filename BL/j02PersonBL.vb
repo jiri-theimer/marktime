@@ -9,7 +9,6 @@
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryJ02) As IEnumerable(Of BO.j02Person)
     Function GetGridDataSource(myQuery As BO.myQueryJ02) As DataTable
-    Function GetList_x90(intPID As Integer, datFrom As Date, datUntil As Date) As IEnumerable(Of BO.x90EntityLog)
     Function GetList_j02_join_j11(j02ids As List(Of Integer), j11ids As List(Of Integer)) As IEnumerable(Of BO.j02Person)
     Function GetEmails_j02_join_j11(j02ids As List(Of Integer), j11ids As List(Of Integer)) As List(Of BO.x43MailQueue_Recipient)
     Function GetList_j11(intJ02ID As Integer) As IEnumerable(Of BO.j11Team)
@@ -99,9 +98,7 @@ Class j02PersonBL
     Public Function GetList(mq As BO.myQueryJ02) As IEnumerable(Of BO.j02Person) Implements Ij02PersonBL.GetList
         Return _cDL.GetList(mq)
     End Function
-    Public Function GetList_x90(intPID As Integer, datFrom As Date, datUntil As Date) As IEnumerable(Of BO.x90EntityLog) Implements Ij02PersonBL.GetList_x90
-        Return _cDL.GetList_x90(intPID, datFrom, datUntil)
-    End Function
+  
     Public Function GetList_j02_join_j11(j02ids As List(Of Integer), j11ids As List(Of Integer)) As IEnumerable(Of BO.j02Person) Implements Ij02PersonBL.GetList_j02_join_j11
         Return _cDL.GetList_j02_join_j11(j02ids, j11ids)
     End Function

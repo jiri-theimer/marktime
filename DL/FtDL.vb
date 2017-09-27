@@ -98,10 +98,7 @@ Public Class FtDL
         Dim s As String = "select *," & bas.RecTail("p87") & " FROM p87BillingLanguage WHERE p87ID=@pid"
         Return _cDB.GetRecord(Of BO.p87BillingLanguage)(s, New With {.pid = intP87ID})
     End Function
-    Public Function LoadX90(intX90ID As Integer) As BO.x90EntityLog
-        Dim s As String = "select a.*,j02.j02LastName+' '+j02.j02FirstName as Person FROM x90EntityLog a INNER JOIN j02Person j02 ON a.j02ID_Author=j02.j02ID WHERE a.x90ID=@pid"
-        Return _cDB.GetRecord(Of BO.x90EntityLog)(s, New With {.pid = intX90ID})
-    End Function
+   
     Public Function LoadJ27(intJ27ID As Integer) As BO.j27Currency
         Dim s As String = "select *," & bas.RecTail("j27") & " FROM j27Currency WHERE j27ID=@pid"
         Return _cDB.GetRecord(Of BO.j27Currency)(s, New With {.pid = intJ27ID})

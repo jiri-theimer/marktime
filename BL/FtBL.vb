@@ -19,7 +19,6 @@
     Function GetList_J27(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.j27Currency)
     Function GetList_C11(datFrom As Date, datUntil As Date, levelFrom As BO.PeriodLevel, levelUntil As BO.PeriodLevel) As IEnumerable(Of BO.c11StatPeriod)
     Function GetList_X21_NonDB(bolIncludeFuture As Boolean, bolEnglish As Boolean) As List(Of BO.x21DatePeriod)
-    Function LoadX90(intX90ID As Integer) As BO.x90EntityLog
     Function LoadX45(intX45ID As Integer) As BO.x45Event
     Function GetList_X45(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.x45Event)
     Function GetList_X61(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x61PageTab)
@@ -155,10 +154,7 @@ Class FtBL
         c.SetPeriod(Today)
         Return c
     End Function
-    Public Function LoadX90(intX90ID As Integer) As BO.x90EntityLog Implements IFtBL.LoadX90
-        Return _cDL.LoadX90(intX90ID)
-    End Function
-
+   
     Public Function GetList_X45(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.x45Event) Implements IFtBL.GetList_X45
         Return _cDL.GetList_X45(mq)
     End Function

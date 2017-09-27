@@ -399,9 +399,7 @@
         s += " ORDER BY " & strORDERBY
         Return s
     End Function
-    Public Function GetList_x90(intPID As Integer, datFrom As Date, datUntil As Date) As IEnumerable(Of BO.x90EntityLog)
-        Return bas.GetList_x90(_cDB, BO.x29IdEnum.j02Person, intPID, datFrom, datUntil)
-    End Function
+  
 
     Public Function GetList_AllAssignedEntityRoles(intPID As Integer, x29id_entity As BO.x29IdEnum) As IEnumerable(Of BO.x67EntityRole)
         Dim s As String = "select *," & bas.RecTail("x67") & " FROM x67EntityRole WHERE x29ID=@x29id AND x67ID IN (select a.x67ID FROM x69EntityRole_Assign a LEFT OUTER JOIN j02Person j02 ON a.j02ID=j02.j02ID LEFT OUTER JOIN j11Team j11 ON a.j11ID=j11.j11ID WHERE a.j02ID=@j02id OR a.j11ID IN (select j11ID FROM j12Team_Person WHERE j02ID=@j02id))"

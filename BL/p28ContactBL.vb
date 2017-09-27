@@ -16,7 +16,6 @@
     Function GetList_o37(intPID As Integer) As IEnumerable(Of BO.o37Contact_Address)
     Function GetList_o32(intPID As Integer) As IEnumerable(Of BO.o32Contact_Medium)
 
-    Function GetList_x90(intPID As Integer, datFrom As Date, datUntil As Date) As IEnumerable(Of BO.x90EntityLog)
     Function InhaleRecordDisposition(cRec As BO.p28Contact) As BO.p28RecordDisposition
     Function InhaleRecordDisposition(intPID As Integer) As BO.p28RecordDisposition
     Sub UpdateSelectedRole(intX67ID As Integer, lisX69 As List(Of BO.x69EntityRole_Assign), intP28ID As Integer)
@@ -212,9 +211,7 @@ Class p28ContactBL
         Return _cDL.GetList_o32(intPID)
     End Function
 
-    Public Function GetList_x90(intPID As Integer, datFrom As Date, datUntil As Date) As IEnumerable(Of BO.x90EntityLog) Implements Ip28ContactBL.GetList_x90
-        Return _cDL.GetList_x90(intPID, datFrom, datUntil)
-    End Function
+   
 
     Public Overloads Function InhaleRecordDisposition(intPID As Integer) As BO.p28RecordDisposition Implements Ip28ContactBL.InhaleRecordDisposition
         Return InhaleRecordDisposition(Load(intPID))

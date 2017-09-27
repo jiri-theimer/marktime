@@ -41,6 +41,15 @@ Partial Public Class j02_framework_detail
     Protected WithEvents j02Code As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''linkTimestamp control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkTimestamp As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''lblJ07Name control.
     '''</summary>
     '''<remarks>

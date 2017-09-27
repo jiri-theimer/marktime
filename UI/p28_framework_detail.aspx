@@ -154,6 +154,16 @@
 
                         </td>
                     </tr>
+                    <tr valign="top">
+                        <td>
+                            <asp:Label ID="Label2" runat="server" CssClass="lbl" Text="Vlastník záznamu:"></asp:Label>
+
+                        </td>
+                        <td>
+                            <asp:Label ID="Owner" runat="server" CssClass="valbold"></asp:Label>
+                            <asp:HyperLink ID="linkTimestamp" runat="server" CssClass="wake_link"></asp:HyperLink>
+                        </td>
+                    </tr>
                 </table>
                 <uc:mytags ID="tags1" runat="server" Prefix="p28" />
                 <uc:treemenu ID="tree1" runat="server" Visible="false" />
@@ -208,8 +218,8 @@
             <img src="Images/billing.png" style="margin-right: 10px;" />
             <span>Fakturační poznámka klienta</span>
         </div>
-        <div class="content" style="background-color:#ffffcc;">
-            <asp:Label ID="p28BillingMemo" runat="server" ForeColor="Black"  Font-Italic="true" Font-Size="Larger"></asp:Label>
+        <div class="content" style="background-color: #ffffcc;">
+            <asp:Label ID="p28BillingMemo" runat="server" ForeColor="Black" Font-Italic="true" Font-Size="Larger"></asp:Label>
         </div>
     </asp:Panel>
 
@@ -222,7 +232,7 @@
         </div>
         <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">
             <div class="title">
-                <img src="Images/notepad.png"  /><span style="margin-right: 10px;">Dokumenty</span>
+                <img src="Images/notepad.png" /><span style="margin-right: 10px;">Dokumenty</span>
                 <img src="Images/label.png" /><span>Kategorie</span>
             </div>
             <div class="content">
@@ -232,7 +242,7 @@
         </asp:Panel>
     </div>
 
-    
+
 
     <asp:Panel ID="boxP41" runat="server" CssClass="content-box1" Style="clear: both;">
         <div class="title">
@@ -263,7 +273,7 @@
         <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
     </div>
 
-    <asp:Panel ID="boxP31Summary" runat="server" CssClass="content-box1" style="clear: both;">
+    <asp:Panel ID="boxP31Summary" runat="server" CssClass="content-box1" Style="clear: both;">
         <div class="title">
             <img src="Images/worksheet.png" style="margin-right: 10px;" />
             <asp:Label ID="boxP31SummaryTitle" runat="server" Text="WORKSHEET Summary"></asp:Label>

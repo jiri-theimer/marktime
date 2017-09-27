@@ -11,7 +11,6 @@
     Function GetGridDataSource(myQuery As BO.myQueryP41) As DataTable
     Function GetList(mq As BO.myQueryP41) As IEnumerable(Of BO.p41Project)
     Function GetList_o39(intPID As Integer) As IEnumerable(Of BO.o39Project_Address)
-    Function GetList_x90(intPID As Integer, datFrom As Date, datUntil As Date) As IEnumerable(Of BO.x90EntityLog)
     Function GetVirtualCount(myQuery As BO.myQueryP41) As Integer
     Function InhaleRecordDisposition(cRec As BO.p41Project) As BO.p41RecordDisposition
     Sub UpdateSelectedProjectRole(intX67ID As Integer, lisX69 As List(Of BO.x69EntityRole_Assign), intP41ID As Integer)
@@ -245,9 +244,7 @@ Class p41ProjectBL
         Return _cDL.GetList_o39(intPID)
     End Function
    
-    Public Function GetList_x90(intPID As Integer, datFrom As Date, datUntil As Date) As IEnumerable(Of BO.x90EntityLog) Implements Ip41ProjectBL.GetList_x90
-        Return _cDL.GetList_x90(intPID, datFrom, datUntil)
-    End Function
+   
     Public Function GetVirtualCount(myQuery As BO.myQueryP41) As Integer Implements Ip41ProjectBL.GetVirtualCount
         Return _cDL.GetVirtualCount(myQuery)
     End Function

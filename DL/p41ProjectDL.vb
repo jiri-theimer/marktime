@@ -291,9 +291,7 @@
     End Function
 
 
-    Public Function GetList_x90(intPID As Integer, datFrom As Date, datUntil As Date) As IEnumerable(Of BO.x90EntityLog)
-        Return bas.GetList_x90(_cDB, BO.x29IdEnum.p41Project, intPID, datFrom, datUntil)
-    End Function
+   
 
     Private Function GetSQLWHERE(myQuery As BO.myQueryP41, ByRef pars As DL.DbParameters) As String
         Dim s As New System.Text.StringBuilder

@@ -85,6 +85,7 @@
                     </td>
                     <td>
                         <asp:Label ID="j02Code" runat="server" CssClass="valbold" ForeColor="gray"></asp:Label>
+                        <asp:HyperLink ID="linkTimestamp" runat="server" CssClass="wake_link" ></asp:HyperLink>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -128,7 +129,7 @@
                     </td>
 
                 </tr>
-
+                
             </table>
 
             <asp:Label ID="Mediums" runat="server" CssClass="val" ForeColor="Orange" Style="padding-left: 8px;"></asp:Label>

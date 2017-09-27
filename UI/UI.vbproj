@@ -340,7 +340,6 @@
     <Content Include="clue_periodcombo.aspx" />
     <Content Include="clue_quickquery.aspx" />
     <Content Include="clue_x67_record.aspx" />
-    <Content Include="clue_x90_record.aspx" />
     <Content Include="contact.ascx" />
     <Content Include="contactpersons.ascx" />
     <Content Include="datacheckbox.ascx" />
@@ -1802,13 +1801,6 @@
     </Compile>
     <Compile Include="clue_x67_record.aspx.vb">
       <DependentUpon>clue_x67_record.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="clue_x90_record.aspx.designer.vb">
-      <DependentUpon>clue_x90_record.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="clue_x90_record.aspx.vb">
-      <DependentUpon>clue_x90_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="contact.ascx.designer.vb">
