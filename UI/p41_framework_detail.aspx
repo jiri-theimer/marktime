@@ -86,7 +86,7 @@
         function ew(p56id) {
             sw_decide("p31_record.aspx?pid=0&p56id=" + p56id, "Images/worksheet.png")
         }
-
+        
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -202,9 +202,8 @@
 
                     </td>
                     <td>
-                        <asp:Label ID="Owner" runat="server" CssClass="valbold"></asp:Label>
-                        <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
-
+                        <asp:Label ID="Owner" runat="server" CssClass="valbold"></asp:Label>                        
+                        <asp:HyperLink ID="linkTimestamp" runat="server" CssClass="wake_link"></asp:HyperLink>
                     </td>
                 </tr>
 
@@ -372,6 +371,7 @@
             </div>
         </div>
     </asp:Panel>
+    
 
     <asp:Button ID="cmdConvertDraft2Normal" runat="server" Style="display: none;" />
     <asp:HiddenField ID="hidCal1ShallBeActive" Value="1" runat="server" />

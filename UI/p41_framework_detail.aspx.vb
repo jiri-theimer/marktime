@@ -115,7 +115,11 @@
             If .b02ID <> 0 Then
                 Me.boxCoreTitle.Text += ": " & .b02Name
             End If
-            Me.Owner.Text = .Owner : Me.Timestamp.Text = .UserInsert & "/" & .DateInsert
+            Me.Owner.Text = .Owner : Me.linkTimestamp.Text = .UserInsert & "/" & .DateInsert
+            If cDisp.OwnerAccess Then
+                Me.linkTimestamp.ToolTip = "CHANGE-LOG"
+                Me.linkTimestamp.NavigateUrl = "javascript:changelog()"
+            End If
 
             Me.Project.Text = .p41Name & " <span style='color:gray;padding-left:10px;'>" & .p41Code & "</span>"
             Select Case .p41TreeLevel

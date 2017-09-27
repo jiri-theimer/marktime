@@ -223,6 +223,9 @@
     function timeline(){            
         sw_decide("entity_timeline.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>","Images/timeline.png",true);
     }
+    function changelog() {
+        window.top.sw_everywhere("changelog.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>", "Images/log.png")        
+    }
     function menu_sendmail() {
         sw_decide("sendmail.aspx?prefix=<%=me.DataPrefix%>&pid=<%=me.DataPID%>", "Images/email.png")
 

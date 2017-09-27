@@ -329,13 +329,13 @@ Partial Public Class p41_framework_detail
     Protected WithEvents Owner As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Timestamp control.
+    '''linkTimestamp control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Timestamp As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents linkTimestamp As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''tags1 control.

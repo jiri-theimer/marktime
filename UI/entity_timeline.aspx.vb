@@ -20,6 +20,7 @@
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 Me.CurrentPrefix = Request.Item("prefix")
                 If .DataPID = 0 Or Me.CurrentPrefix = "" Then .StopPage("prefix or pid missing.")
+                .AddToolbarButton("CHANGE-LOG", "changelog", 10, "Images/log.png", False, "changelog.aspx?prefix=" & Me.CurrentPrefix & "&pid=" & .DataPID.ToString)
                 If Me.CurrentPrefix = "j02" Then
                     'najít j03id osoby
                     Dim mq As New BO.myQueryJ03

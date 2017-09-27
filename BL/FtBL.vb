@@ -27,6 +27,7 @@
     Function FulltextSearch(input As BO.FullTextQueryInput) As List(Of BO.FullTextRecord)
     Function AppendRobotLog(cRec As BO.j91RobotLog) As Boolean
     Function GetLastRobotRun(TaskFlag As BO.j91RobotTaskFlag) As BO.j91RobotLog
+    Function GetChangeLog(strPrefix As String, intRecordPID As Integer) As DataTable
 End Interface
 Class FtBL
     Inherits BLMother
@@ -178,5 +179,8 @@ Class FtBL
     End Function
     Public Function GetLastRobotRun(TaskFlag As BO.j91RobotTaskFlag) As BO.j91RobotLog Implements IFtBL.GetLastRobotRun
         Return _cDL.GetLastRobotRun(CInt(TaskFlag))
+    End Function
+    Public Function GetChangeLog(strPrefix As String, intRecordPID As Integer) As DataTable Implements IFtBL.GetChangeLog
+        Return _cDL.GetChangeLog(strPrefix, intRecordPID)
     End Function
 End Class

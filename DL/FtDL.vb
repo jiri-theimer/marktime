@@ -207,4 +207,13 @@ Public Class FtDL
     Public Function GetLastRobotRun(intTaskFlag As Integer) As BO.j91RobotLog
         Return _cDB.GetRecord(Of BO.j91RobotLog)("SELECT TOP 1 * FROM j91RobotLog WHERE j91TaskFlag=@taskflag AND j91ErrorMessage IS NULL ORDER BY j91ID DESC", New With {.taskflag = intTaskFlag})
     End Function
+    Public Function GetChangeLog(strPrefix As String, intRecordPID As Integer) As DataTable
+        Dim pars As New DbParameters()
+        
+        With pars
+            .Add(strPrefix & "id", intRecordPID, DbType.Int32)
+        End With
+        Dim ds As DataSet = _cDB.GetDataSet("exec dbo." & strPrefix & "_changelog @" & strPrefix & "id", , pars.Convert2PluginDbParameters())
+        If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
+    End Function
 End Class

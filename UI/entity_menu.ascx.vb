@@ -659,7 +659,7 @@ Public Class entity_menu
             ami("Operativní plán osoby", "cmdP48", "javascript:p48_plan();", "Images/oplan.png", mi, , True)
             ami("Historie odeslané pošty", "cmdX40", "x40_framework.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "Images/email.png", mi, , , "_top")
 
-            ami("Historie aktivit osoby", "cmdLog", "javascript: timeline()", "Images/event.png", mi)
+            ami("Historie záznamu", "cmdLog", "javascript: timeline()", "Images/event.png", mi)
         Else
             ami("Štítky", "cmdTags", "javascript:tags_menu();", "Images/tag.png", mi, , True)
         End If
