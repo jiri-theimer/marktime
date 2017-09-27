@@ -8715,6 +8715,7 @@ begin
  end
 end
 
+exec dbo.p31_append_log @p31id
 
 
 GO
@@ -8816,6 +8817,446 @@ exec p91_recalc_amount @p91id
 
 
 
+
+
+
+
+
+GO
+
+----------P---------------p31_append_log-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p31_append_log') and type = 'P')
+ drop procedure p31_append_log
+GO
+
+
+
+
+CREATE    PROCEDURE [dbo].[p31_append_log]
+@p31id int
+AS
+
+INSERT INTO [dbo].[p31Worksheet_Log]
+           ([p31ID]
+           ,[p41ID]
+           ,[j02ID]
+           ,[p32ID]
+           ,[p56ID]
+           ,[j02ID_Owner]
+           ,[j02ID_ApprovedBy]
+           ,[p31Code]
+           ,[p70ID]
+           ,[p71ID]
+           ,[p72ID_AfterApprove]
+           ,[p72ID_AfterTrimming]
+           ,[j27ID_Billing_Orig]
+           ,[j27ID_Billing_Invoiced]
+           ,[j27ID_Billing_Invoiced_Domestic]
+           ,[j27ID_Internal]
+           ,[p91ID]
+           ,[c11ID]
+           ,[p28ID_Supplier]
+           ,[p49ID]
+           ,[j19ID]
+           ,[p31Date]
+           ,[p31DateUntil]
+           ,[p31HoursEntryFlag]
+           ,[p31Approved_When]
+           ,[p31IsPlanRecord]
+           ,[p31Text]
+           ,[p31Value_Orig]
+           ,[p31Value_Trimmed]
+           ,[p31Value_Approved_Billing]
+           ,[p31Value_Approved_Internal]
+           ,[p31Value_Invoiced]
+           ,[p31Amount_WithoutVat_Orig]
+           ,[p31Amount_WithVat_Orig]
+           ,[p31Amount_Vat_Orig]
+           ,[p31VatRate_Orig]
+           ,[p31Amount_WithoutVat_FixedCurrency]
+           ,[p31Amount_WithoutVat_Invoiced]
+           ,[p31Amount_WithVat_Invoiced]
+           ,[p31Amount_Vat_Invoiced]
+           ,[p31VatRate_Invoiced]
+           ,[p31Amount_WithoutVat_Invoiced_Domestic]
+           ,[p31Amount_WithVat_Invoiced_Domestic]
+           ,[p31Amount_Vat_Invoiced_Domestic]
+           ,[p31Minutes_Orig]
+           ,[p31Minutes_Trimmed]
+           ,[p31Minutes_Approved_Billing]
+           ,[p31Minutes_Approved_Internal]
+           ,[p31Minutes_Invoiced]
+           ,[p31HHMM_Orig]
+           ,[p31HHMM_Trimmed]
+           ,[p31HHMM_Approved_Billing]
+           ,[p31HHMM_Approved_Internal]
+           ,[p31HHMM_Invoiced]
+           ,[p31Rate_Billing_Orig]
+           ,[p31Rate_Internal_Orig]
+           ,[p31Rate_Billing_Approved]
+           ,[p31Rate_Internal_Approved]
+           ,[p31Rate_Billing_Invoiced]
+           ,[p31Amount_WithoutVat_Approved]
+           ,[p31Amount_WithVat_Approved]
+           ,[p31Amount_Vat_Approved]
+           ,[p31VatRate_Approved]
+           ,[p31Amount_Internal]
+           ,[p31Amount_Internal_Approved]
+           ,[p31ExchangeRate_Domestic]
+           ,[p31ExchangeRate_Invoice]
+           ,[p31ExchangeRate_Fixed]
+           ,[p31DateTimeFrom_Orig]
+           ,[p31DateTimeUntil_Orig]
+           ,[p31Value_Orig_Entried]
+           ,[p31Hours_Orig]
+           ,[p31Hours_Trimmed]
+           ,[p31Hours_Approved_Billing]
+           ,[p31Hours_Approved_Internal]
+           ,[p31Hours_Invoiced]
+           ,[p31IsInvoiceManual]
+           ,[p31ExchangeRate_InvoiceManual]
+           ,[p31DateUpdate_InvoiceManual]
+           ,[j02ID_InvoiceManual]
+           ,[p31DateInsert]
+           ,[p31UserInsert]
+           ,[p31DateUpdate]
+           ,[p31UserUpdate]
+           ,[p31ValidFrom]
+           ,[p31ValidUntil]
+           ,[p31AKDS_FPR_BODY]
+           ,[p31AKDS_FPR_PODIL]
+           ,[p31AKDS_FPR_OBRAT]
+           ,[p31AKDS_FPR_OBRAT_FixedCurrency]
+           ,[p31Calc_Pieces]
+           ,[p31Calc_PieceAmount]
+           ,[p35ID]
+           ,[p31ApprovingSet]
+           ,[o23ID_First]
+           ,[j02ID_ContactPerson]
+           ,[p31ExternalPID]
+           ,[p31ApprovingLevel]
+           ,[p31Value_FixPrice])
+SELECT [p31ID]
+           ,[p41ID]
+           ,[j02ID]
+           ,[p32ID]
+           ,[p56ID]
+           ,[j02ID_Owner]
+           ,[j02ID_ApprovedBy]
+           ,[p31Code]
+           ,[p70ID]
+           ,[p71ID]
+           ,[p72ID_AfterApprove]
+           ,[p72ID_AfterTrimming]
+           ,[j27ID_Billing_Orig]
+           ,[j27ID_Billing_Invoiced]
+           ,[j27ID_Billing_Invoiced_Domestic]
+           ,[j27ID_Internal]
+           ,[p91ID]
+           ,[c11ID]
+           ,[p28ID_Supplier]
+           ,[p49ID]
+           ,[j19ID]
+           ,[p31Date]
+           ,[p31DateUntil]
+           ,[p31HoursEntryFlag]
+           ,[p31Approved_When]
+           ,[p31IsPlanRecord]
+           ,[p31Text]
+           ,[p31Value_Orig]
+           ,[p31Value_Trimmed]
+           ,[p31Value_Approved_Billing]
+           ,[p31Value_Approved_Internal]
+           ,[p31Value_Invoiced]
+           ,[p31Amount_WithoutVat_Orig]
+           ,[p31Amount_WithVat_Orig]
+           ,[p31Amount_Vat_Orig]
+           ,[p31VatRate_Orig]
+           ,[p31Amount_WithoutVat_FixedCurrency]
+           ,[p31Amount_WithoutVat_Invoiced]
+           ,[p31Amount_WithVat_Invoiced]
+           ,[p31Amount_Vat_Invoiced]
+           ,[p31VatRate_Invoiced]
+           ,[p31Amount_WithoutVat_Invoiced_Domestic]
+           ,[p31Amount_WithVat_Invoiced_Domestic]
+           ,[p31Amount_Vat_Invoiced_Domestic]
+           ,[p31Minutes_Orig]
+           ,[p31Minutes_Trimmed]
+           ,[p31Minutes_Approved_Billing]
+           ,[p31Minutes_Approved_Internal]
+           ,[p31Minutes_Invoiced]
+           ,[p31HHMM_Orig]
+           ,[p31HHMM_Trimmed]
+           ,[p31HHMM_Approved_Billing]
+           ,[p31HHMM_Approved_Internal]
+           ,[p31HHMM_Invoiced]
+           ,[p31Rate_Billing_Orig]
+           ,[p31Rate_Internal_Orig]
+           ,[p31Rate_Billing_Approved]
+           ,[p31Rate_Internal_Approved]
+           ,[p31Rate_Billing_Invoiced]
+           ,[p31Amount_WithoutVat_Approved]
+           ,[p31Amount_WithVat_Approved]
+           ,[p31Amount_Vat_Approved]
+           ,[p31VatRate_Approved]
+           ,[p31Amount_Internal]
+           ,[p31Amount_Internal_Approved]
+           ,[p31ExchangeRate_Domestic]
+           ,[p31ExchangeRate_Invoice]
+           ,[p31ExchangeRate_Fixed]
+           ,[p31DateTimeFrom_Orig]
+           ,[p31DateTimeUntil_Orig]
+           ,[p31Value_Orig_Entried]
+           ,[p31Hours_Orig]
+           ,[p31Hours_Trimmed]
+           ,[p31Hours_Approved_Billing]
+           ,[p31Hours_Approved_Internal]
+           ,[p31Hours_Invoiced]
+           ,[p31IsInvoiceManual]
+           ,[p31ExchangeRate_InvoiceManual]
+           ,[p31DateUpdate_InvoiceManual]
+           ,[j02ID_InvoiceManual]
+           ,[p31DateInsert]
+           ,[p31UserInsert]
+           ,[p31DateUpdate]
+           ,[p31UserUpdate]
+           ,[p31ValidFrom]
+           ,[p31ValidUntil]
+           ,[p31AKDS_FPR_BODY]
+           ,[p31AKDS_FPR_PODIL]
+           ,[p31AKDS_FPR_OBRAT]
+           ,[p31AKDS_FPR_OBRAT_FixedCurrency]
+           ,[p31Calc_Pieces]
+           ,[p31Calc_PieceAmount]
+           ,[p35ID]
+           ,[p31ApprovingSet]
+           ,[o23ID_First]
+           ,[j02ID_ContactPerson]
+           ,[p31ExternalPID]
+           ,[p31ApprovingLevel]
+           ,[p31Value_FixPrice]
+FROM p31Worksheet WHERE p31ID=@p31id
+
+
+
+
+GO
+
+----------P---------------p31_append_log_p91-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p31_append_log_p91') and type = 'P')
+ drop procedure p31_append_log_p91
+GO
+
+
+
+
+
+CREATE    PROCEDURE [dbo].[p31_append_log_p91]
+@p91id int
+AS
+
+INSERT INTO [dbo].[p31Worksheet_Log]
+           ([p31ID]
+           ,[p41ID]
+           ,[j02ID]
+           ,[p32ID]
+           ,[p56ID]
+           ,[j02ID_Owner]
+           ,[j02ID_ApprovedBy]
+           ,[p31Code]
+           ,[p70ID]
+           ,[p71ID]
+           ,[p72ID_AfterApprove]
+           ,[p72ID_AfterTrimming]
+           ,[j27ID_Billing_Orig]
+           ,[j27ID_Billing_Invoiced]
+           ,[j27ID_Billing_Invoiced_Domestic]
+           ,[j27ID_Internal]
+           ,[p91ID]
+           ,[c11ID]
+           ,[p28ID_Supplier]
+           ,[p49ID]
+           ,[j19ID]
+           ,[p31Date]
+           ,[p31DateUntil]
+           ,[p31HoursEntryFlag]
+           ,[p31Approved_When]
+           ,[p31IsPlanRecord]
+           ,[p31Text]
+           ,[p31Value_Orig]
+           ,[p31Value_Trimmed]
+           ,[p31Value_Approved_Billing]
+           ,[p31Value_Approved_Internal]
+           ,[p31Value_Invoiced]
+           ,[p31Amount_WithoutVat_Orig]
+           ,[p31Amount_WithVat_Orig]
+           ,[p31Amount_Vat_Orig]
+           ,[p31VatRate_Orig]
+           ,[p31Amount_WithoutVat_FixedCurrency]
+           ,[p31Amount_WithoutVat_Invoiced]
+           ,[p31Amount_WithVat_Invoiced]
+           ,[p31Amount_Vat_Invoiced]
+           ,[p31VatRate_Invoiced]
+           ,[p31Amount_WithoutVat_Invoiced_Domestic]
+           ,[p31Amount_WithVat_Invoiced_Domestic]
+           ,[p31Amount_Vat_Invoiced_Domestic]
+           ,[p31Minutes_Orig]
+           ,[p31Minutes_Trimmed]
+           ,[p31Minutes_Approved_Billing]
+           ,[p31Minutes_Approved_Internal]
+           ,[p31Minutes_Invoiced]
+           ,[p31HHMM_Orig]
+           ,[p31HHMM_Trimmed]
+           ,[p31HHMM_Approved_Billing]
+           ,[p31HHMM_Approved_Internal]
+           ,[p31HHMM_Invoiced]
+           ,[p31Rate_Billing_Orig]
+           ,[p31Rate_Internal_Orig]
+           ,[p31Rate_Billing_Approved]
+           ,[p31Rate_Internal_Approved]
+           ,[p31Rate_Billing_Invoiced]
+           ,[p31Amount_WithoutVat_Approved]
+           ,[p31Amount_WithVat_Approved]
+           ,[p31Amount_Vat_Approved]
+           ,[p31VatRate_Approved]
+           ,[p31Amount_Internal]
+           ,[p31Amount_Internal_Approved]
+           ,[p31ExchangeRate_Domestic]
+           ,[p31ExchangeRate_Invoice]
+           ,[p31ExchangeRate_Fixed]
+           ,[p31DateTimeFrom_Orig]
+           ,[p31DateTimeUntil_Orig]
+           ,[p31Value_Orig_Entried]
+           ,[p31Hours_Orig]
+           ,[p31Hours_Trimmed]
+           ,[p31Hours_Approved_Billing]
+           ,[p31Hours_Approved_Internal]
+           ,[p31Hours_Invoiced]
+           ,[p31IsInvoiceManual]
+           ,[p31ExchangeRate_InvoiceManual]
+           ,[p31DateUpdate_InvoiceManual]
+           ,[j02ID_InvoiceManual]
+           ,[p31DateInsert]
+           ,[p31UserInsert]
+           ,[p31DateUpdate]
+           ,[p31UserUpdate]
+           ,[p31ValidFrom]
+           ,[p31ValidUntil]
+           ,[p31AKDS_FPR_BODY]
+           ,[p31AKDS_FPR_PODIL]
+           ,[p31AKDS_FPR_OBRAT]
+           ,[p31AKDS_FPR_OBRAT_FixedCurrency]
+           ,[p31Calc_Pieces]
+           ,[p31Calc_PieceAmount]
+           ,[p35ID]
+           ,[p31ApprovingSet]
+           ,[o23ID_First]
+           ,[j02ID_ContactPerson]
+           ,[p31ExternalPID]
+           ,[p31ApprovingLevel]
+           ,[p31Value_FixPrice])
+SELECT [p31ID]
+           ,[p41ID]
+           ,[j02ID]
+           ,[p32ID]
+           ,[p56ID]
+           ,[j02ID_Owner]
+           ,[j02ID_ApprovedBy]
+           ,[p31Code]
+           ,[p70ID]
+           ,[p71ID]
+           ,[p72ID_AfterApprove]
+           ,[p72ID_AfterTrimming]
+           ,[j27ID_Billing_Orig]
+           ,[j27ID_Billing_Invoiced]
+           ,[j27ID_Billing_Invoiced_Domestic]
+           ,[j27ID_Internal]
+           ,[p91ID]
+           ,[c11ID]
+           ,[p28ID_Supplier]
+           ,[p49ID]
+           ,[j19ID]
+           ,[p31Date]
+           ,[p31DateUntil]
+           ,[p31HoursEntryFlag]
+           ,[p31Approved_When]
+           ,[p31IsPlanRecord]
+           ,[p31Text]
+           ,[p31Value_Orig]
+           ,[p31Value_Trimmed]
+           ,[p31Value_Approved_Billing]
+           ,[p31Value_Approved_Internal]
+           ,[p31Value_Invoiced]
+           ,[p31Amount_WithoutVat_Orig]
+           ,[p31Amount_WithVat_Orig]
+           ,[p31Amount_Vat_Orig]
+           ,[p31VatRate_Orig]
+           ,[p31Amount_WithoutVat_FixedCurrency]
+           ,[p31Amount_WithoutVat_Invoiced]
+           ,[p31Amount_WithVat_Invoiced]
+           ,[p31Amount_Vat_Invoiced]
+           ,[p31VatRate_Invoiced]
+           ,[p31Amount_WithoutVat_Invoiced_Domestic]
+           ,[p31Amount_WithVat_Invoiced_Domestic]
+           ,[p31Amount_Vat_Invoiced_Domestic]
+           ,[p31Minutes_Orig]
+           ,[p31Minutes_Trimmed]
+           ,[p31Minutes_Approved_Billing]
+           ,[p31Minutes_Approved_Internal]
+           ,[p31Minutes_Invoiced]
+           ,[p31HHMM_Orig]
+           ,[p31HHMM_Trimmed]
+           ,[p31HHMM_Approved_Billing]
+           ,[p31HHMM_Approved_Internal]
+           ,[p31HHMM_Invoiced]
+           ,[p31Rate_Billing_Orig]
+           ,[p31Rate_Internal_Orig]
+           ,[p31Rate_Billing_Approved]
+           ,[p31Rate_Internal_Approved]
+           ,[p31Rate_Billing_Invoiced]
+           ,[p31Amount_WithoutVat_Approved]
+           ,[p31Amount_WithVat_Approved]
+           ,[p31Amount_Vat_Approved]
+           ,[p31VatRate_Approved]
+           ,[p31Amount_Internal]
+           ,[p31Amount_Internal_Approved]
+           ,[p31ExchangeRate_Domestic]
+           ,[p31ExchangeRate_Invoice]
+           ,[p31ExchangeRate_Fixed]
+           ,[p31DateTimeFrom_Orig]
+           ,[p31DateTimeUntil_Orig]
+           ,[p31Value_Orig_Entried]
+           ,[p31Hours_Orig]
+           ,[p31Hours_Trimmed]
+           ,[p31Hours_Approved_Billing]
+           ,[p31Hours_Approved_Internal]
+           ,[p31Hours_Invoiced]
+           ,[p31IsInvoiceManual]
+           ,[p31ExchangeRate_InvoiceManual]
+           ,[p31DateUpdate_InvoiceManual]
+           ,[j02ID_InvoiceManual]
+           ,[p31DateInsert]
+           ,[p31UserInsert]
+           ,[p31DateUpdate]
+           ,[p31UserUpdate]
+           ,[p31ValidFrom]
+           ,[p31ValidUntil]
+           ,[p31AKDS_FPR_BODY]
+           ,[p31AKDS_FPR_PODIL]
+           ,[p31AKDS_FPR_OBRAT]
+           ,[p31AKDS_FPR_OBRAT_FixedCurrency]
+           ,[p31Calc_Pieces]
+           ,[p31Calc_PieceAmount]
+           ,[p35ID]
+           ,[p31ApprovingSet]
+           ,[o23ID_First]
+           ,[j02ID_ContactPerson]
+           ,[p31ExternalPID]
+           ,[p31ApprovingLevel]
+           ,[p31Value_FixPrice]
+FROM p31Worksheet WHERE p91ID=@p91id
 
 
 
@@ -9479,6 +9920,65 @@ exec p91_recalc_amount @p91id
 
 GO
 
+----------P---------------p31_changelog-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p31_changelog') and type = 'P')
+ drop procedure p31_changelog
+GO
+
+
+
+CREATE procedure [dbo].[p31_changelog]
+@p31id int
+AS
+
+SELECT a.RowID as pid
+,row_number() over (order by a.RowID) as Verze
+,a.p31DateInsert as Založeno
+,a.p31UserInsert as Založil
+,a.p31DateUpdate as Aktualizováno
+,a.p31UserUpdate as Aktualizoval
+,a.p31Date as [Datum]
+,j02.j02LastName+' '+j02.j02FirstName as [Jméno]
+,isnull(p41.p41NameShort,p41.p41Name) as [Projekt]
+,p56.p56Name as [Úkol]
+,p32.p32Name as [Aktivita]
+,dbo.Hours2HHMM(a.p31Hours_Orig) as [Vykázané hodiny]
+,a.p31Rate_Billing_Orig as [Výchozí sazba]
+,a.p31Amount_WithoutVat_Orig as [Vykázáno bez DPH]
+,j27.j27Code as [Mìna]
+,p71.p71Name as [Schvalování]
+,j02Approve.j02LastName+' '+j02Approve.j02FirstName as [Schvalovatel]
+,a.p31Approved_When as [Schváleno kdy]
+,p72Approve.p72Name as [Schválený status]
+,a.p31Hours_Approved_Billing as [Schválené hodiny k fakturaci]
+,a.p31Text as [Text]
+,p91.p91Code as [Faktura]
+,dbo.Hours2HHMM(a.p31Hours_Invoiced) as [Vyfakturované hodiny]
+,a.p31VatRate_Orig as [Výchozí DPH sazba]
+,a.p31Rate_Internal_Orig as [Nákladová sazba]
+,a.p31Hours_Approved_Internal as [Interní schválené hodiny]
+,j27Internal.j27Code as [Mìna nákl.sazby]
+,a.p31ValidUntil as [Platnost záznamu]
+FROM
+p31Worksheet_Log a
+LEFT OUTER JOIN p41Project p41 ON a.p41ID=p41.p41ID
+LEFT OUTER JOIN j02Person j02 ON a.j02ID=j02.j02ID
+LEFT OUTER JOIN p56Task p56 ON a.p56ID=p56.p56ID
+LEFT OUTER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
+LEFT OUTER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID
+LEFT OUTER JOIN p71ApproveStatus p71 ON a.p71ID=p71.p71ID
+LEFT OUTER JOIN j02Person j02Approve ON a.j02ID_ApprovedBy=j02Approve.j02ID
+LEFT OUTER JOIN j27Currency j27 ON a.j27ID_Billing_Orig=j27.j27ID
+LEFT OUTER JOIN j27Currency j27Internal ON a.j27ID_Internal=j27Internal.j27ID
+LEFT OUTER JOIN p72PreBillingStatus p72Approve ON a.p72ID_AfterApprove=p72Approve.p72ID
+WHERE a.p31ID=@p31id
+ORDER BY a.RowID DESC
+
+
+
+GO
+
 ----------P---------------p31_inhale_disposition-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p31_inhale_disposition') and type = 'P')
@@ -10115,7 +10615,7 @@ else
  end
 
 
-
+ exec dbo.p31_append_log @p31id
 
 
 
@@ -14897,6 +15397,40 @@ SELECT [p91ID]
 FROM
 p91Invoice WHERE p91ID=@p91id
 
+declare @p31id int,@rowid int,@p31id_changed int
+
+if not exists(select RowID FROM p31Worksheet_Log WHERE p91ID=@p91id)
+ begin
+	exec dbo.p31_append_log_p91 @p91id
+
+	return
+ end
+
+DECLARE curP31 CURSOR FOR 
+SELECT p31ID,max(RowID) from p31Worksheet_Log WHERE p91ID=@p91id GROUP BY p31ID
+
+OPEN curP31
+FETCH NEXT FROM curP31 
+INTO @p31id,@rowid
+WHILE @@FETCH_STATUS = 0
+BEGIN
+  set @p31id_changed=null
+
+  select @p31id_changed=a.p31ID
+  FROM
+  p31Worksheet a INNER JOIN (select * from p31Worksheet_Log WHERE RowID=@rowid) b ON a.p31ID=b.p31ID
+  WHERE a.p31ID=@p31id
+  AND (a.j27ID_Billing_Invoiced<>b.j27ID_Billing_Invoiced OR a.j27ID_Billing_Invoiced_Domestic<>b.j27ID_Billing_Invoiced_Domestic OR a.p31Text<>b.p31Text OR a.p70ID<>b.p70ID OR a.p31Hours_Invoiced<>b.p31Hours_Invoiced OR isnull(a.p31Amount_WithoutVat_Invoiced,0)<>isnull(b.p31Amount_WithoutVat_Invoiced,0) or a.p31Value_FixPrice<>b.p31Value_FixPrice or a.p31VatRate_Invoiced<>b.p31VatRate_Invoiced)
+
+  if @p31id_changed is not null
+   exec dbo.p31_append_log @p31id
+
+
+  FETCH NEXT FROM curP31 
+  INTO @p31id,@rowid
+END
+CLOSE curP31
+DEALLOCATE curP31
 
 GO
 
