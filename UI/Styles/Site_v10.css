@@ -475,8 +475,7 @@ div.innerform {
     color: Black;
 }
 
-div.innerform_light {
-    border-radius: 5px 5px 5px 5px;
+div.innerform_light {    
     background-color: #F1F1F1;
     padding: 6px;
     border-bottom: solid 1px gray;

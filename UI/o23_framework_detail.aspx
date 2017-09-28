@@ -5,7 +5,7 @@
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="entityrole_assign_inline" Src="~/entityrole_assign_inline.ascx" %>
 <%@ Register TagPrefix="uc" TagName="o23_record_readonly" Src="~/o23_record_readonly.ascx" %>
-<%@ Register TagPrefix="uc" TagName="fileupload_list" Src="~/fileupload_list.ascx" %>
+
 <%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -124,7 +124,7 @@
 
                     <telerik:NavigationNode ID="cmdPlugin" Text="Plugin" NavigateUrl="javascript:plugin();" ImageUrl="Images/plugin.png"></telerik:NavigationNode>
                     <telerik:NavigationNode ID="cmdTags" Text="Štítky" NavigateUrl="javascript:tags_assign();" ImageUrl="Images/tag.png"></telerik:NavigationNode>
-                    
+
 
                     <telerik:NavigationNode ID="cmdBarCode" Text="Čárový kód" NavigateUrl="javascript:barcode();" ImageUrl="Images/barcode.png"></telerik:NavigationNode>
                 </Nodes>
@@ -133,7 +133,7 @@
                 <Nodes>
                     <telerik:NavigationNode ID="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png" Text="Otevřít v nové záložce"></telerik:NavigationNode>
 
-                    <telerik:NavigationNode ID="reload" ImageUrl="Images/refresh.png" text="Obnovit stránku"></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="reload" ImageUrl="Images/refresh.png" Text="Obnovit stránku"></telerik:NavigationNode>
                 </Nodes>
             </telerik:NavigationNode>
 
@@ -156,20 +156,17 @@
     </div>
     <div class="div6" style="border-top: dashed 1px silver;">
         <uc:entityrole_assign_inline ID="roles1" runat="server" EntityX29ID="o23Doc" NoDataText=""></uc:entityrole_assign_inline>
+
+        <uc:mytags ID="tags1" Prefix="o23" runat="server" />
     </div>
-    <uc:mytags ID="tags1" Prefix="o23" runat="server" />
+    
 
-    <asp:Panel ID="panUpload" runat="server" CssClass="content-box2">
-        <div class="title">
+    <asp:Panel ID="panUpload" runat="server" CssClass="innerform_light">
 
-            <img src="Images/attachment.png" style="margin-right: 10px;" />
-            <asp:HyperLink ID="filesPreview" runat="server" Text="Přílohy dokumentu"></asp:HyperLink>
-            <button type="button" onclick="b07_create_upload()" runat="server" id="cmdUpload">Nahrát přílohy</button>
-            <asp:Button ID="cmdLockUnlock" runat="server" Text="Uzamknout přístup k přílohám" CssClass="cmd" />
-        </div>
-        <div class="content">
-            <uc:fileupload_list ID="Fileupload_list__readonly" runat="server" OnClientClickPreview="file_preview" />
-        </div>
+        <img src="Images/attachment.png" style="margin-right: 10px;" />
+        <asp:HyperLink ID="filesPreview" runat="server" Text="Přílohy dokumentu"></asp:HyperLink>
+        <button type="button" onclick="b07_create_upload()" runat="server" id="cmdUpload">Nahrát přílohy</button>
+        <asp:Button ID="cmdLockUnlock" runat="server" Text="Uzamknout přístup k přílohám" CssClass="cmd" style="display:none;" />
     </asp:Panel>
 
     <div style="clear: both; margin-top: 20px;">

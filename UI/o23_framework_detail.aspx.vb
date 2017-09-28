@@ -18,7 +18,7 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         rec1.Factory = Master.Factory
-        Me.Fileupload_list__readonly.Factory = Master.Factory
+
         tags1.Factory = Master.Factory
 
         If Not Page.IsPostBack Then
@@ -108,20 +108,23 @@
 
         Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.o23Doc, cRec.PID)
         roles1.RefreshData(lisX69, cRec.PID)
+        
         comments1.RefreshData(Master.Factory, BO.x29IdEnum.o23Doc, Master.DataPID)
 
         FNO("reload").NavigateUrl = "o23_framework_detail.aspx?pid=" & Master.DataPID.ToString & "&x18id=" & Me.CurrentX18ID.ToString
 
 
         If cX18.x18UploadFlag = BO.x18UploadENUM.FileSystemUpload Then
-            Fileupload_list__readonly.LockFlag = CInt(cRec.o23LockedFlag)
+            ''Fileupload_list__readonly.LockFlag = CInt(cRec.o23LockedFlag)
             Dim mq As New BO.myQueryO27
             mq.Record_x29ID = BO.x29IdEnum.o23Doc
             mq.Record_PID = cRec.PID
-            Me.Fileupload_list__readonly.RefreshData(mq)
+            Dim lisO27 As IEnumerable(Of BO.o27Attachment) = Master.Factory.o27AttachmentBL.GetList(mq)
+
+            '' Me.Fileupload_list__readonly.RefreshData(mq)
             With Me.filesPreview
-                If Fileupload_list__readonly.ItemsCount > 0 Then
-                    .Text = BO.BAS.OM2(.Text, Fileupload_list__readonly.ItemsCount.ToString)
+                If lisO27.Count > 0 Then
+                    .Text = BO.BAS.OM2(.Text, lisO27.Count.ToString)
                     .NavigateUrl = "javascript:file_preview('o23'," & Master.DataPID.ToString & ")"
                 Else
                     cmdLockUnlock.Visible = False

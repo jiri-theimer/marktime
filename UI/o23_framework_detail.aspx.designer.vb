@@ -248,15 +248,6 @@ Partial Public Class o23_framework_detail
     Protected WithEvents cmdLockUnlock As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Fileupload_list__readonly control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Fileupload_list__readonly As Global.UI.fileupload_list
-
-    '''<summary>
     '''comments1 control.
     '''</summary>
     '''<remarks>

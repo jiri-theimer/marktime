@@ -117,12 +117,13 @@
 
 
     Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound
-        Dim cRec As BO.b07Comment = CType(e.Item.DataItem, BO.b07Comment), lisAtt As New List(Of String)
+        Dim cRec As BO.b07Comment = CType(e.Item.DataItem, BO.b07Comment), bolAtts As Boolean = False
 
         If Not _lisO27 Is Nothing Then
             With CType(e.Item.FindControl("rpAtt"), Repeater)
                 .DataSource = _lisO27.Where(Function(p) p.b07ID = cRec.PID)
                 .DataBind()
+                If .Items.Count > 0 Then bolAtts = True
             End With
         End If
         
@@ -195,7 +196,7 @@
             If hidIsClueTip.Value = "1" Then
                 .Visible = False
             Else
-                If (cRec.j02ID_Owner = _sysUser.j02ID Or _sysUser.IsAdmin) And (cRec.b07Value <> "" Or lisAtt.Count > 0) Then
+                If (cRec.j02ID_Owner = _sysUser.j02ID Or _sysUser.IsAdmin) And (cRec.b07Value <> "" Or bolAtts) Then
                     .Visible = True
                     .NavigateUrl = "javascript:trydeleteb07(" & cRec.PID.ToString & ")"
                 Else
