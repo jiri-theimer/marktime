@@ -143,7 +143,7 @@ Public Class entity_scheduler
             .MultiDayView.DayStartTime = .DayView.DayStartTime
             .MultiDayView.DayEndTime = .DayView.DayEndTime
             .MultiDayView.NumberOfDays = BO.BAS.IsNullInt(Me.entity_scheduler_multidays.SelectedValue)
-            .Localization.HeaderMultiDay = "Multi-den (" & .MultiDayView.NumberOfDays.ToString & ")"
+            ''.Localization.HeaderMultiDay = "Multi-den (" & .MultiDayView.NumberOfDays.ToString & ")"
             .AgendaView.NumberOfDays = BO.BAS.IsNullInt(Me.entity_scheduler_agendadays.SelectedValue)
            
         End With

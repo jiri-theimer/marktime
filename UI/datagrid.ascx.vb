@@ -251,17 +251,28 @@ Public Class datagrid
 
     Private Sub SetupGrid()
 
-        With grid1.PagerStyle
-            .PageSizeLabelText = ""
-            If Page.Culture.IndexOf("Czech") >= 0 Or Page.Culture.IndexOf("Če") >= 0 Then
+
+        grid1.PagerStyle.PageSizeLabelText = ""
+        If Page.Culture.IndexOf("Czech") >= 0 Or Page.Culture.IndexOf("Če") >= 0 Then
+            With grid1.PagerStyle
                 .LastPageToolTip = "Poslední strana"
                 .FirstPageToolTip = "První strana"
                 .PrevPageToolTip = "Předchozí strana"
                 .NextPageToolTip = "Další strana"
                 .PagerTextFormat = "{4} Strana {0}/{1}, {2} - {3} z {5}"
-            End If
-            
-        End With
+            End With
+            With grid1.SortingSettings
+                .SortToolTip = "Klikněte zde pro třídění"
+                .SortedDescToolTip = "Setříděno sestupně"
+                .SortedAscToolTip = "Setříděno vzestupně"
+            End With
+            With grid1.GroupingSettings
+                .CollapseTooltip = "Sbalit řádky"
+                .ExpandTooltip = "Rozbalit řádky"
+            End With
+        End If
+
+
         
 
 

@@ -7,14 +7,14 @@
         <Excel Format="Biff" />
         <Pdf BorderStyle="Thin" BorderType="AllBorders" DefaultFontFamily="Calibri" PageBottomMargin="20" PageTopMargin="20" PageLeftMargin="30" PageRightMargin="20"></Pdf>
     </ExportSettings>
-    <GroupingSettings CaseSensitive="false" ExpandTooltip="Rozbalit řádky" CollapseTooltip="Sbalit řádky" />
+    <GroupingSettings CaseSensitive="false" />
     
     <ClientSettings>
         <Selecting AllowRowSelect="true" />
         <ClientEvents OnRowContextMenu="ContextSelect" OnGridCreated="GridCreated" OnCommand="OnGridCommand" />        
     </ClientSettings>
     <PagerStyle Position="Top" AlwaysVisible="false" Mode="NextPrevAndNumeric" Wrap="false" />
-    <SortingSettings SortToolTip="Klikněte zde pro třídění" SortedDescToolTip="Setříděno sestupně" SortedAscToolTip="Setříděno vzestupně" />
+    
     <FooterStyle BackColor="#bcc7d8" HorizontalAlign="Right" />
     
 </telerik:RadGrid>

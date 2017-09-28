@@ -724,6 +724,46 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>p41_framework_detail.en-us.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\RadCalendar.Main.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadCalendar.Main.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\RadCalendar.Main.en-us.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadCalendar.Main.en-us.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\RadDatePicker.Main.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadDatePicker.Main.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\RadDatePicker.Main.en-us.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadDatePicker.Main.en-us.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\RadScheduler.Main.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadScheduler.Main.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\RadScheduler.Main.en-us.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadScheduler.Main.en-us.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\RadUpload.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadUpload.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\RadUpload.en-us.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadUpload.en-us.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\report_modal.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3430,6 +3470,38 @@
     </Content>
     <Content Include="App_LocalResources\entity_worksheet_summary.ascx.resx" />
     <Content Include="App_LocalResources\entity_worksheet_summary.ascx.en-us.resx" />
+    <Content Include="App_GlobalResources\RadUpload.en-us.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadUpload.en-us.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadUpload.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadUpload.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadDatePicker.Main.en-us.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadDatePicker.Main.en-us.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadDatePicker.Main.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadDatePicker.Main.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadCalendar.Main.en-us.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadCalendar.Main.en-us.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadCalendar.Main.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadCalendar.Main.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadScheduler.Main.en-us.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadScheduler.Main.en-us.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadScheduler.Main.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadScheduler.Main.designer.vb</LastGenOutput>
+    </Content>
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

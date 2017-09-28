@@ -52,4 +52,8 @@ Public Class pokus
         cF.CreateDirectoryWithSecurity("c:\temp\hovado2", lis, True, False)
       
     End Sub
+
+    Private Sub cmdRemoveCookie_Click(sender As Object, e As EventArgs) Handles cmdRemoveCookie.Click
+        Request.Cookies.Remove("MT50-CultureInfo")
+    End Sub
 End Class

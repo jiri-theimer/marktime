@@ -59,6 +59,15 @@ Partial Public Class j02_record
     Protected WithEvents core As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
+    '''locTypOsobnihoProfilu control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents locTypOsobnihoProfilu As Global.System.Web.UI.WebControls.Localize
+
+    '''<summary>
     '''chkWhisper control.
     '''</summary>
     '''<remarks>
@@ -77,13 +86,13 @@ Partial Public Class j02_record
     Protected WithEvents j02IsIntraPerson As Global.System.Web.UI.WebControls.RadioButtonList
 
     '''<summary>
-    '''Label1 control.
+    '''lblTitulJmenoPrijmeni control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblTitulJmenoPrijmeni As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''j02TitleBeforeName control.
@@ -455,6 +464,15 @@ Partial Public Class j02_record
     Protected WithEvents other As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
+    '''locOmezeniZpetneZapisovatHodiny control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents locOmezeniZpetneZapisovatHodiny As Global.System.Web.UI.WebControls.Localize
+
+    '''<summary>
     '''lblj02TimesheetEntryDaysBackLimit control.
     '''</summary>
     '''<remarks>
@@ -473,6 +491,15 @@ Partial Public Class j02_record
     Protected WithEvents j02TimesheetEntryDaysBackLimit As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''locSheets control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents locSheets As Global.System.Web.UI.WebControls.Localize
+
+    '''<summary>
     '''j02TimesheetEntryDaysBackLimit_p34IDs control.
     '''</summary>
     '''<remarks>
@@ -480,6 +507,15 @@ Partial Public Class j02_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j02TimesheetEntryDaysBackLimit_p34IDs As Global.UI.datacombo
+
+    '''<summary>
+    '''locOmezeniFakturace control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents locOmezeniFakturace As Global.System.Web.UI.WebControls.Localize
 
     '''<summary>
     '''j02WorksheetAccessFlag control.
@@ -491,13 +527,13 @@ Partial Public Class j02_record
     Protected WithEvents j02WorksheetAccessFlag As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''Label2 control.
+    '''locNonBillableStatus control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents locNonBillableStatus As Global.System.Web.UI.WebControls.Localize
 
     '''<summary>
     '''p72ID_NonBillable control.
@@ -543,6 +579,15 @@ Partial Public Class j02_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j02ExternalPID As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lblAvatar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblAvatar As Global.System.Web.UI.WebControls.Localize
 
     '''<summary>
     '''upload1 control.

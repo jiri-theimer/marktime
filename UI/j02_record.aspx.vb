@@ -49,6 +49,10 @@
 
             RefreshRecord()
 
+            ''If System.Threading.Thread.CurrentThread.CurrentUICulture.Name.IndexOf("en") >= 0 Then
+            ''    upload1.Localization.Remove = ""
+            ''    upload1.Localization.Add = ""
+            ''End If
             If Master.IsRecordClone Then
                 Master.DataPID = 0
 

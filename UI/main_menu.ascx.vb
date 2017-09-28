@@ -57,7 +57,7 @@ Public Class main_menu
     End Sub
     Public Sub RefreshData(factory As BL.Factory, strCurrentHelpID As String, strCurrentSiteMenuValue As String)
         Dim strLang As String = basUI.GetCookieValue(Request, "MT50-CultureInfo")
-        
+
         Me.panContainer.Visible = True
         Dim bolAdmin As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_Admin), n As NavigationNode
         With factory.SysUser

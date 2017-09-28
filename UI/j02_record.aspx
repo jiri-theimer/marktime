@@ -16,9 +16,9 @@
     <asp:HiddenField ID="hidP85ID" runat="server" />
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true">
         <Tabs>
-            <telerik:RadTab Text="<%$ Resources:common, vlastnosti %>" Selected="true" Value="core"></telerik:RadTab>
-            <telerik:RadTab Text="Kategorie ({1}), uživatelská pole ({0})" Value="ff"></telerik:RadTab>
-            
+            <telerik:RadTab Text="Vlastnosti" Selected="true" Value="core" meta:resourcekey="RadTabStrip1_core"></telerik:RadTab>
+            <telerik:RadTab Text="Kategorie ({1}), uživatelská pole ({0})" Value="ff" meta:resourcekey="RadTabStrip1_ff"></telerik:RadTab>
+
             <telerik:RadTab Text="<%$ Resources:common, ostatni %>" Value="other"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
@@ -27,8 +27,8 @@
 
             <div class="content-box2">
                 <div class="title">
-                    Typ osobního profilu
-                    <asp:CheckBox ID="chkWhisper" runat="server" Text="Zapnutý našeptávač podobných osob" AutoPostBack="true" Checked="true" Style="float: right;" />
+                    <asp:Localize ID="locTypOsobnihoProfilu" runat="server" meta:resourcekey="locTypOsobnihoProfilu" Text="Typ osobního profilu"></asp:Localize>
+                    <asp:CheckBox ID="chkWhisper" runat="server" Text="Zapnutý našeptávač podobných jmen" AutoPostBack="true" Checked="true" Style="float: right;" meta:resourcekey="chkWhisper" />
                 </div>
                 <div class="content">
                     <asp:RadioButtonList ID="j02IsIntraPerson" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
@@ -44,7 +44,7 @@
             <table cellpadding="5" cellspacing="2">
                 <tr>
                     <td>
-                        <asp:Label ID="Label1" Text="Titul+Jméno+Příjmení:" runat="server" CssClass="lblReq"></asp:Label>
+                        <asp:Label ID="lblTitulJmenoPrijmeni" Text="Titul+Jméno+Příjmení:" runat="server" CssClass="lblReq" meta:resourcekey="lblTitulJmenoPrijmeni"></asp:Label>
                     </td>
                     <td>
                         <uc:datacombo ID="j02TitleBeforeName" runat="server" Width="80px" AllowCustomText="true" ShowToggleImage="false" Filter="Contains" DefaultValues="Bc.;BcA.;Ing.;Ing.arch.;MUDr.;MVDr.;MgA.;Mgr.;JUDr.;PhDr.;RNDr.;PharmDr.;ThLic.;ThDr.;Ph.D.;Th.D.;prof.;doc.;PaedDr.;Dr.;PhMr."></uc:datacombo>
@@ -114,15 +114,15 @@
                 </tr>
                 <tr valign="top" id="trO40" runat="server">
                     <td>
-                        <asp:Label ID="lblO40ID" Text="Vlastní SMTP účet:" runat="server" CssClass="lbl"></asp:Label></td>
+                        <asp:Label ID="lblO40ID" Text="Vlastní SMTP účet:" runat="server" CssClass="lbl" meta:resourcekey="lblO40ID"></asp:Label></td>
                     <td>
                         <uc:datacombo ID="o40ID" runat="server" DataTextField="o40Name" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
-                        
+
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label ID="lblDomain" Text="Doménový účet:" runat="server" CssClass="lbl"></asp:Label>
+                        <asp:Label ID="lblDomain" Text="Doménový účet:" runat="server" CssClass="lbl" meta:resourcekey="lblDomain"></asp:Label>
                     </td>
                     <td>
                         <asp:TextBox ID="j02DomainAccount" runat="server" Style="width: 300px;"></asp:TextBox>
@@ -130,7 +130,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label ID="lblMobile" Text="TEL1 (mobil):" runat="server" CssClass="lbl" AssociatedControlID="j02Mobile"></asp:Label>
+                        <asp:Label ID="lblMobile" Text="TEL1 (mobil):" runat="server" CssClass="lbl" meta:resourcekey="lblMobile"></asp:Label>
                     </td>
                     <td>
                         <asp:TextBox ID="j02Mobile" runat="server" Style="width: 200px;"></asp:TextBox>
@@ -141,7 +141,7 @@
 
                 <tr id="trJobTitle" runat="server">
                     <td>
-                        <asp:Label ID="lblj02JobTitle" Text="Pozice:" runat="server" CssClass="lbl" AssociatedControlID="j02JobTitle" meta:resourcekey="lblj02JobTitle"></asp:Label>
+                        <asp:Label ID="lblj02JobTitle" Text="Pozice:" runat="server" CssClass="lbl" meta:resourcekey="lblj02JobTitle"></asp:Label>
                     </td>
                     <td>
                         <uc:datacombo ID="j02JobTitle" runat="server" Width="300px" AllowCustomText="true" ShowToggleImage="false" Filter="Contains" DefaultValues="Ředitel;Jednatel;Manažer;Asistentka;Obchodní zástupce;Konzultant;Auditor;Daňový poradce;Analytik;Personální manažer;Finanční manažer;Obchodní manažer;Právník;Účetní;IT správce;Programátor;Technik"></uc:datacombo>
@@ -158,7 +158,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label ID="lblj02Salutation" Text="Oslovení pro korespondenci:" runat="server" CssClass="lbl" AssociatedControlID="j02Salutation"></asp:Label>
+                        <asp:Label ID="lblj02Salutation" Text="Oslovení pro korespondenci:" runat="server" CssClass="lbl" meta:resourcekey="lblj02Salutation"></asp:Label>
                     </td>
                     <td>
                         <asp:TextBox ID="j02Salutation" runat="server" Style="width: 500px;"></asp:TextBox>
@@ -181,16 +181,17 @@
             <uc:freefields ID="ff1" runat="server" />
 
         </telerik:RadPageView>
-        
+
         <telerik:RadPageView ID="other" runat="server">
-            
-           
-            <div class="content-box2" >
+
+
+            <div class="content-box2">
                 <div class="title">
-                    Omezení zpětně zapisovat hodiny
+                    <asp:Localize ID="locOmezeniZpetneZapisovatHodiny" runat="server" meta:resourcekey="locOmezeniZpetneZapisovatHodiny" Text="Omezení zpětně zapisovat hodiny"></asp:Localize>
+
                 </div>
                 <div class="content">
-                    <asp:Label ID="lblj02TimesheetEntryDaysBackLimit" runat="server" Text="Omezení zpětně zapisovat hodiny:" CssClass="lbl"></asp:Label>
+                    <asp:Label ID="lblj02TimesheetEntryDaysBackLimit" runat="server" Text="Počet dní:" CssClass="lbl" meta:resourcekey="lblj02TimesheetEntryDaysBackLimit"></asp:Label>
                     <asp:DropDownList ID="j02TimesheetEntryDaysBackLimit" runat="server">
                         <asp:ListItem Value="" Text="Bez omezení"></asp:ListItem>
                         <asp:ListItem Value="999" Text="Povolen pouze aktuální týden"></asp:ListItem>
@@ -209,48 +210,51 @@
                         <asp:ListItem Value="30" Text="-30 dní"></asp:ListItem>
                     </asp:DropDownList>
                     <div style="margin-top: 10px;">
-                        <label class="lbl">Výběr časových sešitů</label>
+                        <asp:Localize ID="locSheets" runat="server" Text="Okruh sešitů:" meta:resourcekey="locSheets"></asp:Localize>
+
                         <uc:datacombo ID="j02TimesheetEntryDaysBackLimit_p34IDs" DataValueField="pid" DataTextField="p34Name" runat="server" AllowCheckboxes="true" Width="200px" />
                     </div>
                     <br />
+
                     <span class="infoInForm">Počet dní, za které osoba může zpětně zapisovat časové úkony. Omezení se vztahuje na osobu zapisovače úkonu, nikoliv na osobu záznamu úkonu.</span>
                 </div>
             </div>
-
-            <div class="div6" style="margin-top:20px;">
-                <span class="lbl">
-                    Omezení přístupu k úkonům, které prošli fakturací:
-                </span>
-                <asp:DropDownList ID="j02WorksheetAccessFlag" runat="server">
+            <div class="content-box2" style="margin-top: 10px;">
+                <div class="title">
+                    <asp:Localize ID="locOmezeniFakturace" runat="server" meta:resourcekey="locOmezeniFakturace" Text="Omezení přístupu k úkonům, které prošli fakturací"></asp:Localize>
+                </div>
+                <div class="content">
+                    <asp:DropDownList ID="j02WorksheetAccessFlag" runat="server">
                         <asp:ListItem Text="" Value=""></asp:ListItem>
                         <asp:ListItem Text="Nemá přístup k úkonům, které prošli fakturací (vč. vlastních úkonů)" Value="1"></asp:ListItem>
                     </asp:DropDownList>
+                </div>
+            </div>
+            <div class="content-box2" style="margin-top: 10px;">
+                <div class="title">
+                    <asp:Localize ID="locNonBillableStatus" runat="server" meta:resourcekey="locNonBillableStatus" Text="Fakturační status pro ne-fakturovatelné hodiny"></asp:Localize>
+                </div>
+                <div class="content">
+                    <asp:DropDownList ID="p72ID_NonBillable" runat="server">
+                        <asp:ListItem Text="--Rozhodne systém--" Value=""></asp:ListItem>
+                        <asp:ListItem Text="Zahrnout do paušálu" Value="6"></asp:ListItem>
+                        <asp:ListItem Text="Viditelný odpis" Value="2"></asp:ListItem>
+                        <asp:ListItem Text="Skrytý odpis" Value="3"></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
             </div>
 
+
             <table cellpadding="5" cellspacing="2">
-                <tr>
+
+                <tr style="display:none;">
                     <td>
-                        <asp:Label ID="Label2" runat="server" Text="Fakt. status pro nefakturovatelné úkony:" CssClass="lbl"></asp:Label>
-                    </td>
-                    <td>
-                        <asp:DropDownList ID="p72ID_NonBillable" runat="server">
-                            <asp:ListItem Text="--Rozhodne systém--" Value=""></asp:ListItem>
-                            <asp:ListItem Text="Zahrnout do paušálu" Value="6"></asp:ListItem>
-                            <asp:ListItem Text="Viditelný odpis" Value="2"></asp:ListItem>
-                            <asp:ListItem Text="Skrytý odpis" Value="3"></asp:ListItem>
-                        </asp:DropDownList>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Label ID="lblj02RobotAddress" runat="server" Text="Adresa pro IMAP robota:" CssClass="lbl" meta:resourcekey="lblj02RobotAddress"></asp:Label>
+                        <asp:Label ID="lblj02RobotAddress" runat="server" Text="IMAP robot adresa:" CssClass="lbl" meta:resourcekey="lblj02RobotAddress"></asp:Label>
                     </td>
                     <td>
                         <asp:TextBox ID="j02RobotAddress" runat="server" Style="width: 200px;"></asp:TextBox>
                     </td>
-                    <td>
-                        <span class="infoInForm">Adresa, podle které IMAP robot pozná, že načtená poštovní zpráva má vztah osobě.</span>
-                    </td>
+                   
                 </tr>
                 <tr>
                     <td>
@@ -259,20 +263,19 @@
                     <td>
                         <asp:TextBox ID="j02ExternalPID" runat="server" Style="width: 200px;"></asp:TextBox>
                     </td>
-                    <td>
-                        <span class="infoInForm">Klíč záznamu z externího IS pro integraci s MT.</span>
-                    </td>
+                   
                 </tr>
             </table>
 
             <div class="content-box2">
-                <div class="title">Avatar obrázek</div>
+                <div class="title">
+                    <asp:Localize ID="lblAvatar" runat="server" Text="Avatar obrázek" meta:resourcekey="lblAvatar"></asp:Localize>
+                </div>
                 <div class="content">
-                    <telerik:RadUpload ID="upload1" runat="server" InputSize="30" InitialFileInputsCount="0" RenderMode="Auto" Skin="Default" AllowedFileExtensions="png,gif,jpg,bmp" MaxFileInputsCount="1" MaxFileSize="40000">   
-                        <Localization Add="Přidat" Delete="Odstranit" Select="Vybrat" Remove="Odstranit" />
+                    <telerik:RadUpload ID="upload1" runat="server" InputSize="30" InitialFileInputsCount="0" RenderMode="Auto" Skin="Default" AllowedFileExtensions="png,gif,jpg,bmp" MaxFileInputsCount="1" MaxFileSize="40000">                               
                     </telerik:RadUpload>
-                    <asp:Button ID="cmdUploadAvatar" runat="server" Text="Nahrát na server" CssClass="cmd" />
-                    <asp:Button ID="cmdDeleteAvatar" runat="server" CssClass="cmd" Text="Odstranit obrázek" Visible="false" />
+                    <asp:Button ID="cmdUploadAvatar" runat="server" Text="Nahrát na server" CssClass="cmd" meta:resourcekey="cmdUploadAvatar" />
+                    <asp:Button ID="cmdDeleteAvatar" runat="server" CssClass="cmd" Text="Odstranit obrázek" Visible="false" meta:resourcekey="cmdDeleteAvatar" />
                     <asp:Image ID="imgAvatar" runat="server" ImageUrl="Images/nophoto.png" />
                     <asp:HiddenField ID="j02AvatarImage" runat="server" />
                 </div>

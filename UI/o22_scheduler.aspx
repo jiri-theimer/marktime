@@ -51,11 +51,9 @@
     <div id="offsetY"></div>
     <div id="divScheduler"> 
         <telerik:RadScheduler ID="scheduler1" SelectedView="MonthView" EnableViewState="true" Skin="Silk" AppointmentStyleMode="Simple" RowHeight="35px" Height="100%" ShowFooter="false" runat="server" ShowViewTabs="true" OnClientTimeSlotContextMenuItemClicked="record_new" EnableAdvancedForm="false"
-            Culture="cs-CZ" AllowEdit="false" AllowDelete="false" AllowInsert="false" Localization-HeaderToday="Dnes" Localization-ShowMore="více..." OnClientAppointmentEditing="OnClientAppointmentEditing" OnClientTimeSlotContextMenu="clientTimeSlotClick"
-            Localization-AllDay="celý den" Localization-HeaderMonth="Měsíc" Localization-HeaderDay="Den" Localization-HeaderWeek="Týden"
+            Culture="cs-CZ" AllowEdit="false" AllowDelete="false" AllowInsert="false" OnClientAppointmentEditing="OnClientAppointmentEditing" OnClientTimeSlotContextMenu="clientTimeSlotClick"            
             HoursPanelTimeFormat="HH:mm"
-            DataSubjectField="o22Name" DataStartField="o22DateFrom" DataEndField="o22DateUntil" DataKeyField="pid">
-            
+            DataSubjectField="o22Name" DataStartField="o22DateFrom" DataEndField="o22DateUntil" DataKeyField="pid">            
             <TimelineView SlotDuration="1" ColumnHeaderDateFormat="dd.MM ddd" NumberOfSlots="7" UserSelectable="true" />
             <MonthView UserSelectable="true" />
             <DayView UserSelectable="true" DayStartTime="08:00" DayEndTime="19:00" ShowInsertArea="true" />

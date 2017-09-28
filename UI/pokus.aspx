@@ -12,7 +12,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
+    <asp:Button ID="cmdRemoveCookie" runat="server" Text="Remove cookie" />
     
     
     <asp:TextBox ID="txtMaskaFolders" runat="server" Width="300px" ></asp:TextBox>
