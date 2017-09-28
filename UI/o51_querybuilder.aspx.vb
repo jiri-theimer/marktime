@@ -34,13 +34,13 @@ Public Class o51_querybuilder
             End With
 
             RenderNodes(hidPrefix.Value, "Štítky", True, lisCheckedVals)
-            Select Case hidPrefix.Value
-                Case "p41"
-                    RenderNodes("p28", "Štítky klienta projektu", False, lisCheckedVals)
-                Case "p31"
-                    RenderNodes("p41", "Štítky projektu", False, lisCheckedVals)
-                    RenderNodes("p28", "Štítky klienta projektu", False, lisCheckedVals)
-            End Select
+            ''Select Case hidPrefix.Value
+            ''    Case "p41"
+            ''        RenderNodes("p28", "Štítky klienta projektu", False, lisCheckedVals)
+            ''    Case "p31"
+            ''        RenderNodes("p41", "Štítky projektu", False, lisCheckedVals)
+            ''        RenderNodes("p28", "Štítky klienta projektu", False, lisCheckedVals)
+            ''End Select
 
 
         End If
