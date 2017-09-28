@@ -260,6 +260,8 @@
                 lis.Add(New myItem(BO.x29IdEnum.j02Person, "a.j02ID_ContactPerson", "Kontaktní osoba"))
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "p41.p28ID_Client", "Klient projektu"))
                 lis.Add(New myItem(BO.x29IdEnum.System, "p41.p41Name", "Název projektu", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.p42ProjectType, "p41.p42ID", "Typ projektu"))
+                lis.Add(New myItem(BO.x29IdEnum.j18Region, "p41.j18id", "Středisko projektu"))
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "a.p28ID_Supplier", "Dodavatel"))
                 lis.Add(New myItem(BO.x29IdEnum.p71ApproveStatus, "p71id", "Schváleno"))
                 lis.Add(New myItem(BO.x29IdEnum.p72PreBillingStatus, "p72ID_AfterApprove", "Návrh fakturačního statusu schvalovatelem"))

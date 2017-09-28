@@ -9850,7 +9850,7 @@ if @x15id is not null and @vatrate_edit is null
   ,p31DateUpdate_InvoiceManual=case when @p31IsInvoiceManual=1 then getdate() else null end
   ,p31Amount_WithoutVat_Invoiced=@p31amount_withoutvat_invoiced,p31Amount_WithVat_Invoiced=@p31amount_withvat_invoiced
   ,p31Amount_Vat_Invoiced=@p31amount_vat_invoiced,p31VatRate_Invoiced=@vatrate_edit,j27ID_Billing_Invoiced=@j27id
-  ,p31Value_FixPrice=@p31value_fixprice
+  ,p31Value_FixPrice=@p31value_fixprice,p31UserUpdate=@login,p31DateUpdate=getdate()
   WHERE p31ID=@p31id
 
   if @text_edit is not null
@@ -9943,7 +9943,7 @@ SELECT a.RowID as pid
 ,isnull(p41.p41NameShort,p41.p41Name) as [Projekt]
 ,p56.p56Name as [Úkol]
 ,p32.p32Name as [Aktivita]
-,dbo.Hours2HHMM(a.p31Hours_Orig) as [Vykázané hodiny]
+,case when a.p31Hours_Orig<>0 then dbo.Hours2HHMM(a.p31Hours_Orig) end as [Vykázané hodiny]
 ,a.p31Rate_Billing_Orig as [Výchozí sazba]
 ,a.p31Amount_WithoutVat_Orig as [Vykázáno bez DPH]
 ,j27.j27Code as [Mìna]
@@ -9952,9 +9952,13 @@ SELECT a.RowID as pid
 ,a.p31Approved_When as [Schváleno kdy]
 ,p72Approve.p72Name as [Schválený status]
 ,a.p31Hours_Approved_Billing as [Schválené hodiny k fakturaci]
+,a.p31Amount_WithoutVat_Approved as [Schváleno bez DPH]
 ,a.p31Text as [Text]
 ,p91.p91Code as [Faktura]
-,dbo.Hours2HHMM(a.p31Hours_Invoiced) as [Vyfakturované hodiny]
+,p70.p70Name as [Fakturaèní status]
+,case when a.p31Hours_Invoiced<>0 then dbo.Hours2HHMM(a.p31Hours_Invoiced) end as [Vyfakturované hodiny]
+,a.p31Amount_WithoutVat_Invoiced as [Vyfakturováno bez DPH]
+,j27Invoice.j27Code as [Mìna faktury]
 ,a.p31VatRate_Orig as [Výchozí DPH sazba]
 ,a.p31Rate_Internal_Orig as [Nákladová sazba]
 ,a.p31Hours_Approved_Internal as [Interní schválené hodiny]
@@ -9969,9 +9973,11 @@ LEFT OUTER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
 LEFT OUTER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID
 LEFT OUTER JOIN p71ApproveStatus p71 ON a.p71ID=p71.p71ID
 LEFT OUTER JOIN j02Person j02Approve ON a.j02ID_ApprovedBy=j02Approve.j02ID
+LEFT OUTER JOIN j27Currency j27Invoice ON a.j27ID_Billing_Invoiced=j27Invoice.j27ID
 LEFT OUTER JOIN j27Currency j27 ON a.j27ID_Billing_Orig=j27.j27ID
 LEFT OUTER JOIN j27Currency j27Internal ON a.j27ID_Internal=j27Internal.j27ID
 LEFT OUTER JOIN p72PreBillingStatus p72Approve ON a.p72ID_AfterApprove=p72Approve.p72ID
+LEFT OUTER JOIN p70BillingStatus p70 ON a.p70ID=p70.p70ID
 WHERE a.p31ID=@p31id
 ORDER BY a.RowID DESC
 
@@ -15219,6 +15225,8 @@ if exists(select p91ID FROM p91Invoice WHERE p91ID=@p91id AND (p91Code LIKE 'TEM
 ---automaticky se spouští po uložení záznamu faktury
 if @recalc_amount=1
  exec p91_recalc_amount @p91id
+else
+ exec p91_append_log @p91id
 
 
 
@@ -15242,6 +15250,9 @@ GO
 CREATE    PROCEDURE [dbo].[p91_append_log]
 @p91id int
 AS
+
+if exists(select p91ID FROM p91Invoice WHERE p91ID=@p91id AND p91Code LIKE 'TEMP%')
+ return
 
 INSERT INTO [dbo].[p91Invoice_Log]
            ([p91ID]
@@ -15669,6 +15680,8 @@ if @code=''
 
 if @code<>''
  UPDATE p91Invoice SET p91Code=@code,p91IsDraft=0 WHERE p91ID=@p91id 
+
+exec dbo.p91_append_log @p91id
 
   
 
@@ -17725,8 +17738,7 @@ BEGIN TRY
 
 	DELETE FROM x16EntityCategory_FieldSetting WHERE x18ID=@pid		
 
-	if exists(select x17ID FROM x17EntityCategory_Folder WHERE x18ID=@pid)
-	 DELETE FROM x17EntityCategory_Folder WHERE x18ID=@pid
+	
 
 	delete from x18EntityCategory where x18ID=@pid
 
