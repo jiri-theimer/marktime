@@ -139,7 +139,6 @@
     <Compile Include="o13AttachmentTypeBL.vb" />
     <Compile Include="o21MilestoneTypeBL.vb" />
     <Compile Include="o22MilestoneBL.vb" />
-    <Compile Include="o25DmsBindingBL.vb" />
     <Compile Include="o27AttachmentBL.vb" />
     <Compile Include="o38AddressBL.vb" />
     <Compile Include="o40SmtpAccountBL.vb" />

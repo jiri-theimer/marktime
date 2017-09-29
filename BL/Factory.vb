@@ -25,7 +25,6 @@
     Private Property _p56 As Ip56TaskBL
     Private Property _j02 As Ij02PersonBL
     Private Property _j11 As Ij11TeamBL
-    Private Property _o25 As Io25DmsBindingBL
     Private Property _o27 As Io27AttachmentBL
     Private Property _o38 As Io38AddressBL
     Private Property _p30 As Ip30Contact_PersonBL
@@ -126,12 +125,7 @@
             Return _o27
         End Get
     End Property
-    Public ReadOnly Property o25DmsBindingBL As Io25DmsBindingBL
-        Get
-            If _o25 Is Nothing Then _o25 = New o25DmsBindingBL(_cUser)
-            Return _o25
-        End Get
-    End Property
+   
     Public ReadOnly Property p31WorksheetBL As Ip31WorksheetBL
         Get
             If _p31 Is Nothing Then _p31 = New p31WorksheetBL(_cUser)

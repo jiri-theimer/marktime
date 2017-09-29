@@ -599,16 +599,7 @@ Public Class basUIMT
         End With
     End Sub
 
-    Public Shared Sub Handle_SaveDropboxAccessToken(masterPage As Site)
-        Dim lastAccessToken As BO.DropboxUserToken = masterPage.Factory.j03UserBL.GetMyDropboxAccessToken()
-
-        Dim c As New DropNet.DropNetClient("exjpken3uxh45kw", "yq8gd0alxsul0qh", lastAccessToken.Token, lastAccessToken.Secret, Nothing)
-
-        Dim login As DropNet.Models.UserLogin = c.GetAccessToken()
-
-        masterPage.Session.Item("DropBoxLogin") = login
-    End Sub
-
+    
     Public Overloads Shared Function QueryProjectListByTop10(factory As BL.Factory, intJ02ID As Integer) As IEnumerable(Of BO.p41Project)
         'vybere z projektů TOP 10 podle naposledy zapisovaných úkonů
         Dim mqP31 As New BO.myQueryP31

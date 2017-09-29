@@ -26,8 +26,7 @@
     Sub AppendAccessLog(intJ03ID As Integer, cLog As BO.j90LoginAccessLog)
     Function GetMyTag(bolClearAfterRead As Boolean) As String
     Sub SetMyTag(strTagValue As String)
-    Sub SetMyDropboxAccessToken(strToken As String, strSecret As String)
-    Function GetMyDropboxAccessToken() As BO.DropboxUserToken
+
     Function GetList_j90(intJ03ID As Integer, d1 As Date, d2 As Date) As IEnumerable(Of BO.j90LoginAccessLog)
     Function SaveAllFavouriteProjects(intJ03ID As Integer, p41ids As List(Of Integer)) As Boolean
     Function AppendOrRemoveFavouriteProject(intJ03ID As Integer, p41ids As List(Of Integer), bolRemove As Boolean) As Boolean
@@ -129,19 +128,7 @@ Class j03UserBL
     Public Function SYS_DeleteAllUserParams(intJ03ID As Integer) As Boolean Implements Ij03UserBL.DeleteAllUserParams
         Return _cDL.SYS_DeleteAllUserParams(intJ03ID)
     End Function
-    Public Sub SetMyDropboxAccessToken(strToken As String, strSecret As String) Implements Ij03UserBL.SetMyDropboxAccessToken
-        Me.SYS_SetUserParam("dropbox_accesstoken", strToken & "#########" & strSecret)
-    End Sub
-    Public Function GetMyDropboxAccessToken() As BO.DropboxUserToken Implements Ij03UserBL.GetMyDropboxAccessToken
-        Dim s As String = _cDL.SYS_GetMyTag(_cUser.PID, "dropbox_accesstoken", False)
-        Dim a() As String = Split(s, "#########")
-        Dim c As New BO.DropboxUserToken
-        If UBound(a) > 0 Then
-            c.Token = a(0)
-            c.Secret = a(1)
-        End If
-        Return c
-    End Function
+    
     
     
     Public Function RenameLogin(cRec As BO.j03User, strNewLogin As String) As Boolean Implements Ij03UserBL.RenameLogin
