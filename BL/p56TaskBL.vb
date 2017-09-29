@@ -230,10 +230,10 @@ Class p56TaskBL
             
         End If
 
-        If Factory.x67EntityRoleBL.TestEntityRolePermission(BO.x29IdEnum.p41Project, cRec.p41ID, BO.x53PermValEnum.PR_P56_Owner, True) Then
-            'v projektové roli má oprávnění být vlastníkem všech úkolů
-            c.ReadAccess = True : c.OwnerAccess = True : c.P31_Create = True
-        End If
+        ''If Factory.x67EntityRoleBL.TestEntityRolePermission(BO.x29IdEnum.p41Project, cRec.p41ID, BO.x53PermValEnum.PR_P56_Owner, True) Then
+        ''    'v projektové roli má oprávnění být vlastníkem všech úkolů
+        ''    c.ReadAccess = True : c.OwnerAccess = True : c.P31_Create = True
+        ''End If
         
         If Not c.ReadAccess Then
             If Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p56Task, cRec.PID).Count > 0 Then

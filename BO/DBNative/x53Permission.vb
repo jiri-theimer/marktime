@@ -41,9 +41,9 @@
     GR_X18_Admin = 39                     'Správce dokumentů
     'Oprávnění projektové role
     PR_P41_Owner = 1                    'Oprávnění vlastníka projektu
-    PR_P41_Roles = 2                    'Obsazovat projektové role v projektu
+    ''PR_P41_Roles = 2                    'Obsazovat projektové role v projektu
     PR_P56_Creator = 3                   'Vytvářet úlohy
-    PR_P56_Owner = 5                    'Oprávnění vlastníka ke všem úkolům v projektu
+    ''PR_P56_Owner = 5                    'Oprávnění vlastníka ke všem úkolům v projektu
     PR_P91_Creator = 6                   'V rámci projektu vystavovat DRAFT faktury
     PR_P91_Reader = 7                     'Přístup k vystaveným fakturám projektu
     PR_P31_RecalcRates = 8              'Zpětný přepočet sazeb úkonů v projektu
@@ -74,7 +74,7 @@
     'Oprávnění role v dokumentu
     DR_O23_Reader = 1                    'Oprávnění číst dokument
     DR_O23_Owner = 2                   'Oprávnění vlastníka dokumentu
-    DR_O23_File_Appender = 3              'právo dohrávat do dokumentu další přílohy
+    ''DR_O23_File_Appender = 3              'právo dohrávat do dokumentu další přílohy a komentáře
     DR_O23_Comments = 4                 'Zapisovat komentáře mimo workflow dokumentu
     DR_O23_Files_Lock1 = 5                 'Uzamykat/odemykat přístup k souborům dokumentu
 

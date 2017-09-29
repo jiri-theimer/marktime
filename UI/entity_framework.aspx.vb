@@ -893,33 +893,6 @@ Public Class entity_framework
 
 
 
-    ''Private Sub SetupJ74Combo(intDef As Integer)
-    ''    If Not _curJ62 Is Nothing Then
-    ''        If _curJ62.j74ID <> 0 Then
-    ''            Me.j74id.Items.Add(New ListItem("", _curJ62.j74ID.ToString)) : Me.j74id.Visible = False : cmdGridDesiger.Visible = False
-    ''            _curJ74 = Master.Factory.j74SavedGridColTemplateBL.Load(_curJ62.j74ID)
-    ''            If _curJ62.j62GridGroupBy <> "" Then basUI.SelectDropdownlistValue(Me.cbxGroupBy, _curJ62.j62GridGroupBy)
-    ''            Return
-    ''        End If
-    ''    End If
-    ''    Dim lisJ74 As IEnumerable(Of BO.j74SavedGridColTemplate) = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, Me.CurrentX29ID).Where(Function(p) p.j74MasterPrefix = "")
-    ''    If lisJ74.Count = 0 Then
-    ''        'uživatel zatím nemá žádnou šablonu - založit první j74IsSystem=1
-    ''        Master.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(Me.CurrentX29ID, Master.Factory.SysUser.PID)
-    ''        lisJ74 = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, Me.CurrentX29ID).Where(Function(p) p.j74MasterPrefix = "")
-    ''    End If
-    ''    j74id.DataSource = lisJ74
-    ''    j74id.DataBind()
-
-    ''    If intDef > 0 Then
-    ''        basUI.SelectDropdownlistValue(Me.j74id, intDef.ToString)
-    ''    End If
-    ''    If Me.CurrentJ74ID > 0 Then
-    ''        _curJ74 = lisJ74.Where(Function(p) p.PID = Me.CurrentJ74ID)(0)
-    ''    End If
-
-
-    ''End Sub
 
     Private Sub SetupGrouping(strGroupField As String, strFieldHeader As String)
         With grid1.radGridOrig.MasterTableView
@@ -947,15 +920,7 @@ Public Class entity_framework
         grid1.Rebind(True)
     End Sub
    
-    ''Private Sub SaveLastJ74Reference()
-    ''    With Master.Factory.j03UserBL
-    ''        .SetUserParam(Me.CurrentPrefix + "_framework-j74id", Me.CurrentJ74ID.ToString)
-    ''        .SetUserParam(Me.CurrentPrefix + "_framework-sort", "")
-    ''        .SetUserParam(Me.CurrentPrefix + "_framework-filter_setting", "")
-    ''        .SetUserParam(Me.CurrentPrefix + "_framework-filter_sql", "")
-    ''    End With
-
-    ''End Sub
+   
     Private Sub ReloadPage()
         
         Response.Redirect(GetReloadUrl(), True)

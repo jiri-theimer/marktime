@@ -49,11 +49,11 @@
             For Each c In lis
                 Dim bolCanEdit As Boolean = False
                 If c.j02ID_Owner = Master.Factory.SysUser.j02ID Then bolCanEdit = True 'vlasník záznamu má plná práva
-                If Not bolCanEdit Then
-                    If Master.Factory.x67EntityRoleBL.TestEntityRolePermission(BO.x29IdEnum.p41Project, c.p41ID, BO.x53PermValEnum.PR_P56_Owner, True) Then
-                        bolCanEdit = True 'v projektové roli má oprávnění být vlastníkem všech úkolů
-                    End If
-                End If
+                ''If Not bolCanEdit Then
+                ''    If Master.Factory.x67EntityRoleBL.TestEntityRolePermission(BO.x29IdEnum.p41Project, c.p41ID, BO.x53PermValEnum.PR_P56_Owner, True) Then
+                ''        bolCanEdit = True 'v projektové roli má oprávnění být vlastníkem všech úkolů
+                ''    End If
+                ''End If
                 If Not bolCanEdit Then
                     SW("K úkolu [" & c.FullName & "] nedisponujete editačním oprávněním.")
                     Return False

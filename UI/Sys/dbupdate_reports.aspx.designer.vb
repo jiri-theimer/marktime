@@ -41,6 +41,15 @@ Partial Public Class dbupdate_reports
     Protected WithEvents cmdGo As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''cmdDefPage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdDefPage As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''rp1 control.
     '''</summary>
     '''<remarks>

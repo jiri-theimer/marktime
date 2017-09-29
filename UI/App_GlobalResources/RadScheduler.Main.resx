@@ -391,7 +391,7 @@
     <value>Edit</value>
   </data>
   <data name="ContextMenuGoToToday" xml:space="preserve">
-    <value>Go to today</value>
+    <value>Jít na dnes</value>
   </data>
   <data name="Reminder" xml:space="preserve">
     <value>Reminder</value>
@@ -485,5 +485,11 @@
   </data>
   <data name="AdvancedYears" xml:space="preserve">
     <value>year(s)</value>
+  </data>
+  <data name="HeaderAgendaAppointment" xml:space="preserve">
+    <value>Událost</value>
+  </data>
+  <data name="HeaderAgendaTime" xml:space="preserve">
+    <value>Čas</value>
   </data>
 </root>

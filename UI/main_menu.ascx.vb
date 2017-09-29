@@ -175,7 +175,7 @@ Public Class main_menu
 
     Private Sub RenderDbMenu(factory As BL.Factory, strLang As String)
         Dim mq As New BO.myQuery
-        mq.MG_GridSqlColumns = "a.x29ID,j62Name,a.j62Name_ENG,a.j62ParentID,a.j74ID,a.j70ID,a.j62Url,a.j62Target,a.j62ImageUrl,a.j62Tag,a.j62TreeLevel as _j62TreeLevel"    'kvůli co nejvyšší rychlosti
+        mq.MG_GridSqlColumns = "a.x29ID,j62Name,a.j62Name_ENG,a.j62ParentID,a.j70ID,a.j62Url,a.j62Target,a.j62ImageUrl,a.j62Tag,a.j62TreeLevel as _j62TreeLevel"    'kvůli co nejvyšší rychlosti
         Dim lisJ62 As IEnumerable(Of BO.j62MenuHome) = factory.j62MenuHomeBL.GetList(factory.SysUser.j60ID, mq)
         Dim ns As New Dictionary(Of Integer, NavigationNode), bolGO As Boolean = False
         Dim nSeps As New List(Of NavigationNode)
@@ -222,7 +222,7 @@ Public Class main_menu
                 n.Enabled = False
             Else
                 n.NavigateUrl = c.j62Url
-                If c.j70ID > 0 Or c.j74ID > 0 Then
+                If c.j70ID > 0 Then
                     If n.NavigateUrl.IndexOf("?") > 0 Then
                         n.NavigateUrl += "&j62id=" & c.PID.ToString
                     Else

@@ -10,16 +10,23 @@
             <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Aktualizace šablon výchozích tiskových sestav"></asp:Label>
         </div>
         <div class="div6">
+            <span class="infoInForm">
+                Aktualizace naimportuje všechny tiskové šablony sestav, které obsahuje výchozí distribuce systému
+            </span>
+        </div>
+        <div class="div6">
             <asp:Label ID="lblError" runat="server" CssClass="failureNotification"></asp:Label>
         </div>
         <div class="div6">
             <asp:Button ID="cmdGo" runat="server" CssClass="cmd" Text="Zahájit aktualizaci" />
             
         </div>
-        
+        <div class="div6" style="margin-top:10px;">
+            <asp:Button ID="cmdDefPage" runat="server" CssClass="cmd" Text="Spustit MARKTIME" Visible="false" />
+        </div>
 
         <div class="content-box2">
-            <div class="title">Seznam výchozích šablon</div>
+            <div class="title">Seznam výchozích tiskových šablon</div>
             <div class="content">
                 <table cellpadding="10">
                     <asp:Repeater ID="rp1" runat="server">

@@ -35,7 +35,6 @@
             pars.Add("x29ID", .x29ID, DbType.Int32)
             pars.Add("j60ID", BO.BAS.IsNullDBKey(.j60ID), DbType.Int32)
             pars.Add("j70ID", BO.BAS.IsNullDBKey(.j70ID), DbType.Int32)
-            pars.Add("j74ID", BO.BAS.IsNullDBKey(.j74ID), DbType.Int32)
             pars.Add("x31ID", BO.BAS.IsNullDBKey(.x31ID), DbType.Int32)
             pars.Add("j62ParentID", BO.BAS.IsNullDBKey(.j62ParentID), DbType.Int32)
             pars.Add("j62Name", .j62Name, DbType.String)

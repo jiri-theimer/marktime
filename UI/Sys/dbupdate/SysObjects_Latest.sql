@@ -1,4 +1,4 @@
-----------FN---------------CleanHTMLTags-------------------------
+ï»¿----------FN---------------CleanHTMLTags-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('CleanHTMLTags') and type = 'FN')
  drop function CleanHTMLTags
@@ -109,11 +109,11 @@ CREATE FUNCTION dbo.ConvertNumberToRoman (@Number INT)
            ('D', 500),
            ('CM', 900),
            ('M', 1000),
-           (N'|??', 5000),
-           (N'cc|??', 10000),
-           (N'|???', 50000),
-           (N'ccc|???', 100000),
-           (N'ccc|??????', 150000)
+           (N'|â†„â†„', 5000),
+           (N'cc|â†„â†„', 10000),
+           (N'|â†„â†„â†„', 50000),
+           (N'ccc|â†„â†„â†„', 100000),
+           (N'ccc|â†„â†„â†„â†„â†„â†„', 150000)
   
    WHILE @Number > 0
      SELECT  @RomanNumeral = COALESCE(@RomanNumeral, '') + symbol,
@@ -139,7 +139,7 @@ GO
 
 
 create FUNCTION [dbo].[get_datename] (@d datetime,@langindex int)
---@langindex=0 -> èesky, 1 -> anglicky
+--@langindex=0 -> Äesky, 1 -> anglicky
 RETURNS varchar (3) AS  
 BEGIN 
 
@@ -329,7 +329,7 @@ CREATE FUNCTION [dbo].[get_exchange_rate](@ratetype int,@dat datetime,@j27id_sou
 RETURNS float
 AS
 BEGIN
-  set @ratetype=isnull(@ratetype,1)		---@ratetype=1 - fakturaèní kurz, @ratetype=2 - fixní kurz
+  set @ratetype=isnull(@ratetype,1)		---@ratetype=1 - fakturaÄnÃ­ kurz, @ratetype=2 - fixnÃ­ kurz
 
   if @j27id_source is null or @j27id_dest is null
     return(1)
@@ -337,7 +337,7 @@ BEGIN
   if @j27id_source=@j27id_dest
     RETURN(1)
 
-  declare @j27id_domestic int	--domácí mìna, která definuje mìnové kurzy vùèi ostatním mìnám, vıchozí je CZK
+  declare @j27id_domestic int	--domÃ¡cÃ­ mÄ›na, kterÃ¡ definuje mÄ›novÃ© kurzy vÅ¯Äi ostatnÃ­m mÄ›nÃ¡m, vÃ½chozÃ­ je CZK
 
   if exists(select x35ID FROM x35GlobalParam WHERE x35Key like 'j27ID_Domestic')
    select @j27id_domestic=convert(int,x35Value) from x35GlobalParam WHERE x35Key like 'j27ID_Domestic'
@@ -370,7 +370,7 @@ else
   set @ret=isnull(@ret,1)
 
   if @j27id_dest=@j27id_domestic or @j27id_source=@j27id_domestic
-    RETURN(@ret)	--pøevod do nebo z domácí mìny
+    RETURN(@ret)	--pÅ™evod do nebo z domÃ¡cÃ­ mÄ›ny
 
 
 
@@ -544,7 +544,7 @@ CREATE    FUNCTION [dbo].[get_one_role_inline](@recordpid int,@x67id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené obsazení projektové role @x67id v projektu @p41id
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© obsazenÃ­ projektovÃ© role @x67id v projektu @p41id
 
  DECLARE @s nvarchar(2000) 
 
@@ -754,7 +754,7 @@ CREATE FUNCTION [dbo].[getfieldsize] (@field varchar(50),@table varchar(50))
 RETURNS int AS  
 BEGIN 
 
----vrací maximální délku pole @field v tabulce @table
+---vracÃ­ maximÃ¡lnÃ­ dÃ©lku pole @field v tabulce @table
 	
 declare @id int
 
@@ -773,7 +773,7 @@ dbo.syscolumns
 where [name] like @field and [id]=@id
 
 if @xtype=231
-  set @size=@size/2	--nvarchar typ dìlíme 2
+  set @size=@size/2	--nvarchar typ dÄ›lÃ­me 2
 
 if @type=35
   return(0)	--memo
@@ -802,7 +802,7 @@ GO
 
 
 CREATE FUNCTION [dbo].[GetNextMonth] (@d datetime)
---vrací datum o mìsíc posunutı vùèi @d
+--vracÃ­ datum o mÄ›sÃ­c posunutÃ½ vÅ¯Äi @d
 RETURNS datetime AS  
 BEGIN 
 
@@ -854,7 +854,7 @@ GO
 
 
 CREATE FUNCTION [dbo].[GetNextQuarter] (@d datetime)
---vrací datum o kvartál posunutı vùèi @d
+--vracÃ­ datum o kvartÃ¡l posunutÃ½ vÅ¯Äi @d
 RETURNS datetime AS  
 BEGIN 
 
@@ -942,7 +942,7 @@ if @prefix='o23'
  select @ret=isnull(o23Code,'')+' | '+isnull(c.x18Name+': ','')+isnull(a.o23Name,'') FROM o23Doc a INNER JOIN x23EntityField_Combo b ON a.x23ID=b.x23ID INNER JOIN x18EntityCategory c ON b.x23ID=c.x23ID WHERE a.o23ID=@pid
   
 if @prefix='b07'
- select @ret='Komentáø od: '+b.j02Firstname+' '+b.j02LastName, @refpid=a.b07RecordPID,@refx29id=a.x29ID FROM b07Comment a INNER JOIN j02Person b ON a.j02ID_Owner=b.j02ID WHERE a.b07ID=@pid
+ select @ret='KomentÃ¡Å™ od: '+b.j02Firstname+' '+b.j02LastName, @refpid=a.b07RecordPID,@refx29id=a.x29ID FROM b07Comment a INNER JOIN j02Person b ON a.j02ID_Owner=b.j02ID WHERE a.b07ID=@pid
  
 
 if @prefix='p32'
@@ -1122,7 +1122,7 @@ GO
 
 
 CREATE FUNCTION [dbo].[j02_c21_get_hours_for_day] (@j02id int,@d datetime)
---vrací poèet hodin z pracovního fondu osoby @j02id pro den @d
+--vracÃ­ poÄet hodin z pracovnÃ­ho fondu osoby @j02id pro den @d
 RETURNS float AS  
 BEGIN 
 
@@ -1163,7 +1163,7 @@ CREATE    FUNCTION [dbo].[j02_clients_inline](@j02id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené názvy tımù, v kterıch je osoba @j02id
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© nÃ¡zvy tÃ½mÅ¯, v kterÃ½ch je osoba @j02id
 
  DECLARE @s nvarchar(2000) 
 
@@ -1197,7 +1197,7 @@ CREATE    FUNCTION [dbo].[j02_get_pid_from_login](@login varchar(50))
 RETURNS INT
 AS
 BEGIN
-  ---vrací j02ID osoby
+  ---vracÃ­ j02ID osoby
 
  
 
@@ -1238,7 +1238,7 @@ CREATE    FUNCTION [dbo].[j02_teams_inline](@j02id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené názvy tımù, v kterıch je osoba @j02id
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© nÃ¡zvy tÃ½mÅ¯, v kterÃ½ch je osoba @j02id
 
  DECLARE @s nvarchar(2000) 
 
@@ -1272,7 +1272,7 @@ CREATE    FUNCTION [dbo].[j03_get_pid_from_login](@login varchar(50))
 RETURNS INT
 AS
 BEGIN
-  ---vrací j03ID uivatele
+  ---vracÃ­ j03ID uÅ¾ivatele
 
  
 
@@ -1319,7 +1319,7 @@ CREATE    FUNCTION [dbo].[j03_getj02id](@j03id int)
 RETURNS int
 AS
 BEGIN
-  ---vrací j02ID uivatele @j03id
+  ---vracÃ­ j02ID uÅ¾ivatele @j03id
 
  
 
@@ -1366,7 +1366,7 @@ CREATE    FUNCTION [dbo].[j03_getlogin](@j03id int)
 RETURNS nvarchar(50)
 AS
 BEGIN
-  ---vrací login uivatele @j03id
+  ---vracÃ­ login uÅ¾ivatele @j03id
 
  
 
@@ -1413,7 +1413,7 @@ CREATE    FUNCTION [dbo].[j03_test_permission_global](@j03id int,@x53value int)
 RETURNS BIT
 AS
 BEGIN
-  ---vrací 1, pokud uivatel @j03id disponuje oprávnìním v jeho globální roli (j04)
+  ---vracÃ­ 1, pokud uÅ¾ivatel @j03id disponuje oprÃ¡vnÄ›nÃ­m v jeho globÃ¡lnÃ­ roli (j04)
   declare @ret bit,@rolevalue varchar(50)
   set @ret=0
 
@@ -1463,7 +1463,7 @@ CREATE    FUNCTION [dbo].[j05_slaves_inline](@j02id_master int)
 RETURNS varchar(6000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené názvy podøízenıch osob a tımù
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© nÃ¡zvy podÅ™Ã­zenÃ½ch osob a tÃ½mÅ¯
 
  DECLARE @s varchar(6000)
 
@@ -1711,7 +1711,7 @@ CREATE    FUNCTION [dbo].[o22_getroles_inline](@o22id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené obsazení  rolí v události @p56id
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© obsazenÃ­  rolÃ­ v udÃ¡losti @p56id
 
  DECLARE @s nvarchar(2000)
 
@@ -1796,7 +1796,7 @@ CREATE    FUNCTION [dbo].[o23_getroles_inline](@o23id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené obsazení  rolí v poloce štítku @o23id
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© obsazenÃ­  rolÃ­ v poloÅ¾ce Å¡tÃ­tku @o23id
 
  DECLARE @s nvarchar(2000),@count int
 
@@ -1868,7 +1868,7 @@ RETURNS int
 AS
 BEGIN
    
-declare @o28id int,@o28permflag int	---0-pouze vlastní worksheet,1-Èíst vše v rámci projektu, 2-Èíst a upravovat vše v rámci projektu,3-Èíst a schvalovat vše v rámci projektu 4 - Èíst, upravovat a schvalovat vše v rámci projektu
+declare @o28id int,@o28permflag int	---0-pouze vlastnÃ­ worksheet,1-ÄŒÃ­st vÅ¡e v rÃ¡mci projektu, 2-ÄŒÃ­st a upravovat vÅ¡e v rÃ¡mci projektu,3-ÄŒÃ­st a schvalovat vÅ¡e v rÃ¡mci projektu 4 - ÄŒÃ­st, upravovat a schvalovat vÅ¡e v rÃ¡mci projektu
 
 select TOP 1 @o28id=a.o28id,@o28permflag=a.o28PermFlag
 from o28ProjectRole_Workload a inner join x67EntityRole x67 on a.x67ID=x67.x67ID
@@ -1879,7 +1879,7 @@ AND a.o28entryflag>=@minpermflag AND a.o28PermFlag<=@maxpermflag
 ORDER BY a.o28PermFlag DESC
 	
 if @o28id is null and @j18id is not null
-	begin ----------oprávnìní k projektu podle projektové skupiny (regionu)
+	begin ----------oprÃ¡vnÄ›nÃ­ k projektu podle projektovÃ© skupiny (regionu)
 		select TOP 1 @o28id=a.o28id,@o28permflag=a.o28PermFlag
 		from o28ProjectRole_Workload a inner join x67EntityRole x67 on a.x67ID=x67.x67ID
 		inner join x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID
@@ -1914,7 +1914,7 @@ CREATE  FUNCTION [dbo].[p11_find_p41id_default](@j02id int)
 RETURNS int
 AS
 BEGIN
-  ---vrací ID projektu pro zapisování neproduktivních hodin v rozhraní docházky
+  ---vracÃ­ ID projektu pro zapisovÃ¡nÃ­ neproduktivnÃ­ch hodin v rozhranÃ­ dochÃ¡zky
 
   declare @p41id int,@p42id int,@s varchar(10)
 
@@ -1935,7 +1935,7 @@ BEGIN
 
   
   if @p41id is null
-   select TOP 1 @p41id=p41ID FROM p41Project WHERE p41Name like '%reij%' AND getdate() between p41ValidFrom and p41ValidUntil
+   select TOP 1 @p41id=p41ID FROM p41Project WHERE p41Name like '%reÅ¾ij%' AND getdate() between p41ValidFrom and p41ValidUntil
   
   
   
@@ -1959,7 +1959,7 @@ CREATE    FUNCTION [dbo].[p28_address_inline](@p28id int,@o36id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené adresy z profilu kontaktu @p28id pro typ adresy @o36id
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© adresy z profilu kontaktu @p28id pro typ adresy @o36id
 
  DECLARE @s nvarchar(2000) 
 
@@ -1986,7 +1986,7 @@ CREATE    FUNCTION [dbo].[p28_addresses_inline](@p28id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené adresy z profilu kontaktu @p28id
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© adresy z profilu kontaktu @p28id
 
  DECLARE @s nvarchar(2000) 
 
@@ -2017,7 +2017,7 @@ create    FUNCTION [dbo].[p28_get_childs_inline_html](@p28id int)
 RETURNS varchar(5000)
 AS
 BEGIN
-  ---vrací èárkou html seznam pod-klientù v klientovi @p28id
+  ---vracÃ­ ÄÃ¡rkou html seznam pod-klientÅ¯ v klientovi @p28id
 
  DECLARE @s nvarchar(2000) 
 
@@ -2073,7 +2073,7 @@ CREATE FUNCTION [dbo].[p28_getonerole_inline](@p28id int,@x67id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené obsazení jedné klientské role @x67id u klienta @p28id
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© obsazenÃ­ jednÃ© klientskÃ© role @x67id u klienta @p28id
  if @p28id is null
   RETURN(null)
 
@@ -2114,7 +2114,7 @@ CREATE    FUNCTION [dbo].[p28_getroles_inline](@p28id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené obsazení klientskıch rolí v klientovi @p28id
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© obsazenÃ­ klientskÃ½ch rolÃ­ v klientovi @p28id
 
  DECLARE @s nvarchar(2000) 
 
@@ -2168,7 +2168,7 @@ CREATE    FUNCTION [dbo].[p28_ko_inline](@p28id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené názvy kontaktní osob
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© nÃ¡zvy kontaktnÃ­ osob
 
  DECLARE @s nvarchar(2000) 
 
@@ -2196,7 +2196,7 @@ CREATE    FUNCTION [dbo].[p28_medias_inline](@p28id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené kontaktní média z profilu kontaktu @p28id
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© kontaktnÃ­ mÃ©dia z profilu kontaktu @p28id
 
  DECLARE @s nvarchar(2000) 
 
@@ -2245,7 +2245,7 @@ BEGIN
   FROM p51PriceList where p51id=@p51id
 
 
-  --------sazba podle aktivita+uivatel napøímo--------------
+  --------sazba podle aktivita+uÅ¾ivatel napÅ™Ã­mo--------------
   select top 1 @p52id=p52id,@ret_rate=p52Rate
   FROM p52PriceList_Item
   where p51id IN (@p51id,@p51id_master) and p34id=@p34id and p32id=@p32id
@@ -2257,7 +2257,7 @@ BEGIN
 
 
 
-  --------sazba podle aktivita+pozice osoby napøímo--------------
+  --------sazba podle aktivita+pozice osoby napÅ™Ã­mo--------------
   select top 1 @p52id=p52id,@ret_rate=p52Rate
   FROM p52PriceList_Item
   where p51id IN (@p51id,@p51id_master) and p34id=@p34id and p32id=@p32id
@@ -2278,7 +2278,7 @@ BEGIN
     return(@ret_rate)
     
     
---------sazba podle uivatel bez aktivity--------------
+--------sazba podle uÅ¾ivatel bez aktivity--------------
   select top 1 @p52id=p52id,@ret_rate=p52Rate
   FROM p52PriceList_Item
   where p51id IN (@p51id,@p51id_master) and p34id=@p34id and p32id is null
@@ -2299,7 +2299,7 @@ BEGIN
   if isnull(@p52id,0)<>0
     return(@ret_rate)
 
---------sazba podle sheet bez aktivity i personálního zdroje--------------
+--------sazba podle sheet bez aktivity i personÃ¡lnÃ­ho zdroje--------------
   select top 1 @p52id=p52id,@ret_rate=p52Rate
   FROM p52PriceList_Item
   where p51id IN (@p51id,@p51id_master) and p34id=@p34id and p32id is null and j02ID is null AND j07id is null
@@ -2314,7 +2314,7 @@ select @p33id=b.p33ID FROM p32Activity a INNER JOIN p34ActivityGroup b ON a.p34I
 
 if @p33id=1
  begin
--------ještì monost, e sazba je definována pro všechny èasové sešity pøes volbu p52IsPlusAllTimeSheets=1
+-------jeÅ¡tÄ› moÅ¾nost, Å¾e sazba je definovÃ¡na pro vÅ¡echny ÄasovÃ© seÅ¡ity pÅ™es volbu p52IsPlusAllTimeSheets=1
 --------sazba podle osoby bez aktivity--------------
   select top 1 @p52id=p52id,@ret_rate=p52Rate
   FROM p52PriceList_Item
@@ -2333,7 +2333,7 @@ if @p33id=1
   if isnull(@p52id,0)<>0
     return(@ret_rate)
 
-  --------sazba podle sheet bez aktivity i personálního zdroje--------------
+  --------sazba podle sheet bez aktivity i personÃ¡lnÃ­ho zdroje--------------
   select top 1 @p52id=p52id,@ret_rate=p52Rate
   FROM p52PriceList_Item
   where p51id IN (@p51id,@p51id_master) and p52IsPlusAllTimeSheets=1 and p32id is null and j02ID is null AND j07id is null
@@ -2343,7 +2343,7 @@ if @p33id=1
     return(@ret_rate)
  end
 
-----zde u se vrací vıchozí sazba ceníku-----------
+----zde uÅ¾ se vracÃ­ vÃ½chozÃ­ sazba cenÃ­ku-----------
 select @ret_rate=isnull(p51DefaultRateT,0) FROM p51PriceList WHERE p51ID=@p51id
 
 return(@ret_rate)
@@ -2432,7 +2432,7 @@ GO
 CREATE FUNCTION [dbo].[p32_get_invoice_worksheet_text](@p91id int,@p32id int)
 RETURNS nvarchar(200) AS  
 BEGIN 
----vrací název aktivity @p32id ve správném fakturaèním jazyku pro fakturu @p91id
+---vracÃ­ nÃ¡zev aktivity @p32id ve sprÃ¡vnÃ©m fakturaÄnÃ­m jazyku pro fakturu @p91id
 
 declare @p28id int,@p41id int,@p87id int,@ret nvarchar(500),@langindex int
 
@@ -2491,7 +2491,7 @@ GO
 CREATE FUNCTION [dbo].[p32_get_invoicetext](@p91id int,@p32id int)
 RETURNS nvarchar(200) AS  
 BEGIN 
----vrací název aktivity @p32id ve správném fakturaèním jazyku pro fakturu @p91id
+---vracÃ­ nÃ¡zev aktivity @p32id ve sprÃ¡vnÃ©m fakturaÄnÃ­m jazyku pro fakturu @p91id
 
 declare @p28id int,@p41id int,@p87id int,@ret nvarchar(200),@langindex int
 
@@ -2611,7 +2611,7 @@ CREATE    FUNCTION [dbo].[p41_get_childs_inline_html](@p41id int)
 RETURNS varchar(5000)
 AS
 BEGIN
-  ---vrací èárkou html seznam pod-projektù v projektu @p41id
+  ---vracÃ­ ÄÃ¡rkou html seznam pod-projektÅ¯ v projektu @p41id
 
  DECLARE @s nvarchar(2000) 
 
@@ -2672,7 +2672,7 @@ CREATE    FUNCTION [dbo].[p41_get_one_role_inline](@p41id int,@x67id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené obsazení jedné projektové role @x67id v projektu @p41id
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© obsazenÃ­ jednÃ© projektovÃ© role @x67id v projektu @p41id
  if @p41id is null
   RETURN(NULL)
 
@@ -2730,7 +2730,7 @@ CREATE    FUNCTION [dbo].[p41_get_p41code_client_plus_ordinary](@pid int)
 RETURNS varchar(50)
 AS
 BEGIN
-  ---vrací kód projektu podle logiky kód klienta + poøadové èíslo projektu v rámci klienta
+  ---vracÃ­ kÃ³d projektu podle logiky kÃ³d klienta + poÅ™adovÃ© ÄÃ­slo projektu v rÃ¡mci klienta
 
  DECLARE @ret varchar(50),@p28id int,@p28code varchar(50),@pocet int,@suffix varchar(10)
 
@@ -2804,7 +2804,7 @@ CREATE    FUNCTION [dbo].[p41_get_p41code_parentproject_plus_ordinary](@pid int)
 RETURNS varchar(50)
 AS
 BEGIN
-  ---vrací kód projektu podle logiky kód nadøízeného projektu + poøadové èíslo projektu v rámci nadøízeného projektu
+  ---vracÃ­ kÃ³d projektu podle logiky kÃ³d nadÅ™Ã­zenÃ©ho projektu + poÅ™adovÃ© ÄÃ­slo projektu v rÃ¡mci nadÅ™Ã­zenÃ©ho projektu
 
  DECLARE @ret varchar(50),@p41id_master int,@p41code_master varchar(50),@pocet int,@suffix varchar(10)
 
@@ -2881,7 +2881,7 @@ CREATE    FUNCTION [dbo].[p41_get_p41code_yyyy_mm_dd_xxxx](@pid int)
 RETURNS varchar(50)
 AS
 BEGIN
-  ---vrací kód projektu podle logiky YYYY_MM_DD_XXXX
+  ---vracÃ­ kÃ³d projektu podle logiky YYYY_MM_DD_XXXX
 
  DECLARE @ret varchar(50),@d datetime,@pocet int,@suffix varchar(10),@s varchar(50)
  set @d=getdate()
@@ -2928,7 +2928,7 @@ CREATE    FUNCTION [dbo].[p41_get_tasks_inline_html](@p41id int)
 RETURNS varchar(5000)
 AS
 BEGIN
-  ---vrací èárkou html seznam otevøenıch úkolù v projektu @p41id
+  ---vracÃ­ ÄÃ¡rkou html seznam otevÅ™enÃ½ch ÃºkolÅ¯ v projektu @p41id
 
  DECLARE @s nvarchar(2000) 
 
@@ -2992,7 +2992,7 @@ CREATE    FUNCTION [dbo].[p41_getroles_inline](@p41id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené obsazení projektovıch rolí v projektu @p41id
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© obsazenÃ­ projektovÃ½ch rolÃ­ v projektu @p41id
 
  DECLARE @s nvarchar(2000) 
 
@@ -3045,7 +3045,7 @@ create    FUNCTION [dbo].[p41_ko_inline](@p41id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené názvy kontaktní osob pøímo svázané s projektem
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© nÃ¡zvy kontaktnÃ­ osob pÅ™Ã­mo svÃ¡zanÃ© s projektem
 
  DECLARE @s nvarchar(2000) 
 
@@ -3078,7 +3078,7 @@ CREATE    FUNCTION [dbo].[p56_get_one_role_inline](@p56id int,@x67id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené obsazení jedné  role @x67id v úkolu @p56id
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© obsazenÃ­ jednÃ©  role @x67id v Ãºkolu @p56id
  if @p56id is null
   RETURN(NULL)
 
@@ -3137,7 +3137,7 @@ CREATE    FUNCTION [dbo].[p56_getroles_inline](@p56id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené obsazení  rolí v úkolu @p56id
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© obsazenÃ­  rolÃ­ v Ãºkolu @p56id
 
  DECLARE @s nvarchar(2000),@count int
 
@@ -3209,7 +3209,7 @@ CREATE  FUNCTION [dbo].[p82_get_p86id](@p82id int)
 RETURNS int
 AS
 BEGIN
-  ---vrací ID bankovního úètu pro úhradu zálohové faktury @p82id
+  ---vracÃ­ ID bankovnÃ­ho ÃºÄtu pro Ãºhradu zÃ¡lohovÃ© faktury @p82id
 
   declare @p86id int,@j27id int,@p93id int
 
@@ -3287,7 +3287,7 @@ CREATE  FUNCTION [dbo].[p90_get_p86id](@p90id int)
 RETURNS int
 AS
 BEGIN
-  ---vrací ID bankovního úètu pro zálohovou fakturu @p90id
+  ---vracÃ­ ID bankovnÃ­ho ÃºÄtu pro zÃ¡lohovou fakturu @p90id
 
   declare @p86id int,@j27id int,@p93id int
 
@@ -3320,7 +3320,7 @@ CREATE  FUNCTION [dbo].[p91_get_p86id](@p91id int)
 RETURNS int
 AS
 BEGIN
-  ---vrací ID bankovního úètu pro fakturu @p91id
+  ---vracÃ­ ID bankovnÃ­ho ÃºÄtu pro fakturu @p91id
 
   declare @p86id int,@j27id int,@p93id int
 
@@ -3352,7 +3352,7 @@ CREATE  FUNCTION [dbo].[p91_get_p86id_currency](@p91id int,@j27id int)
 RETURNS int
 AS
 BEGIN
-  ---vrací ID bankovního úètu pro fakturu @p91id a explicitnì mìnu @j27id
+  ---vracÃ­ ID bankovnÃ­ho ÃºÄtu pro fakturu @p91id a explicitnÄ› mÄ›nu @j27id
 
   declare @p86id int,@p93id int
 
@@ -3380,7 +3380,7 @@ CREATE  FUNCTION [dbo].[p91_get_vatrate](@x15id int,@j27id int,@j17id int,@dat d
 RETURNS float
 AS
 BEGIN
-  ---2: sníená, 3: standardní, 4: special
+  ---2: snÃ­Å¾enÃ¡, 3: standardnÃ­, 4: special
   if isnull(@x15id,1)=1
    RETURN(0)
 
@@ -3418,7 +3418,7 @@ CREATE  FUNCTION [dbo].[p91_test_vat](@vatrate float,@j27id int,@j17id int,@dat 
 RETURNS bit
 AS
 BEGIN
-  ---2: sníená, 3: standardní, 4: special
+  ---2: snÃ­Å¾enÃ¡, 3: standardnÃ­, 4: special
 
   declare @p53id int
 
@@ -3455,7 +3455,7 @@ GO
 CREATE FUNCTION [dbo].[p95_get_invoicetext](@p91id int,@p95id int)
 RETURNS nvarchar(200) AS  
 BEGIN 
----vrací název fakturaèního oddílu @p95id ve správném fakturaèním jazyku pro fakturu @p91id
+---vracÃ­ nÃ¡zev fakturaÄnÃ­ho oddÃ­lu @p95id ve sprÃ¡vnÃ©m fakturaÄnÃ­m jazyku pro fakturu @p91id
 
 declare @p28id int,@p41id int,@p87id int,@ret nvarchar(200),@langindex int
 
@@ -3513,7 +3513,7 @@ CREATE    FUNCTION [dbo].[parse_errinfo](@ERROR_PROCEDURE nvarchar(500),@ERROR_L
 RETURNS nvarchar(4000)
 AS
 BEGIN
-  ---vrací login uivatele @j03id
+  ---vracÃ­ login uÅ¾ivatele @j03id
  declare @s nvarchar(4000)
  set @s='Procedure: '+@ERROR_PROCEDURE+char(13)+char(10)+'<hr>Line: '+convert(varchar(10),@ERROR_LINE)+char(13)+char(10)+'<hr>'+@ERROR_MESSAGE
 
@@ -3602,7 +3602,7 @@ CREATE FUNCTION [dbo].[stitek_entity](@o23id int,@x20id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené názvy entit
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© nÃ¡zvy entit
   
  DECLARE @s nvarchar(2000) 
 
@@ -3658,7 +3658,7 @@ CREATE FUNCTION [dbo].[stitek_entity_pid](@o23id int,@x29id int)
 RETURNS int
 AS
 BEGIN
-  ---vrací PID entity v dokumentu
+  ---vracÃ­ PID entity v dokumentu
   
  DECLARE @ret int,@x20id int,@x18id int
 
@@ -3718,7 +3718,7 @@ CREATE FUNCTION [dbo].[stitek_entity_pid_by_x20id](@o23id int,@x20id int)
 RETURNS int
 AS
 BEGIN
-  ---vrací PID entity v dokumentu
+  ---vracÃ­ PID entity v dokumentu
   
  DECLARE @ret int
 
@@ -3754,7 +3754,7 @@ CREATE FUNCTION [dbo].[stitek_entity_report](@o23id int,@x29id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené názvy entit
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© nÃ¡zvy entit
   
  DECLARE @s nvarchar(2000),@x20id int,@x18id int
 
@@ -3818,7 +3818,7 @@ CREATE    FUNCTION [dbo].[stitek_hodnoty](@x18id int,@x29id int,@recpid int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené hodnoty štítkù
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© hodnoty Å¡tÃ­tkÅ¯
 
  DECLARE @s nvarchar(2000) 
 
@@ -3873,7 +3873,7 @@ CREATE    FUNCTION [dbo].[tag_values_inline](@x29id int,@recpid int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené hodnoty štítkù
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© hodnoty Å¡tÃ­tkÅ¯
 
  DECLARE @s nvarchar(2000) 
 
@@ -3928,7 +3928,7 @@ CREATE    FUNCTION [dbo].[tag_values_inline_html](@x29id int,@recpid int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
-  ---vrací èárkou oddìlené hodnoty štítkù
+  ---vracÃ­ ÄÃ¡rkou oddÄ›lenÃ© hodnoty Å¡tÃ­tkÅ¯
 
  DECLARE @s nvarchar(2000) 
 
@@ -4067,12 +4067,12 @@ set @val=0
 set @isdraft=isnull(@isdraft,0)
 
 if @x29id is null
- RETURN('')	----bez ID entity nelze generovat kód
+ RETURN('')	----bez ID entity nelze generovat kÃ³d
 
 if @x29id<>328
- begin		---vyjímku má pouze entita Klient
+ begin		---vyjÃ­mku mÃ¡ pouze entita Klient
   if @x38id is null and @isdraft=0
-   RETURN('')	---pokud na vstupu chybí èíselná øada x38id, pak musí bıt záznam v reimu DRAFT. U normálních záznamù nesmí x38id chybìt
+   RETURN('')	---pokud na vstupu chybÃ­ ÄÃ­selnÃ¡ Å™ada x38id, pak musÃ­ bÃ½t zÃ¡znam v reÅ¾imu DRAFT. U normÃ¡lnÃ­ch zÃ¡znamÅ¯ nesmÃ­ x38id chybÄ›t
  end
 
 if @x38id is not null
@@ -4084,7 +4084,7 @@ if @x38id is not null
 	WHERE x38ID=@x38id
 
 	if @x38IsUseDbPID=1
-	 RETURN(convert(varchar(10),@datapid))	---èíslování podle hodnoty primárního klíèe v databázi
+	 RETURN(convert(varchar(10),@datapid))	---ÄÃ­slovÃ¡nÃ­ podle hodnoty primÃ¡rnÃ­ho klÃ­Äe v databÃ¡zi
  end
 else
  begin
@@ -4094,7 +4094,7 @@ else
 	set @x38ConstantAfterValue=''	
 
 	if @x29id=328 and @isdraft=0
-	 begin	----klient bez pøiøazení typu
+	 begin	----klient bez pÅ™iÅ™azenÃ­ typu
 		set @x38ExplicitIncrementStart=0
 		set @x38ConstantBeforeValue='K'
 		set @x38Scale=4
@@ -4113,20 +4113,20 @@ if isnull(@x38Scale,0)=0
 if @x29id=141 and @isdraft=0	---projekt
  select @pid_last=max(p41ID),@code_max_used=max(dbo.remove_alphacharacters(p41code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM p41Project where p41IsDraft=0 AND p41Code NOT LIKE 'TEMP%' and p41Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue AND p42ID IN (SELECT p42ID FROM p42ProjectType WHERE x38ID=@x38id)
 
-if @x29id=141 and @isdraft=1	---projekt DRAFT, x38id mùe bıt prázdné
+if @x29id=141 and @isdraft=1	---projekt DRAFT, x38id mÅ¯Å¾e bÃ½t prÃ¡zdnÃ©
  select @pid_last=max(p41ID),@code_max_used=max(dbo.remove_alphacharacters(p41code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM p41Project where p41IsDraft=1 AND p41Code NOT LIKE 'TEMP%' and p41Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue AND p42ID IN (SELECT p42ID FROM p42ProjectType WHERE x38ID_Draft=@x38id OR x38ID_Draft IS NULL)
 
 
 if @x29id=328
  begin
 	declare @p29id int
-	select @p29id=p29ID FROM p28Contact WHERE p28ID=@datapid	---u klienta nemusí bıt povinnì vyplnìnı TYP klienta, kterı s sebou nese èíselnou øadu
+	select @p29id=p29ID FROM p28Contact WHERE p28ID=@datapid	---u klienta nemusÃ­ bÃ½t povinnÄ› vyplnÄ›nÃ½ TYP klienta, kterÃ½ s sebou nese ÄÃ­selnou Å™adu
 
 
 	if @p29id is not null and @isdraft=0
 	  select @pid_last=max(p28ID),@code_max_used=max(dbo.remove_alphacharacters(p28code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM p28Contact where p28IsDraft=0 AND p28Code NOT LIKE 'TEMP%' and p28Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue AND (p29ID IS NULL OR p29ID IN (SELECT p29ID FROM p29ContactType WHERE x38ID=@x38id))
 
-	if @p29id is null and @isdraft=0	---zde chybí zcela vazba na èíselnou øadu, protoe typ klienta není povinné pole
+	if @p29id is null and @isdraft=0	---zde chybÃ­ zcela vazba na ÄÃ­selnou Å™adu, protoÅ¾e typ klienta nenÃ­ povinnÃ© pole
 	 select @pid_last=max(p28ID),@code_max_used=max(dbo.remove_alphacharacters(p28code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM p28Contact where p28IsDraft=0 AND p28Code NOT LIKE 'TEMP%' and p28Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue
 
 	
@@ -4140,10 +4140,10 @@ if @x29id=328
  end
    
 
-if @x29id=356	---úkol (technicky nemùe bıt DRAFT a musí existovat p57id a tím i x38id
+if @x29id=356	---Ãºkol (technicky nemÅ¯Å¾e bÃ½t DRAFT a musÃ­ existovat p57id a tÃ­m i x38id
  select @pid_last=max(p56ID),@code_max_used=max(dbo.remove_alphacharacters(p56code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM p56Task where p56Code NOT LIKE 'TEMP%' and p56Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue AND p57ID IN (SELECT p57ID FROM p57TaskType WHERE x38ID=@x38id)
 
-if @x29id=382	---úhrada zálohové faktury
+if @x29id=382	---Ãºhrada zÃ¡lohovÃ© faktury
  select @pid_last=max(p82ID),@code_max_used=max(dbo.remove_alphacharacters(p82Code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM p82Proforma_Payment where p82Code NOT LIKE 'TEMP%' and p82Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue
 
 
@@ -4160,20 +4160,20 @@ if @x29id=391 and @isdraft=0	---faktura
 if @x29id=391 and @isdraft=1	---faktura DRAFT
  select @pid_last=max(p91ID),@code_max_used=max(dbo.remove_alphacharacters(p91code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM p91Invoice where p91IsDraft=1 AND p91Code NOT LIKE 'TEMP%' AND p91Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue AND p92ID IN (SELECT p92ID FROM p92InvoiceType WHERE x38ID_Draft=@x38id OR x38ID_Draft is null)
 
-if @x29id=390 and @isdraft=0	---zálohová faktura
+if @x29id=390 and @isdraft=0	---zÃ¡lohovÃ¡ faktura
  select @pid_last=max(p90ID),@code_max_used=max(dbo.remove_alphacharacters(p90code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM p90Proforma where p90IsDraft=0 AND p90Code NOT LIKE 'TEMP%' AND p90Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue AND p89ID IN (SELECT p89ID FROM p89ProformaType WHERE x38ID=@x38id)
 
-if @x29id=390 and @isdraft=1	---zálohová faktura DRAFT
+if @x29id=390 and @isdraft=1	---zÃ¡lohovÃ¡ faktura DRAFT
  select @pid_last=max(p90ID),@code_max_used=max(dbo.remove_alphacharacters(p90code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM p90Proforma where p90IsDraft=1 AND p90Code NOT LIKE 'TEMP%' AND p90Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue AND p89ID IN (SELECT p89ID FROM p89ProformaType WHERE x38ID_Draft=@x38id or x38ID_Draft is null)
 
 	
 if @code_max_used is not null
-begin	---existuje pøedchozí záznam pro navázání øady
+begin	---existuje pÅ™edchozÃ­ zÃ¡znam pro navÃ¡zÃ¡nÃ­ Å™ady
 	if ISNUMERIC(@code_max_used)=1
 	 set @val=convert(int,@code_max_used)
 end
 
-set @val=@val+1		---novı kód bude o jednièku vìtší
+set @val=@val+1		---novÃ½ kÃ³d bude o jedniÄku vÄ›tÅ¡Ã­
   
 if @val<=@x38ExplicitIncrementStart
  set @val=@x38ExplicitIncrementStart
@@ -4405,21 +4405,21 @@ GO
 
 
 CREATE   procedure [dbo].[b01_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--b01id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu workflow šablony z tabulky b01workflowtemplate
+--odstranÄ›nÃ­ zÃ¡znamu workflow Å¡ablony z tabulky b01workflowtemplate
  
 if exists(select b01ID from p42ProjectType where b01id=@pid)
- set @err_ret='Minimálnì jeden typ projektu má vazbu na tuto šablonu.'
+ set @err_ret='MinimÃ¡lnÄ› jeden typ projektu mÃ¡ vazbu na tuto Å¡ablonu.'
 
 if exists(select b01ID from p57TaskType where b01id=@pid)
- set @err_ret='Minimálnì jeden typ úkolu má vazbu na tuto šablonu.'
+ set @err_ret='MinimÃ¡lnÄ› jeden typ Ãºkolu mÃ¡ vazbu na tuto Å¡ablonu.'
 
 if exists(select b01ID from x18EntityCategory where b01id=@pid)
- set @err_ret='Minimálnì jeden štítek má vazbu na tuto šablonu.'
+ set @err_ret='MinimÃ¡lnÄ› jeden Å¡tÃ­tek mÃ¡ vazbu na tuto Å¡ablonu.'
   
 if isnull(@err_ret,'')<>''
  return 
@@ -4476,31 +4476,31 @@ GO
 
 
 CREATE   procedure [dbo].[b02_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--b02id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu statusu z tabulky b02WorkflowStatus
+--odstranÄ›nÃ­ zÃ¡znamu statusu z tabulky b02WorkflowStatus
 
 if exists(select p41ID from p41Project where b02ID=@pid)
 begin
  declare @s varchar(20)
  select TOP 1 @s=isnull(p41Code,'') FROM p41Project WHERE b02ID=@pid
  
- set @err_ret='Minimálnì jeden projekt ('+@s+') má vazbu na tento workflow stav.'
+ set @err_ret='MinimÃ¡lnÄ› jeden projekt ('+@s+') mÃ¡ vazbu na tento workflow stav.'
  return
 end
 
 if exists(select p56ID from p56Task where b02ID=@pid)
 begin
- set @err_ret='Minimálnì jeden úkol má vazbu na tento workflow stav.'
+ set @err_ret='MinimÃ¡lnÄ› jeden Ãºkol mÃ¡ vazbu na tento workflow stav.'
  return
 end
 
 if exists(select o23ID from o23Doc where b02ID=@pid)
 begin
- set @err_ret='Minimálnì jeden dokument má vazbu na tento workflow stav.'
+ set @err_ret='MinimÃ¡lnÄ› jeden dokument mÃ¡ vazbu na tento workflow stav.'
  return
 end
 
@@ -4548,12 +4548,12 @@ GO
 
 
 CREATE   procedure [dbo].[b06_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--b06id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu workflow kroku z tabulky b06WorkflowStep
+--odstranÄ›nÃ­ zÃ¡znamu workflow kroku z tabulky b06WorkflowStep
 
 
 if isnull(@err_ret,'')<>''
@@ -4599,17 +4599,17 @@ GO
 
 
 CREATE   procedure [dbo].[b07_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--b07id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu komentáøe z tabulky b07Comment
+--odstranÄ›nÃ­ zÃ¡znamu komentÃ¡Å™e z tabulky b07Comment
 if exists(select b07ID from b07Comment WHERE b07ID_Parent=@pid)
- set @err_ret='Existuje minimálnì jeden podøízenı komentáø!'
+ set @err_ret='Existuje minimÃ¡lnÄ› jeden podÅ™Ã­zenÃ½ komentÃ¡Å™!'
 
 if exists(select b05ID from b05Workflow_History WHERE b07ID=@pid)
- set @err_ret='Nelze odstranit, protoe má vazbu na historii workflow stavového mechanismu!'
+ set @err_ret='Nelze odstranit, protoÅ¾e mÃ¡ vazbu na historii workflow stavovÃ©ho mechanismu!'
 
 
 
@@ -4652,15 +4652,15 @@ GO
 
 
 CREATE   procedure [dbo].[b65_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--b65id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu notifikaèní zprávy z tabulky b65WorkflowMessage
+--odstranÄ›nÃ­ zÃ¡znamu notifikaÄnÃ­ zprÃ¡vy z tabulky b65WorkflowMessage
  
 if exists(select b11ID from b11WorkflowMessageToStep where b65id=@pid)
- set @err_ret='Minimálnì jeden workflow krok je svázán s touto notifikaèní zprávou.' 
+ set @err_ret='MinimÃ¡lnÄ› jeden workflow krok je svÃ¡zÃ¡n s touto notifikaÄnÃ­ zprÃ¡vou.' 
  
 if isnull(@err_ret,'')<>''
  return 
@@ -4724,13 +4724,13 @@ if @c11level=2
   begin
   	set @code=convert(varchar(4),@year)+'-0'+convert(char(1),@quarter)+'-00-000000-00'
 	set @strid=convert(varchar(10),@year-2000)+convert(char(1),@quarter)+'000000'
-	set @name='Ètvrtletí '+convert(varchar(4),@year)+'-'+convert(char(1),@quarter)
+	set @name='ÄŒtvrtletÃ­ '+convert(varchar(4),@year)+'-'+convert(char(1),@quarter)
   end
 
 if @c11level=3
   begin
   	set @code=convert(varchar(4),@year)+'-0'+convert(char(1),@quarter)+'-'+right('0'+convert(varchar(2),@month),2)+'-000000-00'
-	set @name='Mìsíc '+convert(varchar(4),@year)+'-'+convert(varchar(2),@month)
+	set @name='MÄ›sÃ­c '+convert(varchar(4),@year)+'-'+convert(varchar(2),@month)
 	set @strid=convert(varchar(10),@year-2000)+convert(char(1),@quarter)+right('0'+convert(varchar(2),@month),2)+'0000'
   end
 
@@ -4739,7 +4739,7 @@ if @c11level=4
     
     set @s=convert(varchar(4),@year)+right('0'+convert(varchar(2),@week),2)
     set @code=convert(varchar(4),@year)+'-0'+convert(char(1),@quarter)+'-'+right('0'+convert(varchar(2),@month),2)+'-'+@s+'-00'
-    set @name='Tıden '+convert(varchar(4),@year)+'-'+convert(varchar(2),@week)
+    set @name='TÃ½den '+convert(varchar(4),@year)+'-'+convert(varchar(2),@week)
     set @strid=convert(varchar(10),@year-2000)+convert(char(1),@quarter)+right('0'+convert(varchar(2),@month),2)+right('0'+convert(varchar(2),@week),2)+'00'
     
   end
@@ -4812,13 +4812,13 @@ EXEC c11_insertrec 1, @d1, @d2,-1,-1,-1,-1
 while year(@d1)=@year
   begin
     if day(@d1)=1 and (month(@d1)=1 or month(@d1)=4 or month(@d1)=7 or month(@d1)=10)
-      begin	---kvartály
+      begin	---kvartÃ¡ly
 	set @d2=dateadd(day,-1,dateadd(quarter,1,@d1))
     	EXEC c11_insertrec 2, @d1, @d2,-1,-1,-1,-1
       end
 
     if day(@d1)=1
-      begin	---mìsíce
+      begin	---mÄ›sÃ­ce
 	set @d2=dateadd(day,-1,dateadd(month,1,@d1))
 	EXEC c11_insertrec 3, @d1, @d2,-1,-1,-1,-1
       end
@@ -4830,7 +4830,7 @@ while year(@d1)=@year
   end
 
 
----generovat tıdny----
+---generovat tÃ½dny----
 set @firstthurday=convert(datetime,'01.01.'+convert(varchar(4),@year)) 
 
 while datepart(weekday,@firstthurday)<>4
@@ -4866,7 +4866,7 @@ while year(@d1)=@year or year(@d2)=@year
     set @i=@i+1
   end
 
----generování dnù---------
+---generovÃ¡nÃ­ dnÅ¯---------
 set @d1=convert(datetime,'01.01.'+convert(varchar(4),@year))
 
 while year(@d1)=@year
@@ -4877,7 +4877,7 @@ while year(@d1)=@year
   end
 
 
----narovnání c11parentid dnù vùèi tıdnùm---
+---narovnÃ¡nÃ­ c11parentid dnÅ¯ vÅ¯Äi tÃ½dnÅ¯m---
 declare @w int
 
 DECLARE curW CURSOR FOR 
@@ -4897,7 +4897,7 @@ DECLARE curW CURSOR FOR
 	CLOSE curW
 	DEALLOCATE curW
 
----závìreèné èištìní
+---zÃ¡vÄ›reÄnÃ© ÄiÅ¡tÄ›nÃ­
 update c11statperiod set c11q=0,c11m=0,c11w=0,c11d=0 where c11y=@year and c11level=1
 update c11statperiod set c11m=0,c11w=0,c11d=0 where c11y=@year and c11level=2
 update c11statperiod set c11w=0,c11d=0 where c11y=@year and c11level=3
@@ -4921,7 +4921,7 @@ CREATE   procedure [dbo].[c21_aftersave]
 @c21id int
 ,@j03id_sys int
 AS
----aktualizovat rozpis dnù ve fondu do regionálních instancí kalendáøù
+---aktualizovat rozpis dnÅ¯ ve fondu do regionÃ¡lnÃ­ch instancÃ­ kalendÃ¡Å™Å¯
 declare @count int
 select @count=count(*) from c21FondCalendar
 
@@ -4968,19 +4968,19 @@ GO
 
 
 CREATE   procedure [dbo].[c21_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--c21id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu pracovního kalendáøe z tabulky c21FondCalendar
+--odstranÄ›nÃ­ zÃ¡znamu pracovnÃ­ho kalendÃ¡Å™e z tabulky c21FondCalendar
 declare @ref_pid int
 
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=j02ID from j02Person WHERE c21ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jedna osoba má vazbu na tento pracovní kalendáø ('+dbo.GetObjectAlias('j02',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jedna osoba mÃ¡ vazbu na tento pracovnÃ­ kalendÃ¡Å™ ('+dbo.GetObjectAlias('j02',@ref_pid)+')'
 
 
 if isnull(@err_ret,'')<>''
@@ -5092,7 +5092,7 @@ SET DATEFIRST 1
 
   
 
-if @c21scopeflag=3  ---fond hodin je shodnı s vykázanım timesheet
+if @c21scopeflag=3  ---fond hodin je shodnÃ½ s vykÃ¡zanÃ½m timesheet
  begin
   update c22FondCalendar_Date set c22Hours_Work=8 where c21id=@c21id and isnull(j17id,0)=isnull(@j17id,0)
 
@@ -5100,7 +5100,7 @@ if @c21scopeflag=3  ---fond hodin je shodnı s vykázanım timesheet
  end
 
 
---svátky mají totální prioritu nepracování, kontroluje se stát
+--svÃ¡tky majÃ­ totÃ¡lnÃ­ prioritu nepracovÃ¡nÃ­, kontroluje se stÃ¡t
 UPDATE c22FondCalendar_Date set c22Hours_Work=0,c26ID=b.c26ID
 FROM
 c22FondCalendar_Date a INNER JOIN c26Holiday b ON a.c22Date=b.c26Date AND isnull(a.j17ID,0)=isnull(b.j17ID,0)
@@ -5146,7 +5146,7 @@ CREATE   procedure [dbo].[c26_aftersave]
 @c26id int
 ,@j03id_sys int
 AS
----aktualizovat rozpis dnù ve fondu, kam má vliv den svátku
+---aktualizovat rozpis dnÅ¯ ve fondu, kam mÃ¡ vliv den svÃ¡tku
 
 declare @j17id int
 
@@ -5209,12 +5209,12 @@ GO
 
 
 CREATE   procedure [dbo].[c26_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--c26id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu dnes svátku z tabulky c21FondCalendar
+--odstranÄ›nÃ­ zÃ¡znamu dnes svÃ¡tku z tabulky c21FondCalendar
 
 
 BEGIN TRANSACTION
@@ -5267,7 +5267,7 @@ CREATE    PROCEDURE [dbo].[j02_aftersave]
 
 AS
 
----automaticky se spouští po uloení záznamu osoby
+---automaticky se spouÅ¡tÃ­ po uloÅ¾enÃ­ zÃ¡znamu osoby
 
 if exists(select j03ID FROM j03User WHERE j02ID=@j02id)
  UPDATE a set j03ValidFrom=b.j02ValidFrom,j03ValidUntil=b.j02ValidUntil FROM j03User a INNER JOIN j02Person b ON a.j02ID=b.j02ID WHERE a.j02ID=@j02id
@@ -5381,22 +5381,22 @@ GO
 
 
 CREATE   procedure [dbo].[j02_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p32id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu osoby z tabulky j02Person
+--odstranÄ›nÃ­ zÃ¡znamu osoby z tabulky j02Person
 declare @ref_pid int
 
 if exists(select p31ID FROM p31Worksheet where j02ID=@pid)
- set @err_ret='Minimálnì jeden worksheet záznam má vazbu na tuto osobu.'
+ set @err_ret='MinimÃ¡lnÄ› jeden worksheet zÃ¡znam mÃ¡ vazbu na tuto osobu.'
 
 if isnull(@err_ret,'')<>''
  return 
 
 if exists(select p31ID FROM p31Worksheet where j02ID_ContactPerson=@pid)
- set @err_ret='Je kontaktní osobou minimálnì v jednom worksheet záznamu.'
+ set @err_ret='Je kontaktnÃ­ osobou minimÃ¡lnÄ› v jednom worksheet zÃ¡znamu.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -5404,7 +5404,7 @@ if isnull(@err_ret,'')<>''
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p31ID from p31Worksheet WHERE j02ID_Owner=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì v jednomu worksheet úkonu je vlastníkem záznamu tato osoba ('+dbo.GetObjectAlias('p28',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› v jednomu worksheet Ãºkonu je vlastnÃ­kem zÃ¡znamu tato osoba ('+dbo.GetObjectAlias('p28',@ref_pid)+')'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -5412,22 +5412,22 @@ if isnull(@err_ret,'')<>''
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p41ID from p41Project WHERE j02ID_Owner=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì v jednomu projektu je vlastníkem záznamu tato osoba ('+dbo.GetObjectAlias('p41',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› v jednomu projektu je vlastnÃ­kem zÃ¡znamu tato osoba ('+dbo.GetObjectAlias('p41',@ref_pid)+')'
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p28ID from p28Contact WHERE j02ID_Owner=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì v jednomu záznamu kontaktu je vlastníkem záznamu tato osoba ('+dbo.GetObjectAlias('p28',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› v jednomu zÃ¡znamu kontaktu je vlastnÃ­kem zÃ¡znamu tato osoba ('+dbo.GetObjectAlias('p28',@ref_pid)+')'
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p91ID from p91Invoice WHERE j02ID_Owner=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì v jednomu záznamu faktury je vlastníkem záznamu tato osoba ('+dbo.GetObjectAlias('p91',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› v jednomu zÃ¡znamu faktury je vlastnÃ­kem zÃ¡znamu tato osoba ('+dbo.GetObjectAlias('p91',@ref_pid)+')'
 
 
 
 if exists(select p56ID FROM p56Task WHERE j02ID_Owner=@pid)
- set @err_ret='Osoba je vlastníkem (zakladatelem) minimálnì jednoho úkolu.'
+ set @err_ret='Osoba je vlastnÃ­kem (zakladatelem) minimÃ¡lnÄ› jednoho Ãºkolu.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -5488,10 +5488,19 @@ BEGIN TRY
 	if exists(SELECT j05ID FROM j05MasterSlave WHERE j02ID_Master=@pid OR j02ID_Slave=@pid)
 	 DELETE FROM j05MasterSlave WHERE j02ID_Master=@pid OR j02ID_Slave=@pid
 
-	if exists(select j74ID FROM j74SavedGridColTemplate where j02ID_Owner=@pid)
-	 DELETE FROM j74SavedGridColTemplate WHERE j02ID_Owner=@pid
 
+	if exists(select j70ID FROM j70QueryTemplate where j02ID_Owner=@pid)
+	 begin
+		DELETE FROM j71QueryTemplate_Item WHERE j70ID IN (select j70ID FROM j70QueryTemplate WHERE j02ID_Owner=@pid)
 
+		DELETE FROM j70QueryTemplate WHERE j02ID_Owner=@pid
+	 end
+	 
+
+	 if exists(select j77ID FROM j77WorksheetStatTemplate WHERE j02ID_Owner=@pid)
+	 begin		
+		DELETE FROM j77WorksheetStatTemplate WHERE j02ID_Owner=@pid
+	 end
 	
 
 	DELETE FROM j02Person WHERE j02ID=@pid
@@ -5535,27 +5544,27 @@ AS
 
 SELECT a.RowID as pid
 ,row_number() over (order by a.RowID) as Verze
-,a.j02DateInsert as Zaloeno
-,a.j02UserInsert as Zaloil
-,a.j02DateUpdate as Aktualizováno
+,a.j02DateInsert as ZaloÅ¾eno
+,a.j02UserInsert as ZaloÅ¾il
+,a.j02DateUpdate as AktualizovÃ¡no
 ,a.j02UserUpdate as Aktualizoval
 ,a.j02TitleBeforeName as [Titul]
-,a.j02FirstName as [Jméno]
-,a.j02LastName as [Pøíjmení]
-,a.j02TitleAfterName as [Titul za jménem]
+,a.j02FirstName as [JmÃ©no]
+,a.j02LastName as [PÅ™Ã­jmenÃ­]
+,a.j02TitleAfterName as [Titul za jmÃ©nem]
 ,a.j02Email as [E-mail]
 ,j07.j07Name as [Pozice]
 ,c21.c21Name as [Fond]
-,j18.j18Name as [Støedisko]
-,a.j02Code as [Kód]
+,j18.j18Name as [StÅ™edisko]
+,a.j02Code as [KÃ³d]
 ,a.j02Mobile as [Mobil]
-,a.j02Office as [Kanceláø]
-,o40.o40Name as [SMTP úèet]
+,a.j02Office as [KancelÃ¡Å™]
+,o40.o40Name as [SMTP ÃºÄet]
 ,a.j02AvatarImage as [Avatar]
-,a.j02IsIntraPerson as [Interní osoba]
+,a.j02IsIntraPerson as [InternÃ­ osoba]
 ,a.j02EmailSignature as [E-mail podpis]
-,a.j02ExternalPID as [Externí klíè]
-,a.j02ValidUntil as [Platnost záznamu]
+,a.j02ExternalPID as [ExternÃ­ klÃ­Ä]
+,a.j02ValidUntil as [Platnost zÃ¡znamu]
 FROM
 j02Person_Log a
 LEFT OUTER JOIN j07PersonPosition j07 ON a.j07ID=j07.j07ID
@@ -5694,7 +5703,7 @@ select @j11id_all=j11ID FROM j11Team WHERE j11IsAllPersons=1
 
 if @j11id_all is null
  BEGIN
-  INSERT INTO j11Team(j11IsAllPersons,j11Name,j11UserInsert,j11UserUpdate,j11DateInsert,j11DateUpdate) VALUES(1,'Všechny osoby','recovery','recovery',getdate(),getdate())
+  INSERT INTO j11Team(j11IsAllPersons,j11Name,j11UserInsert,j11UserUpdate,j11DateInsert,j11DateUpdate) VALUES(1,'VÅ¡ichni','recovery','recovery',getdate(),getdate())
 
   set @j11id_all=@@IDENTITY
  END
@@ -5726,29 +5735,25 @@ GO
 
 
 CREATE   procedure [dbo].[j03_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--j03id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu uivatele z tabulky j03User
+--odstranÄ›nÃ­ zÃ¡znamu uÅ¾ivatele z tabulky j03User
 
 
 BEGIN TRANSACTION
 
 BEGIN TRY
-	if exists(select j75ID FROM j75DrillDownTemplate WHERE j03ID=@pid)
-	 begin
-		DELETE FROM j76DrillDownTemplate_Item WHERE j75ID IN (SELECT j75ID FROM j75DrillDownTemplate WHERE j03ID=@pid)
-
-		DELETE FROM j75DrillDownTemplate WHERE j03ID=@pid
+	if exists(select j77ID FROM j77WorksheetStatTemplate WHERE j03ID=@pid)
+	 begin		
+		DELETE FROM j77WorksheetStatTemplate WHERE j03ID=@pid
 	 end
 
 	if exists(select j90ID FROM j90LoginAccessLog where j03ID=@pid)
       DELETE FROM j90LoginAccessLog where j03ID=@pid 
-
-	if exists(select j74ID FROM j74SavedGridColTemplate where j03ID=@pid)
-	 DELETE FROM j74SavedGridColTemplate WHERE j03ID=@pid
+	  	
 
 	if exists(select j70ID FROM j70QueryTemplate where j03ID=@pid)
 	 BEGIN
@@ -5821,40 +5826,40 @@ WHERE a.j03ID=@j03id
 
 
 if exists(SELECT a.x68ID FROM x68EntityRole_Permission a INNER JOIN x53Permission b ON a.x53ID=b.x53ID WHERE a.x67ID=@x67id AND b.x53Value=23 AND b.x29ID=103)
- set @is_approve=1	--mùe paušálnì schvalovat veškerı worksheet, oprávnìní x53Value=GR_P31_Approver (23): Oprávnìní schvalovat všechny worksheet úkony v databázi
+ set @is_approve=1	--mÅ¯Å¾e pauÅ¡Ã¡lnÄ› schvalovat veÅ¡kerÃ½ worksheet, oprÃ¡vnÄ›nÃ­ x53Value=GR_P31_Approver (23): OprÃ¡vnÄ›nÃ­ schvalovat vÅ¡echny worksheet Ãºkony v databÃ¡zi
 
 if @is_approve=0
 begin
  if exists(SELECT TOP 1 a.x67ID FROM x67EntityRole a INNER JOIN x69EntityRole_Assign x69 ON a.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON a.x67ID=o28.x67ID WHERE getdate() BETWEEN a.x67ValidFrom AND a.x67ValidUntil AND a.x29ID=141 AND o28.o28PermFlag IN (3,4) AND (x69.j02ID=@j02id OR x69.j11ID IN (select j11ID FROM j12Team_Person WHERE j02ID=@j02id)))
-  set @is_approve=1	---má oprávnìní schvalovat worksheet v minimálnì jednom projektu
+  set @is_approve=1	---mÃ¡ oprÃ¡vnÄ›nÃ­ schvalovat worksheet v minimÃ¡lnÄ› jednom projektu
 
 end
 
 
----poèet úkolù
+---poÄet ÃºkolÅ¯
 select @p56_count=count(p56ID) FROM p56Task
 WHERE ((p56PlanUntil BETWEEN @d1 AND @d2 and getdate() between p56ValidFrom and p56ValidUntil) OR p56ReminderDate between @d1 AND @d2)
 AND (j02ID_Owner=@j02id OR p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356 AND (x69.j02ID=@j02id OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id))))
  
 
----poèet událostí
+---poÄet udÃ¡lostÃ­
 select @o22_count=count(o22ID) FROM o22Milestone
 WHERE (o22DateFrom BETWEEN @d1 AND @d2 OR o22DateUntil BETWEEN @d1 AND @d2 OR o22ReminderDate BETWEEN @d1 AND @d2)
 AND (j02ID_Owner=@j02id OR j02ID=@j02id OR o22ID IN (SELECT o22ID FROM o20Milestone_Receiver WHERE j02ID=@j02id OR j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id)))
 
---poèet dokumentù k pøipomenutí
+--poÄet dokumentÅ¯ k pÅ™ipomenutÃ­
 select @o23_count=count(o23ID) FROM o23Doc
 WHERE (o23ReminderDate BETWEEN @d1 AND @d2)
 AND (j02ID_Owner=@j02id OR x23ID IN (select x23ID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE a.x19RecordPID=@j02id AND b.x29ID=102))
 
 
-----poèet auto-generovanıch odmìn/paušálù/úkonù
+----poÄet auto-generovanÃ½ch odmÄ›n/pauÅ¡Ã¡lÅ¯/ÃºkonÅ¯
 select @p39_count=count(a.p39ID) FROM p39WorkSheet_Recurrence_Plan a INNER JOIN p40WorkSheet_Recurrence b ON a.p40ID=b.p40ID
 WHERE (b.j02ID=@j02id or b.p40UserInsert=@login) AND a.p39DateCreate BETWEEN @d1 AND @d2
 
 
 if @j11ids is null
- begin	---seznam tımù s úèastí osoby
+ begin	---seznam tÃ½mÅ¯ s ÃºÄastÃ­ osoby
 	select @j11ids=COALESCE(@j11ids + ',', '')+convert(varchar(10),j11ID)
 	from
 	j12Team_Person
@@ -5993,12 +5998,12 @@ GO
 
 
 CREATE   procedure [dbo].[j04_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--j04id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu role z tabulky j04UserRole
+--odstranÄ›nÃ­ zÃ¡znamu role z tabulky j04UserRole
 declare @ref_pid int,@x67id int
 
 select @x67id=x67ID FROM j04UserRole WHERE j04ID=@pid
@@ -6011,7 +6016,7 @@ if @x67id is null
 
 SELECT TOP 1 @ref_pid=j03ID from j03User WHERE j04ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden uivatelskı úèet má vazbu na tuto aplikaèní roli ('+dbo.GetObjectAlias('j03',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jeden uÅ¾ivatelskÃ½ ÃºÄet mÃ¡ vazbu na tuto aplikaÄnÃ­ roli ('+dbo.GetObjectAlias('j03',@ref_pid)+')'
 
 
 if isnull(@err_ret,'')<>''
@@ -6068,12 +6073,12 @@ GO
 
 
 CREATE   procedure [dbo].[j05_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--j05id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu MASTERSLAVE z tabulky j05MasterSlave
+--odstranÄ›nÃ­ zÃ¡znamu MASTERSLAVE z tabulky j05MasterSlave
 
 
 
@@ -6120,17 +6125,17 @@ GO
 
 
 CREATE   procedure [dbo].[j07_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--j07id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu pozice z tabulky j07PersonPosition
+--odstranÄ›nÃ­ zÃ¡znamu pozice z tabulky j07PersonPosition
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=j02ID from j02Person WHERE j07ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jedna osoba má vazbu na tuto pozici ('+dbo.GetObjectAlias('j02',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jedna osoba mÃ¡ vazbu na tuto pozici ('+dbo.GetObjectAlias('j02',@ref_pid)+')'
 
 
 if isnull(@err_ret,'')<>''
@@ -6182,12 +6187,12 @@ GO
 
 
 CREATE   procedure [dbo].[j11_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--j11id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu tımu osob z tabulky j11Team
+--odstranÄ›nÃ­ zÃ¡znamu tÃ½mu osob z tabulky j11Team
 declare @ref_pid int,@x29id int,@x69recordpid int
 
 
@@ -6197,13 +6202,13 @@ from x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID
 WHERE a.j11ID=@pid
 
 if @ref_pid is not null and @x29id=141
- set @err_ret='Tento tım je obsazen pøes projektovou roli minimálnì v jednom projektu ('+dbo.GetObjectAlias('p41',@x69recordpid)+')'
+ set @err_ret='Tento tÃ½m je obsazen pÅ™es projektovou roli minimÃ¡lnÄ› v jednom projektu ('+dbo.GetObjectAlias('p41',@x69recordpid)+')'
 
 if @ref_pid is not null and @x29id=328
- set @err_ret='Tento tım je obsazen rolí minimálnì v jednom záznamu kontaktu ('+dbo.GetObjectAlias('p28',@x69recordpid)+')'
+ set @err_ret='Tento tÃ½m je obsazen rolÃ­ minimÃ¡lnÄ› v jednom zÃ¡znamu kontaktu ('+dbo.GetObjectAlias('p28',@x69recordpid)+')'
 
 if @ref_pid is not null and @x29id=391
- set @err_ret='Tento tım je obsazen rolí minimálnì v jedné faktuøe ('+dbo.GetObjectAlias('p91',@x69recordpid)+')'
+ set @err_ret='Tento tÃ½m je obsazen rolÃ­ minimÃ¡lnÄ› v jednÃ© faktuÅ™e ('+dbo.GetObjectAlias('p91',@x69recordpid)+')'
 
 
 if isnull(@err_ret,'')<>''
@@ -6264,32 +6269,32 @@ GO
 
 
 CREATE   procedure [dbo].[j17_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--j17id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu státu z tabulky j17Country
+--odstranÄ›nÃ­ zÃ¡znamu stÃ¡tu z tabulky j17Country
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=p91ID from p91Invoice WHERE j17ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jedna vystavená faktura má vazbu na tento DPH region ('+dbo.GetObjectAlias('p91',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jedna vystavenÃ¡ faktura mÃ¡ vazbu na tento DPH region ('+dbo.GetObjectAlias('p91',@ref_pid)+')'
 
 
 SELECT TOP 1 @ref_pid=c26ID from c26Holiday WHERE j17ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden den svátku je svázanı s tímto regionem ('+dbo.GetObjectAlias('c26',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jeden den svÃ¡tku je svÃ¡zanÃ½ s tÃ­mto regionem ('+dbo.GetObjectAlias('c26',@ref_pid)+')'
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=j02ID from j02Person WHERE j17ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jedna osoba má vazbu na tento region ('+dbo.GetObjectAlias('j02',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jedna osoba mÃ¡ vazbu na tento region ('+dbo.GetObjectAlias('j02',@ref_pid)+')'
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p92ID from p92InvoiceType WHERE j17ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden typ faktury má vazbu na tento DPH region.'
+ set @err_ret='MinimÃ¡lnÄ› jeden typ faktury mÃ¡ vazbu na tento DPH region.'
 
 
 if isnull(@err_ret,'')<>''
@@ -6337,17 +6342,17 @@ GO
 
 
 CREATE   procedure [dbo].[j18_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--j18id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu regionu z tabulky j18Region
+--odstranÄ›nÃ­ zÃ¡znamu regionu z tabulky j18Region
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=p41ID from p41Project WHERE j18ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden projekt je svázanı s tímto regionem ('+dbo.GetObjectAlias('p41',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jeden projekt je svÃ¡zanÃ½ s tÃ­mto regionem ('+dbo.GetObjectAlias('p41',@ref_pid)+')'
 
 
 
@@ -6397,17 +6402,17 @@ GO
 
 
 CREATE   procedure [dbo].[j25_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--j25ID
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu kategorie z tabulky j25ReportCategory
+--odstranÄ›nÃ­ zÃ¡znamu kategorie z tabulky j25ReportCategory
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=x31ID from x31Report WHERE x31ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jedna šablona sestavy nebo pluginu má vazbu na tuto kategorii ('+dbo.GetObjectAlias('x31',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jedna Å¡ablona sestavy nebo pluginu mÃ¡ vazbu na tuto kategorii ('+dbo.GetObjectAlias('x31',@ref_pid)+')'
 
 
 if isnull(@err_ret,'')<>''
@@ -6479,8 +6484,8 @@ BEGIN
 
   select @parentid_orig=j62ParentID FROM j62MenuHome WHERE j62ID=@j62id
    
-  insert into j62MenuHome(j62UserUpdate,j60ID,x29ID,j62Name,j62Name_ENG,j74ID,j70ID,x31ID,j62URL,j62Target,j62Ordinary,j62GridGroupBy,j62ImageUrl,j62IsSeparator,j62TreeIndex,j62TreeLevel,j62TreePrev,j62TreeNext,j62DateInsert,j62UserInsert,j62DateUpdate,j62ValidFrom,j62ValidUntil,j62Tag)
-  select @uid,@j60id_dest,x29ID,j62Name,j62Name_ENG,j74ID,j70ID,x31ID,j62URL,j62Target,j62Ordinary,j62GridGroupBy,j62ImageUrl,j62IsSeparator,j62TreeIndex,j62TreeLevel,j62TreePrev,j62TreeNext,getdate(),@login,getdate(),j62ValidFrom,j62ValidUntil,j62Tag
+  insert into j62MenuHome(j62UserUpdate,j60ID,x29ID,j62Name,j62Name_ENG,j70ID,x31ID,j62URL,j62Target,j62Ordinary,j62GridGroupBy,j62ImageUrl,j62IsSeparator,j62TreeIndex,j62TreeLevel,j62TreePrev,j62TreeNext,j62DateInsert,j62UserInsert,j62DateUpdate,j62ValidFrom,j62ValidUntil,j62Tag)
+  select @uid,@j60id_dest,x29ID,j62Name,j62Name_ENG,j70ID,x31ID,j62URL,j62Target,j62Ordinary,j62GridGroupBy,j62ImageUrl,j62IsSeparator,j62TreeIndex,j62TreeLevel,j62TreePrev,j62TreeNext,getdate(),@login,getdate(),j62ValidFrom,j62ValidUntil,j62Tag
   FROM
   j62MenuHome
   WHERE j62ID=@j62id
@@ -6527,18 +6532,18 @@ GO
 
 
 CREATE   procedure [dbo].[j60_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--j60ID
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní šablony hlavního aplikaèního menu
+--odstranÄ›nÃ­ Å¡ablony hlavnÃ­ho aplikaÄnÃ­ho menu
 
 if exists(select j04ID FROM j04UserRole WHERE j60ID=@pid)
- set @err_ret='K menu šablonì má vazbu minimálnì jedna aplikaèní role.'
+ set @err_ret='K menu Å¡ablonÄ› mÃ¡ vazbu minimÃ¡lnÄ› jedna aplikaÄnÃ­ role.'
 
 if exists(select j60ID FROM j60MenuTemplate WHERE j60ID=@pid AND j60IsSystem=1)
- set @err_ret='Vıchozí (system) menu šablonu nelze odstranit ani upravovat.' 
+ set @err_ret='VÃ½chozÃ­ (system) menu Å¡ablonu nelze odstranit ani upravovat.' 
 
 if isnull(@err_ret,'')<>''
  return 
@@ -6589,17 +6594,17 @@ GO
 
 
 CREATE   procedure [dbo].[j61_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--j61ID
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu textové šablony z tabulky j61TextTemplate
+--odstranÄ›nÃ­ zÃ¡znamu textovÃ© Å¡ablony z tabulky j61TextTemplate
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=p28ID from p28Contact WHERE j61ID_Invoice=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden klient má vazbu na tuto textovou šablonu ('+dbo.GetObjectAlias('p28',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jeden klient mÃ¡ vazbu na tuto textovou Å¡ablonu ('+dbo.GetObjectAlias('p28',@ref_pid)+')'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -6648,15 +6653,15 @@ GO
 
 
 CREATE   procedure [dbo].[j62_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--j62ID
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu poloky HOME menu z tabulky j62MenuHome
+--odstranÄ›nÃ­ zÃ¡znamu poloÅ¾ky HOME menu z tabulky j62MenuHome
 
 if exists(select j62ID FROM j62MenuHome WHERE j62ParentID=@pid)
- set @err_ret='Tato poloka má pod sebou minimálnì jednu podøízenou poloku.'
+ set @err_ret='Tato poloÅ¾ka mÃ¡ pod sebou minimÃ¡lnÄ› jednu podÅ™Ã­zenou poloÅ¾ku.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -6708,115 +6713,17 @@ GO
 
 
 CREATE   procedure [dbo].[j70_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--j70id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu  z tabulky j70QueryTemplate
+--odstranÄ›nÃ­ zÃ¡znamu  z tabulky j70QueryTemplate
 
 
 delete from j71QueryTemplate_Item WHERE j70ID=@pid
 
 delete from j70QueryTemplate where j70ID=@pid
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-GO
-
-----------P---------------j74_delete-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('j74_delete') and type = 'P')
- drop procedure j74_delete
-GO
-
-
-
-
-
-
-
-
-CREATE   procedure [dbo].[j74_delete]
-@j03id_sys int				--pøihlášenı uivatel
-,@pid int					--j74id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
-
-AS
---odstranìní záznamu  z tabulky j74SavedGridColTemplate
-
-
-if exists(select j74ID FROM j74SavedGridColTemplate WHERE j74ID=@pid AND j74IsSystem=1)
- set @err_ret='Vıchozí šablonu sloupcù nelze odstranit.'
-
-
-if isnull(@err_ret,'')<>''
- return 
-
-delete from j74SavedGridColTemplate where j74ID=@pid
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-GO
-
-----------P---------------j75_delete-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('j75_delete') and type = 'P')
- drop procedure j75_delete
-GO
-
-
-
-
-
-
-
-
-
-CREATE   procedure [dbo].[j75_delete]
-@j03id_sys int				--pøihlášenı uivatel
-,@pid int					--j75id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
-
-AS
---odstranìní záznamu  z tabulky j74SavedGridColTemplate
-
-
-if exists(select j75ID FROM j75DrillDownTemplate WHERE j75ID=@pid AND j75IsSystem=1)
- set @err_ret='Vıchozí drill-down šablonu nelze odstranit.'
-
-
-if isnull(@err_ret,'')<>''
- return 
-
-DELETE FROM j76DrillDownTemplate_Item WHERE j75ID=@pid
-
-delete from j75DrillDownTemplate where j75ID=@pid
 
 
 
@@ -6846,12 +6753,12 @@ GO
 
 
 CREATE   procedure [dbo].[j77_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--j77id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu  z tabulky j77WorksheetStatTemplate
+--odstranÄ›nÃ­ zÃ¡znamu  z tabulky j77WorksheetStatTemplate
 
 
 
@@ -6888,12 +6795,12 @@ GO
 
 
 CREATE   procedure [dbo].[m62_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--m62id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu mìnového kurzu z tabulky m62ExchangeRate
+--odstranÄ›nÃ­ zÃ¡znamu mÄ›novÃ©ho kurzu z tabulky m62ExchangeRate
 
 
 if isnull(@err_ret,'')<>''
@@ -6972,63 +6879,6 @@ select @entry_id as EntryID, @o23id as o23ID,@docname as DocName,@p31id as p31ID
 
 GO
 
-----------P---------------o10_delete-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('o10_delete') and type = 'P')
- drop procedure o10_delete
-GO
-
-
-
-
-
-
-
-CREATE   procedure [dbo].[o10_delete]
-@j03id_sys int				--pøihlášenı uivatel
-,@pid int					--o10id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
-
-AS
---odstranìní záznamu nástìnky z tabulky o10NoticeBoard
-declare @ref_pid int
-
-if isnull(@err_ret,'')<>''
- return 
-
-BEGIN TRANSACTION
-
-BEGIN TRY
-	
-	delete from o10NoticeBoard where o10ID=@pid
-
-	COMMIT TRANSACTION
-
-END TRY
-BEGIN CATCH
-  set @err_ret=dbo.parse_errinfo(ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE())
-  ROLLBACK TRANSACTION
-  
-END CATCH  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-GO
-
 ----------P---------------o21_delete-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('o21_delete') and type = 'P')
@@ -7040,17 +6890,17 @@ GO
 
 
 CREATE   procedure [dbo].[o21_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--o21id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu typu milníku z tabulky o21MilestoneType
+--odstranÄ›nÃ­ zÃ¡znamu typu milnÃ­ku z tabulky o21MilestoneType
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=o22ID from o22Milestone WHERE o21ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden milník/termín/událost je svázanı s tímto typem ('+dbo.GetObjectAlias('o22',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jeden milnÃ­k/termÃ­n/udÃ¡lost je svÃ¡zanÃ½ s tÃ­mto typem ('+dbo.GetObjectAlias('o22',@ref_pid)+')'
 
 
 if isnull(@err_ret,'')<>''
@@ -7102,12 +6952,12 @@ GO
 
 
 CREATE   procedure [dbo].[o22_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--o22id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu milníku z tabulky o22Milestone
+--odstranÄ›nÃ­ zÃ¡znamu milnÃ­ku z tabulky o22Milestone
 
 
 if isnull(@err_ret,'')<>''
@@ -7185,7 +7035,7 @@ INNER JOIN x18EntityCategory x18 ON x23.x23ID=x18.x23ID
 where a.o23ID=@o23id
 
 if @x18EntryCodeFlag=3 and @o23code is null
-begin	---automaticky generovat kód v rámci všech poloek štítku
+begin	---automaticky generovat kÃ³d v rÃ¡mci vÅ¡ech poloÅ¾ek Å¡tÃ­tku
  select @count=count(*) FROM o23Doc WHERE x23ID=@x23id AND o23ID<>@o23id AND o23Code is not null
  set @o23code=isnull(@count,0)+1
 
@@ -7195,7 +7045,7 @@ end
  
 
 if @x18EntryCodeFlag=4 and @o23code is null
-begin	---automaticky generovat kód v rámci projektu daného štítku
+begin	---automaticky generovat kÃ³d v rÃ¡mci projektu danÃ©ho Å¡tÃ­tku
  declare @p41id int,@x20id int
  select @p41id=a.x19RecordPID,@x20id=b.x20ID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE a.o23ID=@o23id AND b.x29ID=141
 
@@ -7222,7 +7072,7 @@ if (left(@o23code,4)='TEMP' OR @o23code is null) AND @x38id is not null
  end 
 
 if ISNUMERIC(@o23code)=1 and @o23ArabicCode is null
- begin	---pøevod kódu na arabské èíslo
+ begin	---pÅ™evod kÃ³du na arabskÃ© ÄÃ­slo
   declare @num int
   set @num=convert(int,@o23code)
 
@@ -7248,19 +7098,19 @@ GO
 
 
 CREATE   procedure [dbo].[o23_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--o23id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu z tabulky o23Doc
+--odstranÄ›nÃ­ zÃ¡znamu z tabulky o23Doc
 
 if exists(select x19ID FROM x19EntityCategory_Binding WHERE o23ID=@pid)
 begin
  declare @count int
  select @count=count(*) from x19EntityCategory_Binding WHERE o23ID=@pid
  if isnull(@count,0)>10
-  set @err_ret='Nelze odstranit, protoe dokument má vazbu na více záznamù. Dokument mùete pøesunout do archivu.'
+  set @err_ret='Nelze odstranit, protoÅ¾e dokument mÃ¡ vazbu na vÃ­ce zÃ¡znamÅ¯. Dokument mÅ¯Å¾ete pÅ™esunout do archivu.'
 
 end
 
@@ -7335,12 +7185,12 @@ GO
 
 
 CREATE   procedure [dbo].[o25_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--o25id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu z tabulky o25DmsBinding
+--odstranÄ›nÃ­ zÃ¡znamu z tabulky o25DmsBinding
 
 BEGIN TRANSACTION
 
@@ -7380,12 +7230,12 @@ GO
 
 
 CREATE   procedure [dbo].[o27_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--o27id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu dokumentu z tabulky o27Attachment
+--odstranÄ›nÃ­ zÃ¡znamu dokumentu z tabulky o27Attachment
 
 
 BEGIN TRANSACTION
@@ -7439,12 +7289,12 @@ GO
 
 
 CREATE   procedure [dbo].[o32_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--o32id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu kontaktního média z tabulky o32Contact_Medium
+--odstranÄ›nÃ­ zÃ¡znamu kontaktnÃ­ho mÃ©dia z tabulky o32Contact_Medium
 
 
 
@@ -7474,17 +7324,17 @@ GO
 
 
 CREATE   procedure [dbo].[o38_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--a38id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu adresy z tabulky o38Address
+--odstranÄ›nÃ­ zÃ¡znamu adresy z tabulky o38Address
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=p91ID from p91Invoice WHERE o38ID_Primary=@pid or o38ID_Delivery=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jedna klientská faktura má vazbu na tuto adresu ('+dbo.GetObjectAlias('p91',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jedna klientskÃ¡ faktura mÃ¡ vazbu na tuto adresu ('+dbo.GetObjectAlias('p91',@ref_pid)+')'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -7524,16 +7374,16 @@ GO
 
 
 CREATE   procedure [dbo].[o40_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--o40ID
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu role z tabulky o40SmtpAccount
+--odstranÄ›nÃ­ zÃ¡znamu role z tabulky o40SmtpAccount
 
 
 if exists(select b01ID FROM b01WorkflowTemplate WHERE o40ID=@pid)
- set @err_ret='Minimálnì jedna workflow šablona má vazbu s tímto SMTP úètem.'
+ set @err_ret='MinimÃ¡lnÄ› jedna workflow Å¡ablona mÃ¡ vazbu s tÃ­mto SMTP ÃºÄtem.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -7587,16 +7437,16 @@ GO
 
 
 CREATE   procedure [dbo].[o41_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--o41ID
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu role z tabulky o41InboxAccount
+--odstranÄ›nÃ­ zÃ¡znamu role z tabulky o41InboxAccount
 
 
 if exists(select o42ID FROM o42ImapRule WHERE o41ID=@pid)
- set @err_ret='Minimálnì jeden IMAP úèet má definované IMAP pravidlo.'
+ set @err_ret='MinimÃ¡lnÄ› jeden IMAP ÃºÄet mÃ¡ definovanÃ© IMAP pravidlo.'
 
 
 if isnull(@err_ret,'')<>''
@@ -7645,12 +7495,12 @@ GO
 
 
 CREATE   procedure [dbo].[o42_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--o42ID
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu IMAP pravidla z tabulky o42ImapRule
+--odstranÄ›nÃ­ zÃ¡znamu IMAP pravidla z tabulky o42ImapRule
 
 
 
@@ -7698,12 +7548,12 @@ GO
 
 
 CREATE   procedure [dbo].[o51_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--o51ID
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu štítku z tabulky o51Tag
+--odstranÄ›nÃ­ zÃ¡znamu Å¡tÃ­tku z tabulky o51Tag
 
 if isnull(@err_ret,'')<>''
  return 
@@ -7756,12 +7606,12 @@ GO
 
 
 CREATE   procedure [dbo].[p11_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p11ID
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu  z tabulky p11Attendance
+--odstranÄ›nÃ­ zÃ¡znamu  z tabulky p11Attendance
 
 
 
@@ -7856,7 +7706,7 @@ if left(@p28code,4)='TEMP' OR @p28code is null
    UPDATE p28Contact SET p28Code=@p28code WHERE p28ID=@p28id 
  end 
 
-if @p51id_billing is not null	---aktualizace názvu pøípadného ceníku sazeb, kterı je nastaven na míru pro danı projekt
+if @p51id_billing is not null	---aktualizace nÃ¡zvu pÅ™Ã­padnÃ©ho cenÃ­ku sazeb, kterÃ½ je nastaven na mÃ­ru pro danÃ½ projekt
  begin
    
    if exists(select p51ID FROM p51PriceList WHERE p51IsCustomTailor=1 and p51ID=@p51id_billing)
@@ -7865,7 +7715,7 @@ if @p51id_billing is not null	---aktualizace názvu pøípadného ceníku sazeb, kter
  end
 
 if exists(select p28ID FROM p28Contact WHERE p28ID=@p28id AND (p28ParentID IS NOT NULL OR p28TreePrev<p28TreeNext))
- exec [p28_recalc_tree]	---aktualizovat stromovou strukturu klientù
+ exec [p28_recalc_tree]	---aktualizovat stromovou strukturu klientÅ¯
 else
  update p28Contact set p28TreePath=isnull(p28CompanyShortName,p28Name) WHERE p28ID=@p28id
 
@@ -8007,9 +7857,9 @@ GO
 
 
 CREATE procedure [dbo].[p28_append_remove_isir]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int						---p28id		
-,@append_remove_flag int		----1 - pøidat, 2 - odstranit
+,@append_remove_flag int		----1 - pÅ™idat, 2 - odstranit
 AS
 
 if @append_remove_flag=1
@@ -8046,7 +7896,7 @@ CREATE    PROCEDURE [dbo].[p28_convertdraft]
 ,@err_ret varchar(1000) OUTPUT
 AS
 
----konverze klienta z DRAFT reimu do normálního klienta
+---konverze klienta z DRAFT reÅ¾imu do normÃ¡lnÃ­ho klienta
 set @err_ret=''
 
 declare @code varchar(50),@x38id int,@isdraft bit
@@ -8061,7 +7911,7 @@ if @x38id is null
 
 if @isdraft=0
  begin
-  set @err_ret='Záznam není v àeimu DRAFT.'
+  set @err_ret='ZÃ¡znam nenÃ­ v Å•eÅ¾imu DRAFT.'
   return
  end
  
@@ -8069,7 +7919,7 @@ exec dbo.x38_get_freecode_proc @x38id,328,@p28id,0,1,@code OUTPUT
 
 if @code=''
  begin
-  set @err_ret='Systém nedokázal sloit odpovídající kód podle nastavení èíselné øady. Záznam zùstává v reimu DRAFT.'
+  set @err_ret='SystÃ©m nedokÃ¡zal sloÅ¾it odpovÃ­dajÃ­cÃ­ kÃ³d podle nastavenÃ­ ÄÃ­selnÃ© Å™ady. ZÃ¡znam zÅ¯stÃ¡vÃ¡ v reÅ¾imu DRAFT.'
   return
  end
 
@@ -8095,39 +7945,39 @@ GO
 
 
 CREATE   procedure [dbo].[p28_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p28id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu kontaktu z tabulky p28Contact
+--odstranÄ›nÃ­ zÃ¡znamu kontaktu z tabulky p28Contact
 declare @ref_pid int
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p41ID from p41Project WHERE p28ID_Client=@pid OR p28ID_Billing=@pid
 if @ref_pid is not null
- set @err_ret='Tento klient je svázán s minimálnì jedním projektem ('+dbo.GetObjectAlias('p41',@ref_pid)+')'
+ set @err_ret='Tento klient je svÃ¡zÃ¡n s minimÃ¡lnÄ› jednÃ­m projektem ('+dbo.GetObjectAlias('p41',@ref_pid)+')'
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p91ID from p91Invoice WHERE p28ID=@pid
 if @ref_pid is not null
- set @err_ret='Tento klient je svázán s minimálnì jednou fakturou ('+dbo.GetObjectAlias('p91',@ref_pid)+')'
+ set @err_ret='Tento klient je svÃ¡zÃ¡n s minimÃ¡lnÄ› jednou fakturou ('+dbo.GetObjectAlias('p91',@ref_pid)+')'
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p90ID from p90Proforma WHERE p28ID=@pid
 if @ref_pid is not null
- set @err_ret='Tento klient je svázán s minimálnì jednou zálohou fakturou ('+dbo.GetObjectAlias('p90',@ref_pid)+')'
+ set @err_ret='Tento klient je svÃ¡zÃ¡n s minimÃ¡lnÄ› jednou zÃ¡lohou fakturou ('+dbo.GetObjectAlias('p90',@ref_pid)+')'
 
 
 
 if @err_ret is null and exists(select p49ID FROM p49FinancialPlan WHERE p28ID_Supplier=@pid)
- set @err_ret='Subjekt vystupuje jako dodavatel v minimálnì jednom rozpoètu (finanèním plánu).'
+ set @err_ret='Subjekt vystupuje jako dodavatel v minimÃ¡lnÄ› jednom rozpoÄtu (finanÄnÃ­m plÃ¡nu).'
 
 if @err_ret is null and exists(select p31ID FROM p31Worksheet WHERE p28ID_Supplier=@pid)
- set @err_ret='Subjekt vystupuje jako dodavatel v minimálnì jednom penìním worksheet úkonu.'
+ set @err_ret='Subjekt vystupuje jako dodavatel v minimÃ¡lnÄ› jednom penÄ›Å¾nÃ­m worksheet Ãºkonu.'
 
 if exists(select p28ID FROM p28Contact WHERE p28ParentID=@pid)
- set @err_ret='Klient má pod sebou minimálnì jednoho podøízeného klienta.'
+ set @err_ret='Klient mÃ¡ pod sebou minimÃ¡lnÄ› jednoho podÅ™Ã­zenÃ©ho klienta.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -8217,29 +8067,29 @@ AS
 
 SELECT a.RowID as pid
 ,row_number() over (order by a.RowID) as Verze
-,a.p28DateInsert as Zaloeno
-,a.p28UserInsert as Zaloil
-,a.p28DateUpdate as Aktualizováno
+,a.p28DateInsert as ZaloÅ¾eno
+,a.p28UserInsert as ZaloÅ¾il
+,a.p28DateUpdate as AktualizovÃ¡no
 ,a.p28UserUpdate as Aktualizoval
-,a.p28Name as [Název]
-,a.p28CompanyShortName as [Zkrácenı název]
+,a.p28Name as [NÃ¡zev]
+,a.p28CompanyShortName as [ZkrÃ¡cenÃ½ nÃ¡zev]
 ,p29.p29Name as [Typ klienta]
-,a.p28Code as [Kód]
-,a.p28RegID as [IÈ]
-,a.p28VatID as [DIÈ]
-,p51Billing.p51Name as [Fakturaèní ceník]
-,p87.p87Name as [Fakturaèní jazyk]
+,a.p28Code as [KÃ³d]
+,a.p28RegID as [IÄŒ]
+,a.p28VatID as [DIÄŒ]
+,p51Billing.p51Name as [FakturaÄnÃ­ cenÃ­k]
+,p87.p87Name as [FakturaÄnÃ­ jazyk]
 ,b02.b02Name as [Stav]
-,a.p28LimitHours_Notification as [Limit rozpracovanıch hodin]
-,a.p28LimitFee_Notification as [Limit rozpracovaného honoráøe]
-,a.p28BillingMemo as [Fakturaèní poznámka]
-,a.p28ExternalPID as [Externí klíè]
-,parent.p28Name as [Nadøízenı klient]
+,a.p28LimitHours_Notification as [Limit rozpracovanÃ½ch hodin]
+,a.p28LimitFee_Notification as [Limit rozpracovanÃ©ho honorÃ¡Å™e]
+,a.p28BillingMemo as [FakturaÄnÃ­ poznÃ¡mka]
+,a.p28ExternalPID as [ExternÃ­ klÃ­Ä]
+,parent.p28Name as [NadÅ™Ã­zenÃ½ klient]
 ,p92.p92Name as [Typ faktury]
-,a.p28InvoiceMaturityDays as [Vıchozí splatnost]
+,a.p28InvoiceMaturityDays as [VÃ½chozÃ­ splatnost]
 ,a.p28InvoiceDefaultText1 as [Text faktury]
-,a.p28IsDraft as [DRAFT záznam]
-,a.p28ValidUntil as [Platnost záznamu]
+,a.p28IsDraft as [DRAFT zÃ¡znam]
+,a.p28ValidUntil as [Platnost zÃ¡znamu]
 FROM
 p28Contact_Log a
 LEFT OUTER JOIN p51PriceList p51Billing ON a.p51ID_Billing=p51Billing.p51ID
@@ -8461,17 +8311,17 @@ GO
 
 
 CREATE   procedure [dbo].[p29_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p29id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu instituce z tabulky p29contacttype
+--odstranÄ›nÃ­ zÃ¡znamu instituce z tabulky p29contacttype
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=p28ID from p28Contact WHERE p29ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden kontakt má vazbu na tento typ ('+dbo.GetObjectAlias('p28',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jeden kontakt mÃ¡ vazbu na tento typ ('+dbo.GetObjectAlias('p28',@ref_pid)+')'
 
 
 if isnull(@err_ret,'')<>''
@@ -8519,12 +8369,12 @@ GO
 
 
 CREATE   procedure [dbo].[p30_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p30id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu  z tabulky p30Contact_Person
+--odstranÄ›nÃ­ zÃ¡znamu  z tabulky p30Contact_Person
 
 
 if isnull(@err_ret,'')<>''
@@ -8574,12 +8424,12 @@ GO
 CREATE    PROCEDURE [dbo].[p31_aftersave]
 @p31id int
 ,@j03id_sys int
-,@p48id int					---ID operativního plánu
-,@x45ids varchar(50) OUTPUT	---pøípadné události, které se mají notifikovat (èárkou oddìlené x45id)
+,@p48id int					---ID operativnÃ­ho plÃ¡nu
+,@x45ids varchar(50) OUTPUT	---pÅ™Ã­padnÃ© udÃ¡losti, kterÃ© se majÃ­ notifikovat (ÄÃ¡rkou oddÄ›lenÃ© x45id)
 
 AS
 
----automaticky se spouští po uloení worksheet záznamu
+---automaticky se spouÅ¡tÃ­ po uloÅ¾enÃ­ worksheet zÃ¡znamu
 set @x45ids=''
 
 declare @p31date datetime,@p32id int,@p41id int,@p34id int,@p71id int,@p70id int,@c11id int,@p33id int,@j02id_rec int
@@ -8597,7 +8447,7 @@ INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
 WHERE a.p31ID=@p31id
 
 if isnull(@p71id,0)<>0 or ISNULL(@p70id,0)<>0 or ISNULL(@p91id,0)<>0
- return	---pokud úkon prošel schvalováním nebo fakturací, není moné mìnit jeho atributy!!!!!
+ return	---pokud Ãºkon proÅ¡el schvalovÃ¡nÃ­m nebo fakturacÃ­, nenÃ­ moÅ¾nÃ© mÄ›nit jeho atributy!!!!!
 
 if @p48id is not null 
  UPDATE p48OperativePlan SET p31ID=@p31id WHERE p48ID=@p48id
@@ -8606,7 +8456,7 @@ declare @c11id_find int
 
 select top 1 @c11id_find=c11id from c11statperiod where c11level=5 and c11datefrom=@p31date  
 
------statistické období c11-------------------------
+-----statistickÃ© obdobÃ­ c11-------------------------
 if @c11id is null OR @c11id_find is null OR isnull(@c11id_find,0)<>isnull(@c11id,0)
  BEGIN  
   if @c11id_find is null
@@ -8624,7 +8474,7 @@ if @c11id is null OR @c11id_find is null OR isnull(@c11id_find,0)<>isnull(@c11id
    update p31worksheet set c11ID=@c11id_find WHERE p31ID=@p31id
  END
 
-if @p33id=1 or @p33id=3	---1 - èas, 3 - kusovník
+if @p33id=1 or @p33id=3	---1 - Äas, 3 - kusovnÃ­k
  BEGIN
 	exec p31_getrate_tu @p31date,1, @p41id, @j02id_rec, @p32id, @j27id_billing_orig OUTPUT , @p31rate_billing_orig OUTPUT
 
@@ -8647,14 +8497,14 @@ if @p33id=1 or @p33id=3	---1 - èas, 3 - kusovník
  END
  
 
- ----otestování limitù k notifikaci
+ ----otestovÃ¡nÃ­ limitÅ¯ k notifikaci
  declare @limit_hours float,@limit_fee float,@waiting_hours float,@waiting_fee float,@p28id int
 
  select @p28id=p28ID_Client,@limit_hours=convert(float,p41LimitHours_Notification),@limit_fee=convert(float,p41LimitFee_Notification)
  FROM p41Project
  WHERE p41ID=@p41id
 
- if @limit_hours>0 OR @limit_fee>0	---notifikaèní limity nastavené u projektu
+ if @limit_hours>0 OR @limit_fee>0	---notifikaÄnÃ­ limity nastavenÃ© u projektu
   begin
     select @waiting_hours=sum(p31Hours_Orig),@waiting_fee=sum(p31Hours_Orig*p31Rate_Billing_Orig)
 	FROM p31Worksheet
@@ -8673,7 +8523,7 @@ set @limit_fee=0
 if @p28id is not null
  select @limit_hours=convert(float,p28LimitHours_Notification),@limit_fee=convert(float,p28LimitFee_Notification) FROM p28Contact WHERE p28ID=@p28id
 
-if @limit_hours>0 OR @limit_fee>0	---notifikaèní limit nastavené u klienta projektu
+if @limit_hours>0 OR @limit_fee>0	---notifikaÄnÃ­ limit nastavenÃ© u klienta projektu
   begin
     select @waiting_hours=sum(p31Hours_Orig),@waiting_fee=sum(p31Hours_Orig*p31Rate_Billing_Orig)
 	FROM p31Worksheet a INNER JOIN p41Project b ON a.p41ID=b.p41ID
@@ -8736,8 +8586,8 @@ CREATE procedure [dbo].[p31_append_invoice]
 ,@err_ret varchar(1000) OUTPUT
 AS
 
----vloení schválenıch worksheet záznamù do uloené faktury @p91id
----vstupní úkony musí bıt schváleny a uloeny v TEMPu - p85TempBox
+---vloÅ¾enÃ­ schvÃ¡lenÃ½ch worksheet zÃ¡znamÅ¯ do uloÅ¾enÃ© faktury @p91id
+---vstupnÃ­ Ãºkony musÃ­ bÃ½t schvÃ¡leny a uloÅ¾eny v TEMPu - p85TempBox
 ---p85Prefix='p31'
 ---p31id - p85DataPID
 
@@ -8755,7 +8605,7 @@ if @j03id_sys=0 or @guid=''
 
 
 if @p91id=0
-  set @err_ret='Chybí faktura @p91id!'
+  set @err_ret='ChybÃ­ faktura @p91id!'
 
 if @err_ret<>''
  return
@@ -9274,7 +9124,7 @@ GO
 CREATE    PROCEDURE [dbo].[p31_create_from_workflow]
 @record_prefix varchar(50)
 ,@record_pid int
-,@b10id int			---workflow krok, z kterého se úkon zakládá
+,@b10id int			---workflow krok, z kterÃ©ho se Ãºkon zaklÃ¡dÃ¡
 ,@j03id_sys int
 ,@err_ret varchar(500) OUTPUT	
 
@@ -9294,7 +9144,7 @@ WHERE b10ID=@b10id
 
 if @p31id_template is null
 begin
-set @err_ret='Nelze dohledat vzorovı úkon @p31id_template'
+set @err_ret='Nelze dohledat vzorovÃ½ Ãºkon @p31id_template'
 return
 end
 
@@ -9316,16 +9166,16 @@ set @d2=@p31date
 if @record_prefix='o23'	---dokument
  begin
 
-  if @b10Worksheet_ProjectFlag=2	---projekt se má naèíst z workflow
+  if @b10Worksheet_ProjectFlag=2	---projekt se mÃ¡ naÄÃ­st z workflow
    select @p41id=a.x19RecordPID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE b.x29ID=141 AND a.o23ID=@record_pid
 
-  if @b10Worksheet_PersonFlag=2		---osoba se má naèíst z workflow
+  if @b10Worksheet_PersonFlag=2		---osoba se mÃ¡ naÄÃ­st z workflow
    select @j02id=a.x19RecordPID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE b.x29ID=102 AND a.o23ID=@record_pid
 
-  if @b10Worksheet_PersonFlag=3		---osoba se má naèíst ze zakladatele
+  if @b10Worksheet_PersonFlag=3		---osoba se mÃ¡ naÄÃ­st ze zakladatele
    select @j02id=j02ID_Owner FROM o23Doc WHERE o23ID=@record_pid
   
-  if @b10Worksheet_DateFlag=2	---datum naèíst z workflow
+  if @b10Worksheet_DateFlag=2	---datum naÄÃ­st z workflow
    select @d1=o23FreeDate01,@d2=o23FreeDate02,@half_day=o23FreeBoolean01 FROM o23Doc WHERE o23ID=@record_pid
 
  end
@@ -9345,10 +9195,10 @@ WHILE @p31date between @d1 and @d2
 BEGIN
   set @go=0
 
-  if @b10Worksheet_HoursFlag=1	---hodnotu brát podle vzorového úkonu
+  if @b10Worksheet_HoursFlag=1	---hodnotu brÃ¡t podle vzorovÃ©ho Ãºkonu
    set @go=1
 
-  if @b10Worksheet_HoursFlag=2 and @p33id=1	---hodiny poèítat podle pracovního fondu osoby
+  if @b10Worksheet_HoursFlag=2 and @p33id=1	---hodiny poÄÃ­tat podle pracovnÃ­ho fondu osoby
    begin
     select @value=dbo.j02_c21_get_hours_for_day(@j02id,@p31date)
 
@@ -9356,9 +9206,9 @@ BEGIN
 	 set @value=@value/convert(float,2)
 	 
 	if @value>0
-	 set @go=1	---je pracovní den
+	 set @go=1	---je pracovnÃ­ den
 	else
-     set @go=0	---není pracovní den
+     set @go=0	---nenÃ­ pracovnÃ­ den
 
    end
 
@@ -9387,11 +9237,11 @@ BEGIN
 	declare @rate float,@vat_rate float
 	select @rate=p31Rate_Billing_Orig,@vat_rate=p31VatRate_Orig from p31Worksheet where p31ID=@p31id_new
 
-	if isnull(@p72id,0)>0	--automaticky úkon schválit	
+	if isnull(@p72id,0)>0	--automaticky Ãºkon schvÃ¡lit	
 	 exec dbo.p31_save_approving @p31id_new,@j03id_sys,1,@p72id,null,@value,@value,@rate,@rate,@p31text,@vat_rate,@p31date,0,0,null	  
 
 	if @record_prefix='o23'	---dokument
-	 begin	---vloit odkaz na novı p31 záznam do x19EntityCategory_Binding
+	 begin	---vloÅ¾it odkaz na novÃ½ p31 zÃ¡znam do x19EntityCategory_Binding
      declare @x20id int,@x18id int
 
 	 select @x18id=c.x18ID FROM o23Doc a INNER JOIN x23EntityField_Combo b ON a.x23ID=b.x23ID INNER JOIN x18EntityCategory c ON b.x23ID=c.x23ID WHERE a.o23ID=@record_pid
@@ -9416,12 +9266,12 @@ GO
 
 
 CREATE   procedure [dbo].[p31_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p31id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu worksheet úkonu z tabulky p31Worksheet
+--odstranÄ›nÃ­ zÃ¡znamu worksheet Ãºkonu z tabulky p31Worksheet
 
 declare @islocked bit,@p34id int,@isplan bit,@p31date datetime,@p33id int,@j02id_rec int,@p91id int,@p71id int,@p41id int,@ref_pid int
 
@@ -9432,14 +9282,14 @@ from p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
 where a.p31ID=@pid
 
 if @p71id is not null
- set @err_ret='Tento worksheet úkon ji prošel schvalovacím procesem.'
+ set @err_ret='Tento worksheet Ãºkon jiÅ¾ proÅ¡el schvalovacÃ­m procesem.'
 
 if @p91id is not null
- set @err_ret='Tento worksheet úkon patøí do faktury ('+dbo.GetObjectAlias('p91',@p91id)+').'
+ set @err_ret='Tento worksheet Ãºkon patÅ™Ã­ do faktury ('+dbo.GetObjectAlias('p91',@p91id)+').'
 
 
 if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND (p41ValidFrom>getdate() OR p41ValidUntil<getdate()))
- set @err_ret='Projekt byl pøesunut do koše, nelze v nìm upravovat úkony.'
+ set @err_ret='Projekt byl pÅ™esunut do koÅ¡e, nelze v nÄ›m upravovat Ãºkony.'
 
 
 
@@ -9449,12 +9299,12 @@ if isnull(@err_ret,'')<>''
 
 if @isplan=0
  begin
-  --test uzamèeného období-----------
+  --test uzamÄenÃ©ho obdobÃ­-----------
   exec p31_test_lockedperiod @j03id_sys,@p31date,@j02id_rec, @p34id, @islocked OUTPUT 
       
 
   if @islocked=1
-    set @err_ret='Datum ['+convert(varchar(30),@p31date,104)+'] patøí do uzamèeného období, úkon nelze odstranit!'
+    set @err_ret='Datum ['+convert(varchar(30),@p31date,104)+'] patÅ™Ã­ do uzamÄenÃ©ho obdobÃ­, Ãºkon nelze odstranit!'
 
  end
 
@@ -9532,8 +9382,8 @@ CREATE procedure [dbo].[p31_getrate_tu]
 @date_rate datetime,@pricelisttype int,@p41id int,@j02id int,@p32id int
 ,@ret_j27id int OUTPUT,@ret_rate float OUTPUT
 
----@pricelisttype=1 - fakturaèní ceník
----@pricelisttype=2 - nákladovı ceník
+---@pricelisttype=1 - fakturaÄnÃ­ cenÃ­k
+---@pricelisttype=2 - nÃ¡kladovÃ½ cenÃ­k
 AS
 
   set @pricelisttype=isnull(@pricelisttype,1)
@@ -9543,7 +9393,7 @@ AS
     
   set @ret_rate=0
   
-  if @pricelisttype=1	--fakturaèní ceník
+  if @pricelisttype=1	--fakturaÄnÃ­ cenÃ­k
    begin
     select @p51id=p51ID_Billing,@p28id=p28id_client from p41Project where p41id=@p41id
     
@@ -9552,7 +9402,7 @@ AS
    end
 
 
-  if @pricelisttype=2	--nákladovı ceník
+  if @pricelisttype=2	--nÃ¡kladovÃ½ cenÃ­k
    begin
      select @p51id=p51ID_Internal,@p28id=p28id_client from p41Project where p41id=@p41id
      
@@ -9560,7 +9410,7 @@ AS
       select @p51id=p51ID_Internal from p28contact where p28id=@p28id
 
 	 if @p51id is null	
-	  begin	--zjistit, zda neexistuje vıchozí nákladovı ceník v globálních promìnnıch
+	  begin	--zjistit, zda neexistuje vÃ½chozÃ­ nÃ¡kladovÃ½ cenÃ­k v globÃ¡lnÃ­ch promÄ›nnÃ½ch
 	    select @p51id=p51ID FROM p50OfficePriceList WHERE p50RatesFlag=1 AND @date_rate BETWEEN p50ValidFrom AND p50ValidUntil
 		
 	  end
@@ -9573,7 +9423,7 @@ AS
    begin
     select @ret_j27id=convert(int,x35Value) FROM x35GlobalParam WHERE x35Key LIKE 'j27ID_Invoice'
 
-    return	--není ceník u projektu ani u klienta
+    return	--nenÃ­ cenÃ­k u projektu ani u klienta
    end
   
 
@@ -9594,7 +9444,7 @@ AS
 	 if @ret_j27id is null
       select @ret_j27id=convert(int,x35Value) FROM x35GlobalParam WHERE x35Key LIKE 'j27ID_Invoice'
 
-     return	--nefakturovatelná aktivita -> nulová sazba (pravidlo platí u fakt.ceníku)
+     return	--nefakturovatelnÃ¡ aktivita -> nulovÃ¡ sazba (pravidlo platÃ­ u fakt.cenÃ­ku)
    end
 
    
@@ -9604,7 +9454,7 @@ AS
   FROM p51PriceList where p51id=@p51id
 
 
-  --------sazba podle aktivita+uivatel napøímo--------------
+  --------sazba podle aktivita+uÅ¾ivatel napÅ™Ã­mo--------------
   select top 1 @p52id=p52id,@ret_rate=p52Rate
   FROM p52PriceList_Item
   where p51id IN (@p51id,@p51id_master) and p34id=@p34id and p32id=@p32id
@@ -9616,7 +9466,7 @@ AS
 
 
 
-  --------sazba podle aktivita+pozice osoby napøímo--------------
+  --------sazba podle aktivita+pozice osoby napÅ™Ã­mo--------------
   select top 1 @p52id=p52id,@ret_rate=p52Rate
   FROM p52PriceList_Item
   where p51id IN (@p51id,@p51id_master) and p34id=@p34id and p32id=@p32id
@@ -9637,7 +9487,7 @@ AS
     return
     
     
---------sazba podle uivatel bez aktivity--------------
+--------sazba podle uÅ¾ivatel bez aktivity--------------
   select top 1 @p52id=p52id,@ret_rate=p52Rate
   FROM p52PriceList_Item
   where p51id IN (@p51id,@p51id_master) and p34id=@p34id and p32id is null
@@ -9658,7 +9508,7 @@ AS
   if isnull(@p52id,0)<>0
     return
 
---------sazba podle sheet bez aktivity i personálního zdroje--------------
+--------sazba podle sheet bez aktivity i personÃ¡lnÃ­ho zdroje--------------
   select top 1 @p52id=p52id,@ret_rate=p52Rate
   FROM p52PriceList_Item
   where p51id IN (@p51id,@p51id_master) and p34id=@p34id and p32id is null and j02ID is null AND j07id is null
@@ -9669,7 +9519,7 @@ AS
 
 if @p33id=1
  begin
--------ještì monost, e sazba je definována pro všechny èasové sešity pøes volbu p52IsPlusAllTimeSheets=1
+-------jeÅ¡tÄ› moÅ¾nost, Å¾e sazba je definovÃ¡na pro vÅ¡echny ÄasovÃ© seÅ¡ity pÅ™es volbu p52IsPlusAllTimeSheets=1
 --------sazba podle osoby bez aktivity--------------
   select top 1 @p52id=p52id,@ret_rate=p52Rate
   FROM p52PriceList_Item
@@ -9688,7 +9538,7 @@ if @p33id=1
   if isnull(@p52id,0)<>0
     return
 
-  --------sazba podle sheet bez aktivity i personálního zdroje--------------
+  --------sazba podle sheet bez aktivity i personÃ¡lnÃ­ho zdroje--------------
   select top 1 @p52id=p52id,@ret_rate=p52Rate
   FROM p52PriceList_Item
   where p51id IN (@p51id,@p51id_master) and p52IsPlusAllTimeSheets=1 and p32id is null and j02ID is null AND j07id is null
@@ -9698,7 +9548,7 @@ if @p33id=1
     return
  end
 
-----zde u se vrací vıchozí sazba ceníku-----------
+----zde uÅ¾ se vracÃ­ vÃ½chozÃ­ sazba cenÃ­ku-----------
 set @ret_rate=@rate_default_amount
 
 
@@ -9736,16 +9586,16 @@ CREATE procedure [dbo].[p31_change_invoice]
 ,@err_ret varchar(1000) OUTPUT
 AS
 
----zmìna vyfakturovanıch úkonù ve faktuøe @p91id
----vstupní úkony musí bıt ji obsaeny ve faktuøe a uloeny v TEMPu - p85TempBox
+---zmÄ›na vyfakturovanÃ½ch ÃºkonÅ¯ ve faktuÅ™e @p91id
+---vstupnÃ­ Ãºkony musÃ­ bÃ½t jiÅ¾ obsaÅ¾eny ve faktuÅ™e a uloÅ¾eny v TEMPu - p85TempBox
 ---p85Prefix='p31'
 ---p31id - p85DataPID
 ---p70id - p85OtherKey1
 ---p31Text - p85Message
----p31Value_Invoiced - p85FreeFloat01  (èástka bez DPH u penìz nebo hodiny u èasu)
----p31Rate_Billing_Invoiced - p85FreeFloat02 (hodinová nebo úkonová sazba)
----p31VatRate_Invoiced - p85FreeFloat03  (explicitní sazba DPH)
----p85FreeText01 - do stringu pøevedeno FixPriceValue
+---p31Value_Invoiced - p85FreeFloat01  (ÄÃ¡stka bez DPH u penÄ›z nebo hodiny u Äasu)
+---p31Rate_Billing_Invoiced - p85FreeFloat02 (hodinovÃ¡ nebo ÃºkonovÃ¡ sazba)
+---p31VatRate_Invoiced - p85FreeFloat03  (explicitnÃ­ sazba DPH)
+---p85FreeText01 - do stringu pÅ™evedeno FixPriceValue
 ---p85FreeBoolean01 - p31IsInvoiceManual
 
 set @err_ret=''
@@ -9762,7 +9612,7 @@ if @j03id_sys=0 or @guid=''
 
 
 if isnull(@p91id,0)=0
-  set @err_ret='Chybí faktura @p91id!'
+  set @err_ret='ChybÃ­ faktura @p91id!'
 
 if exists(select p85ID FROM p85TempBox WHERE p85GUID=@guid AND (p85OtherKey1 IS NULL OR p85DataPID IS NULL))
  set @err_ret='TEMP data p85GUID or p85OtherKey1 missing.'
@@ -9798,10 +9648,10 @@ BEGIN
 
 
 if @x15id is not null and @vatrate_edit is null
-  set @vatrate_edit=@p91fixedvatrate	---DPH se pøebírá z jednotné (fixní) dph faktury
+  set @vatrate_edit=@p91fixedvatrate	---DPH se pÅ™ebÃ­rÃ¡ z jednotnÃ© (fixnÃ­) dph faktury
  
 
- if @p70id_edit=2 or @p70id_edit=3 or @p70id_edit=6	---odpis nebo paušál
+ if @p70id_edit=2 or @p70id_edit=3 or @p70id_edit=6	---odpis nebo pauÅ¡Ã¡l
   begin
    set @value_edit=0
    set @rate_edit=0
@@ -9810,14 +9660,14 @@ if @x15id is not null and @vatrate_edit is null
  if @p70id_edit<>6
   set @p31value_fixprice=null
 
- if @p33id=1	---èas
+ if @p33id=1	---Äas
   begin
     UPDATE p31Worksheet set p31Value_Invoiced=@value_edit,p31Rate_Billing_Invoiced=@rate_edit
 	,p31Hours_Invoiced=@value_edit,p31Minutes_Invoiced=@value_edit*60,p31HHMM_Invoiced=dbo.get_hours_to_hhmm(@value_edit)
 	WHERE p31ID=@p31id
   end
 
- if @p33id=3	---kusovník
+ if @p33id=3	---kusovnÃ­k
   begin
     UPDATE p31Worksheet set p31Value_Invoiced=@value_edit,p31Rate_Billing_Invoiced=@rate_edit
 	WHERE p31ID=@p31id
@@ -9834,7 +9684,7 @@ if @x15id is not null and @vatrate_edit is null
    set @p31amount_withoutvat_invoiced=@rate_edit*@value_edit
 
    if @x15id is null
-	 select @vatrate_edit=p31VatRate_Approved FROM p31Worksheet WHERE p31ID=@p31id	---pokud DPH není ve faktuøe fixní, pak to brát z úkonu
+	 select @vatrate_edit=p31VatRate_Approved FROM p31Worksheet WHERE p31ID=@p31id	---pokud DPH nenÃ­ ve faktuÅ™e fixnÃ­, pak to brÃ¡t z Ãºkonu
   end
   
   
@@ -9934,36 +9784,36 @@ AS
 
 SELECT a.RowID as pid
 ,row_number() over (order by a.RowID) as Verze
-,a.p31DateInsert as Zaloeno
-,a.p31UserInsert as Zaloil
-,a.p31DateUpdate as Aktualizováno
+,a.p31DateInsert as ZaloÅ¾eno
+,a.p31UserInsert as ZaloÅ¾il
+,a.p31DateUpdate as AktualizovÃ¡no
 ,a.p31UserUpdate as Aktualizoval
 ,a.p31Date as [Datum]
-,j02.j02LastName+' '+j02.j02FirstName as [Jméno]
+,j02.j02LastName+' '+j02.j02FirstName as [JmÃ©no]
 ,isnull(p41.p41NameShort,p41.p41Name) as [Projekt]
-,p56.p56Name as [Úkol]
+,p56.p56Name as [Ãškol]
 ,p32.p32Name as [Aktivita]
-,case when a.p31Hours_Orig<>0 then dbo.Hours2HHMM(a.p31Hours_Orig) end as [Vykázané hodiny]
-,a.p31Rate_Billing_Orig as [Vıchozí sazba]
-,a.p31Amount_WithoutVat_Orig as [Vykázáno bez DPH]
-,j27.j27Code as [Mìna]
-,p71.p71Name as [Schvalování]
+,case when a.p31Hours_Orig<>0 then dbo.Hours2HHMM(a.p31Hours_Orig) end as [VykÃ¡zanÃ© hodiny]
+,a.p31Rate_Billing_Orig as [VÃ½chozÃ­ sazba]
+,a.p31Amount_WithoutVat_Orig as [VykÃ¡zÃ¡no bez DPH]
+,j27.j27Code as [MÄ›na]
+,p71.p71Name as [SchvalovÃ¡nÃ­]
 ,j02Approve.j02LastName+' '+j02Approve.j02FirstName as [Schvalovatel]
-,a.p31Approved_When as [Schváleno kdy]
-,p72Approve.p72Name as [Schválenı status]
-,a.p31Hours_Approved_Billing as [Schválené hodiny k fakturaci]
-,a.p31Amount_WithoutVat_Approved as [Schváleno bez DPH]
+,a.p31Approved_When as [SchvÃ¡leno kdy]
+,p72Approve.p72Name as [SchvÃ¡lenÃ½ status]
+,a.p31Hours_Approved_Billing as [SchvÃ¡lenÃ© hodiny k fakturaci]
+,a.p31Amount_WithoutVat_Approved as [SchvÃ¡leno bez DPH]
 ,a.p31Text as [Text]
 ,p91.p91Code as [Faktura]
-,p70.p70Name as [Fakturaèní status]
-,case when a.p31Hours_Invoiced<>0 then dbo.Hours2HHMM(a.p31Hours_Invoiced) end as [Vyfakturované hodiny]
-,a.p31Amount_WithoutVat_Invoiced as [Vyfakturováno bez DPH]
-,j27Invoice.j27Code as [Mìna faktury]
-,a.p31VatRate_Orig as [Vıchozí DPH sazba]
-,a.p31Rate_Internal_Orig as [Nákladová sazba]
-,a.p31Hours_Approved_Internal as [Interní schválené hodiny]
-,j27Internal.j27Code as [Mìna nákl.sazby]
-,a.p31ValidUntil as [Platnost záznamu]
+,p70.p70Name as [FakturaÄnÃ­ status]
+,case when a.p31Hours_Invoiced<>0 then dbo.Hours2HHMM(a.p31Hours_Invoiced) end as [VyfakturovanÃ© hodiny]
+,a.p31Amount_WithoutVat_Invoiced as [VyfakturovÃ¡no bez DPH]
+,j27Invoice.j27Code as [MÄ›na faktury]
+,a.p31VatRate_Orig as [VÃ½chozÃ­ DPH sazba]
+,a.p31Rate_Internal_Orig as [NÃ¡kladovÃ¡ sazba]
+,a.p31Hours_Approved_Internal as [InternÃ­ schvÃ¡lenÃ© hodiny]
+,j27Internal.j27Code as [MÄ›na nÃ¡kl.sazby]
+,a.p31ValidUntil as [Platnost zÃ¡znamu]
 FROM
 p31Worksheet_Log a
 LEFT OUTER JOIN p41Project p41 ON a.p41ID=p41.p41ID
@@ -10033,7 +9883,7 @@ if @p31id is null
 if @p91id is not null
  begin
   set @record_state=7	---invoiced
-  set @msg_locked='Vyfakturovanı úkon'
+  set @msg_locked='VyfakturovanÃ½ Ãºkon'
  end
 
 if isnull(@p71id,0)>0 and @record_state=1
@@ -10043,17 +9893,17 @@ if isnull(@p71id,0)>0 and @record_state=1
 if (@p41validfrom>getdate() OR @p41validuntil<getdate()) and @record_state=1
  begin
   set @record_state=2	---locked
-  set @msg_locked='Projekt byl pøesunut do koše.'
+  set @msg_locked='Projekt byl pÅ™esunut do koÅ¡e.'
  end
 
 if @p41WorksheetOperFlag=1 and @record_state=1
  begin
   set @record_state=2		---locked, p41WorksheetOperFlagEnum=NoEntryData
-  set @msg_locked='Projekt je uzavøenı pro zapisování úkonù'
+  set @msg_locked='Projekt je uzavÅ™enÃ½ pro zapisovÃ¡nÃ­ ÃºkonÅ¯'
  end
 if @isplan=0 and @record_state=1
  begin
-  --test uzamèeného období-----------
+  --test uzamÄenÃ©ho obdobÃ­-----------
   declare @islocked bit
   set @islocked=0
 
@@ -10062,12 +9912,12 @@ if @isplan=0 and @record_state=1
   if @islocked=1
    begin
     set @record_state=2	---locked
-	set @msg_locked='Úkon spadá do uzamknutého období.'
+	set @msg_locked='Ãškon spadÃ¡ do uzamknutÃ©ho obdobÃ­.'
    end
  end
  
 if @j02id_rec=@j02id_sys
- set @is_access_read=1	---osoba záznamu má vdy minimálnì právo na ètení
+ set @is_access_read=1	---osoba zÃ¡znamu mÃ¡ vÅ¾dy minimÃ¡lnÄ› prÃ¡vo na ÄtenÃ­
 
 if @j02id_owner=@j02id_sys
  begin
@@ -10077,7 +9927,7 @@ if @j02id_owner=@j02id_sys
 
 if @j02id_rec=@j02id_sys AND @j02id_rec<>@j02id_owner AND @is_access_edit=0
  begin
-	---osoba záznamu není vlatníkem záznamu - natypoval ho nìkdo jinı, globální oprávnìní GR_P31_EditAsNonOwner=25
+	---osoba zÃ¡znamu nenÃ­ vlatnÃ­kem zÃ¡znamu - natypoval ho nÄ›kdo jinÃ½, globÃ¡lnÃ­ oprÃ¡vnÄ›nÃ­ GR_P31_EditAsNonOwner=25
 	if dbo.j03_test_permission_global(@j03id_sys,25)=1
 	 begin
 		set @is_access_edit=1
@@ -10090,7 +9940,7 @@ if @is_access_edit=0
  begin
   if dbo.j03_test_permission_global(@j03id_sys,22)=1
    begin
-    set @is_access_edit=1	----globální právo bıt vlastníkem pro veškerı worksheet, GR_P31_Owner=22
+    set @is_access_edit=1	----globÃ¡lnÃ­ prÃ¡vo bÃ½t vlastnÃ­kem pro veÅ¡kerÃ½ worksheet, GR_P31_Owner=22
 	set @is_access_read=1
    end
  end
@@ -10098,14 +9948,14 @@ if @is_access_edit=0
 if @is_access_read=0
  begin
    if dbo.j03_test_permission_global(@j03id_sys,21)=1
-    set @is_access_read=1	----globální právo èíst veškerı worksheet, GR_P31_Reader=21
+    set @is_access_read=1	----globÃ¡lnÃ­ prÃ¡vo ÄÃ­st veÅ¡kerÃ½ worksheet, GR_P31_Reader=21
  end
 
 if dbo.j03_test_permission_global(@j03id_sys,23)=1
- set @is_access_approve=1	----globální právo schvalovat veškerı worksheet, GR_P31_Approver=23
+ set @is_access_approve=1	----globÃ¡lnÃ­ prÃ¡vo schvalovat veÅ¡kerÃ½ worksheet, GR_P31_Approver=23
 
 if @is_access_approve=0 or @is_access_read=0 or @is_access_edit=0
-begin  ---ovìøování oprávnìní podle vztahu nadøízenı x podøízenı
+begin  ---ovÄ›Å™ovÃ¡nÃ­ oprÃ¡vnÄ›nÃ­ podle vztahu nadÅ™Ã­zenÃ½ x podÅ™Ã­zenÃ½
  if exists(select j05ID FROM j05MasterSlave WHERE j02ID_Master=@j02id_sys AND (j02ID_Slave=@j02id_rec OR @j02id_rec IN (SELECT j12.j02ID FROM j12Team_Person j12 INNER JOIN j05MasterSlave xj05 ON j12.j11ID=xj05.j11ID_Slave WHERE xj05.j02ID_Master=@j02id_sys)))
   set @is_access_read=1
 
@@ -10118,9 +9968,9 @@ end
 
 
 if @is_access_approve=0 or @is_access_read=0 or @is_access_edit=0
-begin	---ovìøování oprávnìní podle projektové role
-	---test manaerského oprávnìní do projektového worksheet---------
-	declare @o28permflag int	---0-pouze vlastní worksheet,1-Èíst vše v rámci projektu, 2-Èíst a upravovat vše v rámci projektu,3-Èíst a schvalovat vše v rámci projektu,Èíst, upravovat a schvalovat vše v rámci projektu
+begin	---ovÄ›Å™ovÃ¡nÃ­ oprÃ¡vnÄ›nÃ­ podle projektovÃ© role
+	---test manaÅ¾erskÃ©ho oprÃ¡vnÄ›nÃ­ do projektovÃ©ho worksheet---------
+	declare @o28permflag int	---0-pouze vlastnÃ­ worksheet,1-ÄŒÃ­st vÅ¡e v rÃ¡mci projektu, 2-ÄŒÃ­st a upravovat vÅ¡e v rÃ¡mci projektu,3-ÄŒÃ­st a schvalovat vÅ¡e v rÃ¡mci projektu,ÄŒÃ­st, upravovat a schvalovat vÅ¡e v rÃ¡mci projektu
 
 	SELECT @o28permflag=dbo.o28_get_permflag(@j02id_sys,@p41id,@j18id,@p34id,1,4)
 
@@ -10136,7 +9986,7 @@ begin	---ovìøování oprávnìní podle projektové role
 
 	if @is_access_read=1 AND @is_access_edit=0
 	 begin
-		---zjistit, zda má manaerské právo k editaci
+		---zjistit, zda mÃ¡ manaÅ¾erskÃ© prÃ¡vo k editaci
 		SELECT @o28permflag=dbo.o28_get_permflag(@j02id_sys,@p41id,@j18id,@p34id,2,2)
 
 		if @o28permflag=2
@@ -10145,28 +9995,28 @@ begin	---ovìøování oprávnìní podle projektové role
 
 	if @is_access_read=1 AND @is_access_approve=0 and @isplan=0
 	 begin
-	  ---zjistit, zda má manaerské právo ke schvalování
+	  ---zjistit, zda mÃ¡ manaÅ¾erskÃ© prÃ¡vo ke schvalovÃ¡nÃ­
 	  SELECT @o28permflag=dbo.o28_get_permflag(@j02id_sys,@p41id,@j18id,@p34id,3,3)
 
 	  if @o28permflag=3
 		set @is_access_approve=1
 	 end
-end	----konec ovìøování práv podle projektové role
+end	----konec ovÄ›Å™ovÃ¡nÃ­ prÃ¡v podle projektovÃ© role
 
 if @is_access_read=1
- set @record_disposition=1	---právo èíst záznam
+ set @record_disposition=1	---prÃ¡vo ÄÃ­st zÃ¡znam
 
 
 if @is_access_edit=1
- set @record_disposition=2	---právo èíst + editovat záznam
+ set @record_disposition=2	---prÃ¡vo ÄÃ­st + editovat zÃ¡znam
 
 
 if @is_access_approve=1
- set @record_disposition=3	---právo èíst + schvalovat záznam
+ set @record_disposition=3	---prÃ¡vo ÄÃ­st + schvalovat zÃ¡znam
 
 
 if @is_access_edit=1 and @is_access_approve=1
- set @record_disposition=4	---nejvyšší právo: èíst + editovat + schvalovat záznam
+ set @record_disposition=4	---nejvyÅ¡Å¡Ã­ prÃ¡vo: ÄÃ­st + editovat + schvalovat zÃ¡znam
 
 GO
 
@@ -10192,7 +10042,7 @@ AS
   
 
   if isnull(@p31id,0)=0
-   return	---skrytı odpis
+   return	---skrytÃ½ odpis
 
   declare @p41id int,@j02id int
 
@@ -10202,13 +10052,13 @@ AS
 
 
   if @ret_p72id is not null
-   return	---fakturaèní status definován v projektu
+   return	---fakturaÄnÃ­ status definovÃ¡n v projektu
   
 
   select @ret_p72id=p72ID_NonBillable FROM j02Person WHERE j02ID=@j02id
 
   if @ret_p72id is null
-   set @ret_p72id=3	---fakturaèní status definován v osobì
+   set @ret_p72id=3	---fakturaÄnÃ­ status definovÃ¡n v osobÄ›
 
   
 
@@ -10306,8 +10156,8 @@ CREATE procedure [dbo].[p31_remove_approve]
 ,@err_ret varchar(1000) OUTPUT
 AS
 
----vyèištìní worksheet záznamù ze schvalování
----vstupní úkony musí bıt uloeny v TEMPu - p85TempBox
+---vyÄiÅ¡tÄ›nÃ­ worksheet zÃ¡znamÅ¯ ze schvalovÃ¡nÃ­
+---vstupnÃ­ Ãºkony musÃ­ bÃ½t uloÅ¾eny v TEMPu - p85TempBox
 ---p85Prefix='p31'
 ---p31id - p85DataPID
 
@@ -10385,8 +10235,8 @@ CREATE procedure [dbo].[p31_remove_invoice]
 ,@err_ret varchar(1000) OUTPUT
 AS
 
----vyjmutí worksheet záznamù z faktury @p91id
----vstupní úkony musí bıt uloeny v TEMPu - p85TempBox
+---vyjmutÃ­ worksheet zÃ¡znamÅ¯ z faktury @p91id
+---vstupnÃ­ Ãºkony musÃ­ bÃ½t uloÅ¾eny v TEMPu - p85TempBox
 ---p85Prefix='p31'
 ---p31id - p85DataPID
 
@@ -10404,7 +10254,7 @@ if @j03id_sys=0 or @guid=''
 
 
 if @p91id=0
-  set @err_ret='Chybí faktura @p91id!'
+  set @err_ret='ChybÃ­ faktura @p91id!'
 
 if @err_ret<>''
  return
@@ -10512,11 +10362,11 @@ if @p33code='M'
   select @vatrate_approved=dbo.p32_get_vatrate(@p32id,@p41id,@p31date)
  end
 
-if @p33code='MV'	--DPH sazba se u schvalování testuje jenom u finanèních worksheetù
+if @p33code='MV'	--DPH sazba se u schvalovÃ¡nÃ­ testuje jenom u finanÄnÃ­ch worksheetÅ¯
  begin
   select @vatisok=dbo.p31_testvat(@vatrate_approved,@p41id,@p31date,@j27id_orig)
   if @vatisok=0
-    set @err_ret='Sazba DPH ['+convert(varchar(10),@vatrate_approved)+'%] není platná pro dané období, projekt a mìnu!'
+    set @err_ret='Sazba DPH ['+convert(varchar(10),@vatrate_approved)+'%] nenÃ­ platnÃ¡ pro danÃ© obdobÃ­, projekt a mÄ›nu!'
  end
 -----------------------------------------
 
@@ -10526,19 +10376,19 @@ if @err_ret<>''
 
 if @p72id=2 or @p72id=6 or @p72id=3
  begin
-  set @rate_billing_approved=0		---odpis nebo paušál má fakturaèní sazbu celkovou cenu nulovou
+  set @rate_billing_approved=0		---odpis nebo pauÅ¡Ã¡l mÃ¡ fakturaÄnÃ­ sazbu celkovou cenu nulovou
 
    set @value_approved_billing=0
  end
  
-if @p72id=6		--zahrnout do paušálu - schválená hodnota je pùvodní hodnota
+if @p72id=6		--zahrnout do pauÅ¡Ã¡lu - schvÃ¡lenÃ¡ hodnota je pÅ¯vodnÃ­ hodnota
  begin
   select @value_approved_billing=p31value_approved_billing from p31WorkSheet where p31ID=@p31id
  end 
 else
  set @value_fixprice=null
  
-if @p72id=2 or @p72id=3		--odpis nuluje schválené hodnoty
+if @p72id=2 or @p72id=3		--odpis nuluje schvÃ¡lenÃ© hodnoty
  begin
    set @value_approved_billing=0
  end 
@@ -10564,7 +10414,7 @@ update p31worksheet set p71id=@p71id,p72ID_AfterApprove=@p72id,j02ID_ApprovedBy=
 where p31id=@p31id
 
 if @p71id=2 or @p71id=3
-  begin	---neschváleno - vynulovat hodnoty
+  begin	---neschvÃ¡leno - vynulovat hodnoty
 	set @hours=0
 	set @minutes=0
 	set @value_approved_billing=0
@@ -10717,7 +10567,7 @@ AS
 set @err_ret=''
 ---exec p31_testbeforesave_approving @p31id,@j03id_sys,@p71id,@p72id,@hours_approved,@value_approved_billing,@amount_withoutvat_approved,@rate_billing_approved,@err_ret OUTPUT
 if isnull(@guid,'')='' or @p31id is null
- set @err_ret='Na vstupu je prázdnı @guid nebo @p31id.'
+ set @err_ret='Na vstupu je prÃ¡zdnÃ½ @guid nebo @p31id.'
 
 if @err_ret<>''
  return
@@ -10747,11 +10597,11 @@ if @p33code='M'
   select @vatrate_approved=dbo.p32_get_vatrate(@p32id,@p41id,@p31date)
  end
 
-if @p33code='MV'	--DPH sazba se u schvalování testuje jenom u finanèních worksheetù
+if @p33code='MV'	--DPH sazba se u schvalovÃ¡nÃ­ testuje jenom u finanÄnÃ­ch worksheetÅ¯
  begin
   select @vatisok=dbo.p31_testvat(@vatrate_approved,@p41id,@p31date,@j27id_orig)
   if @vatisok=0
-    set @err_ret='Sazba DPH ['+convert(varchar(10),@vatrate_approved)+'%] není platná pro dané období, projekt a mìnu!'
+    set @err_ret='Sazba DPH ['+convert(varchar(10),@vatrate_approved)+'%] nenÃ­ platnÃ¡ pro danÃ© obdobÃ­, projekt a mÄ›nu!'
  end
 -----------------------------------------
 
@@ -10761,7 +10611,7 @@ if @err_ret<>''
 
 if @p72id=2 or @p72id=6 or @p72id=3
  begin
-  set @rate_billing_approved=0		---odpis nebo paušál má fakturaèní sazbu celkovou cenu nulovou
+  set @rate_billing_approved=0		---odpis nebo pauÅ¡Ã¡l mÃ¡ fakturaÄnÃ­ sazbu celkovou cenu nulovou
 
    set @value_approved_billing=0
  end
@@ -10769,12 +10619,12 @@ if @p72id=2 or @p72id=6 or @p72id=3
 if @p72id<>6
  set @value_fixprice=null
  
-------if @p72id=6		--zahrnout do paušálu - schválená hodnota je pùvodní hodnota
+------if @p72id=6		--zahrnout do pauÅ¡Ã¡lu - schvÃ¡lenÃ¡ hodnota je pÅ¯vodnÃ­ hodnota
 ------ begin
 ------  select @value_approved_billing=p31value_approved_billing from p31WorkSheet where p31ID=@p31id
 ------ end 
  
-------if @p72id=2 or @p72id=3		--odpis nuluje schválené hodnoty
+------if @p72id=2 or @p72id=3		--odpis nuluje schvÃ¡lenÃ© hodnoty
 ------ begin
 ------   set @value_approved_billing=0
 ------ end 
@@ -10800,7 +10650,7 @@ update p31worksheet_temp set p71id=@p71id,p72ID_AfterApprove=@p72id,j02ID_Approv
 where p31GUID=@guid AND p31id=@p31id
 
 if @p71id=2 or @p71id=3
-  begin	---neschváleno - vynulovat hodnoty
+  begin	---neschvÃ¡leno - vynulovat hodnoty
 	set @hours=0
 	set @minutes=0
 	set @value_approved_billing=0
@@ -11095,12 +10945,12 @@ CREATE procedure [dbo].[p31_setup_temp]
 AS
 
 --if exists(select a.x19ID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE a.x19RecordPID=@p31id AND b.x29ID=331)
--- begin	---k záznamu existuje vazba na štítky
+-- begin	---k zÃ¡znamu existuje vazba na Å¡tÃ­tky
 --  INSERT INTO p85TempBox(p85GUID,p85Prefix,p85OtherKey1,p85OtherKey2,p85OtherKey3,p85OtherKey4) select @guid,'x19',b.x18ID,x25ID,x19RecordPID,a.x20ID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE a.x19RecordPID=@p31id AND b.x29ID=331
 -- end
 
 if exists(select p31ID FROM p31WorkSheet_FreeField WHERE p31ID=@p31id)
- begin	---k záznamu existují uivatelská pole
+ begin	---k zÃ¡znamu existujÃ­ uÅ¾ivatelskÃ¡ pole
    if not exists(select p31ID FROM p31WorkSheet_FreeField_Temp WHERE p31GUID=@guid AND p31ID=@p31id)
     begin
 	  INSERT INTO p31WorkSheet_FreeField_Temp
@@ -11236,7 +11086,7 @@ if exists(select p31ID FROM p31WorkSheet_FreeField WHERE p31ID=@p31id)
 
 
 if exists(select p31ID FROM p31Worksheet_Temp WHERE p31GUID=@guid AND p31ID=@p31id)
- return ---temp data se na úvod plní pouze jednou
+ return ---temp data se na Ãºvod plnÃ­ pouze jednou
 
 INSERT INTO p31Worksheet_Temp
 (
@@ -11729,33 +11579,33 @@ set @p31vatrate_orig=ISNULL(@p31vatrate_orig,0)
 set @vatrate=0
 
 if @p32id is null
- set @err='Na vstupu chybí aktivita.'
+ set @err='Na vstupu chybÃ­ aktivita.'
 
 if @p41id is null
- set @err='Na vstupu chybí projekt.'
+ set @err='Na vstupu chybÃ­ projekt.'
 
 if @j02id_rec is null
- set @err='Na vstupu chybí osoba.'
+ set @err='Na vstupu chybÃ­ osoba.'
 
 if @err<>''
  return
 
 if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND p41IsDraft=1)
- set @err='Projekt je v reimu DRAFT, nelze do nìj vykazovat úkony.'
+ set @err='Projekt je v reÅ¾imu DRAFT, nelze do nÄ›j vykazovat Ãºkony.'
 
 if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND p41WorksheetOperFlag=1)
- set @err='V projektu platí zákaz zapisovat úkony.'
+ set @err='V projektu platÃ­ zÃ¡kaz zapisovat Ãºkony.'
 
 if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND p41WorksheetOperFlag=3) AND isnull(@p56id,0)=0
- set @err='V projektu lze vykazovat úkony pouze pøes úkol.'
+ set @err='V projektu lze vykazovat Ãºkony pouze pÅ™es Ãºkol.'
 
 if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND (p41ValidFrom>getdate() OR p41ValidUntil<getdate()))
- set @err='Projekt byl pøesunut do koše, nelze do nìj zapisovat worksheet úkony.'
+ set @err='Projekt byl pÅ™esunut do koÅ¡e, nelze do nÄ›j zapisovat worksheet Ãºkony.'
 
 if @p48id is not null
- begin	---test operativního plánu
+ begin	---test operativnÃ­ho plÃ¡nu
   if exists(select p48ID FROM p48OperativePlan WHERE p48ID=@p48id AND p31ID IS NOT NULL)
-   set @err='Pøedávanı záznam operativního plánu byl ji døíve pøeklopen do reality!'
+   set @err='PÅ™edÃ¡vanÃ½ zÃ¡znam operativnÃ­ho plÃ¡nu byl jiÅ¾ dÅ™Ã­ve pÅ™eklopen do reality!'
  end
 
 
@@ -11782,13 +11632,13 @@ where a.p32ID=@p32id
 
 if isnull(ltrim(rtrim(@p31text)),'')='' and @p32IsTextRequired=1
  begin
-  set @err='Pro aktivitu ['+@p32name+'] je povinné zadávat podrobnı popis úkonu.'
+  set @err='Pro aktivitu ['+@p32name+'] je povinnÃ© zadÃ¡vat podrobnÃ½ popis Ãºkonu.'
   return
  end
 
 if @p32Value_Minimum<>0 and @value_orig<=@p32Value_Minimum
  begin
-  set @err='Pro aktivitu ['+@p32name+'] musí bıt vykázaná hodnota vìtší ne: '+convert(varchar(10),@p32Value_Minimum)+' (nyní pøedáváte hodnotu: '+convert(varchar(10),@value_orig)+')'
+  set @err='Pro aktivitu ['+@p32name+'] musÃ­ bÃ½t vykÃ¡zanÃ¡ hodnota vÄ›tÅ¡Ã­ neÅ¾: '+convert(varchar(10),@p32Value_Minimum)+' (nynÃ­ pÅ™edÃ¡vÃ¡te hodnotu: '+convert(varchar(10),@value_orig)+')'
   if @p33id=1
    set @err=@err+'h.'
 
@@ -11797,7 +11647,7 @@ if @p32Value_Minimum<>0 and @value_orig<=@p32Value_Minimum
 
 if @p32Value_Maximum<>0 and @value_orig>=@p32Value_Maximum
  begin
-  set @err='Pro aktivitu ['+@p32name+'] musí bıt vykázaná hodnota menší ne: '+convert(varchar(10),@p32Value_Maximum)
+  set @err='Pro aktivitu ['+@p32name+'] musÃ­ bÃ½t vykÃ¡zanÃ¡ hodnota menÅ¡Ã­ neÅ¾: '+convert(varchar(10),@p32Value_Maximum)
   if @p33id=1
    set @err=@err+'h.'
 
@@ -11806,7 +11656,7 @@ if @p32Value_Maximum<>0 and @value_orig>=@p32Value_Maximum
 
 if @p48id is not null and @p33id<>1
  begin
-  set @err='Operativní plán mùe bıt pøeklopen pouze do èasového úkonu.'
+  set @err='OperativnÃ­ plÃ¡n mÅ¯Å¾e bÃ½t pÅ™eklopen pouze do ÄasovÃ©ho Ãºkonu.'
   return
  end
 
@@ -11815,7 +11665,7 @@ declare @j02TimesheetEntryDaysBackLimit int,@j02TimesheetEntryDaysBackLimit_p34I
 select @j02id_sys=j02ID,@j02TimesheetEntryDaysBackLimit=j02TimesheetEntryDaysBackLimit,@j02TimesheetEntryDaysBackLimit_p34IDs=j02TimesheetEntryDaysBackLimit_p34IDs FROM j02Person WHERE j02ID IN (SELECT j02ID FROM j03User WHERE j03ID=@j03id_sys)
 
 
-if @p33id=1 AND @j02TimesheetEntryDaysBackLimit=999 and @p31date<dbo.get_today()	---mùe zapisovat zpìtnì pouze v aktuální tıden
+if @p33id=1 AND @j02TimesheetEntryDaysBackLimit=999 and @p31date<dbo.get_today()	---mÅ¯Å¾e zapisovat zpÄ›tnÄ› pouze v aktuÃ¡lnÃ­ tÃ½den
  begin
   SET DATEFIRST 1
   declare @datPondeli datetime,@datNedele datetime
@@ -11827,7 +11677,7 @@ if @p33id=1 AND @j02TimesheetEntryDaysBackLimit=999 and @p31date<dbo.get_today()
 
   if @p31date NOT BETWEEN @datPondeli AND @datNedele
    begin
-    set @err='Zpìtnı zápis hodin máte povolenı pouze pro aktuální tıden.'
+    set @err='ZpÄ›tnÃ½ zÃ¡pis hodin mÃ¡te povolenÃ½ pouze pro aktuÃ¡lnÃ­ tÃ½den.'
 	return
    end
  end
@@ -11838,7 +11688,7 @@ if @p33id=1 and isnull(@j02TimesheetEntryDaysBackLimit,0)>0 and @p31date<dbo.get
    begin
     if @j02TimesheetEntryDaysBackLimit_p34IDs is null OR exists(select * FROM dbo.SplitString(@j02TimesheetEntryDaysBackLimit_p34IDs,',') WHERE s=convert(varchar(10),@p34id))
 	 begin
-      set @err='Máte povoleno zapisovat èasové úkony maximálnì ['+convert(varchar(10),@j02TimesheetEntryDaysBackLimit)+'] dní dozadu.'
+      set @err='MÃ¡te povoleno zapisovat ÄasovÃ© Ãºkony maximÃ¡lnÄ› ['+convert(varchar(10),@j02TimesheetEntryDaysBackLimit)+'] dnÃ­ dozadu.'
       return
 	 end
    end	 
@@ -11846,14 +11696,14 @@ if @p33id=1 and isnull(@j02TimesheetEntryDaysBackLimit,0)>0 and @p31date<dbo.get
  
 
 ---test sazby DPH------------
-if @p33id=5 ----testuje se pouze money sešit s plnım rozpisem DPH
+if @p33id=5 ----testuje se pouze money seÅ¡it s plnÃ½m rozpisem DPH
  begin
   declare @vatisok bit
   
   select @vatisok=dbo.p31_testvat(@p31vatrate_orig,@p41id,@p31date,@j27id_explicit)
   
   if @vatisok=0
-   set @err='Sazba DPH ['+convert(varchar(30),@p31vatrate_orig)+'%] není povolena pro tento projekt, mìnu a období!'
+   set @err='Sazba DPH ['+convert(varchar(30),@p31vatrate_orig)+'%] nenÃ­ povolena pro tento projekt, mÄ›nu a obdobÃ­!'
  
 
  end
@@ -11861,31 +11711,31 @@ if @p33id=5 ----testuje se pouze money sešit s plnım rozpisem DPH
 if @err<>''
  return
 
-if @p33id=1 or @p33id=3 or @p33id=2  ----pro èas a kusovník a èástku bez rozpisu
+if @p33id=1 or @p33id=3 or @p33id=2  ----pro Äas a kusovnÃ­k a ÄÃ¡stku bez rozpisu
  select @vatrate=dbo.p32_get_vatrate(@p32id,@p41id,@p31date)
 
 
 
 if @isplan=0
  begin
-  --test uzamèeného období-----------
+  --test uzamÄenÃ©ho obdobÃ­-----------
   exec p31_test_lockedperiod @j03id_sys,@p31date,@j02id_rec, @p34id, @islocked OUTPUT 
 
 
   if @islocked=1
-    set @err='Datum ['+convert(varchar(30),@p31date,104)+'] patøí do uzamèeného období!'
+    set @err='Datum ['+convert(varchar(30),@p31date,104)+'] patÅ™Ã­ do uzamÄenÃ©ho obdobÃ­!'
  end
  
 if @err<>''
  return
    
----test oprávnìní zapisovat do projektu worksheet---------
+---test oprÃ¡vnÄ›nÃ­ zapisovat do projektu worksheet---------
 declare @o28id int,@o28entryflag int,@x69id int,@is_gr_p31_entry_all_projects bit
 
 set @is_gr_p31_entry_all_projects=dbo.j03_test_permission_global(@j03id_sys,29)
 
 if @is_gr_p31_entry_all_projects=1
- set @o28entryflag=1	--má paušální právo zapisovat do všech projektù
+ set @o28entryflag=1	--mÃ¡ pauÅ¡Ã¡lnÃ­ prÃ¡vo zapisovat do vÅ¡ech projektÅ¯
 
 if @is_gr_p31_entry_all_projects=0
 begin
@@ -11901,7 +11751,7 @@ declare @j18id int
 select @j18id=j18ID FROM p41Project WHERE p41ID=@p41id
 
 if @o28id is null and @j18id is not null
- begin ----------oprávnìní k projektu podle støediska
+ begin ----------oprÃ¡vnÄ›nÃ­ k projektu podle stÅ™ediska
   select @o28id=a.o28id,@o28entryflag=a.o28entryflag
   from o28ProjectRole_Workload a inner join x67EntityRole x67 on a.x67ID=x67.x67ID
   inner join x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID
@@ -11913,7 +11763,7 @@ if @o28id is null and @j18id is not null
 
 if @o28id is null
  begin  
-  set @err='['+@person+'] nemá v tomto projektu nebo v pøíslušném støedisku pøiøazenou roli k zapisování worksheet úkonù do sešitu ['+dbo.GetObjectAlias('p34',@p34id)+']'
+  set @err='['+@person+'] nemÃ¡ v tomto projektu nebo v pÅ™Ã­sluÅ¡nÃ©m stÅ™edisku pÅ™iÅ™azenou roli k zapisovÃ¡nÃ­ worksheet ÃºkonÅ¯ do seÅ¡itu ['+dbo.GetObjectAlias('p34',@p34id)+']'
 
  end
 end
@@ -11925,20 +11775,20 @@ declare @test_todo bit
 set @test_todo=1
  
 if @o28entryflag=1
- set @test_todo=0	--OK - právo zapisovat do projektu i všech úkolù 
+ set @test_todo=0	--OK - prÃ¡vo zapisovat do projektu i vÅ¡ech ÃºkolÅ¯ 
 
-if @o28entryflag=1 and @j02id_sys<>@j02id_rec and @is_gr_p31_entry_all_projects=0	--liší se osoba uivatele a osoba úkonu a nemá právo zapisovat do všech projektù
+if @o28entryflag=1 and @j02id_sys<>@j02id_rec and @is_gr_p31_entry_all_projects=0	--liÅ¡Ã­ se osoba uÅ¾ivatele a osoba Ãºkonu a nemÃ¡ prÃ¡vo zapisovat do vÅ¡ech projektÅ¯
  begin
   if not exists(select j05ID FROM j05MasterSlave WHERE j02ID_Master=@j02id_sys AND j02ID_Slave=@j02id_rec)
-   set @err='Nemáte oprávnìní vykazovat za osobu ['+@person+'], protoe nejste jeho/její nadøízenı.'
+   set @err='NemÃ¡te oprÃ¡vnÄ›nÃ­ vykazovat za osobu ['+@person+'], protoÅ¾e nejste jeho/jejÃ­ nadÅ™Ã­zenÃ½.'
    return
  end
 
-if @o28entryflag=4	--OK - právo zapisovat do projektu pøes nadøízenou osobu
+if @o28entryflag=4	--OK - prÃ¡vo zapisovat do projektu pÅ™es nadÅ™Ã­zenou osobu
  begin
   if @j02id_sys=@j02id_rec
    begin
-    set @err='Za ['+@person+'] mùe v projektu vykazovat úkony pouze jeho/její nadøízená osoba.'
+    set @err='Za ['+@person+'] mÅ¯Å¾e v projektu vykazovat Ãºkony pouze jeho/jejÃ­ nadÅ™Ã­zenÃ¡ osoba.'
     return
    end
 
@@ -11947,28 +11797,28 @@ if @o28entryflag=4	--OK - právo zapisovat do projektu pøes nadøízenou osobu
 
 if isnull(@o28entryflag,0)=0
  begin
-   set @err='Projektová role osoby ['+@person+'] nemá povoleno zapisovat worksheet do zvoleného sešitu'
+   set @err='ProjektovÃ¡ role osoby ['+@person+'] nemÃ¡ povoleno zapisovat worksheet do zvolenÃ©ho seÅ¡itu'
    return
  end
  
 if @o28entryflag=2 and @p56id is null
- set @test_todo=0	  --OK - právo zapisovat do projektu pøímo nebo do úkolu s WR
+ set @test_todo=0	  --OK - prÃ¡vo zapisovat do projektu pÅ™Ã­mo nebo do Ãºkolu s WR
 
 if @test_todo=1
  begin
 	if @o28entryflag=3 and @p56id is null
 	 begin
-		set @err='Projektová role osoby ['+@person+'] má povoleno zapisovat pouze do projektovıch úkolù.'
+		set @err='ProjektovÃ¡ role osoby ['+@person+'] mÃ¡ povoleno zapisovat pouze do projektovÃ½ch ÃºkolÅ¯.'
 		return
 	 end 
  
 	if @p56id is null
 	 begin
-		set @err='Musíte vybrat úkol.'
+		set @err='MusÃ­te vybrat Ãºkol.'
 		return
 	 end 
 
-	--situace, kdy se zapisuje úkon do úkolu a osoba nemá právo zapisovat do projektu 
+	--situace, kdy se zapisuje Ãºkon do Ãºkolu a osoba nemÃ¡ prÃ¡vo zapisovat do projektu 
 	SELECT @x69id=a.x69ID
 	from x69EntityRole_Assign a inner join x67EntityRole x67 on a.x67ID=x67.x67ID
 	WHERE a.x69RecordPID=@p56id and x67.x29ID=356
@@ -11980,14 +11830,14 @@ if @test_todo=1
   
 
 	if @x69id is null 
-	 set @err='Nejste øešitelem úkolu ['+dbo.GetObjectAlias('p56',@p56id)+'] a proto nemùete zapisovat worksheet do zvoleného sešitu.'
+	 set @err='Nejste Å™eÅ¡itelem Ãºkolu ['+dbo.GetObjectAlias('p56',@p56id)+'] a proto nemÅ¯Å¾ete zapisovat worksheet do zvolenÃ©ho seÅ¡itu.'
  end
 
 if @err<>''
  return 
 
 if @p56id is not null
- begin	---test pøekroèení plánu úkolu
+ begin	---test pÅ™ekroÄenÃ­ plÃ¡nu Ãºkolu
   declare @p56IsPlan_Hours_Ceiling bit,@p56IsPlan_Expenses_Ceiling bit,@p56Plan_Hours float,@p56Plan_Expenses float,@real_hours float,@real_expenses float
 
   select @p56IsPlan_Hours_Ceiling=p56IsPlan_Hours_Ceiling,@p56IsPlan_Expenses_Ceiling=p56IsPlan_Expenses_Ceiling,@p56Plan_Hours=p56Plan_Hours,@p56Plan_Expenses=p56Plan_Expenses
@@ -11998,14 +11848,14 @@ if @p56id is not null
      select @real_hours=sum(p31Hours_Orig) FROM p31Worksheet WHERE p56ID=@p56id and p31ID<>@p31id
      
 	 if isnull(@real_hours,0)+@value_orig>@p56Plan_Hours
-	  set @err='Vykázané hodiny by pøekroèily plán hodin úkolu ['+convert(varchar(10),@p56Plan_Hours)+'h.].'
+	  set @err='VykÃ¡zanÃ© hodiny by pÅ™ekroÄily plÃ¡n hodin Ãºkolu ['+convert(varchar(10),@p56Plan_Hours)+'h.].'
    end
    if @p56IsPlan_Expenses_Ceiling=1 and @p33id IN (2,5) and @p34IncomeStatementFlag=1
    begin
      select @real_expenses=sum(p31Amount_WithoutVat_Orig) FROM p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID INNER JOIN p34ActivityGroup c ON b.p34ID=c.p34ID WHERE a.p56ID=@p56id AND c.p34IncomeStatementFlag=1 AND c.p33ID IN (2,5) AND a.p31ID<>@p31id
      
 	 if isnull(@real_expenses,0)+@value_orig>@p56Plan_Expenses
-	  set @err='Vykázanı vıdaj by pøekroèil plán (limit) vıdajù úkolu ['+convert(varchar(10),@p56Plan_Expenses)+',-].'
+	  set @err='VykÃ¡zanÃ½ vÃ½daj by pÅ™ekroÄil plÃ¡n (limit) vÃ½dajÅ¯ Ãºkolu ['+convert(varchar(10),@p56Plan_Expenses)+',-].'
    end
    
  end
@@ -12014,9 +11864,9 @@ if @err<>''
  return 
 
 if @p33id<>1
- return	---nejedná se o èasovı úkon, není tøeba testovat limit rozpoètu projektu
+ return	---nejednÃ¡ se o ÄasovÃ½ Ãºkon, nenÃ­ tÅ™eba testovat limit rozpoÄtu projektu
 
----test limitù kapacitního plánu
+---test limitÅ¯ kapacitnÃ­ho plÃ¡nu
 declare @p45id int,@p46id int,@p46ExceedFlag int,@p46HoursTotal float,@real_total float,@real_billable float,@real_nonbillable float,@p32IsBillable bit
 declare @p46HoursBillable float,@p46HoursNonBillable float
 select @p45id=p45ID FROM p45Budget WHERE p41ID=@p41id and getdate() BETWEEN p45ValidFrom AND p45ValidUntil
@@ -12040,7 +11890,7 @@ set @real_total=isnull(@real_total,0)
 
 if @p46ExceedFlag=2 AND @real_total+@value_orig>@p46HoursTotal and @p46HoursTotal>0
  begin
-  set @err='Vykázané hodiny by pøekroèily plán hodin rozpoètu projektu ('+convert(varchar(10),@p46HoursTotal)+'h.).'
+  set @err='VykÃ¡zanÃ© hodiny by pÅ™ekroÄily plÃ¡n hodin rozpoÄtu projektu ('+convert(varchar(10),@p46HoursTotal)+'h.).'
   return
  end
 
@@ -12049,13 +11899,13 @@ select @p32IsBillable=p32IsBillable FROM p32Activity WHERE p32ID=@p32id
 
 if @p46ExceedFlag IN (1,3) AND @p32IsBillable=1 AND @real_billable+@value_orig>@p46HoursBillable and @p46HoursBillable>0
  begin
-  set @err='Vykázané fakturovatelné hodiny by pøekroèily plán fakturovatelnıch hodin rozpoètu projektu ('+convert(varchar(10),@p46HoursBillable)+'h.).'
+  set @err='VykÃ¡zanÃ© fakturovatelnÃ© hodiny by pÅ™ekroÄily plÃ¡n fakturovatelnÃ½ch hodin rozpoÄtu projektu ('+convert(varchar(10),@p46HoursBillable)+'h.).'
   return
  end
 
 if @p46ExceedFlag IN (1,4) AND @p32IsBillable=0 AND @real_nonbillable+@value_orig>@p46HoursNonBillable and @p46HoursNonBillable>0
  begin
-  set @err='Vykázané ne-fakturovatelné hodiny by pøekroèily plán ne-fakturovatelnıch hodin rozpoètu projektu ('+convert(varchar(10),@p46HoursNonBillable)+'h.).'
+  set @err='VykÃ¡zanÃ© ne-fakturovatelnÃ© hodiny by pÅ™ekroÄily plÃ¡n ne-fakturovatelnÃ½ch hodin rozpoÄtu projektu ('+convert(varchar(10),@p46HoursNonBillable)+'h.).'
   return
  end
 
@@ -12089,7 +11939,7 @@ AS
    end
 
 
-  ---zamknuto pro všechny osoby a všechny sheety-----
+  ---zamknuto pro vÅ¡echny osoby a vÅ¡echny sheety-----
   select @p36id=p36id FROM p36LockPeriod
   where @dat BETWEEN p36DateFrom AND p36DateUntil AND p36IsAllSheets=1
 
@@ -12097,7 +11947,7 @@ AS
      return
 
 
-  ---zamknuto pro konkrétní osobu nebo tım a všechny sheety-------
+  ---zamknuto pro konkrÃ©tnÃ­ osobu nebo tÃ½m a vÅ¡echny sheety-------
   select @p36id=p36id FROM p36LockPeriod
   where @dat BETWEEN p36DateFrom AND p36DateUntil and p36IsAllSheets=1
   and (j02ID=@j02id_sys OR j02ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_sys))
@@ -12106,7 +11956,7 @@ AS
      return
 
 
----zamknuto pro všechny uivatele a konkrétní sheety-----
+---zamknuto pro vÅ¡echny uÅ¾ivatele a konkrÃ©tnÃ­ sheety-----
   select @p36id=p36id FROM p36LockPeriod
   where @dat BETWEEN p36DateFrom AND p36DateUntil AND p36IsAllPersons=1
   and p36id in (select p36id from p37LockPeriod_Sheet where p34id=@p34id)
@@ -12115,7 +11965,7 @@ AS
      return
 
 
----zamknuto pro konkrétní osobu/tım a konkrétní sheety-------
+---zamknuto pro konkrÃ©tnÃ­ osobu/tÃ½m a konkrÃ©tnÃ­ sheety-------
   select @p36id=p36id FROM p36LockPeriod
   where @dat BETWEEN p36DateFrom AND p36DateUntil
   and (j02ID=@j02id_sys OR j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_sys))
@@ -12125,7 +11975,7 @@ AS
      return
   
 
-  ---zde u je jasné, e období zamknuté není
+  ---zde uÅ¾ je jasnÃ©, Å¾e obdobÃ­ zamknutÃ© nenÃ­
   set @islocked=0
 
 
@@ -12147,10 +11997,10 @@ GO
 
 
 CREATE procedure [dbo].[p31_update_temp_after_edit_orig]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@p31id int	---p31id
 ,@guid varchar(50)
----volá se po editaci pùvodního worksheet záznam ze schvalovacího dialgu
+---volÃ¡ se po editaci pÅ¯vodnÃ­ho worksheet zÃ¡znam ze schvalovacÃ­ho dialgu
 AS
 update a set p41ID=b.p41ID,j02ID=b.j02ID,p32ID=b.p32ID,p56ID=b.p56ID,j02ID_ContactPerson=b.j02ID_ContactPerson,p28ID_Supplier=b.p28ID_Supplier,p49ID=b.p49ID
 ,p31Date=b.p31Date,p31Text=b.p31Text,p31Value_Orig_Entried=b.p31Value_Orig_Entried
@@ -12239,24 +12089,24 @@ GO
 
 
 CREATE   procedure [dbo].[p32_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p32id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu instituce z tabulky p51PriceList
+--odstranÄ›nÃ­ zÃ¡znamu instituce z tabulky p51PriceList
 declare @ref_pid int
 
 if exists(select p31ID FROM p31Worksheet where p32ID=@pid)
- set @err_ret='Minimálnì jeden worksheet záznam má vazbu na tuto aktivitu.'
+ set @err_ret='MinimÃ¡lnÄ› jeden worksheet zÃ¡znam mÃ¡ vazbu na tuto aktivitu.'
 
 if exists(select p63ID FROM p63Overhead where p32ID=@pid)
- set @err_ret='Aktivita má vazbu na èíselník reijní fakturaèní pøiráky.'
+ set @err_ret='Aktivita mÃ¡ vazbu na ÄÃ­selnÃ­k reÅ¾ijnÃ­ fakturaÄnÃ­ pÅ™irÃ¡Å¾ky.'
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p51ID from p52PriceList_Item WHERE p32ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden ceník sazeb má vazbu na tuto aktivitu ('+dbo.GetObjectAlias('p51',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jeden cenÃ­k sazeb mÃ¡ vazbu na tuto aktivitu ('+dbo.GetObjectAlias('p51',@ref_pid)+')'
 
 
 if isnull(@err_ret,'')<>''
@@ -12306,17 +12156,17 @@ GO
 
 
 CREATE   procedure [dbo].[p34_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p34id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu  z tabulky p34activitygroup
+--odstranÄ›nÃ­ zÃ¡znamu  z tabulky p34activitygroup
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=p32ID from p32Activity WHERE p34ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jedna aktivita má vazbu na tento sešit ('+dbo.GetObjectAlias('p32',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jedna aktivita mÃ¡ vazbu na tento seÅ¡it ('+dbo.GetObjectAlias('p32',@ref_pid)+')'
 
 
 if isnull(@err_ret,'')<>''
@@ -12365,17 +12215,17 @@ GO
 
 
 CREATE   procedure [dbo].[p35_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p35id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu  z tabulky p35Unit
+--odstranÄ›nÃ­ zÃ¡znamu  z tabulky p35Unit
 if exists(select p32ID FROM p32Activity where p35ID=@pid)
- set @err_ret='Minimálnì jedna aktivita má vazbu na tuto jednotku.'
+ set @err_ret='MinimÃ¡lnÄ› jedna aktivita mÃ¡ vazbu na tuto jednotku.'
 
 if exists(select p31ID FROM p31Worksheet where p35ID=@pid)
- set @err_ret='Minimálnì jeden worksheet úkon má vazbu na tuto jednotku.'
+ set @err_ret='MinimÃ¡lnÄ› jeden worksheet Ãºkon mÃ¡ vazbu na tuto jednotku.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -12423,12 +12273,12 @@ GO
 
 
 CREATE   procedure [dbo].[p36_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p36id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu  z tabulky p36LockPeriod
+--odstranÄ›nÃ­ zÃ¡znamu  z tabulky p36LockPeriod
 
 
 if isnull(@err_ret,'')<>''
@@ -12658,12 +12508,12 @@ GO
 
 
 CREATE   procedure [dbo].[p40_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p40id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu adresy z tabulky p40WorkSheet_Recurrence
+--odstranÄ›nÃ­ zÃ¡znamu adresy z tabulky p40WorkSheet_Recurrence
 
 BEGIN TRANSACTION
 
@@ -12708,7 +12558,7 @@ CREATE    PROCEDURE [dbo].[p41_aftersave]
 
 AS
 
----automaticky se spouští po uloení záznamu projektu
+---automaticky se spouÅ¡tÃ­ po uloÅ¾enÃ­ zÃ¡znamu projektu
 declare @p41code varchar(50),@x38id int,@x38id_draft int,@p51id_billing int,@name nvarchar(200),@p28id_client int,@isdraft bit,@p41RecurMotherID int
 
 select @p41code=p41Code,@x38id=p42.x38ID,@x38id_draft=p42.x38ID_Draft,@p51id_billing=a.p51ID_Billing,@name=a.p41Name,@p28id_client=a.p28ID_Client,@isdraft=a.p41IsDraft,@p41RecurMotherID=a.p41RecurMotherID
@@ -12728,7 +12578,7 @@ if left(@p41code,4)='TEMP' OR @p41code is null
    UPDATE p41Project SET p41Code=@p41code WHERE p41ID=@p41id 
  end 
 
-if @p51id_billing is not null	---aktualizace názvu pøípadného ceníku sazeb, kterı je nastaven na míru pro danı projekt
+if @p51id_billing is not null	---aktualizace nÃ¡zvu pÅ™Ã­padnÃ©ho cenÃ­ku sazeb, kterÃ½ je nastaven na mÃ­ru pro danÃ½ projekt
  begin
    if @p28id_client is not null
     select @name=p28Name+' - '+@name FROM p28Contact WHERE p28ID=@p28id_client
@@ -12739,7 +12589,7 @@ if @p51id_billing is not null	---aktualizace názvu pøípadného ceníku sazeb, kter
  end
 
 if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND (p41ParentID IS NOT NULL OR p41TreePrev<p41TreeNext))
- exec [p41_recalc_tree]	---aktualizovat stromovou strukturu projektù
+ exec [p41_recalc_tree]	---aktualizovat stromovou strukturu projektÅ¯
 else
  update p41Project set p41TreePath=isnull(p41NameShort,p41name) WHERE p41ID=@p41id
 
@@ -12877,8 +12727,8 @@ GO
 
 
 CREATE    PROCEDURE [dbo].[p41_batch_update_childs]
-@j03id_sys int				--pøihlášenı uivatel
-,@pid int					--p41id nadøízeného projektu
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
+,@pid int					--p41id nadÅ™Ã­zenÃ©ho projektu
 ,@is_roles bit
 ,@is_p28id bit
 ,@is_p87id bit
@@ -12887,7 +12737,7 @@ CREATE    PROCEDURE [dbo].[p41_batch_update_childs]
 ,@is_j18id bit
 ,@is_p61id bit
 ,@is_validity bit
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 AS
 
 declare @prev int,@next int,@p28id_client int,@p28id_billing int,@p87id int,@p51id int,@p92id int,@j18id int,@p61id int,@validuntil datetime
@@ -12966,7 +12816,7 @@ CREATE    PROCEDURE [dbo].[p41_convertdraft]
 ,@err_ret varchar(1000) OUTPUT
 AS
 
----konverze projektu z DRAFT reimu do normálního projektu
+---konverze projektu z DRAFT reÅ¾imu do normÃ¡lnÃ­ho projektu
 set @err_ret=''
 
 declare @code varchar(50),@x38id int,@isdraft bit
@@ -12978,7 +12828,7 @@ WHERE a.p41ID=@p41id
 
 if @isdraft=0
  begin
-  set @err_ret='Záznam není v àeimu DRAFT.'
+  set @err_ret='ZÃ¡znam nenÃ­ v Å•eÅ¾imu DRAFT.'
   return
  end
 
@@ -12986,7 +12836,7 @@ exec dbo.x38_get_freecode_proc @x38id,141,@p41id,0,1,@code OUTPUT
 
 if @code=''
  begin
-  set @err_ret='Systém nedokázal sloit odpovídající kód podle nastavení èíselné øady. Záznam zùstává v reimu DRAFT.'
+  set @err_ret='SystÃ©m nedokÃ¡zal sloÅ¾it odpovÃ­dajÃ­cÃ­ kÃ³d podle nastavenÃ­ ÄÃ­selnÃ© Å™ady. ZÃ¡znam zÅ¯stÃ¡vÃ¡ v reÅ¾imu DRAFT.'
   return
  end
 
@@ -13011,27 +12861,27 @@ GO
 
 
 CREATE   procedure [dbo].[p41_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p41id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu projektu z tabulky p41Project
+--odstranÄ›nÃ­ zÃ¡znamu projektu z tabulky p41Project
 declare @ref_pid int
 
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p31ID from p31Worksheet WHERE p41ID=@pid
 if @ref_pid is not null
- set @err_ret='Do projektu byl zapsán minimálnì jeden worksheet úkon.'
+ set @err_ret='Do projektu byl zapsÃ¡n minimÃ¡lnÄ› jeden worksheet Ãºkon.'
 
 if exists(select p41ID FROM p41Project WHERE p41ParentID=@pid)
- set @err_ret='Projek má pod sebou minimálnì jeden pod-projekt.'
+ set @err_ret='Projek mÃ¡ pod sebou minimÃ¡lnÄ› jeden pod-projekt.'
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p56ID from p56Task WHERE p41ID=@pid
 if @ref_pid is not null
- set @err_ret='K projektu je vytvoøen minimálnì jeden úkol ('+dbo.GetObjectAlias('p56',@ref_pid)+')'
+ set @err_ret='K projektu je vytvoÅ™en minimÃ¡lnÄ› jeden Ãºkol ('+dbo.GetObjectAlias('p56',@ref_pid)+')'
 
 
 
@@ -13131,7 +12981,7 @@ GO
 CREATE   procedure [dbo].[p41_get_efektivni_sazby_podle_faktur_vypis]
 @pid int,@p51id int,@datfrom datetime,@datuntil datetime
 
----@pid=p41ID,@p51id=ceník seniority podílu na paušální odmìnì
+---@pid=p41ID,@p51id=cenÃ­k seniority podÃ­lu na pauÅ¡Ã¡lnÃ­ odmÄ›nÄ›
 
 AS
 
@@ -13191,7 +13041,7 @@ GO
 CREATE   procedure [dbo].[p41_get_efektivni_sazby_podle_obdobi_vypis]
 @pid int,@p51id int,@datfrom datetime,@datuntil datetime
 
----@pid=p41ID,@p51id=ceník seniority podílu na paušální odmìnì
+---@pid=p41ID,@p51id=cenÃ­k seniority podÃ­lu na pauÅ¡Ã¡lnÃ­ odmÄ›nÄ›
 
 AS
 
@@ -13251,35 +13101,35 @@ AS
 
 SELECT a.RowID as pid
 ,row_number() over (order by a.RowID) as Verze
-,a.p41DateInsert as Zaloeno
-,a.p41UserInsert as Zaloil
-,a.p41DateUpdate as Aktualizováno
+,a.p41DateInsert as ZaloÅ¾eno
+,a.p41UserInsert as ZaloÅ¾il
+,a.p41DateUpdate as AktualizovÃ¡no
 ,a.p41UserUpdate as Aktualizoval
-,a.p41Name as [Název]
-,a.p41NameShort as [Zkrácenı název]
+,a.p41Name as [NÃ¡zev]
+,a.p41NameShort as [ZkrÃ¡cenÃ½ nÃ¡zev]
 ,p42.p42Name as [Typ projektu]
-,a.p41Code as [Kód]
+,a.p41Code as [KÃ³d]
 ,p28Client.p28Name as [Klient projektu]
-,p28Invoice.p28Name as [Odbìratel faktury]
-,p51Billing.p51Name as [Fakturaèní ceník]
-,p87.p87Name as [Fakturaèní jazyk]
-,j18.j18Name as [Støedisko]
+,p28Invoice.p28Name as [OdbÄ›ratel faktury]
+,p51Billing.p51Name as [FakturaÄnÃ­ cenÃ­k]
+,p87.p87Name as [FakturaÄnÃ­ jazyk]
+,j18.j18Name as [StÅ™edisko]
 ,b02.b02Name as [Stav]
 ,a.p41IsDraft as [Je draft]
-,a.p41PlanFrom as [Plánované zahájení]
-,a.p41PlanUntil as [Plánované dokonèení]
-,a.p41LimitHours_Notification as [Limit rozpracovanıch hodin]
-,a.p41LimitFee_Notification as [Limit rozpracovaného honoráøe]
-,a.p41BillingMemo as [Fakturaèní poznámka]
-,a.p41ExternalPID as [Externí klíè]
-,parent.p41Code+' - '+parent.p41Name as [Nadøízenı projekt]
+,a.p41PlanFrom as [PlÃ¡novanÃ© zahÃ¡jenÃ­]
+,a.p41PlanUntil as [PlÃ¡novanÃ© dokonÄenÃ­]
+,a.p41LimitHours_Notification as [Limit rozpracovanÃ½ch hodin]
+,a.p41LimitFee_Notification as [Limit rozpracovanÃ©ho honorÃ¡Å™e]
+,a.p41BillingMemo as [FakturaÄnÃ­ poznÃ¡mka]
+,a.p41ExternalPID as [ExternÃ­ klÃ­Ä]
+,parent.p41Code+' - '+parent.p41Name as [NadÅ™Ã­zenÃ½ projekt]
 ,p92.p92Name as [Typ faktury]
-,a.p41InvoiceMaturityDays as [Vıchozí splatnost]
+,a.p41InvoiceMaturityDays as [VÃ½chozÃ­ splatnost]
 ,a.p41InvoiceDefaultText1 as [Text faktury]
 ,a.p41IsNoNotify as [Vypnout notifikaci]
-,p65.p65Name as [Šablona opakování]
-,p61.p61Name as [Vıbìr povolenıch aktivit]
-,a.p41ValidUntil as [Platnost záznamu]
+,p65.p65Name as [Å ablona opakovÃ¡nÃ­]
+,p61.p61Name as [VÃ½bÄ›r povolenÃ½ch aktivit]
+,a.p41ValidUntil as [Platnost zÃ¡znamu]
 FROM
 p41Project_Log a
 LEFT OUTER JOIN p28Contact p28Client ON a.p28ID_Client=p28Client.p28ID
@@ -13518,17 +13368,17 @@ GO
 
 
 CREATE   procedure [dbo].[p42_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p42id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu instituce z tabulky p42projecttype
+--odstranÄ›nÃ­ zÃ¡znamu instituce z tabulky p42projecttype
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=p41ID from  p41Project WHERE p42ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden projekt má vazbu na tento typ ('+dbo.GetObjectAlias('p41',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jeden projekt mÃ¡ vazbu na tento typ ('+dbo.GetObjectAlias('p41',@ref_pid)+')'
 
 
 if isnull(@err_ret,'')<>''
@@ -13579,7 +13429,7 @@ CREATE    PROCEDURE [dbo].[p45_aftersave]
 
 AS
 
----automaticky se spouští po uloení záznamu rozpoètu
+---automaticky se spouÅ¡tÃ­ po uloÅ¾enÃ­ zÃ¡znamu rozpoÄtu
 
 declare @j02id int,@p45planfrom datetime
 
@@ -13640,7 +13490,7 @@ CREATE    PROCEDURE [dbo].[p45_clone]
 ,@is_p49 bit
 AS
 
----kopíruje rozpoèet do nového
+---kopÃ­ruje rozpoÄet do novÃ©ho
 
 declare @j02id int,@login varchar(50)
 
@@ -13729,26 +13579,26 @@ GO
 
 
 CREATE   procedure [dbo].[p45_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p45id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu rozpoètu z tabulky p45Budget
+--odstranÄ›nÃ­ zÃ¡znamu rozpoÄtu z tabulky p45Budget
 declare @ref_pid int,@p41id int,@count int
 
 select @p41id=p41ID FROM p45Budget WHERE p45ID=@pid
 select @count=count(*) FROM p45Budget WHERE p41ID=@p41id
 
 if @count>1 AND exists(select p45ID FROM p45Budget WHERE p45ID=@pid AND getdate() BETWEEN p45ValidFrom AND p45ValidUntil)
- set @err_ret='Odstranit verzi rozpoètu lze pouze v pøípadì, e je pøesunutá do archivu.'
+ set @err_ret='Odstranit verzi rozpoÄtu lze pouze v pÅ™Ã­padÄ›, Å¾e je pÅ™esunutÃ¡ do archivu.'
 
 if exists(select p47ID FROM p47CapacityPlan WHERE p47HoursTotal>0 AND p46ID IN (SELECT p46ID FROM p46BudgetPerson WHERE p45ID=@pid))
- set @err_ret='Pro odstranìní rozpoètu je tøeba vyèistit jeho kapacitní plán.'
+ set @err_ret='Pro odstranÄ›nÃ­ rozpoÄtu je tÅ™eba vyÄistit jeho kapacitnÃ­ plÃ¡n.'
 
 
 if exists(select p31ID FROM p31Worksheet WHERE p49ID IN (SELECT p49ID FROM p49FinancialPlan WHERE p45ID=@pid))
- set @err_ret='Minimálnì jedna poloka finanèního rozpoètu má vazbu s reálnì vykázanımi worksheet úkony.'
+ set @err_ret='MinimÃ¡lnÄ› jedna poloÅ¾ka finanÄnÃ­ho rozpoÄtu mÃ¡ vazbu s reÃ¡lnÄ› vykÃ¡zanÃ½mi worksheet Ãºkony.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -13802,12 +13652,12 @@ GO
 
 
 CREATE   procedure [dbo].[p48_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p48id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu operativního plánu z tabulky p48OperativePlan
+--odstranÄ›nÃ­ zÃ¡znamu operativnÃ­ho plÃ¡nu z tabulky p48OperativePlan
 
 
 BEGIN TRANSACTION
@@ -13853,14 +13703,14 @@ GO
 
 
 CREATE   procedure [dbo].[p49_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p49id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu finanèního plánu z tabulky p49FinancialPlan
+--odstranÄ›nÃ­ zÃ¡znamu finanÄnÃ­ho plÃ¡nu z tabulky p49FinancialPlan
 if exists(select p31ID FROM p31Worksheet WHERE p49ID=@pid)
- set @err_ret='Záznam rozpoètu ji má vazbu na reálnı worksheet úkon.'
+ set @err_ret='ZÃ¡znam rozpoÄtu jiÅ¾ mÃ¡ vazbu na reÃ¡lnÃ½ worksheet Ãºkon.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -13910,12 +13760,12 @@ GO
 
 
 CREATE   procedure [dbo].[p50_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p50id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu z tabulky p50OfficePriceList
+--odstranÄ›nÃ­ zÃ¡znamu z tabulky p50OfficePriceList
 
 
 if isnull(@err_ret,'')<>''
@@ -14009,22 +13859,22 @@ GO
 
 
 CREATE   procedure [dbo].[p51_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p51id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu instituce z tabulky p51PriceList
+--odstranÄ›nÃ­ zÃ¡znamu instituce z tabulky p51PriceList
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=p28ID from p28Contact WHERE p51ID_Billing=@pid OR p51ID_Internal=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden klient má vazbu na tento ceník ('+dbo.GetObjectAlias('p28',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jeden klient mÃ¡ vazbu na tento cenÃ­k ('+dbo.GetObjectAlias('p28',@ref_pid)+')'
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p41ID from p41Project WHERE p51ID_Billing=@pid OR p51ID_Internal=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden projekt má vazbu na tento ceník ('+dbo.GetObjectAlias('p41',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jeden projekt mÃ¡ vazbu na tento cenÃ­k ('+dbo.GetObjectAlias('p41',@ref_pid)+')'
 
 
 if isnull(@err_ret,'')<>''
@@ -14073,12 +13923,12 @@ GO
 
 
 CREATE   procedure [dbo].[p53_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p53id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu dph sazby z tabulky p53VatRate
+--odstranÄ›nÃ­ zÃ¡znamu dph sazby z tabulky p53VatRate
 
 
 BEGIN TRANSACTION
@@ -14129,7 +13979,7 @@ CREATE    PROCEDURE [dbo].[p56_aftersave]
 
 AS
 
----automaticky se spouští po uloení záznamu projektu
+---automaticky se spouÅ¡tÃ­ po uloÅ¾enÃ­ zÃ¡znamu projektu
 declare @p56code varchar(50),@x38id int,@name nvarchar(200),@p56RecurMotherID int
 
 select @p56code=p56Code,@x38id=p57.x38ID,@name=a.p56Name,@p56RecurMotherID=a.p56RecurMotherID
@@ -14265,19 +14115,19 @@ GO
 
 
 CREATE   procedure [dbo].[p56_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p56id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu úkolu z tabulky p56Task
+--odstranÄ›nÃ­ zÃ¡znamu Ãºkolu z tabulky p56Task
 declare @ref_pid int
 
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p31ID from p31Worksheet WHERE p56ID=@pid
 if @ref_pid is not null
- set @err_ret='K úkolu má vazbu minimálnì jeden worksheet úkon.'
+ set @err_ret='K Ãºkolu mÃ¡ vazbu minimÃ¡lnÄ› jeden worksheet Ãºkon.'
 
 
 
@@ -14365,28 +14215,28 @@ AS
 
 SELECT a.RowID as pid
 ,row_number() over (order by a.RowID) as Verze
-,a.p56DateInsert as Zaloeno
-,a.p56UserInsert as Zaloil
-,a.p56DateUpdate as Aktualizováno
+,a.p56DateInsert as ZaloÅ¾eno
+,a.p56UserInsert as ZaloÅ¾il
+,a.p56DateUpdate as AktualizovÃ¡no
 ,a.p56UserUpdate as Aktualizoval
-,a.p56Name as [Název]
-,a.p56NameShort as [Zkrácenı název]
+,a.p56Name as [NÃ¡zev]
+,a.p56NameShort as [ZkrÃ¡cenÃ½ nÃ¡zev]
 ,b02.b02Name as [Stav]
-,p57.p57Name as [Typ úkolu]
-,a.p56Code as [Kód]
+,p57.p57Name as [Typ Ãºkolu]
+,a.p56Code as [KÃ³d]
 ,p41.p41Name as [Projekt]
-,o22.o22Name as [Milník úkolu]
-,p65.p65Name as [Šablona opakování]
+,o22.o22Name as [MilnÃ­k Ãºkolu]
+,p65.p65Name as [Å ablona opakovÃ¡nÃ­]
 
-,a.p56Description as [Podrobnı popis]
-,a.p56PlanFrom as [Plánované zahájení]
-,a.p56PlanUntil as [Plánované dokonèení]
-,a.p56Plan_Hours as [Plán hodin]
-,a.p56Plan_Expenses as [Plán vıdajù]
-,a.p56IsPlan_Hours_Ceiling as [Pøekroèit hodiny]
-,a.p56IsPlan_Expenses_Ceiling as [Pøekroèit vıdaje]
-,a.p56ExternalPID as [Externí klíè]
-,a.p56ValidUntil as [Platnost záznamu]
+,a.p56Description as [PodrobnÃ½ popis]
+,a.p56PlanFrom as [PlÃ¡novanÃ© zahÃ¡jenÃ­]
+,a.p56PlanUntil as [PlÃ¡novanÃ© dokonÄenÃ­]
+,a.p56Plan_Hours as [PlÃ¡n hodin]
+,a.p56Plan_Expenses as [PlÃ¡n vÃ½dajÅ¯]
+,a.p56IsPlan_Hours_Ceiling as [PÅ™ekroÄit hodiny]
+,a.p56IsPlan_Expenses_Ceiling as [PÅ™ekroÄit vÃ½daje]
+,a.p56ExternalPID as [ExternÃ­ klÃ­Ä]
+,a.p56ValidUntil as [Platnost zÃ¡znamu]
 FROM
 p56Task_Log a
 LEFT OUTER JOIN p41Project p41 ON a.p41ID=p41.p41ID
@@ -14514,17 +14364,17 @@ GO
 
 
 CREATE   procedure [dbo].[p57_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p57id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu typu úkolu z tabulky p57TaskType
+--odstranÄ›nÃ­ zÃ¡znamu typu Ãºkolu z tabulky p57TaskType
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=p56ID from p56Task WHERE p57ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden úkol má vazbu na tento typ ('+dbo.GetObjectAlias('p56',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jeden Ãºkol mÃ¡ vazbu na tento typ ('+dbo.GetObjectAlias('p56',@ref_pid)+')'
 
 
 if isnull(@err_ret,'')<>''
@@ -14574,21 +14424,21 @@ GO
 
 
 CREATE   procedure [dbo].[p59_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p59id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu priority z tabulky p59Priority
+--odstranÄ›nÃ­ zÃ¡znamu priority z tabulky p59Priority
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=p56ID from p56Task WHERE p59ID_Submitter=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden úkol má vazbu na tuto prioritu (zadavatele) ('+dbo.GetObjectAlias('p56',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jeden Ãºkol mÃ¡ vazbu na tuto prioritu (zadavatele) ('+dbo.GetObjectAlias('p56',@ref_pid)+')'
 
 SELECT TOP 1 @ref_pid=p56ID from p56Task WHERE p59ID_Receiver=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden úkol má vazbu na tuto prioritu (øešitele) ('+dbo.GetObjectAlias('p56',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jeden Ãºkol mÃ¡ vazbu na tuto prioritu (Å™eÅ¡itele) ('+dbo.GetObjectAlias('p56',@ref_pid)+')'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -14637,12 +14487,12 @@ GO
 
 
 CREATE   procedure [dbo].[p61_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p61id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu tımu osob z tabulky p61ActivityCluster
+--odstranÄ›nÃ­ zÃ¡znamu tÃ½mu osob z tabulky p61ActivityCluster
 declare @ref_pid int
 
 
@@ -14650,7 +14500,7 @@ set @ref_pid=null
 SELECT TOP 1 @ref_pid=p41ID FROM p41Project WHERE p61ID=@pid
 
 if @ref_pid is not null
- set @err_ret='Tento cluster aktivit je pøiøazen u projektu ('+dbo.GetObjectAlias('p41',@ref_pid)+')'
+ set @err_ret='Tento cluster aktivit je pÅ™iÅ™azen u projektu ('+dbo.GetObjectAlias('p41',@ref_pid)+')'
 
 
 if isnull(@err_ret,'')<>''
@@ -14704,19 +14554,19 @@ GO
 
 
 CREATE   procedure [dbo].[p63_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p63id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu  z tabulky p63Overhead
+--odstranÄ›nÃ­ zÃ¡znamu  z tabulky p63Overhead
 
 
 if exists(select p28ID FROM p28Contact WHERE p63ID=@pid)
- set @err_ret='Má vazbu na minimálnì jednoho klienta.'
+ set @err_ret='MÃ¡ vazbu na minimÃ¡lnÄ› jednoho klienta.'
 
 if exists(select p91ID FROM p91Invoice WHERE p63ID=@pid)
- set @err_ret='Má vazbu na minimálnì jednu vystavenou fakturu.'
+ set @err_ret='MÃ¡ vazbu na minimÃ¡lnÄ› jednu vystavenou fakturu.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -14757,18 +14607,18 @@ GO
 
 
 CREATE   procedure [dbo].[p65_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p65ID
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu  z tabulky p65Recurrence
+--odstranÄ›nÃ­ zÃ¡znamu  z tabulky p65Recurrence
 
 if exists(select p41ID FROM p41Project WHERE p65ID=@pid)
- set @err_ret='Existuje minimálnì jeden projekt svázanı s tímto pravidlem opakování.'
+ set @err_ret='Existuje minimÃ¡lnÄ› jeden projekt svÃ¡zanÃ½ s tÃ­mto pravidlem opakovÃ¡nÃ­.'
 
 if exists(select p56ID FROM p56Task WHERE p65ID=@pid)
- set @err_ret='Existuje minimálnì jeden úkol svázanı s tímto pravidlem opakování.'
+ set @err_ret='Existuje minimÃ¡lnÄ› jeden Ãºkol svÃ¡zanÃ½ s tÃ­mto pravidlem opakovÃ¡nÃ­.'
 
 
 if isnull(@err_ret,'')<>''
@@ -14811,19 +14661,19 @@ GO
 
 
 CREATE   procedure [dbo].[p80_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p80id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu  z tabulky p80InvoiceAmountStructure
+--odstranÄ›nÃ­ zÃ¡znamu  z tabulky p80InvoiceAmountStructure
 
 
 if exists(select p92ID FROM p92InvoiceType WHERE p80ID=@pid)
- set @err_ret='Má vazbu na minimálnì jeden typ faktury.'
+ set @err_ret='MÃ¡ vazbu na minimÃ¡lnÄ› jeden typ faktury.'
 
 if exists(select p91ID FROM p91Invoice WHERE p80ID=@pid)
- set @err_ret='Má vazbu na minimálnì jednu vystavenou fakturu.'
+ set @err_ret='MÃ¡ vazbu na minimÃ¡lnÄ› jednu vystavenou fakturu.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -14864,17 +14714,17 @@ GO
 
 
 CREATE   procedure [dbo].[p86_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p86id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu bankovního úètu z tabulky p92InvoiceType
+--odstranÄ›nÃ­ zÃ¡znamu bankovnÃ­ho ÃºÄtu z tabulky p92InvoiceType
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=p88ID from p88InvoiceHeader_BankAccount WHERE p86ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jedna hlavièka vystavovatele faktur obsahuje vazbu na tento úèet.'
+ set @err_ret='MinimÃ¡lnÄ› jedna hlaviÄka vystavovatele faktur obsahuje vazbu na tento ÃºÄet.'
 
 
 if isnull(@err_ret,'')<>''
@@ -14924,17 +14774,17 @@ GO
 
 
 CREATE   procedure [dbo].[p89_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p89id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu typu zálohy z tabulky p89ProformaType
+--odstranÄ›nÃ­ zÃ¡znamu typu zÃ¡lohy z tabulky p89ProformaType
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=p90ID from p90Proforma WHERE p89ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jedna zálohová faktura má vazbu na tento typ ('+dbo.GetObjectAlias('p90',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jedna zÃ¡lohovÃ¡ faktura mÃ¡ vazbu na tento typ ('+dbo.GetObjectAlias('p90',@ref_pid)+')'
 
 
 if isnull(@err_ret,'')<>''
@@ -15031,7 +14881,7 @@ CLOSE curTR
 DEALLOCATE curTR
 
 
----automaticky se spouští po uloení záznamu faktury
+---automaticky se spouÅ¡tÃ­ po uloÅ¾enÃ­ zÃ¡znamu faktury
 declare @p91id int
 
 DECLARE curTRX CURSOR FOR 
@@ -15066,18 +14916,18 @@ GO
 
 
 CREATE   procedure [dbo].[p90_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p90id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu vystavené faktury z tabulky p90Proforma
+--odstranÄ›nÃ­ zÃ¡znamu vystavenÃ© faktury z tabulky p90Proforma
 declare @ref_pid int
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p91ID from p99Invoice_Proforma WHERE p90ID=@pid
 if @ref_pid is not null
- set @err_ret='Zálohová faktura je svázaná s daòovou fakturou ('+dbo.GetObjectAlias('p91',@ref_pid)+')'
+ set @err_ret='ZÃ¡lohovÃ¡ faktura je svÃ¡zanÃ¡ s daÅˆovou fakturou ('+dbo.GetObjectAlias('p91',@ref_pid)+')'
 
 
 if isnull(@err_ret,'')<>''
@@ -15168,7 +15018,7 @@ CREATE    PROCEDURE [dbo].[p90_update_code]
 
 AS
 
----automaticky se spouští po uloení záznamu zálohy
+---automaticky se spouÅ¡tÃ­ po uloÅ¾enÃ­ zÃ¡znamu zÃ¡lohy
 declare @p90code varchar(50),@x38id int,@isdraft bit,@x38id_draft int
 
 select @p90code=p90Code,@x38id=p89.x38ID,@x38id_draft=p89.x38ID_Draft,@isdraft=a.p90IsDraft
@@ -15222,7 +15072,7 @@ AS
 if exists(select p91ID FROM p91Invoice WHERE p91ID=@p91id AND (p91Code LIKE 'TEMP%' OR p91Code IS NULL))
  exec p91_update_code @p91id,@j03id_sys
 
----automaticky se spouští po uloení záznamu faktury
+---automaticky se spouÅ¡tÃ­ po uloÅ¾enÃ­ zÃ¡znamu faktury
 if @recalc_amount=1
  exec p91_recalc_amount @p91id
 else
@@ -15459,11 +15309,11 @@ CREATE  PROCEDURE [dbo].[p91_calc_overhead]
 ,@p63id int
 AS
 
-  ---vypoèítá èástku reijní pøiráky k faktuøe a zaloí k tomu úkon
-  ---je vnoøené do procedury p91_recalc_amount ...nefunguje samostatnì
+  ---vypoÄÃ­tÃ¡ ÄÃ¡stku reÅ¾ijnÃ­ pÅ™irÃ¡Å¾ky k faktuÅ™e a zaloÅ¾Ã­ k tomu Ãºkon
+  ---je vnoÅ™enÃ© do procedury p91_recalc_amount ...nefunguje samostatnÄ›
 
 if @p63id is null
- begin	---kontrola, zda nevisí ji vygenerovaná pøiráka ve faktuøe ->v tom pøípadì pøirákovı úkon smazat
+ begin	---kontrola, zda nevisÃ­ jiÅ¾ vygenerovanÃ¡ pÅ™irÃ¡Å¾ka ve faktuÅ™e ->v tom pÅ™Ã­padÄ› pÅ™irÃ¡Å¾kovÃ½ Ãºkon smazat
    if not exists(select p63ID FROM p63Overhead)
 	 RETURN
 
@@ -15480,7 +15330,7 @@ from p91invoice a INNER JOIN p92InvoiceType b ON a.p92ID=b.p92ID
 where a.p91id=@p91id
 
 if @p92invoicetype=2
- RETURN	---dobropis je vdy bez pøiráky
+ RETURN	---dobropis je vÅ¾dy bez pÅ™irÃ¡Å¾ky
 
 declare @overhead float,@sum float,@p32id int,@p63IsIncludeTime bit,@p63IsIncludeExpense bit,@p63IsIncludeFees bit,@p63PercentRate float,@p31text nvarchar(1000)
 
@@ -15560,20 +15410,20 @@ CREATE  PROCEDURE [dbo].[p91_calc_p81]
 ,@p80id int
 AS
 
-  ---Generuje souhrnnı cenovı rozpis faktury do tabulky p81InvoiceAmount
-  ---je vnoøené do procedury p91_recalc_amount ...nefunguje samostatnì
+  ---Generuje souhrnnÃ½ cenovÃ½ rozpis faktury do tabulky p81InvoiceAmount
+  ---je vnoÅ™enÃ© do procedury p91_recalc_amount ...nefunguje samostatnÄ›
 
 
 if exists(select p81ID FROM p81InvoiceAmount WHERE p91ID=@p91id)
  DELETE FROM p81InvoiceAmount WHERE p91ID=@p91id
 
- ---explicitní rozpis podle p80InvoiceAmountStructure
+ ---explicitnÃ­ rozpis podle p80InvoiceAmountStructure
  declare @time bit,@fee bit,@expense bit
 
  select @time=p80IsTimeSeparate,@expense=p80IsExpenseSeparate,@fee=p80IsFeeSeparate FROM p80InvoiceAmountStructure WHERE p80ID=@p80id
 
 if @p80id is null OR (@time=0 and @expense=0 and @fee=0)
- begin	---bez explicitní struktury rozpisu ceny (podle fakturaèních oddílù)
+ begin	---bez explicitnÃ­ struktury rozpisu ceny (podle fakturaÄnÃ­ch oddÃ­lÅ¯)
 	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p81VatRate,p81Amount_WithoutVat)
 	SELECT @p91id,p32.p95ID,p31VatRate_Invoiced,isnull(round(sum(a.p31Amount_WithoutVat_Invoiced),2),0)
 	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
@@ -15591,7 +15441,7 @@ if @p80id is not null AND @expense=0
  end
 
 if @p80id is not null AND @expense=1
- begin	---vıdaje 1:1
+ begin	---vÃ½daje 1:1
 	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p31ID,p81VatRate,p81Amount_WithoutVat)
 	SELECT @p91id,p32.p95ID,a.p31ID,p31VatRate_Invoiced,isnull(round(a.p31Amount_WithoutVat_Invoiced,2),0)
 	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
@@ -15608,7 +15458,7 @@ if @p80id is not null AND @fee=0
  end
 
 if @p80id is not null AND @fee=1
- begin	---pevné odmìny 1:1
+ begin	---pevnÃ© odmÄ›ny 1:1
 	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p31ID,p81VatRate,p81Amount_WithoutVat)
 	SELECT @p91id,p32.p95ID,a.p31ID,p31VatRate_Invoiced,isnull(round(a.p31Amount_WithoutVat_Invoiced,2),0)
 	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
@@ -15625,7 +15475,7 @@ if @p80id is not null AND @time=0
  end
 
 if @p80id is not null AND @time=1
- begin	---èasové úkony 1:1
+ begin	---ÄasovÃ© Ãºkony 1:1
 	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p31ID,p81VatRate,p81Amount_WithoutVat)
 	SELECT @p91id,p32.p95ID,a.p31ID,p31VatRate_Invoiced,isnull(round(a.p31Amount_WithoutVat_Invoiced,2),0)
 	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
@@ -15654,7 +15504,7 @@ CREATE    PROCEDURE [dbo].[p91_convertdraft]
 ,@err_ret varchar(1000) OUTPUT
 AS
 
----konverze dokladu DRAFT->OSTRÁ faktura
+---konverze dokladu DRAFT->OSTRÃ faktura
 set @err_ret=''
 
 declare @code varchar(50),@x38id int,@isdraft bit
@@ -15666,15 +15516,15 @@ WHERE a.p91ID=@p91id
 
 if @isdraft=0
  begin
-  set @err_ret='Faktura není v àeimu DRAFT.'
-  return	--faktura není v draftu
+  set @err_ret='Faktura nenÃ­ v Å•eÅ¾imu DRAFT.'
+  return	--faktura nenÃ­ v draftu
  end
  
 exec dbo.x38_get_freecode_proc @x38id,391,@p91id,0,1,@code OUTPUT
 
 if @code=''
  begin
-  set @err_ret='Systém nedokázal sloit odpovídající kód podle nastavení èíselné øady. Záznam zùstává v reimu DRAFT.'
+  set @err_ret='SystÃ©m nedokÃ¡zal sloÅ¾it odpovÃ­dajÃ­cÃ­ kÃ³d podle nastavenÃ­ ÄÃ­selnÃ© Å™ady. ZÃ¡znam zÅ¯stÃ¡vÃ¡ v reÅ¾imu DRAFT.'
   return
  end
 
@@ -15735,10 +15585,10 @@ if @j03id_sys=0 or @guid=''
 
 
 if @p92id=0
-  set @err_ret='Chybí typ faktury!'
+  set @err_ret='ChybÃ­ typ faktury!'
 
 if @p28id=0
-  set @err_ret='Chybí klient (odbìratel) faktury!'
+  set @err_ret='ChybÃ­ klient (odbÄ›ratel) faktury!'
 
 if @err_ret<>''
  return
@@ -15749,7 +15599,7 @@ select @j02id_owner=j02ID FROM j03User WHERE j03ID=@j03id_sys
 
 if not exists(select a.p85ID from p85TempBox a INNER JOIN p31Worksheet b ON a.p85DataPID=b.p31ID where b.p91ID IS NULL AND a.p85guid=@guid and a.p85Prefix='p31' and a.p85IsDeleted=0)
  begin
-  set @err_ret='Na vstupu chybí fronta worksheet poloek faktury!'
+  set @err_ret='Na vstupu chybÃ­ fronta worksheet poloÅ¾ek faktury!'
   return
 
  end
@@ -15770,10 +15620,10 @@ if isnull(@j27id,0)=0
  end
 
  if isnull(@x15id,0)<>0
-  begin	---úvodní otestování existence nastavenıch DPH sazeb
+  begin	---ÃºvodnÃ­ otestovÃ¡nÃ­ existence nastavenÃ½ch DPH sazeb
    if not exists(select p53ID FROM p53VatRate WHERE x15ID=@x15id AND j27ID=@j27id AND isnull(j17ID,0)=isnull(@j17id,0) and GETDATE() between p53ValidFrom AND p53ValidUntil)
     begin
-     select @err_ret='Pro fakturaèní mìnu ['+(select j27Code FROM j27Currency WHERE j27ID=@j27id)+'] je tøeba v systému nadefinovat DPH sazbu hladiny ['+ x15Name+'].' FROM x15VatRateType WHERE x15ID=@x15id
+     select @err_ret='Pro fakturaÄnÃ­ mÄ›nu ['+(select j27Code FROM j27Currency WHERE j27ID=@j27id)+'] je tÅ™eba v systÃ©mu nadefinovat DPH sazbu hladiny ['+ x15Name+'].' FROM x15VatRateType WHERE x15ID=@x15id
 	 return
 	end
   end
@@ -15852,12 +15702,12 @@ update p31worksheet set p31Minutes_Invoiced=p31Minutes_Approved_Billing,p31Hours
 where p91ID=@ret_p91id
 
 
-select @p91vatrate_standard=dbo.p91_get_vatrate(3,@j27id,@j17id,@p91datesupply)	---DPH sazba, která bude aplikovaná pro všechny èasové úkony
+select @p91vatrate_standard=dbo.p91_get_vatrate(3,@j27id,@j17id,@p91datesupply)	---DPH sazba, kterÃ¡ bude aplikovanÃ¡ pro vÅ¡echny ÄasovÃ© Ãºkony
 select @p91vatrate_low=dbo.p91_get_vatrate(2,@j27id,@j17id,@p91datesupply)
 select @p91vatrate_special=dbo.p91_get_vatrate(4,@j27id,@j17id,@p91datesupply)
 
 if @p91vatrate_standard is not null and isnull(@x15id,0)=0
- begin	---narovnat standardní fakturaèní sazbu DPH
+ begin	---narovnat standardnÃ­ fakturaÄnÃ­ sazbu DPH
   UPDATE p31Worksheet SET p31VatRate_Invoiced=@p91vatrate_standard
   ,p31Amount_Vat_Invoiced=p31Amount_WithoutVat_Invoiced*@p91vatrate_standard/100
   ,p31Amount_WithVat_Invoiced=p31Amount_WithoutVat_Invoiced*@p91vatrate_standard/100+p31Amount_WithoutVat_Invoiced
@@ -15867,7 +15717,7 @@ if @p91vatrate_standard is not null and isnull(@x15id,0)=0
  end
 
 if @p91vatrate_low is not null and isnull(@x15id,0)=0
- begin	---narovnat sníenou fakturaèní sazbu DPH
+ begin	---narovnat snÃ­Å¾enou fakturaÄnÃ­ sazbu DPH
   UPDATE p31Worksheet SET p31VatRate_Invoiced=@p91vatrate_low
   ,p31Amount_Vat_Invoiced=p31Amount_WithoutVat_Invoiced*@p91vatrate_low/100
   ,p31Amount_WithVat_Invoiced=p31Amount_WithoutVat_Invoiced*@p91vatrate_low/100+p31Amount_WithoutVat_Invoiced
@@ -15888,7 +15738,7 @@ if isnull(@x15id,0)=0
 exec p91_recalc_amount @ret_p91id
 
 if isnull(@x15id,0)<>0
- begin	---faktura má bıt kompletnì pøevedena do jednotné DPH
+ begin	---faktura mÃ¡ bÃ½t kompletnÄ› pÅ™evedena do jednotnÃ© DPH
   declare @explicit_vatrate float,@j18id int
 
   
@@ -15979,14 +15829,14 @@ declare @x38id int,@p28id int,@j27id int,@p32id_creditnote int,@p98id int,@p80id
 
 if not exists(select x35ID FROM x35GlobalParam WHERE x35Key like 'p32ID_CreditNote')
  begin
-  set @err_ret='V globálním nastavení chybí hodnota parametru [p32ID_CreditNote].'
+  set @err_ret='V globÃ¡lnÃ­m nastavenÃ­ chybÃ­ hodnota parametru [p32ID_CreditNote].'
   return
  end
 
 select @p32id_creditnote=convert(int,x35value) from x35GlobalParam WHERE x35Key like 'p32ID_CreditNote'
 
 if not exists(select p32ID FROM p32Activity WHERE p32ID=@p32id_creditnote)
- set @err_ret='Pro parametr [p32ID_CreditNote] v systému neexistuje záznam aktivity!'
+ set @err_ret='Pro parametr [p32ID_CreditNote] v systÃ©mu neexistuje zÃ¡znam aktivity!'
 
 select @x38id=x38id,@p98id=p98ID,@p80id=p80ID from p92InvoiceType where p92id=@p92id_creditnote
 
@@ -16028,7 +15878,7 @@ exec p91_update_code @ret_p91id,@j03id_sys
 
 ---worksheet
 declare @c11id int,@p31date datetime,@p31id int,@p31text nvarchar(300),@p31value_fixprice float
-set @p31text='Dobropisovaná èástka'
+set @p31text='DobropisovanÃ¡ ÄÃ¡stka'
 select top 1 @c11id=c11id,@p31date=c11datefrom from c11statperiod where c11level=5 and c11datefrom<=getdate() order by c11id desc
 
 declare @amount_withoutvat decimal(18,2),@amount_withvat decimal(18,2),@vatrate decimal(18,2),@amount_vat decimal(18,2),@p41id int
@@ -16086,19 +15936,19 @@ GO
 
 
 CREATE   procedure [dbo].[p91_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p91id
-,@guid varchar(50)			---seznam úkonù ve faktuøe
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@guid varchar(50)			---seznam ÃºkonÅ¯ ve faktuÅ™e
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu vystavené faktury z tabulky p91Invoice
+--odstranÄ›nÃ­ zÃ¡znamu vystavenÃ© faktury z tabulky p91Invoice
 declare @ref_pid int
 
 
 
 if @guid is null
- set @err_ret='Na vstupu chybí guid.'
+ set @err_ret='Na vstupu chybÃ­ guid.'
 
 
 if isnull(@err_ret,'')<>''
@@ -16133,7 +15983,7 @@ update p31Worksheet set p91ID=null,p70ID=null
 ,p31IsInvoiceManual=0,j02ID_InvoiceManual=null
 where p91ID=@pid
 
----pøesunout úkony do rozpracovnaosti
+---pÅ™esunout Ãºkony do rozpracovnaosti
 update p31Worksheet set p71ID=null,p72ID_AfterApprove=null,p31Approved_When=null,p31Value_Approved_Billing=null,p31Value_Approved_Internal=null
 ,p31Minutes_Approved_Billing=null,p31Hours_Approved_Billing=null,p31Hours_Approved_Internal=null,p31HHMM_Approved_Billing=null,p31HHMM_Approved_Internal=null
 ,p31Rate_Billing_Approved=null,p31Rate_Internal_Approved=null
@@ -16141,10 +15991,10 @@ update p31Worksheet set p71ID=null,p72ID_AfterApprove=null,p31Approved_When=null
 ,j02ID_ApprovedBy=null
 FROM p31Worksheet WHERE p31ID IN (SELECT p85DataPID FROM p85TempBox WHERE p85GUID=@guid and p85Prefix='p31' AND p85OtherKey1=2)
 
----pøesunout úkony do archivu
+---pÅ™esunout Ãºkony do archivu
 update p31Worksheet set p31ValidUntil=getdate() WHERE p31ID IN (SELECT p85DataPID FROM p85TempBox WHERE p85GUID=@guid and p85Prefix='p31' AND p85OtherKey1=3)
 
----nenávratnì odstranit úkony
+---nenÃ¡vratnÄ› odstranit Ãºkony
 if exists(select p85ID FROM p85TempBox WHERE p85GUID=@guid and p85Prefix='p31' AND p85OtherKey1=4)
 begin
  DELETE FROM p31WorkSheet_FreeField WHERE p31ID IN (SELECT p85DataPID FROM p85TempBox WHERE p85GUID=@guid and p85Prefix='p31' AND p85OtherKey1=4)
@@ -16268,7 +16118,7 @@ GO
 
 
 CREATE procedure [dbo].[p91_fpr_recalc_invoice]
-@p51id int	----srovnávací ceník pro vıpoèet efektivní sazby
+@p51id int	----srovnÃ¡vacÃ­ cenÃ­k pro vÃ½poÄet efektivnÃ­ sazby
 ,@p91id INT
 
 AS
@@ -16277,10 +16127,10 @@ if isnull(@p51id,0)=0 or isnull(@p91id,0)=0
  return
 
 declare @vynosy float
-declare @hodiny float	---hodiny se statusem [Zahrnout do paušálu]
-declare @body float		---honoráø z paušálních hodin podle srovnávacího ceníku
-declare @vynosy_fixedcurrency float	---pevná neboli paušální odmìna
----p31AKDS_FPR_PODIL = procentuální podíl 
+declare @hodiny float	---hodiny se statusem [Zahrnout do pauÅ¡Ã¡lu]
+declare @body float		---honorÃ¡Å™ z pauÅ¡Ã¡lnÃ­ch hodin podle srovnÃ¡vacÃ­ho cenÃ­ku
+declare @vynosy_fixedcurrency float	---pevnÃ¡ neboli pauÅ¡Ã¡lnÃ­ odmÄ›na
+---p31AKDS_FPR_PODIL = procentuÃ¡lnÃ­ podÃ­l 
 
 select @vynosy=sum(p31Amount_WithoutVat_Invoiced)
 ,@vynosy_fixedcurrency=sum(case when a.j27ID_Billing_Invoiced=2 THEN p31Amount_WithoutVat_Invoiced else p31Amount_WithoutVat_Invoiced_Domestic END)
@@ -16368,8 +16218,8 @@ CREATE   procedure [dbo].[p91_get_cenovy_rozpis]
 AS
 
 declare @zaokrouhleni varchar(100),@zalohy varchar(100)
-set @zaokrouhleni='Zaokrouhlení'
-set @zalohy='Uhrazené zálohy'
+set @zaokrouhleni='ZaokrouhlenÃ­'
+set @zalohy='UhrazenÃ© zÃ¡lohy'
 
 set @langindex=isnull(@langindex,0)
 
@@ -16443,7 +16293,7 @@ GO
 CREATE   procedure [dbo].[p91_get_efektivni_sazby_vypis]
 @pid int,@p51id int
 
----@pid=p91ID,@p51id=ceník seniority podílu na paušální odmìnì
+---@pid=p91ID,@p51id=cenÃ­k seniority podÃ­lu na pauÅ¡Ã¡lnÃ­ odmÄ›nÄ›
 
 AS
 
@@ -16609,7 +16459,7 @@ select @p91DateSupply=p91DateSupply,@j17id=j17id,@j27id=j27id from p91invoice wh
 select @vatisok=dbo.p91_test_vat(@newvatrate,@j27id,@j17id,@p91DateSupply)
 
 if @vatisok=0
-  set @err_ret='Sazba DPH ['+convert(varchar(10),@newvatrate)+'%] není platná pro dané datum plnìní, mìnu a zemi!'
+  set @err_ret='Sazba DPH ['+convert(varchar(10),@newvatrate)+'%] nenÃ­ platnÃ¡ pro danÃ© datum plnÄ›nÃ­, mÄ›nu a zemi!'
 -----------------------------------------
 
 if @err_ret<>''
@@ -16681,54 +16531,54 @@ AS
 
 SELECT a.RowID as pid
 ,row_number() over (order by a.RowID) as Verze
-,a.p91DateInsert as Zaloeno
-,a.p91UserInsert as Zaloil
-,a.p91DateUpdate as Aktualizováno
+,a.p91DateInsert as ZaloÅ¾eno
+,a.p91UserInsert as ZaloÅ¾il
+,a.p91DateUpdate as AktualizovÃ¡no
 ,a.p91UserUpdate as Aktualizoval
-,a.p91Code as [Kód]
+,a.p91Code as [KÃ³d]
 ,a.p91Client as [Klient]
 ,p92.p92Name as [Typ faktury]
-,a.p91Code as [Kód]
-,j27.j27Code as [Mìna]
-,a.p91ExchangeRate as [Mìnovı kurz]
+,a.p91Code as [KÃ³d]
+,j27.j27Code as [MÄ›na]
+,a.p91ExchangeRate as [MÄ›novÃ½ kurz]
 ,a.p91DateExchange as [Datum kurzu]
 ,a.p91Amount_WithoutVat as [Celkem bez DPH]
 ,a.p91Amount_Vat as [Celkem DPH]
-,a.p91Amount_WithVat as [Celkem vè.DPH]
+,a.p91Amount_WithVat as [Celkem vÄ.DPH]
 ,a.p91Amount_Debt as [Dluh]
-,a.p91RoundFitAmount as [Haléøové zaokrouhlení]
-,a.p91Amount_TotalDue as [Celkem k úhradì]
-,a.p91Amount_Billed as [Ji uhrazeno]
+,a.p91RoundFitAmount as [HalÃ©Å™ovÃ© zaokrouhlenÃ­]
+,a.p91Amount_TotalDue as [Celkem k ÃºhradÄ›]
+,a.p91Amount_Billed as [JiÅ¾ uhrazeno]
 ,a.p91Text1 as [Text faktury]
-,a.p91Text2 as [Technickı text]
-,a.p91ProformaBilledAmount as [Spárovaná úhrada zálohy]
+,a.p91Text2 as [TechnickÃ½ text]
+,a.p91ProformaBilledAmount as [SpÃ¡rovanÃ¡ Ãºhrada zÃ¡lohy]
 ,b02.b02Name as [Stav]
 ,a.p91IsDraft as [Je draft]
 ,j17.j17Name as [DPH region]
 ,a.p91Date as [Vystaveno]
 ,a.p91DateMaturity as [Splatnost]
 ,a.p91DateSupply as [DUZP]
-,a.p91DateBilled as [Poslední úhrada]
+,a.p91DateBilled as [PoslednÃ­ Ãºhrada]
 ,a.p91Datep31_From as [Worksheet od]
 ,a.p91Datep31_Until as [Worksheet do]
-,a.p91Client_RegID as [IÈ klienta]
-,a.p91Client_VatID as [DIÈ klienta]
+,a.p91Client_RegID as [IÄŒ klienta]
+,a.p91Client_VatID as [DIÄŒ klienta]
 ,a.p91ClientAddress1_Street as [Ulice klienta]
-,a.p91ClientAddress1_City as [Mìsto klienta]
-,a.p91ClientAddress1_ZIP as [PSÈ klienta]
+,a.p91ClientAddress1_City as [MÄ›sto klienta]
+,a.p91ClientAddress1_ZIP as [PSÄŒ klienta]
 ,a.p91ClientPerson as [Osoba klienta]
-,p63.p63Name as [Reijní pøiráka]
+,p63.p63Name as [ReÅ¾ijnÃ­ pÅ™irÃ¡Å¾ka]
 ,p80.p80Name as [Struktura rozpisu]
-,a.p91FixedVatRate as [Fixní DPH sazba]
-,p98.p98Name as [Zaokrouhovací pravidlo]
-,j27domestic.j27Code as [Domácí mìna]
-,a.p91Amount_WithoutVat_Standard as [Základ zvıšené DPH]
-,a.p91VatRate_Standard as [Sazba zvıšení DPH]
-,a.p91Amount_WithoutVat_None as [Základ nulová DPH]
-,a.p91Amount_WithoutVat_Low as [Základ sníená DPH]
-,a.p91VatRate_Low as [Sazba sníené DPH]
-,a.p91Amount_WithoutVat_Standard as [Základ zvıšená DPH]
-,a.p91ValidUntil as [Platnost záznamu]
+,a.p91FixedVatRate as [FixnÃ­ DPH sazba]
+,p98.p98Name as [ZaokrouhovacÃ­ pravidlo]
+,j27domestic.j27Code as [DomÃ¡cÃ­ mÄ›na]
+,a.p91Amount_WithoutVat_Standard as [ZÃ¡klad zvÃ½Å¡enÃ© DPH]
+,a.p91VatRate_Standard as [Sazba zvÃ½Å¡enÃ­ DPH]
+,a.p91Amount_WithoutVat_None as [ZÃ¡klad nulovÃ¡ DPH]
+,a.p91Amount_WithoutVat_Low as [ZÃ¡klad snÃ­Å¾enÃ¡ DPH]
+,a.p91VatRate_Low as [Sazba snÃ­Å¾enÃ© DPH]
+,a.p91Amount_WithoutVat_Standard as [ZÃ¡klad zvÃ½Å¡enÃ¡ DPH]
+,a.p91ValidUntil as [Platnost zÃ¡znamu]
 FROM
 p91Invoice_Log a
 LEFT OUTER JOIN j27Currency j27 ON a.j27ID=j27.j27ID
@@ -16940,14 +16790,14 @@ declare @p41id_test int
 select top 1 @p41id_test=p41id from p31worksheet where p91id=@p91id
 
 
---*****************mìnové kurzy*************************---------------
+--*****************mÄ›novÃ© kurzy*************************---------------
 if exists(select x35ID FROM x35GlobalParam WHERE x35Key like 'j27ID_Domestic')
  select @j27id_domestic=convert(int,x35Value) from x35GlobalParam WHERE x35Key like 'j27ID_Domestic'
 else
  set @j27id_domestic=2
 
 if @p98id is null
- select @p98id=p98ID FROM p98Invoice_Round_Setting_Template WHERE p98IsDefault=1	---vıchozí zaokrouhlovací pravidlo v systému
+ select @p98id=p98ID FROM p98Invoice_Round_Setting_Template WHERE p98IsDefault=1	---vÃ½chozÃ­ zaokrouhlovacÃ­ pravidlo v systÃ©mu
 
 if @exchangedate is null and @j27id_domestic<>@j27id_dest
  begin
@@ -16983,11 +16833,11 @@ if @j27id_dest=@j27id_domestic
   update p91invoice set p91ExchangeRate=1 where p91id=@p91id
  end
 
-----vıchozí mìnovı kurz pocházející z j27id worksheet záznamu-----------
+----vÃ½chozÃ­ mÄ›novÃ½ kurz pochÃ¡zejÃ­cÃ­ z j27id worksheet zÃ¡znamu-----------
 update p31worksheet set p31ExchangeRate_Invoice=dbo.get_exchange_rate(1,@exchangedate,j27ID_Billing_Orig,@j27id_dest)
 WHERE p91id=@p91id
 
-----mìnovı kurz pro manuálnì upravované èástky ve faktuøe-----------
+----mÄ›novÃ½ kurz pro manuÃ¡lnÄ› upravovanÃ© ÄÃ¡stky ve faktuÅ™e-----------
 update p31worksheet set p31ExchangeRate_InvoiceManual=dbo.get_exchange_rate(1,@exchangedate,j27ID_Billing_Invoiced,@j27id_dest)
 WHERE p91id=@p91id and p31IsInvoiceManual=1
 
@@ -17005,7 +16855,7 @@ update p31worksheet set p31Amount_WithoutVat_Invoiced=p31Amount_WithoutVat_Invoi
 where p91id=@p91id and p31IsInvoiceManual=1
 
 if exists(select p31id from p31worksheet a inner join p32activity b on a.p32id=b.p32id inner join p34activitygroup c on b.p34id=c.p34id where a.p91id=@p91id AND p31amount_withoutvat_invoiced*isnull(p31vatrate_invoiced,0)/100<>isnull(p31amount_vat_invoiced,0))
- begin  ---existují fakturované úkony, u kterıch nesedí vıpoèet DPH
+ begin  ---existujÃ­ fakturovanÃ© Ãºkony, u kterÃ½ch nesedÃ­ vÃ½poÄet DPH
   update p31worksheet set p31amount_vat_invoiced=p31amount_withoutvat_invoiced*p31vatrate_invoiced/100
   ,p31amount_withvat_invoiced=p31amount_withoutvat_invoiced+(p31amount_withoutvat_invoiced*p31vatrate_invoiced/100)
   WHERE p91id=@p91id
@@ -17019,9 +16869,9 @@ update p31worksheet set j27ID_Billing_Invoiced=@j27id_dest
 where p91id=@p91id and isnull(j27ID_Billing_Invoiced,0)<>@j27id_dest
 
 
-exec dbo.p91_calc_overhead @p91id,@p63id	---pøípadná reijní pøiráka k faktuøe
+exec dbo.p91_calc_overhead @p91id,@p63id	---pÅ™Ã­padnÃ¡ reÅ¾ijnÃ­ pÅ™irÃ¡Å¾ka k faktuÅ™e
 
-----mìnovı kurz z fakturaèní mìny do domácí mìny----------
+----mÄ›novÃ½ kurz z fakturaÄnÃ­ mÄ›ny do domÃ¡cÃ­ mÄ›ny----------
 update p31worksheet set j27ID_Billing_Invoiced_Domestic=@j27id_domestic, p31ExchangeRate_Domestic=dbo.get_exchange_rate(1,@exchangedate,j27ID_Billing_Invoiced,@j27id_domestic)
 WHERE p91id=@p91id
 
@@ -17032,7 +16882,7 @@ where p91id=@p91id
 
 
 
---***************èástky DPH***********************************--
+--***************ÄÃ¡stky DPH***********************************--
 declare @p91amount_withoutvat_none float
 
 declare @p91amount_withoutVat_low float,@p91amount_withoutVat_standard float,@p91amount_withoutVat_special float
@@ -17048,7 +16898,7 @@ select @p91vatrate_special=dbo.p91_get_vatrate(4,@j27id_dest,@j17id,@datSupply)
 exec dbo.p91_calc_p81 @p91id,@p80id
 
 if @p92invoicetype=2	--dobropis
- begin  ---u dobropisu brát sazby DPH z pùvodní faktury   
+ begin  ---u dobropisu brÃ¡t sazby DPH z pÅ¯vodnÃ­ faktury   
    select @p91vatrate_low=p91vatrate_low,@p91vatrate_standard=p91vatrate_standard,@p91vatrate_special=p91vatrate_special
    FROM
    p91Invoice WHERE p91ID in (select p91ID_CreditNoteBind FROM p91invoice where p91id=@p91id)
@@ -17102,12 +16952,12 @@ set @p91amount_withVat=@p91amount_withoutvat_none+@p91amount_withVat_low+@p91amo
 set @p91amount_Vat=@p91amount_Vat_low+@p91amount_Vat_standard+@p91amount_Vat_special
 
 if @p91amount_withVat<>(@p91amount_withoutVat+@p91amount_Vat)
- begin	---celková èástka vè. dph se matematicky nerovná
+ begin	---celkovÃ¡ ÄÃ¡stka vÄ. dph se matematicky nerovnÃ¡
   set @p91amount_withVat=@p91amount_withoutVat+@p91amount_Vat
  end
 
 
----*************- spárovaná zálohová faktura************************************
+---*************- spÃ¡rovanÃ¡ zÃ¡lohovÃ¡ faktura************************************
 declare @p91amount_billed float,@p91amount_debt float,@datLastBilled datetime,@p91proformaamount_withoutvat_low float,@p91proformaamount_withoutvat_standard float
 declare @p91proformaamount float,@p91proformabilledamount float,@p91proformaamount_vat_low float,@p91proformaamount_vat_standard float,@p91proformaamount_withoutvat_none float
 declare @p91proformaamount_vatrate float
@@ -17136,9 +16986,9 @@ set @p91proformaamount_withoutvat_none=isnull(@p91proformaamount_withoutvat_none
 --set @p91amount_Vat_standard=@p91amount_Vat_standard-@p91proformaamount_vat_standard
 --set @p91amount_Vat_low=@p91amount_Vat_low-@p91proformaamount_vat_low
 
---************************zaokrouhlování************************************----
+--************************zaokrouhlovÃ¡nÃ­************************************----
 declare @p97id int,@p97scale int,@p91roundfitamount float
-declare @p97amountflag int	---jaká èástka je pøedmìtem zaokrouhlování: 1-èástka DPH, 2-èástka bez DPH (základ), 3-èástka vè. DPH
+declare @p97amountflag int	---jakÃ¡ ÄÃ¡stka je pÅ™edmÄ›tem zaokrouhlovÃ¡nÃ­: 1-ÄÃ¡stka DPH, 2-ÄÃ¡stka bez DPH (zÃ¡klad), 3-ÄÃ¡stka vÄ. DPH
 
 set @p91roundfitamount=0
 
@@ -17147,14 +16997,14 @@ if @p98id is not null
 
 
 if @p97id is not null
-  begin  ----dojde k zaokrouhlování
-    if @p97amountflag=3		---zaokrouhluje se celková èástka faktury
+  begin  ----dojde k zaokrouhlovÃ¡nÃ­
+    if @p97amountflag=3		---zaokrouhluje se celkovÃ¡ ÄÃ¡stka faktury
 	begin
 	  set @p91roundfitamount=round(@p91amount_withVat,@p97scale)-@p91amount_withVat
 	  set @p91amount_withVat=@p91amount_withVat+@p91roundfitamount
 	  
 	end
-	if @p97amountflag=2		---zaokrouhluje se celkovı základ danì
+	if @p97amountflag=2		---zaokrouhluje se celkovÃ½ zÃ¡klad danÄ›
 	 begin
 	   declare @xx float
 	   set @xx=0
@@ -17179,11 +17029,11 @@ if @p97id is not null
 	   set @p91amount_withoutVat=@p91amount_withoutvat_none+@p91amount_withoutVat_low+@p91amount_withoutVat_standard
 	   set @p91amount_withVat=@p91amount_withoutvat_none+@p91amount_withVat_low+@p91amount_withVat_standard
 	   set @p91amount_Vat=0+@p91amount_Vat_low+@p91amount_Vat_standard
-	   --set @p91roundfitamount=0	---zaokrouhlení je nula, protoe u je zahrnuté v èástce bez DPH
+	   --set @p91roundfitamount=0	---zaokrouhlenÃ­ je nula, protoÅ¾e uÅ¾ je zahrnutÃ© v ÄÃ¡stce bez DPH
 	   
 	 end
 
-    if @p97amountflag=1		---zaokrouhluje se vısledná èástka DPH
+    if @p97amountflag=1		---zaokrouhluje se vÃ½slednÃ¡ ÄÃ¡stka DPH
 	begin
 	  set @p91roundfitamount=round(@p91amount_Vat_low,@p97scale)-@p91amount_Vat_low
 	  set @p91amount_Vat_low=@p91amount_Vat_low+@p91roundfitamount
@@ -17201,7 +17051,7 @@ if @p97id is not null
 	
 	  set @p91amount_withVat=@p91amount_withoutvat_none+@p91amount_withVat_low+@p91amount_withVat_standard+@p91amount_withVat_special
 
-	  set @p91roundfitamount=0	---zaokrouhlení je nula, protoe u je zahrnuté v èástce DPH
+	  set @p91roundfitamount=0	---zaokrouhlenÃ­ je nula, protoÅ¾e uÅ¾ je zahrnutÃ© v ÄÃ¡stce DPH
 	  
 	end
   end
@@ -17223,14 +17073,14 @@ if @p92invoicetype=2	---dobropis
 
 if exists(select a.p91id from p91invoice a inner join p92InvoiceType b on a.p92id=b.p92id where b.p92invoicetype=2 and a.p91ID_CreditNoteBind=@p91id)
  begin
-   ---faktura je dobropisována
+   ---faktura je dobropisovÃ¡na
    declare @amount_dobropis float
    select @amount_dobropis=sum(p91amount_withVat) from p91invoice a inner join p92InvoiceType b on a.p92id=b.p92id where b.p92invoicetype=2 and a.p91ID_CreditNoteBind=@p91id
    set @p91amount_debt=@p91amount_debt-abs(@amount_dobropis)
    set @p91amount_billed=@p91amount_billed+abs(@amount_dobropis)
  end
 
-----****závìreènı update**********************
+----****zÃ¡vÄ›reÄnÃ½ update**********************
 update p91invoice set p91amount_withoutvat_none=@p91amount_withoutvat_none,p91amount_withoutVat_low=@p91amount_withoutVat_low,p91amount_withoutVat_standard=@p91amount_withoutVat_standard,p91amount_withoutVat_special=@p91amount_withoutVat_special
 ,p91amount_withVat_low=@p91amount_withVat_low,p91amount_withVat_standard=@p91amount_withVat_standard,p91amount_withVat_special=@p91amount_withVat_special
 ,p91amount_Vat_low=@p91amount_Vat_low,p91amount_Vat_standard=@p91amount_Vat_standard,p91amount_Vat_special=@p91amount_Vat_special
@@ -17248,12 +17098,12 @@ update p91invoice set p91amount_withoutvat_none=@p91amount_withoutvat_none,p91am
 WHERE p91id=@p91id
 
 
----rozúètování faktury
+---rozÃºÄtovÃ¡nÃ­ faktury
 --exec p91_invoice_statement @p91id
 
 if @p92invoicetype=2
  begin
-   --pøepoèítat ještì svázanı doklad k dobropisu
+   --pÅ™epoÄÃ­tat jeÅ¡tÄ› svÃ¡zanÃ½ doklad k dobropisu
    declare @p91id_bound int
    select TOP 1 @p91id_bound=p91ID_CreditNoteBind from p91invoice where p91id=@p91id
 
@@ -17263,7 +17113,7 @@ if @p92invoicetype=2
 
 
  if exists(select x35ID FROM x35GlobalParam WHERE x35Key LIKE 'p51ID_FPR' AND ISNUMERIC(x35Value)=1)
-  begin	---pøepoèet efektivních sazeb úkonù faktury
+  begin	---pÅ™epoÄet efektivnÃ­ch sazeb ÃºkonÅ¯ faktury
     declare @p51id int
 
 	select @p51id=convert(int,x35Value) FROM x35GlobalParam WHERE x35Key LIKE 'p51ID_FPR'
@@ -17313,7 +17163,7 @@ CREATE    PROCEDURE [dbo].[p91_update_code]
 
 AS
 
----automaticky se spouští po uloení záznamu projektu
+---automaticky se spouÅ¡tÃ­ po uloÅ¾enÃ­ zÃ¡znamu projektu
 declare @p91code varchar(50),@x38id int,@isdraft bit,@x38id_draft int
 
 select @p91code=p91Code,@x38id=p92.x38ID,@x38id_draft=p92.x38ID_Draft,@isdraft=a.p91IsDraft
@@ -17356,17 +17206,17 @@ GO
 
 
 CREATE   procedure [dbo].[p92_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p92id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu typu faktury z tabulky p92InvoiceType
+--odstranÄ›nÃ­ zÃ¡znamu typu faktury z tabulky p92InvoiceType
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=p91ID from p91Invoice WHERE p92ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jedna faktura má vazbu na tento typ ('+dbo.GetObjectAlias('p91',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jedna faktura mÃ¡ vazbu na tento typ ('+dbo.GetObjectAlias('p91',@ref_pid)+')'
 
 
 if isnull(@err_ret,'')<>''
@@ -17414,17 +17264,17 @@ GO
 
 
 CREATE   procedure [dbo].[p93_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p93id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu hlavièky dodavatele z tabulky p92InvoiceType
+--odstranÄ›nÃ­ zÃ¡znamu hlaviÄky dodavatele z tabulky p92InvoiceType
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=p92ID from p92InvoiceType WHERE p93ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden typ faktury má vazbu na tento záznam.'
+ set @err_ret='MinimÃ¡lnÄ› jeden typ faktury mÃ¡ vazbu na tento zÃ¡znam.'
 
 
 if isnull(@err_ret,'')<>''
@@ -17474,20 +17324,20 @@ GO
 
 
 CREATE   procedure [dbo].[p95_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p95id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu  z tabulky p95InvoiceRow
+--odstranÄ›nÃ­ zÃ¡znamu  z tabulky p95InvoiceRow
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=p32ID from p32Activity WHERE p95ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jedna aktivita má vazbu na tento oddíl ('+dbo.GetObjectAlias('p32',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jedna aktivita mÃ¡ vazbu na tento oddÃ­l ('+dbo.GetObjectAlias('p32',@ref_pid)+')'
 
 if exists(select p81ID FROM p81InvoiceAmount WHERE p95ID=@pid)
- set @err_ret='Minimálnì u jedné faktury existuje cenovı rozpis podle tohoto fakturaèního oddílu.'
+ set @err_ret='MinimÃ¡lnÄ› u jednÃ© faktury existuje cenovÃ½ rozpis podle tohoto fakturaÄnÃ­ho oddÃ­lu.'
 
 
 if isnull(@err_ret,'')<>''
@@ -17536,12 +17386,12 @@ GO
 
 
 CREATE   procedure [dbo].[p97_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p97id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu zaokrouhlovacího pravidla z tabulky p97Invoice_Round_Setting
+--odstranÄ›nÃ­ zÃ¡znamu zaokrouhlovacÃ­ho pravidla z tabulky p97Invoice_Round_Setting
 
 
 DELETE from p97Invoice_Round_Setting where p97ID=@pid
@@ -17573,23 +17423,23 @@ GO
 
 
 CREATE   procedure [dbo].[p98_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--p98id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu zaokrouhlovacího pravidla: p98Invoice_Round_Setting_Template
+--odstranÄ›nÃ­ zÃ¡znamu zaokrouhlovacÃ­ho pravidla: p98Invoice_Round_Setting_Template
 declare @ref_pid int
 
 SELECT TOP 1 @ref_pid=p91ID from p91Invoice WHERE p98ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jedna vystavená faktura má vazbu na toto zaokrouhlovací pravidlo ('+dbo.GetObjectAlias('p91',@ref_pid)+')'
+ set @err_ret='MinimÃ¡lnÄ› jedna vystavenÃ¡ faktura mÃ¡ vazbu na toto zaokrouhlovacÃ­ pravidlo ('+dbo.GetObjectAlias('p91',@ref_pid)+')'
 
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p92ID from p92InvoiceType WHERE p98ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden typ faktury má vazbu na toto zaokrouhlovací pravidlo.'
+ set @err_ret='MinimÃ¡lnÄ› jeden typ faktury mÃ¡ vazbu na toto zaokrouhlovacÃ­ pravidlo.'
 
 
 if isnull(@err_ret,'')<>''
@@ -17702,14 +17552,14 @@ GO
 
 
 CREATE   procedure [dbo].[x18_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--x18id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu kategorie z tabulky  èíselníku z tabulky x18EntityCategory
+--odstranÄ›nÃ­ zÃ¡znamu kategorie z tabulky  ÄÃ­selnÃ­ku z tabulky x18EntityCategory
 if exists(select x19ID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE b.x18ID=@pid)
- set @err_ret='Nelze odstranit, protoe minimálnì jedna poloka ji byla pouita v oštítkování nìjakého záznamu. Dokument mùete pøesunout do archivu nebo vyèistit jeho vazby.'
+ set @err_ret='Nelze odstranit, protoÅ¾e minimÃ¡lnÄ› jedna poloÅ¾ka jiÅ¾ byla pouÅ¾ita v oÅ¡tÃ­tkovÃ¡nÃ­ nÄ›jakÃ©ho zÃ¡znamu. Dokument mÅ¯Å¾ete pÅ™esunout do archivu nebo vyÄistit jeho vazby.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -17721,7 +17571,7 @@ SELECT @x23id=x23ID FROM x18EntityCategory WHERE x18ID=@pid
 if not exists(select x18ID FROM x18EntityCategory WHERE x18ID<>@pid AND x23ID=@x23id)
  begin
   if exists(select o23ID FROM o23Doc WHERE x23ID=@x23id)
-   set @err_ret='Typ dokumentu obsahuje minimálnì jeden dokument. Je tøeba nejdøíve odstranit svázané dokumenty.'
+   set @err_ret='Typ dokumentu obsahuje minimÃ¡lnÄ› jeden dokument. Je tÅ™eba nejdÅ™Ã­ve odstranit svÃ¡zanÃ© dokumenty.'
 
  end
 
@@ -17791,17 +17641,17 @@ GO
 
 
 CREATE   procedure [dbo].[x23_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--x23id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu combo èíselníku z tabulky x27EntityFieldGroup
+--odstranÄ›nÃ­ zÃ¡znamu combo ÄÃ­selnÃ­ku z tabulky x27EntityFieldGroup
 if exists(select o23ID FROM o23Doc WHERE x23ID=@pid)
- set @err_ret='Èíselník obsahuje minimálnì jednu poloku - je tøeba vyèistit poloky èíselníku.'
+ set @err_ret='ÄŒÃ­selnÃ­k obsahuje minimÃ¡lnÄ› jednu poloÅ¾ku - je tÅ™eba vyÄistit poloÅ¾ky ÄÃ­selnÃ­ku.'
 
 if exists(select x18ID FROM x18EntityCategory where x23ID=@pid)
- set @err_ret='Combo seznam má vazbu na minimálnì jeden štítek.'
+ set @err_ret='Combo seznam mÃ¡ vazbu na minimÃ¡lnÄ› jeden Å¡tÃ­tek.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -17856,14 +17706,14 @@ GO
 
 
 CREATE   procedure [dbo].[x27_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--x27id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu skupiny uivatelskıch polí z tabulky x27EntityFieldGroup
+--odstranÄ›nÃ­ zÃ¡znamu skupiny uÅ¾ivatelskÃ½ch polÃ­ z tabulky x27EntityFieldGroup
 if exists(select x28ID FROM x28EntityField WHERE x27ID=@pid)
- set @err_ret='Minimálnì jedno uivatelské pole je svázané s touto skupinou.'
+ set @err_ret='MinimÃ¡lnÄ› jedno uÅ¾ivatelskÃ© pole je svÃ¡zanÃ© s touto skupinou.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -17911,12 +17761,12 @@ GO
 
 
 CREATE   procedure [dbo].[x28_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--x28id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu uivatelského pole z tabulky x28EntityField
+--odstranÄ›nÃ­ zÃ¡znamu uÅ¾ivatelskÃ©ho pole z tabulky x28EntityField
 
 if isnull(@err_ret,'')<>''
  return 
@@ -17970,12 +17820,12 @@ GO
 
 
 CREATE   procedure [dbo].[x31_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--x31id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu sestavy z tabulky x31Report
+--odstranÄ›nÃ­ zÃ¡znamu sestavy z tabulky x31Report
 
 
 
@@ -18028,14 +17878,14 @@ GO
 
 
 CREATE   procedure [dbo].[x36userparam_get_mytag]
-@j03id int					--id uivatele
-,@x36key varchar(50)		--název klíèe
-,@clear_after_read bit		--1 - ihned po pøeètení vyèistit hodnotu
-,@x36value nvarchar(500) OUTPUT	--hodnota klíèe
+@j03id int					--id uÅ¾ivatele
+,@x36key varchar(50)		--nÃ¡zev klÃ­Äe
+,@clear_after_read bit		--1 - ihned po pÅ™eÄtenÃ­ vyÄistit hodnotu
+,@x36value nvarchar(500) OUTPUT	--hodnota klÃ­Äe
 
 AS
 
---Uloení záznamu uivatelského parametru do tabulky x36UserParam
+--UloÅ¾enÃ­ zÃ¡znamu uÅ¾ivatelskÃ©ho parametru do tabulky x36UserParam
 set @x36value=null
 
 if isnull(@j03id,0)=0
@@ -18095,13 +17945,13 @@ GO
 
 
 CREATE   procedure [dbo].[x36userparam_save]
-@j03id int					--id uivatele
-,@x36key varchar(50)		--název klíèe
-,@x36value nvarchar(500)	--hodnota klíèe
+@j03id int					--id uÅ¾ivatele
+,@x36key varchar(50)		--nÃ¡zev klÃ­Äe
+,@x36value nvarchar(500)	--hodnota klÃ­Äe
 
 AS
 
---Uloení záznamu uivatelského parametru do tabulky x36UserParam
+--UloÅ¾enÃ­ zÃ¡znamu uÅ¾ivatelskÃ©ho parametru do tabulky x36UserParam
 
 if isnull(@j03id,0)=0
   return
@@ -18161,13 +18011,13 @@ GO
 
 
 CREATE   procedure [dbo].[x36userparam_save_allusers]
-@j03id_sys int				--id pøihlášeného uivatele
-,@x36key varchar(50)		--název klíèe
-,@x36value nvarchar(500)	--hodnota klíèe
+@j03id_sys int				--id pÅ™ihlÃ¡Å¡enÃ©ho uÅ¾ivatele
+,@x36key varchar(50)		--nÃ¡zev klÃ­Äe
+,@x36value nvarchar(500)	--hodnota klÃ­Äe
 
 AS
 
---Uloení záznamu uivatelského parametru do tabulky x36UserParam všem uivatelùm
+--UloÅ¾enÃ­ zÃ¡znamu uÅ¾ivatelskÃ©ho parametru do tabulky x36UserParam vÅ¡em uÅ¾ivatelÅ¯m
 
 if isnull(@x36key,'')=''
   return
@@ -18253,13 +18103,13 @@ GO
 
 
 CREATE   procedure [dbo].[x37_save]
-@j03id int					--id uivatele
-,@page varchar(50)		--název aspx stránky
-,@dockstate nvarchar(MAX)	--uloenı dockstate
+@j03id int					--id uÅ¾ivatele
+,@page varchar(50)		--nÃ¡zev aspx strÃ¡nky
+,@dockstate nvarchar(MAX)	--uloÅ¾enÃ½ dockstate
 
 AS
 
---Uloení záznamu uivatelem nastaveného stavu RadDock na stránce @page
+--UloÅ¾enÃ­ zÃ¡znamu uÅ¾ivatelem nastavenÃ©ho stavu RadDock na strÃ¡nce @page
 
 if @j03id is null
   return
@@ -18319,44 +18169,44 @@ GO
 
 
 CREATE   procedure [dbo].[x38_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--x38id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu èíselné øady z tabulky x38CodeLogic
+--odstranÄ›nÃ­ zÃ¡znamu ÄÃ­selnÃ© Å™ady z tabulky x38CodeLogic
 declare @ref_pid int
 
 
 
 SELECT TOP 1 @ref_pid=p42ID from p42ProjectType WHERE x38ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden typ projektu je svázanı s touto èíselnou øadou.'
+ set @err_ret='MinimÃ¡lnÄ› jeden typ projektu je svÃ¡zanÃ½ s touto ÄÃ­selnou Å™adou.'
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p29ID from p29ContactType WHERE x38ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden typ klienta je svázanı s touto èíselnou øadou.'
+ set @err_ret='MinimÃ¡lnÄ› jeden typ klienta je svÃ¡zanÃ½ s touto ÄÃ­selnou Å™adou.'
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p92ID from p92InvoiceType WHERE x38ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden typ faktury je svázanı s touto èíselnou øadou.'
+ set @err_ret='MinimÃ¡lnÄ› jeden typ faktury je svÃ¡zanÃ½ s touto ÄÃ­selnou Å™adou.'
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p89ID from p89ProformaType WHERE x38ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden typ zálohy je svázanı s touto èíselnou øadou.'
+ set @err_ret='MinimÃ¡lnÄ› jeden typ zÃ¡lohy je svÃ¡zanÃ½ s touto ÄÃ­selnou Å™adou.'
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p57ID from p57TaskType WHERE x38ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden typ úkolu je svázanı s touto èíselnou øadou.'
+ set @err_ret='MinimÃ¡lnÄ› jeden typ Ãºkolu je svÃ¡zanÃ½ s touto ÄÃ­selnou Å™adou.'
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=x18ID from x18EntityCategory WHERE x38ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden typ dokumentu je svázanı s touto èíselnou øadou.'
+ set @err_ret='MinimÃ¡lnÄ› jeden typ dokumentu je svÃ¡zanÃ½ s touto ÄÃ­selnou Å™adou.'
 
 
 if isnull(@err_ret,'')<>''
@@ -18456,12 +18306,12 @@ GO
 
 
 CREATE   procedure [dbo].[x40_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--x40id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu odeslané e-mail zprávy
+--odstranÄ›nÃ­ zÃ¡znamu odeslanÃ© e-mail zprÃ¡vy
 
 
 BEGIN TRANSACTION
@@ -18516,12 +18366,12 @@ GO
 
 
 CREATE   procedure [dbo].[x46_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--x46id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu notifikaèního nastavení z tabulky x46EventNotification
+--odstranÄ›nÃ­ zÃ¡znamu notifikaÄnÃ­ho nastavenÃ­ z tabulky x46EventNotification
 
 
 BEGIN TRANSACTION
@@ -18614,12 +18464,12 @@ GO
 
 
 CREATE   procedure [dbo].[x48_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--x48id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu SQL úlohy z tabulky x48SqlTask
+--odstranÄ›nÃ­ zÃ¡znamu SQL Ãºlohy z tabulky x48SqlTask
 
 
 BEGIN TRANSACTION
@@ -18668,12 +18518,12 @@ GO
 
 
 CREATE   procedure [dbo].[x50_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--x50id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu pole z tabulky x50Help
+--odstranÄ›nÃ­ zÃ¡znamu pole z tabulky x50Help
 
 if exists(select o27ID FROM o27Attachment where x50ID=@pid)
  DELETE FROM o27Attachment where x50ID=@pid
@@ -18721,15 +18571,15 @@ GO
 
 
 CREATE   procedure [dbo].[x55_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--x55id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu z tabulky x55HtmlSnippet
+--odstranÄ›nÃ­ zÃ¡znamu z tabulky x55HtmlSnippet
 
 if exists(select x57ID FROM x57UserPageBinding WHERE x55ID=@pid)
- set @err_ret='Minimálnì jedna osobní stránka vyuívá tento BOX.'
+ set @err_ret='MinimÃ¡lnÄ› jedna osobnÃ­ strÃ¡nka vyuÅ¾Ã­vÃ¡ tento BOX.'
 
 
 if isnull(@err_ret,'')<>''
@@ -18781,12 +18631,12 @@ GO
 
 
 CREATE   procedure [dbo].[x67_delete]
-@j03id_sys int				--pøihlášenı uivatel
+@j03id_sys int				--pÅ™ihlÃ¡Å¡enÃ½ uÅ¾ivatel
 ,@pid int					--x67id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+,@err_ret varchar(500) OUTPUT		---pÅ™Ã­padnÃ¡ nÃ¡vratovÃ¡ chyba
 
 AS
---odstranìní záznamu role z tabulky x67EntityRole
+--odstranÄ›nÃ­ zÃ¡znamu role z tabulky x67EntityRole
 declare @ref_pid int,@x29id int,@x69recordpid int
 
 
@@ -18796,16 +18646,16 @@ from x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID
 WHERE b.x67ID=@pid
 
 if @ref_pid is not null and @x29id=141
- set @err_ret='Tato role je ji obsazena v minimálnì jednom projektu ('+dbo.GetObjectAlias('p41',@x69recordpid)+')'
+ set @err_ret='Tato role je jiÅ¾ obsazena v minimÃ¡lnÄ› jednom projektu ('+dbo.GetObjectAlias('p41',@x69recordpid)+')'
 
 if @ref_pid is not null and @x29id=328
- set @err_ret='Tato role je ji obsazena v minimálnì jednom záznamu klienta ('+dbo.GetObjectAlias('p28',@x69recordpid)+')'
+ set @err_ret='Tato role je jiÅ¾ obsazena v minimÃ¡lnÄ› jednom zÃ¡znamu klienta ('+dbo.GetObjectAlias('p28',@x69recordpid)+')'
 
 if @ref_pid is not null and @x29id=356
- set @err_ret='Tato role je ji obsazena v minimálnì jednom úkolu ('+dbo.GetObjectAlias('p56',@x69recordpid)+')'
+ set @err_ret='Tato role je jiÅ¾ obsazena v minimÃ¡lnÄ› jednom Ãºkolu ('+dbo.GetObjectAlias('p56',@x69recordpid)+')'
 
 if @ref_pid is not null and @x29id=223
- set @err_ret='Tato role je ji obsazena v minimálnì jednom dokumentu ('+dbo.GetObjectAlias('p56',@x69recordpid)+')'
+ set @err_ret='Tato role je jiÅ¾ obsazena v minimÃ¡lnÄ› jednom dokumentu ('+dbo.GetObjectAlias('p56',@x69recordpid)+')'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -18816,7 +18666,7 @@ BEGIN TRY
 	
 	if exists(select x67id from x67EntityRole where x67ID=@pid and x29ID=141)
 	 begin
-		--odstranit navíc naklonovanou roli pro entitu j18Region (projektová skupina)
+		--odstranit navÃ­c naklonovanou roli pro entitu j18Region (projektovÃ¡ skupina)
 		declare @x67id_cloned int
 		
 		select @x67id_cloned=x67ID FROM x67EntityRole WHERE x67ParentID=@pid
@@ -18911,14 +18761,14 @@ GO
 
 CREATE VIEW [dbo].[view_fulltext_invoice]
 as
-select 'p91' as Prefix,'Kód' as Field,p91ID as RecPid,p91Code as RecValue,NULL as RecComment,p91Code+isnull('/'+p91Client,'') as RecName,p91DateInsert as RecDateInsert
+select 'p91' as Prefix,'KÃ³d' as Field,p91ID as RecPid,p91Code as RecValue,NULL as RecComment,p91Code+isnull('/'+p91Client,'') as RecName,p91DateInsert as RecDateInsert
 from
 p91Invoice
 UNION SELECT 'p91' as Prefix,'Text faktury' as Field,p91ID as RecPid,p91Text1 as RecValue,NULL as RecComment,p91Code+isnull('/'+p91Client,'') as RecName,p91DateInsert as RecDateInsert
 from
 p91Invoice
 WHERE p91Text1 IS NOT NULL
-UNION SELECT 'p91' as Prefix,'Technickı text' as Field,p91ID as RecPid,p91Text2 as RecValue,NULL as RecComment,p91Code+isnull('/'+p91Client,'') as RecName,p91DateInsert as RecDateInsert
+UNION SELECT 'p91' as Prefix,'TechnickÃ½ text' as Field,p91ID as RecPid,p91Text2 as RecValue,NULL as RecComment,p91Code+isnull('/'+p91Client,'') as RecName,p91DateInsert as RecDateInsert
 from
 p91Invoice
 WHERE p91Text2 is not null
@@ -18930,11 +18780,11 @@ UNION SELECT 'p91' as Prefix,'Osoba klienta' as Field,p91ID as RecPid,p91ClientP
 from
 p91Invoice
 WHERE p91ClientPerson is not null
-UNION SELECT 'p91' as Prefix,'IÈ' as Field,p91ID as RecPid,p91Client_RegID as RecValue,NULL as RecComment,p91Code+isnull('/'+p91Client,'') as RecName,p91DateInsert as RecDateInsert
+UNION SELECT 'p91' as Prefix,'IÄŒ' as Field,p91ID as RecPid,p91Client_RegID as RecValue,NULL as RecComment,p91Code+isnull('/'+p91Client,'') as RecName,p91DateInsert as RecDateInsert
 from
 p91Invoice
 WHERE p91Client_RegID is not null
-UNION SELECT 'p91' as Prefix,'DIÈ' as Field,p91ID as RecPid,p91Client_VatID as RecValue,NULL as RecComment,p91Code+isnull('/'+p91Client,'') as RecName,p91DateInsert as RecDateInsert
+UNION SELECT 'p91' as Prefix,'DIÄŒ' as Field,p91ID as RecPid,p91Client_VatID as RecValue,NULL as RecComment,p91Code+isnull('/'+p91Client,'') as RecName,p91DateInsert as RecDateInsert
 from
 p91Invoice
 WHERE p91Client_VatID is not null
@@ -18944,14 +18794,14 @@ UNION SELECT 'p91' as Prefix,'Adresa faktury' as Field,p91ID as RecPid
 from
 p91Invoice
 WHERE p91ClientAddress1_Street is not null
-UNION select 'p90' as Prefix,'Kód' as Field,a.p90ID as RecPid,a.p90Code as RecValue,NULL as RecComment,a.p90Code+'/'+b.p28Name as RecName,a.p90DateInsert as RecDateInsert
+UNION select 'p90' as Prefix,'KÃ³d' as Field,a.p90ID as RecPid,a.p90Code as RecValue,NULL as RecComment,a.p90Code+'/'+b.p28Name as RecName,a.p90DateInsert as RecDateInsert
 from
 p90Proforma a INNER JOIN p28Contact b ON a.p28ID=b.p28ID
-UNION select 'p90' as Prefix,'Text zálohy' as Field,a.p90ID as RecPid,a.p90Text1 as RecValue,NULL as RecComment,a.p90Code+'/'+b.p28Name as RecName,a.p90DateInsert as RecDateInsert
+UNION select 'p90' as Prefix,'Text zÃ¡lohy' as Field,a.p90ID as RecPid,a.p90Text1 as RecValue,NULL as RecComment,a.p90Code+'/'+b.p28Name as RecName,a.p90DateInsert as RecDateInsert
 from
 p90Proforma a INNER JOIN p28Contact b ON a.p28ID=b.p28ID
 WHERE p90Text1 IS NOT NULL
-UNION select 'p90' as Prefix,'Klient zálohy' as Field,a.p90ID as RecPid
+UNION select 'p90' as Prefix,'Klient zÃ¡lohy' as Field,a.p90ID as RecPid
 ,b.p28Name+isnull(', '+b.p28RegID,'')+isnull(', '+b.p28VatID,'') as RecValue
 ,NULL as RecComment,a.p90Code+'/'+b.p28Name as RecName,a.p90DateInsert as RecDateInsert
 from
@@ -18973,63 +18823,63 @@ GO
 
 CREATE VIEW [dbo].[view_fulltext_main]
 as
-select 'p41' as Prefix,'Kód' as Field,p41ID as RecPid,p41Code as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
+select 'p41' as Prefix,'KÃ³d' as Field,p41ID as RecPid,p41Code as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
 from
 p41Project
-UNION SELECT 'p41' as Prefix,'Název' as Field,p41ID as RecPid,p41Name as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
+UNION SELECT 'p41' as Prefix,'NÃ¡zev' as Field,p41ID as RecPid,p41Name as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
 from
 p41Project
-UNION SELECT 'p41' as Prefix,'Zkrácenı název' as Field,p41ID as RecPid,p41NameShort as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
+UNION SELECT 'p41' as Prefix,'ZkrÃ¡cenÃ½ nÃ¡zev' as Field,p41ID as RecPid,p41NameShort as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
 from
 p41Project
 WHERE p41NameShort is not null
-UNION SELECT 'p41' as Prefix,'Fakturaèní poznámka' as Field,p41ID as RecPid,p41BillingMemo as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
+UNION SELECT 'p41' as Prefix,'FakturaÄnÃ­ poznÃ¡mka' as Field,p41ID as RecPid,p41BillingMemo as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
 from
 p41Project
 WHERE p41BillingMemo is not null
-UNION SELECT 'p41' as Prefix,'Vıchozí text faktury' as Field,p41ID as RecPid,p41InvoiceDefaultText1 as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
+UNION SELECT 'p41' as Prefix,'VÃ½chozÃ­ text faktury' as Field,p41ID as RecPid,p41InvoiceDefaultText1 as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
 from
 p41Project
 WHERE p41InvoiceDefaultText1 is not null
-UNION SELECT 'p41' as Prefix,'Vıchozí technickı text faktury' as Field,p41ID as RecPid,p41InvoiceDefaultText2 as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
+UNION SELECT 'p41' as Prefix,'VÃ½chozÃ­ technickÃ½ text faktury' as Field,p41ID as RecPid,p41InvoiceDefaultText2 as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
 from
 p41Project
 WHERE p41InvoiceDefaultText2 is not null
-UNION SELECT 'p41' as Prefix,'Externí kód' as Field,p41ID as RecPid,p41ExternalPID as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
+UNION SELECT 'p41' as Prefix,'ExternÃ­ kÃ³d' as Field,p41ID as RecPid,p41ExternalPID as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
 from
 p41Project
 WHERE p41ExternalPID is not null
-UNION SELECT 'p28' as Prefix,'Kód' as Field,p28ID as RecPid,p28Code as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
+UNION SELECT 'p28' as Prefix,'KÃ³d' as Field,p28ID as RecPid,p28Code as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
 from
 p28Contact
-UNION SELECT 'p28' as Prefix,'Název' as Field,p28ID as RecPid,p28Name as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
+UNION SELECT 'p28' as Prefix,'NÃ¡zev' as Field,p28ID as RecPid,p28Name as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
 from
 p28Contact
-UNION SELECT 'p28' as Prefix,'IÈ' as Field,p28ID as RecPid,p28RegID as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
+UNION SELECT 'p28' as Prefix,'IÄŒ' as Field,p28ID as RecPid,p28RegID as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
 from
 p28Contact
 WHERE p28RegID IS NOT NULL
-UNION SELECT 'p28' as Prefix,'DIÈ' as Field,p28ID as RecPid,p28VatID as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
+UNION SELECT 'p28' as Prefix,'DIÄŒ' as Field,p28ID as RecPid,p28VatID as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
 from
 p28Contact
 WHERE p28VatID IS NOT NULL
-UNION SELECT 'p28' as Prefix,'Vıchozí text faktury' as Field,p28ID as RecPid,p28InvoiceDefaultText1 as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
+UNION SELECT 'p28' as Prefix,'VÃ½chozÃ­ text faktury' as Field,p28ID as RecPid,p28InvoiceDefaultText1 as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
 from
 p28Contact
 WHERE p28InvoiceDefaultText1 IS NOT NULL
-UNION SELECT 'p28' as Prefix,'Vıchozí technickı text faktury' as Field,p28ID as RecPid,p28InvoiceDefaultText2 as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
+UNION SELECT 'p28' as Prefix,'VÃ½chozÃ­ technickÃ½ text faktury' as Field,p28ID as RecPid,p28InvoiceDefaultText2 as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
 from
 p28Contact
 WHERE p28InvoiceDefaultText2 IS NOT NULL
-UNION SELECT 'p28' as Prefix,'Externí kód' as Field,p28ID as RecPid,p28ExternalPID as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
+UNION SELECT 'p28' as Prefix,'ExternÃ­ kÃ³d' as Field,p28ID as RecPid,p28ExternalPID as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
 from
 p28Contact
 WHERE p28ExternalPID IS NOT NULL
-UNION SELECT 'p28' as Prefix,'Fakturaèní poznámka' as Field,p28ID as RecPid,p28BillingMemo as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
+UNION SELECT 'p28' as Prefix,'FakturaÄnÃ­ poznÃ¡mka' as Field,p28ID as RecPid,p28BillingMemo as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
 from
 p28Contact
 WHERE p28BillingMemo IS NOT NULL
-UNION SELECT 'p28' as Prefix,'Kontaktní médium klienta' as Field,a.p28ID as RecPid,b.o33Name+': '+a.o32Value as RecValue,NULL as RecComment,c.p28Code+' - '+c.p28Code as RecName,a.o32DateInsert as RecDateInsert
+UNION SELECT 'p28' as Prefix,'KontaktnÃ­ mÃ©dium klienta' as Field,a.p28ID as RecPid,b.o33Name+': '+a.o32Value as RecValue,NULL as RecComment,c.p28Code+' - '+c.p28Code as RecName,a.o32DateInsert as RecDateInsert
 FROM
 o32Contact_Medium a INNER JOIN o33MediumType b ON a.o33ID=b.o33ID INNER JOIN p28Contact c ON a.p28ID=c.p28ID
 UNION SELECT 'p28' as Prefix,'Adresa klienta' as Field,b.p28ID as RecPid
@@ -19058,13 +18908,13 @@ GO
 
 CREATE VIEW [dbo].[view_fulltext_task]
 as
-select 'p56' as Prefix,'Kód' as Field,a.p56ID as RecPid,a.p56Code as RecValue,NULL as RecComment,b.p41Name+'/'+a.p56Name as RecName,a.p56DateInsert as RecDateInsert
+select 'p56' as Prefix,'KÃ³d' as Field,a.p56ID as RecPid,a.p56Code as RecValue,NULL as RecComment,b.p41Name+'/'+a.p56Name as RecName,a.p56DateInsert as RecDateInsert
 from
 p56Task a INNER JOIN p41Project b ON a.p41ID=b.p41ID
-UNION select 'p56' as Prefix,'Název úkolu' as Field,a.p56ID as RecPid,a.p56Name as RecValue,NULL as RecComment,b.p41Name+'/'+a.p56Name as RecName,a.p56DateInsert as RecDateInsert
+UNION select 'p56' as Prefix,'NÃ¡zev Ãºkolu' as Field,a.p56ID as RecPid,a.p56Name as RecValue,NULL as RecComment,b.p41Name+'/'+a.p56Name as RecName,a.p56DateInsert as RecDateInsert
 from
 p56Task a INNER JOIN p41Project b ON a.p41ID=b.p41ID
-UNION select 'p56' as Prefix,'Podrobnı popis' as Field,a.p56ID as RecPid,a.p56Description as RecValue,NULL as RecComment,b.p41Name+'/'+a.p56Name as RecName,a.p56DateInsert as RecDateInsert
+UNION select 'p56' as Prefix,'PodrobnÃ½ popis' as Field,a.p56ID as RecPid,a.p56Description as RecValue,NULL as RecComment,b.p41Name+'/'+a.p56Name as RecName,a.p56DateInsert as RecDateInsert
 from
 p56Task a INNER JOIN p41Project b ON a.p41ID=b.p41ID
 WHERE a.p56Description IS NOT NULL
@@ -19344,7 +19194,7 @@ as
 select a.p91ID
 ,x40.x40WhenProceeded as Kdy_Odeslano
 ,x40.x40DateInsert as Kdy_Zahajeno
-,case when x40.x40State=3 then 'Odesláno' when x40.x40State=1 then 'Odesílá se' when x40.x40State=2 then 'Chyba' when x40.x40State=4 then 'Zastaveno' end as AktualniStav
+,case when x40.x40State=3 then 'OdeslÃ¡no' when x40.x40State=1 then 'OdesÃ­lÃ¡ se' when x40.x40State=2 then 'Chyba' when x40.x40State=4 then 'Zastaveno' end as AktualniStav
 ,x40.x40Recipient as Komu
 from
 p91Invoice a

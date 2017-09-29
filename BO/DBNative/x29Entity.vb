@@ -59,8 +59,6 @@
     p72PreBillingStatus = 372
     p70BillingStatus = 370
     j70QueryTemplate = 170
-    j74SavedGridColTemplate = 174
-    j75DrillDownTemplate = 175
     j77WorksheetStatTemplate = 177
     x18EntityCategory = 918
 

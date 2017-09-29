@@ -25,7 +25,7 @@
     Private Sub PracovniCas(intP95ID As Integer)
         Dim cP34 As New BO.p34ActivityGroup
         With cP34
-            .p34Name = "Klientský čas"
+            .p34Name = "Klientské hodiny"
             .p34Code = "TB"
             .p33ID = BO.p33IdENUM.Cas
             .p34ActivityEntryFlag = BO.p34ActivityEntryFlagENUM.AktivitaJePovinna
@@ -170,8 +170,8 @@
             WE(_Factory.p34ActivityGroupBL.ErrorMessage)
         Else
             Dim intP34ID As Integer = _Factory.p34ActivityGroupBL.LastSavedPID
-            CP32(intP34ID, "Fixně domluvená odměna", True, True, intP95ID, -1)
-            CP32(intP34ID, "Dohodnutý (opakovaný) paušál", True, True, intP95ID)
+            CP32(intP34ID, "Pevně domluvená odměna", True, True, intP95ID, -1)
+            CP32(intP34ID, "Paušální (opakovaná) odměna", True, True, intP95ID)
             CP32(intP34ID, "Sleva", True, True, intP95ID)
             CP32(intP34ID, "Přirážka", True, True, intP95ID)
             CP32(intP34ID, "Software Maintenance", True, True, intP95ID)
@@ -390,8 +390,8 @@
         role.x67ID = 3
         lisRoles.Add(role)
         role = New BO.x69EntityRole_Assign
-        role.j11ID = _Factory.j11TeamBL.GetList()(0).PID
-        role.x67ID = 3
+        role.j11ID = _Factory.j11TeamBL.GetList()(0).PID    'tým = všichni
+        role.x67ID = 5
         lisRoles.Add(role)
         _Factory.p41ProjectBL.Save(cP41, Nothing, Nothing, lisRoles, Nothing)
     End Sub
@@ -400,14 +400,14 @@
         CO21(BO.x29IdEnum.p41Project, "Schůzka s klientem")
         CO21(BO.x29IdEnum.p41Project, "Kontrolní den", 10)
         CO21(BO.x29IdEnum.p41Project, "Vypršení licence", 10)
-        CO21(BO.x29IdEnum.p41Project, "Ostatní (projekt)", 100)
+        CO21(BO.x29IdEnum.p41Project, "Ostatní", 100)
 
         CO21(BO.x29IdEnum.p28Contact, "Schůzka s klientem")
-        CO21(BO.x29IdEnum.p28Contact, "Ostatní (klient)", 100)
+        CO21(BO.x29IdEnum.p28Contact, "Ostatní", 100)
 
         CO21(BO.x29IdEnum.j02Person, "Narozeniny")
         CO21(BO.x29IdEnum.j02Person, "Termín školení")
-        CO21(BO.x29IdEnum.j02Person, "Ostatní (osoba)", 100)
+        CO21(BO.x29IdEnum.j02Person, "Ostatní", 100)
     End Sub
     Private Sub CO21(x29id As BO.x29IdEnum, strName As String, Optional intOrdinary As Integer = 0)
         Dim c As New BO.o21MilestoneType

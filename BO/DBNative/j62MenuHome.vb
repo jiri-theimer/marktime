@@ -6,7 +6,6 @@
     Public Property j62Name_ENG As String
     Public Property x29ID As BO.x29IdEnum
     Public Property j70ID As Integer
-    Public Property j74ID As Integer
     Public Property x31ID As Integer
     Public Property j62Url As String
     Public Property j62Target As String

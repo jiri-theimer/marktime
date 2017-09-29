@@ -118,7 +118,7 @@
                     <telerik:NavigationNode ID="cmdEdit" Text="Upravit" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png"></telerik:NavigationNode>
                     <telerik:NavigationNode ID="cmdClone" Text="Kopírovat" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" Visible="false"></telerik:NavigationNode>
 
-                    <telerik:NavigationNode ID="cmdWorkflow" Text="Zapsat komentář/souborovou přílohu" NavigateUrl="javascript:b07_create();" ImageUrl="Images/comment.png"></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="cmdWorkflow" Text="Nahrát přílohu dokumentu, zapsat komentář" NavigateUrl="javascript:b07_create_upload();" ImageUrl="Images/comment.png"></telerik:NavigationNode>
                     <telerik:NavigationNode ID="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report();" ImageUrl="Images/report.png"></telerik:NavigationNode>
                     <telerik:NavigationNode ID="cmdEmail" Text="Odeslat e-mail" NavigateUrl="javascript:sendmail();" ImageUrl="Images/email.png"></telerik:NavigationNode>
 

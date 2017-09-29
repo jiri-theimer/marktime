@@ -51,6 +51,8 @@ Public Class dbupdate_reports
         Dim cF As New BO.clsFile
         Dim lis As List(Of String) = cF.GetFileListFromDir(strDIR, "*.*")
 
+        Dim lisX31Pre As IEnumerable(Of BO.x31Report) = Master.Factory.x31ReportBL.GetList(New BO.myQuery)
+
         Dim cRole As New BO.x69EntityRole_Assign()
         cRole.j11ID = Master.Factory.j11TeamBL.GetList().Where(Function(p) p.j11IsAllPersons = True)(0).PID
         cRole.x67ID = Master.Factory.x67EntityRoleBL.GetList().Where(Function(p) p.x29ID = BO.x29IdEnum.x31Report)(0).PID
@@ -66,6 +68,10 @@ Public Class dbupdate_reports
                 If cRec Is Nothing Then
                     cRec = New BO.x31Report
                     cRec.j25ID = cRI.j25id
+                    If lisX31Pre.Count < 5 Then
+                        'úvodní import sestav
+                        cRec.ValidFrom = DateSerial(2017, 1, 1)
+                    End If
                 End If
                 With cRec
                     .x29ID = CType(cRI.x29id, BO.x29IdEnum)
@@ -140,9 +146,12 @@ Public Class dbupdate_reports
         HandleImportX55()
         If Me.lblError.Text = "" Then
             Master.Notify("Aktualizace byla dokončena", NotifyLevel.InfoMessage)
+            cmdGo.Visible = False
         Else
             Master.Notify("Aktualizace byla dokončena s chybami", NotifyLevel.WarningMessage)
         End If
+        cmdDefPage.Visible = True
+
     End Sub
 
     Private Sub HandleImportX55()
@@ -203,4 +212,8 @@ Public Class dbupdate_reports
             Return ""
         End If
     End Function
+
+    Private Sub cmdDefPage_Click(sender As Object, e As EventArgs) Handles cmdDefPage.Click
+        Response.Redirect("../default.aspx")
+    End Sub
 End Class

@@ -866,11 +866,29 @@ Namespace Resources.RadScheduler
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Go to today.
+        '''  Looks up a localized string similar to Jít na dnes.
         '''</summary>
         Friend Shared ReadOnly Property ContextMenuGoToToday() As String
             Get
                 Return ResourceManager.GetString("ContextMenuGoToToday", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Událost.
+        '''</summary>
+        Friend Shared ReadOnly Property HeaderAgendaAppointment() As String
+            Get
+                Return ResourceManager.GetString("HeaderAgendaAppointment", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Čas.
+        '''</summary>
+        Friend Shared ReadOnly Property HeaderAgendaTime() As String
+            Get
+                Return ResourceManager.GetString("HeaderAgendaTime", resourceCulture)
             End Get
         End Property
         

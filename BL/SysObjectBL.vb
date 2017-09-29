@@ -35,7 +35,7 @@
             s += vbCrLf & "if @c1<>@c2"
             s += vbCrLf & "  print 'V [" & strTab & "] je rozdíl: '+@c1+' x '+@c2"
             s += vbCrLf & vbCrLf & "GO"
-            cFile.SaveText2File(strFile, s, True)
+            cFile.SaveText2File(strFile, s, True, , False)
         Next
     End Sub
 
@@ -68,7 +68,7 @@
                 s += vbCrLf & "  print 'Rozdíl!!!!'"
 
                 s += vbCrLf & vbCrLf & "GO"
-                cFile.SaveText2File(strFile, s, True)
+                cFile.SaveText2File(strFile, s, True, , False)
             End If
 
         Next
@@ -84,7 +84,7 @@
             If Len(strTab) > 3 Then
                 Dim s As String = vbCrLf & vbCrLf & "DELETE FROM " & strDestDbName & ".dbo." & strTab
                 s += vbCrLf & vbCrLf & "GO"
-                cFile.SaveText2File(strFile, s, True)
+                cFile.SaveText2File(strFile, s, True, , False)
             End If
 
         Next
@@ -103,13 +103,13 @@
         End If
 
         Dim strLastTab As String = ""
-        cFile.SaveText2File(strFile, "------- Jaké tabulky a sloupce chybí v databázi -------" & vbCrLf & vbCrLf, True)
+        cFile.SaveText2File(strFile, "------- Jaké tabulky a sloupce chybí v databázi -------" & vbCrLf & vbCrLf, True, , False)
         For Each cRec As BO.TableColumn In lisSource
             Dim strTab As String = cRec.TableName, strField As String = cRec.Name, bolTabFound As Boolean = True
 
             If lisDest.Where(Function(p As BO.TableColumn) p.TableName Like strTab).Count = 0 Then
                 If strTab <> strLastTab Then
-                    cFile.SaveText2File(strFile, "Chybí tabulka [" & strTab & "]" & vbCrLf & vbCrLf, True)
+                    cFile.SaveText2File(strFile, "Chybí tabulka [" & strTab & "]" & vbCrLf & vbCrLf, True, , False)
                 End If
                 bolTabFound = False
             End If
@@ -124,20 +124,20 @@
                     If cRec.IsNullable Then strType += " NULL"
 
 
-                    cFile.SaveText2File(strFile, "V tabulce [" & strTab & "] chybí pole [" & strField & "] " & strType & vbCrLf, True)
+                    cFile.SaveText2File(strFile, "V tabulce [" & strTab & "] chybí pole [" & strField & "] " & strType & vbCrLf, True, , False)
                 End If
             End If
             strLastTab = strTab
         Next
 
         strLastTab = ""
-        cFile.SaveText2File(strFile, vbCrLf & vbCrLf & "------- Jaké tabulky a sloupce jsou navíc ve srovnávací databázi -------" & vbCrLf & vbCrLf, True)
+        cFile.SaveText2File(strFile, vbCrLf & vbCrLf & "------- Jaké tabulky a sloupce jsou navíc ve srovnávací databázi -------" & vbCrLf & vbCrLf, True, , False)
         For Each cRec As BO.TableColumn In lisDest
             Dim strTab As String = cRec.TableName, strField As String = cRec.Name, bolTabFound As Boolean = True
 
             If lisSource.Where(Function(p As BO.TableColumn) p.TableName Like strTab).Count = 0 Then
                 If strTab <> strLastTab Then
-                    cFile.SaveText2File(strFile, "Ve srovnávací databázi existuje tabulka [" & strTab & "]" & vbCrLf & vbCrLf, True)
+                    cFile.SaveText2File(strFile, "Ve srovnávací databázi existuje tabulka [" & strTab & "]" & vbCrLf & vbCrLf, True, , False)
                 End If
                 bolTabFound = False
             End If
@@ -152,7 +152,7 @@
                     If cRec.IsNullable Then strType += " NULL"
 
 
-                    cFile.SaveText2File(strFile, "Srovnávací databáze, tabulka [" & strTab & "] navíc obsahuje pole [" & strField & "] " & strType & vbCrLf, True)
+                    cFile.SaveText2File(strFile, "Srovnávací databáze, tabulka [" & strTab & "] navíc obsahuje pole [" & strField & "] " & strType & vbCrLf, True, , False)
                 End If
             End If
             strLastTab = strTab
@@ -172,11 +172,11 @@
         For Each cRec As BO.SysDbObject In lis
             If bolSeparateFiles Then
                 Dim strFile As String = strDIR & "\" & cRec.Name & ".sql"
-                cFile.SaveText2File(strFile, GetFullCreateScript(cRec))
+                cFile.SaveText2File(strFile, GetFullCreateScript(cRec), , , False)
 
                 cFile.CopyFile(strFile, "c:\zjt\marktime50\distribuce\inno-setup\files\wfa\sql_step2_sp.sql")
             Else
-                cFile.SaveText2File(strSingleFile, "----------" & cRec.xType & "---------------" & cRec.Name & "-------------------------" & vbCrLf & vbCrLf & GetFullCreateScript(cRec) & vbCrLf & vbCrLf, True)
+                cFile.SaveText2File(strSingleFile, "----------" & cRec.xType & "---------------" & cRec.Name & "-------------------------" & vbCrLf & vbCrLf & GetFullCreateScript(cRec) & vbCrLf & vbCrLf, True, , False)
 
                 cFile.CopyFile(strSingleFile, "c:\zjt\marktime50\distribuce\inno-setup\files\wfa\sql_step2_sp.sql")
             End If
@@ -215,7 +215,7 @@
 
     Public Sub GenerateDistributionXmlFiles(strSourceDbName As String)
         Dim cF As New BO.clsFile, strDestDir As String = "c:\asp2013\marktime50\ui\sys\dbupdate"
-        cF.SaveText2File(strDestDir & "\version.txt", Format(Now, "dd.MM.yyyy HH:mm"))
+        cF.SaveText2File(strDestDir & "\version.txt", Format(Now, "dd.MM.yyyy HH:mm"), , , False)
 
         Dim ds As DataSet = _cDL.GetDataset(String.Format("SELECT ID,name FROM {0}.dbo.sysobjects WHERE xtype='U' and name<>'dtproperties' order by name", strSourceDbName), "sysobjects")
         Dim strFile As String = strDestDir & "\sysobjects_U.xml"

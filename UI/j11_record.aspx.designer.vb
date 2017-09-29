@@ -14,6 +14,33 @@ Option Explicit On
 Partial Public Class j11_record
 
     '''<summary>
+    '''RadTabStrip1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadTabStrip1 As Global.Telerik.Web.UI.RadTabStrip
+
+    '''<summary>
+    '''RadMultiPage1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadMultiPage1 As Global.Telerik.Web.UI.RadMultiPage
+
+    '''<summary>
+    '''page1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents page1 As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
     '''lblJ11Name control.
     '''</summary>
     '''<remarks>
@@ -30,33 +57,6 @@ Partial Public Class j11_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j11name As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''j11Email control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j11Email As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''j11RobotAddress control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j11RobotAddress As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''j11DomainAccount control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j11DomainAccount As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''panMembers control.
@@ -147,6 +147,42 @@ Partial Public Class j11_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j11IsAllPersons As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''page2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents page2 As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
+    '''j11Email control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j11Email As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''j11RobotAddress control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j11RobotAddress As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''j11DomainAccount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j11DomainAccount As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Master property.

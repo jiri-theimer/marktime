@@ -30,11 +30,10 @@
 
                 .AddToolbarButton("Potvrdit", "ok", , "Images/save.png")
 
-                Dim lisPars As New List(Of String), strGridKey As String = "p91_create-j74id_p41-" & CInt(BO.p31RecordState.Approved).ToString
+                Dim lisPars As New List(Of String)
                 With lisPars
                     .Add("p91_create-period")
                     .Add("periodcombo-custom_query")                   
-                    .Add(strGridKey)
                 End With
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
                 period1.SetupData(.Factory, .Factory.j03UserBL.GetUserParam("periodcombo-custom_query"))

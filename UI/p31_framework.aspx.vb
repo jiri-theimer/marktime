@@ -455,16 +455,6 @@ Public Class p31_framework
         grid1.Rebind(True)
     End Sub
     
-
-    ''Private Sub SaveLastJ74Reference()
-    ''    With Master.Factory.j03UserBL
-    ''        .SetUserParam("p31_framework-j74id-" & Me.GridPrefix, Me.CurrentJ74ID.ToString)
-    ''        .SetUserParam("p31_framework-sort-" & Me.GridPrefix, "")
-    ''        .SetUserParam("p31_framework-filter_setting_" & Me.GridPrefix, "")
-    ''        .SetUserParam("p31_framework-filter_sql_" & Me.GridPrefix, "")
-    ''    End With
-
-    ''End Sub
     Private Sub ReloadPage()
         Response.Redirect("p31_framework.aspx")
     End Sub

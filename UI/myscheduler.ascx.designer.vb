@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class myscheduler
 
     '''<summary>
+    '''locCalendar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents locCalendar As Global.System.Web.UI.WebControls.Localize
+
+    '''<summary>
     '''cbxNumberOfDays control.
     '''</summary>
     '''<remarks>
@@ -66,6 +75,15 @@ Partial Public Class myscheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents panP56 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''locUkolyBezTerminu control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents locUkolyBezTerminu As Global.System.Web.UI.WebControls.Localize
 
     '''<summary>
     '''p56Count control.

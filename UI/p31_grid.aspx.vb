@@ -237,15 +237,6 @@ Public Class p31_grid
 
     
 
-    ''Private Sub SaveLastJ74Reference()
-    ''    With Master.Factory.j03UserBL
-    ''        .SetUserParam("p31_grid-sort", "")
-    ''        .SetUserParam("p31_grid-filter_setting", "")
-    ''        .SetUserParam("p31_grid-filter_sql", "")
-    ''    End With
-
-    ''End Sub
-
     Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("p31_grid-pagesize", Me.cbxPaging.SelectedValue)
 

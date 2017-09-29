@@ -9,29 +9,45 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             Me.AppHost.Text = Context.Request.Url.GetLeftPart(UriPartial.Authority)
+            Me.robot_host.Text = Me.AppHost.Text
+
         End If
     End Sub
 
     Private Sub kickoff_after2_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        Me.panSMTP.Visible = Me.chkSmtp.Checked
+
     End Sub
 
     Private Sub cmdGo_Click(sender As Object, e As EventArgs) Handles cmdGo.Click
+        If Trim(Me.txtUploadFolder.Text) = "" Then
+            Me.lblError.Text = "Chybí vyplnit Upload složku." : Return
+        End If
+        If Not System.IO.Directory.Exists(Me.txtUploadFolder.Text) Then
+            lblMessage.Text = String.Format("Složka {0} na serveru neexistuje!", Me.txtUploadFolder.Text)
+            Return
+        Else
+            Dim cF As New BO.clsFile
+            If Not cF.SaveText2File(Me.txtUploadFolder.Text & "\test.txt", "Proveden úspěšný test zápisu do UPLOAD složky.", , , False) Then
+                lblMessage.Text = cF.ErrorMessage
+                Return
+            End If
+        End If
 
         With _Factory.x35GlobalParam
             .UpdateValue("Upload_Folder", Me.txtUploadFolder.Text)
-            If Me.chkSmtp.Checked Then
-                .UpdateValue("IsUseWebConfigSetting", "0")
-                .UpdateValue("SMTP_SenderAddress", Me.SMTP_SenderAddress.Text)
-                .UpdateValue("SMTP_Server", Me.SMTP_Server.Text)
-                .UpdateValue("SMTP_Login", Me.SMTP_Login.Text)
-                .UpdateValue("SMTP_IsVerify", BO.BAS.GB(Me.SMTP_IsVerify.Checked))
-                .UpdateValue("SMTP_Password", Me.SMTP_Password.Text)
+            .UpdateValue("AppHost", Me.AppHost.Text)
+            .UpdateValue("SMTP_SenderAddress", Me.SMTP_SenderAddress.Text)
+            .UpdateValue("robot_host", Me.robot_host.Text)
 
-                .UpdateValue("AppHost", Me.AppHost.Text)
-            End If
+            'spustit fixační sql skripty
+            Dim cBL As New BL.SysDbUpdateBL()
+            cBL.RunFixingSQLs_BeforeDbUpdate()  'spustit fixing sql dotazy
+            cBL.RunFixingSQLs_AfterDbUpdate()  'spustit fixing sql dotazy
 
-            Response.Redirect("../default.aspx")
+            'přejít do aktualizace tiskových sestav
+            Response.Redirect("../sys/dbupdate_reports.aspx")
+
+            ''Response.Redirect("../default.aspx")
         End With
     End Sub
 End Class

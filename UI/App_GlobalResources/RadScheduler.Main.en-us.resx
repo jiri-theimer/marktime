@@ -486,4 +486,10 @@
   <data name="AdvancedYears" xml:space="preserve">
     <value>year(s)</value>
   </data>
+  <data name="HeaderAgendaAppointment" xml:space="preserve">
+    <value>Appointment</value>
+  </data>
+  <data name="HeaderAgendaTime" xml:space="preserve">
+    <value>Time</value>
+  </data>
 </root>

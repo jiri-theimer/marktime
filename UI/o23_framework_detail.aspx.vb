@@ -69,7 +69,7 @@
             FNO("cmdWorkflow").NavigateUrl = "javascript:workflow()"
         Else
             hidB01ID.Value = ""
-            FNO("cmdWorkflow").Text = "Doplnit poznámku, komentář, přílohu"
+            FNO("cmdWorkflow").Text = "Nahrát přílohu dokumentu, zapsat komentář"
             FNO("cmdWorkflow").ImageUrl = "Images/comment.png"
             FNO("cmdWorkflow").NavigateUrl = "javascript:b07_create()"
         End If

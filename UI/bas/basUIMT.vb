@@ -43,13 +43,7 @@ Public Class basUIMT
                     .radGridOrig.ClientSettings.Scrolling.AllowScroll = False
                     .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = False
             End Select
-            ''If cJ70.j74IsVirtualScrolling Then
-            ''    .radGridOrig.MasterTableView.TableLayout = GridTableLayout.Fixed
-            ''    .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
-            ''    .radGridOrig.ClientSettings.Scrolling.EnableVirtualScrollPaging = True
-            ''    .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = True
-            ''    .radGridOrig.ClientSettings.Scrolling.SaveScrollPosition = True
-            ''End If
+          
             .radGridOrig.MasterTableView.Name = "grid"
             If strSortExpression <> "" Then .radGridOrig.MasterTableView.SortExpressions.AddSortExpression(strSortExpression)
 

@@ -3502,6 +3502,8 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>RadScheduler.Main.designer.vb</LastGenOutput>
     </Content>
+    <Content Include="App_LocalResources\myscheduler.ascx.resx" />
+    <Content Include="App_LocalResources\myscheduler.ascx.en-us.resx" />
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

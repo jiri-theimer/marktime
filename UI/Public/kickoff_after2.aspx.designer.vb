@@ -23,6 +23,15 @@ Partial Public Class kickoff_after2
     Protected WithEvents lblHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''lblMessage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblMessage As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''txtUploadFolder control.
     '''</summary>
     '''<remarks>
@@ -41,13 +50,13 @@ Partial Public Class kickoff_after2
     Protected WithEvents AppHost As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''chkSmtp control.
+    '''robot_host control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents chkSmtp As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents robot_host As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''SMTP_SenderAddress control.
@@ -57,51 +66,6 @@ Partial Public Class kickoff_after2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents SMTP_SenderAddress As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''panSMTP control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSMTP As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''SMTP_Server control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents SMTP_Server As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''SMTP_Login control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents SMTP_Login As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''SMTP_IsVerify control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents SMTP_IsVerify As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''SMTP_Password control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents SMTP_Password As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''cmdGo control.
