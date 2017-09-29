@@ -671,13 +671,13 @@ Partial Public Class p41_framework_detail
     Protected WithEvents p31summary1 As Global.UI.entity_worksheet_summary
 
     '''<summary>
-    '''Last_Invoice control.
+    '''linkLastInvoice control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Last_Invoice As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents linkLastInvoice As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''Last_WIP_Worksheet control.

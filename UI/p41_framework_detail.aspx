@@ -361,7 +361,8 @@
 
             <div style="width: 100%;">
                 <span class="val">Poslední vystavená faktura:</span>
-                <asp:Label ID="Last_Invoice" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
+                <asp:HyperLink ID="linkLastInvoice" runat="server" CssClass="value_link" Target="_top"></asp:HyperLink>
+                
 
             </div>
             <div style="width: 100%;">

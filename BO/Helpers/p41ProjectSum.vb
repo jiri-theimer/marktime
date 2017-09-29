@@ -20,6 +20,7 @@
     Public Property p45_Count As Integer
 
     Public Property Last_Invoice As String
+    Public Property Last_p91ID As Integer
     Public Property Last_Wip_Worksheet As String
     Public Property o52_Exist As Boolean
     Public Property f01_Exist As Boolean

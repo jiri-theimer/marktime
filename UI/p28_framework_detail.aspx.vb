@@ -197,8 +197,6 @@
             If Master.Factory.SysUser.j04IsMenu_Invoice Then
                 Me.linkLastInvoice.NavigateUrl = "p91_framework.aspx?pid=" & cRecSum.Last_p91ID.ToString
             End If
-        Else
-
         End If
         
 

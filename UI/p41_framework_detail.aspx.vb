@@ -244,7 +244,13 @@
         mq.p41ID = cRec.PID
 
         If cP42.p42IsModule_p31 Then
-            Me.Last_Invoice.Text = cRecSum.Last_Invoice
+            Me.linkLastInvoice.Text = cRecSum.Last_Invoice
+            If cRecSum.Last_p91ID > 0 Then
+                Me.linkLastInvoice.Text = cRecSum.Last_Invoice
+                If Master.Factory.SysUser.j04IsMenu_Invoice Then
+                    Me.linkLastInvoice.NavigateUrl = "p91_framework.aspx?pid=" & cRecSum.Last_p91ID.ToString
+                End If
+            End If
             Me.Last_WIP_Worksheet.Text = cRecSum.Last_Wip_Worksheet
             If cRec.p41LimitFee_Notification > 0 Or cRec.p41LimitHours_Notification > 0 Or cRecSum.p31_Wip_Time_Count > 0 Or cRecSum.p31_Wip_Expense_Count > 0 Or cRecSum.p31_Wip_Fee_Count > 0 Or cRecSum.p31_Approved_Time_Count > 0 Or cRecSum.p31_Approved_Expense_Count > 0 Then
                 Dim cWorksheetSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, True, True)
