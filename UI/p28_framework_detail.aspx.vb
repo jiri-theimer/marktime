@@ -192,8 +192,16 @@
         End If
 
 
+        If cRecSum.Last_p91ID > 0 Then
+            Me.linkLastInvoice.Text = cRecSum.Last_Invoice
+            If Master.Factory.SysUser.j04IsMenu_Invoice Then
+                Me.linkLastInvoice.NavigateUrl = "p91_framework.aspx?pid=" & cRecSum.Last_p91ID.ToString
+            End If
+        Else
 
-        Me.Last_Invoice.Text = cRecSum.Last_Invoice
+        End If
+        
+
         Me.Last_WIP_Worksheet.Text = cRecSum.Last_Wip_Worksheet
         If cRecSum.p31_Approved_Time_Count > 0 Or cRecSum.p31_Wip_Time_Count > 0 Or cRecSum.p31_Wip_Expense_Count > 0 Or cRecSum.p31_Wip_Fee_Count > 0 Or cRecSum.p31_Approved_Expense_Count > 0 Then
             Dim mq As New BO.myQueryP31

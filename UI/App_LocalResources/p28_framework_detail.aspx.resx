@@ -128,4 +128,10 @@
   <data name="boxP41Title.Text" xml:space="preserve">
     <value>Otevřené projekty klienta</value>
   </data>
+  <data name="locPosledniFaktura.Text" xml:space="preserve">
+    <value>Poslední vystavená faktura:</value>
+  </data>
+  <data name="locPosledniNevyfakturovanyUkon.Text" xml:space="preserve">
+    <value>Poslední nevyfakturovaný úkon:</value>
+  </data>
 </root>

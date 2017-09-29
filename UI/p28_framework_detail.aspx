@@ -284,12 +284,16 @@
             <uc:entity_worksheet_summary ID="p31summary1" runat="server"></uc:entity_worksheet_summary>
 
             <div style="width: 100%;">
-                <span class="val">Poslední vystavená faktura:</span>
-                <asp:Label ID="Last_Invoice" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
-
+                
+                <asp:Localize ID="locPosledniFaktura" runat="server" Text="Poslední vystavená faktura:" meta:resourcekey="locPosledniFaktura"></asp:Localize>
+                
+                
+                <asp:HyperLink ID="linkLastInvoice" runat="server" CssClass="value_link" Target="_top"></asp:HyperLink>
             </div>
             <div style="width: 100%;">
-                <span class="val">Poslední nevyfakturovaný úkon:</span>
+                <asp:Localize ID="locPosledniNevyfakturovanyUkon" runat="server" Text="Poslední nevyfakturovaný úkon:" meta:resourcekey="locPosledniNevyfakturovanyUkon"></asp:Localize>
+                
+                
                 <asp:Label ID="Last_WIP_Worksheet" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
 
             </div>

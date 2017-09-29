@@ -128,4 +128,10 @@
   <data name="boxP41Title.Text" xml:space="preserve">
     <value>Open client projects</value>
   </data>
+  <data name="locPosledniFaktura.Text" xml:space="preserve">
+    <value>Last issued invoice:</value>
+  </data>
+  <data name="locPosledniNevyfakturovanyUkon.Text" xml:space="preserve">
+    <value>Last not invoiced worksheet item:</value>
+  </data>
 </root>

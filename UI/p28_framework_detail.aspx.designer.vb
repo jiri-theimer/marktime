@@ -482,13 +482,31 @@ Partial Public Class p28_framework_detail
     Protected WithEvents p31summary1 As Global.UI.entity_worksheet_summary
 
     '''<summary>
-    '''Last_Invoice control.
+    '''locPosledniFaktura control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Last_Invoice As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents locPosledniFaktura As Global.System.Web.UI.WebControls.Localize
+
+    '''<summary>
+    '''linkLastInvoice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkLastInvoice As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''locPosledniNevyfakturovanyUkon control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents locPosledniNevyfakturovanyUkon As Global.System.Web.UI.WebControls.Localize
 
     '''<summary>
     '''Last_WIP_Worksheet control.
