@@ -1400,7 +1400,7 @@
     </Compile>
     <Compile Include="p28_framework_detail.aspx.vb">
       <DependentUpon>p28_framework_detail.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="p28_framework_detail_p90.aspx.designer.vb">
       <DependentUpon>p28_framework_detail_p90.aspx</DependentUpon>
@@ -3472,6 +3472,10 @@
     </Content>
     <Content Include="App_LocalResources\myscheduler.ascx.resx" />
     <Content Include="App_LocalResources\myscheduler.ascx.en-us.resx" />
+    <Content Include="App_LocalResources\j02_framework_detail.aspx.en-us.resx" />
+    <Content Include="App_LocalResources\j02_framework_detail.aspx.resx" />
+    <Content Include="App_LocalResources\p28_framework_detail.aspx.en-us.resx" />
+    <Content Include="App_LocalResources\p28_framework_detail.aspx.resx" />
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

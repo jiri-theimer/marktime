@@ -23,6 +23,15 @@ Partial Public Class j02_framework_detail
     Protected WithEvents menu1 As Global.UI.entity_menu
 
     '''<summary>
+    '''locOsobniProfil control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents locOsobniProfil As Global.System.Web.UI.WebControls.Localize
+
+    '''<summary>
     '''FullNameAsc control.
     '''</summary>
     '''<remarks>
@@ -284,6 +293,15 @@ Partial Public Class j02_framework_detail
     Protected WithEvents cmdAccount As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''lblPosledniPristup control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblPosledniPristup As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''Last_Access control.
     '''</summary>
     '''<remarks>
@@ -293,6 +311,15 @@ Partial Public Class j02_framework_detail
     Protected WithEvents Last_Access As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''lblNaposledyZapsanyUkon control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblNaposledyZapsanyUkon As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''Last_Worksheet control.
     '''</summary>
     '''<remarks>
@@ -300,6 +327,15 @@ Partial Public Class j02_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents Last_Worksheet As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lblPocetUkolu control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblPocetUkolu As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''link_p56_actual_count control.
@@ -428,6 +464,15 @@ Partial Public Class j02_framework_detail
     Protected WithEvents boxP30 As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
+    '''locContactPersons control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents locContactPersons As Global.System.Web.UI.WebControls.Localize
+
+    '''<summary>
     '''rpP30 control.
     '''</summary>
     '''<remarks>
@@ -462,6 +507,24 @@ Partial Public Class j02_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents boxX18 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''locDokumenty control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents locDokumenty As Global.System.Web.UI.WebControls.Localize
+
+    '''<summary>
+    '''locKategorie control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents locKategorie As Global.System.Web.UI.WebControls.Localize
 
     '''<summary>
     '''labels1 control.

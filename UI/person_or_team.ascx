@@ -4,7 +4,7 @@
 <asp:Repeater ID="rp1" runat="server">
     <ItemTemplate>
         <div>
-            <span>Osoba:</span>
+            <span>Jméno:</span>
             <uc:person id="j02id" runat="server" width="200px" flag="all" />
             <span>nebo tým:</span>
             <asp:DropDownList ID="j11id" runat="server" DataTextField="NameWithEmail" DataValueField="pid" Style="width: 200px;"></asp:DropDownList>

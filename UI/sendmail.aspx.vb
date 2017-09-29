@@ -89,7 +89,11 @@
                         If Me.txtTo.Text = "" Then
                             Me.txtTo.Text = s
                         Else
-                            If Me.txtTo.Text.IndexOf(s) < 0 Then Me.txtTo.Text += "," & s
+                            Try
+                                If Me.txtTo.Text.IndexOf(s) < 0 Then Me.txtTo.Text += "," & s
+                            Catch ex As Exception
+                            End Try
+
                         End If
                     End If
                     If cP91.p28ID <> 0 Then

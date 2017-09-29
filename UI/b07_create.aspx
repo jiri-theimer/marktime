@@ -31,7 +31,7 @@
         </tr>
     </table>
     <p></p>
-    <asp:TextBox ID="b07Value" runat="server" TextMode="MultiLine" Style="width: 100%; height: 100px; font-family: 'Courier New';"></asp:TextBox>
+    <asp:TextBox ID="b07Value" runat="server" TextMode="MultiLine" Style="width: 100%; height: 100px; font-family: 'Courier New';" ToolTip="Zapsaný komentář"></asp:TextBox>
 
     <div class="content-box2">
         <div class="title">
@@ -43,7 +43,7 @@
             <uc:person_or_team id="receiver1" runat="server"></uc:person_or_team>
         </div>
     </div>
-
+   
 
 
     <uc:b07_list ID="history1" runat="server" ShowInsertButton="false" IsClueTipInfo="true" />

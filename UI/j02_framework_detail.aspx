@@ -74,7 +74,8 @@
 
     <div class="content-box1">
         <div class="title">
-            <img src="Images/properties.png" style="margin-right: 10px;" />Osobní profil
+            <img src="Images/properties.png" style="margin-right: 10px;" />
+           <asp:Localize ID="locOsobniProfil" runat="server" text="Osobní profil" meta:resourcekey="locOsobniProfil"></asp:Localize>
             
         </div>
         <div class="content">
@@ -91,13 +92,13 @@
                 <tr valign="top">
 
                     <td>
-                        <asp:Label ID="lblJ07Name" runat="server" Text="Pozice:" CssClass="lbl"></asp:Label>
+                        <asp:Label ID="lblJ07Name" runat="server" Text="Pozice:" CssClass="lbl" meta:resourcekey="lblJ07Name"></asp:Label>
                     </td>
                     <td>
                         <asp:Label ID="j07Name" runat="server" CssClass="valbold"></asp:Label>
                     </td>
                     <td>
-                        <asp:Label ID="lblJ18Name" runat="server" Text="Středisko:" CssClass="lbl"></asp:Label>
+                        <asp:Label ID="lblJ18Name" runat="server" Text="Středisko:" CssClass="lbl" meta:resourcekey="lblJ18Name"></asp:Label>
                         <asp:Label ID="j18Name" runat="server" CssClass="valbold"></asp:Label>
                         <asp:Label ID="lblJ17Name" runat="server" Text="Region:" CssClass="lbl"></asp:Label>
                         <asp:Label ID="j17Name" runat="server" CssClass="valbold"></asp:Label>
@@ -114,14 +115,14 @@
 
                     </td>
                     <td>
-                        <asp:Label ID="lblFond" runat="server" Text="Fond hodin:" CssClass="lbl"></asp:Label>
+                        <asp:Label ID="lblFond" runat="server" Text="Fond hodin:" CssClass="lbl" meta:resourcekey="lblFond"></asp:Label>
                         <asp:Label ID="c21Name" runat="server" CssClass="valbold"></asp:Label>
                     </td>
 
                 </tr>
                 <tr valign="top">
                     <td>
-                        <asp:Label ID="lblTeams" runat="server" Text="Člen týmů:" CssClass="lbl"></asp:Label>
+                        <asp:Label ID="lblTeams" runat="server" Text="Člen týmů:" CssClass="lbl" meta:resourcekey="lblTeams"></asp:Label>
                     </td>
                     <td colspan="2">
                         <asp:Label ID="TeamsInLine" runat="server" CssClass="valbold"></asp:Label>
@@ -146,14 +147,14 @@
     </div>
     <asp:Panel ID="panIntraPerson" runat="server" CssClass="content-box1">
         <div class="title">
-            <img src="Images/user.png" style="margin-right: 10px;" /><asp:Label ID="lblUserHeader" runat="server" Text="Uživatelský účet"></asp:Label>
+            <img src="Images/user.png" style="margin-right: 10px;" /><asp:Label ID="lblUserHeader" runat="server" Text="Uživatelský účet" meta:resourcekey="lblUserHeader"></asp:Label>
         </div>
         <div class="content">
             <asp:Panel ID="panAccount" runat="server">
                 <table cellpadding="10" cellspacing="2">
                     <tr valign="top">
                         <td style="min-width: 120px;">
-                            <asp:Label ID="lblLogin" runat="server" Text="Přihlašovací jméno:" CssClass="lbl"></asp:Label>
+                            <asp:Label ID="lblLogin" runat="server" Text="Přihlašovací jméno:" CssClass="lbl" meta:resourcekey="lblLogin"></asp:Label>
                         </td>
                         <td>
 
@@ -162,7 +163,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <asp:Label ID="lblJ04Name" runat="server" Text="Aplikační role:" CssClass="lbl"></asp:Label>
+                            <asp:Label ID="lblJ04Name" runat="server" Text="Aplikační role:" CssClass="lbl" meta:resourcekey="lblJ04Name"></asp:Label>
                         </td>
                         <td>
                             <asp:Label ID="j04Name" runat="server" CssClass="valbold"></asp:Label>
@@ -175,22 +176,23 @@
                 </table>
             </asp:Panel>
             <asp:Label ID="AccountMessage" runat="server" CssClass="infoInForm"></asp:Label>
-            <asp:HyperLink ID="cmdLog" runat="server" Text="Historie aktivit" NavigateUrl="javascript: timeline()" Style="margin-left: 6px;"></asp:HyperLink>
+            <asp:HyperLink ID="cmdLog" runat="server" Text="Historie aktivit" NavigateUrl="javascript: timeline()" Style="margin-left: 6px;" meta:resourcekey="cmdLog"></asp:HyperLink>
             <span style="padding-left: 40px;"></span>
             <asp:HyperLink ID="cmdAccount" runat="server" Text="Založit uživatelský účet" Visible="false"></asp:HyperLink>
 
             <div style="width: 100%; padding: 6px; margin-top: 10px;">
-                <span class="lbl">Poslední přístup do MT:</span>
+                <asp:Label ID="lblPosledniPristup" runat="server" CssClass="lbl" Text="Poslední přístup do MT:" meta:resourcekey="lblPosledniPristup"></asp:Label>
+               
                 <asp:Label ID="Last_Access" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
 
             </div>
-            <div style="width: 100%; padding: 6px;">
-                <span class="lbl">Naposledy zapsaný úkon:</span>
+            <div style="width: 100%; padding: 6px;">                
+                <asp:Label ID="lblNaposledyZapsanyUkon" runat="server" Text="Naposledy zapsaný úkon:" CssClass="lbl" meta:resourcekey="lblNaposledyZapsanyUkon"></asp:Label>
                 <asp:Label ID="Last_Worksheet" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
 
             </div>
-            <div style="width: 100%; padding: 6px;">
-                <span class="lbl">Počet otevřených úkolů:</span>
+            <div style="width: 100%; padding: 6px;">                
+                <asp:Label ID="lblPocetUkolu" runat="server" CssClass="lbl" Text="Počet otevřených úkolů:" meta:resourcekey="lblPocetUkolu"></asp:Label>
                 <asp:HyperLink ID="link_p56_actual_count" runat="server" Style="margin-left: 20px;"></asp:HyperLink>
 
             </div>
@@ -199,8 +201,8 @@
     <asp:Panel ID="boxJ05" runat="server" CssClass="content-box1">
         <div class="title">
             <img src="Images/masterslave.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxJ05Title" runat="server" Text="Nadřízenost | Podřízenost"></asp:Label>
-            <asp:HyperLink ID="cmdAddJ05" runat="server" Text="Přidat" NavigateUrl="javascript:j05_record(0)"></asp:HyperLink>
+            <asp:Label ID="boxJ05Title" runat="server" Text="Nadřízenost | Podřízenost" meta:resourcekey="boxJ05Title"></asp:Label>
+            <asp:HyperLink ID="cmdAddJ05" runat="server" Text="Přidat" NavigateUrl="javascript:j05_record(0)" meta:resourcekey="cmdAddJ05"></asp:HyperLink>
         </div>
         <div class="content">
 
@@ -243,7 +245,8 @@
         <div class="title">
             <img src="Images/contact.png" />
             <img src="Images/project.png" style="margin-right: 10px;" />
-            Kontaktní osoba pro klienty/projekty
+            <asp:Localize ID="locContactPersons" runat="server" Text="Kontaktní osoba pro klienty/projekty" meta:resourcekey="locContactPersons"></asp:Localize>
+            
         </div>
         <div class="content">
             <asp:Repeater ID="rpP30" runat="server">
@@ -267,8 +270,8 @@
         </div>
         <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">
             <div class="title">
-                <img src="Images/notepad.png"  /><span style="margin-right: 10px;">Dokumenty</span>
-                <img src="Images/label.png" /><span>Kategorie</span>
+                <img src="Images/notepad.png"  /><span style="margin-right: 10px;"><asp:Localize ID="locDokumenty" runat="server" Text="Dokumenty" meta:resourcekey="locDokumenty"></asp:Localize></span>
+                <img src="Images/label.png" /><span><asp:Localize ID="locKategorie" runat="server" Text="Kategorie" meta:resourcekey="locKategorie"></asp:Localize></span>
             </div>
             <div class="content">
                 <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>

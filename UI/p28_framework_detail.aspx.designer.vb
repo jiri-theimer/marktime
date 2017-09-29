@@ -167,13 +167,13 @@ Partial Public Class p28_framework_detail
     Protected WithEvents trICDIC As Global.System.Web.UI.HtmlControls.HtmlTableRow
 
     '''<summary>
-    '''Label1 control.
+    '''locIC control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents locIC As Global.System.Web.UI.WebControls.Localize
 
     '''<summary>
     '''linkIC control.
@@ -194,6 +194,15 @@ Partial Public Class p28_framework_detail
     Protected WithEvents linkARES As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''lblDIC control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblDIC As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''linkDIC control.
     '''</summary>
     '''<remarks>
@@ -203,13 +212,13 @@ Partial Public Class p28_framework_detail
     Protected WithEvents linkDIC As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''Label2 control.
+    '''lblOwner control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblOwner As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''Owner control.
@@ -282,6 +291,15 @@ Partial Public Class p28_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents panRoles As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''locObsazeniRoli control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents locObsazeniRoli As Global.System.Web.UI.WebControls.Localize
 
     '''<summary>
     '''roles1 control.

@@ -43,13 +43,20 @@ Class b07CommentBL
             If strUploadGUID <> "" Then
                 Me.Factory.o27AttachmentBL.UploadAndSaveUserControl(lisTempUpload, BO.x29IdEnum.b07Comment, Me.LastSavedPID)
             End If
-            Dim bolStopNotification As Boolean = False
-            If notifyReceivers Is Nothing Then
-                bolStopNotification = True
-            Else
-                If notifyReceivers.Count = 0 Then bolStopNotification = True
+            If Not notifyReceivers Is Nothing Then
+                If notifyReceivers.Count > 0 Then
+                    Dim message As New Rebex.Mail.MailMessage
+                    With message
+                        .BodyText = cRec.b07Value & vbCrLf & vbCrLf & Factory.GetRecordLinkUrl(BO.BAS.GetDataPrefix(cRec.x29ID), cRec.b07RecordPID)
+                        .Subject = "MARKTIME komentář: " & Me.Factory.GetRecordCaption(cRec.x29ID, cRec.b07RecordPID, True)
+                        Factory.x40MailQueueBL.SaveMessageToQueque(message, Factory.j02PersonBL.GetEmails_j02_join_j11(notifyReceivers.Select(Function(p) p.j02ID).ToList, notifyReceivers.Select(Function(p) p.j11ID).ToList), cRec.x29ID, cRec.b07RecordPID, BO.x40StateENUM.InQueque, 0)
+                        
+                    End With
+                End If
             End If
-            Me.RaiseAppEvent(BO.x45IDEnum.b07_new, Me.LastSavedPID, , , bolStopNotification, notifyReceivers)
+           
+            Me.RaiseAppEvent(BO.x45IDEnum.b07_new, Me.LastSavedPID)
+
             Return True
         Else
             Return False

@@ -128,7 +128,7 @@
                     </tr>
                     <tr valign="top">
                         <td>
-                            <asp:Label ID="lblX51" runat="server" Text="Fakturační ceník:" CssClass="lbl"></asp:Label>
+                            <asp:Label ID="lblX51" runat="server" Text="Fakturační ceník:" CssClass="lbl" meta:resourcekey="lblX51"></asp:Label>
 
                         </td>
                         <td>
@@ -140,14 +140,16 @@
                     </tr>
                     <tr valign="top" id="trICDIC" runat="server">
                         <td>
-                            <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="IČ:"></asp:Label>
+                            <asp:Localize ID="locIC" runat="server" Text="IČ:" meta:resourcekey="locIC"></asp:Localize>
+                           
 
                         </td>
                         <td>
                             <asp:HyperLink ID="linkIC" runat="server" Target="_blank" ToolTip="JUSTICE.cz" Visible="false" CssClass="value_link"></asp:HyperLink>
                             <asp:HyperLink ID="linkARES" runat="server" Text="ARES" Target="_blank" Visible="false"></asp:HyperLink>
 
-                            <span style="margin-left: 20px;">DIČ:</span>
+                            <asp:Label ID="lblDIC" runat="server" Text="DIČ:" meta:resourcekey="lblDIC" style="margin-left: 20px;"></asp:Label>
+                            
                             <asp:HyperLink ID="linkDIC" runat="server" ToolTip="Ověření subjektu v DPH registrech" Visible="false" CssClass="value_link"></asp:HyperLink>
 
 
@@ -156,7 +158,7 @@
                     </tr>
                     <tr valign="top">
                         <td>
-                            <asp:Label ID="Label2" runat="server" CssClass="lbl" Text="Vlastník záznamu:"></asp:Label>
+                            <asp:Label ID="lblOwner" runat="server" CssClass="lbl" Text="Vlastník záznamu:" meta:resourcekey="lblOwner"></asp:Label>
 
                         </td>
                         <td>
@@ -189,7 +191,7 @@
     <asp:Panel ID="panRoles" runat="server" CssClass="content-box1">
         <div class="title">
             <img src="Images/projectrole.png" style="margin-right: 10px;" />
-            Obsazení klientských rolí
+            <asp:Localize ID="locObsazeniRoli" runat="server" text="Obsazení klientských rolí" meta:resourcekey="locObsazeniRoli"></asp:Localize>
         </div>
         <div class="content">
             <uc:entityrole_assign_inline ID="roles1" runat="server" EntityX29ID="p28Contact" NoDataText=""></uc:entityrole_assign_inline>
@@ -201,7 +203,7 @@
             <img src="Images/address.png" />
             <img src="Images/person.png" />
             <img src="Images/email.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxO37Title" runat="server" Text="Adresy a kontakty"></asp:Label>
+            <asp:Label ID="boxO37Title" runat="server" Text="Adresy a kontakty" meta:resourcekey="boxO37Title"></asp:Label>
         </div>
         <div class="content">
             <uc:p28_address ID="address1" runat="server"></uc:p28_address>
@@ -247,7 +249,7 @@
     <asp:Panel ID="boxP41" runat="server" CssClass="content-box1" Style="clear: both;">
         <div class="title">
             <img src="Images/project.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxP41Title" runat="server" Text="Otevřené projekty klienta"></asp:Label>
+            <asp:Label ID="boxP41Title" runat="server" Text="Otevřené projekty klienta" meta:resourcekey="boxP41Title"></asp:Label>
 
         </div>
         <asp:Panel ID="panProjects" runat="server" CssClass="content" Style="overflow: auto; max-height: 200px;">
