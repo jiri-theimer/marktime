@@ -8122,6 +8122,7 @@ declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count in
 declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
 declare @o23_count int,@p41_actual_count int,@p41_closed_count int, @o48_exist bit,@p90_count int
 declare @last_invoice varchar(100),@last_wip_worksheet as varchar(100),@f01_exist bit,@o52_exist bit
+declare @last_p91id int
 
 SELECT @p56_actual_count=sum(case when getdate() BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
 ,@p56_closed_count=sum(case when getdate() NOT BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
@@ -8208,7 +8209,7 @@ else
  set @f01_exist=0
 
 if @p91_count>0
- select TOP 1 @last_invoice=p91Code+'/'+convert(varchar(10),p91DateSupply,104) FROM p91Invoice WHERE p28ID=@pid ORDER BY p91ID DESC
+ select TOP 1 @last_invoice=p91Code+'/'+convert(varchar(10),p91DateSupply,104),@last_p91id=p91ID FROM p91Invoice WHERE p28ID=@pid ORDER BY p91ID DESC
 
 if @p31_wip_time_count>0 or @p31_approved_time_count>0 or @p31_approved_expense_count>0
  select TOP 1 @last_wip_worksheet=dbo.GetDDMMYYYYHHMM(a.p31DateInsert)+'/'+c.j02FirstName+' '+c.j02LastName+'/'+d.p32Name FROM p31Worksheet a INNER JOIN p41Project b ON a.p41ID=b.p41ID INNER JOIN j02Person c ON a.j02ID=c.j02ID INNER JOIN p32Activity d ON a.p32ID=d.p32ID WHERE b.p28ID_Client=@pid ORDER BY a.p31ID DESC
@@ -8234,6 +8235,7 @@ select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@p41_closed_count,0) as p41_closed_count
 ,@o48_exist as o48_Exist
 ,@last_invoice as Last_Invoice
+,@last_p91id as Last_p91ID
 ,@last_wip_worksheet as Last_Wip_Worksheet
 ,@p90_count as p90_Count
 ,@o52_exist as o52_Exist
@@ -8630,12 +8632,15 @@ WHERE p91ID is null AND p71id=1 and isnull(p72ID_AfterApprove,0)<>0 and p31id in
 update p31worksheet set p91ID=@p91id,p70id=(case when isnull(p31amount_withoutvat_approved,0)<>0 then 4 else 2 end)
 WHERE p91ID is null AND p71id=1 and isnull(p72ID_AfterApprove,0)=0 and p31id in (select p85datapid from p85TempBox where p85guid=@guid and p85Prefix='p31')
 
-update p31worksheet set p31Minutes_Invoiced=p31Minutes_Approved_Billing,p31Hours_Invoiced=p31Hours_Approved_Billing,p31HHMM_Invoiced=p31HHMM_Approved_Billing
-,p31Value_Invoiced=p31Value_Approved_Billing
-,p31Amount_WithoutVat_Invoiced=p31Amount_WithoutVat_Approved,p31Amount_WithVat_Invoiced=p31Amount_WithVat_Approved
-,p31Amount_Vat_Invoiced=p31Amount_Vat_Approved
+update p31worksheet set p31Minutes_Invoiced=case when p70ID=4 then p31Minutes_Approved_Billing else null end
+,p31Hours_Invoiced=case when p70ID=4 then p31Hours_Approved_Billing else null end
+,p31HHMM_Invoiced=case when p70id=4 then p31HHMM_Approved_Billing else null end
+,p31Value_Invoiced=case when p70id=4 then p31Value_Approved_Billing else null end
+,p31Amount_WithoutVat_Invoiced=case when p70id=4 then p31Amount_WithoutVat_Approved else null end
+,p31Amount_WithVat_Invoiced=case when p70id=4 then p31Amount_WithVat_Approved else null end
+,p31Amount_Vat_Invoiced=case when p70id=4 then p31Amount_Vat_Approved else null end
 ,p31VatRate_Invoiced=case when @x15id is not null then @p91fixedvatrate else p31VatRate_Approved end
-,p31Rate_Billing_Invoiced=p31Rate_Billing_Approved
+,p31Rate_Billing_Invoiced=case when p70id=4 then p31Rate_Billing_Approved else 0 end
 where p91ID=@p91id AND p31id in (select p85datapid from p85TempBox where p85guid=@guid and p85Prefix='p31')
 
 
@@ -10426,31 +10431,41 @@ if @p71id=2 or @p71id=3
 if @p71id is not null
  begin
    if @p33code='T'
- 	update p31worksheet set p31Minutes_Approved_Billing=@minutes,p31HHMM_Approved_Billing=dbo.Minutes2HHMM(@minutes),p31Rate_Billing_Approved=@rate_billing_approved,p31rate_internal_approved=@rate_internal_approved
+ 	update p31worksheet set p31Minutes_Approved_Billing=case when p72ID_AfterApprove IN (6,3,2) then 0 else @minutes end
+	,p31HHMM_Approved_Billing=case when p72ID_AfterApprove IN (6,3,2) then null else dbo.Minutes2HHMM(@minutes) end
+	,p31Rate_Billing_Approved=case when p72ID_AfterApprove IN (6,3,2) then 0 else @rate_billing_approved end
+	,p31rate_internal_approved=@rate_internal_approved
 	,p31amount_internal_approved=@rate_internal_approved*@hours_internal
-	,p31amount_withoutvat_approved=@rate_billing_approved*@hours,p31vatrate_approved=@vatrate_approved,p31amount_vat_approved=@rate_billing_approved*@hours*@vatrate_approved/100
-	,p31amount_withvat_approved=@rate_billing_approved*@hours+@rate_billing_approved*@hours*@vatrate_approved/100
+	,p31amount_withoutvat_approved=case when p72ID_AfterApprove IN (6,3,2) then 0 else @rate_billing_approved*@hours end
+	,p31vatrate_approved=@vatrate_approved
+	,p31amount_vat_approved=case when p72ID_AfterApprove IN (6,3,2) then 0 else @rate_billing_approved*@hours*@vatrate_approved/100 end
+	,p31amount_withvat_approved=case when p72ID_AfterApprove IN (6,3,2) then 0 else @rate_billing_approved*@hours+@rate_billing_approved*@hours*@vatrate_approved/100 end
 	,p31Minutes_Approved_Internal=@minutes_internal,p31HHMM_Approved_Internal=dbo.Minutes2HHMM(@minutes_internal)
 	,p31value_approved_internal=@value_approved_internal
-	,p31Value_Approved_Billing=case when @p72id IN (4,7) then @hours else 0 end
-	,p31Hours_Approved_Billing=@hours,p31Hours_Approved_Internal=@hours_internal
+	,p31Value_Approved_Billing=case when p72ID_AfterApprove IN (6,3,2) then 0 else @hours end
+	,p31Hours_Approved_Billing=case when p72ID_AfterApprove IN (6,3,2) then 0 else @hours end
+	,p31Hours_Approved_Internal=@hours_internal
 	where p31id=@p31id
 
    if @p33code='U'
- 	update p31worksheet set p31Rate_Billing_Approved=@rate_billing_approved,p31rate_internal_approved=@rate_internal_approved
+ 	update p31worksheet set p31Rate_Billing_Approved=case when p72ID_AfterApprove IN (6,3,2) then 0 else @rate_billing_approved end
+	,p31rate_internal_approved=@rate_internal_approved
 	,p31amount_internal_approved=@rate_internal_approved*@value_approved_internal
-	,p31amount_withoutvat_approved=@rate_billing_approved*@value_approved_billing,p31vatrate_approved=@vatrate_approved,p31amount_vat_approved=@rate_billing_approved*@value_approved_billing*@vatrate_approved/100
-	,p31amount_withvat_approved=@rate_billing_approved*@value_approved_billing+@rate_billing_approved*@value_approved_billing*@vatrate_approved/100
+	,p31amount_withoutvat_approved=case when p72ID_AfterApprove IN (6,3,2) then 0 else @rate_billing_approved*@value_approved_billing end
+	,p31vatrate_approved=case when p72ID_AfterApprove IN (6,3,2) then 0 else @vatrate_approved end
+	,p31amount_vat_approved=case when p72ID_AfterApprove IN (6,3,2) then 0 else @rate_billing_approved*@value_approved_billing*@vatrate_approved/100 end
+	,p31amount_withvat_approved=case when p72ID_AfterApprove IN (6,3,2) then 0 else @rate_billing_approved*@value_approved_billing+@rate_billing_approved*@value_approved_billing*@vatrate_approved/100 end
 	,p31value_approved_internal=@value_approved_internal
-	,p31Value_Approved_Billing=case when @p72id IN (4,7) then @value_approved_billing else 0 end
+	,p31Value_Approved_Billing=case when p72ID_AfterApprove IN (6,3,2) then 0 else  @value_approved_billing end
 	where p31id=@p31id
 
    if @p33code='M' or @p33code='MV'
    begin
- 	update p31worksheet set p31Amount_WithoutVat_Approved=@value_approved_billing,p31vatrate_approved=@vatrate_approved
+ 	update p31worksheet set p31Amount_WithoutVat_Approved=case when p72ID_AfterApprove IN (6,3,2) then 0 else @value_approved_billing end
+	,p31vatrate_approved=@vatrate_approved
 	,p31amount_withvat_approved=(case when p31vatrate_orig<>@vatrate_approved or @value_approved_billing<>p31amount_withoutvat_orig then @value_approved_billing+@value_approved_billing*@vatrate_approved/100 else p31amount_withvat_orig end)
 	,p31value_approved_internal=@value_approved_internal
-	,p31Value_Approved_Billing=case when @p72id IN (4,7) then @value_approved_billing else 0 end
+	,p31Value_Approved_Billing=case when p72ID_AfterApprove IN (6,3,2) then 0 else @value_approved_billing end
 	where p31id=@p31id
    end
 
@@ -13165,7 +13180,7 @@ AS
 declare @p56_actual_count int,@p56_closed_count int,@o22_actual_count int,@p91_count int,@p30_exist bit,@childs_count int,@is_my_favourite bit,@p40_exist bit
 declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
 declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
-declare @o23_count int,@p45_count int
+declare @o23_count int,@p45_count int,@last_p91id int
 declare @last_invoice varchar(100),@last_wip_worksheet varchar(100),@o52_exist bit,@f01_exist bit
 declare @p42IsModule_p31 bit,@p42IsModule_p56 bit,@p42IsModule_o23 bit,@p42IsModule_p45 bit,@p28id_client int
 
@@ -13269,7 +13284,7 @@ if @p42IsModule_p45=1
  select @p45_count=COUNT(p45ID) FROM p45Budget WHERE p41ID=@pid
 
 if @p91_count>0
- select TOP 1 @last_invoice=p91Code+'/'+convert(varchar(10),p91DateSupply,104) FROM p91Invoice a INNER JOIN p31Worksheet b ON a.p91ID=b.p91ID WHERE b.p41ID=@pid ORDER BY a.p91ID DESC
+ select TOP 1 @last_invoice=p91Code+'/'+convert(varchar(10),p91DateSupply,104),@last_p91id=a.p91ID FROM p91Invoice a INNER JOIN p31Worksheet b ON a.p91ID=b.p91ID WHERE b.p41ID=@pid ORDER BY a.p91ID DESC
 
 if @p31_wip_time_count>0 or @p31_approved_time_count>0 or @p31_approved_expense_count>0
  select TOP 1 @last_wip_worksheet=dbo.GetDDMMYYYYHHMM(a.p31DateInsert)+'/'+c.j02FirstName+' '+c.j02LastName+'/'+d.p32Name FROM p31Worksheet a INNER JOIN j02Person c ON a.j02ID=c.j02ID INNER JOIN p32Activity d ON a.p32ID=d.p32ID WHERE a.p41ID=@pid ORDER BY a.p31ID DESC
@@ -13295,6 +13310,7 @@ select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@o23_count,0) as o23_Count
 ,isnull(@p45_count,0) as p45_Count
 ,@last_invoice as Last_Invoice
+,@last_p91id as Last_p91ID
 ,@last_wip_worksheet as Last_Wip_Worksheet
 ,@o52_exist as o52_Exist
 ,@f01_exist as f01_Exist
