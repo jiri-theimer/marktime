@@ -73,6 +73,12 @@ Public Enum PivotSumFieldType
     p31Amount_HoursFee_Internal_Approved = 31
 
     p31Value_FixPrice = 14
+
+    Hours_NotInvoiced = 50
+    Expenses_NotInvoiced = 51
+    Fees_NotInvoiced = 52
+
+
 End Enum
 Public Class PivotRowColumnField
     Public FieldType As PivotRowColumnFieldType
@@ -313,7 +319,7 @@ Public Class PivotSumField
                 s = "Rozpracované výdaje"
             Case PivotSumFieldType.Expenses_Approved
                 _SelectField = "SUM(case when a.p71ID=1 AND a.p91ID IS NULL AND p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Amount_WithoutVat_Approved END)"
-                s = "Výdaje schválené k fakturaci"
+                s = "Schválené výdaje k fakturaci"
             Case PivotSumFieldType.Expenses_Invoiced
                 _SelectField = "SUM(case when a.p91ID IS NOT NULL AND p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Invoiced END)"
                 s = "Vyfakturované výdaje"
@@ -328,7 +334,7 @@ Public Class PivotSumField
                 s = "Rozpracované paušální odměny"
             Case PivotSumFieldType.Fees_Approved
                 _SelectField = "SUM(case when a.p71ID=1 AND a.p91ID IS NULL AND p34.p34IncomeStatementFlag=2 AND p34.p33ID IN (2,5) AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Amount_WithoutVat_Approved END)"
-                s = "Rozpracované paušální odměny"
+                s = "Schválené paušální odměny"
             Case PivotSumFieldType.Fees_Invoiced
                 _SelectField = "SUM(case when a.p91ID IS NOT NULL AND p34.p34IncomeStatementFlag=2 AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Invoiced END)"
                 s = "Vyfakturované paušální odměny"

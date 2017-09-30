@@ -92,6 +92,7 @@ Public Class sumgrid_designer
         sumsDest.Items.Clear()
         For Each c In lisAllSums
             Dim it As New RadListBoxItem(c.Caption, c.FieldTypeID.ToString)
+
             Select Case c.ColumnType
                 Case BO.cfENUM.DateTime, BO.cfENUM.DateTime
                     it.ImageUrl = "Images/type_datetime.png"
@@ -106,6 +107,12 @@ Public Class sumgrid_designer
             End Select
 
             sumsSource.Items.Add(it)
+            If sumsSource.Items.Count = 4 Then
+                it = New RadListBoxItem("Skupina", "g1")
+                it.Enabled = False
+                sumsSource.Items.Add(it)
+
+            End If
         Next
 
         If strDefSumCols <> "" Then
