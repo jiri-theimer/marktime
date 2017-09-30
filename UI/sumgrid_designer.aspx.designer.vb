@@ -104,6 +104,33 @@ Partial Public Class sumgrid_designer
     Protected WithEvents dd2 As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
+    '''RadTabStrip1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadTabStrip1 As Global.Telerik.Web.UI.RadTabStrip
+
+    '''<summary>
+    '''RadMultiPage1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadMultiPage1 As Global.Telerik.Web.UI.RadMultiPage
+
+    '''<summary>
+    '''core control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents core As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
     '''colsSource control.
     '''</summary>
     '''<remarks>
@@ -131,6 +158,15 @@ Partial Public Class sumgrid_designer
     Protected WithEvents cbxMaxMinAll As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''sum2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sum2 As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
     '''sumsSource control.
     '''</summary>
     '''<remarks>
@@ -147,6 +183,15 @@ Partial Public Class sumgrid_designer
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents sumsDest As Global.Telerik.Web.UI.RadListBox
+
+    '''<summary>
+    '''other control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents other As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
     '''panRoles control.
