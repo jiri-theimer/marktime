@@ -92,27 +92,34 @@ Public Class sumgrid_designer
         sumsDest.Items.Clear()
         For Each c In lisAllSums
             Dim it As New RadListBoxItem(c.Caption, c.FieldTypeID.ToString)
-
-            Select Case c.ColumnType
-                Case BO.cfENUM.DateTime, BO.cfENUM.DateTime
-                    it.ImageUrl = "Images/type_datetime.png"
-                Case BO.cfENUM.DateOnly
-                    it.ImageUrl = "Images/type_date.png"
-                Case BO.cfENUM.Numeric, BO.cfENUM.Numeric2, BO.cfENUM.Numeric0
-                    it.ImageUrl = "Images/type_number.png"
-                Case BO.cfENUM.AnyString
-                    it.ImageUrl = "Images/type_text.png"
-                Case BO.cfENUM.Checkbox
-                    it.ImageUrl = "Images/type_checkbox.png"
+            Select Case c.GP
+                Case 10 : it.ImageUrl = "Images/a01_stats.png"
+                Case 14 : it.ImageUrl = "Images/a14_stats.png"
+                Case 13 : it.ImageUrl = "Images/a13_stats.png"
+                Case 16 : it.ImageUrl = "Images/a16_stats.png"
+                Case 17 : it.ImageUrl = "Images/a17_stats.png"
+                Case 24 : it.ImageUrl = "Images/a24_stats.png"
+                Case 23 : it.ImageUrl = "Images/a23_stats.png"
+                Case 26 : it.ImageUrl = "Images/a26_stats.png"
+                Case 50 : it.ImageUrl = "Images/a50_stats.png"
+                Case Else
+                    it.ImageUrl = "Images/a00_stats.png"
             End Select
+            'Select Case c.ColumnType
+            '    Case BO.cfENUM.DateTime, BO.cfENUM.DateTime
+            '        it.ImageUrl = "Images/type_datetime.png"
+            '    Case BO.cfENUM.DateOnly
+            '        it.ImageUrl = "Images/type_date.png"
+            '    Case BO.cfENUM.Numeric, BO.cfENUM.Numeric2, BO.cfENUM.Numeric0
+            '        it.ImageUrl = "Images/type_number.png"
+            '    Case BO.cfENUM.AnyString
+            '        it.ImageUrl = "Images/type_text.png"
+            '    Case BO.cfENUM.Checkbox
+            '        it.ImageUrl = "Images/type_checkbox.png"
+            'End Select
 
             sumsSource.Items.Add(it)
-            If sumsSource.Items.Count = 4 Then
-                it = New RadListBoxItem("Skupina", "g1")
-                it.Enabled = False
-                sumsSource.Items.Add(it)
-
-            End If
+            
         Next
 
         If strDefSumCols <> "" Then
