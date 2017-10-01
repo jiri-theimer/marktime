@@ -159,6 +159,9 @@
                 End Select
             End If
             If .j70ID > 0 Then
+                pars.Add("dp31f1", DateSerial(2000, 1, 1))
+                pars.Add("dp31f2", DateSerial(3000, 1, 1))
+
                 Dim strQueryW As String = bas.CompleteSqlJ70(_cDB, .j70ID, _curUser)
                 If strQueryW <> "" Then
                     strW += " AND " & strQueryW
@@ -167,13 +170,7 @@
             If .QuickQuery > BO.myQueryJ02_QuickQuery._NotSpecified Then
                 strW += " AND " & bas.GetQuickQuerySQL_j02(.QuickQuery)
             End If
-            'Select Case .QuickQuery
-            '    Case BO.myQueryJ02_QuickQuery.WaitingOnApproval
-            '        strW += " AND a.j02ID IN (SELECT j02ID FROM p31Worksheet WHERE p71ID IS NULL AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)"
-            '    Case BO.myQueryP41_QuickQuery.WaitingOnInvoice
-            '        strW += " AND a.j02ID IN (SELECT j02ID FROM p31Worksheet WHERE p71ID=1 AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)"
-            '    Case Else
-            'End Select
+            
             
             If .j04ID <> 0 Then
                 pars.Add("j04id", .j04ID, DbType.Int32)
