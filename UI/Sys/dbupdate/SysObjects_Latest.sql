@@ -2211,6 +2211,34 @@ END
 
 GO
 
+----------FN---------------p28_medias_inline_invoice-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p28_medias_inline_invoice') and type = 'FN')
+ drop function p28_medias_inline_invoice
+GO
+
+
+
+CREATE    FUNCTION [dbo].[p28_medias_inline_invoice](@p28id int)
+RETURNS nvarchar(2000)
+AS
+BEGIN
+  ---vrací čárkou oddělené fakturační e-mail adresy
+
+ DECLARE @s nvarchar(2000) 
+
+select @s=COALESCE(@s + ', ', '')+isnull(a.o32Value,'')+isnull(' ('+a.o32description+')','')
+from
+o32Contact_Medium a
+WHERE a.p28ID=@p28id AND a.o32IsDefaultInInvoice=1
+
+RETURN(@s)
+   
+END
+
+
+GO
+
 ----------FN---------------p31_getrate_from_p51id-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p31_getrate_from_p51id') and type = 'FN')
@@ -4233,6 +4261,182 @@ create function [dbo].[SplitString]
 
 GO
 
+----------IF---------------tview_j02_notinvoiced-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('tview_j02_notinvoiced') and type = 'IF')
+ drop function tview_j02_notinvoiced
+GO
+
+
+
+CREATE function [dbo].[tview_j02_notinvoiced] 
+    (
+        @d1 datetime,
+		@d2 datetime
+    )
+    returns table
+    AS
+    return (
+        select a.j02ID
+,sum(case when a.p71ID IS NULL AND p32.p32IsBillable=1 THEN a.p31Hours_Orig when a.p71ID=1 THEN a.p31Hours_Approved_Billing end) as Hodiny
+,sum(case when a.p71ID IS NULL AND a.p31Amount_WithoutVat_Orig<>0 then a.p31Amount_WithoutVat_Orig WHEN a.p71ID=1 THEN a.p31Amount_WithoutVat_Approved end) as Castka_Celkem
+,sum(case when a.p71ID IS NULL AND p34.p33ID=1 then p31Amount_WithoutVat_Orig WHEN a.p71ID=1 AND p34.p33ID=1 THEN a.p31Amount_WithoutVat_Approved end) as Honorar
+,sum(case when a.p71ID IS NULL AND p34.p33ID=1 and a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Orig WHEN a.p71ID=1 AND p34.p33ID=1 AND a.j27ID_Billing_Orig=2 THEN a.p31Amount_WithoutVat_Approved end) as Honorar_CZK
+,sum(case when a.p71ID IS NULL AND p34.p33ID=1 and a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Orig WHEN a.p71ID=1 AND p34.p33ID=1 AND a.j27ID_Billing_Orig=3 THEN a.p31Amount_WithoutVat_Approved end) as Honorar_EUR
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 then a.p31Amount_WithoutVat_Orig WHEN a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 THEN a.p31Amount_WithoutVat_Approved end) as Vydaje
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Orig when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Approved end) as Vydaje_CZK
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Orig when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Approved end) as Vydaje_EUR
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 then a.p31Amount_WithoutVat_Orig when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 then a.p31Amount_WithoutVat_Approved end) as Odmeny
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Orig when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Approved end) as Odmeny_CZK
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Orig when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Approved end) as Odmeny_EUR
+from
+p31WorkSheet a
+INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
+INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE a.p91ID IS NULL AND p31Date between @d1 and @d2 AND getdate() between a.p31ValidFrom and a.p31ValidUntil
+GROUP BY a.j02ID
+
+      )
+
+
+
+GO
+
+----------IF---------------tview_j02_wip-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('tview_j02_wip') and type = 'IF')
+ drop function tview_j02_wip
+GO
+
+
+
+CREATE function [dbo].[tview_j02_wip] 
+    (
+        @d1 datetime,
+		@d2 datetime
+    )
+    returns table
+    AS
+    return (
+        select a.j02ID
+,sum(a.p31Hours_Orig) as Hodiny
+,sum(case when a.p31Amount_WithoutVat_Orig<>0 then a.p31Amount_WithoutVat_Orig end) as Castka_Celkem
+,sum(case when p34.p33ID=1 then p31Amount_WithoutVat_Orig end) as Honorar
+,sum(case when p34.p33ID=1 and a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Orig end) as Honorar_CZK
+,sum(case when p34.p33ID=1 and a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Orig end) as Honorar_EUR
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 then a.p31Amount_WithoutVat_Orig end) as Vydaje
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Orig end) as Vydaje_CZK
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Orig end) as Vydaje_EUR
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 then a.p31Amount_WithoutVat_Orig end) as Odmeny
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 and a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Orig end) as Odmeny_CZK
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 and a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Orig end) as Odmeny_EUR
+from
+p31WorkSheet a
+INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
+INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE a.p71ID IS NULL and a.p91ID IS NULL AND p31Date between @d1 and @d2 AND getdate() between a.p31ValidFrom and a.p31ValidUntil
+GROUP BY a.j02ID
+
+      )
+
+
+
+GO
+
+----------IF---------------tview_p28_approved-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('tview_p28_approved') and type = 'IF')
+ drop function tview_p28_approved
+GO
+
+
+
+
+
+
+CREATE function [dbo].[tview_p28_approved] 
+    (
+        @d1 datetime,
+		@d2 datetime
+    )
+    returns table
+    AS
+    return (
+        select p41.p28ID_Client as p28ID
+,sum(a.p31Hours_Approved_Billing) as Hodiny
+,sum(a.p31Amount_WithoutVat_Approved) as Castka_Celkem
+,sum(case when a.p71ID=1 AND p34.p33ID=1 THEN a.p31Amount_WithoutVat_Approved end) as Honorar
+,sum(case when a.p71ID=1 AND p34.p33ID=1 AND a.j27ID_Billing_Orig=2 THEN a.p31Amount_WithoutVat_Approved end) as Honorar_CZK
+,sum(case when a.p71ID=1 AND p34.p33ID=1 AND a.j27ID_Billing_Orig=3 THEN a.p31Amount_WithoutVat_Approved end) as Honorar_EUR
+,sum(case when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 THEN a.p31Amount_WithoutVat_Approved end) as Vydaje
+,sum(case when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Approved end) as Vydaje_CZK
+,sum(case when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Approved end) as Vydaje_EUR
+,sum(case when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 then a.p31Amount_WithoutVat_Approved end) as Odmeny
+,sum(case when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Approved end) as Odmeny_CZK
+,sum(case when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Approved end) as Odmeny_EUR
+,count(a.p41ID) as PocetProjektu
+from
+p31WorkSheet a
+INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID
+INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
+INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE p41.p28ID_Client IS NOT NULL AND a.p71ID=1 AND a.p91ID IS NULL AND p31Date between @d1 and @d2 AND getdate() between a.p31ValidFrom and a.p31ValidUntil
+GROUP BY p41.p28ID_Client
+
+      )
+
+
+
+
+
+GO
+
+----------IF---------------tview_p28_notinvoiced-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('tview_p28_notinvoiced') and type = 'IF')
+ drop function tview_p28_notinvoiced
+GO
+
+
+
+
+
+CREATE function [dbo].[tview_p28_notinvoiced] 
+    (
+        @d1 datetime,
+		@d2 datetime
+    )
+    returns table
+    AS
+    return (
+        select p41.p28ID_Client as p28ID
+,sum(case when a.p71ID IS NULL AND p32.p32IsBillable=1 THEN a.p31Hours_Orig when a.p71ID=1 THEN a.p31Hours_Approved_Billing end) as Hodiny
+,sum(case when a.p71ID IS NULL AND a.p31Amount_WithoutVat_Orig<>0 then a.p31Amount_WithoutVat_Orig WHEN a.p71ID=1 THEN a.p31Amount_WithoutVat_Approved end) as Castka_Celkem
+,sum(case when a.p71ID IS NULL AND p34.p33ID=1 then p31Amount_WithoutVat_Orig WHEN a.p71ID=1 AND p34.p33ID=1 THEN a.p31Amount_WithoutVat_Approved end) as Honorar
+,sum(case when a.p71ID IS NULL AND p34.p33ID=1 and a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Orig WHEN a.p71ID=1 AND p34.p33ID=1 AND a.j27ID_Billing_Orig=2 THEN a.p31Amount_WithoutVat_Approved end) as Honorar_CZK
+,sum(case when a.p71ID IS NULL AND p34.p33ID=1 and a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Orig WHEN a.p71ID=1 AND p34.p33ID=1 AND a.j27ID_Billing_Orig=3 THEN a.p31Amount_WithoutVat_Approved end) as Honorar_EUR
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 then a.p31Amount_WithoutVat_Orig WHEN a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 THEN a.p31Amount_WithoutVat_Approved end) as Vydaje
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Orig when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Approved end) as Vydaje_CZK
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Orig when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Approved end) as Vydaje_EUR
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 then a.p31Amount_WithoutVat_Orig when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 then a.p31Amount_WithoutVat_Approved end) as Odmeny
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Orig when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Approved end) as Odmeny_CZK
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Orig when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Approved end) as Odmeny_EUR
+,count(a.p41ID) as PocetProjektu
+from
+p31WorkSheet a
+INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID
+INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
+INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE p41.p28ID_Client IS NOT NULL AND a.p91ID IS NULL AND p31Date between @d1 and @d2 AND getdate() between a.p31ValidFrom and a.p31ValidUntil
+GROUP BY p41.p28ID_Client
+
+      )
+
+
+
+
+GO
+
 ----------IF---------------tview_p28_wip-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('tview_p28_wip') and type = 'IF')
@@ -4252,23 +4456,21 @@ CREATE function [dbo].[tview_p28_wip]
     return (
         select p41.p28ID_Client as p28ID
 ,sum(a.p31Hours_Orig) as Hodiny
-,sum(case when a.p31Amount_WithoutVat_Orig<>0 then p31Amount_WithoutVat_Orig end) as Castka_Celkem
+,sum(case when a.p31Amount_WithoutVat_Orig<>0 then a.p31Amount_WithoutVat_Orig end) as Castka_Celkem
 ,sum(case when p34.p33ID=1 then p31Amount_WithoutVat_Orig end) as Honorar
-,sum(case when p34.p33ID=1 and a.j27ID_Billing_Orig=2 then p31Amount_WithoutVat_Orig end) as Honorar_CZK
-,sum(case when p34.p33ID=1 and a.j27ID_Billing_Orig=3 then p31Amount_WithoutVat_Orig end) as Honorar_EUR
-,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 then p31Amount_WithoutVat_Orig end) as Vydaje
-,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=2 then p31Amount_WithoutVat_Orig end) as Vydaje_CZK
-,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=3 then p31Amount_WithoutVat_Orig end) as Vydaje_EUR
-,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 then p31Amount_WithoutVat_Orig end) as Odmeny
-,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 and a.j27ID_Billing_Orig=2 then p31Amount_WithoutVat_Orig end) as Odmeny_CZK
-,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 and a.j27ID_Billing_Orig=3 then p31Amount_WithoutVat_Orig end) as Odmeny_EUR
+,sum(case when p34.p33ID=1 and a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Orig end) as Honorar_CZK
+,sum(case when p34.p33ID=1 and a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Orig end) as Honorar_EUR
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 then a.p31Amount_WithoutVat_Orig end) as Vydaje
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 then a.p31Amount_WithoutVat_Orig end) as Odmeny
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 and a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Orig end) as Odmeny_CZK
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 and a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Orig end) as Odmeny_EUR
 ,count(a.p41ID) as PocetProjektu
 from
 p31WorkSheet a
 INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID
 INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
 INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
-WHERE p41.p28ID_Client IS NOT NULL AND a.p71ID IS NULL AND p31Date between @d1 and @d2 AND getdate() between a.p31ValidFrom and a.p31ValidUntil
+WHERE p41.p28ID_Client IS NOT NULL AND a.p71ID IS NULL AND a.p91ID IS NULL AND p31Date between @d1 and @d2 AND getdate() between a.p31ValidFrom and a.p31ValidUntil
 GROUP BY p41.p28ID_Client
 
       )
@@ -4317,6 +4519,86 @@ GROUP BY p41.p28ID_Client
 
 GO
 
+----------IF---------------tview_p41_approved-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('tview_p41_approved') and type = 'IF')
+ drop function tview_p41_approved
+GO
+
+
+
+CREATE function [dbo].[tview_p41_approved] 
+    (
+        @d1 datetime,
+		@d2 datetime
+    )
+    returns table
+    AS
+    return (
+        select a.p41ID
+,sum(a.p31Hours_Approved_Billing) as Hodiny
+,sum(a.p31Amount_WithoutVat_Approved) as Castka_Celkem
+,sum(case when a.p71ID=1 AND p34.p33ID=1 THEN a.p31Amount_WithoutVat_Approved end) as Honorar
+,sum(case when a.p71ID=1 AND p34.p33ID=1 AND a.j27ID_Billing_Orig=2 THEN a.p31Amount_WithoutVat_Approved end) as Honorar_CZK
+,sum(case when a.p71ID=1 AND p34.p33ID=1 AND a.j27ID_Billing_Orig=3 THEN a.p31Amount_WithoutVat_Approved end) as Honorar_EUR
+,sum(case when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 THEN a.p31Amount_WithoutVat_Approved end) as Vydaje
+,sum(case when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Approved end) as Vydaje_CZK
+,sum(case when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Approved end) as Vydaje_EUR
+,sum(case when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 then a.p31Amount_WithoutVat_Approved end) as Odmeny
+,sum(case when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Approved end) as Odmeny_CZK
+,sum(case when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Approved end) as Odmeny_EUR
+from
+p31WorkSheet a
+INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
+INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE a.p71ID=1 AND a.p91ID IS NULL AND p31Date between @d1 and @d2 AND getdate() between a.p31ValidFrom and a.p31ValidUntil
+GROUP BY a.p41ID
+
+      )
+
+
+
+GO
+
+----------IF---------------tview_p41_notinvoiced-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('tview_p41_notinvoiced') and type = 'IF')
+ drop function tview_p41_notinvoiced
+GO
+
+
+CREATE function [dbo].[tview_p41_notinvoiced] 
+    (
+        @d1 datetime,
+		@d2 datetime
+    )
+    returns table
+    AS
+    return (
+        select a.p41ID
+,sum(case when a.p71ID IS NULL AND p32.p32IsBillable=1 THEN a.p31Hours_Orig when a.p71ID=1 THEN a.p31Hours_Approved_Billing end) as Hodiny
+,sum(case when a.p71ID IS NULL AND a.p31Amount_WithoutVat_Orig<>0 then a.p31Amount_WithoutVat_Orig WHEN a.p71ID=1 THEN a.p31Amount_WithoutVat_Approved end) as Castka_Celkem
+,sum(case when a.p71ID IS NULL AND p34.p33ID=1 then p31Amount_WithoutVat_Orig WHEN a.p71ID=1 AND p34.p33ID=1 THEN a.p31Amount_WithoutVat_Approved end) as Honorar
+,sum(case when a.p71ID IS NULL AND p34.p33ID=1 and a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Orig WHEN a.p71ID=1 AND p34.p33ID=1 AND a.j27ID_Billing_Orig=2 THEN a.p31Amount_WithoutVat_Approved end) as Honorar_CZK
+,sum(case when a.p71ID IS NULL AND p34.p33ID=1 and a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Orig WHEN a.p71ID=1 AND p34.p33ID=1 AND a.j27ID_Billing_Orig=3 THEN a.p31Amount_WithoutVat_Approved end) as Honorar_EUR
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 then a.p31Amount_WithoutVat_Orig WHEN a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 THEN a.p31Amount_WithoutVat_Approved end) as Vydaje
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Orig when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Approved end) as Vydaje_CZK
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Orig when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Approved end) as Vydaje_EUR
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 then a.p31Amount_WithoutVat_Orig when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 then a.p31Amount_WithoutVat_Approved end) as Odmeny
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Orig when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Approved end) as Odmeny_CZK
+,sum(case when a.p71ID IS NULL AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Orig when a.p71ID=1 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Approved end) as Odmeny_EUR
+from
+p31WorkSheet a
+INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
+INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE a.p91ID IS NULL AND p31Date between @d1 and @d2 AND getdate() between a.p31ValidFrom and a.p31ValidUntil
+GROUP BY a.p41ID
+
+      )
+
+
+GO
+
 ----------IF---------------tview_p41_wip-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('tview_p41_wip') and type = 'IF')
@@ -4334,21 +4616,21 @@ CREATE function [dbo].[tview_p41_wip]
     return (
         select a.p41ID
 ,sum(a.p31Hours_Orig) as Hodiny
-,sum(case when a.p31Amount_WithoutVat_Orig<>0 then p31Amount_WithoutVat_Orig end) as Castka_Celkem
+,sum(case when a.p31Amount_WithoutVat_Orig<>0 then a.p31Amount_WithoutVat_Orig end) as Castka_Celkem
 ,sum(case when p34.p33ID=1 then p31Amount_WithoutVat_Orig end) as Honorar
-,sum(case when p34.p33ID=1 and a.j27ID_Billing_Orig=2 then p31Amount_WithoutVat_Orig end) as Honorar_CZK
-,sum(case when p34.p33ID=1 and a.j27ID_Billing_Orig=3 then p31Amount_WithoutVat_Orig end) as Honorar_EUR
-,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 then p31Amount_WithoutVat_Orig end) as Vydaje
-,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=2 then p31Amount_WithoutVat_Orig end) as Vydaje_CZK
-,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=3 then p31Amount_WithoutVat_Orig end) as Vydaje_EUR
-,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 then p31Amount_WithoutVat_Orig end) as Odmeny
-,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 and a.j27ID_Billing_Orig=2 then p31Amount_WithoutVat_Orig end) as Odmeny_CZK
-,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 and a.j27ID_Billing_Orig=3 then p31Amount_WithoutVat_Orig end) as Odmeny_EUR
+,sum(case when p34.p33ID=1 and a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Orig end) as Honorar_CZK
+,sum(case when p34.p33ID=1 and a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Orig end) as Honorar_EUR
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 then a.p31Amount_WithoutVat_Orig end) as Vydaje
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Orig end) as Vydaje_CZK
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Orig end) as Vydaje_EUR
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 then a.p31Amount_WithoutVat_Orig end) as Odmeny
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 and a.j27ID_Billing_Orig=2 then a.p31Amount_WithoutVat_Orig end) as Odmeny_CZK
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 and a.j27ID_Billing_Orig=3 then a.p31Amount_WithoutVat_Orig end) as Odmeny_EUR
 from
 p31WorkSheet a
 INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
 INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
-WHERE a.p71ID IS NULL AND p31Date between @d1 and @d2 AND getdate() between a.p31ValidFrom and a.p31ValidUntil
+WHERE a.p71ID IS NULL and a.p91ID IS NULL AND p31Date between @d1 and @d2 AND getdate() between a.p31ValidFrom and a.p31ValidUntil
 GROUP BY a.p41ID
 
       )

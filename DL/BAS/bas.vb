@@ -599,7 +599,7 @@
             Case BO.myQueryP28_QuickQuery.WaitingOnApproval
                 Return "a.p28ID IN (SELECT xb.p28ID_Client FROM p31Worksheet xa INNER JOIN p41Project xb ON xa.p41ID=xb.p41ID WHERE xb.p28ID_Client IS NOT NULL AND xa.p71ID IS NULL AND xa.p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)"
             Case BO.myQueryP28_QuickQuery.WaitingOnInvoice
-                Return "a.p28ID IN (SELECT xb.p28ID_Client FROM p31Worksheet xa INNER JOIN p41Project xb ON xa.p41ID=xb.p41ID WHERE xb.p28ID_Client IS NOT NULL AND xa.p71ID=1 AND xa.p91ID IS NULL)"
+                Return "a.p28ID IN (SELECT xb.p28ID_Client FROM p31Worksheet xa INNER JOIN p41Project xb ON xa.p41ID=xb.p41ID WHERE xb.p28ID_Client IS NOT NULL AND xa.p71ID=1 AND xa.p31Amount_WithoutVat_Approved>0 AND xa.p91ID IS NULL)"
             Case BO.myQueryP28_QuickQuery.WIthNotepad
                 Return "a.p28ID IN (SELECT xa.x19RecordPID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=328)"
             Case BO.myQueryP28_QuickQuery.OverWorksheetLimit
@@ -664,7 +664,7 @@
             Case BO.myQueryP41_QuickQuery.WaitingOnApproval
                 Return "a.p41ID IN (SELECT p41ID FROM p31Worksheet WHERE p71ID IS NULL AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)"
             Case BO.myQueryP41_QuickQuery.WaitingOnInvoice
-                Return "a.p41ID IN (SELECT p41ID FROM p31Worksheet WHERE p71ID=1 AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)"
+                Return "a.p41ID IN (SELECT p41ID FROM p31Worksheet WHERE p71ID=1 AND p91ID IS NULL AND p31Amount_WithoutVat_Approved>0 AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)"
             Case BO.myQueryP41_QuickQuery.OverWorksheetLimit
                 Dim s As String = "(a.p41ID IN ("
                 s += "SELECT xa.p41ID"
@@ -731,7 +731,7 @@
             Case BO.myQueryJ02_QuickQuery.WaitingOnApproval
                 Return "a.j02ID IN (SELECT j02ID FROM p31Worksheet WHERE p71ID IS NULL AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)"
             Case BO.myQueryP41_QuickQuery.WaitingOnInvoice
-                Return "a.j02ID IN (SELECT j02ID FROM p31Worksheet WHERE p71ID=1 AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)"
+                Return "a.j02ID IN (SELECT j02ID FROM p31Worksheet WHERE p71ID=1 AND p31Amount_WithoutVat_Approved>0 AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)"
             Case BO.myQueryJ02_QuickQuery.NonIntraPersonsOnly
                 Return "a.j02IsIntraPerson=0"
             Case BO.myQueryJ02_QuickQuery.IntraPersonsOnly
