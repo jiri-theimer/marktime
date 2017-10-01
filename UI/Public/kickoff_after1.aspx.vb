@@ -565,29 +565,26 @@
     End Sub
 
     Private Sub Filtry()
-
         Dim strColumnNames As String = "Client,p41Name"
-        CreateQuery("Otevřené projekty", BO.x29IdEnum.p41Project, 1, strColumnNames)
-        CreateQuery("Projekty v archivu", BO.x29IdEnum.p41Project, 2, strColumnNames)
-        CreateQuery("Strom", BO.x29IdEnum.p41Project, 0, "Client,p41TreePath")
-        CreateQuery("Štítky", BO.x29IdEnum.p41Project, 0, "Client,p41Name,TagsHtml")
-        CreateQuery("Naposledy založené", BO.x29IdEnum.p41Project, 0, "Client,p41Name,p41DateInsert,p41UserInsert", , , , "a.p41DateInsert DESC")
-        CreateQuery("Otevřené úkoly", BO.x29IdEnum.p41Project, 0, "Client,p41Name,PendingTasks", "_other", 6)
-        CreateQuery("Nevyfakturováno", BO.x29IdEnum.p41Project, 0, "Client,p41Name,NI_Hodiny,NI_Castka", "_other", 3)
-        CreateQuery("Rozpracováno, čeká na schválení", BO.x29IdEnum.p41Project, 0, "Client,p41Name,WIP_Hodiny,WIP_Castka", "_other", 3)
-        CreateQuery("Schváleno, čeká na fakturaci", BO.x29IdEnum.p41Project, 0, "Client,p41Name,AP_Hodiny,AP_Castka", "_other", 5)
-        CreateQuery("Stav fakturace", BO.x29IdEnum.p41Project, 0, "Client,p41Name,NI_Castka,Vyfakturovano_Naposledy_Kdy")
-        CreateQuery("Projekty s vystavenou fakturou", BO.x29IdEnum.p41Project, 0, "Client,p41Name,Vyfakturovano_PocetFaktur,Vyfakturovano_Naposledy_Kdy", "_other", 15)
-        CreateQuery("Překročen limit rozpracovanosti", BO.x29IdEnum.p41Project, 0, "Client,p41Name,p41LimitHours_Notification,p41LimitFee_Notification,WIP_Hodiny,WIP_Castka", "_other", 4)
-
-        CreateQuery("Matky opakovaných projektů", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 22)
-        CreateQuery("Projekty s opakovanou paušální odměnou", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 10)
-        CreateQuery("Projekty v režimu DRAFT", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 11)
-        CreateQuery("Není přiřazen ceník sazeb", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 13)
-        CreateQuery("Projekty s kontaktní osobou", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 16)
         CreateQuery("Můj seznam oblíbených", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 20)
-        'CreateQuery("Má nad sebou nadřízený projekt", BO.x29IdEnum.p41Project, 0, "Client,p41TreePath", "_other", 18)
-        'CreateQuery("Má pod sebou podřízené projekty", BO.x29IdEnum.p41Project, 0, "Client,p41TreePath", "_other", 19)
+        CreateQuery("Projekty s kontaktní osobou", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 16)
+        CreateQuery("Není přiřazen ceník sazeb", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 13)
+        CreateQuery("Projekty v režimu DRAFT", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 11)
+        CreateQuery("Projekty s opakovanou paušální odměnou", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 10)
+        CreateQuery("Matky opakovaných projektů", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 22)
+        CreateQuery("Překročen limit rozpracovanosti", BO.x29IdEnum.p41Project, 0, "Client,p41Name,p41LimitHours_Notification,p41LimitFee_Notification,WIP_Hodiny,WIP_Castka", "_other", 4)
+        CreateQuery("Projekty s vystavenou fakturou", BO.x29IdEnum.p41Project, 0, "Client,p41Name,Vyfakturovano_PocetFaktur,Vyfakturovano_Naposledy_Kdy", "_other", 15)
+        CreateQuery("Stav fakturace", BO.x29IdEnum.p41Project, 0, "Client,p41Name,NI_Castka,Vyfakturovano_Naposledy_Kdy")
+        CreateQuery("Schváleno, čeká na fakturaci", BO.x29IdEnum.p41Project, 0, "Client,p41Name,AP_Hodiny,AP_Castka", "_other", 5)
+        CreateQuery("Rozpracováno, čeká na schválení", BO.x29IdEnum.p41Project, 0, "Client,p41Name,WIP_Hodiny,WIP_Castka", "_other", 3)
+        CreateQuery("Nevyfakturováno", BO.x29IdEnum.p41Project, 0, "Client,p41Name,NI_Hodiny,NI_Castka", "_other", 3)
+        CreateQuery("Otevřené úkoly", BO.x29IdEnum.p41Project, 0, "Client,p41Name,PendingTasks", "_other", 6)
+        CreateQuery("Naposledy založené", BO.x29IdEnum.p41Project, 0, "Client,p41Name,p41DateInsert,p41UserInsert", , , , "a.p41DateInsert DESC")
+        CreateQuery("Štítky", BO.x29IdEnum.p41Project, 0, "Client,p41Name,TagsHtml")
+        CreateQuery("Strom", BO.x29IdEnum.p41Project, 0, "Client,p41TreePath")
+        CreateQuery("Projekty v archivu", BO.x29IdEnum.p41Project, 2, strColumnNames)
+        CreateQuery("Otevřené projekty", BO.x29IdEnum.p41Project, 1, strColumnNames)
+
 
         strColumnNames = "p28Name"
         CreateQuery("Otevření klienti", BO.x29IdEnum.p28Contact, 1, strColumnNames)
@@ -605,12 +602,13 @@
         CreateQuery("Klient+podřízení klienti", BO.x29IdEnum.p28Contact, 0, "p28Name,ChildContactsInline")
         
         strColumnNames = "FullNameDesc"
-        CreateQuery("Interní osoby", BO.x29IdEnum.j02Person, 1, strColumnNames, "_other", 6)
-        CreateQuery("Kontaktní osoby", BO.x29IdEnum.j02Person, 0, strColumnNames, "_other", 7)
-        CreateQuery("Osoby v archivu", BO.x29IdEnum.j02Person, 2, strColumnNames)
+        CreateQuery("Nevyfakturované hodiny", BO.x29IdEnum.j02Person, 0, "FullNameDesc,NI_Hodiny", "_other", 35)
+        CreateQuery("Rozpracované hodiny", BO.x29IdEnum.j02Person, 0, "FullNameDesc,WIP_Hodiny", "_other", 3)
         CreateQuery("Štítky", BO.x29IdEnum.j02Person, 0, "FullNameDesc,TagsHtml")
-        CreateQuery("Rozpracované hodiny", BO.x29IdEnum.j02Person, 0, "FullNameDesc,WIP_Hodiny,WIP_Honorar", "_other", 3)
-        CreateQuery("Nevyfakturované hodiny", BO.x29IdEnum.j02Person, 0, "FullNameDesc,NI_Hodiny,NI_Honorar", "_other", 35)
+        CreateQuery("Osoby v archivu", BO.x29IdEnum.j02Person, 2, strColumnNames)
+        CreateQuery("Kontaktní osoby", BO.x29IdEnum.j02Person, 0, strColumnNames, "_other", 7)
+        CreateQuery("Interní osoby", BO.x29IdEnum.j02Person, 1, strColumnNames, "_other", 6)
+
 
         strColumnNames = "p91Code,p91Client,p91Amount_WithoutVat,j27Code"
         CreateQuery("Neuhrazené po splatnosti", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 4)
@@ -624,26 +622,33 @@
         CreateQuery("S nulovou sazbou DPH", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 12)
 
         strColumnNames = "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
-        CreateQuery("Výdaje", BO.x29IdEnum.p31Worksheet, 0, "p31Date,ClientName,p41Name,Person,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,j27Code_Billing_Orig,p31Text", "p34id", 3, "Výdaje")
-        CreateQuery("Pevné (paušální) odměny", BO.x29IdEnum.p31Worksheet, 0, "p31Date,ClientName,p41Name,Person,p32Name,p31Amount_WithoutVat_Orig,j27Code_Billing_Orig,p31Text", "p34id", 4, "Pevné (paušální) odměny")
-        CreateQuery("Rozpracovanost, čeká na schvalování", BO.x29IdEnum.p31Worksheet, 0, "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text", "_other", 1)
-        CreateQuery("Schváleno, čeká na fakturaci", BO.x29IdEnum.p31Worksheet, 0, "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Hours_Approved_Billing,p31Amount_WithoutVat_Approved,j27Code_Billing_Orig,p31Text", "_other", 2)
-        CreateQuery("Vyfakturováno", BO.x29IdEnum.p31Worksheet, 0, "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Invoiced,p31Amount_WithoutVat_Invoiced,p31Text,p91Code", "_other", 3)
-        CreateQuery("Přesunuto do archivu", BO.x29IdEnum.p31Worksheet, 0, strColumnNames, "_other", 4)
-        CreateQuery("Štítky", BO.x29IdEnum.p31Worksheet, 0, "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Text,TagsHtml")
-        CreateQuery("Přiřazena kontaktní osoba", BO.x29IdEnum.p31Worksheet, 0, strColumnNames, "_other", 6)
-        CreateQuery("Přiřazen úkol", BO.x29IdEnum.p31Worksheet, 0, strColumnNames, "_other", 9)
         CreateQuery("Vygenerováno automaticky robotem", BO.x29IdEnum.p31Worksheet, 0, strColumnNames, "_other", 13)
+        CreateQuery("Přiřazen úkol", BO.x29IdEnum.p31Worksheet, 0, strColumnNames, "_other", 9)
+        CreateQuery("Přiřazena kontaktní osoba", BO.x29IdEnum.p31Worksheet, 0, strColumnNames, "_other", 6)
+        CreateQuery("Štítky", BO.x29IdEnum.p31Worksheet, 0, "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Text,TagsHtml")
+        CreateQuery("Přesunuto do archivu", BO.x29IdEnum.p31Worksheet, 0, strColumnNames, "_other", 4)
+        CreateQuery("Vyfakturováno", BO.x29IdEnum.p31Worksheet, 0, "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Invoiced,p31Amount_WithoutVat_Invoiced,p31Text,p91Code", "_other", 3)
+        CreateQuery("Schváleno, čeká na fakturaci", BO.x29IdEnum.p31Worksheet, 0, "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Hours_Approved_Billing,p31Amount_WithoutVat_Approved,j27Code_Billing_Orig,p31Text", "_other", 2)
+        CreateQuery("Rozpracovanost, čeká na schvalování", BO.x29IdEnum.p31Worksheet, 0, "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text", "_other", 1)
+        CreateQuery("Pevné (paušální) odměny", BO.x29IdEnum.p31Worksheet, 0, "p31Date,ClientName,p41Name,Person,p32Name,p31Amount_WithoutVat_Orig,j27Code_Billing_Orig,p31Text", "p34id", 4, "Pevné (paušální) odměny")
+        CreateQuery("Výdaje", BO.x29IdEnum.p31Worksheet, 0, "p31Date,ClientName,p41Name,Person,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,j27Code_Billing_Orig,p31Text", "p34id", 3, "Výdaje")
 
         strColumnNames = "p56Code,p56Name,b02Name"
-        CreateQuery("Otevřené úkoly", BO.x29IdEnum.p56Task, 1, strColumnNames)
-        CreateQuery("Uzavřené úkoly (v archivu)", BO.x29IdEnum.p56Task, 2, strColumnNames)
-        CreateQuery("Rozpracované úkony, čeká na schvalování", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 3)
-        CreateQuery("Schválené úkony, čeká na fakturaci", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 5)
-        CreateQuery("Vyplněn plán/limit hodin", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 9)
-        CreateQuery("Vyplněn termín dokončení", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 6)
-        CreateQuery("Je po termínu dokončení", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 7)
         CreateQuery("Matky opakovaných úkolů", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 13)
+        CreateQuery("Je po termínu dokončení", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 7)
+        CreateQuery("Vyplněn termín dokončení", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 6)
+        CreateQuery("Vyplněn plán/limit hodin", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 9)
+        CreateQuery("Schválené úkony, čeká na fakturaci", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 5)
+        CreateQuery("Rozpracované, čeká na schvalování", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 3)
+        CreateQuery("Uzavřené úkoly (v archivu)", BO.x29IdEnum.p56Task, 2, strColumnNames)
+        CreateQuery("Otevřené úkoly", BO.x29IdEnum.p56Task, 1, strColumnNames)
+
+
+
+
+
+
+
 
     End Sub
 
@@ -685,6 +690,7 @@
         c.x29ID = x29ID
         c.j70ColumnNames = strColumnNames
         c.j70OrderBy = strJ70OrderBy
+
 
         Dim lisJ71 As New List(Of BO.j71QueryTemplate_Item)
         If strJ71Field <> "" Then
