@@ -108,8 +108,9 @@
                     </td>
                     <td>
                         <asp:Label ID="b02Name" runat="server" CssClass="valboldred"></asp:Label>
-                        <a href="javascript: workflow()" title="Změnit stav úkolu, zapsat komentář, případně další kroky, které podporuje aktuální workflow šablona...">
-                            <img src="Images/workflow.png" />Posunout/doplnit</a>
+                        <button type="button" class="cmd" onclick=" workflow()" title="Změnit stav úkolu, zapsat komentář, nahrát přílohu, případně další kroky, které podporuje aktuální workflow šablona...">
+                            <img src="Images/workflow.png" />Posunout/doplnit
+                        </button>
 
                     </td>
                 </tr>

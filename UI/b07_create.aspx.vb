@@ -31,6 +31,8 @@
         End Set
     End Property
 
+    
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         receiver1.Factory = Master.Factory
         Me.upload1.Factory = Master.Factory
@@ -83,7 +85,10 @@
                 .b07ID_Parent = Me.CurrentParentID
                 .b07WorkflowInfo = receiver1.GetInlineContent()
             End With
-
+            If receiver1.RowsCount > 0 And receiver1.GetList().Count = 0 Then
+                Master.Notify("V příjemcích chybí obsazení lidí/týmů.", NotifyLevel.WarningMessage)
+                Return
+            End If
             With Master.Factory.b07CommentBL
                 If .Save(cRec, upload1.GUID, receiver1.GetList()) Then
                     Master.CloseAndRefreshParent("b07-save")
@@ -102,4 +107,11 @@
         receiver1.AddReceiver(0, 0, False)
     End Sub
 
+    Private Sub b07_create_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        If receiver1.RowsCount > 0 Then
+            Master.RenameToolbarButton("save", "Uložit a odeslat zprávu")
+        Else
+            Master.RenameToolbarButton("save", "Uložit")
+        End If
+    End Sub
 End Class

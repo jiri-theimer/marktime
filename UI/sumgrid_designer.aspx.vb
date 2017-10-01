@@ -101,6 +101,7 @@ Public Class sumgrid_designer
                 Case 24 : it.ImageUrl = "Images/a24_stats.png"
                 Case 23 : it.ImageUrl = "Images/a23_stats.png"
                 Case 26 : it.ImageUrl = "Images/a26_stats.png"
+                Case 30 : it.ImageUrl = "Images/a02_stats.png"
                 Case 50 : it.ImageUrl = "Images/a50_stats.png"
                 Case Else
                     it.ImageUrl = "Images/a00_stats.png"

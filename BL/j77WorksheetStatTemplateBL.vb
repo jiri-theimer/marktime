@@ -66,11 +66,13 @@ Class j77WorksheetStatTemplateBL
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_WithoutVat_WIP))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_HoursFee_WIP))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_HoursFee_Approved))
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.NI_HoursFee))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_HoursFee_Invoiced))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_HoursFee_Invoiced_Domestic))
         End If
 
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_Approved_Billing))
+        lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.NI_Hours))
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_Approved_FixedPrice))
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_Approved_WriteOff))
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_Approved_InvoiceLater))
@@ -91,11 +93,13 @@ Class j77WorksheetStatTemplateBL
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.Fees))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.Fees_WIP))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.Fees_Approved))
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.NI_Fees))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.Fees_Invoiced))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.Fees_Invoiced_Domestic))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.Expenses))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.Expenses_WIP))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.Expenses_Approved))
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.NI_Expenses))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.Expenses_Invoiced))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.Expenses_Invoiced_Domestic))
 

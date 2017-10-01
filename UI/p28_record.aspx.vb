@@ -640,7 +640,7 @@
         SaveTempO32()
         Dim cRec As New BO.p85TempBox()
         cRec.p85GUID = ViewState("guid_o32")
-        cRec.p85OtherKey1 = BO.o33FlagEnum.Tel
+        cRec.p85OtherKey1 = BO.o33FlagEnum.Email
         Master.Factory.p85TempBoxBL.Save(cRec)
         RefreshTempO32()
     End Sub

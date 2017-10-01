@@ -572,10 +572,10 @@
         CreateQuery("Strom", BO.x29IdEnum.p41Project, 0, "Client,p41TreePath")
         CreateQuery("Štítky", BO.x29IdEnum.p41Project, 0, "Client,p41Name,TagsHtml")
         CreateQuery("Naposledy založené", BO.x29IdEnum.p41Project, 0, "Client,p41Name,p41DateInsert,p41UserInsert", , , , "a.p41DateInsert DESC")
-        CreateQuery("S otevřenými úkoly", BO.x29IdEnum.p41Project, 0, "Client,p41Name,PendingTasks", "_other", 6)
+        CreateQuery("Otevřené úkoly", BO.x29IdEnum.p41Project, 0, "Client,p41Name,PendingTasks", "_other", 6)
         CreateQuery("Můj seznam oblíbených", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 20)
-        CreateQuery("Obsahují rozpracovanost (čeká na schvalování)", BO.x29IdEnum.p41Project, 0, "Client,p41Name,WIP_Hodiny,WIP_Castka", "_other", 3)
-        CreateQuery("Obsahují schválené úkony (čeká na fakturaci)", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 5)
+        CreateQuery("Rozpracovanost - čeká na schválení", BO.x29IdEnum.p41Project, 0, "Client,p41Name,WIP_Hodiny,WIP_Castka", "_other", 3)
+        CreateQuery("Schválené - čeká na fakturaci", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 5)
         CreateQuery("Projekty s vystavenou fakturou", BO.x29IdEnum.p41Project, 0, strColumnNames, "_other", 15)
         CreateQuery("Došlo k překročení limitu rozpracovanosti", BO.x29IdEnum.p41Project, 0, "Client,p41Name,p41LimitHours_Notification,p41LimitFee_Notification,WIP_Hodiny,WIP_Castka", "_other", 4)
 
@@ -593,12 +593,15 @@
         CreateQuery("Strom", BO.x29IdEnum.p28Contact, 0, "p28TreePath")
         CreateQuery("Štítky", BO.x29IdEnum.p28Contact, 0, "p28Name,TagsHtml")
         CreateQuery("Naposledy založené", BO.x29IdEnum.p28Contact, 0, "p28Name,p28DateInsert,p28UserInsert", , , , "a.p28DateInsert DESC")
-        CreateQuery("Rozpracovanost (čeká na schvalování)", BO.x29IdEnum.p28Contact, 0, "p28Name,WIP_Hodiny", "_other", 3)
-        CreateQuery("Schválené úkony (čeká na fakturaci)", BO.x29IdEnum.p28Contact, 0, strColumnNames, "_other", 5)
-        CreateQuery("Klienti s kontaktní osobou", BO.x29IdEnum.p28Contact, 0, strColumnNames, "_other", 16)
-        'CreateQuery("Má nad sebou nadřízeného klienta", BO.x29IdEnum.p28Contact, 0, "p28TreePath", "_other", 25)
-        'CreateQuery("Má pod sebou podřízené klienty", BO.x29IdEnum.p28Contact, 0, "p28TreePath", "_other", 26)
-
+        CreateQuery("Stav fakturace", BO.x29IdEnum.p28Contact, 0, "p28Name,WIP_CastkaNevyfakturovano,Vyfakturovano_Naposledy_Kdy")
+        CreateQuery("Nevyfakturovaní klienti", BO.x29IdEnum.p28Contact, 0, "p28Name,WIP_HodinyNevyfakturovane,WIP_CastkaNevyfakturovano", "_other", 35)
+        CreateQuery("Rozpracovanost, čeká na schvalování", BO.x29IdEnum.p28Contact, 0, "p28Name,WIP_Hodiny", "_other", 3)
+        CreateQuery("Schváleno, čeká na fakturaci", BO.x29IdEnum.p28Contact, 0, strColumnNames, "_other", 5)
+        CreateQuery("Kontaktní osoby klienta", BO.x29IdEnum.p28Contact, 0, "p28Name,KontaktniOsoby")
+        CreateQuery("Kontaktní média klienta", BO.x29IdEnum.p28Contact, 0, "p28Name,KontaktniMedia")
+        CreateQuery("Fakturační e-mail", BO.x29IdEnum.p28Contact, 0, "p28Name,FakturacniEmail")
+        CreateQuery("Klient+podřízení klienti", BO.x29IdEnum.p28Contact, 0, "p28Name,ChildContactsInline")
+        
         strColumnNames = "FullNameDesc"
         CreateQuery("Otevřené osoby (uživatelé)", BO.x29IdEnum.j02Person, 1, strColumnNames, "_other", 6)
         CreateQuery("Kontaktní osoby", BO.x29IdEnum.j02Person, 0, strColumnNames, "_other", 7)
@@ -683,18 +686,26 @@
 
         Dim lisJ71 As New List(Of BO.j71QueryTemplate_Item)
         If strJ71Field <> "" Then
-            Dim cI As New BO.j71QueryTemplate_Item
-            cI.j71ValueType = "combo"
-            cI.j71RecordPID = intJ71RecordPID
-            cI.j71Field = strJ71Field
-            If strJ71Field = "_other" Then
-                cI.j71FieldLabel = "Různé"
-                cI.j71RecordName = Findj71RecordName(x29ID, cI.j71RecordPID)
-            Else
-                If strJ71Field = "p34id" Then cI.j71FieldLabel = "Sešit"
-                cI.j71RecordName = strJ71RecordName
-            End If
-            lisJ71.Add(cI)
+            ''Dim cI As New BO.j71QueryTemplate_Item
+            ''cI.j71ValueType = "combo"
+            ''cI.j71RecordPID = intJ71RecordPID
+            ''cI.j71Field = strJ71Field
+            ''If strJ71Field = "_other" Then
+            ''    cI.j71FieldLabel = "Různé"
+            ''    cI.j71RecordName = Findj71RecordName(x29ID, cI.j71RecordPID)
+            ''Else
+            ''    If strJ71Field = "p34id" Then cI.j71FieldLabel = "Sešit"
+            ''    cI.j71RecordName = strJ71RecordName
+            ''End If
+            ''lisJ71.Add(cI)
+            Select Case intJ71RecordPID
+                Case 35
+                    lisJ71.Add(CreateJ71(x29ID, strJ71Field, 3, strJ71RecordName))
+                    lisJ71.Add(CreateJ71(x29ID, strJ71Field, 5, strJ71RecordName))
+                Case Else
+                    lisJ71.Add(CreateJ71(x29ID, strJ71Field, intJ71RecordPID, strJ71RecordName))
+            End Select
+
         End If
 
         Dim lisX69 As New List(Of BO.x69EntityRole_Assign)
@@ -705,4 +716,19 @@
         _Factory.j70QueryTemplateBL.Save(c, lisJ71, lisX69)
     End Sub
 
+    Private Function CreateJ71(x29ID As BO.x29IdEnum, strJ71Field As String, intJ71RecordPID As Integer, strJ71RecordName As String) As BO.j71QueryTemplate_Item
+        Dim cI As New BO.j71QueryTemplate_Item
+        cI.j71ValueType = "combo"
+        cI.j71RecordPID = intJ71RecordPID
+        cI.j71Field = strJ71Field
+        If strJ71Field = "_other" Then
+            cI.j71FieldLabel = "Různé"
+            cI.j71RecordName = Findj71RecordName(x29ID, cI.j71RecordPID)
+        Else
+            If strJ71Field = "p34id" Then cI.j71FieldLabel = "Sešit"
+            cI.j71RecordName = strJ71RecordName
+        End If
+        Return cI
+
+    End Function
 End Class

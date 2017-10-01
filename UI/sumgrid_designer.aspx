@@ -41,13 +41,13 @@
 
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true">
         <Tabs>
-            <telerik:RadTab Text="Další agregační sloupce statistiky" Selected="true" Value="core" meta:resourcekey="RadTabStrip1_core"></telerik:RadTab>
-            <telerik:RadTab Text="SUM veličiny statistiky" Value="sums" meta:resourcekey="RadTabStrip1_sums"></telerik:RadTab>
+            <telerik:RadTab Text="Další agregační sloupce statistiky" Value="core" meta:resourcekey="RadTabStrip1_core"></telerik:RadTab>
+            <telerik:RadTab Text="SUM veličiny statistiky" Value="sums" meta:resourcekey="RadTabStrip1_sums" Selected="true"></telerik:RadTab>
             <telerik:RadTab Text="Ostatní" Value="other"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
     <telerik:RadMultiPage ID="RadMultiPage1" runat="server">
-        <telerik:RadPageView ID="core" runat="server" Selected="true">
+        <telerik:RadPageView ID="core" runat="server">
 
             <table cellpadding="8">
                 <tr valign="top">
@@ -82,7 +82,7 @@
                 </tr>
             </table>
         </telerik:RadPageView>
-        <telerik:RadPageView ID="sum2" runat="server">
+        <telerik:RadPageView ID="sum2" runat="server" Selected="true">
             <table cellpadding="8">
                 <tr valign="top">
                     <td>

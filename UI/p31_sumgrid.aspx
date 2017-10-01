@@ -58,11 +58,10 @@
                                 </div>
                                 <div class="content">
                                     <div class="div6">
-                                        <button type="button" onclick="x18_querybuilder()"><img src="Images/label.png" />Štítky</button>
-                                        <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit filtr podle štítků" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
+                                        <button type="button" onclick="x18_querybuilder()"><img src="Images/label.png" />Kategorie</button>
+                                        <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit filtr kategorií" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
                                         <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
-                                    </div>
-                                    <div class="div6">
+                                   
                                     <asp:DropDownList ID="cbxTabQueryFlag" runat="server" AutoPostBack="true">
                                         <asp:ListItem Text="--Druh úkonů--" Value="p31" Selected="true"></asp:ListItem>
                                         <asp:ListItem Text="Pouze hodiny" Value="time"></asp:ListItem>
@@ -87,7 +86,7 @@
                             <asp:Panel ID="panExport" runat="server" CssClass="content-box3">
                                 <div class="title">
                                     <img src="Images/export.png" />
-                                    <span>Export záznamů aktuálního přehledu</span>
+                                    <span>Export výstupu statistiky</span>
                                 </div>
                                 <div class="content">
 

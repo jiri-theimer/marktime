@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="mygrid.ascx.vb" Inherits="UI.mygrid" %>
 <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
 <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="false" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný přehled" onchange="mygrid_reloadurl(this)"></asp:DropDownList>
-<button type="button" class="button-link" id="cmdSetting" runat="server" onclick="mygrid_setting()" title="Návrhář přehledu"><img src="Images/griddesigner.png" /></button>
+<button type="button" class="button-link" id="cmdSetting" runat="server" onclick="mygrid_setting()" title="Návrhář přehledu"><img src="Images/setting.png" /></button>
 
 
 <asp:HiddenField ID="hidX29ID" runat="server" />
