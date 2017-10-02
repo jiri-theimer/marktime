@@ -56,6 +56,7 @@
         With cRec
             Me.o40Name.Text = .o40Name
             basUI.SelectDropdownlistValue(Me.o40SslModeFlag, CInt(.o40SslModeFlag).ToString)
+            basUI.SelectDropdownlistValue(Me.o40SmtpAuthentication, CInt(.o40SmtpAuthentication).ToString)
             Me.o40IsVerify.Checked = .o40IsVerify
             Me.o40login.Text = .o40Login
             Me.o40Password.Text = .o40Password
@@ -98,7 +99,7 @@
                 .o40SslModeFlag = CInt(Me.o40SslModeFlag.SelectedValue)
                 .o40IsVerify = Me.o40IsVerify.Checked
                 .o40Port = Me.o40Port.Text
-
+                .o40SmtpAuthentication = CInt(Me.o40SmtpAuthentication.SelectedValue)
 
                 If Me.o40Password.Visible Then .o40Password = BO.Crypto.Encrypt(Me.o40Password.Text, "o40SmtpAccount")
 
@@ -146,7 +147,7 @@
         Dim c As BO.o40SmtpAccount = Master.Factory.o40SmtpAccountBL.Load(Master.DataPID)
 
 
-        If Master.Factory.x40MailQueueBL.TestConnect(c.o40Server, c.o40Login, c.DecryptedPassword, BO.BAS.IsNullInt(c.o40Port), CType(Me.o40SslModeFlag.SelectedValue, BO.SslModeENUM)) Then
+        If Master.Factory.x40MailQueueBL.TestConnect(c.o40Server, c.o40Login, c.DecryptedPassword, BO.BAS.IsNullInt(c.o40Port), CType(Me.o40SslModeFlag.SelectedValue, BO.SslModeENUM), c.o40SmtpAuthentication) Then
             Master.Notify("Připojení se podařilo.", NotifyLevel.InfoMessage)
         Else
             Master.Notify(Master.Factory.x40MailQueueBL.ErrorMessage, NotifyLevel.ErrorMessage)

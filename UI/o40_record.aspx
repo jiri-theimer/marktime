@@ -59,6 +59,23 @@
                 </asp:DropDownList>
             </td>
         </tr>
+        <tr>
+            <td>
+                <asp:Label ID="Label5" Text="SMTP Authentication mód:" runat="server" CssClass="lbl"></asp:Label>
+            </td>
+            <td>
+                <asp:DropDownList ID="o40SmtpAuthentication" runat="server">
+                    <asp:ListItem Text="Auto" Value="0" Selected="true"></asp:ListItem>
+                    <asp:ListItem Text="CramMD5" Value="3"></asp:ListItem>
+                    <asp:ListItem Text="DigestMD5" Value="2"></asp:ListItem>
+                    <asp:ListItem Text="GssApi" Value="9"></asp:ListItem>
+                    <asp:ListItem Text="Login" Value="4"></asp:ListItem>
+                    <asp:ListItem Text="Ntlm" Value="7"></asp:ListItem>
+                    <asp:ListItem Text="OAuth20" Value="10"></asp:ListItem>
+                    <asp:ListItem Text="Plain" Value="1"></asp:ListItem>
+                </asp:DropDownList>
+            </td>
+        </tr>
 
       
         <tr>

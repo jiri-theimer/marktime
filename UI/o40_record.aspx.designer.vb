@@ -104,6 +104,24 @@ Partial Public Class o40_record
     Protected WithEvents o40SslModeFlag As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''Label5 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''o40SmtpAuthentication control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o40SmtpAuthentication As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''o40IsVerify control.
     '''</summary>
     '''<remarks>

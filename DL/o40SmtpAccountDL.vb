@@ -29,6 +29,7 @@
 
             pars.Add("o40Port", .o40Port, DbType.String)
             pars.Add("o40SslModeFlag", CInt(.o40SslModeFlag), DbType.Int32)
+            pars.Add("o40SmtpAuthentication", CInt(.o40SmtpAuthentication), DbType.Int32)
 
             pars.Add("o40validfrom", .ValidFrom, DbType.DateTime)
             pars.Add("o40validuntil", .ValidUntil, DbType.DateTime)

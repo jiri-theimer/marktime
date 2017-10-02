@@ -23,7 +23,7 @@ Public Interface Ix40MailQueueBL
     Function CreateRecipients(strEmail As String, strDisplayName As String, Optional side As BO.x43RecipientIdEnum = BO.x43RecipientIdEnum.recTO) As List(Of BO.x43MailQueue_Recipient)
     Sub AppendRecipient(ByRef lis2Append As List(Of BO.x43MailQueue_Recipient), strEmail As String, strDisplayName As String, Optional side As BO.x43RecipientIdEnum = BO.x43RecipientIdEnum.recTO)
     Function ForwardMessageToQueue(strSubject As String, strBody As String, recipients As List(Of BO.x43MailQueue_Recipient), intO43ID As Integer, x29id As BO.x29IdEnum, intRecordPID As Integer) As Integer
-    Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer, sslM As BO.SslModeENUM) As Boolean
+    Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer, sslM As BO.SslModeENUM, smtpSpecAuth As BO.smtpAuthenticationENUM) As Boolean
 End Interface
 
 Class x40MailQueueBL
@@ -308,7 +308,7 @@ Class x40MailQueueBL
 
         
         Dim bolSucceeded As Boolean = False, bolUseWebConfig As Boolean = True, strSmtpServer As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_Server"), strSmtpLogin As String = "", strSmtpPassword As String = "", intPort As Integer = 0, sslM As BO.SslModeENUM = BO.SslModeENUM._NoSSL
-
+        Dim smtpSpecAuth As BO.smtpAuthenticationENUM = BO.smtpAuthenticationENUM._Auto
         If cRec.o40ID = 0 Then  'na vstupu již může být předán jiný SMTP účet
             If Me.Factory.x35GlobalParam.GetValueString("IsUseWebConfigSetting", "1") = "0" And BO.BAS.IsNullInt(strSmtpServer) <> 0 Then
                 cRec.o40ID = BO.BAS.IsNullInt(strSmtpServer)
@@ -325,9 +325,11 @@ Class x40MailQueueBL
         If cRec.o40ID <> 0 Then
             bolUseWebConfig = False
             Dim cO40 As BO.o40SmtpAccount = Me.Factory.o40SmtpAccountBL.Load(cRec.o40ID)
+
             strSmtpServer = cO40.o40Server
             intPort = BO.BAS.IsNullInt(cO40.o40Port)
             sslM = cO40.o40SslModeFlag
+            smtpSpecAuth = cO40.o40SmtpAuthentication
 
             If cO40.o40IsVerify Then
                 strSmtpLogin = cO40.o40Login
@@ -335,9 +337,11 @@ Class x40MailQueueBL
             End If
             cRec.x40SenderAddress = cO40.o40EmailAddress
             cRec.x40SenderName = cO40.o40Name
+
             mail.From.Clear()
             mail.From.Add(New Rebex.Mime.Headers.MailAddress(cO40.o40EmailAddress, cO40.o40Name))
         End If
+        ''Dim credentials As GssApiProvider = Rebex.Net.GssApiProvider.GetSspiProvider("Ntlm", Nothing, Nothing, Nothing, Nothing)
 
         If Not bolUseWebConfig Then
             Dim smtp As New Smtp
@@ -364,7 +368,16 @@ Class x40MailQueueBL
                             End If
                     End Select
                     If strSmtpLogin <> "" And strSmtpPassword <> "" Then
-                        .Login(strSmtpLogin, strSmtpPassword)
+                        If smtpSpecAuth = BO.smtpAuthenticationENUM._Auto Then
+                            .Login(strSmtpLogin, strSmtpPassword)
+                        Else
+                            .Login(strSmtpLogin, strSmtpPassword, CType(smtpSpecAuth, SmtpAuthentication))
+                        End If
+                    Else
+                        If smtpSpecAuth > BO.smtpAuthenticationENUM._Auto Then
+                            .Login(CType(smtpSpecAuth, SmtpAuthentication))
+                        End If
+
                     End If
                     .Send(mail)
                     .Disconnect()
@@ -513,7 +526,7 @@ Class x40MailQueueBL
         Return SendAnswer2Ticket(strBody, cRec2Answer.o43ID, cRec2Answer.x29ID, cRec2Answer.b07RecordPID)
     End Function
 
-    Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer, sslM As BO.SslModeENUM) As Boolean Implements Ix40MailQueueBL.TestConnect
+    Function TestConnect(strSmtpServer As String, strSmtpLogin As String, strSmtpPassword As String, intPort As Integer, sslM As BO.SslModeENUM, smtpSpecAuth As BO.smtpAuthenticationENUM) As Boolean Implements Ix40MailQueueBL.TestConnect
         Dim smtp As New Smtp
         With smtp
             Try
@@ -541,7 +554,15 @@ Class x40MailQueueBL
                 End Select
 
                 If strSmtpLogin <> "" And strSmtpPassword <> "" Then
-                    .Login(strSmtpLogin, strSmtpPassword)
+                    If smtpSpecAuth = BO.smtpAuthenticationENUM._Auto Then
+                        .Login(strSmtpLogin, strSmtpPassword)
+                    Else
+                        .Login(strSmtpLogin, strSmtpPassword, CType(smtpSpecAuth, SmtpAuthentication))
+                    End If
+                Else
+                    If smtpSpecAuth > BO.smtpAuthenticationENUM._Auto Then
+                        .Login(CType(smtpSpecAuth, SmtpAuthentication))
+                    End If
                 End If
 
                 .Disconnect()
