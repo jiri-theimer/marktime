@@ -445,7 +445,7 @@
             _isChangeJ61ID = True
             Dim c As BO.j61TextTemplate = Master.Factory.j61TextTemplateBL.Load(intJ61ID)
             Dim cRoles As New BO.Roles4Notification
-            If Me.CurrentX29ID > BO.x29IdEnum._NotSpecified And (c.j61PlainTextBody.IndexOf("]") > 0 Or c.j61MailSubject.IndexOf("]") > 0) Then
+            If Me.CurrentX29ID > BO.x29IdEnum._NotSpecified And ((c.j61MailSubject & c.j61PlainTextBody).IndexOf("]") > 0) Then
                 Dim cM As New BO.clsMergeContent(), objects As New List(Of Object)
                 If c.j61PlainTextBody.IndexOf("#RolesInline#") > 0 Then
                     c.j61PlainTextBody = Replace(c.j61PlainTextBody, "#RolesInline#", "[%RolesInLine%]", , , CompareMethod.Text)
