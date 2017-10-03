@@ -368,16 +368,37 @@ Class x40MailQueueBL
                             End If
                     End Select
                     If strSmtpLogin <> "" And strSmtpPassword <> "" Then
+                        ''Select Case smtpSpecAuth
+                        ''    Case BO.smtpAuthenticationENUM.Ntlm
+                        ''        Dim credentials As GssApiProvider = Rebex.Net.GssApiProvider.GetSspiProvider("Ntlm", Nothing, strSmtpLogin, strSmtpPassword, Nothing)
+                        ''        .Login(credentials)
+                        ''    Case BO.smtpAuthenticationENUM._Auto
+                        ''        .Login(strSmtpLogin, strSmtpPassword)
+                        ''    Case Else
+                        ''        .Login(strSmtpLogin, strSmtpPassword, CType(smtpSpecAuth, SmtpAuthentication))
+
+                        ''End Select
                         If smtpSpecAuth = BO.smtpAuthenticationENUM._Auto Then
                             .Login(strSmtpLogin, strSmtpPassword)
                         Else
                             .Login(strSmtpLogin, strSmtpPassword, CType(smtpSpecAuth, SmtpAuthentication))
                         End If
                     Else
-                        If smtpSpecAuth > BO.smtpAuthenticationENUM._Auto Then
+                        ''Select Case smtpSpecAuth
+                        ''    Case BO.smtpAuthenticationENUM.Ntlm
+                        ''        Dim credentials As GssApiProvider = Rebex.Net.GssApiProvider.GetSspiProvider("Ntlm", Nothing, Nothing, Nothing, Nothing)
+                        ''        .Login(credentials)
+                        ''    Case BO.smtpAuthenticationENUM._Auto
+                        ''        'žádný login
+                        ''    Case Else
+                        ''        .Login(CType(smtpSpecAuth, SmtpAuthentication))
+
+                        ''End Select
+                        If smtpSpecAuth = BO.smtpAuthenticationENUM._Auto Then
+                            'žádný login
+                        Else
                             .Login(CType(smtpSpecAuth, SmtpAuthentication))
                         End If
-
                     End If
                     .Send(mail)
                     .Disconnect()

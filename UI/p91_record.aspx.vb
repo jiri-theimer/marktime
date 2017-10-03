@@ -37,6 +37,17 @@
             RefreshRecord()
             Master.IsRecordDeletable = False
 
+            If Request.Item("tab") <> "" Then
+                With RadTabStrip1.FindTabByValue(Request.Item("tab"))
+                    Try
+                        .Selected = True
+                        If Not RadMultiPage1.FindPageViewByID(Request.Item("tab")) Is Nothing Then
+                            RadMultiPage1.FindPageViewByID(Request.Item("tab")).Selected = True
+                        End If
+                    Catch ex As Exception
+                    End Try
+                End With
+            End If
         End If
     End Sub
 
