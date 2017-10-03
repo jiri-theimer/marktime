@@ -420,9 +420,13 @@ Public Class report_modal
         Next
 
         If bolSendByMail Then
-            Dim strFileName As String = BO.BAS.GetGUID & ".pdf"
+            'Dim strFileName As String = BO.BAS.GetGUID & ".pdf"
+            Dim strFileName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False, Me.CurrentX31ID)
+            'doc1.Draw(Master.Factory.x35GlobalParam.TempFolder & "\" & strFileName)
             doc1.Draw(Master.Factory.x35GlobalParam.TempFolder & "\" & strFileName)
+
             Server.Transfer("sendmail.aspx?prefix=" & Me.CurrentPrefix & "&pid=" & Master.DataPID.ToString & "&tempfile=" & strFileName, False)
+            Return
         End If
 
         Dim strExportName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False, Me.CurrentX31ID)

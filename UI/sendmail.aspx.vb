@@ -142,6 +142,7 @@
             End If
             If Request.Item("tempfile") <> "" Then
                 PrepareTempFile(Request.Item("tempfile"))
+
             End If
         End If
     End Sub
@@ -437,7 +438,7 @@
             _isChangeJ61ID = True
             Dim c As BO.j61TextTemplate = Master.Factory.j61TextTemplateBL.Load(intJ61ID)
             Dim cRoles As New BO.Roles4Notification
-            If Me.CurrentX29ID > BO.x29IdEnum._NotSpecified And c.j61PlainTextBody.IndexOf("]") > 0 Then
+            If Me.CurrentX29ID > BO.x29IdEnum._NotSpecified And (c.j61PlainTextBody.IndexOf("]") > 0 Or c.j61MailSubject.IndexOf("]") > 0) Then
                 Dim cM As New BO.clsMergeContent(), objects As New List(Of Object)
                 If c.j61PlainTextBody.IndexOf("#RolesInline#") > 0 Then
                     c.j61PlainTextBody = Replace(c.j61PlainTextBody, "#RolesInline#", "[%RolesInLine%]", , , CompareMethod.Text)
@@ -518,7 +519,7 @@
 
 
     Private Sub PrepareTempFile(strTempFileName As String)
-        Dim strOutputFileName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False, 0)
+        ''Dim strOutputFileName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False, 0)
 
         Dim cTemp As New BO.p85TempBox(), cF As New BO.clsFile
         Dim lisO13 As IEnumerable(Of BO.o13AttachmentType) = Master.Factory.o13AttachmentTypeBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = BO.x29IdEnum.x40MailQueue)
@@ -528,7 +529,8 @@
                 .p85FreeText06 = lisO13(0).o13Name
             End If
             .p85GUID = upload1.GUID
-            .p85FreeText01 = strOutputFileName
+            ''.p85FreeText01 = strOutputFileName
+            .p85FreeText01 = strTempFileName
             .p85FreeText02 = strTempFileName
             .p85FreeText03 = cF.GetContentType(Master.Factory.x35GlobalParam.TempFolder & "\" & strTempFileName)
             .p85FreeNumber01 = cF.GetFileSize(Master.Factory.x35GlobalParam.TempFolder & "\" & strTempFileName)
