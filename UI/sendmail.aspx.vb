@@ -125,13 +125,15 @@
                     Me.txtTo.Text = Master.Factory.j02PersonBL.Load(CInt(s)).j02Email
                 End If
             End If
-
-            If Me.CurrentX29ID > BO.x29IdEnum._NotSpecified And Me.CurrentX29ID <> BO.x29IdEnum.j02Person Then
-                Me.txtBody.Text = vbCrLf & vbCrLf & "Přímý odkaz: " & Master.Factory.GetRecordLinkUrl(Me.CurrentPrefix, Master.DataPID)
+            If Me.txtBody.Text = "" Then
+                If Me.CurrentX29ID > BO.x29IdEnum._NotSpecified And Me.CurrentX29ID <> BO.x29IdEnum.j02Person Then
+                    Me.txtBody.Text = vbCrLf & vbCrLf & "Přímý odkaz: " & Master.Factory.GetRecordLinkUrl(Me.CurrentPrefix, Master.DataPID)
+                End If
+                If Master.Factory.SysUser.j02ID <> 0 Then
+                    Me.txtBody.Text += vbCrLf & vbCrLf & Master.Factory.j02PersonBL.Load(Master.Factory.SysUser.j02ID).j02EmailSignature
+                End If
             End If
-            If Master.Factory.SysUser.j02ID <> 0 Then
-                Me.txtBody.Text += vbCrLf & vbCrLf & Master.Factory.j02PersonBL.Load(Master.Factory.SysUser.j02ID).j02EmailSignature
-            End If
+            
 
 
             
@@ -378,7 +380,7 @@
             cRep.Query_RecordPID = BO.BAS.IsNullInt(Request.Item("pid"))
         End If
 
-        Dim strOutputFileName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False, cRec.x31Name)
+        Dim strOutputFileName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False, intX31ID)
         strOutputFileName = cRep.GenerateReport2Temp(Master.Factory, strRepFullPath, , strOutputFileName)
         If strOutputFileName = "" Then
             Master.Notify("Chyba při generování PDF.", NotifyLevel.ErrorMessage) : Return
@@ -516,7 +518,7 @@
 
 
     Private Sub PrepareTempFile(strTempFileName As String)
-        Dim strOutputFileName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False)
+        Dim strOutputFileName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False, 0)
 
         Dim cTemp As New BO.p85TempBox(), cF As New BO.clsFile
         Dim lisO13 As IEnumerable(Of BO.o13AttachmentType) = Master.Factory.o13AttachmentTypeBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = BO.x29IdEnum.x40MailQueue)

@@ -308,7 +308,7 @@ Class x40MailQueueBL
 
         
         Dim bolSucceeded As Boolean = False, bolUseWebConfig As Boolean = True, strSmtpServer As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_Server"), strSmtpLogin As String = "", strSmtpPassword As String = "", intPort As Integer = 0, sslM As BO.SslModeENUM = BO.SslModeENUM._NoSSL
-        Dim smtpSpecAuth As BO.smtpAuthenticationENUM = BO.smtpAuthenticationENUM._Auto
+        Dim smtpSpecAuth As BO.smtpAuthenticationENUM = BO.smtpAuthenticationENUM._Auto, bolPersonalSMTP As Boolean = False
         If cRec.o40ID = 0 Then  'na vstupu již může být předán jiný SMTP účet
             If Me.Factory.x35GlobalParam.GetValueString("IsUseWebConfigSetting", "1") = "0" And BO.BAS.IsNullInt(strSmtpServer) <> 0 Then
                 cRec.o40ID = BO.BAS.IsNullInt(strSmtpServer)
@@ -317,7 +317,7 @@ Class x40MailQueueBL
                 Dim cPerson As BO.j02Person = Me.Factory.j02PersonBL.Load(_cUser.j02ID)
                 If cPerson.o40ID <> 0 Then
                     'osoba má vlastní SMTP účet
-                    cRec.o40ID = cPerson.o40ID
+                    cRec.o40ID = cPerson.o40ID : bolPersonalSMTP = True
                 End If
             End If
         End If
@@ -336,7 +336,12 @@ Class x40MailQueueBL
                 strSmtpPassword = cO40.DecryptedPassword()
             End If
             cRec.x40SenderAddress = cO40.o40EmailAddress
-            cRec.x40SenderName = cO40.o40Name
+            If bolPersonalSMTP Then
+                cRec.x40SenderName = cO40.o40Name   'odesílá se z uživatelovo mail účtu
+            Else
+                cRec.x40SenderName = _cUser.Person & " via MARKTIME"  'odesílá se z centrálního smtp účtu
+            End If
+
 
             mail.From.Clear()
             mail.From.Add(New Rebex.Mime.Headers.MailAddress(cO40.o40EmailAddress, cO40.o40Name))

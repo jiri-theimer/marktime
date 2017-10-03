@@ -654,14 +654,21 @@
         Return x35GlobalParam.GetValueString("AppHost") & "/dr.aspx?prefix=" & strPrefix & "&pid=" & intRecordPID.ToString
     End Function
 
-    Public Function GetRecordFileName(x29id As BO.x29IdEnum, intRecordPID As Integer, strFileSuffix As String, bolAppendTimestamp As Boolean, Optional strReportName As String = "") As String
+    Public Function GetRecordFileName(x29id As BO.x29IdEnum, intRecordPID As Integer, strFileSuffix As String, bolAppendTimestamp As Boolean, intX31ID As Integer) As String
         Dim s As String = x47EventLogBL.GetObjectAlias(x29id, intRecordPID)
-        If strReportName <> "" Then s = strReportName & "_" & s
-        s = BO.BAS.Prepare4FileName(s)
-        ''s = Replace(s, "|", "_")
-        ''s = BO.BAS.RemoveDiacritism(s)
+        If intX31ID > 0 Then
+            Dim cX31 As BO.x31Report = x31ReportBL.Load(intX31ID)
+            If Not cX31 Is Nothing Then
+                If cX31.x31ExportFileNameMask = "" Then
+                    s = cX31.x31Name & "_" & s
+                Else
+                    s = cX31.x31ExportFileNameMask & "_" & s
+                End If
+            End If
+        End If
 
-        ''s = System.Text.RegularExpressions.Regex.Replace(s, "[^A-Za-z0-9 _]", "").Replace(" ", "")
+        s = BO.BAS.Prepare4FileName(s)
+
         If s = "" Then s = BO.BAS.GetGUID()
         If bolAppendTimestamp Then s += "_" & Format(Now, "yyyy-mm-dd-HHmm")
         Return s & "." & strFileSuffix

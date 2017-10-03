@@ -314,6 +314,9 @@ Public Class report_modal
                 xmlRepSource.Parameters.Add(New Parameter(par.Key, par.Value))
             Next
         End If
+        Dim strExportName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False, cRec.PID)
+        xmlRepSource.Xml = Replace(xmlRepSource.Xml, "Name=" & Chr(34) & "report1" & Chr(34), "Name=" & Chr(34) & strExportName & Chr(34))
+
 
         rv1.ReportSource = xmlRepSource
     End Sub
@@ -374,22 +377,11 @@ Public Class report_modal
                     Return
                 End If
 
-                Dim strOutputFileName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False, Me.x31ID.SelectedItem.Text)
+                Dim strOutputFileName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False, Me.CurrentX31ID)
 
                 hidOutputFullPathPdf.Value = GenerateOnePDF2Temp(Me.CurrentX31ID, GenerateOnePDF2Temp(Me.CurrentX31ID, strOutputFileName))
 
-                ''InhaleLic()
-                ''Dim doc1 As New ceTe.DynamicPDF.Merger.MergeDocument()
-                ''With doc1
-                ''    .Author = "MARKTIME 5.0"
-
-                ''    Dim strOutputFileName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False, Me.x31ID.SelectedItem.Text)
-
-                ''    .Append(Master.Factory.x35GlobalParam.TempFolder & "\" & GenerateOnePDF2Temp(Me.CurrentX31ID, strOutputFileName))
-
-                ''    .DrawToWeb(IIf(strOutputFileName = "", "MARKTIME_REPORT.pdf", strOutputFileName), True)
-
-                ''End With
+                
 
         End Select
     End Sub
@@ -432,7 +424,9 @@ Public Class report_modal
             doc1.Draw(Master.Factory.x35GlobalParam.TempFolder & "\" & strFileName)
             Server.Transfer("sendmail.aspx?prefix=" & Me.CurrentPrefix & "&pid=" & Master.DataPID.ToString & "&tempfile=" & strFileName, False)
         End If
-        doc1.DrawToWeb("MARKTIME_REPORT.pdf", bolForceDownload)
+
+        Dim strExportName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False, Me.CurrentX31ID)
+        doc1.DrawToWeb(strExportName & ".pdf", bolForceDownload)
 
     End Sub
     Private Sub MultiPidsGenerateMerge(bolForceDownload As Boolean, bolSendByMail As Boolean)

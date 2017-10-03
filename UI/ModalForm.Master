@@ -168,7 +168,7 @@
         <asp:ContentPlaceHolder ID="OverMainContent" runat="server">
         </asp:ContentPlaceHolder>
         <div>            
-            <telerik:RadToolBar ID="toolbar1" runat="server" Width="100%" Skin="Bootstrap" AutoPostBack="true" RenderMode="Auto">
+            <telerik:RadToolBar ID="toolbar1" runat="server" Width="100%" Skin="Bootstrap" AutoPostBack="true" RenderMode="Auto" OnClientButtonClicked="clicked">
                 <Items>
 
                     <telerik:RadToolBarButton Text="<%$ Resources:common, close %>" Value="close" ImageUrl="Images/close.png" PostBack="false" NavigateUrl="javascript:CloseOnly()"></telerik:RadToolBarButton>
