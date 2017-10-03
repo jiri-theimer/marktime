@@ -60,7 +60,9 @@
             Me.uploadlist1.GUID = Me.upload1.GUID
 
             SetupTemplates()
-
+            If Me.CurrentPrefix <> "" Then
+                Me.txtSubject.Text = Master.Factory.GetRecordCaption(Me.CurrentX29ID, Master.DataPID)
+            End If
             Select Case Me.CurrentPrefix
                 Case "p28"
                     hidMasterPrefix_p30.Value = "p28"
@@ -68,10 +70,12 @@
                 Case "p41"
                     hidMasterPrefix_p30.Value = "p41"
                     hidMasterPID_p30.Value = Master.DataPID.ToString
+
                 Case "p91"
                     Dim cP91 As BO.p91Invoice = Master.Factory.p91InvoiceBL.Load(Master.DataPID)
                     hidMasterPID_p30.Value = cP91.p28ID.ToString
                     hidMasterPrefix_p30.Value = "p28"
+                    Me.txtSubject.Text = String.Format("Faktura {0} | {1}", cP91.p91Code, cP91.p91Client)
                     Dim lisO32 As IEnumerable(Of BO.o32Contact_Medium) = Master.Factory.p28ContactBL.GetList_o32(cP91.p28ID).Where(Function(p) p.o33ID = BO.o33FlagEnum.Email And p.o32IsDefaultInInvoice = True)
                     If lisO32.Count > 0 Then
                         Me.txtTo.Text = String.Join(",", lisO32.Select(Function(p) p.o32Value))
@@ -129,11 +133,14 @@
                 If Me.CurrentX29ID > BO.x29IdEnum._NotSpecified And Me.CurrentX29ID <> BO.x29IdEnum.j02Person Then
                     Me.txtBody.Text = vbCrLf & vbCrLf & "Přímý odkaz: " & Master.Factory.GetRecordLinkUrl(Me.CurrentPrefix, Master.DataPID)
                 End If
-                If Master.Factory.SysUser.j02ID <> 0 Then
-                    Me.txtBody.Text += vbCrLf & vbCrLf & Master.Factory.j02PersonBL.Load(Master.Factory.SysUser.j02ID).j02EmailSignature
+                
+            End If
+            If Master.Factory.SysUser.j02ID > 0 Then
+                Dim strSignature As String = Master.Factory.j02PersonBL.Load(Master.Factory.SysUser.j02ID).j02EmailSignature
+                If strSignature <> "" Then
+                    Me.txtBody.Text += vbCrLf & vbCrLf & strSignature
                 End If
             End If
-            
 
 
             
@@ -389,7 +396,7 @@
         Select Case Me.CurrentX29ID
             Case BO.x29IdEnum.p91Invoice
                 Dim cP91 As BO.p91Invoice = Master.Factory.p91InvoiceBL.Load(Master.DataPID)
-                Me.txtSubject.Text = String.Format("Faktura {0} | {1}", cP91.p91Code, cP91.p28Name)
+                Me.txtSubject.Text = String.Format("Faktura {0} | {1}", cP91.p91Code, cP91.p91Client)
             Case Else
                 Me.txtSubject.Text = cRec.x31Name
         End Select
