@@ -939,7 +939,7 @@ Class j70QueryTemplateBL
         AppendRoles(BO.x29IdEnum.o23Doc, "a.o23ID", "Role v dokumentu", lis)
 
         Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum._NotSpecified, -1), x As Integer = 0
-        Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Factory.x18EntityCategoryBL.GetList_x16(0).Where(Function(p) p.x16IsGridField = True)
+        Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Factory.x18EntityCategoryBL.GetList_x16(0)        ''.Where(Function(p) p.x16IsGridField = True)
         For Each cX18 In lisX18
             For Each c In lisX16.Where(Function(p) p.x18ID = cX18.PID).OrderBy(Function(p) p.x16Ordinary)
                 ''Dim strSql As String = "iif(x18.x18ID=" & c.x18ID.ToString & "," & c.x16Field & ",null)" 'kvůli tomu, aby do gridu každý sloupce vstupoval s unikátním názvem
@@ -957,7 +957,7 @@ Class j70QueryTemplateBL
             
         Next
 
-        AppendFreeFields(BO.x29IdEnum.o23Doc, lis)
+
     End Sub
 
 

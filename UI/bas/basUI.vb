@@ -159,6 +159,13 @@ Public Class basUI
         Catch ex As Exception
         End Try
     End Sub
+    Public Shared Sub ChangeToolbarButtonAttribute(toolbarControl As Telerik.Web.UI.RadToolBar, ByVal strButtonValue As String, ByVal strAttribute As String, strAttributeValue As String)
+        Try
+            toolbarControl.FindItemByValue(strButtonValue).Attributes.Item(strAttribute) = strAttributeValue
+        Catch ex As Exception
+        End Try
+    End Sub
+
 
     Public Shared Sub SetupP87Combo(_factory As BL.Factory, cbx As UI.datacombo)
         Dim lisP87 As IEnumerable(Of BO.p87BillingLanguage) = _factory.ftBL.GetList_P87()

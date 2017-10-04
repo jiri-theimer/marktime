@@ -655,7 +655,10 @@
     End Function
 
     Public Function GetRecordFileName(x29id As BO.x29IdEnum, intRecordPID As Integer, strFileSuffix As String, bolAppendTimestamp As Boolean, intX31ID As Integer) As String
-        Dim s As String = x47EventLogBL.GetObjectAlias(x29id, intRecordPID)
+        Dim s As String = ""
+        If x29id > BO.x29IdEnum._NotSpecified And intRecordPID <> 0 Then
+            s = x47EventLogBL.GetObjectAlias(x29id, intRecordPID)
+        End If
         If intX31ID > 0 Then
             Dim cX31 As BO.x31Report = x31ReportBL.Load(intX31ID)
             If Not cX31 Is Nothing Then
@@ -670,6 +673,7 @@
         s = BO.BAS.Prepare4FileName(s)
 
         If s = "" Then s = BO.BAS.GetGUID()
+        If Right(s, 1) = "_" Then s = Left(s, Len(s) - 1)
         If bolAppendTimestamp Then s += "_" & Format(Now, "yyyy-mm-dd-HHmm")
         Return s & "." & strFileSuffix
 

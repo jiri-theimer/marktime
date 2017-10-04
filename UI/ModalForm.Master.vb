@@ -99,6 +99,9 @@
     Public Sub RenameToolbarButton(ByVal strButtonValue As String, ByVal strNewText As String)
         basUI.RenameToolbarButton(Me.toolbar1, strButtonValue, strNewText)
     End Sub
+    Public Sub ChangeToolbarButtonAttribute(strButtonValue As String, strAttribute As String, strValute As String)
+        basUI.ChangeToolbarButtonAttribute(Me.toolbar1, strButtonValue, strAttribute, strButtonValue)
+    End Sub
     Public Sub HideShowToolbarButton(ByVal strButtonValue As String, ByVal bolVisible As Boolean)
         basUI.HideShowToolbarButton(Me.toolbar1, strButtonValue, bolVisible)
     End Sub
