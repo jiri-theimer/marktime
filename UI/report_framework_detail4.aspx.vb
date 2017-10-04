@@ -2,7 +2,8 @@
 
 Public Class report_framework_detail4
     Inherits System.Web.UI.Page
-   
+    Private Property _defOutputFileName As String
+
     Public Property CurrentX31ID As Integer
         Get
             Return BO.BAS.IsNullInt(hidCurX31ID.Value)
@@ -84,7 +85,9 @@ Public Class report_framework_detail4
             Master.Notify("XLSX soubor šablony tiskové sestavy nelze načíst.", 2)
             Return ""
         End If
-
+        _defOutputFileName = cRec.x31ExportFileNameMask
+        If _defOutputFileName = "" Then _defOutputFileName = cRec.x31Name
+        _defOutputFileName += "_" & Format(Now, "yyyyMMddHHmmss")
 
         Return strRepFullPath
 
@@ -95,6 +98,8 @@ Public Class report_framework_detail4
 
     Private Function GenerateXLS(strSourceXlsFullPath As String, bolGenerateCsvFile As Boolean, Optional strCsvDelimiter As String = ";") As String
         Dim cXLS As New clsExportToXls(Master.Factory)
+        cXLS.DefaultOutputFileName = _defOutputFileName
+
         Dim sheetDef As ExcelWorksheet = cXLS.LoadSheet(strSourceXlsFullPath, 0, "marktime_definition")
         If sheetDef Is Nothing Then
             Master.Notify("XLS soubor neobsahuje sešit s názvem [marktime_definition].", NotifyLevel.ErrorMessage)

@@ -167,12 +167,23 @@ Public Class report_framework_detail1
         ''lblQuery.Visible = bolQueryJ70
         ''query_j70id.Visible = bolQueryJ70
 
+        
+        xmlRepSource.Xml = Replace(xmlRepSource.Xml, "Name=" & Chr(34) & "report1" & Chr(34), "Name=" & Chr(34) & GetOutputExportFileName(cRec) & Chr(34))
+
+
 
 
         rv1.ReportSource = xmlRepSource
 
         cmdPdfExport.Enabled = True : linkPrint.Enabled = True : linkMail.Enabled = True
     End Sub
+    Private Function GetOutputExportFileName(Optional cRec As BO.x31Report = Nothing) As String
+        If cRec Is Nothing Then cRec = Master.Factory.x31ReportBL.Load(Me.CurrentX31ID)
+        Dim strExportName As String = cRec.x31ExportFileNameMask
+        If strExportName = "" Then strExportName = cRec.x31Name
+        ''strExportName += "_" & Format(Now, "yyyyMMddHHmmss")
+        Return BO.BAS.Prepare4FileName(strExportName)
+    End Function
 
     Private Sub report_framework_detail1_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         With Me.period1
@@ -225,7 +236,7 @@ Public Class report_framework_detail1
 
     Private Sub cmdPdfExport_Click(sender As Object, e As EventArgs) Handles cmdPdfExport.Click
 
-        hidOutputFullPathPdf.Value = GenerateOnePDF2Temp(Me.CurrentX31ID, GenerateOnePDF2Temp(Me.CurrentX31ID, "MARKTIME_REPORT_" & Master.Factory.SysUser.j03Login & ".pdf"))
+        hidOutputFullPathPdf.Value = GenerateOnePDF2Temp(Me.CurrentX31ID, GenerateOnePDF2Temp(Me.CurrentX31ID, GetOutputExportFileName() & ".pdf"))
 
     End Sub
 

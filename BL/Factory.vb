@@ -656,7 +656,7 @@
 
     Public Function GetRecordFileName(x29id As BO.x29IdEnum, intRecordPID As Integer, strFileSuffix As String, bolAppendTimestamp As Boolean, intX31ID As Integer) As String
         Dim s As String = ""
-        If x29id > BO.x29IdEnum._NotSpecified And intRecordPID <> 0 Then
+        If x29id > BO.x29IdEnum._NotSpecified And intRecordPID <> 0 And x29id <> BO.x29IdEnum.x31Report Then
             s = x47EventLogBL.GetObjectAlias(x29id, intRecordPID)
         End If
         If intX31ID > 0 Then

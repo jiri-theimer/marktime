@@ -3,6 +3,7 @@
 Public Class clsExportToXls
     Private Property _Error As String
     Private _factory As BL.Factory
+    Public Property DefaultOutputFileName As String = ""
     Public Sub New(factory As BL.Factory)
         _factory = factory
     End Sub
@@ -191,6 +192,9 @@ Public Class clsExportToXls
 
 
         Dim strGUID As String = "MARKTIME_" & BO.BAS.GetGUID()
+        If Me.DefaultOutputFileName <> "" Then
+            strGUID = BO.BAS.Prepare4FileName(Me.DefaultOutputFileName)
+        End If
         Dim strFullPath As String = strDir & "\" & strGUID & ".xlsx"
         If bolGenerateCsvFile Then
             strFullPath = strDir & "\" & strGUID & ".csv"
