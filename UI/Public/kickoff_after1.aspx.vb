@@ -390,7 +390,7 @@
         role.x67ID = 3
         lisRoles.Add(role)
         role = New BO.x69EntityRole_Assign
-        role.j11ID = _Factory.j11TeamBL.GetList()(0).PID    'tým = všichni
+        role.j11ID = GetJ11ID_All()    'tým = všichni
         role.x67ID = 5
         lisRoles.Add(role)
         _Factory.p41ProjectBL.Save(cP41, Nothing, Nothing, lisRoles, Nothing)
@@ -662,6 +662,14 @@
         End If
     End Function
 
+    Private Function GetJ11ID_All() As Integer
+        Dim lisJ11 As IEnumerable(Of BO.j11Team) = _Factory.j11TeamBL.GetList()
+        If lisJ11.Where(Function(p) p.j11IsAllPersons = True).Count > 0 Then
+            Return lisJ11.Where(Function(p) p.j11IsAllPersons = True)(0).PID
+        Else
+            Return lisJ11(0).PID
+        End If
+    End Function
     Private Sub CreateQuery(strJ70Name As String, x29ID As BO.x29IdEnum, intBinFlag As Integer, strColumnNames As String, Optional strJ71Field As String = "", Optional intJ71RecordPID As Integer = 0, Optional strJ71RecordName As String = "", Optional strJ70OrderBy As String = "")
         Dim mqJ02 As New BO.myQueryJ02
         mqJ02.IntraPersons = BO.myQueryJ02_IntraPersons.IntraOnly
@@ -683,11 +691,7 @@
             Return
         End Try
 
-        Dim lisJ11 As IEnumerable(Of BO.j11Team) = _Factory.j11TeamBL.GetList()
-        Dim intJ11ID As Integer = lisJ11(0).PID
-        If lisJ11.Where(Function(p) p.j11IsAllPersons = True).Count > 0 Then
-            intJ11ID = lisJ11.Where(Function(p) p.j11IsAllPersons = True)(0).PID
-        End If
+        
         Dim c As New BO.j70QueryTemplate
         c.j70Name = strJ70Name
         c.j70BinFlag = intBinFlag
@@ -725,7 +729,7 @@
         Dim lisX69 As New List(Of BO.x69EntityRole_Assign)
         Dim cJ As New BO.x69EntityRole_Assign
         cJ.x67ID = 9
-        cJ.j11ID = intJ11ID
+        cJ.j11ID = GetJ11ID_All()
         lisX69.Add(cJ)
         _Factory.j70QueryTemplateBL.Save(c, lisJ71, lisX69)
     End Sub
