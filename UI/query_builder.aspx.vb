@@ -1070,7 +1070,7 @@
                 End If
             Next
             If .j70OrderBy <> "" Then
-                Dim a() As String = Split(.j70OrderBy, ",")
+                Dim a() As String = Split(.j70OrderBy, " , ")
                 If a(0).IndexOf("DESC") > 0 Then
                     Me.cbxOrderBy1Dir.SelectedValue = "DESC"
                     basUI.SelectDropdownlistValue(Me.cbxOrderBy1, Replace(a(0), " DESC", ""))
@@ -1177,7 +1177,7 @@
             If s = "" Then
                 s = Me.cbxOrderBy2.SelectedValue
             Else
-                s += "," & Me.cbxOrderBy2.SelectedValue
+                s += " , " & Me.cbxOrderBy2.SelectedValue       'musí tam být před a za čárkou mezera, protože pole bohužel mohou obsahovat čárky
             End If
 
             If Me.cbxOrderBy2Dir.SelectedValue <> "" Then
