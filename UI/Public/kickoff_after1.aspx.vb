@@ -611,15 +611,17 @@
 
 
         strColumnNames = "p91Code,p91Client,p91Amount_WithoutVat,j27Code"
-        CreateQuery("Neuhrazené po splatnosti", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 4)
-        CreateQuery("Ve splatnosti", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 3)
-        CreateQuery("DRAFT doklady", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 5)
-        CreateQuery("S oficiálním číslem", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 6)
-        CreateQuery("Svázané se zálohou", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 7)
-        CreateQuery("Svázané s opravným dokladem", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 8)
-        CreateQuery("S haléřovým zaokrouhlením", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 9)
-        CreateQuery("S přepotem  měnového kurzu", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 13)
+
         CreateQuery("S nulovou sazbou DPH", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 12)
+        CreateQuery("S přepotem  měnového kurzu", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 13)
+        CreateQuery("S haléřovým zaokrouhlením", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 9)
+        CreateQuery("Svázané s opravným dokladem", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 8)
+        CreateQuery("Svázané se zálohou", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 7)
+        CreateQuery("Stav odesílání", BO.x29IdEnum.p91Invoice, 0, "p91Code,p91Client,VomStav,VomKomu")
+        CreateQuery("S oficiálním číslem", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 6)
+        CreateQuery("DRAFT doklady", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 5)
+        CreateQuery("Ve splatnosti", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 3)
+        CreateQuery("Neuhrazené po splatnosti", BO.x29IdEnum.p91Invoice, 0, strColumnNames, "_other", 4)
 
         strColumnNames = "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
         CreateQuery("Vygenerováno automaticky robotem", BO.x29IdEnum.p31Worksheet, 0, strColumnNames, "_other", 13)
@@ -681,7 +683,11 @@
             Return
         End Try
 
-        Dim intJ11ID As Integer = _Factory.j11TeamBL.GetList()(0).PID
+        Dim lisJ11 As IEnumerable(Of BO.j11Team) = _Factory.j11TeamBL.GetList()
+        Dim intJ11ID As Integer = lisJ11(0).PID
+        If lisJ11.Where(Function(p) p.j11IsAllPersons = True).Count > 0 Then
+            intJ11ID = lisJ11.Where(Function(p) p.j11IsAllPersons = True)(0).PID
+        End If
         Dim c As New BO.j70QueryTemplate
         c.j70Name = strJ70Name
         c.j70BinFlag = intBinFlag
