@@ -153,6 +153,12 @@
             Else
                 Me.clue_j18name.Visible = False
             End If
+            If .p61ID > 0 Then
+                Me.p61Name.Text = Master.Factory.p61ActivityClusterBL.Load(.p61ID).p61Name
+                Me.clue_p61Name.Attributes("rel") = "clue_p61_record.aspx?pid=" & .p61ID.ToString
+            Else
+                lblP61Name.Visible = False : Me.p61Name.Visible = False
+            End If
             Me.p42Name.Text = .p42Name
             Me.clue_p42name.Attributes("rel") = "clue_p42_record.aspx?pid=" & .p42ID.ToString
             lblJ18Name.Visible = False : Me.j18Name.Visible = False
@@ -344,7 +350,9 @@
             End If
             Dim c As BO.RecurrenceCalculation = Master.Factory.p65RecurrenceBL.CalculateDates(cP65, datNextBaseDate)
             lblNextGen.Text = BO.BAS.FD(c.DatGen, , True)
-            If c.DatGen <= Now Then lblNextGen.Text += " - > " & BO.BAS.FD(Now)
+            If c.DatGen <= Now Then
+                lblNextGen.Text = BO.BAS.FD(Now, , True) & ", původní termín byl: " & BO.BAS.FD(c.DatGen, , True)
+            End If
         End With
 
     End Sub

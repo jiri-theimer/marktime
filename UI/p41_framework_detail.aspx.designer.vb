@@ -311,6 +311,33 @@ Partial Public Class p41_framework_detail
     Protected WithEvents clue_j18name As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''lblP61Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblP61Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p61Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p61Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''clue_p61Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents clue_p61Name As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''Label1 control.
     '''</summary>
     '''<remarks>

@@ -41,7 +41,7 @@
             </td>
             <td>
 
-                <telerik:RadNumericTextBox ID="p65RecurGenToBase_M" runat="server" MinValue="0" MaxValue="6" Value="0" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+                <telerik:RadNumericTextBox ID="p65RecurGenToBase_M" runat="server" MinValue="0" MaxValue="18" Value="0" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
             </td>
         </tr>
         <tr>
@@ -55,7 +55,7 @@
             </td>
             <td>
 
-                <telerik:RadNumericTextBox ID="p65RecurPlanUntilToBase_D" runat="server" MinValue="-10" MaxValue="25" Value="20" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+                <telerik:RadNumericTextBox ID="p65RecurPlanUntilToBase_D" runat="server" MinValue="-10" MaxValue="30" Value="20" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
             </td>
         </tr>
         <tr>
@@ -64,7 +64,7 @@
             </td>
             <td>
 
-                <telerik:RadNumericTextBox ID="p65RecurPlanUntilToBase_M" runat="server" MinValue="0" MaxValue="6" Value="0" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+                <telerik:RadNumericTextBox ID="p65RecurPlanUntilToBase_M" runat="server" MinValue="0" MaxValue="18" Value="0" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
             </td>
         </tr>
         <tr>
@@ -87,7 +87,7 @@
             </td>
             <td>
 
-                <telerik:RadNumericTextBox ID="p65RecurPlanFromToBase_M" runat="server" MinValue="0" MaxValue="6" NumberFormat-DecimalDigits="0" Value="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+                <telerik:RadNumericTextBox ID="p65RecurPlanFromToBase_M" runat="server" MinValue="0" MaxValue="18" NumberFormat-DecimalDigits="0" Value="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
             </td>
         </tr>
     </table>

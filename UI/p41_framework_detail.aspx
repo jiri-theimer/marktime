@@ -193,6 +193,10 @@
                         <asp:Label ID="lblJ18Name" runat="server" Text="Středisko:" CssClass="lbl" meta:resourcekey="lblJ18Name"></asp:Label>
                         <asp:Label ID="j18Name" runat="server" CssClass="valbold"></asp:Label>
                         <asp:HyperLink ID="clue_j18name" runat="server" CssClass="reczoom" Text="i" title="Detail střediska"></asp:HyperLink>
+                        <asp:Label ID="lblP61Name" runat="server" Text="Klastr aktivit:" CssClass="lbl" meta:resourcekey="lblP61Name"></asp:Label>
+                        <asp:Label ID="p61Name" runat="server" CssClass="valbold"></asp:Label>
+                        <asp:HyperLink ID="clue_p61Name" runat="server" CssClass="reczoom" Text="i" title="Detail klastru aktivit"></asp:HyperLink>
+                        
                     </td>
 
                 </tr>

@@ -145,11 +145,7 @@
                     .p41RecurBaseDate = cRD.DatBase
                     .p65ID = 0 : .p41Code = "" : .ValidFrom = _curNow
                     If c.p41RecurNameMask <> "" Then .p41Name = c.p41RecurNameMask
-                    'If cP65.p65IsPlanUntil Or cP65.p65IsPlanFrom Then
-                    '    .p41PlanUntil = cRD.DatBase.AddMonths(cP65.p65RecurPlanUntilToBase_M).AddDays(cP65.p65RecurPlanUntilToBase_D)
-                    'Else
-                    '    .p41PlanUntil = Nothing
-                    'End If
+                    .p41ParentID = c.PID   'potom bude podřízený projekt matce
                     .p41PlanUntil = cRD.DatPlanUntil
                     .p41PlanFrom = cRD.DatPlanFrom
                     .SetPID(0)
