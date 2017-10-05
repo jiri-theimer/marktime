@@ -8,6 +8,7 @@
     Public Property Code As String
 
     Public Property j27Code As String
+    Public Property j27ID As Integer
     Public Property rozpracovano_hodiny As Double?
     Public Property rozpracovano_honorar As Double?
     Public Property rozpracovano_vydaje As Double?

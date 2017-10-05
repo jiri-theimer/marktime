@@ -35,6 +35,7 @@ Public Class approving_framework
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add("approving_framework-j70id")
+                    .Add("approving_framework-j27id")
                     .Add("p31_grid-period")
                     .Add("p31_grid-periodtype")
                     .Add("periodcombo-custom_query")
@@ -281,9 +282,35 @@ Public Class approving_framework
         mq.DateUntil = period1.DateUntil
         mq.j70ID = query1.CurrentJ70ID
 
-
         Dim lis As IEnumerable(Of BO.ApprovingFramework) = Master.Factory.p31WorksheetBL.GetList_ApprovingFramework(Me.CurrentX29ID, mq, hidX18_value.Value)
+        Dim qry = From p In lis Select p.j27ID, p.j27Code Distinct
 
+        With Me.cbxJ27ID
+            Dim ss As String = ""
+            If Not Page.IsPostBack Then
+                ss = Master.Factory.j03UserBL.GetUserParam("approving_framework-j27id")
+            Else
+                If .SelectedIndex > 0 Then ss = .SelectedValue
+            End If
+            If qry.Count > 1 Then
+                .Items.Clear()
+                Dim s As New List(Of String)
+                For Each row In qry
+                    .Items.Add(New ListItem(row.j27Code, row.j27ID.ToString))
+                    s.Add(row.j27Code)
+                Next
+                .Items.Insert(0, New ListItem(String.Join("+", s), ""))
+                If ss <> "" Then basUI.SelectDropdownlistValue(Me.cbxJ27ID, ss)
+
+                If .SelectedValue <> "" Then
+                    Dim intJ27ID As Integer = BO.BAS.IsNullInt(.SelectedValue)
+                    lis = lis.Where(Function(p) p.j27ID = intJ27ID)
+                End If
+            Else
+                .Visible = False
+            End If
+        End With
+        
         grid1.DataSource = lis
     End Sub
 
@@ -317,7 +344,11 @@ Public Class approving_framework
                 End Select
             End With
         End If
-        
+        If cbxJ27ID.SelectedIndex > 0 Then
+            cbxJ27ID.BackColor = basUI.ColorQueryRGB
+        Else
+            cbxJ27ID.BackColor = Nothing
+        End If
     End Sub
 
     
@@ -388,4 +419,8 @@ Public Class approving_framework
         ReloadPage()
     End Sub
     
+    Private Sub cbxJ27ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxJ27ID.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("approving_framework-j27id", Me.cbxJ27ID.SelectedValue)
+        ReloadPage()
+    End Sub
 End Class

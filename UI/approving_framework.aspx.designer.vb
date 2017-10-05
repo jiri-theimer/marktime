@@ -41,6 +41,15 @@ Partial Public Class approving_framework
     Protected WithEvents cbxScope As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''cbxJ27ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxJ27ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''period1 control.
     '''</summary>
     '''<remarks>

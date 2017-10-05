@@ -311,6 +311,9 @@
             If .p32ID <> 0 Then
                 pars.Add("p32id", .p32ID, DbType.Int32) : s.Append(" AND a.p32ID=@p32id")
             End If
+            If .j27ID_Billing_Orig > 0 Then
+                pars.Add("j27id_billing_orig", .j27ID_Billing_Orig, DbType.Int32) : s.Append(" AND a.j27ID_Billing_Orig=@j27id_billing_orig")
+            End If
             If Not .p33IDs Is Nothing Then
                 s.Append(" AND p34.p33ID IN (" & String.Join(",", .p33IDs) & ")")
             End If
@@ -1172,7 +1175,7 @@
             Case BO.x29IdEnum.p56Task
                 s.Append("select min(a.p56ID) as PID,min(p56.p56Name+' ('+p56.p56Code+')') as Task, min(p56.p56Code) as Code,min(isnull(p41.p41NameShort,p41.p41Name)) as Project,min(p28.p28Name) as Client")
         End Select
-        s.Append(",min(j27.j27Code) as j27Code,SUM(case when a.p71ID IS NULL and a.p31hours_orig<>0 THEN a.p31hours_orig END) as rozpracovano_hodiny")
+        s.Append(",a.j27ID_Billing_Orig as j27ID,min(j27.j27Code) as j27Code,SUM(case when a.p71ID IS NULL and a.p31hours_orig<>0 THEN a.p31hours_orig END) as rozpracovano_hodiny")
         s.Append(",MIN(case when a.p71ID IS NULL THEN p31Date END) as rozpracovano_prvni")
         s.Append(",MAX(case when a.p71ID IS NULL THEN p31Date END) as rozpracovano_posledni")
         s.Append(",SUM(case when a.p71ID IS NULL AND p34.p33ID=1 THEN a.p31Amount_WithoutVat_Orig END) as rozpracovano_honorar")

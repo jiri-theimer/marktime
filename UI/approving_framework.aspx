@@ -179,7 +179,11 @@
             </asp:DropDownList>
 
         </div>
-       
+       <div class="commandcell">
+           <asp:DropDownList ID="cbxJ27ID" runat="server" AutoPostBack="true">
+
+           </asp:DropDownList>
+       </div>
         <div class="commandcell" style="margin-left: 6px; margin-right: 6px;">
             <uc:periodcombo ID="period1" runat="server" Width="180px"></uc:periodcombo>
         </div>
