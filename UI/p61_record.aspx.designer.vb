@@ -32,22 +32,13 @@ Partial Public Class p61_record
     Protected WithEvents p61Name As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''panMembers control.
+    '''label0 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panMembers As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''lblAdd control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblAdd As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents label0 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''p32ID control.
@@ -68,13 +59,31 @@ Partial Public Class p61_record
     Protected WithEvents cmdAdd As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''cmdRemoveSelected control.
+    '''Label1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdRemoveSelected As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p34ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p34ID As Global.UI.datacombo
+
+    '''<summary>
+    '''cmdAddP34ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdAddP34ID As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''grid1 control.
@@ -84,6 +93,15 @@ Partial Public Class p61_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents grid1 As Global.UI.datagrid
+
+    '''<summary>
+    '''cmdRemoveSelected control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdRemoveSelected As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''Master property.

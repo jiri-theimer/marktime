@@ -499,6 +499,7 @@ Class j70QueryTemplateBL
             .Add(AGC(My.Resources.common.LimitniHonorar, "p41LimitFee_Notification", BO.cfENUM.Numeric, , "a.p41LimitFee_Notification", True))
 
             .Add(AGC("Odběratel faktury", "InvoiceClient", , , "p28billing.p28Name", , "LEFT OUTER JOIN p28Contact p28billing ON a.p28ID_Billing=p28billing.p28ID"))
+            .Add(AGC("Klastr aktivit", "Cluster", , , "p61.p61Name", , "LEFT OUTER JOIN p61ActivityCluster p61 ON a.p61ID=p61.p61ID"))
 
             .Add(AGC("Stromový název", "p41TreePath", , True, "a.p41TreePath", , , "Strom"))
             .Add(AGC("Odkaz na pod-projekty", "ChildProjectsInline", , , "dbo.p41_get_childs_inline_html(a.p41ID)", , , "Strom"))

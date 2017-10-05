@@ -27,7 +27,7 @@ Class p61ActivityClusterBL
     Public Function Save(cRec As BO.p61ActivityCluster, lisP32 As List(Of BO.p32Activity)) As Boolean Implements Ip61ActivityClusterBL.Save
         If Trim(cRec.p61Name) = "" Then _Error = "Chybí název." : Return False
         If BO.BAS.IsListEmpty(lisP32) Then
-            _Error = "Cluster musí mít minimálně jednu aktivitu!" : Return False
+            _Error = "Klastr musí mít minimálně jednu aktivitu!" : Return False
         End If
 
         Return _cDL.Save(cRec, lisP32)

@@ -238,7 +238,7 @@ Public Class p31_scheduler
                     c.ToolTip = ""
                     ''If Len(c.Subject) > 30 Then c.Subject = Left(c.Subject, 30)
                 Else
-                    If .p31Text.Length > 50 Then
+                    If Len(.p31Text) > 50 Then
                         c.ToolTip = Left(.p31Text, 50) & "..."
                     Else
                         c.ToolTip = .p31Text

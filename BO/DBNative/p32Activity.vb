@@ -49,6 +49,19 @@ Public Class p32Activity
             Return _p34Name
         End Get
     End Property
+    Private Property _p33ID As Integer
+    Public ReadOnly Property p33ID As Integer
+        Get
+            Return _p33ID
+        End Get
+    End Property
+    Private Property _p34IncomeStatementFlag As Integer
+    Public ReadOnly Property p34IncomeStatementFlag As Integer
+        Get
+            Return _p34IncomeStatementFlag
+        End Get
+    End Property
+
     Public ReadOnly Property NameWithSheet As String
         Get
             Return p32Name & " (" & p34Name & ")"

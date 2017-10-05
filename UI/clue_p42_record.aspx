@@ -12,7 +12,7 @@
        </div>
        <div class="content-box2">
         <div class="title">
-            Projekt pracuje s níže zaškrtlými moduly:
+            V projektu jsou zapnuty níže uvedené nástroje:
         </div>
         <asp:panel ID="panModules" runat="server"  CssClass="content" Enabled="false">  
             <div style="float:left;padding:10px;">

@@ -308,7 +308,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label ID="lblP61ID" runat="server" Text="Výběr povolených aktivit:" CssClass="lbl"></asp:Label>
+                        <asp:Label ID="lblP61ID" runat="server" Text="Povolit vykazovat aktivity pouze pro klastr:" CssClass="lbl"></asp:Label>
 
                     </td>
                     <td>
@@ -319,7 +319,7 @@
                 <tr>
                     <td colspan="2">
                         <span class="infoInForm">Uplatňuje se pro zapisování worksheet úkonů.</span>
-                        <span class="infoInForm">Cílem výběru aktivit je ještě více zúžit nabídku povolených aktivit z povolených, které vyplývají z typu projektu a role osoby v projektu.</span>
+                        <span class="infoInForm">Smyslem klastru aktivit v projektu je zúžit uživatelům nabídku povolených aktivit pro vykazování.</span>
                     </td>
                 </tr>
                 <tr>
