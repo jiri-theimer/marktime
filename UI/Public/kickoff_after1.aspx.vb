@@ -635,7 +635,7 @@
         CreateQuery("Pevné (paušální) odměny", BO.x29IdEnum.p31Worksheet, 0, "p31Date,ClientName,p41Name,Person,p32Name,p31Amount_WithoutVat_Orig,j27Code_Billing_Orig,p31Text", "p34id", 4, "Pevné (paušální) odměny")
         CreateQuery("Výdaje", BO.x29IdEnum.p31Worksheet, 0, "p31Date,ClientName,p41Name,Person,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,j27Code_Billing_Orig,p31Text", "p34id", 3, "Výdaje")
 
-        strColumnNames = "p56Code,p56Name,b02Name"
+        strColumnNames = "ClientAndProject,p56Name,b02Name"
         CreateQuery("Matky opakovaných úkolů", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 13)
         CreateQuery("Je po termínu dokončení", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 7)
         CreateQuery("Vyplněn termín dokončení", BO.x29IdEnum.p56Task, 0, strColumnNames, "_other", 6)

@@ -725,7 +725,9 @@ Class j70QueryTemplateBL
             .Add(AGC(My.Resources.common.FakturacniOddil, "p95Name", , , , , , "Aktivita", "min(p95.p95Name)", "p32.p95ID"))
 
             .Add(AGC(My.Resources.common.Projekt, "p41Name", , , "isnull(p41NameShort,p41Name)", , , "Projekt", "min(p41Name)", "a.p41ID"))
-            .Add(AGC("Klient+Projekt", "ClientAndProject", , , "isnull(p28Client.p28Name+'-','')+p41Name", , , "Projekt", "min(isnull(p28Client.p28Name+' - ','')+p41Name)", "a.p41ID"))
+            '.Add(AGC("Klient+Projekt", "ClientAndProject", , , "isnull(p28Client.p28Name+'-','')+p41Name", , , "Projekt", "min(isnull(p28Client.p28Name+' - ','')+p41Name)", "a.p41ID"))
+            .Add(AGC("Klient+Projekt", "ClientAndProject", , , "isnull(p28client.p28Name+char(32)+isnull(p41NameShort,p41Name),isnull(p41NameShort,p41Name))", , , "Projekt", "min(isnull(p28Client.p28Name+' - ','')+p41Name)", "a.p41ID"))
+
             .Add(AGC("Stromový název", "p41TreePath", , , "isnull(p41TreePath,p41Name)", , , "Projekt", "min(p41TreePath)", "a.p41ID"))
 
             .Add(AGC(My.Resources.common.KodProjektu, "p41Code", , , , , , "Projekt", "min(p41Code)", "a.p41ID"))
@@ -883,7 +885,7 @@ Class j70QueryTemplateBL
             .Add(AGC(My.Resources.common.Typ, "p57Name"))
             .Add(AGC(My.Resources.common.Nazev, "p56Name"))
             .Add(AGC("Aktuální stav", "b02Name"))
-            .Add(AGC("Klient+projekt", "ClientPlusProject", , , "isnull(p28client.p28Name,'')", , , "Projekt"))
+            .Add(AGC("Klient+projekt", "ClientAndProject", , , "isnull(p28client.p28Name+char(32)+isnull(p41NameShort,p41Name),isnull(p41NameShort,p41Name))", , , "Projekt"))
             .Add(AGC(My.Resources.common.Klient, "Client", , , "p28client.p28Name", , , "Projekt"))
             .Add(AGC(My.Resources.common.Projekt, "p41Name", , , "isnull(p41NameShort,p41Name)", , , "Projekt"))
             .Add(AGC(My.Resources.common.KodProjektu, "p41Code", , , , , , "Projekt"))
