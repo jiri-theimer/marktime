@@ -883,6 +883,7 @@ Class j70QueryTemplateBL
             .Add(AGC(My.Resources.common.Typ, "p57Name"))
             .Add(AGC(My.Resources.common.Nazev, "p56Name"))
             .Add(AGC("Aktuální stav", "b02Name"))
+            .Add(AGC("Klient+projekt", "ClientPlusProject", , , "isnull(p28client.p28Name,'')", , , "Projekt"))
             .Add(AGC(My.Resources.common.Klient, "Client", , , "p28client.p28Name", , , "Projekt"))
             .Add(AGC(My.Resources.common.Projekt, "p41Name", , , "isnull(p41NameShort,p41Name)", , , "Projekt"))
             .Add(AGC(My.Resources.common.KodProjektu, "p41Code", , , , , , "Projekt"))

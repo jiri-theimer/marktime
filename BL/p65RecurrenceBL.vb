@@ -50,11 +50,11 @@ Class p65RecurrenceBL
             c.DatBase = DateSerial(Year(datNow), 1, 1)
         End If
         If cP65.p65RecurFlag = BO.RecurrenceType.Quarter Then
-            Select Case Month(Now)
+            Select Case Month(datNow)
                 Case 1, 2, 3 : c.DatBase = DateSerial(Year(datNow), 1, 1)
                 Case 4, 5, 6 : c.DatBase = DateSerial(Year(datNow), 4, 1)
                 Case 7, 8, 9 : c.DatBase = DateSerial(Year(datNow), 7, 1)
-                Case Else : c.DatBase = DateSerial(Year(datNow), 12, 1)
+                Case Else : c.DatBase = DateSerial(Year(datNow), Month(datNow), 1)
             End Select
 
         End If
