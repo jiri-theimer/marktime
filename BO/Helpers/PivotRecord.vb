@@ -56,6 +56,7 @@ Public Enum PivotSumFieldType
     p31Hours_Invoiced_FixedPrice = 36
     p31Hours_Invoiced_WriteOff = 33
 
+
     Expenses = 37
     Expenses_WIP = 38
     Expenses_Approved = 39
@@ -68,6 +69,8 @@ Public Enum PivotSumFieldType
     Expenses_Invoiced_Domestic = 46
     p31Amount_HoursFee_Invoiced_Domestic = 47
 
+    p31Hours_Approved_Internal = 55
+    p31Amount_Internal_Approved = 56
 
     p31Amount_HoursFee_Internal = 30
     p31Amount_HoursFee_Internal_Approved = 31
@@ -397,6 +400,14 @@ Public Class PivotSumField
                 _SelectField = "SUM(case when a.p71ID IS NULL AND p34.p34IncomeStatementFlag=2 AND p34.p33ID IN (2,5) AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN a.p31Amount_WithoutVat_Orig WHEN a.p71ID=1 AND a.p91ID IS NULL AND p34.p34IncomeStatementFlag=2 AND p34.p33ID IN (2,5) AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN a.p31Amount_WithoutVat_Approved END)"
                 s = "Nevyfakturované paušální odměny"
                 Me.GP = 30
+            Case PivotSumFieldType.p31Hours_Approved_Internal
+                Me.GP = 50
+                _SelectField = "sum(a.p31Hours_Approved_Internal)"
+                s = "Interně schválené hodiny (ISH)"
+            Case PivotSumFieldType.p31Amount_Internal_Approved
+                Me.GP = 50
+                _SelectField = "sum(a.p31Amount_Internal_Approved)"
+                s = "ISH honorář"
         End Select
         If Me.Caption = "" Then Me.Caption = s
     End Sub

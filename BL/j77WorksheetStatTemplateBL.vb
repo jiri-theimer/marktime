@@ -105,6 +105,9 @@ Class j77WorksheetStatTemplateBL
 
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_HoursFee_Internal))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_HoursFee_Internal_Approved))
+
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_Approved_Internal))
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_Internal_Approved))
         End If
 
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_BIN))
