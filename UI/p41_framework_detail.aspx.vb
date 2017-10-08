@@ -155,9 +155,9 @@
             End If
             If .p61ID > 0 Then
                 Me.p61Name.Text = Master.Factory.p61ActivityClusterBL.Load(.p61ID).p61Name
-                Me.clue_p61Name.Attributes("rel") = "clue_p61_record.aspx?pid=" & .p61ID.ToString
+                Me.clue_p61Name.Attributes("rel") = "clue_p61_record.aspx?pid=" & .p61ID.ToString : clue_p61Name.Visible = True
             Else
-                lblP61Name.Visible = False : Me.p61Name.Visible = False
+                lblP61Name.Visible = False : Me.p61Name.Visible = False : clue_p61Name.Visible = False
             End If
             Me.p42Name.Text = .p42Name
             Me.clue_p42name.Attributes("rel") = "clue_p42_record.aspx?pid=" & .p42ID.ToString

@@ -311,7 +311,7 @@ Public Class entity_framework
                     If Not .Factory.SysUser.j04IsMenu_Invoice Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Faktury].")
             End Select
             panExport.Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
-            designer1.Visible = panExport.Visible
+            ''designer1.Visible = panExport.Visible
 
         End With
         If opgLayout.SelectedValue = "3" Then
