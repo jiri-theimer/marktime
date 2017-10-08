@@ -115,33 +115,53 @@ Public Class basUI
             .Show()
         End With
     End Sub
-
-    Public Shared Sub AddToolbarButton(toolbarControl As Telerik.Web.UI.RadToolBar, ByVal strText As String, ByVal strValue As String, Optional ByVal Index As Integer = 0, Optional ByVal strImageURL As String = "", Optional ByVal bolPostBack As Boolean = True, Optional ByVal strNavigateURL As String = "", Optional strTarget As String = "", Optional bolShowLoading As Boolean = False)
+    Public Overloads Shared Sub AddToolbarButton(toolbarControl As Telerik.Web.UI.RadToolBar, c As clsToolBarButton)
         Dim b As New Telerik.Web.UI.RadToolBarButton
-        b.Text = strText
-        b.Target = strTarget
-        b.Value = strValue
-        If strImageURL > "" Then b.ImageUrl = strImageURL
-        b.PostBack = bolPostBack
-        If bolPostBack Then
-            b.Attributes.Add("postback", "1")
-        Else
-            b.Attributes.Add("postback", "0")
-        End If
-        If bolShowLoading Then
-            b.Attributes.Add("showloading", "1")
-        Else
-            b.Attributes.Add("showloading", "0")
-        End If
-        b.NavigateUrl = strNavigateURL
-        If Index > toolbarControl.Items.Count - 1 Then Index = toolbarControl.Items.Count - 1
-        toolbarControl.Items.Insert(Index, b)
+        With c
+            b.Text = .Text
+            b.Target = .Target
+            b.Value = .Value
+            If .ImageURL > "" Then b.ImageUrl = .ImageURL
+            b.PostBack = .AutoPostback
+            If .AutoPostback Then
+                b.Attributes.Add("postback", "1")
+            Else
+                b.Attributes.Add("postback", "0")
+            End If
+            If .ShowLoading Then
+                b.Attributes.Add("showloading", "1")
+            Else
+                b.Attributes.Add("showloading", "0")
+            End If
+            b.NavigateUrl = .NavigateURL
+            If .Index > toolbarControl.Items.Count - 1 Then .Index = toolbarControl.Items.Count - 1
 
-        'b = New Telerik.Web.UI.RadToolBarButton()
-        'b.IsSeparator = True
-        'b.Value = "sep_" & strValue
-        'toolbarControl.Items.Insert(Index + 1, b)
+            If .GroupText <> "" Then
+                Dim sp As Telerik.Web.UI.RadToolBarSplitButton = toolbarControl.FindItemByText(.GroupText)
+                If sp Is Nothing Then
+                    sp = New Telerik.Web.UI.RadToolBarSplitButton(.GroupText)
+                    toolbarControl.Items.Insert(.Index, sp)
+                End If
+                sp.Buttons.Add(b)
 
+            Else
+                toolbarControl.Items.Insert(.Index, b)
+            End If
+
+        End With
+
+    End Sub
+    Public Overloads Shared Sub AddToolbarButton(toolbarControl As Telerik.Web.UI.RadToolBar, ByVal strText As String, ByVal strValue As String, Optional ByVal Index As Integer = 0, Optional ByVal strImageURL As String = "", Optional ByVal bolPostBack As Boolean = True, Optional ByVal strNavigateURL As String = "", Optional strTarget As String = "", Optional bolShowLoading As Boolean = False)
+        Dim c As New clsToolBarButton(strText, strValue)
+        With c
+            .Index = Index
+            .ImageURL = strImageURL
+            .AutoPostback = bolPostBack
+            .NavigateURL = strNavigateURL
+            .Target = strTarget
+            .ShowLoading = bolShowLoading
+        End With
+        AddToolbarButton(toolbarControl, c)
     End Sub
     Public Shared Sub HideShowToolbarButton(toolbarControl As Telerik.Web.UI.RadToolBar, ByVal strButtonValue As String, ByVal bolVisible As Boolean)
         Try

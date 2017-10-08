@@ -91,9 +91,11 @@
     Private Sub toolbar1_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles toolbar1.ButtonClick
         RaiseEvent Master_OnToolbarClick(e.Item.Value)
     End Sub
-    Public Sub AddToolbarButton(ByVal strText As String, ByVal strValue As String, Optional ByVal Index As Integer = 0, Optional ByVal strImageURL As String = "", Optional ByVal bolPostBack As Boolean = True, Optional ByVal strNavigateURL As String = "", Optional strTarget As String = "", Optional bolShowLoading As Boolean = False)
+    Public Overloads Sub AddToolbarButton(c As clsToolBarButton)
+        basUI.AddToolbarButton(Me.toolbar1, c)
+    End Sub
+    Public Overloads Sub AddToolbarButton(ByVal strText As String, ByVal strValue As String, Optional ByVal Index As Integer = 0, Optional ByVal strImageURL As String = "", Optional ByVal bolPostBack As Boolean = True, Optional ByVal strNavigateURL As String = "", Optional strTarget As String = "", Optional bolShowLoading As Boolean = False)
         basUI.AddToolbarButton(Me.toolbar1, strText, strValue, Index, strImageURL, bolPostBack, strNavigateURL, strTarget, bolShowLoading)
-
     End Sub
 
     Public Sub RenameToolbarButton(ByVal strButtonValue As String, ByVal strNewText As String)

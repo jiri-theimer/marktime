@@ -141,6 +141,18 @@
             dialog_master("tag_binding.aspx?prefix=p31&pids=" + pids, "Images/tag.png");
 
         }
+        function SaveAsSet() {            
+            var s = window.prompt("Zadejte název billing dávky.");
+
+            if (s != '' && s != null) {
+                self.document.getElementById("<%=hidApprovingSet_Explicit.ClientID%>").value = s;
+
+                hardrefresh(0, "save_as_set");
+            }
+
+            
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
@@ -181,19 +193,20 @@
     <div style="height: 60px; width: 100%;">
         <table cellpadding="5" cellspacing="2">
             <tr>
-                <td>Počet úkonů:
+                <td>Počet:
                 </td>
                 <td align="right">
                     <asp:Label ID="RowCount" runat="server" CssClass="valbold"></asp:Label>
+                    x
                 </td>
-                <td>Vykázaný čas (fakturovatelný):
+                <td>Vykázané fakt.hodiny:
                 </td>
                 <td align="right">
                     <asp:Label ID="hours_billable_orig" runat="server" CssClass="valbold"></asp:Label>h.
                 <asp:Label ID="fee_billable_orig" runat="server" CssClass="valboldblue"></asp:Label>
                 </td>
                 <td>
-                    <img src='Images/a14.gif' />Fakturovat čas:
+                    <img src='Images/a14.gif' />Fakturovat hodiny:
                 </td>
                 <td align="right">
                     <asp:Label ID="hours_4" runat="server" CssClass="valbold"></asp:Label>h.
@@ -214,10 +227,11 @@
                 <td></td>
             </tr>
             <tr>
-                <td>Schválené úkony:
+                <td>Schváleno:
                 </td>
                 <td>
                     <asp:Label ID="RowsCount_Approved" runat="server" CssClass="valbold"></asp:Label>
+                    x
                 </td>
                 <td>Ostatní vykázané příjmy:
                 </td>
@@ -285,11 +299,7 @@
                                     <asp:Button ID="cmdBatch_6" Text="[Zahrnout do paušálu]" runat="server" CssClass="cmd" Width="280px" />
 
                                 </div>
-                                <div style="display: none;">
-                                    <asp:Button ID="cmdBatch_ApprovingSet" Text="Vybrané záznamy zařadit do billing dávky:" runat="server" CssClass="cmd" Width="280px" Visible="false" />
-                                    <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="200px" AllowCustomText="true" ToolTip="Název billing dávky" Visible="false"></telerik:RadComboBox>
-                                    <asp:Button ID="cmdBatch_ApprovingSet_Clear" Text="Vybraným vyčistit přiřazení billing dávky" runat="server" CssClass="cmd" Width="280px" Visible="false" />
-                                </div>
+                               
                                 <div class="div6">
                                     <asp:Button ID="cmdBatch_3" Text="[Skrytý odpis]" runat="server" CssClass="cmd" Width="280px" />
 
@@ -303,6 +313,11 @@
                                 <div class="div6">
                                     <asp:Button ID="cmdBatch_7" Text="[Fakturovat později]" runat="server" CssClass="cmd" Width="280px" />
 
+                                </div>
+                                <div class="div6" style="margin-top:20px;">
+                                    <asp:Button ID="cmdBatch_ApprovingSet" Text="Vybrané zařadit do billing dávky:" runat="server" CssClass="cmd" Width="280px" Visible="true" />
+                                    <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="300px" AllowCustomText="true" ToolTip="Název billing dávky"></telerik:RadComboBox>
+                                    <asp:Button ID="cmdBatch_ApprovingSet_Clear" Text="Vybraným vyčistit přiřazení billing dávky" runat="server" CssClass="cmd" Width="280px" Visible="true" />
                                 </div>
                                 <div class="div6">
                                     <button id="cmdTags" type="button" onclick="tags()" style="width:280px">Oštítkovat</button>
@@ -346,6 +361,7 @@
     <asp:HiddenField ID="hidCols" runat="server" />
     <asp:HiddenField ID="hidFrom" runat="server" />
     <asp:HiddenField ID="hidApprovingLevel" runat="server" />
+    <asp:HiddenField ID="hidApprovingSet_Explicit" runat="server" />
 
     <telerik:RadWindow ID="okno1" runat="server" Modal="true" KeepInScreenBounds="true" VisibleTitlebar="true" VisibleStatusbar="false" Skin="WebBlue" ShowContentDuringLoad="false" Width="800px" Height="600px" Behaviors="Close,Move,Maximize" IconUrl="Images/window.png" Style="z-index: 9900;">
         <Shortcuts>

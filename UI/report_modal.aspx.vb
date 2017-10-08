@@ -318,7 +318,7 @@ Public Class report_modal
                 xmlRepSource.Parameters.Add(New Parameter(par.Key, par.Value))
             Next
         End If
-        Dim strExportName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False, cRec.PID)
+        Dim strExportName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "", False, cRec.PID)
         xmlRepSource.Xml = Replace(xmlRepSource.Xml, "Name=" & Chr(34) & "report1" & Chr(34), "Name=" & Chr(34) & strExportName & Chr(34))
 
 

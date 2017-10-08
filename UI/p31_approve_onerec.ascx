@@ -127,8 +127,8 @@
             </telerik:RadDatePicker>
            
             
-            <span style="display:none;">Zařadit do billing dávky:</span>
-            <telerik:RadComboBox ID="p31ApprovingSet" Visible="false" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="150px" AllowCustomText="true"></telerik:RadComboBox>
+            <span>Zařazeno do billing dávky:</span>
+            <telerik:RadComboBox ID="p31ApprovingSet" Visible="true" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="150px" AllowCustomText="true"></telerik:RadComboBox>
         </div>
     </div>
 </div>

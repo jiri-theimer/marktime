@@ -675,7 +675,12 @@
         If s = "" Then s = BO.BAS.GetGUID()
         If Right(s, 1) = "_" Then s = Left(s, Len(s) - 1)
         If bolAppendTimestamp Then s += "_" & Format(Now, "yyyy-mm-dd-HHmm")
-        Return s & "." & strFileSuffix
+        If strFileSuffix = "" Then
+            Return s
+        Else
+            Return s & "." & strFileSuffix
+        End If
+
 
 
 

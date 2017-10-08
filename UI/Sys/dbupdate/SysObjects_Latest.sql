@@ -791,6 +791,31 @@ END
 
 GO
 
+----------FN---------------GetFirstMondayInWeek-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('GetFirstMondayInWeek') and type = 'FN')
+ drop function GetFirstMondayInWeek
+GO
+
+
+CREATE FUNCTION [dbo].[GetFirstMondayInWeek] (@d datetime)
+--vrací první pondělí v týdnu, kam patří den @d
+RETURNS datetime AS  
+BEGIN 
+
+set @d=dbo.convert_to_dateserial(@d)
+
+while upper(DATENAME(weekday,@d))<>'MONDAY'
+  begin
+	set @d=dateadd(day,-1,@d)
+  end
+
+RETURN(@d)
+	
+END
+
+GO
+
 ----------FN---------------GetNextMonth-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('GetNextMonth') and type = 'FN')
@@ -4212,6 +4237,59 @@ return(@code_new)
 
 
 END
+
+
+GO
+
+----------FN---------------x69_exist_role_in_record-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('x69_exist_role_in_record') and type = 'FN')
+ drop function x69_exist_role_in_record
+GO
+
+
+
+
+
+
+
+
+
+CREATE    FUNCTION [dbo].[x69_exist_role_in_record](@x67id int,@j02id int,@record_pid int)
+RETURNS BIT
+AS
+BEGIN
+  ---vrací 1, pokud osoba @j02id má u záznamu @record_pid roli @x67id
+
+ if exists(select x69ID FROM x69EntityRole_Assign WHERE x67ID=@x67id AND j02ID=@j02id AND x69RecordPID=@record_pid)
+  RETURN(1)
+ 
+ if exists(select x69ID FROM x69EntityRole_Assign WHERE x67ID=@x67id AND j11ID IN (select j11ID FROM j12Team_Person WHERE j02ID=@j02id) AND x69RecordPID=@record_pid)
+  RETURN(1)
+
+ RETURN(0)
+   
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 GO

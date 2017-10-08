@@ -275,33 +275,6 @@ Partial Public Class p31_approving_step3
     Protected WithEvents cmdBatch_6 As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''cmdBatch_ApprovingSet control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdBatch_ApprovingSet As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''p31ApprovingSet control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p31ApprovingSet As Global.Telerik.Web.UI.RadComboBox
-
-    '''<summary>
-    '''cmdBatch_ApprovingSet_Clear control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdBatch_ApprovingSet_Clear As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
     '''cmdBatch_3 control.
     '''</summary>
     '''<remarks>
@@ -327,6 +300,33 @@ Partial Public Class p31_approving_step3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdBatch_7 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdBatch_ApprovingSet control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdBatch_ApprovingSet As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''p31ApprovingSet control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p31ApprovingSet As Global.Telerik.Web.UI.RadComboBox
+
+    '''<summary>
+    '''cmdBatch_ApprovingSet_Clear control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdBatch_ApprovingSet_Clear As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''cmdBatch_8 control.
@@ -453,6 +453,15 @@ Partial Public Class p31_approving_step3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidApprovingLevel As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidApprovingSet_Explicit control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidApprovingSet_Explicit As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''okno1 control.

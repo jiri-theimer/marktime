@@ -18,6 +18,7 @@
     <div>
         <button type="button" id="cmdSplitRecord" runat="server" onclick="javascript:split_record()">Rozdělit úkon na 2 kusy</button>
         <button type="button" id="cmdSourceRecord" runat="server" onclick="javascript:source_record()">Upravit zdrojový úkon</button>
+        <button type="button" onclick="changelog()">LOG</button>
     </div>
     <uc:freefields_readonly ID="ff2" runat="server" />
     <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
@@ -130,5 +131,9 @@
         document.getElementById("<%=Me.hidRefreshParent.ClientID%>").value="0";
         window.parent.hardrefresh(<%=Master.DataPID%>, "refresh");
         <%End If%>
+
+        function changelog() {
+            window.parent.sw_orig("changelog.aspx?prefix=p31&pid=<%=Master.DataPID%>", true)
+        }
     </script>
 </asp:Content>

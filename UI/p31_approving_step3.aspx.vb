@@ -58,7 +58,14 @@ Public Class p31_approving_step3
                 Me.chkUseInternalApproving.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p31_approving-use_internal_approving", "0"))
                 Me.chkAutoFilter.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p31_approving-autofilter", "0"))
                 Me.chkDefaultApproveSetup.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p31_approving-defapprovesetup", "1"))
-                .AddToolbarButton("Uložit a zavřít", "save_close", , "Images/save.png")
+
+                Dim cB As New clsToolBarButton("Uložit a zavřít", "save_close")
+                'cB.ImageURL = "Images/save.png"
+                cB.GroupText = "groupsave"
+                .AddToolbarButton(cB)
+                ' .AddToolbarButton("Uložit a zavřít", "save_close", , "Images/save.png")
+
+                
 
                 .AddToolbarButton("Sestava", "report", 1, "Images/report.png", False, "javascript:report()")
 
@@ -70,17 +77,27 @@ Public Class p31_approving_step3
                 .AddToolbarButton("Editovatelná tabulka", "", 1, , False, "javascript:batch_p31text()")
 
                 If .Factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator) Or .Factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator) Then
-                    .AddToolbarButton("Uložit a pokračovat fakturací", "save_invoice", 1, "Images/save.png")
+                    '.AddToolbarButton("Uložit a pokračovat fakturací", "save_invoice", 1, "Images/save.png")
+                    cB = New clsToolBarButton("Uložit a pokračovat fakturací", "save_invoice")
+                    cB.GroupText = "groupsave"
+                    .AddToolbarButton(cB)
                 End If
 
                 If Me.CurrentMasterPrefix <> "" Then
-                    .AddToolbarButton("Uložit", "save_gate", 1, "Images/save.png")
+                    '.AddToolbarButton("Uložit", "save_gate", 1, "Images/save.png")
+                    cB = New clsToolBarButton("Uložit", "save_gate")
+                    cB.GroupText = "groupsave"
+                    .AddToolbarButton(cB)
                 End If
 
                 .RadToolbar.FindItemByValue("setting").CssClass = "show_hide2"
                 ''.RadToolbar.FindItemByValue("o23").CssClass = "show_hide3"
 
-
+                cB = New clsToolBarButton("Uložit jako billing dávku", "save_set")
+                cB.NavigateURL = "javascript:SaveAsSet()"
+                cB.AutoPostback = False
+                cB.GroupText = "groupsave"
+                .AddToolbarButton(cB)
 
             End With
             designer1.RefreshData(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam(designer1.x36Key)))
@@ -431,6 +448,9 @@ Public Class p31_approving_step3
             Case "p31text"
 
                 grid1.Rebind(True, BO.BAS.IsNullInt(Me.hidHardRefreshPID.Value))
+            Case "save_as_set"
+                If Not SaveChanges(Me.hidApprovingSet_Explicit.Value) Then Return
+                Master.CloseAndRefreshParent("approving")
             Case Else
                 RefreshSubform(Me.hidHardRefreshPID.Value)
                 grid1.Rebind(True, BO.BAS.IsNullInt(Me.hidHardRefreshPID.Value))
@@ -591,14 +611,14 @@ Public Class p31_approving_step3
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
         Select Case strButtonValue
             Case "save_close"
-                If Not SaveChanges() Then Return
+                If Not SaveChanges("") Then Return
                 Master.CloseAndRefreshParent("approving")
             Case "save_gate"
-                If Not SaveChanges() Then Return
+                If Not SaveChanges("") Then Return
                 Dim cTEMP As BO.p85TempBox = Master.Factory.p85TempBoxBL.LoadByGUID(ViewState("guid") & "-00")
                 Response.Redirect("entity_modal_approving.aspx?" & cTEMP.p85Message)
             Case "save_invoice"
-                If Not SaveChanges() Then Return
+                If Not SaveChanges("") Then Return
                 Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).Where(Function(p) p.p85Prefix = ""), strGUID As String = BO.BAS.GetGUID(), x As Integer = 0
                 For Each cTemp In lis
                     Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.Load(cTemp.p85DataPID)
@@ -618,7 +638,7 @@ Public Class p31_approving_step3
        
     End Sub
 
-    Private Function SaveChanges() As Boolean
+    Private Function SaveChanges(strApprovingSet As String) As Boolean
         Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).Where(Function(p) p.p85Prefix = ""), x As Integer = 0
         Dim strErrs As String = ""
         For Each cTemp In lis
@@ -632,7 +652,12 @@ Public Class p31_approving_step3
             With cApprove
                 .p71id = cRec.p71ID
                 .p72id = cRec.p72ID_AfterApprove
-                .p31ApprovingSet = cRec.p31ApprovingSet
+                If strApprovingSet = "" Then
+                    .p31ApprovingSet = cRec.p31ApprovingSet
+                Else
+                    .p31ApprovingSet = strApprovingSet
+                End If
+
                 .Value_Approved_Billing = cRec.p31Value_Approved_Billing
                 .Value_Approved_Internal = cRec.p31Value_Approved_Internal
                 Select Case cRec.p33ID
