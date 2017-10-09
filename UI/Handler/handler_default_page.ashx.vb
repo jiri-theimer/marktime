@@ -12,7 +12,9 @@ Public Class handler_default_page
             context.Response.Write(" ")
             Return
         End If
-        If Left(strURL, 1) = "/" Then strURL = Right(strURL, Len(strURL) - 1)
+        Dim a() As String = Split(strURL, "/")
+        strURL = a(UBound(a))
+        ''If Left(strURL, 1) = "/" Then strURL = Right(strURL, Len(strURL) - 1)
 
         Dim factory As BL.Factory = Nothing
         If HttpContext.Current.User.Identity.IsAuthenticated Then
