@@ -70,7 +70,7 @@ Public Class j02_personalplan
                 Master.AddToolbarButton("Uložit a zavřít", "saveandclose", 0, "Images/save.png")
                 Me.cbxJ11ID.DataSource = .Factory.j11TeamBL.GetList(New BO.myQuery)
                 Me.cbxJ11ID.DataBind()
-                Me.cbxJ11ID.Items.Insert(0, "")
+                Me.cbxJ11ID.Items.Insert(0, "--Filtr podle týmů--")
                 With .Factory.j03UserBL
                     .InhaleUserParams("j02_personalplan-y1", "j02_personalplan-m1", "j02_personalplan-j11id")
                     basUI.SelectDropdownlistValue(Me.y1, .GetUserParam("j02_personalplan-y1", Year(Now).ToString))
@@ -243,7 +243,7 @@ Public Class j02_personalplan
     End Sub
 
     Private Sub m1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles m1.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam("j02_personalplan-y1", Me.m1.SelectedValue)
+        Master.Factory.j03UserBL.SetUserParam("j02_personalplan-m1", Me.m1.SelectedValue)
         _bolNeedSetupGrid = True
     End Sub
 

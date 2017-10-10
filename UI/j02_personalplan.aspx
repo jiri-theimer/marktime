@@ -115,7 +115,7 @@
     <table cellpadding="6">
         <tr>
             <td>
-                <asp:DropDownList ID="cbxJ11ID" runat="server" DataTextField="j11Name" DataValueField="pid" ToolTip="Tým osob" AutoPostBack="true"></asp:DropDownList>
+                <asp:DropDownList ID="cbxJ11ID" runat="server" DataTextField="j11Name" DataValueField="pid" ToolTip="Tým osob" AutoPostBack="true" style="max-width:250px;"></asp:DropDownList>
             </td>
             <td>
                 <asp:DropDownList ID="cbxField" runat="server" AutoPostBack="true" BackColor="Yellow">
