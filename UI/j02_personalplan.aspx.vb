@@ -66,6 +66,7 @@ Public Class j02_personalplan
                 .neededPermission = BO.x53PermValEnum.GR_Admin
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))    'j02ID
                 .HeaderText = "Osobní plány"
+                Master.AddToolbarButton("XLS", "xls", , "Images/xls.png")
                 Master.AddToolbarButton("Uložit změny", "save", 0, "Images/save.png")
                 Master.AddToolbarButton("Uložit a zavřít", "saveandclose", 0, "Images/save.png")
                 Me.cbxJ11ID.DataSource = .Factory.j11TeamBL.GetList(New BO.myQuery)
@@ -92,18 +93,19 @@ Public Class j02_personalplan
         grid1.MasterTableView.ColumnGroups.Clear()
         
         
-        Dim d1 As Date = Me.LimitD1, d2 As Date = Me.LimitD2
-        Dim d As Date = d1, x As Integer = 1
+        Dim d1 As Date = Me.LimitD1, x As Integer = 1
         AddColumn("Person", "Osoba")
         AddColumn("Total", "<img src='Images/sum.png'/>")
-        While d <= d2
 
+        Dim dats As New List(Of Date)
+        For i As Integer = 0 To 11
+            dats.Add(d1.AddMonths(i))
+        Next
+        For Each d In dats
             AddNumbericTextboxColumn("Col" & x.ToString, Format(d, "M-yyyy"), "gridnumber1", True)
-            
-
-            d = d.AddMonths(1)
             x += 1
-        End While
+        Next
+      
 
 
     End Sub
@@ -260,6 +262,10 @@ Public Class j02_personalplan
                 End If
             Case "save"
                 SaveChanges()
+            Case "xls"
+
+                grid1.ExportToExcel()
+
         End Select
        
     End Sub
@@ -320,4 +326,6 @@ Public Class j02_personalplan
         Master.Factory.j03UserBL.SetUserParam("j02_personalplan-j11id", Me.cbxJ11ID.SelectedValue)
         _bolNeedSetupGrid = True
     End Sub
+
+   
 End Class
