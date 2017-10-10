@@ -59,6 +59,7 @@
                     End If
                     Me.p31Rate_Billing_Orig.Text = BO.BAS.FN(.p31Rate_Billing_Orig)
                     Me.rate_j27ident.Text = .j27Code_Billing_Orig
+
                 Case BO.p33IdENUM.PenizeBezDPH, BO.p33IdENUM.PenizeVcDPHRozpisu
                     Me.lblBillingRate_Orig.Visible = False
                     Me.p31Rate_Billing_Orig.Visible = False

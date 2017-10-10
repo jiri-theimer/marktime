@@ -589,8 +589,10 @@ Public Class entity_menu
         If cRec.b02ID = 0 Then ami("Doplnit poznámku, komentář, přílohu", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
 
 
+        If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P48_Creator) Then
+            ami("Operativní plán projektů klienta", "cmdP48", "javascript:p48_plan();", "Images/oplan.png", mi, , True)
+        End If
 
-        ami("Operativní plán projektů klienta", "cmdP48", "javascript:p48_plan();", "Images/oplan.png", mi, , True)
         ami("Historie odeslané pošty", "cmdX40", "x40_framework.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "Images/email.png", mi, , , "_top")
         If cDisp.OwnerAccess Then
             ami("Historie záznamu", "cmdLog", "javascript: timeline()", "Images/event.png", mi)
@@ -656,7 +658,11 @@ Public Class entity_menu
             If Not cRec.IsClosed Then ami("Vytvořit událost v kalendáři", "cmdO22", "javascript:menu_o22_record(0);", "Images/calendar.png", mi, , True)
             ami("Kalendář osoby", "cmdScheduler", "javascript:scheduler()", "Images/calendar.png", mi)
 
-            ami("Operativní plán osoby", "cmdP48", "javascript:p48_plan();", "Images/oplan.png", mi, , True)
+            If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P48_Creator) Then
+                ami("Operativní plán osoby", "cmdP48", "javascript:p48_plan();", "Images/oplan.png", mi, , True)
+            End If
+            ami("Osobní plány", "cmdP66", "javascript:p66_plan();", "Images/plan.png", mi, , True)
+
             ami("Historie odeslané pošty", "cmdX40", "x40_framework.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "Images/email.png", mi, , , "_top")
 
             ami("Historie záznamu", "cmdLog", "javascript: timeline()", "Images/event.png", mi)

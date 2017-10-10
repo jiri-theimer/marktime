@@ -65,6 +65,9 @@
         function wd(pid) {
             sw_decide("workflow_dialog.aspx?pid=" + pid + "&prefix=p56", "Images/workflow.png")
         }
+        function p66_plan() {
+            window.parent.sw_everywhere("j02_personalplan.aspx?j02id=<%=Master.DataPID%>", "Images/plan.png");
+        }
 
     </script>
 </asp:Content>

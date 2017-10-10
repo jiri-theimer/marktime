@@ -418,4 +418,61 @@
         End With
         Return _cDB.GetRecord(Of BO.j02PersonSum)("j02_inhale_sumrow", pars, True)
     End Function
+
+    Public Function SavePersonalPlan(lisP66 As List(Of BO.p66PersonalPlan)) As Boolean
+        Dim mq As New BO.myQueryP66
+        If lisP66.Count > 0 Then
+            mq.D1 = lisP66.Select(Function(p) p.p66DateFrom).Min
+            mq.D2 = lisP66.Select(Function(p) p.p66DateFrom).Max
+        End If
+        
+        Dim lisSaved As IEnumerable(Of BO.p66PersonalPlan) = GetList_p66(mq)
+        For Each c In lisP66
+            Dim pars As New DbParameters, strW As String = "", bolINSERT As Boolean = True
+            If c.PID <> 0 Then
+                strW = "p66ID=@pid"
+                pars.Add("pid", c.PID, DbType.Int32)
+                bolINSERT = False
+            End If
+            With c
+                pars.Add("j02id", .j02ID, DbType.Int32)
+                pars.Add("p66VersionIndex", .p66VersionIndex, DbType.Int32)
+                pars.Add("p66DateFrom", .p66DateFrom, DbType.DateTime)
+                pars.Add("p66DateUntil", .p66DateUntil, DbType.DateTime)
+                pars.Add("p66HoursBillable", .p66HoursBillable, DbType.Double)
+                pars.Add("p66HoursNonBillable", .p66HoursNonBillable, DbType.Double)
+                pars.Add("p66HoursTotal", .p66HoursTotal, DbType.Double)
+                pars.Add("p66HoursInvoiced", .p66HoursInvoiced, DbType.Double)
+            End With
+
+            If Not _cDB.SaveRecord("p66PersonalPlan", pars, bolINSERT, strW, True, _curUser.j03Login) Then
+                Return False
+            End If
+        Next
+
+        Return True
+    End Function
+
+    Public Function GetList_p66(mq As BO.myQueryP66) As IEnumerable(Of BO.p66PersonalPlan)
+        Dim s As String = "SELECT a.*," & bas.RecTail("p66", "a") & ",j02.j02LastName+' '+j02.j02FirstName as Person FROM p66PersonalPlan a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID", pars As New DbParameters
+        pars.Add("d1", mq.D1, DbType.DateTime)
+        pars.Add("d2", mq.D2, DbType.DateTime)
+        s += " WHERE p66DateFROM BETWEEN @d1 AND @d2"
+        If mq.VersionIndex > 0 Then
+            pars.Add("version", mq.VersionIndex, DbType.Int32)
+            s += " AND p66VersionIndex=@version"
+        End If
+        If mq.j11ID <> 0 Then
+            pars.Add("j11id", mq.j11ID, DbType.Int32)
+            s += " AND a.j02ID IN (select j02ID FROM j12Team_Person WHERE j11ID=@j11id)"
+        End If
+
+        If Not mq.j02IDs Is Nothing Then
+            If mq.j02IDs.Count > 0 Then
+                s += " AND a.j02ID IN (" & String.Join(",", mq.j02IDs) & ")"
+            End If
+        End If
+
+        Return _cDB.GetList(Of BO.p66PersonalPlan)(s, pars)
+    End Function
 End Class

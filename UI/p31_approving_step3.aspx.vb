@@ -241,6 +241,7 @@ Public Class p31_approving_step3
 
                     If cRec.p71ID = BO.p71IdENUM.Nic Then
                         'dosud neprošlo schvalováním
+                        .Rate_Internal_Approved = cRec.p31Rate_Internal_Orig
                         .p31ApprovingLevel = BO.BAS.IsNullInt(Me.hidApprovingLevel.Value)
                         If Me.chkDefaultApproveSetup.Checked Then   'pokud je nastaveno, že se má nahodit výchozí fakturační status
                             .p71id = BO.p71IdENUM.Schvaleno

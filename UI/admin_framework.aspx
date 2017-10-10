@@ -74,6 +74,10 @@
         function run_robot() {
             sw_master("/Public/robot.aspx?blank=1");
         }
+
+        function p66_plan() {
+            sw_everywhere("j02_personalplan.aspx", "Images/plan.png");
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">

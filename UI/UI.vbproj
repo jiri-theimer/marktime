@@ -238,6 +238,7 @@
     <Content Include="invoice.ascx" />
     <Content Include="j02_framework.aspx" />
     <Content Include="j02_framework_detail.aspx" />
+    <Content Include="j02_personalplan.aspx" />
     <Content Include="j03_accesslog.aspx" />
     <Content Include="j60_record.aspx" />
     <Content Include="j61_record.aspx" />
@@ -409,6 +410,7 @@
     <Content Include="Public\mtservice_recovery.aspx" />
     <Content Include="report_framework_detail4.aspx" />
     <Content Include="Handler\handler_default_page.ashx" />
+    <Content Include="Handler\handler_p66_plan.ashx" />
     <None Include="Service References\SpolehlivostDPH\rozhraniCRPDPH.wsdl" />
     <Content Include="searchbox.ascx" />
     <Content Include="Service References\SpolehlivostDPH\UI.SpolehlivostDPH.InformaceOPlatciType.datasource">
@@ -1037,6 +1039,9 @@
     <Compile Include="Handler\handler_p45_project.ashx.vb">
       <DependentUpon>handler_p45_project.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handler\handler_p66_plan.ashx.vb">
+      <DependentUpon>handler_p66_plan.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handler\handler_search_task.ashx.vb">
       <DependentUpon>handler_search_task.ashx</DependentUpon>
     </Compile>
@@ -1108,6 +1113,13 @@
     </Compile>
     <Compile Include="j02_framework_detail.aspx.vb">
       <DependentUpon>j02_framework_detail.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j02_personalplan.aspx.designer.vb">
+      <DependentUpon>j02_personalplan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j02_personalplan.aspx.vb">
+      <DependentUpon>j02_personalplan.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="j03_accesslog.aspx.designer.vb">

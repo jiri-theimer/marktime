@@ -181,6 +181,7 @@
     function p48_plan(){            
         window.open("p48_framework.aspx?masterprefix=<%=me.DataPrefix%>&masterpid=<%=Me.DataPID%>","_top");
     }
+    
 
     function workflow(){            
         sw_decide("workflow_dialog.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=me.datapid%>","Images/workflow.png",false);

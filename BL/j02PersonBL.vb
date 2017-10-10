@@ -17,6 +17,8 @@
     Function GetTeamsInLine(intJ02ID As Integer) As String
     Function GetList_AllAssignedEntityRoles(intPID As Integer, x29id_entity As BO.x29IdEnum) As IEnumerable(Of BO.x67EntityRole)
     Function LoadSumRow(intPID As Integer) As BO.j02PersonSum
+    Function GetList_p66(mq As BO.myQueryP66) As IEnumerable(Of BO.p66PersonalPlan)
+    Function SavePersonalPlan(lisP66 As List(Of BO.p66PersonalPlan)) As Boolean
 End Interface
 Class j02PersonBL
     Inherits BLMother
@@ -165,5 +167,11 @@ Class j02PersonBL
     End Function
     Public Function LoadSumRow(intPID As Integer) As BO.j02PersonSum Implements Ij02PersonBL.LoadSumRow
         Return _cDL.LoadSumRow(intPID)
+    End Function
+    Public Function GetList_p66(mq As BO.myQueryP66) As IEnumerable(Of BO.p66PersonalPlan) Implements Ij02PersonBL.GetList_p66
+        Return _cDL.GetList_p66(mq)
+    End Function
+    Public Function SavePersonalPlan(lisP66 As List(Of BO.p66PersonalPlan)) As Boolean Implements Ij02PersonBL.SavePersonalPlan
+        Return _cDL.SavePersonalPlan(lisP66)
     End Function
 End Class

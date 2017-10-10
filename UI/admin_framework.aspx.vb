@@ -147,8 +147,10 @@ Public Class admin_framework
             .AddItem("Pozice osob", "j07", NU("j07"), "person")
             .AddItem("Týmy osob", "j11", NU("j11"), "person")
             .AddItem("Nadřízení/podřízení", "j05", NU("j05"), "person")
+            .AddItem("Osobní plány", "p66", "javascript:p66_plan()", "person")
             .AddItem("Pracovní fondy", "c21", NU("c21"), "person")
             .AddItem("Dny svátků", "c26", NU("c26"), "person")
+
 
             '.AddItem("Časové fondy", "j11", NU("j11"), "user")
 

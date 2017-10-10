@@ -148,6 +148,7 @@
     <Compile Include="Helpers\PersonOrTeam.vb" />
     <Compile Include="Helpers\QueryByTags.vb" />
     <Compile Include="Helpers\Query\myQueryO23.vb" />
+    <Compile Include="Helpers\Query\myQueryP66.vb" />
     <Compile Include="Helpers\RecurrenceCalculation.vb" />
     <Compile Include="Helpers\Roles4Notification.vb" />
     <Compile Include="Helpers\SchedulerItem.vb" />
@@ -303,6 +304,7 @@
     <Compile Include="DBNative\x67EntityRole.vb" />
     <Compile Include="DBNative\x69EntityRole_Assign.vb" />
     <Compile Include="DBNative\p85TempBox.vb" />
+    <Compile Include="p66PersonalPlan.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

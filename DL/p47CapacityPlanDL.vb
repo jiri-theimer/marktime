@@ -94,9 +94,5 @@
         Return True
     End Function
 
-    'Public Function GetList_p44(intP45ID As Integer) As IEnumerable(Of BO.p44CapacityPlan_Exception)
-    '    Dim s As String = "select a.*,j02.j02LastName+' '+j02.j02FirstName as _Person," & bas.RecTail("p46", "a") & " FROM p46BudgetPerson a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID"
-    '    s += " WHERE a.p45ID=@p45id ORDER BY j02.j02LastName,j02.j02FirstName"
-    '    Return _cDB.GetList(Of BO.p46BudgetPerson)(s, New With {.p45id = intPID})
-    'End Function
+  
 End Class
