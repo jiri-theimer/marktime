@@ -275,24 +275,6 @@ Partial Public Class admin_framework
     Protected WithEvents imgLogoPreview As Global.Telerik.Web.UI.RadBinaryImage
 
     '''<summary>
-    '''boxMailLabel control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxMailLabel As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Label1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''version control.
     '''</summary>
     '''<remarks>

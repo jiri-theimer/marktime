@@ -49,7 +49,7 @@ Public Class j02_personalplan
     End Property
     Public ReadOnly Property LimitD2 As Date
         Get
-            Return LimitD1.AddMonths(12)
+            Return LimitD1.AddMonths(12).AddDays(-1)
         End Get
 
     End Property
@@ -94,7 +94,7 @@ Public Class j02_personalplan
         
         
         Dim d1 As Date = Me.LimitD1, x As Integer = 1
-        AddColumn("Person", "Osoba")
+        AddColumn("Person", "Jméno")
         AddColumn("Total", "<img src='Images/sum.png'/>")
 
         Dim dats As New List(Of Date)
@@ -134,12 +134,15 @@ Public Class j02_personalplan
                 .p85FreeDate02 = c.p66DateUntil
 
                 Select Case Me.cbxField.SelectedValue
-                    Case "p66HoursInvoiced"
-                        .p85FreeFloat01 = c.p66HoursInvoiced
-                    Case "p66HoursBillable"
-                        .p85FreeFloat01 = c.p66HoursBillable
-                    Case "p66HoursNonBillable"
-                        .p85FreeFloat01 = c.p66HoursNonBillable
+                    Case "p66HoursInvoiced" : .p85FreeFloat01 = BO.BAS.IsNullNum(c.p66HoursInvoiced)
+                    Case "p66HoursBillable" : .p85FreeFloat01 = BO.BAS.IsNullNum(c.p66HoursBillable)
+                    Case "p66HoursNonBillable" : .p85FreeFloat01 = BO.BAS.IsNullNum(c.p66HoursNonBillable)
+                    Case "p66HoursTotal" : .p85FreeFloat01 = BO.BAS.IsNullNum(c.p66HoursTotal)
+                    Case "p66FreeNumber01" : .p85FreeFloat01 = BO.BAS.IsNullNum(c.p66FreeNumber01)
+                    Case "p66FreeNumber02" : .p85FreeFloat01 = BO.BAS.IsNullNum(c.p66FreeNumber02)
+                    Case "p66FreeNumber03" : .p85FreeFloat01 = BO.BAS.IsNullNum(c.p66FreeNumber03)
+                    Case "p66FreeNumber04" : .p85FreeFloat01 = BO.BAS.IsNullNum(c.p66FreeNumber04)
+                    Case "p66FreeNumber05" : .p85FreeFloat01 = BO.BAS.IsNullNum(c.p66FreeNumber05)
                 End Select
 
 
@@ -188,7 +191,12 @@ Public Class j02_personalplan
                 If c.p85FreeDate01 = dats(x) Then
 
                     row = lis.First(Function(p) p.PID = c.p85OtherKey1)
-                    BO.BAS.SetPropertyValue(row, "Col" & (x + 1).ToString, c.p85FreeFloat01)
+                    If c.p85FreeFloat01 <> 0 Then
+                        BO.BAS.SetPropertyValue(row, "Col" & (x + 1).ToString, c.p85FreeFloat01)
+                    Else
+                        BO.BAS.SetPropertyValue(row, "Col" & (x + 1).ToString, Nothing)
+                    End If
+
                     BO.BAS.SetPropertyValue(row, "Col" & (x + 1).ToString & "P85ID", c.PID)
 
                 End If
@@ -289,6 +297,12 @@ Public Class j02_personalplan
                     c.p66HoursInvoiced = .p66HoursInvoiced
                     c.p66HoursBillable = .p66HoursBillable
                     c.p66HoursNonBillable = .p66HoursNonBillable
+                    c.p66HoursTotal = .p66HoursTotal
+                    c.p66FreeNumber01 = .p66FreeNumber01
+                    c.p66FreeNumber02 = .p66FreeNumber02
+                    c.p66FreeNumber03 = .p66FreeNumber03
+                    c.p66FreeNumber04 = .p66FreeNumber04
+                    c.p66FreeNumber05 = .p66FreeNumber05
                 End With
             End If
 
@@ -297,13 +311,18 @@ Public Class j02_personalplan
             c.p66DateFrom = cTemp.p85FreeDate01
             c.p66DateUntil = c.p66DateFrom.AddMonths(1).AddDays(-1)
 
+            Dim valNum As Double? = Nothing
+            If cTemp.p85FreeFloat01 <> 0 Then valNum = cTemp.p85FreeFloat01
             Select Case Me.cbxField.SelectedValue
-                Case "p66HoursInvoiced"
-                    c.p66HoursInvoiced = cTemp.p85FreeFloat01
-                Case "p66HoursBillable"
-                    c.p66HoursBillable = cTemp.p85FreeFloat01
-                Case "p66HoursNonBillable"
-                    c.p66HoursNonBillable = cTemp.p85FreeFloat01
+                Case "p66HoursInvoiced" : c.p66HoursInvoiced = valNum
+                Case "p66HoursBillable" : c.p66HoursBillable = valNum
+                Case "p66HoursNonBillable" : c.p66HoursNonBillable = valNum
+                Case "p66HoursTotal" : c.p66HoursTotal = valNum
+                Case "p66FreeNumber01" : c.p66FreeNumber01 = valNum
+                Case "p66FreeNumber02" : c.p66FreeNumber02 = valNum
+                Case "p66FreeNumber03" : c.p66FreeNumber03 = valNum
+                Case "p66FreeNumber04" : c.p66FreeNumber04 = valNum
+                Case "p66FreeNumber05" : c.p66FreeNumber05 = valNum
             End Select
 
             lisP66.Add(c)

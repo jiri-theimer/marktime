@@ -123,6 +123,15 @@
                     </td>
 
                 </tr>
+                <tr>
+                    <td>
+                        <asp:Label ID="lblSMTP" runat="server" Text="Poštovní účet:" CssClass="lbl"></asp:Label>
+                    </td>
+                    <td colspan="2">
+                        <asp:Label ID="smtpAccount" runat="server" CssClass="valbold"></asp:Label>
+                    </td>
+                    
+                </tr>
                 <tr valign="top">
                     <td>
                         <asp:Label ID="lblTeams" runat="server" Text="Člen týmů:" CssClass="lbl" meta:resourcekey="lblTeams"></asp:Label>
@@ -133,6 +142,7 @@
                     </td>
 
                 </tr>
+                
                 
             </table>
 

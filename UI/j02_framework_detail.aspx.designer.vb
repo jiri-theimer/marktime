@@ -149,6 +149,24 @@ Partial Public Class j02_framework_detail
     Protected WithEvents c21Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''lblSMTP control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblSMTP As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''smtpAccount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents smtpAccount As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''lblTeams control.
     '''</summary>
     '''<remarks>

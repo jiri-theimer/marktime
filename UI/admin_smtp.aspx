@@ -10,20 +10,23 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <div class="div6">
-        <asp:Label ID="Label2" runat="server" Text="Globální e-mail adresa odesílatele:"></asp:Label>
+        <span class="infoNotification">Pokud uživatel nemá v MARKTIME nastavený vlastní poštovní účet, použije se tato adresa:</span>
+    </div>
+    <div class="div6">
+        <asp:Label ID="Label2" runat="server" Text="E-mail adresa odesílatele:"></asp:Label>
         <asp:TextBox ID="SMTP_SenderAddress" runat="server" Style="width: 150px;"></asp:TextBox>
 
     </div>
     
+    
+    
     <div class="div6">
-        <asp:Label ID="Label1" runat="server" Text="Aplikační adresa (Host URL):"></asp:Label>
-        <asp:TextBox ID="AppHost" runat="server" Style="width: 300px;"></asp:TextBox>
-        <span class="infoInForm">Tato URL adresa se bude zobrazovat v notifikačních zprávách</span>
-    </div>
-    <fieldset>        
-    <div class="div6">
-        <asp:CheckBox ID="chkIsSMTP_UseWebConfigSetting" runat="server" Text="Aplikační SMTP server je nastaven v konfiguračním souboru web.config" AutoPostBack="true" CssClass="chk"></asp:CheckBox>
-
+        
+       
+        <asp:RadioButtonList ID="opgSMTP_UseWebConfigSetting" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
+            <asp:ListItem Text="Nastavení SMTP serveru načítat z web.config (sekce mailSettings)" Value="1"></asp:ListItem>
+            <asp:ListItem Text="Vybrat jiný SMTP účet" Value="0"></asp:ListItem>
+        </asp:RadioButtonList>
     </div>
     <asp:Panel ID="panWebConfig" runat="server">
         <table cellpadding="3" cellspacing="2">
@@ -45,7 +48,7 @@
             </tr>
         </table>
     </asp:Panel>
-    </fieldset>
+   
 
 
     <asp:Panel ID="panRec" runat="server">
@@ -64,6 +67,12 @@
         </table>
     </asp:Panel>
 
+    <hr />
+    <div class="div6">
+        <asp:Label ID="Label1" runat="server" Text="MARKTIME url adresa uvedená jako odkaz ve zprávě:"></asp:Label>
+        <asp:TextBox ID="AppHost" runat="server" Style="width: 300px;"></asp:TextBox>
+        <span class="infoInForm">Tuto adresu systém vkládá do zpráv, aby se uživatel kliknutím dostal rovnou do MARKTIME.</span>
+    </div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

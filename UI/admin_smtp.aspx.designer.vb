@@ -32,31 +32,13 @@ Partial Public Class admin_smtp
     Protected WithEvents SMTP_SenderAddress As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Label1 control.
+    '''opgSMTP_UseWebConfigSetting control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''AppHost control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents AppHost As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''chkIsSMTP_UseWebConfigSetting control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkIsSMTP_UseWebConfigSetting As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents opgSMTP_UseWebConfigSetting As Global.System.Web.UI.WebControls.RadioButtonList
 
     '''<summary>
     '''panWebConfig control.
@@ -129,6 +111,24 @@ Partial Public Class admin_smtp
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cbxO40ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''Label1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''AppHost control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents AppHost As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Master property.

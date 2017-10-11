@@ -122,6 +122,12 @@
                     <asp:ListItem Text="Plán vyfakturovaných hodin" Value="p66HoursInvoiced"></asp:ListItem>
                     <asp:ListItem Text="Plán vykázaných fakturovatelných hodin" Value="p66HoursBillable"></asp:ListItem>
                     <asp:ListItem Text="Plán vykázaných nefakturovatelných hodin" Value="p66HoursNonBillable"></asp:ListItem>
+                    <asp:ListItem Text="Plán celkově vykázaných hodin" Value="p66HoursTotal"></asp:ListItem>
+                    <asp:ListItem Text="Volná veličina 1" Value="p66FreeNumber01"></asp:ListItem>
+                    <asp:ListItem Text="Volná veličina 2" Value="p66FreeNumber02"></asp:ListItem>
+                    <asp:ListItem Text="Volná veličina 3" Value="p66FreeNumber03"></asp:ListItem>
+                    <asp:ListItem Text="Volná veličina 4" Value="p66FreeNumber04"></asp:ListItem>
+                    <asp:ListItem Text="Volná veličina 5" Value="p66FreeNumber05"></asp:ListItem>
                 </asp:DropDownList>
             </td>
             <td>
@@ -162,6 +168,7 @@
             <ItemStyle Height="35px" />
             <AlternatingItemStyle Height="35px" />
         </MasterTableView>
+        <HeaderStyle Font-Bold="true" BackColor="LightBlue" />
         <ExportSettings ExportOnlyData="true" OpenInNewWindow="true" FileName="marktime_export" UseItemStyles="false">
             <Excel Format="Biff" />
         </ExportSettings>

@@ -304,7 +304,7 @@
     <Compile Include="DBNative\x67EntityRole.vb" />
     <Compile Include="DBNative\x69EntityRole_Assign.vb" />
     <Compile Include="DBNative\p85TempBox.vb" />
-    <Compile Include="p66PersonalPlan.vb" />
+    <Compile Include="DBNative\p66PersonalPlan.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

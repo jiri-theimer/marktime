@@ -215,14 +215,19 @@ Public Class admin_framework
             '.AddItem("SMTP server", "smtp", , "other")
            
 
-            .AddItem("Odeslaná pošta", "smtp", , , "Images/email.png")
-            .AddItem("Notifikační pravidla", "x46", NU("x46"), "smtp")
-            .AddItem("Odeslané zprávy/fronta", "x40", "x40_framework.aspx", "smtp")
 
-            .AddItem("SMTP & IMAP", "imap", , , "Images/imap.png")
-            .AddItem("IMAP účty", "o41", NU("o41"), "imap")
-            .AddItem("IMAP pravidla", "o42", NU("o42"), "imap")
-            .AddItem("SMTP účty", "o40", NU("o40"), "imap")
+            
+
+            .AddItem("Pošta/SMTP/IMAP", "smtp_imap", , , "Images/email.png")
+            .AddItem("Výchozí aplikační poštovní účet", "admin_smtp", "javascript:sw_master('admin_smtp.aspx','Images/setting_32.png')", "smtp_imap")
+            .AddItem("SMTP účty", "o40", NU("o40"), "smtp_imap")
+
+            .AddItem("Historie/Fronta odeslaných zpráv", "x40", "x40_framework.aspx", "smtp_imap")
+
+            .AddItem("IMAP účty", "o41", NU("o41"), "smtp_imap")
+            .AddItem("IMAP pravidla", "o42", NU("o42"), "smtp_imap")
+
+            .AddItem("Notifikační pravidla", "x46", NU("x46"), "smtp_imap")
 
             .AddItem("Uživatelská pole", "ff", , , "Images/form.png")
             .AddItem("Katalog polí", "x28", NU("x28"), "ff")

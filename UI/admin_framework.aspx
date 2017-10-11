@@ -238,34 +238,7 @@
             </div>
 
 
-            <div style="clear: both; width: 100%;">
-                <img style="display: inline;" src="Images/email_32.png" />
-                <span style="display: inline;" class="framework_header_span">Nastavení pošty</span>
-            </div>
-            <div class="content-box1" style="width: 100%; max-width: none;">
-                <div class="title">
-                    <img src="Images/email.png" style="margin-right: 10px;" />
-                    <asp:Label ID="boxMailLabel" Text="Odesílání poštovních zpráv" runat="server"></asp:Label>
-                </div>
-                <div class="content">
-                    <button type="button" onclick="location.replace('x40_framework.aspx')">Historie/fronta zpráv</button>
-                    <button type="button" onclick="lp('x46')">Notifikační pravidla pro události v systému</button>
-                    <button type="button" onclick="sw_master('admin_smtp.aspx','Images/setting_32.png')" style="margin-left: 40px;">Nastavit odesílání pošty</button>
-
-                </div>
-            </div>
-            <div class="content-box1" style="width: 100%; max-width: none;">
-                <div class="title">
-                    <img src="Images/imap.png" style="margin-right: 10px;" />
-                    <asp:Label ID="Label1" Text="IMAP načítání zpráv" runat="server"></asp:Label>
-                </div>
-                <div class="content">
-                    <button type="button" onclick="lp('o41')">IMAP účty</button>
-                    <button type="button" onclick="lp('o42')">Pravidla IMAP robota</button>
-
-
-                </div>
-            </div>
+          
 
 
 
@@ -274,7 +247,7 @@
             <div style="width: 100%;">
                 <img style="display: inline;" src="Images/license_32.png" />
                 <span style="display: inline;" class="framework_header_span">Systém</span>
-                <button type="button" onclick="sw_master('license.aspx','Images/license_32.png')" style="display: none;">Nahrát licenční soubor</button>
+                
             </div>
 
 
@@ -337,7 +310,7 @@
                     <button type="button" onclick="sw_master('x35_record.aspx?key=Upload_Folder','Images/setting_32.png')">Nastavit</button>
                 </div>
             </div>
-            <div class="content-box1">
+            <div class="content-box1" style="display:none;">
                 <div class="title">
                     Režim přihlašování/ověřování uživatelů
                 </div>

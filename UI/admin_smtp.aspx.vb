@@ -14,7 +14,7 @@ Public Class admin_smtp
         If Not Page.IsPostBack Then
             With Master
                 .neededPermission = BO.x53PermValEnum.GR_Admin
-                .HeaderText = "Nastavení SMTP serveru"
+                .HeaderText = "Výchozí aplikační poštovní účet"
                 .HeaderIcon = "Images/settings_32.png"
                 .AddToolbarButton("Uložit změny", "ok", , "Images/save.png")
 
@@ -46,11 +46,13 @@ Public Class admin_smtp
             End If
             Dim bolUseWC As Boolean = BO.BAS.BG(.GetValueString("IsUseWebConfigSetting", "1"))
             Me.SMTP_SenderAddress.Text = .GetValueString("SMTP_SenderAddress")
-            Me.chkIsSMTP_UseWebConfigSetting.Checked = bolUseWC
-            If Not bolUseWC Then
+            If bolUseWC Then
+                opgSMTP_UseWebConfigSetting.SelectedValue = "1"
+            Else
+                opgSMTP_UseWebConfigSetting.SelectedValue = "0"
                 basUI.SelectDropdownlistValue(Me.cbxO40ID, .GetValueString("SMTP_Server"))
             End If
-
+         
             
 
         End With
@@ -58,13 +60,14 @@ Public Class admin_smtp
     End Sub
 
     Private Sub admin_smtp_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        Me.panRec.Visible = Not Me.chkIsSMTP_UseWebConfigSetting.Checked
+        Me.panRec.Visible = Not BO.BAS.BG(Me.opgSMTP_UseWebConfigSetting.SelectedValue)
+        Me.panWebConfig.Visible = BO.BAS.BG(Me.opgSMTP_UseWebConfigSetting.SelectedValue)
     End Sub
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
         If strButtonValue = "ok" Then
             With Master.Factory.x35GlobalParam
-                If Not chkIsSMTP_UseWebConfigSetting.Checked Then
+                If opgSMTP_UseWebConfigSetting.SelectedValue = "0" Then
                     'zkontrolovat vlastní nastavení
                     If Me.cbxO40ID.SelectedValue = "" Then
                         Master.Notify("Musíte vybrat jeden ze zavedených SMTP účtů.", NotifyLevel.ErrorMessage)
@@ -79,7 +82,7 @@ Public Class admin_smtp
                 End If
 
                 Dim cRec As BO.x35GlobalParam = .Load("IsUseWebConfigSetting")
-                cRec.x35Value = BO.BAS.GB(Me.chkIsSMTP_UseWebConfigSetting.Checked)
+                cRec.x35Value = Me.opgSMTP_UseWebConfigSetting.SelectedValue
                 .Save(cRec)
 
 
@@ -93,7 +96,7 @@ Public Class admin_smtp
                 .Save(cRec)
 
                 cRec = .Load("SMTP_Server")
-                If Not chkIsSMTP_UseWebConfigSetting.Checked Then
+                If opgSMTP_UseWebConfigSetting.SelectedValue = "0" Then
                     cRec.x35Value = Me.cbxO40ID.SelectedValue
                 Else
                     cRec.x35Value = ""

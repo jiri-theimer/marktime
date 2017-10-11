@@ -443,6 +443,11 @@
                 pars.Add("p66HoursNonBillable", .p66HoursNonBillable, DbType.Double)
                 pars.Add("p66HoursTotal", .p66HoursTotal, DbType.Double)
                 pars.Add("p66HoursInvoiced", .p66HoursInvoiced, DbType.Double)
+                pars.Add("p66FreeNumber01", .p66FreeNumber01, DbType.Double)
+                pars.Add("p66FreeNumber02", .p66FreeNumber02, DbType.Double)
+                pars.Add("p66FreeNumber03", .p66FreeNumber03, DbType.Double)
+                pars.Add("p66FreeNumber04", .p66FreeNumber04, DbType.Double)
+                pars.Add("p66FreeNumber05", .p66FreeNumber05, DbType.Double)
             End With
 
             If Not _cDB.SaveRecord("p66PersonalPlan", pars, bolINSERT, strW, True, _curUser.j03Login) Then

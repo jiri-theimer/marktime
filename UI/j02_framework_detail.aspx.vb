@@ -143,6 +143,7 @@
                 AccountMessage.Text = "Tento osobní profil není svázán s uživatelským účtem."
                 cmdLog.Visible = False
             End If
+
         End If
         Handle_Permissions(cRec)
 
@@ -192,6 +193,11 @@
             If .j02AvatarImage <> "" Then
                 imgAvatar.Visible = True
                 imgAvatar.ImageUrl = "Plugins/Avatar/" & .j02AvatarImage
+            End If
+            If .o40ID > 0 Then
+                Me.smtpAccount.Text = Master.Factory.o40SmtpAccountBL.Load(.o40ID).o40Name
+            Else
+                Me.smtpAccount.Text = "Výchozí aplikační poštovní účet"
             End If
         End With
 

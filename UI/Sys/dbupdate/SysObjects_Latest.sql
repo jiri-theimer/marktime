@@ -10168,6 +10168,7 @@ SELECT a.RowID as pid
 ,p72Approve.p72Name as [Schválený status]
 ,a.p31Hours_Approved_Billing as [Schválené hodiny k fakturaci]
 ,a.p31Amount_WithoutVat_Approved as [Schváleno bez DPH]
+,a.p31ApprovingSet as [Billing dávka]
 ,a.p31Text as [Text]
 ,p91.p91Code as [Faktura]
 ,p70.p70Name as [Fakturační status]
@@ -10842,6 +10843,7 @@ else
 	,p31Rate_Billing_Approved=null,p31Rate_Internal_Approved=null
  	,p31Amount_WithoutVat_Approved=null,p31Amount_WithVat_Approved=null,p31Amount_Vat_Approved=null,p31VatRate_Approved=null
  	,j02ID_ApprovedBy=null,p31approved_when=null,p31Value_FixPrice=null
+	,p31Amount_Internal_Approved=null
  	where p31id=@p31id
  end
 
