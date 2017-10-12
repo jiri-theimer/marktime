@@ -130,7 +130,7 @@ Public Class entity_framework
 
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam(Me.CurrentPrefix + "_framework-groupby"))
                     Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_framework-groups-autoexpanded", "1"))
-                    Me.chkCheckboxSelector.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_framework-checkbox_selector", "0"))
+                    Me.chkCheckboxSelector.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_framework-checkbox_selector", "1"))
                     If .GetUserParam(Me.CurrentPrefix + "_framework-sort") <> "" Then
                         grid1.radGridOrig.MasterTableView.SortExpressions.AddSortExpression(.GetUserParam(Me.CurrentPrefix + "_framework-sort"))
                     End If
