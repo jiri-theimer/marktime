@@ -153,6 +153,7 @@
             Me.j02Email.Text = .j02Email
             Me.j02Code.Text = .j02Code
             Me.j02Email.NavigateUrl = "mailto:" & .j02Email
+            If .j02IsInvoiceEmail Then Me.j02Email.ForeColor = Drawing.Color.Green
             Me.linkTimestamp.Text = .UserInsert & "/" & .DateInsert
             Me.linkTimestamp.ToolTip = "CHANGE-LOG"
             Me.linkTimestamp.NavigateUrl = "javascript:changelog()"

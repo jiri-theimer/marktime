@@ -41,7 +41,7 @@ Class j02PersonBL
         With cRec
             If Trim(.j02LastName) = "" Then _Error = "Chybí příjmení." : Return False
             If Trim(.j02FirstName) = "" Then _Error = "Chybí křestní jméno." : Return False
-            If .j02IsIntraPerson Then
+            If .j02IsIntraPerson Or (.j02IsIntraPerson = False And .j02IsInvoiceEmail) Then
                 If Trim(.j02Email) = "" Then _Error = "Chybí e-mail adresa!" : Return False
             End If
           
@@ -53,6 +53,7 @@ Class j02PersonBL
                 If Not c Is Nothing Then
                     _Error = "Jiná osoba (" & c.FullNameAsc & ") již má zavedenu tuto e-mail adresu." : Return False
                 End If
+          
             End If
             If .j02TimesheetEntryDaysBackLimit = 0 And .j02TimesheetEntryDaysBackLimit_p34IDs <> "" Then
                 _Error = "Omezení zpětného zapisování hodin není zadáno správně." : Return False
@@ -63,7 +64,8 @@ Class j02PersonBL
     End Function
     Public Function Save(cRec As BO.j02Person, lisFF As List(Of BO.FreeField)) As Boolean Implements Ij02PersonBL.Save
         If Not ValidateBeforeSave(cRec) Then Return False
-       
+        If cRec.j02IsIntraPerson Then cRec.j02IsInvoiceEmail = False
+
         If _cDL.Save(cRec, lisFF) Then
             
             If cRec.PID = 0 Then

@@ -63,7 +63,7 @@
                     </td>
                     <td>
                         <asp:TextBox ID="j02Email" runat="server" Style="width: 300px;"></asp:TextBox>
-
+                        <asp:CheckBox ID="j02IsInvoiceEmail" runat="server" Text="Fakturační e-mail adresa" checked="true" />
 
 
                     </td>

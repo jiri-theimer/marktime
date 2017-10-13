@@ -606,7 +606,7 @@
         CreateQuery("Rozpracované hodiny", BO.x29IdEnum.j02Person, 0, "FullNameDesc,WIP_Hodiny", "_other", 3)
         CreateQuery("Štítky", BO.x29IdEnum.j02Person, 0, "FullNameDesc,TagsHtml")
         CreateQuery("Osoby v archivu", BO.x29IdEnum.j02Person, 2, strColumnNames)
-        CreateQuery("Kontaktní osoby", BO.x29IdEnum.j02Person, 0, strColumnNames, "_other", 7)
+        CreateQuery("Kontaktní osoby", BO.x29IdEnum.j02Person, 0, "FullNameDesc,VazbaKlient", "_other", 7)
         CreateQuery("Interní osoby", BO.x29IdEnum.j02Person, 1, strColumnNames, "_other", 6)
 
 

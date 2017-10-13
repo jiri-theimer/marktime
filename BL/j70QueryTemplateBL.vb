@@ -661,6 +661,8 @@ Class j70QueryTemplateBL
             .Add(AGC("Příjmení", "j02LastName"))
             .Add(AGC("Titul", "j02TitleBeforeName"))
             .Add(AGC("E-mail", "j02Email"))
+
+
             .Add(AGC("Pozice", "j07Name"))
             .Add(AGC("Osobní číslo (kód)", "j02Code"))
             .Add(AGC("Fond", "c21Name"))
@@ -675,9 +677,9 @@ Class j70QueryTemplateBL
             .Add(AGC("Kancelář", "j02Office"))
 
             
-            .Add(AGC("Pozice KO", "j02JobTitle", , , , , , "Kontaktní osoba"))
-            .Add(AGC("Klient KO", "VazbaKlient", , , "dbo.j02_clients_inline(a.j02ID)", , , "Kontaktní osoba"))
-
+            .Add(AGC("Pozice KO", "j02JobTitle", , , , , , "Kontaktní osoba klienta/projektu"))
+            .Add(AGC("Klient vazba", "VazbaKlient", , , "dbo.j02_clients_inline(a.j02ID)", , , "Kontaktní osoba klienta/projektu"))
+            .Add(AGC("Fakturační adresa?", "j02IsInvoiceEmail", BO.cfENUM.Checkbox, , , , , "Kontaktní osoba klienta/projektu"))
 
             .Add(AGC("Interní osoba", "j02IsIntraPerson", BO.cfENUM.Checkbox))
             .Add(AGC("Založeno", "j02DateInsert", BO.cfENUM.DateTime, , , , , "Záznam"))

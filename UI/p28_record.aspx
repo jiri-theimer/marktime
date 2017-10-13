@@ -314,13 +314,13 @@
                     </table>
                     <table id="tabDefaultPerson" runat="server">
                         <tr>
-                            <td>Výchozí kontaktní osoba pro worksheet zapisování:</td>
+                            <td>Výchozí kontaktní osoba pro vykazování úkonů:</td>
                             <td>
                                 <asp:DropDownList ID="j02ID_ContactPerson_DefaultInWorksheet" runat="server" DataValueField="p85OtherKey1" DataTextField="p85FreeText01"></asp:DropDownList>
                             </td>
                         </tr>
                         <tr>
-                            <td>Výchozí kontaktní osoba pro fakturaci:</td>
+                            <td>Kontaktní osoba na faktuře:</td>
                             <td>
                                 <asp:DropDownList ID="j02ID_ContactPerson_DefaultInInvoice" runat="server" DataValueField="p85OtherKey1" DataTextField="p85FreeText01"></asp:DropDownList>
                             </td>

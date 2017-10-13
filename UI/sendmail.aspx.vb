@@ -76,29 +76,22 @@
                     hidMasterPID_p30.Value = cP91.p28ID.ToString
                     hidMasterPrefix_p30.Value = "p28"
                     Me.txtSubject.Text = String.Format("Faktura {0} | {1}", cP91.p91Code, cP91.p91Client)
+                    Dim tos As New List(Of String)
                     Dim lisO32 As IEnumerable(Of BO.o32Contact_Medium) = Master.Factory.p28ContactBL.GetList_o32(cP91.p28ID).Where(Function(p) p.o33ID = BO.o33FlagEnum.Email And p.o32IsDefaultInInvoice = True)
-                    If lisO32.Count > 0 Then
-                        Me.txtTo.Text = String.Join(",", lisO32.Select(Function(p) p.o32Value))
-                    Else
-                        Dim lisJ02 As IEnumerable(Of BO.j02Person) = Master.Factory.p30Contact_PersonBL.GetList_J02(cP91.p28ID, cP91.p41ID_First, False)
-                        If lisJ02.Count > 0 Then
-                            Dim intJ02ID As Integer = Master.Factory.p30Contact_PersonBL.Get_j02ID_DefaultInInvoice(cP91.p28ID, cP91.p41ID_First)
-                            If intJ02ID <> 0 Then lisJ02 = lisJ02.Where(Function(p) p.PID = intJ02ID)
-
-                            Me.txtTo.Text = String.Join(",", lisJ02.Select(Function(p) p.j02Email))
-                        End If
-                    End If
+                    For Each c In lisO32
+                        tos.Add(c.o32Value)
+                    Next
+                    Dim lisJ02 As IEnumerable(Of BO.j02Person) = Master.Factory.p30Contact_PersonBL.GetList_J02(cP91.p28ID, cP91.p41ID_First, False).Where(Function(p) p.j02IsInvoiceEmail = True)
+                    For Each c In lisJ02
+                        tos.Add(c.j02Email)
+                    Next
+                    
                     If cP91.j02ID_ContactPerson <> 0 Then
                         Dim s As String = Master.Factory.j02PersonBL.Load(cP91.j02ID_ContactPerson).j02Email
-                        If Me.txtTo.Text = "" Then
-                            Me.txtTo.Text = s
-                        Else
-                            Try
-                                If Me.txtTo.Text.IndexOf(s) < 0 Then Me.txtTo.Text += "," & s
-                            Catch ex As Exception
-                            End Try
-
-                        End If
+                        If s <> "" Then tos.Add(s)
+                    End If
+                    If tos.Count > 0 Then
+                        Me.txtTo.Text = String.Join(",", tos.Distinct)
                     End If
                     If cP91.p28ID <> 0 Then
                         Dim cP28 As BO.p28Contact = Master.Factory.p28ContactBL.Load(cP91.p28ID)

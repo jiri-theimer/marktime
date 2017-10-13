@@ -28,6 +28,7 @@
     Public Property j02WorksheetAccessFlag As Integer   '1= nemá přístup k již vyfakturovaným úkonům
     Public Property p72ID_NonBillable As BO.p72IdENUM
     Public Property j02DomainAccount As String
+    Public Property j02IsInvoiceEmail As Boolean
 
     Public ReadOnly Property FullNameAsc As String
         Get

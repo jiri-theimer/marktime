@@ -326,7 +326,7 @@
                 <div class="commandcell" style="padding-left: 4px;">
                     <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" CollapseAnimation-Duration="0" CollapseAnimation-Type="None" ClickToOpen="true">
                         <Items>
-                            <telerik:RadMenuItem Value="more" Text="Menu" ImageUrl="Images/more.png" Style="padding-right: 0px">
+                            <telerik:RadMenuItem Value="more" Text="MENU" ImageUrl="Images/more.png" Style="padding-right: 0px">
                                 <GroupSettings />
                                 <ContentTemplate>
                                     <div class="content-box3">
