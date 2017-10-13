@@ -22,16 +22,19 @@
 <div class="commandcell" style="margin-left: 10px;">
     <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" EnableRoundedCorners="false" EnableShadows="false" Style="z-index: 2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
         <Items>
-            <telerik:RadMenuItem Text="Záznam" ImageUrl="Images/menuarrow.png">
+            <telerik:RadMenuItem Text="Úkol" ImageUrl="Images/menuarrow.png">
                 <Items>
+                    <telerik:RadMenuItem Text="Posunout/doplnit" Value="workflow" NavigateUrl="javascript:p56_subgrid_workflow()"></telerik:RadMenuItem>                                        
+                    <telerik:RadMenuItem Text="Zapsat worksheet k úkolu" Value="p31new" NavigateUrl="javascript:p31_entry_p56()"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                     <telerik:RadMenuItem Text="Nový úkol" Value="new" NavigateUrl="javascript:p56_record()"></telerik:RadMenuItem>
                     <telerik:RadMenuItem Text="Kopírovat úkol" Value="clone" NavigateUrl="javascript:p56_clone()"></telerik:RadMenuItem>
                 </Items>
             </telerik:RadMenuItem>
-            <telerik:RadMenuItem Text="Vybrané záznamy" Value="akce" ImageUrl="Images/menuarrow.png">
+            <telerik:RadMenuItem Text="Vybrané úkoly" Value="akce" ImageUrl="Images/menuarrow.png">
                 <Items>
-                    <telerik:RadMenuItem Text="Zapsat worksheet úkon k úkolu" Value="p31new" NavigateUrl="javascript:p31_entry_p56()"></telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Schvalovat worksheet úkony za označené úkoly" Value="cmdApprove" NavigateUrl="javascript:approving()"></telerik:RadMenuItem>
+                    
+                    <telerik:RadMenuItem Text="Schválit úkony u označených úkolů" Value="cmdApprove" NavigateUrl="javascript:approving()"></telerik:RadMenuItem>
                     
                 </Items>
             </telerik:RadMenuItem>
@@ -80,17 +83,17 @@
                             <span>Export záznamů aktuálního přehledu</span>
                         </div>
                         <div class="content">
-                            <img src="Images/export.png" alt="export" />
-                            <asp:LinkButton ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
+                            
+                            <asp:button ID="cmdExport" runat="server" Text="Export" CssClass="cmd" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
 
-                            <img src="Images/xls.png" alt="xls" />
-                            <asp:LinkButton ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+                           
+                            <asp:button ID="cmdXLS" runat="server" Text="XLS" CssClass="cmd" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
 
-                            <img src="Images/pdf.png" alt="pdf" />
-                            <asp:LinkButton ID="cmdPDF" runat="server" Text="PDF" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+                            
+                            <asp:button ID="cmdPDF" runat="server" Text="PDF" CssClass="cmd" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
 
-                            <img src="Images/doc.png" alt="doc" />
-                            <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+                            
+                            <asp:button ID="cmdDOC" runat="server" Text="DOC" CssClass="cmd" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
                         </div>
                     </asp:Panel>
                     <div class="content-box3">
@@ -164,6 +167,12 @@
 
     function p56_fullscreen() {
         window.open("p56_Framework.aspx?masterpid=<%=Me.MasterDataPID%>&masterprefix=<%=BO.BAS.GetDataPrefix(Me.x29ID)%>", "_top");
+
+    }
+
+    function go2workflow() {
+
+        window.parent.sw_everywhere("workflow_dialog.aspx?prefix=p56&pid=<%=Me.MasterDataPID%>", "Images/task.png", true);
 
     }
 </script>

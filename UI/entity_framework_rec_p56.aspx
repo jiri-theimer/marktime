@@ -68,6 +68,17 @@
             sw_decide("p56_record.aspx?clone=1&p41id=<%=Master.DataPID%>&pid=" + pid, "Images/task.png", true);
 
         }
+        function p56_subgrid_workflow() {
+            ///volá se z gridu úkolů
+            var pid = document.getElementById("<%=hiddatapid_p56.ClientID%>").value;
+            if (pid == "" || pid == null) {
+                alert("Není vybrán záznam.");
+                return;
+            }
+            sw_decide("workflow_dialog.aspx?prefix=p56&pid="+pid, "Images/task.png", true);
+
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">

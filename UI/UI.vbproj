@@ -206,6 +206,7 @@
     <Content Include="clue_b07_record.aspx" />
     <Content Include="clue_help.aspx" />
     <Content Include="clue_p61_record.aspx" />
+    <Content Include="clue_popup.aspx" />
     <Content Include="clue_x18_record.aspx" />
     <Content Include="clue_p41_myworksheet.aspx" />
     <Content Include="clue_p48_record.aspx" />
@@ -874,6 +875,13 @@
     </Compile>
     <Compile Include="clue_p61_record.aspx.vb">
       <DependentUpon>clue_p61_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_popup.aspx.designer.vb">
+      <DependentUpon>clue_popup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_popup.aspx.vb">
+      <DependentUpon>clue_popup.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="clue_x18_record.aspx.designer.vb">

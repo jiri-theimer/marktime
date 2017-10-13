@@ -165,45 +165,33 @@
             });
             <%end If%>
 
-            $("a.button-reczoom").each(function () {
+           
+            $("a.recpop").each(function () {
 
                 // Extract your variables here:
                 var $this = $(this);
                 var myurl = $this.attr('rel');
 
-                var mytitle = $this.attr('title');
-                if (mytitle == null)
-                    mytitle = 'Modal dialog';
-
-                var dialogheight = $this.attr('dialogheight');
-                if (dialogheight == "" || dialogheight == null) {
-                    dialogheight = 300;
-                }
-                iframeHeight = dialogheight - 30;
-
                 $this.qtip({
                     content: {
-                        text: '<iframe src="' + myurl + '"' + ' width=' + iframeWidth + '"' + ' height=' + '"' + iframeHeight + '"  frameborder="0"><p>Your browser does not support iframes.</p></iframe>',
-                        title: {
-                            text: mytitle
-                        },
+                        text: '<iframe src="' + myurl + '"' + ' width="100%" height="200"  frameborder="0"><p>Your browser does not support iframes.</p></iframe>',
 
                     },
                     position: {
-                        my: 'top center',  // Position my top left...
-                        at: 'bottom center', // at the bottom right of...
+                        at: 'right center',
+                        my: 'left top',
                         viewport: $(window)
+
                     },
                     show: {
                         event: 'click', // Show it on click...
-                        solo: true, // ...and hide all other tooltips...
-                        modal: true // ...and make it modal
+                        solo: true, // ...and hide all other tooltips...                        
                     },
-                    hide: false,
+                    hide: 'unfocus',
                     style: {
-                        classes: 'qtip-tipped',
-                        width: 700,
-                        height: dialogheight
+                        classes: 'qtip-bootstrap',
+                        width: 300,
+                        height: 220
 
                     }
                 });

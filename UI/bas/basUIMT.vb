@@ -233,7 +233,7 @@ Public Class basUIMT
             If cRec.Item(0) Is System.DBNull.Value Then Return 'chybné SQL datového přehledu
             If bolShowClueTip Then
                 With dataItem("systemcolumn")
-                    .Text = "<a class='reczoom' title='Detail úkolu' rel='clue_p56_record.aspx?pid=" & cRec.Item("pid").ToString & "'>i</a>"
+                    .Text = "<a class='recpop' rel='clue_popup.aspx?prefix=p56&pid=" & cRec.Item("pid").ToString & "'></a>"
                 End With
             End If
             With cRec
