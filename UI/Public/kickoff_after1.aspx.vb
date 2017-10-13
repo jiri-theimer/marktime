@@ -700,7 +700,8 @@
         c.x29ID = x29ID
         c.j70ColumnNames = strColumnNames
         c.j70OrderBy = strJ70OrderBy
-
+        c.j70ScrollingFlag = BO.j70ScrollingFlagENUM.StaticHeaders
+        c.j70IsFilteringByColumn = True
 
         Dim lisJ71 As New List(Of BO.j71QueryTemplate_Item)
         If strJ71Field <> "" Then
