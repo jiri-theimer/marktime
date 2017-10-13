@@ -418,17 +418,17 @@ Public Class PivotSumField
             Case PivotSumFieldType.SI_Profit1
                 s = "Zisk"
                 Me.GP = 60
-                _SelectField = "sum(isnull(a.p31Amount_WithoutVat_Invoiced_Domestic,0) - (case when p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) THEN a.p31Amount_WithoutVat_Orig else 0 end) - isnull(a.p31Amount_Internal,0))"
+                _SelectField = "isnull(sum(a.p31Amount_WithoutVat_Invoiced_Domestic),0) - sum(case when p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) THEN a.p31Amount_WithoutVat_Orig else 0 end) - isnull(sum(a.p31Amount_Internal),0)"
             Case PivotSumFieldType.SI_Profit2
                 s = "Odhad zisku z vykázaných hodnot"
-                _SelectField = "SUM((case when p34.p34IncomeStatementFlag=2 AND p34.p33ID IN (2,5) AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN a.p31Amount_WithoutVat_Orig else 0 END)+(case when p34.p33ID=1 AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Hours_Orig*p31Rate_Billing_Orig end)-(case when p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) THEN a.p31Amount_WithoutVat_Orig else 0 END)-(case when p34.p33ID=1 THEN a.p31Amount_Internal else 0 end))"
+                _SelectField = "SUM(case when p34.p34IncomeStatementFlag=2 AND p34.p33ID IN (2,5) AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN a.p31Amount_WithoutVat_Orig else 0 END)+sum(case when p34.p33ID=1 AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Hours_Orig*p31Rate_Billing_Orig else 0 end)-sum(case when p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) THEN a.p31Amount_WithoutVat_Orig else 0 END)-sum(case when p34.p33ID=1 THEN a.p31Amount_Internal else 0 end)"
                 Me.GP = 60
 
 
             Case PivotSumFieldType.SI_Profit3
                 s = "Zisk ISH"
                 Me.GP = 60
-                _SelectField = "sum(isnull(a.p31Amount_WithoutVat_Invoiced_Domestic,0) - (case when p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) THEN a.p31Amount_Internal_Approved else 0 end) - isnull(a.p31Amount_Internal_Approved,0))"
+                _SelectField = "sum(isnull(a.p31Amount_WithoutVat_Invoiced_Domestic,0) - sum(case when p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) THEN a.p31Amount_Internal_Approved else 0 end) - isnull(sum(a.p31Amount_Internal_Approved),0)"
         End Select
         If Me.Caption = "" Then Me.Caption = s
     End Sub

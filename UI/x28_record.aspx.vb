@@ -43,7 +43,9 @@
         x27ID.DataBind()
         x24id.DataSource = Master.Factory.ftBL.GetList_X24(New BO.myQuery)
         x24id.DataBind()
-        
+        Me.x23ID.DataSource = Master.Factory.x23EntityField_ComboBL.GetList(New BO.myQuery).Where(Function(p) p.x23DataSource <> "")
+        Me.x23ID.DataBind()
+
         Handle_ChangeX29ID()
 
         If Master.DataPID = 0 Then Return
@@ -59,6 +61,7 @@
             x27ID.SelectedValue = BO.BAS.IsNull(.x27ID)
             x28Name.Text = .x28Name
             x24id.SelectedValue = CInt(.x24ID).ToString
+            x23ID.SelectedValue = .x23ID.ToString
             x28TextboxWidth.Value = .x28TextboxWidth
             x28TextboxHeight.Value = .x28TextboxHeight
             x28DataSource.Text = .x28DataSource
@@ -93,6 +96,12 @@
         x29ID.Enabled = Master.IsRecordNew
 
         Dim b As Boolean = False
+        If Me.x23ID.SelectedValue <> "" Then
+            If Me.x24id.SelectedValue <> "1" Then Me.x24id.SelectedValue = "1"
+            Me.x24id.Enabled = False
+        Else
+            Me.x24id.Enabled = True
+        End If
        
         If x24id.SelectedValue = "2" Then b = True 'string
 
@@ -167,7 +176,7 @@
 
                 .x29ID = BO.BAS.IsNullInt(x29ID.SelectedValue)
                 .x27ID = BO.BAS.IsNullInt(x27ID.SelectedValue)
-
+                .x23ID = BO.BAS.IsNullInt(Me.x23ID.SelectedValue)
                 .x28IsPublic = Me.x28IsPublic.Checked
                 If Me.x28IsPublic.Checked Then
                     .x28NotPublic_j04IDs = "" : .x28NotPublic_j07IDs = ""

@@ -86,6 +86,24 @@ Partial Public Class x28_record
     Protected WithEvents tabFlag1 As Global.System.Web.UI.HtmlControls.HtmlTable
 
     '''<summary>
+    '''Label3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x23ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x23ID As Global.UI.datacombo
+
+    '''<summary>
     '''Label4 control.
     '''</summary>
     '''<remarks>

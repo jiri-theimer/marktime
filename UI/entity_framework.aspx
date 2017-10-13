@@ -427,26 +427,19 @@
                                                 </div>
                                                
                                             </div>
-
-
-                                        </div>
-                                    </div>
-                                    <div class="content-box3">
-                                        <div class="title">
+                                            <div>
                                             <img src="Images/saw_turn_on.png" /><img src="Images/saw_turn_off.png" />
-                                            <span>Rozvržení panelů</span>
-                                        </div>
-                                        <div class="content">
-
-                                            <asp:RadioButtonList ID="opgLayout" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
+                                            <span>Rozvržení panelů:</span>
+                                            </div>
+                                            <asp:dropdownlist ID="opgLayout" runat="server" AutoPostBack="true">
                                                 <asp:ListItem Text="Levý panel = přehled, pravý panel = detail" Value="1" Selected="True"></asp:ListItem>
                                                 <asp:ListItem Text="Pouze jeden panel - buď přehled nebo vybraný záznam na dvoj-klik" Value="3"></asp:ListItem>
                                                 <asp:ListItem Text="Horní panel = přehled, spodní panel = detail" Value="2"></asp:ListItem>
-                                            </asp:RadioButtonList>
-                                            <asp:Label ID="lblLayoutMessage" runat="server" CssClass="infoNotification" Text="Z důvodu malého rozlišení displeje (pod 1280px) se automaticky zapnul režim jediného panelu s datovým přehledem." Visible="false"></asp:Label>
-
+                                            </asp:dropdownlist>
+                                            <asp:Label ID="lblLayoutMessage" runat="server" CssClass="infoNotificationRed"></asp:Label>
                                         </div>
                                     </div>
+                                    
                                 </ContentTemplate>
                             </telerik:RadMenuItem>
                         </Items>

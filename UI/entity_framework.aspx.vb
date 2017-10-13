@@ -99,7 +99,7 @@ Public Class entity_framework
                         Me.opgLayout.Enabled = False
                     Else
                         lblLayoutMessage.Visible = False : lblLayoutMessage.Text = ""
-                        basUI.SelectRadiolistValue(Me.opgLayout, .GetUserParam(Me.CurrentPrefix + "_framework-layout", "1"))
+                        basUI.SelectDropdownlistValue(Me.opgLayout, .GetUserParam(Me.CurrentPrefix + "_framework-layout", "1"))
                     End If
 
 
@@ -1183,10 +1183,7 @@ Public Class entity_framework
     
    
   
-    Private Sub opgLayout_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgLayout.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-layout", Me.opgLayout.SelectedValue)
-        ReloadPage()
-    End Sub
+   
 
     Private Sub cmdClearX18_Click(sender As Object, e As ImageClickEventArgs) Handles cmdClearX18.Click
         With Master.Factory.j03UserBL
@@ -1214,5 +1211,10 @@ Public Class entity_framework
 
     Private Sub cmdXLS_Click(sender As Object, e As EventArgs) Handles cmdXLS.Click
         GridExport("xls")
+    End Sub
+
+    Private Sub opgLayout_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgLayout.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-layout", Me.opgLayout.SelectedValue)
+        ReloadPage()
     End Sub
 End Class
