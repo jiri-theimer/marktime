@@ -24,9 +24,7 @@
             <%If Me.CurrentPrefix = "p91" Then%>
             document.getElementById("buttonBatchMail").style.display = "block";
             <%End If%>
-            <%If designer1.Visible then%>
-            document.getElementById("cmdMyGridDesigner").style.display = "block";
-            <%end If%>
+           
 
         });
 
@@ -323,22 +321,13 @@
         <telerik:RadPane ID="navigationPane" runat="server" Width="353px" OnClientResized="AfterPaneResized" OnClientCollapsed="AfterPaneCollapsed" OnClientExpanded="AfterPaneExpanded" BackColor="white">
 
             <asp:Panel ID="panSearch" runat="server" Style="min-height: 42px; background-color: #f7f7f7;">
-                <div style="float: left;">
-                    <asp:Image ID="img1" runat="server" ImageUrl="Images/project_32.png" />
-                </div>
-
-                <asp:Panel ID="panSearchbox" runat="server" CssClass="commandcell" Style="padding-left: 5px;">
-                    <telerik:RadComboBox ID="cbx1" runat="server" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="100px" OnClientSelectedIndexChanged="cbx1_OnClientSelectedIndexChanged" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
-                        <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
-                    </telerik:RadComboBox>
-                </asp:Panel>
-
+               
 
                 <div class="commandcell" style="padding-left: 4px;">
                     <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" CollapseAnimation-Duration="0" CollapseAnimation-Type="None" ClickToOpen="true">
                         <Items>
-                            <telerik:RadMenuItem Value="more" Text="Akce" ImageUrl="Images/arrow_down_menu.png" Style="padding-right: 0px">
-                                <GroupSettings OffsetX="-135" />
+                            <telerik:RadMenuItem Value="more" Text="Menu" ImageUrl="Images/more.png" Style="padding-right: 0px">
+                                <GroupSettings />
                                 <ContentTemplate>
                                     <div class="content-box3">
                                         <div class="title">
@@ -381,18 +370,21 @@
                                             <span>Operace pro označené (zaškrtlé) záznamy</span>
                                         </div>
                                         <div class="content">
+                                            <button type="button" id="cmdSummary" runat="server" onclick="drilldown()" style="float: left;">Statistiky</button>                                            
+                                            <button type="button" onclick="report()" title="Tisková sestava" style="float: left;">Tisková sestava</button>
                                             <button type="button" onclick="tags()" style="float:left;">Oštítkovat</button>
-                                            <button type="button" id="buttonBatch" onclick="batch()" title="Hromadné operace nad označenými záznamy v přehledu" style="display: none; float: left;">Hromadné operace</button>
-
+                                            <br />
                                             <button id="cmdApprove" runat="server" type="button" visible="false" onclick="approve()" style="float: left;">Schválit/připravit k fakturaci</button>
 
                                             <button id="cmdInvoice" runat="server" type="button" visible="false" onclick="invoice()" style="float: left;">Zrychlená fakturace bez schvalování</button>
-
-                                            <button type="button" onclick="report()" title="Tisková sestava" style="float: left;">Tisková sestava</button>
+                                            <br />
+                                            
 
                                             <button type="button" id="buttonBatchMail" onclick="sendmail_batch()" style="display: none; float: left;">Hromadně odeslat faktury (e-mail)</button>
 
-                                            <button type="button" id="cmdSummary" runat="server" onclick="drilldown()" style="float: left;">WORKSHEET statistika</button>
+                                            
+                                            <button type="button" id="buttonBatch" onclick="batch()" title="Hromadné operace nad označenými záznamy v přehledu" style="display: none; float: left;">Hromadné operace</button>
+
 
                                         </div>
                                     </div>
@@ -442,9 +434,7 @@
                                                 <div>
                                                     <asp:CheckBox ID="chkCheckboxSelector" runat="server" Text="Možnost označovat záznamy zaškrtnutím (checkbox)" AutoPostBack="true" />
                                                 </div>
-                                                <div>
-                                                    <button type="button" id="cmdMyGridDesigner" onclick="mygrid_setting()" style="display:none;">Návrhář přehledu (sloupce a filtry)</button>
-                                                </div>
+                                               
                                             </div>
 
 
@@ -473,6 +463,11 @@
 
 
                 </div>
+                <asp:Panel ID="panSearchbox" runat="server" CssClass="commandcell" Style="padding-left: 5px;">
+                    <telerik:RadComboBox ID="cbx1" runat="server" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="100px" OnClientSelectedIndexChanged="cbx1_OnClientSelectedIndexChanged" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
+                        <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
+                    </telerik:RadComboBox>
+                </asp:Panel>
                 <div class="commandcell" style="padding-left: 4px;">
                     <uc:mygrid ID="designer1" runat="server" Prefix="p41" Width="170px"></uc:mygrid>
 

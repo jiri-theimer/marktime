@@ -14,10 +14,10 @@
     <div class="div6">
         <span>Vzhled (Skin) kontextového menu stránky:</span>
         <asp:DropDownList ID="skin0" runat="server">
-            <asp:ListItem Text="--Výchozí--" Value="Metro" Selected="true"></asp:ListItem>                      
+            <asp:ListItem Text="--Výchozí--" Value="WebBlue" Selected="true"></asp:ListItem>                      
 
             
-            <asp:ListItem Text="WebBlue" Value="WebBlue"></asp:ListItem>
+            <asp:ListItem Text="Metro" Value="Metro"></asp:ListItem>
             <asp:ListItem Text="Web20" Value="Web20"></asp:ListItem>
             
             <asp:ListItem Text="Outlook" Value="Outlook"></asp:ListItem>

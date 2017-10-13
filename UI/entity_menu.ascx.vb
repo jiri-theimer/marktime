@@ -54,7 +54,8 @@ Public Class entity_menu
             Return menu1.Skin
         End Get
         Set(value As String)
-            If value = "" Then value = "Metro"
+            'If value = "" Then value = "Metro"
+            If value = "" Then value = "WebBlue"
             menu1.Skin = value
         End Set
     End Property

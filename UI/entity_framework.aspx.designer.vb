@@ -41,33 +41,6 @@ Partial Public Class entity_framework
     Protected WithEvents panSearch As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''img1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents img1 As Global.System.Web.UI.WebControls.Image
-
-    '''<summary>
-    '''panSearchbox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSearchbox As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''cbx1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbx1 As Global.Telerik.Web.UI.RadComboBox
-
-    '''<summary>
     '''menu1 control.
     '''</summary>
     '''<remarks>
@@ -131,6 +104,15 @@ Partial Public Class entity_framework
     Protected WithEvents cbxQueryFlag As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''cmdSummary control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSummary As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
     '''cmdApprove control.
     '''</summary>
     '''<remarks>
@@ -147,15 +129,6 @@ Partial Public Class entity_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdInvoice As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''cmdSummary control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdSummary As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''panExport control.
@@ -255,6 +228,24 @@ Partial Public Class entity_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblLayoutMessage As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''panSearchbox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panSearchbox As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''cbx1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbx1 As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
     '''designer1 control.

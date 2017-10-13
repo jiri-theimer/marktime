@@ -82,6 +82,8 @@ Public Enum PivotSumFieldType
     NI_Fees = 52
     NI_HoursFee = 53
 
+    SI_Profit1 = 60
+    SI_Profit2 = 61
 
 End Enum
 Public Class PivotRowColumnField
@@ -408,6 +410,14 @@ Public Class PivotSumField
                 Me.GP = 50
                 _SelectField = "sum(a.p31Amount_Internal_Approved)"
                 s = "ISH honorář"
+            Case PivotSumFieldType.SI_Profit1
+                s = "Zisk"
+                Me.GP = 60
+                _SelectField = "sum(isnull(a.p31Amount_WithoutVat_Invoiced_Domestic,0) - (case when p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) THEN a.p31Amount_WithoutVat_Orig else 0 end) - isnull(a.p31Amount_Internal,0))"
+            Case PivotSumFieldType.SI_Profit2
+                s = "Zisk podle interního schvalování"
+                Me.GP = 60
+                _SelectField = "sum(isnull(a.p31Amount_WithoutVat_Invoiced_Domestic,0) - (case when p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) THEN a.p31Amount_Internal_Approved else 0 end) - isnull(a.p31Amount_Internal_Approved,0))"
         End Select
         If Me.Caption = "" Then Me.Caption = s
     End Sub

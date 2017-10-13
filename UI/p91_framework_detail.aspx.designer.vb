@@ -149,15 +149,6 @@ Partial Public Class p91_framework_detail
     Protected WithEvents cmdTags As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
-    '''switchHeight control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents switchHeight As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
     '''cmdPivot control.
     '''</summary>
     '''<remarks>
@@ -246,6 +237,15 @@ Partial Public Class p91_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents thePage As Global.Telerik.Web.UI.NavigationNode
+
+    '''<summary>
+    '''switchHeight control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents switchHeight As Global.Telerik.Web.UI.NavigationNode
 
     '''<summary>
     '''fs control.

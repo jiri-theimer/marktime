@@ -281,33 +281,33 @@ Public Class entity_framework
             .PageTitle = BO.BAS.GetX29EntityAlias(Me.CurrentX29ID, True)
             Select Case Me.CurrentX29ID
                 Case BO.x29IdEnum.p41Project
-                    img1.ImageUrl = "Images/project_32.png"
+                    ''img1.ImageUrl = "Images/project_32.png"
                     If Not .Factory.SysUser.j04IsMenu_Project Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Projekty].")
                     cmdApprove.Visible = bolCanApprove
                     cmdInvoice.Visible = bolCanInvoice
                     ''menu1.FindItemByValue("more").Text = "Akce nad projekty"
                 Case BO.x29IdEnum.p28Contact
-                    img1.ImageUrl = "Images/contact_32.png"
+                    ''img1.ImageUrl = "Images/contact_32.png"
                     If Not .Factory.SysUser.j04IsMenu_Contact Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Klienti].")
                     cmdApprove.Visible = bolCanApprove
                     cmdInvoice.Visible = bolCanInvoice
                     ''menu1.FindItemByValue("more").Text = "Akce nad klienty"
                 Case BO.x29IdEnum.o23Doc
-                    img1.ImageUrl = "Images/notepad_32.png"
+                    ''img1.ImageUrl = "Images/notepad_32.png"
                     ''menu1.FindItemByValue("more").Text = "Akce nad dokumenty"
                     cmdSummary.Visible = False
                 Case BO.x29IdEnum.p56Task
-                    img1.ImageUrl = "Images/task_32.png"
+                    ''img1.ImageUrl = "Images/task_32.png"
                     cmdApprove.Visible = bolCanApprove
                     cmdInvoice.Visible = bolCanInvoice
                     ''menu1.FindItemByValue("more").Text = "Akce nad úkoly"
                 Case BO.x29IdEnum.j02Person
                     ''menu1.FindItemByValue("more").Text = "Akce nad přehledem"
-                    img1.ImageUrl = "Images/person_32.png"
+                    ''img1.ImageUrl = "Images/person_32.png"
                     If Not .Factory.SysUser.j04IsMenu_People Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Lidé].")
                 Case BO.x29IdEnum.p91Invoice
                     ''menu1.FindItemByValue("more").Text = "Akce nad fakturami"
-                    img1.ImageUrl = "Images/invoice_32.png"
+                    ''img1.ImageUrl = "Images/invoice_32.png"
                     If Not .Factory.SysUser.j04IsMenu_Invoice Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Faktury].")
             End Select
             panExport.Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)

@@ -299,8 +299,7 @@
                     <telerik:NavigationNode ID="cmdTags" Text="Štítky" ImageUrl="Images/tag.png" NavigateUrl="javascript:tags_assign()">
                     </telerik:NavigationNode>
 
-                    <telerik:NavigationNode ID="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()">
-                    </telerik:NavigationNode>
+                    
 
                     <telerik:NavigationNode ID="cmdPivot" Text="WORKSHEET statistika faktury" NavigateUrl="javascript:report('');" Target="_top" ImageUrl="Images/pivot.png"></telerik:NavigationNode>
 
@@ -321,6 +320,8 @@
             </telerik:NavigationNode>
             <telerik:NavigationNode ID="thePage" Text="STRÁNKA">
                 <Nodes>
+                    <telerik:NavigationNode ID="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()">
+                    </telerik:NavigationNode>
                     <telerik:NavigationNode ID="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png" Text="Otevřít v nové záložce"></telerik:NavigationNode>
 
                     <telerik:NavigationNode ID="reload" ImageUrl="Images/refresh.png" text="Obnovit stránku"></telerik:NavigationNode>

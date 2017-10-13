@@ -80,7 +80,7 @@ Public Class p91_framework_detail
 
 
             tabs1.Skin = Master.Factory.j03UserBL.GetUserParam("p91_menu-tabskin", "Default")
-            menu1.Skin = Master.Factory.j03UserBL.GetUserParam("p91_menu-menuskin", "Default")
+            menu1.Skin = Master.Factory.j03UserBL.GetUserParam("p91_menu-menuskin", "WebBlue")
         End If
 
         AdaptMenu()
