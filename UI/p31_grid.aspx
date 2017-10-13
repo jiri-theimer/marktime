@@ -291,17 +291,10 @@
                                     Export záznamů aktuálního přehledu
                                 </div>
                                 <div class="content">
-                                    <img src="Images/export.png" alt="export" />
-                                    <asp:LinkButton ID="cmdExport" runat="server" Text="Export" />
-
-                                    <img src="Images/xls.png" alt="xls" style="margin-left: 20px;" />
-                                    <asp:LinkButton ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
-
-                                    <img src="Images/pdf.png" alt="pdf" style="margin-left: 20px;" />
-                                    <asp:LinkButton ID="cmdPDF" runat="server" Text="PDF" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
-
-                                    <img src="Images/doc.png" alt="doc" style="margin-left: 20px;" />
-                                    <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+                                    <asp:button ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" CssClass="cmd" />                                                                                       
+                                            <asp:button ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" CssClass="cmd" />                                                                                       
+                                            <asp:Button ID="cmdPDF" runat="server" Text="PDF" CssClass="cmd" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />                                                                                      
+                                            <asp:button ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" CssClass="cmd" />
                                 </div>
                             </asp:Panel>
                             <div class="content-box3" style="margin-top: 20px;">

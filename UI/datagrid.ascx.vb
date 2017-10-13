@@ -286,7 +286,7 @@ Public Class datagrid
         grid1.MasterTableView.Columns.Add(col)
         col.HeaderStyle.Width = Unit.Parse("25px")
         ''col.ItemStyle.Width = Unit.Parse("25px")
-        
+
     End Sub
     Public Sub AddButton(strText As String, strCommandName As String, strHeaderText As String, Optional strImageUrl As String = "")
         Dim cmd As New GridButtonColumn

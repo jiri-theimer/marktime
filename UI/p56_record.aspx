@@ -21,7 +21,7 @@
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true">
         <Tabs>
             <telerik:RadTab Text="Vlastnosti" Value="core" Selected="true"></telerik:RadTab>
-            <telerik:RadTab Text="Štítky ({1}), uživatelská pole ({0})" Value="ff"></telerik:RadTab>
+            <telerik:RadTab Text="Kategorie ({1}), uživatelská pole ({0})" Value="ff"></telerik:RadTab>
             <telerik:RadTab Text="Ostatní" Value="other"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>

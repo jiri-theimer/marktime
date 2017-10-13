@@ -63,6 +63,7 @@ Class j77WorksheetStatTemplateBL
         End If
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_WIP))
         If Not bolHideRatesColumns Then
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_HoursFee_Orig))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_WithoutVat_WIP))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_HoursFee_WIP))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_HoursFee_Approved))
@@ -121,6 +122,7 @@ Class j77WorksheetStatTemplateBL
         If Not bolHideRatesColumns Then
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.SI_Profit1))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.SI_Profit2))
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.SI_Profit3))
         End If
         Return lis
 

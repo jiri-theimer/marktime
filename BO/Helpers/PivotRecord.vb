@@ -43,6 +43,7 @@ Public Enum PivotSumFieldType
     p31Amount_WithoutVat_Invoiced = 23
     p31Amount_WithoutVat_FixedCurrency = 24
     p31Amount_WithoutVat_Invoiced_Domestic = 25
+    p31Amount_HoursFee_Orig = 20
     p31Amount_HoursFee_WIP = 26
     p31Amount_HoursFee_Approved = 28
     p31Amount_HoursFee_Invoiced = 29
@@ -84,6 +85,7 @@ Public Enum PivotSumFieldType
 
     SI_Profit1 = 60
     SI_Profit2 = 61
+    SI_Profit3 = 62
 
 End Enum
 Public Class PivotRowColumnField
@@ -279,6 +281,9 @@ Public Class PivotSumField
             Case PivotSumFieldType.p31Amount_WithoutVat_Orig
                 _SelectField = "sum(p31Amount_WithoutVat_Orig)"
                 s = "Vykázáno bez DPH"
+            Case PivotSumFieldType.p31Amount_HoursFee_Orig
+                _SelectField = "sum(case when p34.p33ID=1 AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Hours_Orig*p31Rate_Billing_Orig end)"
+                s = "Honorář z vykázaných hodin"
             Case PivotSumFieldType.p31Amount_WithoutVat_Approved
                 _SelectField = "sum(case when a.p71ID=1 AND a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil then a.p31Amount_WithoutVat_Approved end)"
                 s = "Schváleno k fakturaci bez DPH"
@@ -376,11 +381,11 @@ Public Class PivotSumField
                 s = "Vyfakturované paušální odměny x kurz"
                 Me.GP = 24
             Case PivotSumFieldType.p31Amount_HoursFee_Internal
-                _SelectField = "sum(a.p31Amount_Internal)"
+                _SelectField = "sum(case when p34.p33ID=1 THEN a.p31Amount_Internal end)"
                 s = "Výchozí nákladový honorář"
                 Me.GP = 50
             Case PivotSumFieldType.p31Amount_HoursFee_Internal_Approved
-                _SelectField = "sum(a.p31Amount_Internal_Approved)"
+                _SelectField = "sum(case when p34.p33ID=1 THEN a.p31Amount_Internal_Approved end)"
                 s = "Schválený nákladový honorář"
                 Me.GP = 50
             Case PivotSumFieldType.p31Value_FixPrice
@@ -415,7 +420,13 @@ Public Class PivotSumField
                 Me.GP = 60
                 _SelectField = "sum(isnull(a.p31Amount_WithoutVat_Invoiced_Domestic,0) - (case when p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) THEN a.p31Amount_WithoutVat_Orig else 0 end) - isnull(a.p31Amount_Internal,0))"
             Case PivotSumFieldType.SI_Profit2
-                s = "Zisk podle interního schvalování"
+                s = "Odhad zisku z vykázaných hodnot"
+                _SelectField = "SUM((case when p34.p34IncomeStatementFlag=2 AND p34.p33ID IN (2,5) AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN a.p31Amount_WithoutVat_Orig else 0 END)+(case when p34.p33ID=1 AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Hours_Orig*p31Rate_Billing_Orig end)-(case when p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) THEN a.p31Amount_WithoutVat_Orig else 0 END)-(case when p34.p33ID=1 THEN a.p31Amount_Internal else 0 end))"
+                Me.GP = 60
+
+
+            Case PivotSumFieldType.SI_Profit3
+                s = "Zisk ISH"
                 Me.GP = 60
                 _SelectField = "sum(isnull(a.p31Amount_WithoutVat_Invoiced_Domestic,0) - (case when p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) THEN a.p31Amount_Internal_Approved else 0 end) - isnull(a.p31Amount_Internal_Approved,0))"
         End Select

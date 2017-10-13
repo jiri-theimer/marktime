@@ -670,10 +670,18 @@ Public Class basUIMT
                 .radGridOrig.ClientSettings.Scrolling.AllowScroll = False
                 .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = False
             End If
+            For Each c As GridColumn In .radGridOrig.Columns
+                If c.ColumnType <> "GridBoundColumn" Then
+                    c.Display = False
+                    c.Visible = False
+                End If
 
+            Next
+           
             .Page.Response.ClearHeaders()
             .Page.Response.Cache.SetCacheability(HttpCacheability.[Private])
             .PageSize = 2000
+
 
             .Rebind(False)
             Select Case strFormat

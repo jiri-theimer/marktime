@@ -48,13 +48,7 @@
         </tr>
     </table>
     <table cellpadding="3" cellspacing="2" id="tabFlag1" runat="server">
-        <tr>
-            <td style="width:140px;">
-                <asp:Label ID="Label3" Text="Combo seznam:" runat="server" CssClass="lbl"></asp:Label></td>
-            <td>
-                <uc:datacombo ID="x23ID" runat="server" DataTextField="x23Name" DataValueField="pid" IsFirstEmptyRow="true" Width="300px" AutoPostBack="true"></uc:datacombo>
-            </td>
-        </tr>
+        
         <tr>
             <td>
                 <asp:Label ID="Label4" Text="Skupina polí:" runat="server" CssClass="lbl"></asp:Label></td>

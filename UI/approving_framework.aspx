@@ -229,15 +229,18 @@
                                 </div>
                                 <div class="content">
 
-                                    <img src="Images/xls.png" alt="xls" />
-                                    <asp:HyperLink ID="cmdXLS" runat="server" Text="XLS" NavigateUrl="javascript:hardrefresh(0,'xls')" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů"></asp:HyperLink>
-
-
-                                    <img src="Images/pdf.png" alt="pdf" />
-                                    <asp:HyperLink ID="cmdPDF" runat="server" Text="PDF" NavigateUrl="javascript:hardrefresh(0,'pdf')" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů"></asp:HyperLink>
-
-                                    <img src="Images/doc.png" alt="doc" />
-                                    <asp:HyperLink ID="cmdDOC" runat="server" Text="DOC" NavigateUrl="javascript:hardrefresh(0,'doc')" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů"></asp:HyperLink>
+                                  <button type="button" onclick="hardrefresh(0,'xls')" title="Export do XLSX vč. souhrnů s omezovačem na maximálně 2000 záznamů">
+                                      <img src="Images/xls.png" />
+                                      XLS
+                                  </button>
+                                  <button type="button" onclick="hardrefresh(0,'pdf')" title="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů">
+                                      <img src="Images/pdf.png" />
+                                      PDF
+                                  </button>
+                                   <button type="button" onclick="hardrefresh(0,'doc')" title="Export do DOCX vč. souhrnů s omezovačem na maximálně 2000 záznamů">
+                                      <img src="Images/doc.png" />
+                                      DOC
+                                  </button>
 
 
                                 </div>

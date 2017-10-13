@@ -43,8 +43,7 @@
         x27ID.DataBind()
         x24id.DataSource = Master.Factory.ftBL.GetList_X24(New BO.myQuery)
         x24id.DataBind()
-        Me.x23ID.DataSource = Master.Factory.x23EntityField_ComboBL.GetList(New BO.myQuery)
-        Me.x23ID.DataBind()
+        
         Handle_ChangeX29ID()
 
         If Master.DataPID = 0 Then Return
@@ -58,7 +57,6 @@
             x29ID.SelectedValue = BO.BAS.IsNullInt(.x29ID).ToString
             Handle_ChangeX29ID()
             x27ID.SelectedValue = BO.BAS.IsNull(.x27ID)
-            x23ID.SelectedValue = .x23ID.ToString
             x28Name.Text = .x28Name
             x24id.SelectedValue = CInt(.x24ID).ToString
             x28TextboxWidth.Value = .x28TextboxWidth
@@ -95,12 +93,7 @@
         x29ID.Enabled = Master.IsRecordNew
 
         Dim b As Boolean = False
-        If Me.x23ID.SelectedValue <> "" Then
-            If Me.x24id.SelectedValue <> "1" Then Me.x24id.SelectedValue = "1"
-            Me.x24id.Enabled = False
-        Else
-            Me.x24id.Enabled = True
-        End If
+       
         If x24id.SelectedValue = "2" Then b = True 'string
 
         x28IsFixedDataSource.Visible = b
@@ -163,7 +156,7 @@
                 .x28Flag = CInt(Me.x28Flag.SelectedValue)
                 .x28Name = x28Name.Text
                 .x24ID = BO.BAS.IsNullInt(x24id.SelectedValue)
-                .x23ID = BO.BAS.IsNullInt(Me.x23ID.SelectedValue)
+
                 .x28Ordinary = BO.BAS.IsNullInt(x28Ordinary.Value)
                 .x28TextboxHeight = BO.BAS.IsNullInt(x28TextboxHeight.Value)
                 .x28TextboxWidth = BO.BAS.IsNullInt(x28TextboxWidth.Value)

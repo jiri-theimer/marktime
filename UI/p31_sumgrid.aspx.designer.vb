@@ -95,33 +95,6 @@ Partial Public Class p31_sumgrid
     Protected WithEvents panExport As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''cmdXLS control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdXLS As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''cmdPDF control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdPDF As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''cmdDOC control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''lblPaging control.
     '''</summary>
     '''<remarks>

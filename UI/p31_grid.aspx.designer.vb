@@ -119,7 +119,7 @@ Partial Public Class p31_grid
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdExport As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents cmdExport As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''cmdXLS control.
@@ -128,7 +128,7 @@ Partial Public Class p31_grid
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdXLS As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents cmdXLS As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''cmdPDF control.
@@ -137,7 +137,7 @@ Partial Public Class p31_grid
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdPDF As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents cmdPDF As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''cmdDOC control.
@@ -146,7 +146,7 @@ Partial Public Class p31_grid
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''panGroupBy control.

@@ -18,8 +18,8 @@
         <asp:ImageButton ID="cmdClearExplicitPeriod" runat="server" ImageUrl="Images/close.png" ToolTip="Zrušit filtr podle kalendáře" CssClass="button-link" />
     </div>
     <div class="commandcell" id="divQueryContainer">
-        <uc:mygrid id="designer1" runat="server" prefix="p31" MasterPrefixFlag="1"></uc:mygrid>
-       
+        <uc:mygrid ID="designer1" runat="server" Prefix="p31" MasterPrefixFlag="1"></uc:mygrid>
+
     </div>
 
 
@@ -43,7 +43,7 @@
                     </Items>
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Text="Další akce" ImageUrl="Images/menuarrow.png">
-                    
+
                     <ContentTemplate>
 
                         <div class="content-box3">
@@ -58,7 +58,7 @@
                                     <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit štítkovací filtr" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
                                     <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <asp:Panel ID="panExport" runat="server" CssClass="content-box3">
@@ -67,17 +67,10 @@
                                 <span>Export záznamů aktuálního přehledu</span>
                             </div>
                             <div class="content">
-                                <img src="Images/export.png" alt="export" />
-                                <asp:LinkButton ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
-
-                                <img src="Images/xls.png" alt="xls" />
-                                <asp:LinkButton ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
-
-                                <img src="Images/pdf.png" alt="pdf" />
-                                <asp:LinkButton ID="cmdPDF" runat="server" Text="PDF" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
-
-                                <img src="Images/doc.png" alt="doc" />
-                                <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+                                <asp:Button ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" CssClass="cmd" />
+                                <asp:Button ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" CssClass="cmd" />
+                                <asp:Button ID="cmdPDF" runat="server" Text="PDF" CssClass="cmd" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+                                <asp:Button ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" CssClass="cmd" />
                             </div>
 
 
@@ -89,7 +82,7 @@
                                 <img src="Images/griddesigner.png" />Nastavení přehledu
                             </div>
                             <div class="content">
-                                
+
 
                                 <asp:Panel ID="panGroupBy" runat="server" CssClass="div6">
                                     <span><%=Resources.common.DatoveSouhrny%>:</span>
@@ -156,8 +149,8 @@
 </asp:Panel>
 <div style="clear: both; width: 100%;"></div>
 <div id="divCurrentQuery">
-    
-    
+
+
     <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
 </div>
 
@@ -183,7 +176,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        
+
 
 
 
@@ -196,7 +189,7 @@
 
     }
 
- 
+
 
     function approving() {
         var pids = GetAllSelectedPIDs();
@@ -226,7 +219,7 @@
         return (pids);
     }
 
-   
+
     function p31_subgrid_query() {
         alert("prázdné");
         //return (false);
@@ -266,7 +259,7 @@
             url = url + "&p31ids=" + p31ids;
 
         window.open(url, "_top");
-       
+
     }
 
     function drilldown_p31ids() {
@@ -276,7 +269,7 @@
             return;
         }
         drilldown(pids);
-        
+
 
 
     }

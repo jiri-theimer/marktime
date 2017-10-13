@@ -1177,17 +1177,7 @@ Public Class entity_framework
       
     End Sub
 
-    Private Sub cmdDOC_Click(sender As Object, e As EventArgs) Handles cmdDOC.Click
-        GridExport("doc")
-    End Sub
-
-    Private Sub cmdPDF_Click(sender As Object, e As EventArgs) Handles cmdPDF.Click
-        GridExport("pdf")
-    End Sub
-
-    Private Sub cmdXLS_Click(sender As Object, e As EventArgs) Handles cmdXLS.Click
-        GridExport("xls")
-    End Sub
+    
 
    
     
@@ -1211,5 +1201,18 @@ Public Class entity_framework
             .SetUserParam("o51_querybuilder-" & Me.CurrentPrefix, "")
         End With
         ReloadPage()
+    End Sub
+
+    Private Sub cmdPDF_Click(sender As Object, e As EventArgs) Handles cmdPDF.Click
+        GridExport("pdf")
+    End Sub
+    Private Sub cmdDOC_Click(sender As Object, e As EventArgs) Handles cmdDOC.Click
+        GridExport("doc")
+    End Sub
+
+
+
+    Private Sub cmdXLS_Click(sender As Object, e As EventArgs) Handles cmdXLS.Click
+        GridExport("xls")
     End Sub
 End Class
