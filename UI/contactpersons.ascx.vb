@@ -1,5 +1,6 @@
 ﻿Public Class contactpersons
     Inherits System.Web.UI.UserControl
+    Private Property _ShowAsLink As Boolean = False
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
@@ -13,7 +14,8 @@
             Me.hidIsShowClueTip.Value = BO.BAS.GB(value)
         End Set
     End Property
-    Public Sub FillData(lisJ02 As IEnumerable(Of BO.j02Person))
+    Public Sub FillData(lisJ02 As IEnumerable(Of BO.j02Person), bolShowAsLink As Boolean)
+        _ShowAsLink = bolShowAsLink
         rpP30.DataSource = lisJ02
         rpP30.DataBind()
 
@@ -25,14 +27,23 @@
             If cRec.j02Email <> "" Then
                 .Text = cRec.j02Email
                 .NavigateUrl = "mailto:" & cRec.j02Email
+
             Else
                 .Visible = False
             End If
             If cRec.IsClosed Then .Font.Strikeout = True
         End With
-        With CType(e.Item.FindControl("Person"), Label)
+        With CType(e.Item.FindControl("linkPerson"), HyperLink)
             .Text = cRec.FullNameDesc
+            If _ShowAsLink Then
+                .NavigateUrl = "j02_framework.aspx?pid=" & cRec.PID.ToString
+            Else
+                If cRec.j02IsInvoiceEmail Then .ForeColor = Drawing.Color.Green
+                .CssClass = "valbold"
+            End If
+
             If cRec.IsClosed Then .Font.Strikeout = True
+
         End With
         With CType(e.Item.FindControl("j02JobTitle"), Label)
             .Text = cRec.j02JobTitle

@@ -107,7 +107,7 @@
         Dim lisP30 As IEnumerable(Of BO.j02Person) = Master.Factory.p30Contact_PersonBL.GetList_J02(Master.DataPID, 0, True)
         If lisP30.Count > 0 Then
             Me.boxP30.Visible = True
-            Me.persons1.FillData(lisP30)
+            Me.persons1.FillData(lisP30, False)
             Me.CountP30.Text = lisP30.Count.ToString
 
         Else

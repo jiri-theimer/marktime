@@ -58,7 +58,7 @@
 
         Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(intPID, 0, 0)
         If lisP30.Count > 0 Then
-            Me.persons1.FillData(lisP30)
+            Me.persons1.FillData(lisP30, False)
         Else
             panP30.Visible = False
         End If

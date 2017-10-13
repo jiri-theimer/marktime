@@ -6,7 +6,8 @@
             <img src="Images/person.png" />
             <asp:HyperLink ID="clue_j02" runat="server" CssClass="reczoom" Text="i" title="Detail"></asp:HyperLink>
 
-            <asp:Label ID="Person" runat="server" CssClass="valbold"></asp:Label>
+            
+            <asp:HyperLink ID="linkPerson" runat="server" CssClass="value_link" Target="_top"></asp:HyperLink>
 
             <asp:HyperLink ID="j02Email" runat="server" CssClass="wake_link"></asp:HyperLink>
 

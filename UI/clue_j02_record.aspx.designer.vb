@@ -41,6 +41,15 @@ Partial Public Class clue_j02_record
     Protected WithEvents tags1 As Global.UI.mytags
 
     '''<summary>
+    '''linkGoTo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkGoTo As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''panIntraOnly control.
     '''</summary>
     '''<remarks>

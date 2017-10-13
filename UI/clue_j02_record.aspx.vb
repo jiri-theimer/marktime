@@ -7,7 +7,7 @@
         If Not Page.IsPostBack Then
             Master.DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
             If Master.DataPID = 0 Then Master.StopPage("pid is missing", , , False)
-
+            linkGoTo.Visible = Master.Factory.SysUser.j04IsMenu_People
             RefreshRecord()
 
         End If
@@ -16,6 +16,7 @@
         Dim cRec As BO.j02Person = Master.Factory.j02PersonBL.Load(Master.DataPID)
         With cRec
             Me.ph1.Text = .FullNameAsc
+            If .j02IsInvoiceEmail Then ph1.ForeColor = Drawing.Color.Green
             If .IsClosed Then ph1.Font.Strikeout = True
             Me.j07Name.Text = .j07Name
             Me.j02Code.Text = .j02Code

@@ -852,6 +852,7 @@
                     .Text = c.FullNameAsc
                     .NavigateUrl = "javascript:j02_record(" & c.PID.ToString & ")"
                     If c.IsClosed Then .Font.Strikeout = True
+                    If c.j02IsInvoiceEmail Then .ForeColor = Drawing.Color.Green
                 End With
 
                 CType(e.Item.FindControl("j02Email"), Label).Text = c.j02Email

@@ -4,6 +4,13 @@
 <%@ MasterType VirtualPath="~/Clue.Master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <script type="text/javascript">
+        function go2module() {
+
+            window.open("j02_framework.aspx?pid=<%=Master.DataPID%>", "_top");
+
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -13,6 +20,9 @@
             <asp:Label ID="ph1" runat="server" CssClass="clue_header_span"></asp:Label>
             <asp:HyperLink ID="j02Email" runat="server" CssClass="wake_link"></asp:HyperLink>
             <uc:mytags ID="tags1" ModeUi="2" Prefix="j02" runat="server" />
+        </div>
+        <div>
+            <asp:hyperlink runat="server" ID="linkGoTo" NavigateUrl="javascript:go2module()">Přejít na stránku osoby</asp:hyperlink>
         </div>
         <asp:Panel ID="panIntraOnly" runat="server" CssClass="content-box2">
             <div class="title">

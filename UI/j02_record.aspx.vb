@@ -236,7 +236,8 @@
 
         trJobTitle.Visible = Not b
         j02IsInvoiceEmail.Visible = Not b
-        
+        lblDomain.Visible = b
+        j02DomainAccount.Visible = b
 
         If Me.j02IsIntraPerson.SelectedValue = "1" Then
 

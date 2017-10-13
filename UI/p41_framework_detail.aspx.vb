@@ -235,7 +235,7 @@
             Dim lisP30 As IEnumerable(Of BO.j02Person) = Master.Factory.p30Contact_PersonBL.GetList_J02(cRec.p28ID_Client, Master.DataPID, False)
             If lisP30.Count > 0 Then
                 Me.boxP30.Visible = True
-                Me.persons1.FillData(lisP30)
+                Me.persons1.FillData(lisP30, Master.Factory.SysUser.j04IsMenu_People)
                 With Me.boxP30Title
                     .Text = BO.BAS.OM2(.Text, lisP30.Count.ToString)
                    
