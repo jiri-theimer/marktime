@@ -728,7 +728,8 @@
 
         Dim lisX69 As New List(Of BO.x69EntityRole_Assign)
         Dim cJ As New BO.x69EntityRole_Assign
-        cJ.x67ID = 9
+        cJ.x67ID = _Factory.x67EntityRoleBL.GetList(New BO.myQuery).First(Function(p) p.x29ID = BO.x29IdEnum.j70QueryTemplate).PID
+
         cJ.j11ID = GetJ11ID_All()
         lisX69.Add(cJ)
         _Factory.j70QueryTemplateBL.Save(c, lisJ71, lisX69)

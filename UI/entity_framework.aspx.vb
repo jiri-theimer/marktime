@@ -106,7 +106,7 @@ Public Class entity_framework
                     basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam(Me.CurrentPrefix + "_framework-pagesize", "20"))
                     Dim strDefWidth As String = "435"
                     Select Case Me.CurrentPrefix
-                        Case "o23", "p56", "p91" : strDefWidth = "500"
+                        Case "o23", "p56", "p91" : strDefWidth = "600"
                         Case Else
                     End Select
                     Select Case Me.opgLayout.SelectedValue
@@ -134,7 +134,9 @@ Public Class entity_framework
                     If .GetUserParam(Me.CurrentPrefix + "_framework-sort") <> "" Then
                         grid1.radGridOrig.MasterTableView.SortExpressions.AddSortExpression(.GetUserParam(Me.CurrentPrefix + "_framework-sort"))
                     End If
-                    basUI.SelectDropdownlistValue(Me.cbxPeriodType, .GetUserParam(Me.CurrentPrefix + "_framework-periodtype", ""))
+                    strDefWidth = ""
+                    If Me.CurrentPrefix = "p91" Then strDefWidth = "p91DateSupply"
+                    basUI.SelectDropdownlistValue(Me.cbxPeriodType, .GetUserParam(Me.CurrentPrefix + "_framework-periodtype", strDefWidth))
                     If Me.cbxQueryFlag.Visible Then basUI.SelectDropdownlistValue(Me.cbxQueryFlag, .GetUserParam(Me.CurrentPrefix + "_framework-queryflag"))
                     If Me.CurrentPrefix = "j02" And Me.CurrentMasterPrefix <> "" And Me.CurrentMasterPID > 0 Then Me.cbxQueryFlag.SelectedIndex = 0 'seznam kontaktních osob k projektu/klientu
                     If Me.cbxPeriodType.SelectedIndex > 0 Then

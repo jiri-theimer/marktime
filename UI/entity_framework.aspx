@@ -327,14 +327,15 @@
                     <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" CollapseAnimation-Duration="0" CollapseAnimation-Type="None" ClickToOpen="true">
                         <Items>
                             <telerik:RadMenuItem Value="more" Text="MENU" ImageUrl="Images/more.png" Style="padding-right: 0px">
-                                <GroupSettings />
+                                
                                 <ContentTemplate>
+                                    
                                     <div class="content-box3">
                                         <div class="title">
                                             <img src="Images/query.png" />
                                             <span>Dodatečné filtrování záznamů</span>
                                         </div>
-                                        <div class="content">
+                                        <div class="content" style="background-color:#87CEEB;">
 
                                             
                                             <div style="margin-top: 6px;">
@@ -369,7 +370,7 @@
                                             <img src="Images/batch.png" />
                                             <span>Operace pro označené (zaškrtlé) záznamy</span>
                                         </div>
-                                        <div class="content">
+                                        <div class="content" style="background-color:#87CEEB;">
                                             <button type="button" id="cmdSummary" runat="server" onclick="drilldown()" style="float: left;">Statistiky</button>                                            
                                             <button type="button" onclick="report()" title="Tisková sestava" style="float: left;">Tisková sestava</button>
                                             <button type="button" onclick="tags()" style="float:left;">Oštítkovat</button>
@@ -394,7 +395,7 @@
                                             <span>Export záznamů v aktuálním přehledu</span>
 
                                         </div>
-                                        <div class="content">                                         
+                                        <div class="content" style="background-color:#87CEEB;">                                         
                                             <asp:button ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" CssClass="cmd" />                                                                                       
                                             <asp:button ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" CssClass="cmd" />                                                                                       
                                             <asp:Button ID="cmdPDF" runat="server" Text="PDF" CssClass="cmd" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />                                                                                      
@@ -408,7 +409,7 @@
                                             <span>Nastavení přehledu</span>
 
                                         </div>
-                                        <div class="content">
+                                        <div class="content" style="background-color:#87CEEB;">
                                             <div class="div6">
                                                 <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField">
                                                 </asp:DropDownList>

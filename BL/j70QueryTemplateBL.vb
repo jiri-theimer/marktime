@@ -334,15 +334,18 @@ Class j70QueryTemplateBL
                         c.j70ColumnNames = "p57Name,Client,p41Name,p56Name,p56PlanUntil,ReceiversInLine,Hours_Orig,Owner"
                     Case "p28"
                         c.j70Name = My.Resources.common.VychoziPrehledKlienta
-                        c.j70ColumnNames = "p57Name,p41Name,p56Name,p56PlanUntil,ReceiversInLine,Hours_Orig,Owner"
+                        c.j70ColumnNames = "p57Name,p56Name,p56PlanUntil,ReceiversInLine,Hours_Orig"
+                    Case "p41"
+                        c.j70Name = My.Resources.common.VychoziPrehled
+                        c.j70ColumnNames = "p57Name,p56Name,b02Name,ReceiversInLine,Hours_Orig"
                     Case "p31_framework"
                         c.j70Name = My.Resources.common.VychoziPrehledZapisovaniUkonu
-                        c.j70ColumnNames = "p57Name,p56Name"
+                        c.j70ColumnNames = "p56Name"
                     Case "mobile_grid"
                         c.j70Name = My.Resources.common.VychoziPrehled
-                        c.j70ColumnNames = "p56Code,p56Name"
+                        c.j70ColumnNames = "p56Name"
                     Case Else
-                        c.j70ColumnNames = "p56Code,p56Name,b02Name"
+                        c.j70ColumnNames = "ClientAndProject,p56Name,ReceiversInLine"
                 End Select
             Case BO.x29IdEnum.o23Doc
                 Select Case strMasterPrefix
