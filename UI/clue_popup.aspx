@@ -18,7 +18,7 @@
             /* Links inside the dropdown */
             .dropdown-content a {
                 color: black;
-                padding: 12px 16px;
+                padding: 8px 12px;
                 text-decoration: none;
                 display: block;
             }
@@ -29,21 +29,38 @@
                 }
 
        
+        DIV.separator {
+            
+            width:100%;            
+            height:1px;
+            background-color:#e0e0e0;
 
+        }
        
     </style>
+
+    <script type="text/javascript">
+        function gg(url) {
+
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div style="max-height: 200px; width: 100%;">
-        <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
+    
+        <div class="dropdown-content" style="max-height:200px;overflow:auto;">
+            <a href="javascript:window.parent.p56_subgrid_workflow();">Posunout/Doplnit</a>
+            <a href="javascript:window.parent.p31_entry_p56();">Vykázat k úkolu worksheet úkon</a>
+            <div class="separator"></div>
+            <a href="#">Upravit</a>
+            <div class="separator"></div>
+            <a href="javascript:window.parent.p56_clone();">Zkopírovat do nového úkolu</a>
+            
+            <asp:Label ID="gogo1" runat="server"></asp:Label>
         </div>
 
 
-        <asp:Label ID="gogo1" runat="server"></asp:Label>
+        
 
 
-    </div>
+   
 </asp:Content>
