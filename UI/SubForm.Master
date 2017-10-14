@@ -218,6 +218,9 @@
                     
                     var contextMenu = $find("<%= RadContextMenu1.ClientID %>");
                     contextMenu.get_items().clear();
+
+                    var x = $("#" + ctlID).offset().left;
+                    var y = $("#" + ctlID).offset().top;
                     
                     for (var i in data) {
                         var c = data[i];
@@ -228,7 +231,7 @@
                         }
 
                         if (c.IsSeparator == false) {
-                            mi.set_text(c.Text);
+                            mi.set_text(c.Text+", y: "+y);
                             
                             if (c.Target == "_top")
                                 mi.set_navigateUrl("contReload('" & c.NavigateUrl & "')");
@@ -248,9 +251,8 @@
                     }
 
 
-                    var x = $("#" + ctlID).offset().left
-                    var y = $("#" + ctlID).offset().top                   
-
+                    
+                   
                     contextMenu.showAt(x + 20, y);
 
 
