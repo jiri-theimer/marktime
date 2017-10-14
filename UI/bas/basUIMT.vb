@@ -233,7 +233,7 @@ Public Class basUIMT
             If cRec.Item(0) Is System.DBNull.Value Then Return 'chybné SQL datového přehledu
             If bolShowClueTip Then
                 With dataItem("systemcolumn")
-                    .Text = "<a class='pp1' prefix='p56' pid='" & cRec.Item("pid").ToString & "'></a>"
+                    .Text = "<a class='pp1' id='pm1' prefix='p56' pid='" & cRec.Item("pid").ToString & "'></a>"
                 End With
             End If
             With cRec
@@ -468,6 +468,10 @@ Public Class basUIMT
             End With
             If bolMobile Then
                 dataItem("mob").Text = "<a href='javascript:re(" & cRec.Item("pid").ToString & ")'><img src='Images/fe.png'></a>"
+            Else
+                With dataItem("systemcolumn")
+                    .Text = "<a class='pp1' id='pm1' prefix='p31' pid='" & cRec.Item("pid").ToString & "'></a>"
+                End With
             End If
 
         Else

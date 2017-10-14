@@ -203,10 +203,13 @@
         function contMenu(url) {
             sw_everywhere(url, "", true);
         }
+        function contReload(url) {
+            window.open(url, "_top");
+        }
 
         $(function () {
             $.contextMenu({
-                selector: '.pp1',
+                selector: '#pm1',
                 trigger: 'left',
                 build: function ($trigger, e) {
                     // this callback is executed every time the menu is to be shown
@@ -233,7 +236,7 @@
                 method: "POST",
                 url: "Handler/handler_popupmenu.ashx",
                 beforeSend: function () {
-                    //zatím nic
+                    //zatím nic                    
                 },
                 async: false,
                 timeout: 2000,

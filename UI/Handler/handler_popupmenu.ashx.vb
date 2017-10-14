@@ -26,13 +26,58 @@ Public Class handler_popupmenu
         End If
 
         Select Case strPREFIX
+            Case "p31"
+                Dim cRec As BO.p31Worksheet = factory.p31WorksheetBL.Load(intPID)
+                If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
+
+                Dim cDisp As BO.p31WorksheetDisposition = factory.p31WorksheetBL.InhaleRecordDisposition(intPID)
+                If cDisp.RecordDisposition = BO.p31RecordDisposition._NoAccess Then FinalRW(context, "K úkonu nemáte přístup.") : Return
+
+                Select Case cDisp.RecordState
+                    Case BO.p31RecordState.Editing
+                        If cDisp.RecordDisposition = BO.p31RecordDisposition.CanEdit Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Then
+                            CI("Upravit záznam (dvojklik)", "p31_record.aspx?pid=" & intPID.ToString)
+                            CI("Kopírovat", "p31_record.aspx?clone=1&pid=" & intPID.ToString)
+                            If cDisp.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Then
+                                CI("Schválit", "p31_record.aspx?pid=" & intPID.ToString)
+                            End If
+                        End If
+                    Case BO.p31RecordState.Approved
+                        If cDisp.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Then
+                            CI("Detail/Pře-schválit (dvojklik)", "p31_record.aspx?pid=" & intPID.ToString)
+                        Else
+                            CI("Detail (dvojklik)", "p31_record.aspx?pid=" & intPID.ToString)
+                        End If
+                        If cDisp.RecordDisposition = BO.p31RecordDisposition.CanEdit Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Or cRec.j02ID = factory.SysUser.j02ID Then
+                            CI("Kopírovat", "p31_record.aspx?clone=1&pid=" & intPID.ToString)
+                        End If
+                    Case BO.p31RecordState.Invoiced
+                        CI("Detail (dvojklik)", "p31_record_AA.aspx?pid=" & intPID.ToString)
+                        If factory.SysUser.j04IsMenu_Invoice Then
+                            SEP()
+                            REL("Stránka faktury", "p91_framework.aspx?pid=" & cRec.p91ID.ToString)
+                        End If
+                        If cDisp.RecordDisposition = BO.p31RecordDisposition.CanEdit Or cRec.j02ID = factory.SysUser.j02ID Then
+                            CI("Kopírovat", "p31_record.aspx?clone=1&pid=" & intPID.ToString)
+                        End If
+
+                End Select
+                SEP()
+                If cRec.p56ID > 0 Then
+                    If factory.SysUser.j04IsMenu_Task Then REL("Stránka úkolu", "p56_framework.aspx?pid=" & cRec.p56ID.ToString)
+                End If
+                If factory.SysUser.j04IsMenu_Project Then
+                    REL("Stránka projektu", "p41_framework.aspx?pid=" & cRec.p41ID.ToString)
+                End If
+
+                
             Case "p56"
                 Dim cRec As BO.p56Task = factory.p56TaskBL.Load(intPID)
                 If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
 
                 Dim cDisp As BO.p56RecordDisposition = factory.p56TaskBL.InhaleRecordDisposition(cRec)
                 If Not cDisp.ReadAccess Then FinalRW(context, "Nemáte přístup k tomuto úkolu.") : Return
-                CI("Přejít na stránku úkolu", "p56_framework.aspx?pid=" & intPID.ToString)
+                CI("Stránka úkolu (dvojklik)", "p56_framework.aspx?pid=" & intPID.ToString)
                 CI("Posunout/Doplnit", "workflow_dialog.aspx?prefix=p56&pid=" & intPID.ToString)
                 If cDisp.OwnerAccess Then
                     SEP()
@@ -69,6 +114,11 @@ Public Class handler_popupmenu
         Else
             _lis.Add(" onclick=contMenu(" & Chr(34) & strURL & Chr(34) & ")>")
         End If
+        _lis.Add("</menuitem>")
+    End Sub
+    Private Sub REL(strText As String, strURL As String)
+        _lis.Add("<menuitem label=" & Chr(34) & strText & Chr(34))
+        _lis.Add(" onclick=contReload(" & Chr(34) & strURL & Chr(34) & ")>")
         _lis.Add("</menuitem>")
     End Sub
 
