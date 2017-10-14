@@ -8,115 +8,99 @@
   
 
     <script type="text/javascript">
-        $(document).ready(function () {
-         
+       
+        function contMenu(url) {
+            sw_everywhere(url, "", true);
+        }
+        function contReload(url) {
+            window.open(url, "_top");
+        }
 
+        function hovado() {
+            alert("ahoj");
+        }
 
-            $("a.recpop").each(function () {
+        function RCM(curPREFIX, curPID, ctlID) {
+            var curPAGE = "";
+            $.ajax({
+                method: "POST",
+                url: "Handler/handler_popupmenu.ashx",
+                beforeSend: function () {
+                    
+                },
+                async: true,
+                timeout: 3000,
+                data: { prefix: curPREFIX, pid: curPID, page: curPAGE },
+                success: function (data) {
+                    //alert("načítání");
+                    //$('#html5menu').html('');
 
-                // Extract your variables here:
-                var $this = $(this);
-                var myurl = $this.attr('rel');
+                    var contextMenu = $find("<%= RadContextMenu1.ClientID %>");
+                    contextMenu.get_items().clear();
 
-                $this.qtip({
-                    content: {
-                        text: '<iframe src="' + myurl + '"' + ' width="100%" height="200"  frameborder="0"></iframe>',
+                    for (var i in data) {
+                        var c = data[i];
+                        var mi = new Telerik.Web.UI.RadMenuItem();
 
-                    },
-                    position: {
-                        at: 'right center',
-                        my: 'left top',
-                        viewport: $(window)
+                        if (c.IsSeparator == true) {
+                            mi.set_isSeparator(true);                            
+                        }
 
-                    },
-                    show: {
-                        event: 'click', // Show it on click...
-                        solo: true, // ...and hide all other tooltips...                        
-                    },
-                    hide: 'unfocus',
-                    style: {
-                        classes: 'qtip-bootstrap',
-                        width: 300,
-                        height: 220
+                        if (c.IsSeparator == false) {
+                            mi.set_text(c.Text);
 
+                           
+                            if (c.Target == "_top")
+                                mi.set_navigateUrl("contReload('" & c.NavigateUrl & "')");
+                            else
+                                mi.set_navigateUrl(c.NavigateUrl);
+                        }
+
+                        if (c.ImageUrl != null) {
+                            mi.set_imageUrl(c.ImageUrl);
+                        }
+
+                        contextMenu.get_items().add(mi);
                     }
-                });
+
+                    
+
+                    var x = $("#" + ctlID).offset().left
+                    var y = $("#" + ctlID).offset().top
+                    
+
+                    contextMenu.showAt(x + 20, y);
+
+
+
+                },
+                complete: function () {
+                    // do the job here
+                    
+                }
             });
 
+            ;
 
-        });
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Button ID="cmdRemoveCookie" runat="server" Text="Remove cookie" />
-    
-    
-    <asp:TextBox ID="txtMaskaFolders" runat="server" Width="300px" ></asp:TextBox>
-
+    <div style="position:absolute;top:200px; left:500px;">
+    <a id="cmdPP" class="pp1" href="javascript:RCM('p56','9','cmdPP')"></a>
+    </div>
     <hr />
-    <asp:Button ID="cmdFolders" runat="server" Text="Přejmenovat složky" />
-
-    <table>
-    <asp:Repeater ID="rp1" runat="server">
-        <ItemTemplate>
-            <tr>
-                <td>
-                    <asp:Label ID="Project" runat="server"></asp:Label>
-                </td>
-            </tr>
-        </ItemTemplate>
-    </asp:Repeater>
-    </table>
-
-
-    <hr />
-    <div style="left:100px;border:solid 1px red;padding:10px;">
-        <a class="recpop" rel="clue_popup.aspx?pid=1"></a>
-    </div>
-    <div style="left:100px;border:solid 1px red;padding:10px;">
-        <a class="recpop" rel="clue_popup.aspx?pid=2"></a>
-    </div>
-    <div style="left:100px;border:solid 1px red;padding:10px;">
-        <a class="recpop" rel="clue_popup.aspx?pid=3"></a>
-    </div>
-    <div style="left:100px;border:solid 1px red;padding:10px;">
-        <a class="recpop" rel="clue_popup.aspx?pid=4"></a>
-    </div>
-    <div style="left:100px;border:solid 1px red;padding:10px;">
-        <a class="recpop" rel="clue_popup.aspx?pid=4"></a>
-    </div>
-    <div style="left:100px;border:solid 1px red;padding:10px;">
-        <a class="recpop" rel="clue_popup.aspx?pid=4"></a>
-    </div>
-    <div style="left:100px;border:solid 1px red;padding:10px;">
-        <a class="recpop" rel="clue_popup.aspx?pid=4"></a>
-    </div>
-    <div style="left:100px;border:solid 1px red;padding:10px;">
-        <a class="recpop" rel="clue_popup.aspx?pid=4"></a>
-    </div>
-    <div style="left:100px;border:solid 1px red;padding:10px;">
-        <a class="recpop" rel="clue_popup.aspx?pid=4"></a>
-    </div>
-    <div style="left:100px;border:solid 1px red;padding:10px;">
-        <a class="recpop" rel="clue_popup.aspx?pid=4"></a>
-    </div>
-    <div style="left:100px;border:solid 1px red;padding:10px;">
-        <a class="recpop" rel="clue_popup.aspx?pid=4"></a>
-    </div>
-    <div style="left:100px;border:solid 1px red;padding:10px;">
-        <a class="recpop" rel="clue_popup.aspx?pid=4"></a>
-    </div>
-    <div style="left:100px;border:solid 1px red;padding:10px;">
-        <a class="recpop" rel="clue_popup.aspx?pid=4"></a>
-    </div>
-    <div style="left:100px;border:solid 1px red;padding:10px;">
-        <a class="recpop" rel="clue_popup.aspx?pid=4"></a>
-    </div>
-    <div style="left:100px;border:solid 1px red;padding:10px;">
-        <a class="recpop" rel="clue_popup.aspx?pid=4"></a>
+    <div>
+    <a id="cmdPP2" class="pp1" href="javascript:RCM('p56','44','cmdPP2')"></a>
     </div>
     
-    <hr />
+        
+    
+    
+<telerik:RadContextMenu ID="RadContextMenu1" runat="server" EnableViewState="false" Skin="Metro" ExpandDelay="0"  >
+    <CollapseAnimation Type="None" />
+    <ExpandAnimation Type="None" />    
+</telerik:RadContextMenu>
 </asp:Content>
 
 

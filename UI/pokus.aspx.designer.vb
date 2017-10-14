@@ -14,40 +14,13 @@ Option Explicit On
 Partial Public Class pokus
 
     '''<summary>
-    '''cmdRemoveCookie control.
+    '''RadContextMenu1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdRemoveCookie As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''txtMaskaFolders control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtMaskaFolders As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''cmdFolders control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdFolders As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''rp1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rp1 As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents RadContextMenu1 As Global.Telerik.Web.UI.RadContextMenu
 
     '''<summary>
     '''Master property.

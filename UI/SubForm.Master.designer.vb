@@ -138,4 +138,13 @@ Partial Public Class SubForm
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents okno1 As Global.Telerik.Web.UI.RadWindow
+
+    '''<summary>
+    '''RadContextMenu1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadContextMenu1 As Global.Telerik.Web.UI.RadContextMenu
 End Class

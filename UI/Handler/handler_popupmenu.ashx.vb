@@ -3,10 +3,11 @@ Imports System.Web.Services
 
 Public Class handler_popupmenu
     Implements System.Web.IHttpHandler
-    Private _lis As New List(Of String)
+    Private _lis As New List(Of BO.ContextMenuItem)
     Sub ProcessRequest(ByVal context As HttpContext) Implements IHttpHandler.ProcessRequest
 
-        context.Response.ContentType = "text/plain"
+        context.Response.ContentType = "application/json"
+
 
         Dim factory As BL.Factory = Nothing
         If HttpContext.Current.User.Identity.IsAuthenticated Then
@@ -43,31 +44,32 @@ Public Class handler_popupmenu
                             End If
                         End If
                     Case BO.p31RecordState.Approved
+                        CI("Detail (dvojklik)", "p31_record.aspx?pid=" & intPID.ToString)
                         If cDisp.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Then
-                            CI("Detail/Pře-schválit (dvojklik)", "p31_record.aspx?pid=" & intPID.ToString)
-                        Else
-                            CI("Detail (dvojklik)", "p31_record.aspx?pid=" & intPID.ToString)
+                            CI("Pře-schválit", "p31_record_AI.aspx?pid=" & intPID.ToString)                        
                         End If
                         If cDisp.RecordDisposition = BO.p31RecordDisposition.CanEdit Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Or cRec.j02ID = factory.SysUser.j02ID Then
+                            SEP()
                             CI("Kopírovat", "p31_record.aspx?clone=1&pid=" & intPID.ToString)
                         End If
                     Case BO.p31RecordState.Invoiced
-                        CI("Detail (dvojklik)", "p31_record_AA.aspx?pid=" & intPID.ToString)
+                        CI("Detail (dvojklik)", "p31_record_AI.aspx?pid=" & intPID.ToString)
                         If factory.SysUser.j04IsMenu_Invoice Then
                             SEP()
-                            REL("Stránka faktury", "p91_framework.aspx?pid=" & cRec.p91ID.ToString)
+                            REL("Stránka faktury", "p91_framework.aspx?pid=" & cRec.p91ID.ToString, "_top")
                         End If
                         If cDisp.RecordDisposition = BO.p31RecordDisposition.CanEdit Or cRec.j02ID = factory.SysUser.j02ID Then
+                            SEP()
                             CI("Kopírovat", "p31_record.aspx?clone=1&pid=" & intPID.ToString)
                         End If
 
                 End Select
                 SEP()
                 If cRec.p56ID > 0 Then
-                    If factory.SysUser.j04IsMenu_Task Then REL("Stránka úkolu", "p56_framework.aspx?pid=" & cRec.p56ID.ToString)
+                    If factory.SysUser.j04IsMenu_Task Then REL("Stránka úkolu", "p56_framework.aspx?pid=" & cRec.p56ID.ToString, "_top")
                 End If
                 If factory.SysUser.j04IsMenu_Project Then
-                    REL("Stránka projektu", "p41_framework.aspx?pid=" & cRec.p41ID.ToString)
+                    REL("Stránka projektu", "p41_framework.aspx?pid=" & cRec.p41ID.ToString, "_top")
                 End If
 
                 
@@ -94,7 +96,10 @@ Public Class handler_popupmenu
         End Select
 
         
-        context.Response.Write(String.Join("", _lis))
+        Dim jss As New System.Web.Script.Serialization.JavaScriptSerializer
+        Dim s As String = jss.Serialize(_lis)
+        context.Response.Write(s)
+
 
     End Sub
 
@@ -102,24 +107,29 @@ Public Class handler_popupmenu
         If strMessage <> "" Then
             CI(strMessage, "")
         End If
-        context.Response.Write(String.Join("", _lis))
+        Dim jss As New System.Web.Script.Serialization.JavaScriptSerializer
+        Dim s As String = jss.Serialize(_lis)
+        context.Response.Write(s)
     End Sub
     Private Sub SEP()
-        _lis.Add("<hr>")
+        Dim c As New BO.ContextMenuItem
+        c.IsSeparator = True
+        _lis.Add(c)
     End Sub
     Private Sub CI(strText As String, strURL As String, Optional bolDisabled As Boolean = False)
-        _lis.Add("<menuitem label=" & Chr(34) & strText & Chr(34))
-        If strURL = "" Then
-            If bolDisabled Then _lis.Add(" disabled")
-        Else
-            _lis.Add(" onclick=contMenu(" & Chr(34) & strURL & Chr(34) & ")>")
-        End If
-        _lis.Add("</menuitem>")
+        Dim c As New BO.ContextMenuItem
+        c.Text = strText
+        c.NavigateUrl = "javascript:contMenu(" & Chr(34) & strURL & Chr(34) & ")"
+        c.IsDisabled = bolDisabled
+        _lis.Add(c)
+
     End Sub
-    Private Sub REL(strText As String, strURL As String)
-        _lis.Add("<menuitem label=" & Chr(34) & strText & Chr(34))
-        _lis.Add(" onclick=contReload(" & Chr(34) & strURL & Chr(34) & ")>")
-        _lis.Add("</menuitem>")
+    Private Sub REL(strText As String, strURL As String, strTarget As String)
+        Dim c As New BO.ContextMenuItem
+        c.Text = strText
+        c.NavigateUrl = strURL
+        c.Target = strTarget
+        _lis.Add(c)
     End Sub
 
     ReadOnly Property IsReusable() As Boolean Implements IHttpHandler.IsReusable
