@@ -88,7 +88,7 @@ Public Class handler_popupmenu
                 End If
                 If cDisp.P31_Create Then
                     SEP()
-                    CI("Vykázat v úkolu worksheet úkon", "p31_record.aspx?p56id=" & intPID.ToString)
+                    CI("Vykázat v úkolu worksheet úkon", "p31_record.aspx?p56id=" & intPID.ToString, cRec.IsClosed)
                 End If
                 CI("Tisková sestava", "report_modal.aspx?prefix=p56&pid=" & intPID.ToString)
             Case Else

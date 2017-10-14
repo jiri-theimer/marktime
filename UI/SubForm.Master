@@ -13,15 +13,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="~/Styles/Site_v10.css" rel="stylesheet" type="text/css" />
 
-    <link href="Scripts/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
-    <link href="Scripts/contextmenu/jquery.contextMenu.css" rel="stylesheet" type="text/css" />
+    <link href="Scripts/jquery.qtip.min.css" rel="stylesheet" type="text/css" />    
 
     <asp:PlaceHolder ID="placeFavicon" runat="server"></asp:PlaceHolder>
     <script src="Scripts/jquery-1.11.1.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="Scripts/jquery.qtip.min.js"></script>
 
-    <script src="Scripts/contextmenu/jquery.contextMenu.js" type="text/javascript"></script>
-    <script src="Scripts/contextmenu/jquery.ui.position.min.js" type="text/javascript"></script>
+
 
     <style type="text/css">
         html .RadNavigation_Windows7 .rnvRootGroupWrapper {
@@ -101,7 +99,7 @@
             </Shortcuts>
             <Localization Close="Zavřít" Restore="Základní velikost" Maximize="Maximalizovat" Reload="Obnovit, znovu načíst" />
         </telerik:RadWindow>
-        <telerik:RadContextMenu ID="RadContextMenu1" runat="server" EnableViewState="false" Skin="Metro" ExpandDelay="0">
+        <telerik:RadContextMenu ID="RadContextMenu1" runat="server" EnableViewState="false" Skin="Metro" ExpandDelay="0" RenderMode="Lightweight">
             <CollapseAnimation Type="None" />
             <ExpandAnimation Type="None" />
         </telerik:RadContextMenu>
@@ -217,10 +215,10 @@
                 success: function (data) {
                     //alert("načítání");
                     //$('#html5menu').html('');
-
+                    
                     var contextMenu = $find("<%= RadContextMenu1.ClientID %>");
                     contextMenu.get_items().clear();
-
+                    
                     for (var i in data) {
                         var c = data[i];
                         var mi = new Telerik.Web.UI.RadMenuItem();
@@ -231,26 +229,27 @@
 
                         if (c.IsSeparator == false) {
                             mi.set_text(c.Text);
-
-
+                            
                             if (c.Target == "_top")
                                 mi.set_navigateUrl("contReload('" & c.NavigateUrl & "')");
                             else
                                 mi.set_navigateUrl(c.NavigateUrl);
                         }
 
-                        if (c.ImageUrl != null) {
+                        if (c.ImageUrl != "") {
                             mi.set_imageUrl(c.ImageUrl);
+                        }
+
+                        if (c.Disabled) {
+                            mi.disable();
                         }
 
                         contextMenu.get_items().add(mi);
                     }
 
 
-
                     var x = $("#" + ctlID).offset().left
-                    var y = $("#" + ctlID).offset().top
-
+                    var y = $("#" + ctlID).offset().top                   
 
                     contextMenu.showAt(x + 20, y);
 

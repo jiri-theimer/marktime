@@ -233,7 +233,7 @@ Public Class basUIMT
             If cRec.Item(0) Is System.DBNull.Value Then Return 'chybné SQL datového přehledu
             If bolShowClueTip Then
                 With dataItem("systemcolumn")
-                    .Text = "<a class='pp1' id='p56x'" & cRec.Item("pid").ToString & " href=" & Chr(34) & "javascript:RCM('p56','" & cRec.Item("pid").ToString & "','p56x" & cRec.Item("pid").ToString & "')" & Chr(34) & "></a>"
+                    .Text = "<a class='pp1' id='p56x" & cRec.Item("pid").ToString & "' href=" & Chr(34) & "javascript:RCM('p56','" & cRec.Item("pid").ToString & "','p56x" & cRec.Item("pid").ToString & "')" & Chr(34) & "></a>"
                 End With
             End If
             With cRec
@@ -469,8 +469,8 @@ Public Class basUIMT
             If bolMobile Then
                 dataItem("mob").Text = "<a href='javascript:re(" & cRec.Item("pid").ToString & ")'><img src='Images/fe.png'></a>"
             Else
-                With dataItem("systemcolumn")
-                    .Text = "<a class='pp1' id='pm1' prefix='p31' pid='" & cRec.Item("pid").ToString & "'></a>"
+                With dataItem("systemcolumn")                    
+                    .Text = "<a class='pp1' id='p31x" & cRec.Item("pid").ToString & "' href=" & Chr(34) & "javascript:RCM('p31','" & cRec.Item("pid").ToString & "','p31x" & cRec.Item("pid").ToString & "')" & Chr(34) & "></a>"
                 End With
             End If
 
