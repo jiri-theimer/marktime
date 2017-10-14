@@ -20,7 +20,7 @@
 
                 $this.qtip({
                     content: {
-                        text: '<iframe src="' + myurl + '"' + ' width="100%" height="200"  frameborder="0"><p>Your browser does not support iframes.</p></iframe>',
+                        text: '<iframe src="' + myurl + '"' + ' width="100%" height="200"  frameborder="0"></iframe>',
 
                     },
                     position: {

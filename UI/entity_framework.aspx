@@ -335,7 +335,7 @@
                                             <img src="Images/query.png" />
                                             <span>Dodatečné filtrování záznamů</span>
                                         </div>
-                                        <div class="content" style="background-color:#87CEEB;">
+                                        <div class="content">
 
                                             
                                             <div style="margin-top: 6px;">
@@ -370,7 +370,7 @@
                                             <img src="Images/batch.png" />
                                             <span>Operace pro označené (zaškrtlé) záznamy</span>
                                         </div>
-                                        <div class="content" style="background-color:#87CEEB;">
+                                        <div class="content">
                                             <button type="button" id="cmdSummary" runat="server" onclick="drilldown()" style="float: left;">Statistiky</button>                                            
                                             <button type="button" onclick="report()" title="Tisková sestava" style="float: left;">Tisková sestava</button>
                                             <button type="button" onclick="tags()" style="float:left;">Oštítkovat</button>
@@ -395,7 +395,7 @@
                                             <span>Export záznamů v aktuálním přehledu</span>
 
                                         </div>
-                                        <div class="content" style="background-color:#87CEEB;">                                         
+                                        <div class="content">                                         
                                             <asp:button ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" CssClass="cmd" />                                                                                       
                                             <asp:button ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" CssClass="cmd" />                                                                                       
                                             <asp:Button ID="cmdPDF" runat="server" Text="PDF" CssClass="cmd" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />                                                                                      
@@ -409,7 +409,7 @@
                                             <span>Nastavení přehledu</span>
 
                                         </div>
-                                        <div class="content" style="background-color:#87CEEB;">
+                                        <div class="content">
                                             <div class="div6">
                                                 <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField">
                                                 </asp:DropDownList>

@@ -296,6 +296,7 @@
     <Content Include="p91_delete.aspx" />
     <Content Include="persons.ascx" />
     <Content Include="plugin_modal.aspx" />
+    <Content Include="pokus2.aspx" />
     <Content Include="projects.ascx" />
     <Content Include="select_doctype.aspx" />
     <Content Include="select_field.aspx" />
@@ -412,6 +413,7 @@
     <Content Include="report_framework_detail4.aspx" />
     <Content Include="Handler\handler_default_page.ashx" />
     <Content Include="Handler\handler_p66_plan.ashx" />
+    <Content Include="Handler\handler_popupmenu.ashx" />
     <None Include="Service References\SpolehlivostDPH\rozhraniCRPDPH.wsdl" />
     <Content Include="searchbox.ascx" />
     <Content Include="Service References\SpolehlivostDPH\UI.SpolehlivostDPH.InformaceOPlatciType.datasource">
@@ -1050,6 +1052,9 @@
     <Compile Include="Handler\handler_p66_plan.ashx.vb">
       <DependentUpon>handler_p66_plan.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handler\handler_popupmenu.ashx.vb">
+      <DependentUpon>handler_popupmenu.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handler\handler_search_task.ashx.vb">
       <DependentUpon>handler_search_task.ashx</DependentUpon>
     </Compile>
@@ -1520,6 +1525,13 @@
     </Compile>
     <Compile Include="plugin_modal.aspx.vb">
       <DependentUpon>plugin_modal.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="pokus2.aspx.designer.vb">
+      <DependentUpon>pokus2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pokus2.aspx.vb">
+      <DependentUpon>pokus2.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="projects.ascx.designer.vb">

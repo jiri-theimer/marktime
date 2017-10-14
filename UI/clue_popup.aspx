@@ -12,13 +12,14 @@
             background-color:#f0f8ff;
             width:100%;
             
-            z-index: 1;
+            
         }
 
             /* Links inside the dropdown */
             .dropdown-content a {
                 color: black;
-                padding: 8px 12px;
+                padding: 6px 12px;
+                
                 text-decoration: none;
                 display: block;
             }
@@ -26,6 +27,7 @@
                 /* Change color of dropdown links on hover */
                 .dropdown-content a:hover {
                     background-color:#e0e0e0;
+                    
                 }
 
        
@@ -33,7 +35,8 @@
             
             width:100%;            
             height:1px;
-            background-color:#e0e0e0;
+            padding:0px;
+            border-top: solid 1px #e0e0e0;
 
         }
        
