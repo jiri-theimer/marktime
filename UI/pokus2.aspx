@@ -20,8 +20,7 @@
     width:16px;
     height:20px;
     cursor: pointer;
-        
- 
+       
   
 }
 
@@ -42,7 +41,7 @@
 
 
     <script type="text/javascript">
-        var _items = "";
+        
 
         $(function () {
             $.contextMenu({
@@ -52,13 +51,8 @@
                     // this callback is executed every time the menu is to be shown
                     // its results are destroyed every time the menu is hidden
                     // e is the original contextmenu event, containing e.pageX and e.pageY (amongst other data)
-                    FillMenu($trigger.attr("prefix"), $trigger.attr("pid"), "blank");
-
-
-
-
-
-
+                    
+                    //FillMenu($trigger.attr("prefix"), $trigger.attr("pid"), "blank");
 
                     return {
                         callback: function (key, options) {
@@ -79,12 +73,14 @@
                 method: "POST",
                 url: "Handler/handler_popupmenu.ashx",
                 beforeSend: function () {
+                    alert("načítání");
                     $('#loading1').show();
                 },
                 async: false,
-                timeout:4000,
+                timeout:3000,
                 data: { prefix: curPREFIX, pid: curPID, page: curPAGE },
-                success: function (data) {                    
+                success: function (data) {
+                    alert("načítání");
                     $('#html5menu').html('');
                     
                     $("#html5menu").append(data);
@@ -92,6 +88,7 @@
                 },
                 complete: function () {
                     // do the job here
+                    alert("načítání");
                     $('#loading1').hide();
                 }
             });
@@ -118,7 +115,7 @@
         <a class="pp1 btn btn-neutral" id="row1" prefix="p56", pid="9"></a>
 
         <br>
-        <a class="pp1 btn btn-neutral" id="row2" prefix="p41" pid="8"></a>
+        <a class="pp1" id="row2" prefix="p41" pid="8"></a>
 
         <br>
         <a class="pp1 btn btn-neutral" id="row3" prefix="j02" pid="10"></a>

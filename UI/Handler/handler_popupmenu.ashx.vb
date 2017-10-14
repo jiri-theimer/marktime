@@ -64,10 +64,10 @@ Public Class handler_popupmenu
     End Sub
     Private Sub CI(strText As String, strURL As String, Optional bolDisabled As Boolean = False)
         _lis.Add("<menuitem label=" & Chr(34) & strText & Chr(34))
-        If strURL = "" Or bolDisabled Then
-            _lis.Add(" disabled")
+        If strURL = "" Then
+            If bolDisabled Then _lis.Add(" disabled")
         Else
-            _lis.Add(" onclick=contMenu(" & Chr(34) & strURL & Chr(34) & ">")
+            _lis.Add(" onclick=contMenu(" & Chr(34) & strURL & Chr(34) & ")>")
         End If
         _lis.Add("</menuitem>")
     End Sub

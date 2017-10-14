@@ -386,23 +386,22 @@ display: inline-block;
         cursor: pointer;
     }
 
-A.recpop {
+A.pp1 {
     display: block;
     background-image: url('../Images/p1.png');
     background-repeat: no-repeat;    
     width:16px;
     height:20px;
     cursor: pointer;
-        
- 
+       
   
 }
 
-    A.recpop:hover {
+    A.pp1:hover {
          background-image: url('../Images/p2.png');
          background-repeat: no-repeat;
          background-color:lightskyblue;
-    }    
+    } 
 
 
 /* MISC  
