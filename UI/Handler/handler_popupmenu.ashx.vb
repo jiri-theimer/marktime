@@ -69,10 +69,10 @@ Public Class handler_popupmenu
                 End Select
                 SEP()
                 If cRec.p56ID > 0 Then
-                    If factory.SysUser.j04IsMenu_Task Then REL("Stránka úkolu", "p56_framework.aspx?pid=" & cRec.p56ID.ToString, "_top")
+                    If factory.SysUser.j04IsMenu_Task Then REL("Stránka úkolu", "p56_framework.aspx?pid=" & cRec.p56ID.ToString, "_top", "Images/task.png")
                 End If
                 If factory.SysUser.j04IsMenu_Project Then
-                    REL("Stránka projektu", "p41_framework.aspx?pid=" & cRec.p41ID.ToString, "_top")
+                    REL("Stránka projektu", "p41_framework.aspx?pid=" & cRec.p41ID.ToString, "_top", "Images/project.png")
                 End If
 
 
@@ -84,7 +84,7 @@ Public Class handler_popupmenu
                 If Not cDisp.ReadAccess Then FinalRW(context, "Nemáte přístup k tomuto úkolu.") : Return
                 CI(cRec.FullName, "", True, "Images/information.png")
                 SEP()
-                CI("Stránka úkolu", "p56_framework.aspx?pid=" & intPID.ToString, , "Images/fullscreen.png")                
+                REL("Stránka úkolu", "p56_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
                 If cDisp.P31_Create Then
                     SEP()
                     CI("Zapsat WORKSHEET", "p31_record.aspx?p56id=" & intPID.ToString, cRec.IsClosed, "Images/worksheet.png")
@@ -230,6 +230,7 @@ Public Class handler_popupmenu
     End Sub
     Private Sub CI(strText As String, strURL As String, Optional bolDisabled As Boolean = False, Optional strImageUrl As String = "", Optional bolChild As Boolean = False)
         Dim c As New BO.ContextMenuItem
+        If Len(strText) > 35 Then strText = Left(strText, 35) & "..."
         c.Text = strText
         c.NavigateUrl = "javascript:contMenu(" & Chr(34) & strURL & Chr(34) & ")"
         c.IsDisabled = bolDisabled
@@ -238,10 +239,12 @@ Public Class handler_popupmenu
         _lis.Add(c)
 
     End Sub
-    Private Sub REL(strText As String, strURL As String, strTarget As String)
+    Private Sub REL(strText As String, strURL As String, strTarget As String, Optional strImageUrl As String = "")
         Dim c As New BO.ContextMenuItem
+        If Len(strText) > 35 Then strText = Left(strText, 35) & "..."
         c.Text = strText
-        c.NavigateUrl = strURL
+        c.NavigateUrl = "javascript:contReload(" & Chr(34) & strURL & Chr(34) & "," & Chr(34) & strTarget & Chr(34) & ")"
+        c.ImageUrl = strImageUrl
         c.Target = strTarget
         _lis.Add(c)
     End Sub

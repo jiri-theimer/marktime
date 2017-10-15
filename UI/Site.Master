@@ -299,8 +299,8 @@
         function contMenu(url) {
             sw_everywhere(url, "", true);
         }
-        function contReload(url) {
-            window.open(url, "_top");
+        function contReload(url, target) {            
+            window.open(url, target);
         }
 
         
@@ -344,11 +344,9 @@
 
                         if (c.IsSeparator == false) {
                             mi.set_text(c.Text);
-
-                            if (c.Target == "_top")
-                                mi.set_navigateUrl("contReload('" & c.NavigateUrl & "')");
-                            else
-                                mi.set_navigateUrl(c.NavigateUrl);
+                                                        
+                            mi.set_navigateUrl(c.NavigateUrl);                            
+                                
                         }
                         
                         if (c.ImageUrl != "") {
