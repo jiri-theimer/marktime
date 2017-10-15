@@ -20,7 +20,8 @@
             alert("ahoj");
         }
 
-        function RCM(curPREFIX, curPID, ctlID) {
+        function RCM2(curPREFIX, curPID, ctl) {
+            alert(ctl);
             var curPAGE = "";
             $.ajax({
                 method: "POST",
@@ -65,8 +66,8 @@
 
                     
 
-                    var x = $("#" + ctlID).offset().left
-                    var y = $("#" + ctlID).offset().top
+                    var x = $(ctl).offset().left
+                    var y = $(ctl).offset().top
                     
 
                     contextMenu.showAt(x + 20, y);
@@ -87,14 +88,15 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div style="position:absolute;top:200px; left:500px;">
-    <a id="cmdPP" class="pp1" href="javascript:RCM('p56','9','cmdPP')"></a>
+    <a id="cmdPP" class="pp1" onclick="RCM2('p56','9',this)"></a>
     </div>
     <hr />
     <div>
-    <a id="cmdPP2" class="pp1" href="javascript:RCM('p56','44','cmdPP2')"></a>
+    <a id="cmdPP2" class="pp1" onclick="RCM2('p56','44',this)"></a>
     </div>
     
-        
+     <hr />
+       <a id="cmdPP3" class="pp1" href="javascript:RCM2('p56','9',event)"></a>
     
     
 <telerik:RadContextMenu ID="RadContextMenu1" runat="server" EnableViewState="false" Skin="Metro" ExpandDelay="0"  >

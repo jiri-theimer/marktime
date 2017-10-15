@@ -71,7 +71,8 @@ Public Class main_menu
                 ai("", "searchbox", "javascript:mysearch()", "Images/search_silver.png", , "Najít projekt, klienta, fakturu, osobu nebo fulltext")
             End If
 
-            n = ai("", "new", "", "Images/new_menu.png", , Resources.common.Novy)
+            ai("", "newrec", "javascript:RCM('newrec')", "Images/new4menu.png", , Resources.common.Novy)
+            'n = ai("", "new", "", "Images/new_menu.png", , Resources.common.Novy)
 
             Dim b As Boolean = False
             If .j04IsMenu_Worksheet Then
@@ -142,7 +143,6 @@ Public Class main_menu
     
 
     Private Function ai(strText As String, strValue As String, strURL As String, strImg As String, Optional nParent As NavigationNode = Nothing, Optional strTooltip As String = "") As NavigationNode
-
         Dim n As New NavigationNode(strText)
         n.NavigateUrl = strURL
         n.ImageUrl = strImg
@@ -156,6 +156,7 @@ Public Class main_menu
         Return n
 
     End Function
+    
 
     ''Private Sub menu1_ItemCreated(sender As Object, e As RadMenuEventArgs) Handles menu1.ItemCreated
     ''    If Not TypeOf (e.Item) Is RadMenuItem Then Return

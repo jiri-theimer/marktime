@@ -22,11 +22,14 @@ Public Class handler_popupmenu
         Dim intPID As Integer = BO.BAS.IsNullInt(Trim(context.Request.Item("pid")))
         Dim strPAGE As String = Trim(context.Request.Item("page"))
 
-        If strPREFIX = "" Or intPID = 0 Then
-            FinalRW(context, "prefix or pid is missing") : Return
+        If strPREFIX = "" Then
+            FinalRW(context, "prefix is missing") : Return
         End If
+       
 
         Select Case strPREFIX
+            Case "newrec"
+                RenderNewRecMenu(context)  'hlavní menu - odkazy k založení nového záznamu
             Case "p31"
                 Dim cRec As BO.p31Worksheet = factory.p31WorksheetBL.Load(intPID)
                 If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
@@ -46,7 +49,7 @@ Public Class handler_popupmenu
                     Case BO.p31RecordState.Approved
                         CI("Detail (dvojklik)", "p31_record.aspx?pid=" & intPID.ToString)
                         If cDisp.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Then
-                            CI("Pře-schválit", "p31_record_AI.aspx?pid=" & intPID.ToString)                        
+                            CI("Pře-schválit", "p31_record_AI.aspx?pid=" & intPID.ToString)
                         End If
                         If cDisp.RecordDisposition = BO.p31RecordDisposition.CanEdit Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Or cRec.j02ID = factory.SysUser.j02ID Then
                             SEP()
@@ -72,7 +75,7 @@ Public Class handler_popupmenu
                     REL("Stránka projektu", "p41_framework.aspx?pid=" & cRec.p41ID.ToString, "_top")
                 End If
 
-                
+
             Case "p56"
                 Dim cRec As BO.p56Task = factory.p56TaskBL.Load(intPID)
                 If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
@@ -103,9 +106,15 @@ Public Class handler_popupmenu
 
     End Sub
 
+    Private Sub RenderNewRecMenu(context As HttpContext)
+        CI("Klient", "p28_record.aspx?pid=0&hrjs=hardrefresh_menu", , "Images/contact.png")
+        CI("Projekt", "p41_create.aspx?hrjs=hardrefresh_menu", , "Images/project.png")
+        CI("Dokument", "select_doctype.aspx?hrjs=hardrefresh_menu", , "Images/notepad.png")
+    End Sub
+
     Private Sub FinalRW(context As HttpContext, strMessage As String)
         If strMessage <> "" Then
-            CI(strMessage, "")
+            CI(strMessage, "", True)
         End If
         Dim jss As New System.Web.Script.Serialization.JavaScriptSerializer
         Dim s As String = jss.Serialize(_lis)
@@ -116,11 +125,12 @@ Public Class handler_popupmenu
         c.IsSeparator = True
         _lis.Add(c)
     End Sub
-    Private Sub CI(strText As String, strURL As String, Optional bolDisabled As Boolean = False)
+    Private Sub CI(strText As String, strURL As String, Optional bolDisabled As Boolean = False, Optional strImageUrl As String = "")
         Dim c As New BO.ContextMenuItem
         c.Text = strText
         c.NavigateUrl = "javascript:contMenu(" & Chr(34) & strURL & Chr(34) & ")"
         c.IsDisabled = bolDisabled
+        c.ImageUrl = strImageUrl
         _lis.Add(c)
 
     End Sub

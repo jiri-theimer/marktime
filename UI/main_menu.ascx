@@ -50,6 +50,8 @@
         });
     }
 
+    
+
     function p28_create() {
 
         sw_menu_decide("p28_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/contact.png", false);

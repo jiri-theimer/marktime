@@ -102,4 +102,13 @@ Partial Public Class Site
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidPageTitle As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''RadContextMenu1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadContextMenu1 As Global.Telerik.Web.UI.RadContextMenu
 End Class
