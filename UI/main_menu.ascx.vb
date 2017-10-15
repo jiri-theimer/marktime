@@ -74,30 +74,7 @@ Public Class main_menu
             ai("", "newrec", "javascript:RCM('newrec')", "Images/new4menu.png", , Resources.common.Novy)
             'n = ai("", "new", "", "Images/new_menu.png", , Resources.common.Novy)
 
-            Dim b As Boolean = False
-            If .j04IsMenu_Worksheet Then
-                ai("Worksheet úkon", "new_p31", "javascript:p31_create()", "", n) : b = True
-            End If
-            If .j04IsMenu_Contact Then
-                If factory.TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator) Then ai(Resources.common.Klient, "new_p28", "javascript:p28_create()", "", n) : b = True
-            End If
-            If .j04IsMenu_Project Then
-                If factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then ai(Resources.common.Projekt, "new_p41", "javascript:p41_create()", "", n) : b = True
-            End If
             
-            If factory.SysUser.j04IsMenu_Notepad Then
-                ai(Resources.common.Dokument, "new_o23", "javascript:o23_create()", "", n) : b = True
-            End If
-            ai(Resources.common.Ukol, "new_p56", "javascript:p56_create()", "", n)
-            ai("Událost v kalendáři", "new_o22", "javascript:o22_create()", "", n)
-            If .j04IsMenu_Invoice Then
-                If factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator) Then ai(Resources.common.Faktura, "", "javascript:p91_create()", "", n) : b = True
-            End If
-            If factory.TestPermission(BO.x53PermValEnum.GR_P90_Create) Then ai(Resources.common.ZalohovaFaktura, "new_p90", "javascript:p90_create()", "", n)
-
-            If factory.SysUser.IsAdmin Then
-                ai(Resources.common.Osoba, "new_j02", "javascript:j02_create()", "", n) : b = True
-            End If
             ''If Not b Then menu1.Nodes.Remove(n)
         End With
 

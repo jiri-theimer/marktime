@@ -52,44 +52,7 @@
 
     
 
-    function p28_create() {
 
-        sw_menu_decide("p28_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/contact.png", false);
-    }
-    function p41_create() {
-        sw_menu_decide("p41_create.aspx?hrjs=hardrefresh_menu", "Images/project.png", false);
-    }
-
-    function p56_create() {
-        sw_menu_decide("p56_record.aspx?masterprefix=p41&masterpid=0&hrjs=hardrefresh_menu", "Images/task.png");
-    }
-    function o22_create() {
-        sw_menu_decide("o22_record.aspx?hrjs=hardrefresh_menu", "Images/milestone.png");
-    }
-    function p91_create() {
-        sw_menu_decide("p91_create_step1.aspx?prefix=p28&hrjs=hardrefresh_menu", "Images/invoice.png", true);
-
-    }
-    function p31_create() {
-        sw_menu_decide("p31_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/worksheet.png")
-
-    }
-    function o23_create() {
-        sw_menu_decide("select_doctype.aspx?hrjs=hardrefresh_menu", "Images/notepad.png")
-
-    }
-    function o10_create() {
-        sw_menu_decide("o10_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/article.png", true)
-
-    }
-    function p90_create() {
-        sw_menu_decide("p90_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/proforma.png")
-
-    }
-    function j02_create() {
-        sw_menu_decide("j02_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/person.png")
-
-    }
     function mysearch() {
         sw_menu_decide("clue_search.aspx", "Images/search.png")
 

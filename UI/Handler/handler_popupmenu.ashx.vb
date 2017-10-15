@@ -106,10 +106,46 @@ Public Class handler_popupmenu
 
     End Sub
 
-    Private Sub RenderNewRecMenu(context As HttpContext)
-        CI("Klient", "p28_record.aspx?pid=0&hrjs=hardrefresh_menu", , "Images/contact.png")
-        CI("Projekt", "p41_create.aspx?hrjs=hardrefresh_menu", , "Images/project.png")
-        CI("Dokument", "select_doctype.aspx?hrjs=hardrefresh_menu", , "Images/notepad.png")
+    Private Sub RenderNewRecMenu(factory As BL.Factory, context As HttpContext)
+        With factory.SysUser
+
+            If .j04IsMenu_Worksheet Then
+                CI("Zapsat worksheet", "p31_record.aspx?pid=0", , "Images/worksheet.png")
+            End If
+            If .j04IsMenu_Contact Then
+                If factory.TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator) Then
+                    CI(Resources.common.Klient, "p28_record.aspx?pid=0&hrjs=hardrefresh_menu", , "Images/contact.png")
+                End If
+            End If
+            If .j04IsMenu_Project Then
+                If factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then
+                    CI(Resources.common.Projekt, "p41_create.aspx?hrjs=hardrefresh_menu", , "Images/project.png")
+                End If
+            End If
+
+            If factory.SysUser.j04IsMenu_Notepad Then
+                CI(Resources.common.Dokument, "select_doctype.aspx?hrjs=hardrefresh_menu", , "Images/notepad.png") : b = True
+            End If
+            If factory.SysUser.j04IsMenu_Task Then
+                CI(Resources.common.Ukol, "p56_record.aspx?masterprefix=p41&masterpid=0&hrjs=hardrefresh_menu", , "Images/task.png")
+            End If
+            CI("Událost v kalendáři", "o22_record.aspx?hrjs=hardrefresh_menu", , "Images/event.png")
+
+            If .j04IsMenu_Invoice Then
+                If factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator) Then
+                    CI(Resources.common.Faktura, "p91_create_step1.aspx?prefix=p28&hrjs=hardrefresh_menu", , "Images/invoice.png")
+                End If
+            End If
+            If factory.TestPermission(BO.x53PermValEnum.GR_P90_Create) Then
+                CI(Resources.common.ZalohovaFaktura, "p90_record.aspx?pid=0&hrjs=hardrefresh_menu", , "Images/proforma.png")
+            End If
+
+            If factory.SysUser.IsAdmin Then
+                CI(Resources.common.Osoba, "j02_record.aspx?pid=0&hrjs=hardrefresh_menu", , "Images/person.png")
+            End If
+        End With
+
+
     End Sub
 
     Private Sub FinalRW(context As HttpContext, strMessage As String)
