@@ -82,17 +82,20 @@ Public Class handler_popupmenu
 
                 Dim cDisp As BO.p56RecordDisposition = factory.p56TaskBL.InhaleRecordDisposition(cRec)
                 If Not cDisp.ReadAccess Then FinalRW(context, "Nemáte přístup k tomuto úkolu.") : Return
-                CI("Stránka úkolu", "p56_framework.aspx?pid=" & intPID.ToString, , "Images/fullscreen.png")
+                CI(cRec.FullName, "", True, "Images/information.png")
+                SEP()
+                CI("Stránka úkolu", "p56_framework.aspx?pid=" & intPID.ToString, , "Images/fullscreen.png")                
+                If cDisp.P31_Create Then
+                    SEP()
+                    CI("Zapsat WORKSHEET", "p31_record.aspx?p56id=" & intPID.ToString, cRec.IsClosed, "Images/worksheet.png")
+                End If
                 CI("Posunout/Doplnit", "workflow_dialog.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/workflow.png")
                 If cDisp.OwnerAccess Then
                     SEP()
                     CI("Upravit záznam (karta úkolu)", "p56_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
                     CI("Kopírovat", "p56_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
                 End If
-                If cDisp.P31_Create Then
-                    SEP()
-                    CI("Zapsat WORKSHEET", "p31_record.aspx?p56id=" & intPID.ToString, cRec.IsClosed, "Images/worksheet.png")
-                End If
+                
                 SEP()
                 CI("Tisková sestava", "report_modal.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/report.png")
             Case "p28"
@@ -100,7 +103,8 @@ Public Class handler_popupmenu
                 If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
                 Dim cDisp As BO.p28RecordDisposition = factory.p28ContactBL.InhaleRecordDisposition(cRec)
                 If Not cDisp.ReadAccess Then FinalRW(context, "Nemáte přístup k tomuto úkolu.") : Return
-                
+                CI(cRec.p28Name, "", True, "Images/information.png")
+                SEP()
                 If cDisp.OwnerAccess Then
                     CI("Upravit záznam (karta klienta)", "p28_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
                     CI("Kopírovat", "p28_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
@@ -110,15 +114,18 @@ Public Class handler_popupmenu
             Case "p41"
                 Dim cRec As BO.p41Project = factory.p41ProjectBL.Load(intPID)
                 If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
+                CI(cRec.PrefferedName, "", True, "Images/information.png")
+                SEP()
 
                 Dim cP42 As BO.p42ProjectType = factory.p42ProjectTypeBL.Load(cRec.p42ID)
                 Dim cDisp As BO.p41RecordDisposition = factory.p41ProjectBL.InhaleRecordDisposition(cRec)
 
                 If cP42.p42IsModule_p31 And Not (cRec.IsClosed Or cRec.p41IsDraft) Then
-                    'mi = ami("ZAPSAT WORKSHEET", "p31", "", "", Nothing)
+                    CI("Zapsat WORKSHEET", "", , "Images/worksheet.png")
+
                     Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(cRec.PID, cRec.p42ID, cRec.j18ID, factory.SysUser.j02ID)
                     For Each c In lisP34
-                        CI(String.Format(Resources.p41_framework_detail.ZapsatUkonDo, c.p34Name), "p31_record.aspx?pid=0&p41id=" & cRec.PID.ToString & "&p34id=" + c.PID.ToString, , "Images/worksheet.png")
+                        CI("[" & c.p34Name & "]", "p31_record.aspx?pid=0&p41id=" & cRec.PID.ToString & "&p34id=" + c.PID.ToString, , "Images/worksheet.png", True)
                     Next
                 End If
 
@@ -129,6 +136,30 @@ Public Class handler_popupmenu
                 End If
                 SEP()
                 CI("Tisková sestava", "report_modal.aspx?prefix=p41&pid=" & intPID.ToString, , "Images/report.png")
+            Case "p91"
+                Dim cRec As BO.p91Invoice = factory.p91InvoiceBL.Load(intPID)
+                If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
+                CI(cRec.p92Name & ": " & cRec.p91Code, "", True, "Images/information.png")
+                Dim cDisp As BO.p91RecordDisposition = factory.p91InvoiceBL.InhaleRecordDisposition(cRec)
+                If cDisp.ReadAccess Then
+                    If cDisp.OwnerAccess Then
+                        SEP()
+                        CI("Upravit kartu faktury", "p91_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+                    End If
+                    SEP()
+                    Dim cP92 As BO.p92InvoiceType = factory.p92InvoiceTypeBL.Load(cRec.p92ID)
+                    With cP92
+                        If .x31ID_Invoice > 0 Then
+                            CI("Sestava dokladu", "report_modal.aspx?x31id=" & .x31ID_Invoice.ToString & "&prefix=p91&pid=" & intPID.ToString, , "Images/report.png")
+                        End If
+                        If .x31ID_Attachment > 0 Then
+                            CI("Sestava přílohy", "report_modal.aspx?x31id=" & .x31ID_Attachment.ToString & "&prefix=p91&pid=" & intPID.ToString, , "Images/report.png")
+                        End If
+                    End With
+                    CI("Tisková sestava", "report_modal.aspx?prefix=p91&pid=" & intPID.ToString, , "Images/report.png")
+                End If
+                
+
             Case Else
                 CI("Nezpracovatelný PREFIX", "")
         End Select
@@ -197,12 +228,13 @@ Public Class handler_popupmenu
         c.IsSeparator = True
         _lis.Add(c)
     End Sub
-    Private Sub CI(strText As String, strURL As String, Optional bolDisabled As Boolean = False, Optional strImageUrl As String = "")
+    Private Sub CI(strText As String, strURL As String, Optional bolDisabled As Boolean = False, Optional strImageUrl As String = "", Optional bolChild As Boolean = False)
         Dim c As New BO.ContextMenuItem
         c.Text = strText
         c.NavigateUrl = "javascript:contMenu(" & Chr(34) & strURL & Chr(34) & ")"
         c.IsDisabled = bolDisabled
         c.ImageUrl = strImageUrl
+        c.IsChildOfPrevious = bolChild
         _lis.Add(c)
 
     End Sub

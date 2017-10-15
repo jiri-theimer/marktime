@@ -6,5 +6,6 @@
     Public Property IsSeparator As Boolean
 
     Public Property IsDisabled As Boolean
+    Public Property IsChildOfPrevious As Boolean
 
 End Class

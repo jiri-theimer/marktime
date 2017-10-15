@@ -73,10 +73,10 @@
                         </td>
                     </tr>
                     <tr valign="top" style="background-color: white;">
-                        <td>
+                        <td width="20px">
                             <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" ToolTip="Detail úkolu"></asp:HyperLink>
                         </td>
-                        <td>
+                        <td width="20px">
                             <asp:HyperLink ID="pm1" runat="server" CssClass="pp1"></asp:HyperLink>
                         </td>
                         <td style="max-width: 460px; padding: 4px;">

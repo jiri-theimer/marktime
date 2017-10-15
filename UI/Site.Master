@@ -332,6 +332,7 @@
                     }
                     
                     
+                    var miLastRoot = null;
 
                     for (var i in data) {
                         var c = data[i];
@@ -353,12 +354,21 @@
                         if (c.ImageUrl != "") {
                             mi.set_imageUrl(c.ImageUrl);
                         }
-
-                        if (c.Disabled) {
+                        
+                        if (c.IsDisabled == true) {
                             mi.disable();
                         }
+                        
+                        if (c.IsChildOfPrevious == true) {
+                            miLastRoot.get_items().add(mi);
+                        }
 
-                        contextMenu.get_items().add(mi);
+                        if (c.IsChildOfPrevious == false) {                            
+                            contextMenu.get_items().add(mi);
+                            miLastRoot = mi;
+                        }
+
+                        
                     }
 
                     contextMenu.showAt(x + 20, y);
