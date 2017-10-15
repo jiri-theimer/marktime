@@ -29,7 +29,7 @@ Public Class handler_popupmenu
 
         Select Case strPREFIX
             Case "newrec"
-                RenderNewRecMenu(context)  'hlavní menu - odkazy k založení nového záznamu
+                RenderNewRecMenu(factory, context)  'hlavní menu - odkazy k založení nového záznamu
             Case "p31"
                 Dim cRec As BO.p31Worksheet = factory.p31WorksheetBL.Load(intPID)
                 If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
@@ -82,18 +82,53 @@ Public Class handler_popupmenu
 
                 Dim cDisp As BO.p56RecordDisposition = factory.p56TaskBL.InhaleRecordDisposition(cRec)
                 If Not cDisp.ReadAccess Then FinalRW(context, "Nemáte přístup k tomuto úkolu.") : Return
-                CI("Stránka úkolu (dvojklik)", "p56_framework.aspx?pid=" & intPID.ToString)
-                CI("Posunout/Doplnit", "workflow_dialog.aspx?prefix=p56&pid=" & intPID.ToString)
+                CI("Stránka úkolu", "p56_framework.aspx?pid=" & intPID.ToString, , "Images/fullscreen.png")
+                CI("Posunout/Doplnit", "workflow_dialog.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/workflow.png")
                 If cDisp.OwnerAccess Then
                     SEP()
-                    CI("Upravit záznam (karta úkolu)", "p56_record.aspx?pid=" & intPID.ToString)
-                    CI("Kopírovat", "p56_record.aspx?clone=1&pid=" & intPID.ToString)
+                    CI("Upravit záznam (karta úkolu)", "p56_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+                    CI("Kopírovat", "p56_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
                 End If
                 If cDisp.P31_Create Then
                     SEP()
-                    CI("Vykázat v úkolu worksheet úkon", "p31_record.aspx?p56id=" & intPID.ToString, cRec.IsClosed)
+                    CI("Zapsat WORKSHEET", "p31_record.aspx?p56id=" & intPID.ToString, cRec.IsClosed, "Images/worksheet.png")
                 End If
-                CI("Tisková sestava", "report_modal.aspx?prefix=p56&pid=" & intPID.ToString)
+                SEP()
+                CI("Tisková sestava", "report_modal.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/report.png")
+            Case "p28"
+                Dim cRec As BO.p28Contact = factory.p28ContactBL.Load(intPID)
+                If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
+                Dim cDisp As BO.p28RecordDisposition = factory.p28ContactBL.InhaleRecordDisposition(cRec)
+                If Not cDisp.ReadAccess Then FinalRW(context, "Nemáte přístup k tomuto úkolu.") : Return
+                
+                If cDisp.OwnerAccess Then
+                    CI("Upravit záznam (karta klienta)", "p28_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+                    CI("Kopírovat", "p28_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
+                End If
+                SEP()
+                CI("Tisková sestava", "report_modal.aspx?prefix=p28&pid=" & intPID.ToString, , "Images/report.png")
+            Case "p41"
+                Dim cRec As BO.p41Project = factory.p41ProjectBL.Load(intPID)
+                If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
+
+                Dim cP42 As BO.p42ProjectType = factory.p42ProjectTypeBL.Load(cRec.p42ID)
+                Dim cDisp As BO.p41RecordDisposition = factory.p41ProjectBL.InhaleRecordDisposition(cRec)
+
+                If cP42.p42IsModule_p31 And Not (cRec.IsClosed Or cRec.p41IsDraft) Then
+                    'mi = ami("ZAPSAT WORKSHEET", "p31", "", "", Nothing)
+                    Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(cRec.PID, cRec.p42ID, cRec.j18ID, factory.SysUser.j02ID)
+                    For Each c In lisP34
+                        CI(String.Format(Resources.p41_framework_detail.ZapsatUkonDo, c.p34Name), "p31_record.aspx?pid=0&p41id=" & cRec.PID.ToString & "&p34id=" + c.PID.ToString, , "Images/worksheet.png")
+                    Next
+                End If
+
+                If cDisp.OwnerAccess Then
+                    SEP()
+                    CI("Upravit záznam (karta projektu)", "p41_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+                    CI("Kopírovat", "p41_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
+                End If
+                SEP()
+                CI("Tisková sestava", "report_modal.aspx?prefix=p41&pid=" & intPID.ToString, , "Images/report.png")
             Case Else
                 CI("Nezpracovatelný PREFIX", "")
         End Select
@@ -110,6 +145,7 @@ Public Class handler_popupmenu
         With factory.SysUser
 
             If .j04IsMenu_Worksheet Then
+
                 CI("Zapsat worksheet", "p31_record.aspx?pid=0", , "Images/worksheet.png")
             End If
             If .j04IsMenu_Contact Then
@@ -124,7 +160,7 @@ Public Class handler_popupmenu
             End If
 
             If factory.SysUser.j04IsMenu_Notepad Then
-                CI(Resources.common.Dokument, "select_doctype.aspx?hrjs=hardrefresh_menu", , "Images/notepad.png") : b = True
+                CI(Resources.common.Dokument, "select_doctype.aspx?hrjs=hardrefresh_menu", , "Images/notepad.png")
             End If
             If factory.SysUser.j04IsMenu_Task Then
                 CI(Resources.common.Ukol, "p56_record.aspx?masterprefix=p41&masterpid=0&hrjs=hardrefresh_menu", , "Images/task.png")

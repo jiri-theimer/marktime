@@ -287,8 +287,11 @@
                                     <td>
                                         <asp:Image ID="img1" runat="server" />
                                         <asp:Label ID="lbl1" runat="server" CssClass="timestamp"></asp:Label>
+                                        
                                     </td>
-
+                                    <td>
+                                        <asp:HyperLink ID="linkPP1" runat="server" CssClass="pp1"></asp:HyperLink>
+                                    </td>
                                     <td>
                                         <asp:HyperLink ID="link1" runat="server" CssClass="value_link"></asp:HyperLink>
                                         <asp:Label ID="lbl2" runat="server"></asp:Label>

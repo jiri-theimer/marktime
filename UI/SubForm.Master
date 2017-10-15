@@ -225,6 +225,7 @@
 
             try {
                 window.parent.MainMenuClose();
+                
             }
             catch (err) {
                 //nic

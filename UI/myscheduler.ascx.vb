@@ -299,15 +299,15 @@ Public Class myscheduler
         Else
             e.Item.FindControl("Project").Visible = False
         End If
-        
+        With CType(e.Item.FindControl("pm1"), HyperLink)
+            .Attributes.Item("onclick") = "RCM('p56'," & cRec.PID.ToString & ",this)"
+        End With
         With CType(e.Item.FindControl("linkWorkflow"), HyperLink)
             .Text = cRec.b02Name
             If cRec.b02Color <> "" Then .Style.Item("background-color") = cRec.b02Color
             .NavigateUrl = "javascript:wd(" & cRec.PID.ToString & ")"
         End With
-        With CType(e.Item.FindControl("linkWorksheet"), HyperLink)
-            .NavigateUrl = "javascript:ew(" & cRec.PID.ToString & ")"
-        End With
+       
 
         If Not BO.BAS.IsNullDBDate(cRec.p56PlanUntil) Is Nothing Then
             With CType(e.Item.FindControl("p56PlanUntil"), Label)

@@ -457,7 +457,9 @@
             CType(e.Item.FindControl("link1"), HyperLink).NavigateUrl = BO.BAS.GetDataPrefix(cRec.x29ID) & "_framework.aspx?pid=" & cRec.x47RecordPID.ToString
             CType(e.Item.FindControl("lbl2"), Label).Text = BO.BAS.OM3(cRec.x47NameReference, 25)
         End If
-
+        With CType(e.Item.FindControl("linkPP1"), HyperLink)
+            .Attributes.Item("onclick") = "RCM('" & BO.BAS.GetDataPrefix(cRec.x29ID) & "'," & cRec.x47RecordPID.ToString & ",this)"
+        End With
         CType(e.Item.FindControl("timestamp"), Label).Text = cRec.Person & "/" & BO.BAS.FD(cRec.DateInsert, True, True)
         CType(e.Item.FindControl("link1"), HyperLink).Text = BO.BAS.OM3(cRec.x47Name, 40)
 

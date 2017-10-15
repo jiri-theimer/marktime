@@ -303,7 +303,8 @@
             window.open(url, "_top");
         }
 
-            
+        
+        
        
         function RCM(curPREFIX, curPID, ctl) {                                    
             
@@ -341,7 +342,7 @@
                         }
 
                         if (c.IsSeparator == false) {
-                            mi.set_text(c.Text + ", y: " + y);
+                            mi.set_text(c.Text);
 
                             if (c.Target == "_top")
                                 mi.set_navigateUrl("contReload('" & c.NavigateUrl & "')");

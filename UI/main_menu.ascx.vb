@@ -65,15 +65,12 @@ Public Class main_menu
             If .j03SiteMenuSkin > "" Then menu1.Skin = .j03SiteMenuSkin
             'If menu1.Nodes.Count > 0 Then menu1.Nodes.Clear()
 
-            ''ai("", "begin", "", "")
             If .j04IsMenu_Project Or .j04IsMenu_Contact Or .j04IsMenu_Invoice Or .j04IsMenu_People Then
 
                 ai("", "searchbox", "javascript:mysearch()", "Images/search_silver.png", , "Najít projekt, klienta, fakturu, osobu nebo fulltext")
             End If
 
             ai("", "newrec", "javascript:RCM('newrec')", "Images/new4menu.png", , Resources.common.Novy)
-            'n = ai("", "new", "", "Images/new_menu.png", , Resources.common.Novy)
-
             
             ''If Not b Then menu1.Nodes.Remove(n)
         End With
