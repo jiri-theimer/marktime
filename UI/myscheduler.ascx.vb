@@ -302,10 +302,10 @@ Public Class myscheduler
         With CType(e.Item.FindControl("pm1"), HyperLink)
             .Attributes.Item("onclick") = "RCM('p56'," & cRec.PID.ToString & ",this)"
         End With
-        With CType(e.Item.FindControl("linkWorkflow"), HyperLink)
+        With CType(e.Item.FindControl("lblB02Name"), Label)
             .Text = cRec.b02Name
             If cRec.b02Color <> "" Then .Style.Item("background-color") = cRec.b02Color
-            .NavigateUrl = "javascript:wd(" & cRec.PID.ToString & ")"
+
         End With
        
 

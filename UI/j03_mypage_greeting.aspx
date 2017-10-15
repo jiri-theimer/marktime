@@ -25,15 +25,6 @@
 
 
 
-       
-        function wd(pid) {
-
-            sw_master("workflow_dialog.aspx?pid=" + pid + "&prefix=p56", "Images/workflow.png")
-        }
-        function ew(p56id) {
-
-            sw_master("p31_record.aspx?pid=0&p56id=" + p56id, "Images/worksheet.png")
-        }
 
         function hardrefresh(pid, flag) {
             if (flag == "o23-save") {

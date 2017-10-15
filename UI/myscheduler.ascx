@@ -90,8 +90,8 @@
                         </td>
                         
                         <td style="text-align: center; padding: 4px;">
-                            <asp:HyperLink ID="linkWorkflow" runat="server" Text="Posunout/doplnit" meta:resourcekey="linkWorkflow"></asp:HyperLink>
-
+                            
+                            <asp:Label ID="lblB02Name" runat="server"></asp:Label>
                         </td>
                         
                     </tr>
