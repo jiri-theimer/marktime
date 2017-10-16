@@ -158,6 +158,15 @@ Partial Public Class approving_framework
     Protected WithEvents chkFirstLastCount As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''chkShowTags control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkShowTags As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''CurrentQuery control.
     '''</summary>
     '''<remarks>

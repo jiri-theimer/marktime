@@ -30,5 +30,5 @@
     Public Property schvaleno_pocet As Integer?
     Public Property schvaleno_prvni As Date?
     Public Property schvaleno_posledni As Date?
-    
+    Public Property TagsInlineHtml As String
 End Class

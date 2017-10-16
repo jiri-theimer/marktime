@@ -147,50 +147,7 @@ Public Class handler_popupmenu
                 SEP()
                 CI("Oštítkovat", "tag_binding.aspx?prefix=p28&pids=" & intPID.ToString, , "Images/tag.png")
             Case "p41"
-                Dim cRec As BO.p41Project = factory.p41ProjectBL.Load(intPID)
-                If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
-                If factory.SysUser.j04IsMenu_Project Then
-                    REL(cRec.PrefferedName, "p41_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
-                    If cRec.p41ParentID > 0 Then
-                        Dim cParent As BO.p41Project = factory.p41ProjectBL.Load(cRec.p41ParentID)
-                        REL(cParent.PrefferedName, "p41_framework.aspx?pid=" & cRec.p41ParentID.ToString, "_top", "Images/tree.png")
-                    End If
-                Else
-                    CI(cRec.PrefferedName, "", True, "Images/information.png")
-                End If
-                SEP()
-
-                Dim cP42 As BO.p42ProjectType = factory.p42ProjectTypeBL.Load(cRec.p42ID)
-                Dim cDisp As BO.p41RecordDisposition = factory.p41ProjectBL.InhaleRecordDisposition(cRec)
-                If Not cDisp.ReadAccess Then FinalRW(context, "Nemáte přístup k tomuto projektu.") : Return
-
-                If cP42.p42IsModule_p31 And Not (cRec.IsClosed Or cRec.p41IsDraft) Then
-                    CI("Zapsat WORKSHEET", "", , "Images/worksheet.png")
-
-                    Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(cRec.PID, cRec.p42ID, cRec.j18ID, factory.SysUser.j02ID)
-                    For Each c In lisP34
-                        CI("[" & c.p34Name & "]", "p31_record.aspx?pid=0&p41id=" & cRec.PID.ToString & "&p34id=" + c.PID.ToString, , "Images/worksheet.png", True)
-                    Next
-                End If
-
-                If cDisp.OwnerAccess Then
-                    SEP()
-                    CI("Upravit kartu projektu", "p41_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
-                    CI("Kopírovat", "p41_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
-                End If
-                
-                If factory.SysUser.j04IsMenu_Contact And cRec.p28ID_Client > 0 Then
-                    SEP()
-                    REL(cRec.Client, "p28_framework.aspx?pid=" & cRec.p28ID_Client.ToString, "_top", "Images/contact.png")
-                End If
-                If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
-                    SEP()
-                    REL("Statistiky projektu", "p31_sumgrid.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "_top", "Images/pivot.png")
-                End If
-                SEP()
-                CI("Tisková sestava", "report_modal.aspx?prefix=p41&pid=" & intPID.ToString, , "Images/report.png")
-                SEP()
-                CI("Oštítkovat", "tag_binding.aspx?prefix=p41&pids=" & intPID.ToString, , "Images/tag.png")
+                HandleP41(intPID, factory, strFlag)
             Case "p91"
                 Dim cRec As BO.p91Invoice = factory.p91InvoiceBL.Load(intPID)
                 If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
@@ -249,6 +206,74 @@ Public Class handler_popupmenu
         context.Response.Write(s)
 
 
+    End Sub
+    Private Sub HandleP41(intPID As Integer, factory As BL.Factory, strFlag As String)
+        Dim cRec As BO.p41Project = factory.p41ProjectBL.Load(intPID)
+        If cRec Is Nothing Then CI("Záznam nebyl nalezen.", "", True) : Return
+        If factory.SysUser.j04IsMenu_Project Then
+            REL(cRec.PrefferedName, "p41_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
+            If cRec.p41ParentID > 0 Then
+                Dim cParent As BO.p41Project = factory.p41ProjectBL.Load(cRec.p41ParentID)
+                REL(cParent.PrefferedName, "p41_framework.aspx?pid=" & cRec.p41ParentID.ToString, "_top", "Images/tree.png")
+            End If
+        Else
+            CI(cRec.PrefferedName, "", True, "Images/information.png")
+        End If
+
+
+        Dim cP42 As BO.p42ProjectType = factory.p42ProjectTypeBL.Load(cRec.p42ID)
+        Dim cDisp As BO.p41RecordDisposition = factory.p41ProjectBL.InhaleRecordDisposition(cRec)
+        If Not cDisp.ReadAccess Then CI("Nemáte přístup k tomuto projektu.", "", True) : Return
+        If cP42.p42IsModule_p31 Then
+            If Not (cRec.IsClosed Or cRec.p41IsDraft) Then
+                CI("Zapsat WORKSHEET", "", , "Images/worksheet.png")
+
+                Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(cRec.PID, cRec.p42ID, cRec.j18ID, factory.SysUser.j02ID)
+                For Each c In lisP34
+                    CI("[" & c.p34Name & "]", "p31_record.aspx?pid=0&p41id=" & cRec.PID.ToString & "&p34id=" + c.PID.ToString, , "Images/worksheet.png", True)
+                Next
+            End If
+            Dim cRecSum As BO.p41ProjectSum = factory.p41ProjectBL.LoadSumRow(cRec.PID)
+            If cRecSum.p31_Wip_Expense_Count > 0 Or cRecSum.p31_Wip_Fee_Count > 0 Or cRecSum.p31_Wip_Time_Count > 0 Then
+                Dim bolCanApproveOrInvoice As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver, BO.x53PermValEnum.GR_P91_Creator)
+                If Not bolCanApproveOrInvoice Then bolCanApproveOrInvoice = factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator)
+                If bolCanApproveOrInvoice = False And cDisp.x67IDs.Count > 0 Then
+                    Dim lisO28 As IEnumerable(Of BO.o28ProjectRole_Workload) = factory.x67EntityRoleBL.GetList_o28(cDisp.x67IDs)
+                    If lisO28.Where(Function(p) p.o28PermFlag = BO.o28PermFlagENUM.CistASchvalovatVProjektu Or p.o28PermFlag = BO.o28PermFlagENUM.CistAEditASchvalovatVProjektu).Count > 0 Then
+                        bolCanApproveOrInvoice = True
+                    End If
+                End If
+                If bolCanApproveOrInvoice Then
+                    SEP()
+                    CI("Schvalovat nebo vystavit fakturu", "entity_modal_approving.aspx?prefix=p41&pid=" & intPID.ToString, , "Images/approve.png")
+                    If factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator, BO.x53PermValEnum.GR_P31_Approver) Then
+                        CI("Vystavit fakturu zrychleně bez schvalování", "entity_modal_invoicing.aspx?prefix=p41&pids=" & intPID.ToString, , "Images/invoice.png")
+                    End If
+                End If
+            End If
+            
+
+        End If
+        
+
+        If cDisp.OwnerAccess Then
+            SEP()
+            CI("Upravit kartu projektu", "p41_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+            CI("Kopírovat", "p41_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
+        End If
+
+        If factory.SysUser.j04IsMenu_Contact And cRec.p28ID_Client > 0 Then
+            SEP()
+            REL(cRec.Client, "p28_framework.aspx?pid=" & cRec.p28ID_Client.ToString, "_top", "Images/contact.png")
+        End If
+        If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
+            SEP()
+            REL("Statistiky projektu", "p31_sumgrid.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "_top", "Images/pivot.png")
+        End If
+        SEP()
+        CI("Tisková sestava", "report_modal.aspx?prefix=p41&pid=" & intPID.ToString, , "Images/report.png")
+        SEP()
+        CI("Oštítkovat", "tag_binding.aspx?prefix=p41&pids=" & intPID.ToString, , "Images/tag.png")
     End Sub
     Private Sub HandleO23(intPID As Integer, factory As BL.Factory, strFlag As String)
         Dim cRec As BO.o23Doc = factory.o23DocBL.Load(intPID)

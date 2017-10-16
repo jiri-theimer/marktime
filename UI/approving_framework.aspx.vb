@@ -57,6 +57,7 @@ Public Class approving_framework
                     .Add("approving_framework-filter_sql-j02")
                     
                     .Add("approving_framework-chkFirstLastCount")
+                    .Add("approving_framework-chkShowTags")
                     .Add("approving_framework-cbxScrollingFlag")
                     .Add("x18_querybuilder-value-p41-approve")
                     .Add("x18_querybuilder-text-p41-approve")
@@ -71,7 +72,8 @@ Public Class approving_framework
 
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
-                    Me.chkFirstLastCount.Checked = BO.BAS.BG(.GetUserParam("approving_framework-chkFirstLastCount", "1"))
+                    Me.chkFirstLastCount.Checked = BO.BAS.BG(.GetUserParam("approving_framework-chkFirstLastCount", "0"))
+                    Me.chkShowTags.Checked = BO.BAS.BG(.GetUserParam("approving_framework-chkShowTags", "0"))
                     period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                     period1.SelectedValue = .GetUserParam("p31_grid-period")
                     If Request.Item("prefix") = "" Then
@@ -127,13 +129,14 @@ Public Class approving_framework
             If cbxScrollingFlag.SelectedValue = "2" Then
                 .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = True
             End If
-
+            ''.AddSystemColumn(16)
+            .AddContextMenuColumn(16)
 
             .radGridOrig.ShowFooter = True
 
             Select Case Me.CurrentX29ID
                 Case BO.x29IdEnum.p41Project
-                    .AddSystemColumn(25)
+                    ''.AddSystemColumn(25)
                     If Me.cbxGroupBy.SelectedValue <> "Client" Then
                         .AddColumn("Client", "Klient")
                     End If
@@ -141,7 +144,7 @@ Public Class approving_framework
                     .AddColumn("Project", "Projekt")
 
                 Case BO.x29IdEnum.p28Contact
-                    .AddSystemColumn(25)
+                    ''.AddSystemColumn(25)
                     .AddColumn("Client", "Klient")
                 Case BO.x29IdEnum.j02Person
                     .AddColumn("Person", "Osoba")
@@ -179,11 +182,15 @@ Public Class approving_framework
                 .AddColumn("schvaleno_hodiny_pausal", "Hodiny v paušálu", BO.cfENUM.Numeric2, , , , , True)
                 .AddColumn("schvaleno_hodiny_odpis", "Odepsané hodiny", BO.cfENUM.Numeric2, , , , , True)
                 .AddColumn("schvaleno_hodiny_pozdeji", "Hodiny fakturovat později", BO.cfENUM.Numeric2, , , , , True)
+                
                 If Me.chkFirstLastCount.Checked Then
                     .AddColumn("schvaleno_prvni", "První", BO.cfENUM.DateOnly)
                     .AddColumn("schvaleno_posledni", "Poslední", BO.cfENUM.DateOnly)
                 End If
                 .AddColumn("schvaleno_pocet", "Počet", BO.cfENUM.Numeric0, , , , , True)
+            End If
+            If chkShowTags.Checked Then
+                .AddColumn("TagsInlineHtml", "", , False, , , , , False)
             End If
             .SetFilterSetting(strFilterSetting, strFilterExpression)
         End With
@@ -247,13 +254,16 @@ Public Class approving_framework
                 dataItem("schvaleno_vydaje_fakturovat").ForeColor = Drawing.Color.Brown
             End If
         End If
-        Select Case Me.CurrentX29ID
-            Case BO.x29IdEnum.p41Project
-                dataItem("systemcolumn").Text = "<a href='p41_framework.aspx?pid=" & cRec.PID.ToString & "'><img src='Images/fullscreen.png'/></a>"
-            Case BO.x29IdEnum.p28Contact
-                dataItem("systemcolumn").Text = "<a href='p28_framework.aspx?pid=" & cRec.PID.ToString & "'><img src='Images/fullscreen.png'/></a>"
-        End Select
+        ''Select Case Me.CurrentX29ID
+        ''    Case BO.x29IdEnum.p41Project
+        ''        dataItem("systemcolumn").Text = "<a href='p41_framework.aspx?pid=" & cRec.PID.ToString & "'><img src='Images/fullscreen.png'/></a>"
+        ''    Case BO.x29IdEnum.p28Contact
+        ''        dataItem("systemcolumn").Text = "<a href='p28_framework.aspx?pid=" & cRec.PID.ToString & "'><img src='Images/fullscreen.png'/></a>"
+        ''End Select
 
+        With dataItem.Item("pm1")
+            .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('" & cRec.Prefix & "','" & cRec.PID.ToString & "',this,'approving_framework')" & Chr(34) & "></a>"
+        End With
 
     End Sub
 
@@ -282,7 +292,7 @@ Public Class approving_framework
         mq.DateUntil = period1.DateUntil
         mq.j70ID = query1.CurrentJ70ID
 
-        Dim lis As IEnumerable(Of BO.ApprovingFramework) = Master.Factory.p31WorksheetBL.GetList_ApprovingFramework(Me.CurrentX29ID, mq, hidX18_value.Value)
+        Dim lis As IEnumerable(Of BO.ApprovingFramework) = Master.Factory.p31WorksheetBL.GetList_ApprovingFramework(Me.CurrentX29ID, mq, hidX18_value.Value, chkShowTags.Checked)
         Dim qry = From p In lis Select p.j27ID, p.j27Code Distinct
 
         With Me.cbxJ27ID
@@ -421,6 +431,11 @@ Public Class approving_framework
     
     Private Sub cbxJ27ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxJ27ID.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("approving_framework-j27id", Me.cbxJ27ID.SelectedValue)
+        ReloadPage()
+    End Sub
+
+    Private Sub chkShowTags_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowTags.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("approving_framework-chkShowTags", BO.BAS.GB(Me.chkShowTags.Checked))
         ReloadPage()
     End Sub
 End Class

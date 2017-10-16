@@ -1162,19 +1162,28 @@
 
     End Function
 
-    Public Function GetList_ApprovingFramework(x29id As BO.x29IdEnum, myQuery As BO.myQueryP31, Optional strX18Value As String = "") As IEnumerable(Of BO.ApprovingFramework)
+    Public Function GetList_ApprovingFramework(x29id As BO.x29IdEnum, myQuery As BO.myQueryP31, strX18Value As String, bolShowTags As Boolean) As IEnumerable(Of BO.ApprovingFramework)
         Dim s As New System.Text.StringBuilder
-        Dim pars As New DbParameters
+        Dim pars As New DbParameters, strPidField As String = ""
         Select Case x29id
             Case BO.x29IdEnum.p41Project
-                s.Append("select min(a.p41ID) as PID,min(p41.p41Code) as Code,min(isnull(p41.p41NameShort,p41.p41Name)) as Project,min(p28.p28Name) as Client")
+                s.Append("select min(a.p41ID) as PID,min(p41.p41Code) as Code,min(isnull(p41.p41NameShort,p41.p41Name)) as Project,min(p28.p28Name) as Client,'p41' as Prefix")
+                strPidField = "a.p41ID"
             Case BO.x29IdEnum.p28Contact
-                s.Append("select min(p28.p28ID) as PID,min(p28.p28Code) as Code,min(p28.p28Name) as Client")
+                s.Append("select min(p28.p28ID) as PID,min(p28.p28Code) as Code,min(p28.p28Name) as Client,'p28' as Prefix")
+                strPidField = "p28.p28ID"
             Case BO.x29IdEnum.j02Person
-                s.Append("select min(j02.j02ID) as PID,min(j02.j02Code) as Code,min(j02.j02LastName+' '+j02.j02FirstName) as Person")
+                s.Append("select min(j02.j02ID) as PID,min(j02.j02Code) as Code,min(j02.j02LastName+' '+j02.j02FirstName) as Person,'j02' as Prefix")
+                strPidField = "j02.j02ID"
             Case BO.x29IdEnum.p56Task
-                s.Append("select min(a.p56ID) as PID,min(p56.p56Name+' ('+p56.p56Code+')') as Task, min(p56.p56Code) as Code,min(isnull(p41.p41NameShort,p41.p41Name)) as Project,min(p28.p28Name) as Client")
+                s.Append("select min(a.p56ID) as PID,min(p56.p56Name+' ('+p56.p56Code+')') as Task, min(p56.p56Code) as Code,min(isnull(p41.p41NameShort,p41.p41Name)) as Project,min(p28.p28Name) as Client,'p56' as Prefix")
+                strPidField = "a.p56ID"
         End Select
+        If bolShowTags Then
+            s.Append(",dbo.tag_values_inline_html(" & CInt(x29id).ToString & ",min(" & strPidField & ")) as TagsInlineHtml")
+        Else
+            s.Append(",NULL as TagsInlineHtml")
+        End If
         s.Append(",a.j27ID_Billing_Orig as j27ID,min(j27.j27Code) as j27Code,SUM(case when a.p71ID IS NULL and a.p31hours_orig<>0 THEN a.p31hours_orig END) as rozpracovano_hodiny")
         s.Append(",MIN(case when a.p71ID IS NULL THEN p31Date END) as rozpracovano_prvni")
         s.Append(",MAX(case when a.p71ID IS NULL THEN p31Date END) as rozpracovano_posledni")

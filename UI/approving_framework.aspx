@@ -194,7 +194,7 @@
         <div class="commandcell" style="margin-left: 10px;">
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
                 <Items>
-                    <telerik:RadMenuItem Text="Akce pro vybrané (zaškrtlé)" ImageUrl="Images/menuarrow.png">
+                    <telerik:RadMenuItem Text="Vybrané (zaškrtlé)" ImageUrl="Images/menuarrow.png">
                         <Items>
                             <telerik:RadMenuItem Text="Zahájit schvalovací/fakturační proces" Value="approve" NavigateUrl="javascript:approve_selected()" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Vystavit faktury zrychleně bez schvalování" Value="draft" NavigateUrl="javascript:invoice_selected()" ImageUrl="Images/invoice.png"></telerik:RadMenuItem>
@@ -203,7 +203,7 @@
                         </Items>
                     </telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem Text="Další akce" ImageUrl="Images/menuarrow.png" Value="more" PostBack="false">
+                    <telerik:RadMenuItem Text="Další" ImageUrl="Images/menuarrow.png" Value="more" PostBack="false">
                         <GroupSettings OffsetX="-250" />
                         <ContentTemplate>
                             <div class="content-box3">
@@ -282,6 +282,9 @@
                                     </div>
                                     <div class="div6">
                                         <asp:CheckBox ID="chkFirstLastCount" runat="server" AutoPostBack="true" Text="Zobrazovat sloupce [Datum prvního úkonu], [Datum posledního úkonu]" Checked="true" />
+                                    </div>
+                                    <div class="div6">
+                                        <asp:CheckBox ID="chkShowTags" runat="server" AutoPostBack="true" Text="Zobrazovat štítky" Checked="false" />
                                     </div>
                                 </div>
                             </div>
