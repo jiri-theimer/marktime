@@ -57,16 +57,7 @@
             return (pids);
         }
 
-        function record_clone() {
-            var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
-            if (pid == "" || pid == null) {
-                alert("Není vybrán záznam.");
-                return
-            }
-            sw_master("p90_record.aspx?clone=1&pid=" + pid, "Images/billing.png",true);
-
-        }
-
+      
 
 
 
@@ -78,16 +69,7 @@
 
         }
 
-        function report() {
-            var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
-            if (pid == "" || pid == null) {
-                alert("Není vybrán záznam.");
-                return
-            }
-
-            sw_master("report_modal.aspx?prefix=p90&pid=" + pid, "Images/reporting.png");
-
-        }
+        
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -110,18 +92,8 @@
         <div class="commandcell" style="padding-left: 50px;">
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 3000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true">
                 <Items>
-
-                    <telerik:RadMenuItem Text="ZÁZNAM" Value="record" PostBack="false" ImageUrl="Images/arrow_down_menu.png">
-                        <Items>
-                            <telerik:RadMenuItem Value="cmdNew" Text="Nový" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdEdit" Text="Upravit" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report();" ImageUrl="Images/report.png"></telerik:RadMenuItem>
-
-                        </Items>
-                    </telerik:RadMenuItem>
-
+                    <telerik:RadMenuItem Value="cmdNew" Text="Nový" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
+                    
 
                     <telerik:RadMenuItem Text="Obnovit" Visible="false" ImageUrl="Images/refresh.png" Value="refresh" NavigateUrl="p90_framework.aspx"></telerik:RadMenuItem>
 

@@ -303,7 +303,10 @@
                     s.Append(" AND " & strQueryW)
                 End If
             End If
-
+            If .p51ID <> 0 Then
+                pars.Add("p51id", .p51ID, DbType.Int32)
+                s.Append(" AND (a.p51ID_Billing=@p51id)")
+            End If
             If .SpecificQuery > BO.myQueryP28_QuickQuery._NotSpecified Then
                 If .j02ID_ExplicitQueryFor > 0 Then
                     pars.Add("j02id_query", .j02ID_ExplicitQueryFor, DbType.Int32)

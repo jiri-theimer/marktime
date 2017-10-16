@@ -19,6 +19,7 @@
     Public Property p90Text1 As String
     Public Property p90Text2 As String
     Public Property p90TextDPP As String
+    Public Property TagsInlineHtml As String
 
     Private Property _p82ID As Integer
     Public ReadOnly Property p82ID As Integer

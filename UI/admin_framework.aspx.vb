@@ -155,7 +155,7 @@ Public Class admin_framework
             .AddItem("Klastry aktivit", "p61", NU("p61"), "p31")
             .AddItem("Uzamknutá období", "p36", NU("p36"), "p31")
             .AddItem("Kusovníkové jednotky", "p35", NU("p35"), "p31")
-            .AddItem("Nastavení nákladových ceníků", "p50", NU("p50"), "p31")
+            .AddItem("Nastavení interních ceníků", "p50", NU("p50"), "p31")
 
             .AddItem("Projekty", "p41", , , "Images/project.png")
             .AddItem("Typy projektů", "p42", NU("p42"), "p41")

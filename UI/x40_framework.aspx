@@ -110,25 +110,19 @@
         <div class="commandcell" style="padding-left: 10px;">
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 2000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true">
                 <Items>
-                    <telerik:RadMenuItem Text="ZÁZNAM" ImageUrl="Images/menuarrow.png">
-                    <Items>
-                        <telerik:RadMenuItem Text="Detail zprávy (dvoj-klik)" Value="record" PostBack="false" ImageUrl="Images/edit.png" NavigateUrl="javascript:record_detail()"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Text="Nová zpráva" Value="new" PostBack="false" ImageUrl="Images/new.png" NavigateUrl="javascript:sendmail()"></telerik:RadMenuItem>
-                    </Items>
-                    </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="AKCE" ImageUrl="Images/menuarrow.png">
+                    <telerik:RadMenuItem Text="Nová zpráva" Value="new" PostBack="false" ImageUrl="Images/new.png" NavigateUrl="javascript:sendmail()"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="Vybrané (zaškrtlé)" ImageUrl="Images/menuarrow.png">
                         <Items>
                             <telerik:RadMenuItem Text="Označené změnit na [Odeslat]" Value="odeslat" NavigateUrl="javascript:batch(1)"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Označené změnit na [Čeká na odeslání]" Value="confirm" NavigateUrl="javascript:batch(5)"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Označené změnit na [Zastaveno]" Value="stop" NavigateUrl="javascript:batch(4)"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="Obnovit přehled" Value="refresh" NavigateUrl="x40_framework.aspx" ImageUrl="Images/refresh.png"></telerik:RadMenuItem>
+                            
+                            
                         </Items>
                     </telerik:RadMenuItem>
-                    
+                    <telerik:RadMenuItem Text="Obnovit" Value="refresh" NavigateUrl="x40_framework.aspx" ImageUrl="Images/refresh.png"></telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/menuarrow.png" Value="columns" PostBack="false">
+                    <telerik:RadMenuItem Text="Další" ImageUrl="Images/menuarrow.png" Value="columns" PostBack="false">
                         <ContentTemplate>
                             <div style="padding: 20px;">
 
@@ -143,6 +137,7 @@
                                     </asp:DropDownList>
                                 </div>
                             </div>
+                            
                         </ContentTemplate>
                     </telerik:RadMenuItem>
                 </Items>

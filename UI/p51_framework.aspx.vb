@@ -50,6 +50,8 @@ Public Class p51_framework
             .PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedItem.Text)
             .radGridOrig.ShowFooter = False
 
+            .AddContextMenuColumn(16)
+
             .AddColumn("p51name", "Název ceníku")
             .AddColumn("j27Code", "Měna sazeb")
             .AddColumn("p51IsCustomTailor", "Sazby na míru", BO.cfENUM.Checkbox)
@@ -70,6 +72,10 @@ Public Class p51_framework
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
         Dim cRec As BO.p51PriceList = CType(e.Item.DataItem, BO.p51PriceList)
         If cRec.IsClosed Then dataItem.Font.Strikeout = True
+
+        With dataItem.Item("pm1")
+            .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('p51','" & cRec.PID.ToString & "',this)" & Chr(34) & "></a>"
+        End With
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource

@@ -47,7 +47,9 @@ Public Class p90_framework
             .ClearColumns()
             .PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedItem.Text)
             .radGridOrig.ShowFooter = False
-            .AddSystemColumn(20)
+            .AddSystemColumn(16)
+            .AddContextMenuColumn(16)
+
             .AddColumn("p90Code", "Číslo")
             .AddColumn("p82Code", "DPP", , , , , "Číslo dokladu o přijaté platbě")
             .AddColumn("p90Date", "Datum", BO.cfENUM.DateOnly)
@@ -58,7 +60,7 @@ Public Class p90_framework
             .AddColumn("p90Amount_Debt", "Dluh", BO.cfENUM.Numeric2)
             .AddColumn("p90Text1", "Text")
             .AddColumn("j27Code", "")
-
+            .AddColumn("TagsInlineHtml", "", , False, , , , , False)
             .SetFilterSetting(strFilterSetting, strFilterExpression)
         End With
 
@@ -77,6 +79,10 @@ Public Class p90_framework
         If cRec.p90Amount_Debt > 0 Then
             dataItem.Item("systemcolumn").BackColor = basUI.ColorQueryRGB
         End If
+        With dataItem.Item("pm1")
+            .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('p90','" & cRec.PID.ToString & "',this)" & Chr(34) & "></a>"
+        End With
+       
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
@@ -87,6 +93,7 @@ Public Class p90_framework
             End With
         End If
         Dim mq As New BO.myQueryP90
+        mq.IsShowTagsInColumn = True
         Select Case Me.cbxValidity.SelectedValue
             Case "1"
                 mq.Closed = BO.BooleanQueryMode.NoQuery

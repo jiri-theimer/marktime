@@ -40,6 +40,7 @@ Public Class myQueryP28
     Public Property j02ID As Integer
     Public Property b02ID As Integer
     Public Property j70ID As Integer
+    Public Property p51ID As Integer
     Public Property p28ParentID As Integer
     Public Property CanBeSupplier As BooleanQueryMode = BooleanQueryMode.NoQuery
     Public Property CanBeClient As BooleanQueryMode = BooleanQueryMode.NoQuery

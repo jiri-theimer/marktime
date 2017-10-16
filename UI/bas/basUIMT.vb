@@ -204,7 +204,9 @@ Public Class basUIMT
         End If
         dataItem("x40State").Text = cRec.StatusAlias
         dataItem.Style.Item("color") = cRec.StatusColor
-
+        With dataItem.Item("pm1")
+            .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('x40','" & cRec.PID.ToString & "',this)" & Chr(34) & "></a>"
+        End With
         
     End Sub
     Public Shared Sub o43_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs)

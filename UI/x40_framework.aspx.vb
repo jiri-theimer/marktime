@@ -77,7 +77,8 @@ Public Class x40_framework
             .AllowMultiSelect = True
             .AddCheckboxSelector()
 
-            .AddSystemColumn(20, "UserInsert")
+            .AddSystemColumn(16, "UserInsert")
+            .AddContextMenuColumn(16)
             .AddColumn("DateUpdate", "Čas", BO.cfENUM.DateTime, , , , , , False)
             .AddColumn("Context", "Kontext", , , , , , , False)
             .AddColumn("x40State", "Stav", , , , , , , False)

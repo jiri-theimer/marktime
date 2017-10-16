@@ -5,7 +5,7 @@
         _curUser = ServiceUser
     End Sub
     Public Function Load(intPID As Integer) As BO.p90Proforma
-        Dim s As String = GetSQLPart1(0)
+        Dim s As String = GetSQLPart1(0, False)
         s += " WHERE a.p90ID=@p90id"
 
         Return _cDB.GetRecord(Of BO.p90Proforma)(s, New With {.p90id = intPID})
@@ -17,7 +17,7 @@
         Return _cDB.GetRecord(Of BO.p82Proforma_Payment)(s, New With {.p82id = intP82ID})
     End Function
     Public Function LoadMyLastCreated() As BO.p90Proforma
-        Dim s As String = GetSQLPart1(1)
+        Dim s As String = GetSQLPart1(1, False)
         s += " WHERE a.j02ID_Owner=@j02id_owner ORDER BY a.p90ID DESC"
 
         Return _cDB.GetRecord(Of BO.p90Proforma)(s, New With {.j02id_owner = _curUser.j02ID})
@@ -154,7 +154,7 @@
         Return _cDB.GetList(Of BO.p82Proforma_Payment)(s, pars)
     End Function
     Public Function GetList(myQuery As BO.myQueryP90) As IEnumerable(Of BO.p90Proforma)
-        Dim s As String = GetSQLPart1(0), pars As New DbParameters
+        Dim s As String = GetSQLPart1(0, myQuery.IsShowTagsInColumn), pars As New DbParameters
         Dim strW As String = bas.ParseWhereMultiPIDs("a.p90ID", myQuery)
         With myQuery
             If .p89ID <> 0 Then
@@ -207,11 +207,12 @@
     End Function
 
 
-    Private Function GetSQLPart1(intTOP As Integer) As String
+    Private Function GetSQLPart1(intTOP As Integer, bolIncludeTags As Boolean) As String
         Dim s As String = "SELECT"
         If intTOP > 0 Then s += " TOP " & intTOP.ToString
         s += " a.*,j27.j27Code as _j27Code,p89.p89Name as _p89Name," & bas.RecTail("p90", "a")
         s += ",p28.p28Name as _p28Name,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p82.p82Code as _p82Code,p82.p82ID as _p82ID"
+        If bolIncludeTags Then s += ",dbo.tag_values_inline_html(390,a.p90ID) as TagsInlineHtml" Else s += ",NULL as TagsInlineHtml"
         s += " FROM p90Proforma a INNER JOIN p89ProformaType p89 ON a.p89ID=p89.p89ID"
         s += " LEFT OUTER JOIN p28Contact p28 ON a.p28ID=p28.p28ID"
         s += " LEFT OUTER JOIN j27Currency j27 ON a.j27ID=j27.j27ID"
