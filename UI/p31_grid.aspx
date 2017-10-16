@@ -116,15 +116,7 @@
             sw_master("p31_move2project.aspx?p31ids=" + pids, "Images/cut.png");
         }
 
-        function record_split() {
-            var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
-            if (pid == "" || pid == null) {
-                $.alert("Není vybrán záznam.");
-                return
-            }
-            sw_master("p31_record_split.aspx?pid=" + pid, "Images/worksheet.png");
-
-        }
+        
 
 
         function hardrefresh(pid, flag) {
@@ -232,15 +224,9 @@
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" CollapseAnimation-Duration="0" CollapseAnimation-Type="None">
                 <Items>
 
-                    <telerik:RadMenuItem Text="Záznam" Value="record" PostBack="false" ImageUrl="Images/arrow_down_menu.png">
-                        <Items>
-                            <telerik:RadMenuItem Value="cmdNew" Text="<%$Resources:common,Novy %>" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdEdit" Text="<%$Resources:common,Upravit %>" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdSplit" Text="<%$Resources:p31_grid,Rozdelit %>" NavigateUrl="javascript:record_split();" ImageUrl="Images/split.png"></telerik:RadMenuItem>
-                        </Items>
-                    </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Akce pro vybrané záznamy" Value="recs" ImageUrl="Images/arrow_down_menu.png">
+                    <telerik:RadMenuItem Value="cmdNew" Text="<%$Resources:common,Novy %>" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
+                        
+                    <telerik:RadMenuItem Text="Vybrané (zaškrtlé)" Value="recs" ImageUrl="Images/arrow_down_menu.png">
                         <Items>
                             <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat záznamy" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdApprove" Text="Schvalovat/pře-schvalovat/fakturovat úkony" NavigateUrl="javascript:approving();" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
@@ -249,7 +235,7 @@
                             <telerik:RadMenuItem Value="cmdSummary" Text="Statistiky" NavigateUrl="javascript:drilldown_p31ids();" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
                         </Items>
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Další akce" Value="more" ImageUrl="Images/arrow_down_menu.png">
+                    <telerik:RadMenuItem Text="Další" Value="more" ImageUrl="Images/arrow_down_menu.png">
                         <GroupSettings OffsetX="-220" />
                         <ContentTemplate>
                             <div class="content-box3">

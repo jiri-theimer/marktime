@@ -149,15 +149,6 @@ Partial Public Class ModalDataRecord
     Protected WithEvents panTimestamp As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''litTimestamp control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents litTimestamp As Global.System.Web.UI.WebControls.Literal
-
-    '''<summary>
     '''lblTimestamp control.
     '''</summary>
     '''<remarks>

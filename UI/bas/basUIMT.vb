@@ -28,11 +28,11 @@ Public Class basUIMT
             If bolAllowMultiSelect And bolMultiSelectCheckboxSelector Then .AddCheckboxSelector()
 
 
-            .PageSize = intPageSize
-            .AddContextMenuColumn(16)
+            .PageSize = intPageSize            
             If intSysColumnWidth > 0 Then
                 .AddSystemColumn(intSysColumnWidth)
             End If
+            .AddContextMenuColumn(16)
             .radGridOrig.PagerStyle.Mode = Telerik.Web.UI.GridPagerMode.NextPrevAndNumeric
             .AllowFilteringByColumn = cJ70.j70IsFilteringByColumn
             Select Case cJ70.j70ScrollingFlag

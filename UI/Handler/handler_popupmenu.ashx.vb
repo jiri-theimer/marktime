@@ -40,32 +40,33 @@ Public Class handler_popupmenu
                 Select Case cDisp.RecordState
                     Case BO.p31RecordState.Editing
                         If cDisp.RecordDisposition = BO.p31RecordDisposition.CanEdit Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Then
-                            CI("Upravit záznam (dvojklik)", "p31_record.aspx?pid=" & intPID.ToString)
-                            CI("Kopírovat", "p31_record.aspx?clone=1&pid=" & intPID.ToString)
+                            CI("Upravit úkon", "p31_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+                            CI("Kopírovat", "p31_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
+                            If cRec.p33ID = BO.p33IdENUM.Cas Then
+                                CI("Rozdělit úkon na 2 kusy", "p31_record_split.aspx?pid=" & intPID.ToString, , "Images/split.png")
+                            End If
                             If cDisp.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Then
-                                CI("Schválit", "p31_record.aspx?pid=" & intPID.ToString)
+                                SEP()
+                                CI("Schválit", "p31_approving_step2.aspx?pids=" & intPID.ToString, , "Images/approve.png")
                             End If
                         End If
                     Case BO.p31RecordState.Approved
-                        CI("Detail (dvojklik)", "p31_record.aspx?pid=" & intPID.ToString)
-                        If cDisp.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Then
-                            CI("Pře-schválit", "p31_record_AI.aspx?pid=" & intPID.ToString)
+                        CI("Detail úkonu", "p31_record.aspx?pid=" & intPID.ToString, , "Images/zoom.png")
+                        
+                        If cDisp.RecordDisposition = BO.p31RecordDisposition.CanEdit Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Or cRec.j02ID = factory.SysUser.j02ID Then                           
+                            CI("Kopírovat", "p31_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
                         End If
-                        If cDisp.RecordDisposition = BO.p31RecordDisposition.CanEdit Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Or cRec.j02ID = factory.SysUser.j02ID Then
+                        If cDisp.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Then
                             SEP()
-                            CI("Kopírovat", "p31_record.aspx?clone=1&pid=" & intPID.ToString)
+                            CI("Pře-schválit", "p31_approving_step2.aspx?pids=" & intPID.ToString, , "Images/approve.png")
                         End If
                     Case BO.p31RecordState.Invoiced
-                        CI("Detail (dvojklik)", "p31_record_AI.aspx?pid=" & intPID.ToString)
-                        If factory.SysUser.j04IsMenu_Invoice Then
-                            SEP()
-                            REL("Stránka faktury", "p91_framework.aspx?pid=" & cRec.p91ID.ToString, "_top")
-                        End If
+                        CI("Detail úkonu", "p31_record.aspx?pid=" & intPID.ToString, , "Images/zoom.png")                        
                         If cDisp.RecordDisposition = BO.p31RecordDisposition.CanEdit Or cRec.j02ID = factory.SysUser.j02ID Then
                             SEP()
-                            CI("Kopírovat", "p31_record.aspx?clone=1&pid=" & intPID.ToString)
+                            CI("Kopírovat", "p31_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
                         End If
-
+                        
                 End Select
                 SEP()
                 If cRec.p56ID > 0 Then
@@ -74,7 +75,11 @@ Public Class handler_popupmenu
                 If factory.SysUser.j04IsMenu_Project Then
                     REL("Stránka projektu", "p41_framework.aspx?pid=" & cRec.p41ID.ToString, "_top", "Images/project.png")
                 End If
-
+                If factory.SysUser.j04IsMenu_Invoice And cRec.p91ID > 0 Then                    
+                    REL("Stránka faktury", "p91_framework.aspx?pid=" & cRec.p91ID.ToString, "_top", "Images/invoice.png")
+                End If
+                SEP()
+                CI("Oštítkovat", "tag_binding.aspx?prefix=p31&pids=" & intPID.ToString, , "Images/tag.png")
 
             Case "p56"
                 Dim cRec As BO.p56Task = factory.p56TaskBL.Load(intPID)
@@ -220,7 +225,8 @@ Public Class handler_popupmenu
                 SEP()
                 If cDisp.OwnerAccess Then
                     SEP()
-                    CI("Upravit kartu dokumentu", "o23_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+                    CI("Upravit kartu dokumentu", "o23_record.aspx?pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, , "Images/edit.png")
+                    CI("Kopírovat", "o23_record.aspx?clone=1&pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, , "Images/copy.png")
                 End If
             Case Else
                 CI("Nezpracovatelný PREFIX", "")
@@ -294,7 +300,7 @@ Public Class handler_popupmenu
         Dim c As New BO.ContextMenuItem
         If Len(strText) > 35 Then strText = Left(strText, 35) & "..."
         c.Text = strText
-        c.NavigateUrl = "javascript:contMenu(" & Chr(34) & strURL & Chr(34) & ")"
+        If strURL <> "" Then c.NavigateUrl = "javascript:contMenu(" & Chr(34) & strURL & Chr(34) & ")"
         c.IsDisabled = bolDisabled
         c.ImageUrl = strImageUrl
         c.IsChildOfPrevious = bolChild
