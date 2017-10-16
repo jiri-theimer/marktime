@@ -387,6 +387,7 @@
             Return
         End If
         Dim mq As New BO.myQueryX47, x45ids As New List(Of String), b As Boolean = Master.Factory.TestPermission(BO.x53PermValEnum.GR_Admin)
+        mq.IsShowTagsInColumn = True
         With Master.Factory
             If (b Or .TestPermission(BO.x53PermValEnum.GR_P41_Reader)) And .SysUser.j04IsMenu_Project Then
                 chkP41.Visible = True
@@ -456,6 +457,7 @@
             CType(e.Item.FindControl("img1"), Image).ImageUrl = s
             CType(e.Item.FindControl("link1"), HyperLink).NavigateUrl = BO.BAS.GetDataPrefix(cRec.x29ID) & "_framework.aspx?pid=" & cRec.x47RecordPID.ToString
             CType(e.Item.FindControl("lbl2"), Label).Text = BO.BAS.OM3(cRec.x47NameReference, 25)
+            CType(e.Item.FindControl("tags"), Label).Text = cRec.TagsInlineHtml
         End If
         With CType(e.Item.FindControl("linkPP1"), HyperLink)
             .Attributes.Item("onclick") = "RCM('" & BO.BAS.GetDataPrefix(cRec.x29ID) & "'," & cRec.x47RecordPID.ToString & ",this)"

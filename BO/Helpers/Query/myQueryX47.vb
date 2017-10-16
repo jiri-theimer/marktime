@@ -6,4 +6,7 @@
     Public Property j03ID As Integer
     Public Property x45IDs As String
 
+    Public Property IsShowTagsInColumn As Boolean
+
+
 End Class

@@ -50,4 +50,5 @@ Public Class myQueryP56
     Public Property IsRecurrenceMother As BO.BooleanQueryMode = BooleanQueryMode.NoQuery
     Public Property IsRecurrenceChild As BO.BooleanQueryMode = BooleanQueryMode.NoQuery
     Public Property p56RecurMotherID As Integer
+    Public Property IsShowTagsInColumn As Boolean   'platí pouze GetList bez datareader
 End Class

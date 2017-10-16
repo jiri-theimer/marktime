@@ -10,6 +10,7 @@
     Public Property x47Name As String
     Public Property x47NameReference As String
     Public Property x47Description As String
+    Public Property TagsInlineHtml As String
     Private Property x47DateInsert As Date
     Public ReadOnly Property DateInsert As Date
         Get

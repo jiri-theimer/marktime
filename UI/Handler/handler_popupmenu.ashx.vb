@@ -25,11 +25,14 @@ Public Class handler_popupmenu
         If strPREFIX = "" Then
             FinalRW(context, "prefix is missing") : Return
         End If
-       
+        If Left(strPREFIX, 5) = "admin" Then
+            RenderAdminMenu(strPREFIX, intPID, factory) 'číselníky za administrace
+            FinalRW(context, "") : Return
+        End If
 
         Select Case strPREFIX
             Case "newrec"
-                RenderNewRecMenu(factory, context)  'hlavní menu - odkazy k založení nového záznamu
+                RenderNewRecMenu(factory)  'hlavní menu - odkazy k založení nového záznamu
             Case "p31"
                 Dim cRec As BO.p31Worksheet = factory.p31WorksheetBL.Load(intPID)
                 If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
@@ -73,10 +76,14 @@ Public Class handler_popupmenu
                     If factory.SysUser.j04IsMenu_Task Then REL("Stránka úkolu", "p56_framework.aspx?pid=" & cRec.p56ID.ToString, "_top", "Images/task.png")
                 End If
                 If factory.SysUser.j04IsMenu_Project Then
-                    REL("Stránka projektu", "p41_framework.aspx?pid=" & cRec.p41ID.ToString, "_top", "Images/project.png")
+                    Dim ss As String = cRec.p41NameShort
+                    If ss = "" Then ss = cRec.p41Name
+                    If cRec.p28ID_Client > 0 Then ss = cRec.ClientName & " - " & ss
+                    REL(ss, "p41_framework.aspx?pid=" & cRec.p41ID.ToString, "_top", "Images/project.png")
                 End If
-                If factory.SysUser.j04IsMenu_Invoice And cRec.p91ID > 0 Then                    
-                    REL("Stránka faktury", "p91_framework.aspx?pid=" & cRec.p91ID.ToString, "_top", "Images/invoice.png")
+                If factory.SysUser.j04IsMenu_Invoice And cRec.p91ID > 0 Then
+                    Dim cP91 As BO.p91Invoice = factory.p91InvoiceBL.Load(cRec.p91ID)
+                    REL(cP91.p92Name & ": " & cP91.p91Code, "p91_framework.aspx?pid=" & cRec.p91ID.ToString, "_top", "Images/invoice.png")
                 End If
                 SEP()
                 CI("Oštítkovat", "tag_binding.aspx?prefix=p31&pids=" & intPID.ToString, , "Images/tag.png")
@@ -109,6 +116,8 @@ Public Class handler_popupmenu
                 End If
                 SEP()
                 CI("Tisková sestava", "report_modal.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/report.png")
+                SEP()
+                CI("Oštítkovat", "tag_binding.aspx?prefix=p56&pids=" & intPID.ToString, , "Images/tag.png")
             Case "p28"
                 Dim cRec As BO.p28Contact = factory.p28ContactBL.Load(intPID)
                 If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
@@ -117,7 +126,8 @@ Public Class handler_popupmenu
                 If factory.SysUser.j04IsMenu_Contact Then
                     REL(cRec.p28Name, "p28_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
                     If cRec.p28ParentID > 0 Then
-                        REL("Nadřízený klient", "p28_framework.aspx?pid=" & cRec.p28ParentID.ToString, "_top", "Images/tree.png")
+                        Dim cParent As BO.p28Contact = factory.p28ContactBL.Load(cRec.p28ParentID)
+                        REL(cParent.p28Name, "p28_framework.aspx?pid=" & cRec.p28ParentID.ToString, "_top", "Images/tree.png")
                     End If
                 Else
                     CI(cRec.p28Name, "", True, "Images/information.png")
@@ -134,13 +144,16 @@ Public Class handler_popupmenu
                 End If
                 SEP()
                 CI("Tisková sestava", "report_modal.aspx?prefix=p28&pid=" & intPID.ToString, , "Images/report.png")
+                SEP()
+                CI("Oštítkovat", "tag_binding.aspx?prefix=p28&pids=" & intPID.ToString, , "Images/tag.png")
             Case "p41"
                 Dim cRec As BO.p41Project = factory.p41ProjectBL.Load(intPID)
                 If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
                 If factory.SysUser.j04IsMenu_Project Then
                     REL(cRec.PrefferedName, "p41_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
-                    If cRec.p41ParentID > 0 Then                        
-                        REL("Nadřízený projekt", "p41_framework.aspx?pid=" & cRec.p41ParentID.ToString, "_top", "Images/tree.png")
+                    If cRec.p41ParentID > 0 Then
+                        Dim cParent As BO.p41Project = factory.p41ProjectBL.Load(cRec.p41ParentID)
+                        REL(cParent.PrefferedName, "p41_framework.aspx?pid=" & cRec.p41ParentID.ToString, "_top", "Images/tree.png")
                     End If
                 Else
                     CI(cRec.PrefferedName, "", True, "Images/information.png")
@@ -168,7 +181,7 @@ Public Class handler_popupmenu
                 
                 If factory.SysUser.j04IsMenu_Contact And cRec.p28ID_Client > 0 Then
                     SEP()
-                    REL("Klient projektu", "p28_framework.aspx?pid=" & cRec.p28ID_Client.ToString, "_top", "Images/contact.png")
+                    REL(cRec.Client, "p28_framework.aspx?pid=" & cRec.p28ID_Client.ToString, "_top", "Images/contact.png")
                 End If
                 If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
                     SEP()
@@ -176,6 +189,8 @@ Public Class handler_popupmenu
                 End If
                 SEP()
                 CI("Tisková sestava", "report_modal.aspx?prefix=p41&pid=" & intPID.ToString, , "Images/report.png")
+                SEP()
+                CI("Oštítkovat", "tag_binding.aspx?prefix=p41&pids=" & intPID.ToString, , "Images/tag.png")
             Case "p91"
                 Dim cRec As BO.p91Invoice = factory.p91InvoiceBL.Load(intPID)
                 If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
@@ -212,7 +227,8 @@ Public Class handler_popupmenu
                 Else
                     CI(cRec.p92Name & ": " & cRec.p91Code, "", True, "Images/information.png")
                 End If
-                
+                SEP()
+                CI("Oštítkovat", "tag_binding.aspx?prefix=p91&pids=" & intPID.ToString, , "Images/tag.png")
             Case "o23"
                 Dim cRec As BO.o23Doc = factory.o23DocBL.Load(intPID)
                 If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
@@ -228,6 +244,52 @@ Public Class handler_popupmenu
                     CI("Upravit kartu dokumentu", "o23_record.aspx?pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, , "Images/edit.png")
                     CI("Kopírovat", "o23_record.aspx?clone=1&pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, , "Images/copy.png")
                 End If
+                SEP()
+                CI("Oštítkovat", "tag_binding.aspx?prefix=p91&pids=" & intPID.ToString, , "Images/tag.png")
+            Case "j02"
+                Dim cRec As BO.j02Person = factory.j02PersonBL.Load(intPID)
+                If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
+                If factory.SysUser.j04IsMenu_People Then
+                    REL(cRec.FullNameDesc, "j02_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
+                Else
+                    CI(cRec.FullNameDesc, "", True, "Images/information.png")
+                End If
+                If factory.TestPermission(BO.x53PermValEnum.GR_Admin) Then
+                    SEP()
+                    CI("Upravit kartu osoby", "j02_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+                    CI("Kopírovat", "j02_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
+                End If
+                If cRec.j02IsIntraPerson Then
+                    If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
+                        SEP()
+                        REL("Statistiky osoby", "p31_sumgrid.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "_top", "Images/pivot.png")
+                    End If
+                    SEP()
+                    CI("Tisková sestava", "report_modal.aspx?prefix=p28&pid=" & intPID.ToString, , "Images/report.png")
+                Else
+                    Dim mqP28 As New BO.myQueryP28, b As Boolean = False
+                    mqP28.j02ID = intPID
+                    Dim lisP28 As IEnumerable(Of BO.p28Contact) = factory.p28ContactBL.GetList(mqP28)
+                    For Each c In lisP28
+                        If Not b Then SEP() : b = True
+                        REL(c.p28Name, "p28_framework.aspx?pid=" & c.PID.ToString, "_top", "Images/contact.png")
+                    Next
+                    Dim mqP41 As New BO.myQueryP41
+                    mqP41.j02ID_ContactPerson = intPID
+                    Dim lisP41 As IEnumerable(Of BO.p41Project) = factory.p41ProjectBL.GetList(mqP41)
+                    For Each c In lisP41
+                        If lisP28.Where(Function(p) p.PID = c.p28ID_Client).Count = 0 Then
+                            If Not b Then SEP() : b = True
+                            REL(c.FullName, "p41_framework.aspx?pid=" & c.PID.ToString, "_top", "Images/project.png")
+                        End If
+                    Next
+                End If
+                
+                If factory.SysUser.j04IsMenu_People Then
+                    SEP()
+                    CI("Oštítkovat", "tag_binding.aspx?prefix=j02&pids=" & intPID.ToString, , "Images/tag.png")
+                End If
+           
             Case Else
                 CI("Nezpracovatelný PREFIX", "")
         End Select
@@ -239,8 +301,18 @@ Public Class handler_popupmenu
 
 
     End Sub
-
-    Private Sub RenderNewRecMenu(factory As BL.Factory, context As HttpContext)
+    Private Sub RenderAdminMenu(strPrefix As String, intPID As Integer, factory As BL.Factory)
+        Dim a() As String = Split(strPrefix, "-")
+        If Not factory.TestPermission(BO.x53PermValEnum.GR_Admin) Then
+            CI("Nedisponujete oprávněním administrátora.", "", True) : Return
+        Else
+            CI("Administrace", "", True, "Images/information.png")
+        End If
+        SEP()
+        CI("Upravit záznam", Right(a(1), 3) & "_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+        CI("Kopírovat", Right(a(1), 3) & "_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
+    End Sub
+    Private Sub RenderNewRecMenu(factory As BL.Factory)
         With factory.SysUser
 
             If .j04IsMenu_Worksheet Then

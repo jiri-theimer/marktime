@@ -50,15 +50,7 @@
     }
 
 
-    function CloneRecord() {
-        var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
-            if (pid == "" || pid == null) {
-                alert("Není vybrán záznam.");
-                return
-            }
-            sw_master("<%=ViewState("page")%>?clone=1&pid=" + pid, "Images/setting.png");
-
-        }
+    
 
         function hardrefresh(pid, flag) {
 
@@ -116,16 +108,10 @@
         <div class="commandcell" style="margin-left: 20px;">
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
                 <Items>
-                    <telerik:RadMenuItem Text="ZÁZNAM" ImageUrl="Images/arrow_down_menu.png" PostBack="false">
-                        <Items>
-                            <telerik:RadMenuItem Text="Nový" ImageUrl="Images/new.png" NavigateUrl="javascript:NewRecord(true);" Value="new"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="Upravit" ImageUrl="Images/edit.png" NavigateUrl="javascript:Edit();" Value="edit" PostBack="false"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="Kopírovat" ImageUrl="Images/copy.png" NavigateUrl="javascript:CloneRecord();" Value="clone"></telerik:RadMenuItem>
-                        </Items>
-                    </telerik:RadMenuItem>
-
-                    <telerik:RadMenuItem Text="EXPORT" Value="export" ImageUrl="Images/export.png" PostBack="true"></telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="OBNOVIT" ImageUrl="Images/refresh.png" Value="refresh"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="Nový" ImageUrl="Images/new.png" NavigateUrl="javascript:NewRecord(true);" Value="new"></telerik:RadMenuItem>
+                    
+                    <telerik:RadMenuItem Text="Export" Value="export" ImageUrl="Images/export.png" PostBack="true"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="Obnovit" ImageUrl="Images/refresh.png" Value="refresh"></telerik:RadMenuItem>
                 </Items>
             </telerik:RadMenu>
 

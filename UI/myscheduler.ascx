@@ -68,31 +68,28 @@
             <asp:Repeater ID="rpP56" runat="server">
                 <ItemTemplate>
                     <tr>
-                        <td colspan="4">
+                        <td colspan="2">
                             <asp:Label ID="Project" runat="server" Font-Italic="true"></asp:Label>
                         </td>
                     </tr>
                     <tr valign="top" style="background-color: white;">
-                        <td width="20px">
-                            <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" ToolTip="Detail úkolu"></asp:HyperLink>
-                        </td>
-                        <td width="20px">
+                       
+                        <td style="width:20px;">
                             <asp:HyperLink ID="pm1" runat="server" CssClass="pp1"></asp:HyperLink>
                         </td>
                         <td style="max-width: 460px; padding: 4px;">
                             
                             
                             <asp:HyperLink ID="link1" runat="server" Target="_top" CssClass="value_link"></asp:HyperLink>
+                            <asp:Label ID="lblB02Name" runat="server"></asp:Label>
+                            <asp:Label ID="tags" runat="server"></asp:Label>
                             <div>
                                 <asp:Label ID="p56PlanUntil" runat="server" ToolTip="Termín úkolu"></asp:Label>
                                 <asp:Image ID="img1" runat="server" ImageUrl="Images/reminder.png" ToolTip="Připomenutí" meta:resourcekey="img1" />
                             </div>
                         </td>
                         
-                        <td style="text-align: center; padding: 4px;">
-                            
-                            <asp:Label ID="lblB02Name" runat="server"></asp:Label>
-                        </td>
+                       
                         
                     </tr>
                 </ItemTemplate>

@@ -5,24 +5,24 @@
         _curUser = ServiceUser
     End Sub
     Public Function Load(intPID As Integer) As BO.p56Task
-        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing)
+        Dim s As String = GetSQLPart1(0, False) & " " & GetSQLPart2(Nothing)
         s += " WHERE a.p56ID=@p56id"
 
         Return _cDB.GetRecord(Of BO.p56Task)(s, New With {.p56id = intPID})
     End Function
     Public Function LoadMyLastCreated() As BO.p56Task
-        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2(Nothing)
+        Dim s As String = GetSQLPart1(1, False) & " " & GetSQLPart2(Nothing)
         s += " WHERE a.j02ID_Owner=@j02id_owner ORDER BY a.p56ID DESC"
 
         Return _cDB.GetRecord(Of BO.p56Task)(s, New With {.j02id_owner = _curUser.j02ID})
     End Function
     Public Function LoadByExternalPID(strExternalPID As String) As BO.p56Task
-        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2(Nothing)
+        Dim s As String = GetSQLPart1(1, False) & " " & GetSQLPart2(Nothing)
         s += " WHERE a.p56ExternalPID LIKE @externalpid"
         Return _cDB.GetRecord(Of BO.p56Task)(s, New With {.externalpid = strExternalPID})
     End Function
     Public Function LoadByCode(strCode As String) As BO.p56Task
-        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2(Nothing)
+        Dim s As String = GetSQLPart1(1, False) & " " & GetSQLPart2(Nothing)
         s += " WHERE a.p56Code LIKE @code"
         Return _cDB.GetRecord(Of BO.p56Task)(s, New With {.code = strCode})
     End Function
@@ -282,7 +282,7 @@
     End Function
 
     Public Function GetList(myQuery As BO.myQueryP56, bolInhaleReceiversInLine As Boolean) As IEnumerable(Of BO.p56Task)
-        Dim s As String = GetSQLPart1(myQuery.TopRecordsOnly), pars As New DbParameters
+        Dim s As String = GetSQLPart1(myQuery.TopRecordsOnly, myQuery.IsShowTagsInColumn), pars As New DbParameters
         If myQuery.MG_SelectPidFieldOnly Then
             'SQL SELECT klauzule bude plnit pouze hodnotu primárního klíče
             s = "SELECT a.p56ID as _pid"
@@ -387,7 +387,7 @@
     Private Function GetSQL_OFFSET(strWHERE As String, strORDERBY As String, intPageSize As Integer, intCurrentPageIndex As Integer, ByRef pars As DL.DbParameters, bolInhaleReceiversInLine As Boolean) As String
         Dim intStart As Integer = (intCurrentPageIndex) * intPageSize
 
-        Dim s As String = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & GetSF()
+        Dim s As String = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & GetSF(False)
         If bolInhaleReceiversInLine Then
             s += ",dbo.p56_getroles_inline(a.p56ID) as _ReceiversInLine"
         End If
@@ -412,7 +412,7 @@
         Return ParseSortExpression(strFilter).Replace("[", "").Replace("]", "")
     End Function
     Public Function GetList_WaitingOnReminder(datReminderFrom As Date, datReminderUntil As Date) As IEnumerable(Of BO.p56Task)
-        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing), pars As New DbParameters
+        Dim s As String = GetSQLPart1(0, False) & " " & GetSQLPart2(Nothing), pars As New DbParameters
         pars.Add("datereminderfrom", datReminderFrom)
         pars.Add("datereminderuntil", datReminderUntil)
         s += " WHERE p56ReminderDate BETWEEN @datereminderfrom AND @datereminderuntil"
@@ -421,7 +421,7 @@
         Return _cDB.GetList(Of BO.p56Task)(s, pars)
     End Function
     Public Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.p56Task)
-        Dim s As String = GetSQLPart1(100) & " " & GetSQLPart2(Nothing), pars As New DbParameters
+        Dim s As String = GetSQLPart1(100, False) & " " & GetSQLPart2(Nothing), pars As New DbParameters
         ''s += " WHERE ((p56PlanUntil BETWEEN DATEADD(DAY,-3,@d1) AND @d2 and getdate() between p56ValidFrom and p56ValidUntil) OR p56ReminderDate between @d1 AND @d2)"
         s += " WHERE ((p56PlanUntil IS NOT NULL and getdate() between p56ValidFrom and p56ValidUntil) OR p56ReminderDate between @d1 AND @d2)"
         's += "AND (a.j02ID_Owner=@j02id OR a.p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356 AND (x69.j02ID=@j02id OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id))))"
@@ -483,20 +483,25 @@
         If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
     End Function
 
-    Private Function GetSF() As String
+    Private Function GetSF(bolIncludeTags As Boolean) As String
         Dim s As New System.Text.StringBuilder
 
         s.Append(bas.RecTail("p56", "a"))
         s.Append(",a.p41ID,a.o22ID,a.p57ID,a.j02ID_Owner,a.b02ID,a.p59ID_Submitter,a.p59ID_Receiver,a.o43ID,a.p56Name,a.p56NameShort,a.p56Code,a.p56Description,a.p56Ordinary,a.p56PlanFrom,a.p56PlanUntil,a.p56ReminderDate,a.p56Plan_Hours,a.p56Plan_Expenses,a.p56RatingValue,a.p56CompletePercent,a.p56ExternalPID,a.p56IsPlan_Hours_Ceiling,a.p56IsPlan_Expenses_Ceiling,a.p56IsHtml,a.p56IsNoNotify")
         s.Append(",p28client.p28Name as _Client,p57.p57Name as _p57Name,p59submitter.p59Name as _p59NameSubmitter,isnull(p41.p41NameShort,p41.p41Name) as _p41Name,p41.p41Code as _p41Code,o22.o22Name as _o22Name,b02.b02Name as _b02Name,b02.b02Color as _b02Color,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p57.p57IsHelpdesk as _p57IsHelpdesk,p57.b01ID as _b01ID,p57.p57PlanDatesEntryFlag as _p57PlanDatesEntryFlag")
         s.Append(",a.p65ID,a.p56RecurNameMask,a.p56RecurBaseDate,a.p56RecurMotherID")
+        If bolIncludeTags Then
+            s.Append(",dbo.tag_values_inline_html(356,a.p56ID) as TagsInlineHtml")
+        Else
+            s.Append(",NULL as TagsInlineHtml")
+        End If
         Return s.ToString
 
     End Function
-    Private Function GetSQLPart1(intTOP As Integer) As String
+    Private Function GetSQLPart1(intTOP As Integer, bolIncludeTags As Boolean) As String
         Dim s As String = "SELECT"
         If intTOP > 0 Then s += " TOP " & intTOP.ToString
-        s += " " & GetSF()
+        s += " " & GetSF(bolIncludeTags)
         Return s
     End Function
     Private Function GetSQLPart2(mq As BO.myQueryP56) As String

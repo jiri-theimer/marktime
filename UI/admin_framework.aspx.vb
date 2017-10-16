@@ -89,13 +89,8 @@ Public Class admin_framework
         End With
 
         If ViewState("prefix") <> "" Then
-            menu1.FindItemByValue("clone").Visible = True
             menu1.FindItemByValue("new").Visible = True
-            Select Case ViewState("prefix")
-               
-                Case Else
-                    menu1.Visible = True
-            End Select
+
             Select Case ViewState("prefix")
                 Case "x28", "j05", "c26", "p36"
                     query_validity.Visible = False
@@ -325,7 +320,8 @@ Public Class admin_framework
         With grid1
             .PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedItem.Text)
             .radGridOrig.ShowFooter = False
-
+            .AddContextMenuColumn(16)
+            
             Select Case ViewState("prefix")
                 Case "j02"
                     bolSearch = True
@@ -578,6 +574,10 @@ Public Class admin_framework
         If Not TypeOf e.Item Is GridDataItem Then Return
 
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
+        With dataItem("pm1")
+            .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('admin-" & ViewState("prefix") & "','" & dataItem.GetDataKeyValue("pid").ToString & "',this)" & Chr(34) & "></a>"
+        End With
+
         Select Case ViewState("prefix")
             Case "p41_o21", "p28_o21", "j02_o21"
                 Dim cRec As BO.o21MilestoneType = CType(e.Item.DataItem, BO.o21MilestoneType)
@@ -618,23 +618,7 @@ Public Class admin_framework
                     dataItem.BackColor = System.Drawing.Color.SkyBlue
                 End If
         End Select
-        'Select Case ViewState("prefix")
-        '    Case "j03-j03"
-        '        If dataItem("j03Login").Text = dataItem("FullName").Text Then
-        '            dataItem("FullName").Text = ""
-        '        End If
-        '        If dataItem("FullName").Text <> "" Then
-        '            dataItem("systemcolumn").Text = "<a class='reczoom' rel='ClueTip/j02_clue.aspx?j03id=" & dataItem.GetDataKeyValue("pid").ToString & "'>i</a>"
-        '        End If
-
-        '    Case "j03-j02"
-        '        dataItem("systemcolumn").Text = "<a class='reczoom' rel='ClueTip/j02_clue.aspx?pid=" & dataItem.GetDataKeyValue("pid").ToString & "'>i</a>"
-        '    Case "x31-x31"
-        '        'If dataItem("IsRestricted") Then
-
-        '        'End If
-        'End Select
-
+     
 
 
         If dataItem.GetDataKeyValue("IsClosed") Then dataItem.Font.Strikeout = True
@@ -655,7 +639,7 @@ Public Class admin_framework
                 .SetUserParam("admin_framework-filter_sql-" & ViewState("prefix"), grid1.GetFilterExpression())
             End With
         End If
-        grid1.DataKeyNames = "IsClosed"
+        grid1.DataKeyNames = "pid,IsClosed"
         Dim mqDef As New BO.myQuery
         mqDef.Closed = VQ()
         Dim lisGRID As IEnumerable(Of Object) = Nothing

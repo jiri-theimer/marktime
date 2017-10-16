@@ -286,6 +286,7 @@
                                     <td>
                                         <asp:HyperLink ID="link1" runat="server" CssClass="value_link"></asp:HyperLink>
                                         <asp:Label ID="lbl2" runat="server"></asp:Label>
+                                        <asp:Label ID="tags" runat="server"></asp:Label>
                                     </td>
 
 

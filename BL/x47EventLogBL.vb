@@ -92,6 +92,7 @@ Class x47EventLogBL
   
     Public Function GetList(mq As BO.myQueryX47, Optional intTopRecs As Integer = 0) As IEnumerable(Of BO.x47EventLog) Implements Ix47EventLogBL.GetList
         Return _cDL.GetList(mq, intTopRecs)
+
     End Function
     Public Function GetObjectAlias(x29id As BO.x29IdEnum, intRecordPID As Integer) As String Implements Ix47EventLogBL.GetObjectAlias
         If x29id = BO.x29IdEnum._NotSpecified Or intRecordPID = 0 Then Return "????"

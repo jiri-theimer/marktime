@@ -5,7 +5,7 @@
         _curUser = ServiceUser
     End Sub
     Public Function Load(intPID As Integer) As BO.x47EventLog
-        Dim s As String = GetSQLPart1(0)
+        Dim s As String = GetSQLPart1(0, False)
         s += " WHERE a.x47ID=@x47id"
 
         Return _cDB.GetRecord(Of BO.x47EventLog)(s, New With {.x47id = intPID})
@@ -44,7 +44,7 @@
 
 
     Public Function GetList(myQuery As BO.myQueryX47, Optional intTopRecs As Integer = 0) As IEnumerable(Of BO.x47EventLog)
-        Dim s As String = GetSQLPart1(intTopRecs), pars As New DbParameters
+        Dim s As String = GetSQLPart1(intTopRecs, myQuery.IsShowTagsInColumn), pars As New DbParameters
         Dim strW As String = bas.ParseWhereMultiPIDs("a.x47ID", myQuery)
         With myQuery
             If Year(.DateFrom) > 1900 Or Year(.DateUntil) < 3000 Then
@@ -79,7 +79,7 @@
             End If
         End With
 
-    
+
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
 
         s += " ORDER BY a.x47ID DESC"
@@ -89,10 +89,11 @@
     End Function
 
 
-    Private Function GetSQLPart1(intTOP As Integer) As String
+    Private Function GetSQLPart1(intTOP As Integer, bolIncludeTags As Boolean) As String
         Dim s As String = "SELECT"
         If intTOP > 0 Then s += " TOP " & intTOP.ToString
         s += " a.*,x45.x45Name as _x45Name,j02.j02LastName+' '+j02.j02FirstName as _Person,x45.x45IsAllowNotification as _x45IsAllowNotification"
+        If bolIncludeTags Then s += ",dbo.tag_values_inline_html(a.x29ID,a.x47RecordPID) as TagsInlineHtml" Else s += ",NULL as TagsInlineHtml"
         s += " FROM x47EventLog a INNER JOIN x45Event x45 ON a.x45ID=x45.x45ID"
         s += " INNER JOIN j03User j03 ON a.j03ID=j03.j03ID"
         s += " LEFT OUTER JOIN j02Person j02 ON j03.j02ID=j02.j02ID"

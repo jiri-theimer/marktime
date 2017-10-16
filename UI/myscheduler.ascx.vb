@@ -238,6 +238,8 @@ Public Class myscheduler
         mq.Closed = BO.BooleanQueryMode.FalseQuery
         mq.TerminNeniVyplnen = BO.BooleanQueryMode.TrueQuery
         mq.TopRecordsOnly = Me.MaxTopRecs
+        mq.IsShowTagsInColumn = True
+
         Select Case hidPrefix.Value
             Case "p28"
                 mq.p28ID = Me.RecordPID
@@ -277,9 +279,12 @@ Public Class myscheduler
             .NavigateUrl = "p56_framework.aspx?pid=" & cRec.PID.ToString
             If cRec.IsClosed Then .Font.Strikeout = True
         End With
-        With CType(e.Item.FindControl("clue1"), HyperLink)
-            .Attributes.Item("rel") = "clue_p56_record.aspx?&pid=" & cRec.PID.ToString
+        With CType(e.Item.FindControl("tags"), Label)
+            .Text = cRec.TagsInlineHtml
         End With
+        ''With CType(e.Item.FindControl("clue1"), HyperLink)
+        ''    .Attributes.Item("rel") = "clue_p56_record.aspx?&pid=" & cRec.PID.ToString
+        ''End With
         If Not cRec.p56ReminderDate Is Nothing Then
             e.Item.FindControl("img1").Visible = True
         Else
