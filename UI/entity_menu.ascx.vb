@@ -282,7 +282,7 @@ Public Class entity_menu
 
 
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
-            ami("WORKSHEET statistika projektu", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
+            ami("Statistiky projektu", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
         ami("Plugin", "cmdPlugin", "javascript:plugin();", "Images/plugin.png", mi, , True)
         ami("Štítky", "cmdTags", "javascript:tags_menu();", "Images/tag.png", mi, , True)
@@ -574,7 +574,7 @@ Public Class entity_menu
         'mi.GroupSettings.OffsetX = -200
 
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
-            ami("WORKSHEET statistika klienta", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
+            ami("Statistiky klienta", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
         ami("Plugin", "cmdPlugin", "javascript:plugin();", "Images/plugin.png", mi, , True)
         ami("Štítky", "cmdTags", "javascript:tags_menu();", "Images/tag.png", mi, , True)
@@ -645,7 +645,7 @@ Public Class entity_menu
 
         If cRec.j02IsIntraPerson Then
             If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
-                ami("WORKSHEET statistika osoby", "cmdPivot", "p31_sumgrid.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
+                ami("Statistiky osoby", "cmdPivot", "p31_sumgrid.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
             End If
             ami("Plugin", "cmdPlugin", "javascript:plugin();", "Images/plugin.png", mi, , True)
             ami("Štítky", "cmdTags", "javascript:tags_menu();", "Images/tag.png", mi, , True)
@@ -839,7 +839,7 @@ Public Class entity_menu
         ''mi.GroupSettings.OffsetX = -270
         'If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky úkolu", "", "javascript:page_setting()", "Images/setting.png", mi)
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
-            ami("WORKSHEET statistika úkolu", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
+            ami("Statistiky úkolu", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
         ami("Štítky", "cmdTags", "javascript:tags_menu();", "Images/tag.png", mi, , True)
 

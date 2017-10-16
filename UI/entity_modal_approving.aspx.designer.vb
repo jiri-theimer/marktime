@@ -194,24 +194,6 @@ Partial Public Class entity_modal_approving
     Protected WithEvents tlb2 As Global.Telerik.Web.UI.RadToolBar
 
     '''<summary>
-    '''tri control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents tri As Global.Telerik.Web.UI.RadPageView
-
-    '''<summary>
-    '''cmdQuickInvoice control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdQuickInvoice As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
     '''hidX29ID control.
     '''</summary>
     '''<remarks>

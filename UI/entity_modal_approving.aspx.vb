@@ -681,9 +681,7 @@
     
    
   
-    Private Sub cmdQuickInvoice_Click(sender As Object, e As EventArgs) Handles cmdQuickInvoice.Click
-        Response.Redirect("p91_create_step1.aspx?quick=1&prefix=" & Me.CurrentPrefix & "&pid=" & Master.DataPID.ToString)
-    End Sub
+    
 
     Private Sub cbxApprovingLevel_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxApprovingLevel.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("entity_framework_detail_approving-approving-level", Me.cbxApprovingLevel.SelectedValue)

@@ -119,33 +119,7 @@ Public Class handler_popupmenu
                 SEP()
                 CI("Oštítkovat", "tag_binding.aspx?prefix=p56&pids=" & intPID.ToString, , "Images/tag.png")
             Case "p28"
-                Dim cRec As BO.p28Contact = factory.p28ContactBL.Load(intPID)
-                If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
-                Dim cDisp As BO.p28RecordDisposition = factory.p28ContactBL.InhaleRecordDisposition(cRec)
-                If Not cDisp.ReadAccess Then FinalRW(context, "Nemáte přístup k tomuto klientovi.") : Return
-                If factory.SysUser.j04IsMenu_Contact Then
-                    REL(cRec.p28Name, "p28_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
-                    If cRec.p28ParentID > 0 Then
-                        Dim cParent As BO.p28Contact = factory.p28ContactBL.Load(cRec.p28ParentID)
-                        REL(cParent.p28Name, "p28_framework.aspx?pid=" & cRec.p28ParentID.ToString, "_top", "Images/tree.png")
-                    End If
-                Else
-                    CI(cRec.p28Name, "", True, "Images/information.png")
-                End If
-
-                SEP()
-                If cDisp.OwnerAccess Then
-                    CI("Upravit kartu klienta", "p28_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
-                    CI("Kopírovat", "p28_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
-                End If
-                If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
-                    SEP()
-                    REL("Statistiky klienta", "p31_sumgrid.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "_top", "Images/pivot.png")
-                End If
-                SEP()
-                CI("Tisková sestava", "report_modal.aspx?prefix=p28&pid=" & intPID.ToString, , "Images/report.png")
-                SEP()
-                CI("Oštítkovat", "tag_binding.aspx?prefix=p28&pids=" & intPID.ToString, , "Images/tag.png")
+                HandleP28(intPID, factory, strFlag)
             Case "p41"
                 HandleP41(intPID, factory, strFlag)
             Case "p91"
@@ -207,6 +181,73 @@ Public Class handler_popupmenu
 
 
     End Sub
+    Private Sub HandleP28(intPID As Integer, factory As BL.Factory, strFlag As String)
+        Dim cRec As BO.p28Contact = factory.p28ContactBL.Load(intPID)
+        If cRec Is Nothing Then CI("Záznam nebyl nalezen", "", True) : Return
+        Dim cDisp As BO.p28RecordDisposition = factory.p28ContactBL.InhaleRecordDisposition(cRec)
+        If Not cDisp.ReadAccess Then CI("Ke klientovi nemáte oprávnění.", "", True) : Return
+        Dim cRecSum As BO.p28ContactSum = factory.p28ContactBL.LoadSumRow(cRec.PID)
+
+        If factory.SysUser.j04IsMenu_Contact Then
+            REL(cRec.p28Name, "p28_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
+            If cRec.p28ParentID > 0 Then
+                Dim cParent As BO.p28Contact = factory.p28ContactBL.Load(cRec.p28ParentID)
+                REL(cParent.p28Name, "p28_framework.aspx?pid=" & cRec.p28ParentID.ToString, "_top", "Images/tree.png")
+            End If
+        Else
+            CI(cRec.p28Name, "", True, "Images/information.png")
+        End If
+        Dim bolCanInvoice As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator), bolInvoicing As Boolean = False
+
+        If (factory.SysUser.IsApprovingPerson Or bolCanInvoice) And cRec.p28SupplierFlag <> BO.p28SupplierFlagENUM.NotClientNotSupplier Then
+            Dim intWIPx As Integer = 0, intAPPx As Integer = 0
+            With cRecSum
+                intWIPx = .p31_Wip_Expense_Count + .p31_Wip_Fee_Count + .p31_Wip_Time_Count + .p31_Wip_Kusovnik_Count
+                intAPPx = .p31_Approved_Expense_Count + .p31_Approved_Fee_Count + .p31_Approved_Kusovnik_Count + .p31_Approved_Time_Count
+            End With
+            If intWIPx > 0 Or intAPPx > 0 Then
+                SEP()
+                Dim ss As String = String.Format("Schválit rozpracované úkony ({0}x)", intWIPx)
+                If intWIPx = 0 And intAPPx > 0 Then ss = String.Format("Přes-schválit ({0}x) schválené", intAPPx)
+                If intWIPx > 0 And intAPPx > 0 Then ss = String.Format("Schválit ({0}x)/přes-schválit ({1}x)", intWIPx, intAPPx)
+                CI(ss, "entity_modal_approving.aspx?prefix=p28&pid=" & intPID.ToString, , "Images/approve.png")
+
+                If bolCanInvoice Then CI("Fakturovat", "", , "Images/invoice.png") : bolInvoicing = True
+                If bolCanInvoice And intAPPx > 0 Then
+                    CI(String.Format("Fakturovat schválené úkony ({0}x)", intAPPx.ToString), "p91_create_step1.aspx?nogateway=1&prefix=p28&pid=" & intPID.ToString, , "Images/invoice.png", True)
+                End If
+                If bolCanInvoice And intAPPx = 0 And intWIPx > 0 Then
+                    CI(String.Format("Fakturovat bez schvalování ({0}x+{1}x)", intWIPx, intAPPx), "entity_modal_invoicing.aspx?prefix=p28&pids=" & intPID.ToString, , "Images/invoice.png", True)
+                End If
+                If factory.SysUser.j04IsMenu_Invoice Then
+                    If cRecSum.Last_p91ID > 0 Then
+                        REL(String.Format("Poslední faktura: {0}", cRecSum.Last_Invoice), "p91_framework.aspx?pid=" & cRecSum.Last_p91ID.ToString, "_top", "Images/invoice.png", True)
+                    Else
+                        CI("Klient zatím nefakturován", "", True, , True)
+                    End If
+
+                End If
+            End If
+        End If
+        If bolCanInvoice Then
+            If Not bolInvoicing Then CI("Fakturovat", "", , "Images/invoice.png")
+            CI("Fakturovat jednou částkou bez úkonů", "p91_create_step1.aspx?quick=1&prefix=p28&pid=" & intPID.ToString, , "Images/invoice.png", True)
+        End If
+
+        If cDisp.OwnerAccess Then
+            SEP()
+            CI("Upravit kartu klienta", "p28_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+            CI("Kopírovat", "p28_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
+        End If
+        If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
+            SEP()
+            REL("Statistiky klienta", "p31_sumgrid.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "_top", "Images/pivot.png")
+        End If
+        SEP()
+        CI("Tisková sestava", "report_modal.aspx?prefix=p28&pid=" & intPID.ToString, , "Images/report.png")
+        SEP()
+        CI("Oštítkovat", "tag_binding.aspx?prefix=p28&pids=" & intPID.ToString, , "Images/tag.png")
+    End Sub
     Private Sub HandleP41(intPID As Integer, factory As BL.Factory, strFlag As String)
         Dim cRec As BO.p41Project = factory.p41ProjectBL.Load(intPID)
         If cRec Is Nothing Then CI("Záznam nebyl nalezen.", "", True) : Return
@@ -239,9 +280,9 @@ Public Class handler_popupmenu
                 intWIPx = .p31_Wip_Expense_Count + .p31_Wip_Fee_Count + .p31_Wip_Time_Count + .p31_Wip_Kusovnik_Count
                 intAPPx = .p31_Approved_Expense_Count + .p31_Approved_Fee_Count + .p31_Approved_Kusovnik_Count + .p31_Approved_Time_Count
             End With
+            Dim bolCanInvoice As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator), bolInvoicing As Boolean = False
             If intWIPx > 0 Or intAPPx > 0 Then
                 Dim bolCanApprove As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver)
-                Dim bolCanInvoice As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)
                 If Not bolCanApprove And cDisp.x67IDs.Count > 0 Then
                     Dim lisO28 As IEnumerable(Of BO.o28ProjectRole_Workload) = factory.x67EntityRoleBL.GetList_o28(cDisp.x67IDs)
                     If lisO28.Where(Function(p) p.o28PermFlag = BO.o28PermFlagENUM.CistASchvalovatVProjektu Or p.o28PermFlag = BO.o28PermFlagENUM.CistAEditASchvalovatVProjektu).Count > 0 Then
@@ -255,13 +296,14 @@ Public Class handler_popupmenu
                     If intWIPx > 0 And intAPPx > 0 Then ss = String.Format("Schválit ({0}x)/přes-schválit ({1}x)", intWIPx, intAPPx)
                     CI(ss, "entity_modal_approving.aspx?prefix=p41&pid=" & intPID.ToString, , "Images/approve.png")
                 End If
-                If bolCanInvoice Then CI("Fakturovat", "", , "Images/invoice.png")
+                If bolCanInvoice Then CI("Fakturovat", "", , "Images/invoice.png") : bolInvoicing = True
                 If bolCanInvoice And intAPPx > 0 Then
-                    CI(String.Format("Fakturovat schválené úkony ({0}x)", intAPPx.ToString), "p91_create_step1.aspx?nogateway=1&prefix=p41&pid=" & intPID.ToString, , "Images/invoice.png", True)
+                    CI(String.Format("Fakturovat schválené úkony ({0}x)", intAPPx.ToString), "p91_create_step1.aspx?nogateway=1&prefix=p41&pid=" & intPID.ToString, , "Images/invoice.png", True) : bolInvoicing = True
                 End If
                 If bolCanInvoice And intAPPx = 0 And intWIPx > 0 Then
-                    CI(String.Format("Fakturovat bez schvalování ({0}x+{1}x)", intWIPx, intAPPx), "entity_modal_invoicing.aspx?prefix=p41&pids=" & intPID.ToString, , "Images/invoice.png", True)
+                    CI(String.Format("Fakturovat bez schvalování ({0}x+{1}x)", intWIPx, intAPPx), "entity_modal_invoicing.aspx?prefix=p41&pids=" & intPID.ToString, , "Images/invoice.png", True) : bolInvoicing = True
                 End If
+
                 If factory.SysUser.j04IsMenu_Invoice Then
                     If cRecSum.Last_p91ID > 0 Then
                         REL(String.Format("Poslední faktura: {0}", cRecSum.Last_Invoice), "p91_framework.aspx?pid=" & cRecSum.Last_p91ID.ToString, "_top", "Images/invoice.png", True)
@@ -270,6 +312,10 @@ Public Class handler_popupmenu
                     End If
 
                 End If
+            End If
+            If bolCanInvoice Then
+                If Not bolInvoicing Then CI("Fakturovat", "", , "Images/invoice.png")
+                CI("Fakturovat jednou částkou bez úkonů", "p91_create_step1.aspx?quick=1&prefix=p41&pid=" & intPID.ToString, , "Images/invoice.png", True)
             End If
             
 

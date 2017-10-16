@@ -136,8 +136,7 @@
     <telerik:RadTabStrip ID="tabs1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true">
         <Tabs>
             <telerik:RadTab Text="Rozpracované úkony - čeká na schvalování" Selected="true" Value="1" ImageUrl="Images/approve.png"></telerik:RadTab>
-            <telerik:RadTab Text="Schválené úkony - čeká na fakturaci" Value="2" ImageUrl="Images/invoice.png"></telerik:RadTab>
-            <telerik:RadTab Text="Zrychlená fakturace jednou částkou" Value="3" ImageUrl="Images/invoice.png"></telerik:RadTab>
+            <telerik:RadTab Text="Schválené úkony - čeká na fakturaci" Value="2" ImageUrl="Images/invoice.png"></telerik:RadTab>            
         </Tabs>
     </telerik:RadTabStrip>
 
@@ -280,18 +279,7 @@
 
 
         </telerik:RadPageView>
-        <telerik:RadPageView ID="tri" runat="server">
-
-
-            <asp:Button ID="cmdQuickInvoice" runat="server" Text="Vytvořit fakturu" CssClass="cmd" />
-            <div>Jedno rozhraní pro následující proces:</div>
-            <ul>
-                <li>1. Založíte peněžní worksheet úkon.</li>
-                <li>2. Ihned úkon schválíte.</li>
-                <li>3. Vytvoříte fakturu.</li>
-            </ul>
-
-        </telerik:RadPageView>
+      
     </telerik:RadMultiPage>
 
     <asp:HiddenField ID="hidX29ID" runat="server" Value="141" />
