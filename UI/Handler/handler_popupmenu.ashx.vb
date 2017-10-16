@@ -20,7 +20,7 @@ Public Class handler_popupmenu
 
         Dim strPREFIX As String = Trim(context.Request.Item("prefix"))
         Dim intPID As Integer = BO.BAS.IsNullInt(Trim(context.Request.Item("pid")))
-        Dim strPAGE As String = Trim(context.Request.Item("page"))
+        Dim strFlag As String = Trim(context.Request.Item("flag"))
 
         If strPREFIX = "" Then
             FinalRW(context, "prefix is missing") : Return
@@ -230,22 +230,7 @@ Public Class handler_popupmenu
                 SEP()
                 CI("Oštítkovat", "tag_binding.aspx?prefix=p91&pids=" & intPID.ToString, , "Images/tag.png")
             Case "o23"
-                Dim cRec As BO.o23Doc = factory.o23DocBL.Load(intPID)
-                If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
-                Dim cDisp As BO.o23RecordDisposition = factory.o23DocBL.InhaleDisposition(cRec)
-                If factory.SysUser.j04IsMenu_Notepad Then
-                    REL(cRec.o23Name, "o23_fixwork.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
-                Else
-                    CI(cRec.o23Name, "", True, "Images/information.png")
-                End If
-                SEP()
-                If cDisp.OwnerAccess Then
-                    SEP()
-                    CI("Upravit kartu dokumentu", "o23_record.aspx?pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, , "Images/edit.png")
-                    CI("Kopírovat", "o23_record.aspx?clone=1&pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, , "Images/copy.png")
-                End If
-                SEP()
-                CI("Oštítkovat", "tag_binding.aspx?prefix=p91&pids=" & intPID.ToString, , "Images/tag.png")
+                HandleO23(intPID, factory, strFlag)
             Case "j02"
                 HandleJ02(intPID, factory)
             Case "p90"
@@ -264,6 +249,36 @@ Public Class handler_popupmenu
         context.Response.Write(s)
 
 
+    End Sub
+    Private Sub HandleO23(intPID As Integer, factory As BL.Factory, strFlag As String)
+        Dim cRec As BO.o23Doc = factory.o23DocBL.Load(intPID)
+        If cRec Is Nothing Then CI("Záznam nebyl nalezen.", "", True) : Return
+        Dim cDisp As BO.o23RecordDisposition = factory.o23DocBL.InhaleDisposition(cRec)
+        Dim cX18 As BO.x18EntityCategory = factory.x18EntityCategoryBL.Load(cRec.x18ID)
+        If factory.SysUser.j04IsMenu_Notepad Then
+
+            If strFlag = "o23_fixwork" Then
+                REL("Přepnout do obecných přehledů", "entity_framework.aspx?prefix=o23&pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
+            Else
+                REL("Přepnout do pevných přehledů", "o23_fixwork.aspx?pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, "_top", "Images/fullscreen.png")
+            End If
+
+        Else
+            CI(cRec.o23Name, "", True, "Images/information.png")
+        End If
+
+        If cDisp.OwnerAccess Then
+            SEP()
+            If cX18.x18IsManyItems Then
+                CI("Upravit kartu dokumentu", "o23_record.aspx?pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, , "Images/edit.png")
+            Else
+                CI("Upravit kartu kategorie", "o23_record.aspx?pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, , "Images/edit.png")
+            End If
+
+            CI("Kopírovat", "o23_record.aspx?clone=1&pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, , "Images/copy.png")
+        End If
+        SEP()
+        CI("Oštítkovat", "tag_binding.aspx?prefix=o23&pids=" & intPID.ToString, , "Images/tag.png")
     End Sub
     Private Sub HandleX40(intPID As Integer, factory As BL.Factory)
         Dim cRec As BO.x40MailQueue = factory.x40MailQueueBL.Load(intPID)

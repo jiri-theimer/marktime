@@ -311,7 +311,7 @@
             
         }
        
-        function RCM(curPREFIX, curPID, ctl) {
+        function RCM(curPREFIX, curPID, ctl,strFlag) {
             var d = new Date();
             var n = d.getTime();
            
@@ -328,7 +328,7 @@
                 },
                 async: true,
                 timeout: 3000,
-                data: { prefix: curPREFIX, pid: curPID },
+                data: { prefix: curPREFIX, pid: curPID, flag: strFlag },
                 success: function (data) {
                     //alert("načítání");
                     //$('#html5menu').html('');
