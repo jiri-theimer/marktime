@@ -82,43 +82,69 @@ Public Class handler_popupmenu
 
                 Dim cDisp As BO.p56RecordDisposition = factory.p56TaskBL.InhaleRecordDisposition(cRec)
                 If Not cDisp.ReadAccess Then FinalRW(context, "Nemáte přístup k tomuto úkolu.") : Return
-                CI(cRec.FullName, "", True, "Images/information.png")
-                SEP()
-                REL("Stránka úkolu", "p56_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
+                If factory.SysUser.j04IsMenu_Task Then
+                    REL(cRec.FullName, "p56_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
+                Else
+                    CI(cRec.FullName, "", True, "Images/information.png")
+                End If
                 If cDisp.P31_Create Then
                     SEP()
                     CI("Zapsat WORKSHEET", "p31_record.aspx?p56id=" & intPID.ToString, cRec.IsClosed, "Images/worksheet.png")
                 End If
+                SEP()
                 CI("Posunout/Doplnit", "workflow_dialog.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/workflow.png")
                 If cDisp.OwnerAccess Then
                     SEP()
-                    CI("Upravit záznam (karta úkolu)", "p56_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+                    CI("Upravit kartu úkolu", "p56_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
                     CI("Kopírovat", "p56_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
                 End If
-                
+                If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
+                    SEP()
+                    REL("Statistiky úkolu", "p31_sumgrid.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, "_top", "Images/pivot.png")
+                End If
                 SEP()
                 CI("Tisková sestava", "report_modal.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/report.png")
             Case "p28"
                 Dim cRec As BO.p28Contact = factory.p28ContactBL.Load(intPID)
                 If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
                 Dim cDisp As BO.p28RecordDisposition = factory.p28ContactBL.InhaleRecordDisposition(cRec)
-                If Not cDisp.ReadAccess Then FinalRW(context, "Nemáte přístup k tomuto úkolu.") : Return
-                CI(cRec.p28Name, "", True, "Images/information.png")
+                If Not cDisp.ReadAccess Then FinalRW(context, "Nemáte přístup k tomuto klientovi.") : Return
+                If factory.SysUser.j04IsMenu_Contact Then
+                    REL(cRec.p28Name, "p28_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
+                    If cRec.p28ParentID > 0 Then
+                        REL("Nadřízený klient", "p28_framework.aspx?pid=" & cRec.p28ParentID.ToString, "_top", "Images/tree.png")
+                    End If
+                Else
+                    CI(cRec.p28Name, "", True, "Images/information.png")
+                End If
+
                 SEP()
                 If cDisp.OwnerAccess Then
-                    CI("Upravit záznam (karta klienta)", "p28_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+                    CI("Upravit kartu klienta", "p28_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
                     CI("Kopírovat", "p28_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
+                End If
+                If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
+                    SEP()
+                    REL("Statistiky klienta", "p31_sumgrid.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "_top", "Images/pivot.png")
                 End If
                 SEP()
                 CI("Tisková sestava", "report_modal.aspx?prefix=p28&pid=" & intPID.ToString, , "Images/report.png")
             Case "p41"
                 Dim cRec As BO.p41Project = factory.p41ProjectBL.Load(intPID)
                 If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
-                CI(cRec.PrefferedName, "", True, "Images/information.png")
+                If factory.SysUser.j04IsMenu_Project Then
+                    REL(cRec.PrefferedName, "p41_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
+                    If cRec.p41ParentID > 0 Then                        
+                        REL("Nadřízený projekt", "p41_framework.aspx?pid=" & cRec.p41ParentID.ToString, "_top", "Images/tree.png")
+                    End If
+                Else
+                    CI(cRec.PrefferedName, "", True, "Images/information.png")
+                End If
                 SEP()
 
                 Dim cP42 As BO.p42ProjectType = factory.p42ProjectTypeBL.Load(cRec.p42ID)
                 Dim cDisp As BO.p41RecordDisposition = factory.p41ProjectBL.InhaleRecordDisposition(cRec)
+                If Not cDisp.ReadAccess Then FinalRW(context, "Nemáte přístup k tomuto projektu.") : Return
 
                 If cP42.p42IsModule_p31 And Not (cRec.IsClosed Or cRec.p41IsDraft) Then
                     CI("Zapsat WORKSHEET", "", , "Images/worksheet.png")
@@ -131,20 +157,41 @@ Public Class handler_popupmenu
 
                 If cDisp.OwnerAccess Then
                     SEP()
-                    CI("Upravit záznam (karta projektu)", "p41_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+                    CI("Upravit kartu projektu", "p41_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
                     CI("Kopírovat", "p41_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
+                End If
+                
+                If factory.SysUser.j04IsMenu_Contact And cRec.p28ID_Client > 0 Then
+                    SEP()
+                    REL("Klient projektu", "p28_framework.aspx?pid=" & cRec.p28ID_Client.ToString, "_top", "Images/contact.png")
+                End If
+                If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
+                    SEP()
+                    REL("Statistiky projektu", "p31_sumgrid.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "_top", "Images/pivot.png")
                 End If
                 SEP()
                 CI("Tisková sestava", "report_modal.aspx?prefix=p41&pid=" & intPID.ToString, , "Images/report.png")
             Case "p91"
                 Dim cRec As BO.p91Invoice = factory.p91InvoiceBL.Load(intPID)
                 If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
-                CI(cRec.p92Name & ": " & cRec.p91Code, "", True, "Images/information.png")
+
                 Dim cDisp As BO.p91RecordDisposition = factory.p91InvoiceBL.InhaleRecordDisposition(cRec)
                 If cDisp.ReadAccess Then
+                    REL(cRec.p92Name & ": " & cRec.p91Code, "p91_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
                     If cDisp.OwnerAccess Then
                         SEP()
                         CI("Upravit kartu faktury", "p91_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+                    End If
+                    If factory.SysUser.j04IsMenu_Contact And cRec.p28ID > 0 Then
+                        SEP()
+                        REL("Klient faktury", "p28_framework.aspx?pid=" & cRec.p28ID.ToString, "_top", "Images/contact.png")
+                    End If
+                    If factory.SysUser.j04IsMenu_Project And cRec.p41ID_First > 0 Then
+                        REL("Fakturovaný projekt", "p41_framework.aspx?pid=" & cRec.p41ID_First.ToString, "_top", "Images/project.png")
+                    End If
+                    If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
+                        SEP()
+                        REL("Statistiky faktury", "p31_sumgrid.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString, "_top", "Images/pivot.png")
                     End If
                     SEP()
                     Dim cP92 As BO.p92InvoiceType = factory.p92InvoiceTypeBL.Load(cRec.p92ID)
@@ -157,9 +204,24 @@ Public Class handler_popupmenu
                         End If
                     End With
                     CI("Tisková sestava", "report_modal.aspx?prefix=p91&pid=" & intPID.ToString, , "Images/report.png")
+                Else
+                    CI(cRec.p92Name & ": " & cRec.p91Code, "", True, "Images/information.png")
                 End If
                 
-
+            Case "o23"
+                Dim cRec As BO.o23Doc = factory.o23DocBL.Load(intPID)
+                If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
+                Dim cDisp As BO.o23RecordDisposition = factory.o23DocBL.InhaleDisposition(cRec)
+                If factory.SysUser.j04IsMenu_Notepad Then
+                    REL(cRec.o23Name, "o23_fixwork.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
+                Else
+                    CI(cRec.o23Name, "", True, "Images/information.png")
+                End If
+                SEP()
+                If cDisp.OwnerAccess Then
+                    SEP()
+                    CI("Upravit kartu dokumentu", "o23_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+                End If
             Case Else
                 CI("Nezpracovatelný PREFIX", "")
         End Select
