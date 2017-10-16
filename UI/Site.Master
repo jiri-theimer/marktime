@@ -314,6 +314,7 @@
         function RCM(curPREFIX, curPID, ctl) {
             var d = new Date();
             var n = d.getTime();
+           
             var contextMenu = $find("<%= RadContextMenu1.ClientID %>");
             if (n - _lastCmClosedTime < 2) {
                 return;     //menu bylo zavřeno přes link volající přímo RCM

@@ -11,7 +11,7 @@ Public Class basUIMT
         End Get
     End Property
    
-    Public Shared Function SetupDataGrid(factory As BL.Factory, grid As UI.datagrid, cJ70 As BO.j70QueryTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 20, Optional ByRef strGetSumCols As String = "", Optional strMasterPrefix As String = "") As String
+    Public Shared Function SetupDataGrid(factory As BL.Factory, grid As UI.datagrid, cJ70 As BO.j70QueryTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 16, Optional ByRef strGetSumCols As String = "", Optional strMasterPrefix As String = "") As String
         If cJ70.j70ScrollingFlag = BO.j70ScrollingFlagENUM.Scrolling Then cJ70.j70ScrollingFlag = BO.j70ScrollingFlagENUM.StaticHeaders
         Dim lisSqlSEL As New List(Of String) 'vrací Sql SELECT syntaxi pro datový zdroj GRIDu
         Dim lisSqlSumCols As New List(Of String)
@@ -29,7 +29,10 @@ Public Class basUIMT
 
 
             .PageSize = intPageSize
-            If intSysColumnWidth > 0 Then .AddSystemColumn(intSysColumnWidth)
+            .AddContextMenuColumn(16)
+            If intSysColumnWidth > 0 Then
+                .AddSystemColumn(intSysColumnWidth)
+            End If
             .radGridOrig.PagerStyle.Mode = Telerik.Web.UI.GridPagerMode.NextPrevAndNumeric
             .AllowFilteringByColumn = cJ70.j70IsFilteringByColumn
             Select Case cJ70.j70ScrollingFlag
@@ -43,7 +46,7 @@ Public Class basUIMT
                     .radGridOrig.ClientSettings.Scrolling.AllowScroll = False
                     .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = False
             End Select
-          
+
             .radGridOrig.MasterTableView.Name = "grid"
             If strSortExpression <> "" Then .radGridOrig.MasterTableView.SortExpressions.AddSortExpression(strSortExpression)
 
@@ -99,7 +102,7 @@ Public Class basUIMT
                 Next
             End If
         End With
-        
+
 
         If lisSqlFROM.Count > 0 Then strGetAdditionalFROM = String.Join(" ", lisSqlFROM.Distinct)
         strGetSumCols = String.Join("|", lisSqlSumCols)
@@ -232,10 +235,11 @@ Public Class basUIMT
             Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
             If cRec.Item(0) Is System.DBNull.Value Then Return 'chybné SQL datového přehledu
             If bolShowClueTip Then
-                With dataItem("systemcolumn")
-                    .Text = "<a class='pp1' id='p56x" & cRec.Item("pid").ToString & "' href=" & Chr(34) & "javascript:RCM('p56','" & cRec.Item("pid").ToString & "','p56x" & cRec.Item("pid").ToString & "')" & Chr(34) & "></a>"
-                End With
+                
             End If
+            With dataItem("pm1")
+                .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('p56','" & cRec.Item("pid").ToString & "',this)" & Chr(34) & "></a>"
+            End With
             With cRec
                 If .Item("IsClosed") Then
                     dataItem.Font.Strikeout = True
@@ -345,7 +349,10 @@ Public Class basUIMT
             If Not cRec.Item("p65ID") Is System.DBNull.Value Then
                 dataItem("systemcolumn").CssClass = "recurrence"
             End If
-
+            With dataItem("pm1")
+                '.Text = "<a class='pp1' id='p41x" & cRec.Item("pid").ToString & "' onclick=" & Chr(34) & "javascript:RCM('p41','" & cRec.Item("pid").ToString & "',this)" & Chr(34) & "></a>"
+                .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('p41','" & cRec.Item("pid").ToString & "',this)" & Chr(34) & "></a>"
+            End With
 
 
         Else
@@ -469,8 +476,8 @@ Public Class basUIMT
             If bolMobile Then
                 dataItem("mob").Text = "<a href='javascript:re(" & cRec.Item("pid").ToString & ")'><img src='Images/fe.png'></a>"
             Else
-                With dataItem("systemcolumn")                    
-                    .Text = "<a class='pp1' id='p31x" & cRec.Item("pid").ToString & "' href=" & Chr(34) & "javascript:RCM('p31','" & cRec.Item("pid").ToString & "','p31x" & cRec.Item("pid").ToString & "')" & Chr(34) & "></a>"
+                With dataItem("pm1")
+                    .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('p31','" & cRec.Item("pid").ToString & "',this)" & Chr(34) & "></a>"
                 End With
             End If
 

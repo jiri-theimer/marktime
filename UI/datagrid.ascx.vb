@@ -438,10 +438,26 @@ Public Class datagrid
         col.DataField = strFieldName
         col.AllowFiltering = False
         col.AllowSorting = False
-        ''col.ItemStyle.Width = Unit.Parse(intWidth.ToString & "px")
         col.HeaderStyle.Width = Unit.Parse(intWidth.ToString & "px")
         col.Exportable = False
         col.ReadOnly = True
+        col.ItemStyle.CssClass = "systemcolumn"
+    End Sub
+    Public Sub AddContextMenuColumn(ByVal intWidth As Integer, Optional gtv As GridTableView = Nothing)
+        Dim col As GridBoundColumn
+        col = New GridBoundColumn
+        If Not gtv Is Nothing Then
+            gtv.Columns.Add(col)
+        Else
+            grid1.MasterTableView.Columns.Add(col)
+        End If
+        col.UniqueName = "pm1"
+        col.AllowFiltering = False
+        col.AllowSorting = False
+        col.HeaderStyle.Width = Unit.Parse(intWidth.ToString & "px")
+        col.Exportable = False
+        col.ReadOnly = True
+        col.ItemStyle.CssClass = "systemcolumn"
     End Sub
 
     Private Sub grid1_BiffExporting(sender As Object, e As Telerik.Web.UI.GridBiffExportingEventArgs) Handles grid1.BiffExporting

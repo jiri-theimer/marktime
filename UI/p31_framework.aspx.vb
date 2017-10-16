@@ -174,9 +174,9 @@ Public Class p31_framework
 
         Dim strAddSqlFrom As String = ""
         If tabs1.SelectedIndex = 0 Then
-            Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom, 30)
+            Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom)
         Else
-            Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 100, False, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom, 30)
+            Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 100, False, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom)
         End If
         hidFrom.Value = strAddSqlFrom
         If cJ70.j70ScrollingFlag > BO.j70ScrollingFlagENUM.NoScrolling Then
@@ -187,7 +187,6 @@ Public Class p31_framework
 
         With grid1
             .radGridOrig.ShowFooter = False
-            .radGridOrig.SelectedItemStyle.BackColor = Drawing.Color.Red
         End With
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
@@ -209,9 +208,9 @@ Public Class p31_framework
             'If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
             'dataItem("systemcolumn").Text = "<a title='Zapsat úkon' href='javascript:nw(" & cRec.Item("pid").ToString & ")'><img src='Images/new.png' border=0/></a>"
             basUIMT.p41_grid_Handle_ItemDataBound(sender, e, True)
-            With dataItem("systemcolumn")
-                .Text = "<a class='reczoom' title='Detail projektu' rel='clue_p41_myworksheet.aspx?parent_url_reload=p31_framework.aspx&pid=" & cRec.Item("pid").ToString & "&j02id=" & Me.CurrentJ02ID.ToString & "' style='margin-left:-10px;'>i</a>" & .Text
-            End With
+            'With dataItem("systemcolumn")
+            '    .Text = "<a class='reczoom' title='Detail projektu' rel='clue_p41_myworksheet.aspx?parent_url_reload=p31_framework.aspx&pid=" & cRec.Item("pid").ToString & "&j02id=" & Me.CurrentJ02ID.ToString & "' style='margin-left:-10px;'>i</a>" & .Text
+            'End With
         Else
             With dataItem("systemcolumn")
                 .Text = "<a class='reczoom' title='Detail úkolu' rel='clue_p56_record.aspx?&pid=" & cRec.Item("pid").ToString & "' style='margin-left:-10px;'>i</a>"
