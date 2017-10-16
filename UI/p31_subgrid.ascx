@@ -26,14 +26,8 @@
     <div class="commandcell">
         <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" Style="z-index: 2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" CollapseAnimation-Duration="0" CollapseAnimation-Type="None">
             <Items>
-                <telerik:RadMenuItem Text="Záznam" ImageUrl="Images/menuarrow.png">
-                    <Items>
-                        <telerik:RadMenuItem Text="Nový" Value="new" NavigateUrl="javascript:p31_entry()"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Text="Kopírovat" Value="clone" NavigateUrl="javascript:p31_clone()"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Text="Rozdělit časový úkon na 2 kusy" Value="split" NavigateUrl="javascript:p31_split()"></telerik:RadMenuItem>
-                    </Items>
-                </telerik:RadMenuItem>
-                <telerik:RadMenuItem Text="Vybrané záznamy" Value="akce" ImageUrl="Images/menuarrow.png">
+                <telerik:RadMenuItem Text="Nový" Value="new" NavigateUrl="javascript:p31_entry()" ImageUrl="Images/new.png"></telerik:RadMenuItem>
+                <telerik:RadMenuItem Text="Vybrané (zaškrtlé)" Value="akce" ImageUrl="Images/menuarrow.png">
                     <Items>
                         <telerik:RadMenuItem Text="Kopírovat" Value="clone" NavigateUrl="javascript:p31_clone()"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Text="Schvalovat/pře-schvalovat označené" Value="cmdApprove" NavigateUrl="javascript:approving()"></telerik:RadMenuItem>
@@ -42,7 +36,7 @@
 
                     </Items>
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Text="Další akce" ImageUrl="Images/menuarrow.png">
+                <telerik:RadMenuItem Text="Další" ImageUrl="Images/menuarrow.png">
 
                     <ContentTemplate>
 

@@ -286,7 +286,7 @@ Public Class p31_grid
     End Sub
 
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
-        basUIMT.p31_grid_Handle_ItemDataBound(sender, e, True)
+        basUIMT.p31_grid_Handle_ItemDataBound(sender, e, True, False, "p31_grid")
         If _curIsExport Then
             If TypeOf e.Item Is GridHeaderItem Then
                 e.Item.BackColor = Drawing.Color.Silver

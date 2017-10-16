@@ -83,7 +83,7 @@
 
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
         If Not TypeOf e.Item Is Telerik.Web.UI.GridDataItem Then Return
-        basUIMT.p31_grid_Handle_ItemDataBound(sender, e)
+        basUIMT.p31_grid_Handle_ItemDataBound(sender, e, False, False, "p31_approving_step2")
         Dim cRec As BO.p31Worksheet = CType(e.Item.DataItem, BO.p31Worksheet)
         If cRec.p91ID > 0 Or cRec.p31IsPlanRecord Then
             e.Item.ForeColor = Drawing.Color.Red    'zamítnuté

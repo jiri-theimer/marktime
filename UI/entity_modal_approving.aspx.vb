@@ -223,12 +223,12 @@
                 Master.HeaderIcon = "Images/person_32.png"
         End Select
 
-        If ViewState("can_create_invoice") Then
-            tabs1.FindTabByValue("3").Visible = True
-        Else
-            tabs1.FindTabByValue("3").Visible = False
-        End If
-        RadMultiPage1.FindPageViewByID("tri").Visible = tabs1.FindTabByValue("3").Visible
+        ''If ViewState("can_create_invoice") Then
+        ''    tabs1.FindTabByValue("3").Visible = True
+        ''Else
+        ''    tabs1.FindTabByValue("3").Visible = False
+        ''End If
+        ''RadMultiPage1.FindPageViewByID("tri").Visible = tabs1.FindTabByValue("3").Visible
 
         If Not bolCanApprove Then
             Handle_NoPermissions()

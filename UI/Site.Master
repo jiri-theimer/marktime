@@ -296,7 +296,7 @@
         }
 
 
-        function contMenu(url) {
+        function contMenu(url, isTopWindow) {
             sw_everywhere(url, "", true);
         }
         function contReload(url, target) {            

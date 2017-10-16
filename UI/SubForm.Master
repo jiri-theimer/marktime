@@ -236,16 +236,48 @@
             sw_local(url, iconUrl, is_maximize);
         }
 
-        function contMenu(url) {
+        function contMenu(url,isTopWindow) {
+            var w = window.innerWidth;
+            
+
+            if (w < 1100 && window.parent != null) {
+                window.parent.sw_everywhere(url, "", true);
+                return;
+            }
+
+            if (isTopWindow == true) {
+                var isInIFrame = (window.location != window.parent.location);
+                if (isInIFrame == true) {
+                    window.parent.sw_everywhere(url, "", true);
+                    return;
+                }
+            }
+            
+
             sw_everywhere(url, "", true);
         }
-        function contReload(url) {
-            window.open(url, "_top");
+
+        function contReload(url, target) {
+            window.open(url, target);
         }
 
+        var _lastCmClosedTime = null;
 
-        function RCM(curPREFIX, curPID, ctlID) {
-            var curPAGE = "";
+        function RadContextMenu1_Hidden(menu) {
+            var d = new Date();
+            _lastCmClosedTime = d.getTime();
+
+        }
+
+        function RCM(curPREFIX, curPID, ctl, strFlag) {
+            var d = new Date();
+            var n = d.getTime();
+
+            var contextMenu = $find("<%= RadContextMenu1.ClientID %>");
+            if (n - _lastCmClosedTime < 2) {
+                return;     //menu bylo zavřeno přes link volající přímo RCM
+            }
+
             $.ajax({
                 method: "POST",
                 url: "Handler/handler_popupmenu.ashx",
@@ -254,17 +286,23 @@
                 },
                 async: true,
                 timeout: 3000,
-                data: { prefix: curPREFIX, pid: curPID, page: curPAGE },
+                data: { prefix: curPREFIX, pid: curPID, flag: strFlag },
                 success: function (data) {
                     //alert("načítání");
                     //$('#html5menu').html('');
 
-                    var contextMenu = $find("<%= RadContextMenu1.ClientID %>");
                     contextMenu.get_items().clear();
 
-                    var x = $("#" + ctlID).offset().left;
-                    var y = $("#" + ctlID).offset().top;
+                    var x = 180
+                    var y = 30
 
+                    if (ctl != null) {
+                        x = $(ctl).offset().left;
+                        y = $(ctl).offset().top;
+                    }
+
+
+                    var miLastRoot = null;
 
                     for (var i in data) {
                         var c = data[i];
@@ -275,26 +313,31 @@
                         }
 
                         if (c.IsSeparator == false) {
-                            mi.set_text(c.Text + ", y: " + y);
+                            mi.set_text(c.Text);
 
-                            if (c.Target == "_top")
-                                mi.set_navigateUrl("contReload('" & c.NavigateUrl & "')");
-                            else
-                                mi.set_navigateUrl(c.NavigateUrl);
+                            mi.set_navigateUrl(c.NavigateUrl);
+
                         }
 
                         if (c.ImageUrl != "") {
                             mi.set_imageUrl(c.ImageUrl);
                         }
 
-                        if (c.Disabled) {
+                        if (c.IsDisabled == true) {
                             mi.disable();
                         }
 
-                        contextMenu.get_items().add(mi);
+                        if (c.IsChildOfPrevious == true) {
+                            miLastRoot.get_items().add(mi);
+                        }
+
+                        if (c.IsChildOfPrevious == false) {
+                            contextMenu.get_items().add(mi);
+                            miLastRoot = mi;
+                        }
+
+
                     }
-
-
 
                     contextMenu.showAt(x + 20, y);
 
@@ -307,9 +350,9 @@
                 }
             });
 
-                ;
+            ;
 
-            }
+        }
     </script>
 </body>
 </html>

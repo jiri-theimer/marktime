@@ -474,7 +474,7 @@ Public Class basUIMT
             Case Else
         End Select
     End Sub
-    Public Shared Sub p31_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, Optional bolDT As Boolean = False, Optional bolMobile As Boolean = False)
+    Public Shared Sub p31_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolDT As Boolean, bolMobile As Boolean, strContextMenuFlag As String)
         If Not TypeOf e.Item Is GridDataItem Then Return
 
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
@@ -488,7 +488,7 @@ Public Class basUIMT
                 dataItem("mob").Text = "<a href='javascript:re(" & cRec.Item("pid").ToString & ")'><img src='Images/fe.png'></a>"
             Else
                 With dataItem("pm1")
-                    .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('p31','" & cRec.Item("pid").ToString & "',this)" & Chr(34) & "></a>"
+                    .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('p31','" & cRec.Item("pid").ToString & "',this,'" & strContextMenuFlag & "')" & Chr(34) & "></a>"
                 End With
             End If
 

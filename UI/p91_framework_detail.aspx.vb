@@ -442,7 +442,7 @@ Public Class p91_framework_detail
     End Sub
 
     Private Sub grid1_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles grid1.ItemDataBound
-        basUIMT.p31_grid_Handle_ItemDataBound(sender, e, True)
+        basUIMT.p31_grid_Handle_ItemDataBound(sender, e, True, False, "p91_framework_detail")
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
