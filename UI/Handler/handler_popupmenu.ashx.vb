@@ -234,21 +234,41 @@ Public Class handler_popupmenu
                 Next
             End If
             Dim cRecSum As BO.p41ProjectSum = factory.p41ProjectBL.LoadSumRow(cRec.PID)
-            If cRecSum.p31_Wip_Expense_Count > 0 Or cRecSum.p31_Wip_Fee_Count > 0 Or cRecSum.p31_Wip_Time_Count > 0 Then
-                Dim bolCanApproveOrInvoice As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver, BO.x53PermValEnum.GR_P91_Creator)
-                If Not bolCanApproveOrInvoice Then bolCanApproveOrInvoice = factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator)
-                If bolCanApproveOrInvoice = False And cDisp.x67IDs.Count > 0 Then
+            Dim intWIPx As Integer = 0, intAPPx As Integer = 0
+            With cRecSum
+                intWIPx = .p31_Wip_Expense_Count + .p31_Wip_Fee_Count + .p31_Wip_Time_Count + .p31_Wip_Kusovnik_Count
+                intAPPx = .p31_Approved_Expense_Count + .p31_Approved_Fee_Count + .p31_Approved_Kusovnik_Count + .p31_Approved_Time_Count
+            End With
+            If intWIPx > 0 Or intAPPx > 0 Then
+                Dim bolCanApprove As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver)
+                Dim bolCanInvoice As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)
+                If Not bolCanApprove And cDisp.x67IDs.Count > 0 Then
                     Dim lisO28 As IEnumerable(Of BO.o28ProjectRole_Workload) = factory.x67EntityRoleBL.GetList_o28(cDisp.x67IDs)
                     If lisO28.Where(Function(p) p.o28PermFlag = BO.o28PermFlagENUM.CistASchvalovatVProjektu Or p.o28PermFlag = BO.o28PermFlagENUM.CistAEditASchvalovatVProjektu).Count > 0 Then
-                        bolCanApproveOrInvoice = True
+                        bolCanApprove = True
                     End If
                 End If
-                If bolCanApproveOrInvoice Then
-                    SEP()
-                    CI("Schvalovat nebo vystavit fakturu", "entity_modal_approving.aspx?prefix=p41&pid=" & intPID.ToString, , "Images/approve.png")
-                    If factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator, BO.x53PermValEnum.GR_P31_Approver) Then
-                        CI("Vystavit fakturu zrychleně bez schvalování", "entity_modal_invoicing.aspx?prefix=p41&pids=" & intPID.ToString, , "Images/invoice.png")
+                If bolCanApprove Or bolCanInvoice Then SEP()
+                If bolCanApprove And (intWIPx > 0 Or intAPPx > 0) Then
+                    Dim ss As String = String.Format("Schválit rozpracované úkony ({0}x)", intWIPx)
+                    If intWIPx = 0 And intAPPx > 0 Then ss = String.Format("Přes-schválit ({0}x) schválené", intAPPx)
+                    If intWIPx > 0 And intAPPx > 0 Then ss = String.Format("Schválit ({0}x)/přes-schválit ({1}x)", intWIPx, intAPPx)
+                    CI(ss, "entity_modal_approving.aspx?prefix=p41&pid=" & intPID.ToString, , "Images/approve.png")
+                End If
+                If bolCanInvoice Then CI("Fakturovat", "", , "Images/invoice.png")
+                If bolCanInvoice And intAPPx > 0 Then
+                    CI(String.Format("Fakturovat schválené úkony ({0}x)", intAPPx.ToString), "p91_create_step1.aspx?nogateway=1&prefix=p41&pid=" & intPID.ToString, , "Images/invoice.png", True)
+                End If
+                If bolCanInvoice And intAPPx = 0 And intWIPx > 0 Then
+                    CI(String.Format("Fakturovat bez schvalování ({0}x+{1}x)", intWIPx, intAPPx), "entity_modal_invoicing.aspx?prefix=p41&pids=" & intPID.ToString, , "Images/invoice.png", True)
+                End If
+                If factory.SysUser.j04IsMenu_Invoice Then
+                    If cRecSum.Last_p91ID > 0 Then
+                        REL(String.Format("Poslední faktura: {0}", cRecSum.Last_Invoice), "p91_framework.aspx?pid=" & cRecSum.Last_p91ID.ToString, "_top", "Images/invoice.png", True)
+                    Else
+                        CI("Projekt zatím nefakturován", "", True, , True)
                     End If
+
                 End If
             End If
             
@@ -503,13 +523,14 @@ Public Class handler_popupmenu
         _lis.Add(c)
 
     End Sub
-    Private Sub REL(strText As String, strURL As String, strTarget As String, Optional strImageUrl As String = "")
+    Private Sub REL(strText As String, strURL As String, strTarget As String, Optional strImageUrl As String = "", Optional bolChild As Boolean = False)
         Dim c As New BO.ContextMenuItem
         If Len(strText) > 35 Then strText = Left(strText, 35) & "..."
         c.Text = strText
         c.NavigateUrl = "javascript:contReload(" & Chr(34) & strURL & Chr(34) & "," & Chr(34) & strTarget & Chr(34) & ")"
         c.ImageUrl = strImageUrl
         c.Target = strTarget
+        c.IsChildOfPrevious = bolChild
         _lis.Add(c)
     End Sub
 
