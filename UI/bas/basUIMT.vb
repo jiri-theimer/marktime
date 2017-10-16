@@ -136,7 +136,9 @@ Public Class basUIMT
         If bolDT Then
             Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
             If cRec.Item(0) Is System.DBNull.Value Then Return 'chybné SQL datového přehledu
-
+            With dataItem("pm1")
+                .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('p91','" & cRec.Item("pid").ToString & "',this)" & Chr(34) & "></a>"
+            End With
 
             With cRec
                 If .Item("IsDraft") Then
@@ -297,6 +299,9 @@ Public Class basUIMT
             End With
         End If
         With cRec
+            With dataItem("pm1")
+                .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('o23','" & cRec.Item("pid").ToString & "',this)" & Chr(34) & "></a>"
+            End With
             If .Item("IsO27") Then
                 Dim s As String = "<a href='fileupload_preview.aspx?prefix=o23&pid=" & cRec.Item("pid").ToString & "' target='_blank' title='Dokument má přílohy'><img src='Images/attachment.png'/></a>"
                 If bolShowClueTip Then
@@ -314,7 +319,7 @@ Public Class basUIMT
             If .Item("o23IsEncrypted") Then dataItem("systemcolumn").CssClass = "spy"
             If CType(BO.BAS.IsNullInt(.Item("o23LockedFlag")), BO.o23LockedTypeENUM) > BO.o23LockedTypeENUM._NotSpecified Then dataItem("systemcolumn").CssClass = "locked"
 
-            
+
             If BO.BAS.IsNullInt(.Item("b02ID")) > 0 Then
                 If .Item("b02Color") & "" <> "" Then dataItem("systemcolumn").Style.Item("background-color") = .Item("b02Color")
             Else
@@ -370,7 +375,9 @@ Public Class basUIMT
 
         Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
         If cRec.Item(0) Is System.DBNull.Value Then Return 'chybné SQL datového přehledu
-
+        With dataItem("pm1")
+            .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('j02','" & cRec.Item("pid").ToString & "',this)" & Chr(34) & "></a>"
+        End With
         If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
         If Not cRec.Item("IsIntraPerson") Then
             dataItem.Font.Italic = True
@@ -382,7 +389,9 @@ Public Class basUIMT
         If bolDT Then
             Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
             If cRec.Item(0) Is System.DBNull.Value Then Return 'chybné SQL datového přehledu
-
+            With dataItem("pm1")
+                .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('p28','" & cRec.Item("pid").ToString & "',this)" & Chr(34) & "></a>"
+            End With
             If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
             If cRec.Item("IsDraft") Then dataItem("systemcolumn").CssClass = "draft"
             If cRec.Item("SupplierFlag") = 4 Then dataItem.Font.Italic = 4
