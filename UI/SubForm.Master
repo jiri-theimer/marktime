@@ -236,6 +236,20 @@
             sw_local(url, iconUrl, is_maximize);
         }
 
+        function ContextMenu_Approve(p72id, pid) {
+            $.post("Handler/handler_approve.ashx", { pid: pid, p72id: p72id }, function (data) {
+                if (data != "1") {
+                    $.alert(data);
+                    return;
+                }
+
+                //schváleno
+                hardrefresh(pid, "p31-save");
+
+            });
+
+        }
+
         function contMenu(url,isTopWindow) {
             var w = window.innerWidth;
             
