@@ -29,7 +29,7 @@ Public Class handler_popupmenu
             HandleAdminMenu(strPREFIX, intPID, factory) 'číselníky za administrace
             FinalRW(context, "") : Return
         End If
-        CI("flag: " & strFlag, "", True)
+        ''CI("flag: " & strFlag, "", True)
 
         Select Case strPREFIX
             Case "newrec"
@@ -38,35 +38,7 @@ Public Class handler_popupmenu
                 HandleP31(intPID, factory, strFlag)
 
             Case "p56"
-                Dim cRec As BO.p56Task = factory.p56TaskBL.Load(intPID)
-                If cRec Is Nothing Then FinalRW(context, "Záznam nebyl nalezen.") : Return
-
-                Dim cDisp As BO.p56RecordDisposition = factory.p56TaskBL.InhaleRecordDisposition(cRec)
-                If Not cDisp.ReadAccess Then FinalRW(context, "Nemáte přístup k tomuto úkolu.") : Return
-                If factory.SysUser.j04IsMenu_Task Then
-                    REL(cRec.FullName, "p56_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
-                Else
-                    CI(cRec.FullName, "", True, "Images/information.png")
-                End If
-                If cDisp.P31_Create Then
-                    SEP()
-                    CI("Zapsat WORKSHEET", "p31_record.aspx?p56id=" & intPID.ToString, cRec.IsClosed, "Images/worksheet.png")
-                End If
-                SEP()
-                CI("Posunout/Doplnit", "workflow_dialog.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/workflow.png")
-                If cDisp.OwnerAccess Then
-                    SEP()
-                    CI("Upravit kartu úkolu", "p56_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
-                    CI("Kopírovat", "p56_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
-                End If
-                If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
-                    SEP()
-                    REL("Statistiky úkolu", "p31_sumgrid.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, "_top", "Images/pivot.png")
-                End If
-                SEP()
-                CI("Tisková sestava", "report_modal.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/report.png")
-                SEP()
-                CI("Oštítkovat", "tag_binding.aspx?prefix=p56&pids=" & intPID.ToString, , "Images/tag.png")
+                HandleP56(intPID, factory)
             Case "p28"
                 HandleP28(intPID, factory, strFlag)
             Case "p41"
@@ -93,6 +65,41 @@ Public Class handler_popupmenu
         context.Response.Write(s)
 
 
+    End Sub
+    Private Sub HandleP56(intPID As Integer, factory As BL.Factory)
+        Dim cRec As BO.p56Task = factory.p56TaskBL.Load(intPID)
+        If cRec Is Nothing Then CI("Záznam nebyl nalezen.", "", True) : Return
+
+        Dim cDisp As BO.p56RecordDisposition = factory.p56TaskBL.InhaleRecordDisposition(cRec)
+        If Not cDisp.ReadAccess Then CI("Nemáte přístup k tomuto úkolu.", "", True) : Return
+        If factory.SysUser.j04IsMenu_Task Then
+            REL(cRec.FullName, "p56_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
+        Else
+            CI(cRec.FullName, "", True, "Images/information.png")
+        End If
+        If cDisp.P31_Create Then
+            SEP()
+            CI("Zapsat WORKSHEET", "p31_record.aspx?p56id=" & intPID.ToString, cRec.IsClosed, "Images/worksheet.png")
+        End If
+        SEP()
+        CI("Posunout/Doplnit", "workflow_dialog.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/workflow.png")
+        If cDisp.OwnerAccess Then
+            SEP()
+            CI("Upravit kartu úkolu", "p56_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+            CI("Kopírovat", "p56_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
+        End If
+        If factory.SysUser.j04IsMenu_Project And cRec.p41ID > 0 Then
+            SEP()
+            REL(cRec.p41Name, "p41_framework.aspx?pid=" & cRec.p41ID.ToString, "_top", "Images/project.png")
+        End If
+        If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
+            SEP()
+            REL("Statistiky úkolu", "p31_sumgrid.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, "_top", "Images/pivot.png")
+        End If
+        SEP()
+        CI("Tisková sestava", "report_modal.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/report.png")
+        SEP()
+        CI("Oštítkovat", "tag_binding.aspx?prefix=p56&pids=" & intPID.ToString, , "Images/tag.png")
     End Sub
     Private Sub HandleP91(intPID As Integer, factory As BL.Factory)
         Dim cRec As BO.p91Invoice = factory.p91InvoiceBL.Load(intPID)
@@ -194,13 +201,13 @@ Public Class handler_popupmenu
                     SEP()
                     CI("Pře-schválit", "", , "Images/approve.png")
 
-                    CI("Schvalovací dialog", "p31_approving_step2.aspx?pids=" & intPID.ToString, , "Images/approve.png", True, True)
-                    CI("Vyčistit schvalování", "javascript:ContextMenu_Approve(0," & cRec.PID.ToString & ")", , "Images/clear.png", True)
+                    CI("Schvalovací dialog", "p31_approving_step2.aspx?pids=" & intPID.ToString, , "Images/approve.png", True, True)                    
                     CI("Fakturovat", "javascript:ContextMenu_Approve(4," & cRec.PID.ToString & ")", , "Images/a14.gif", True)
                     CI("Zahrnout do paušálu", "javascript:ContextMenu_Approve(6," & cRec.PID.ToString & ")", , "Images/a16.gif", True)
                     CI("Viditelný odpis", "javascript:ContextMenu_Approve(2," & cRec.PID.ToString & ")", , "Images/a12.gif", True)
                     CI("Skrytý odpis", "javascript:ContextMenu_Approve(3," & cRec.PID.ToString & ")", , "Images/a13.gif", True)
                     CI("Fakturovat později", "javascript:ContextMenu_Approve(7," & cRec.PID.ToString & ")", , "Images/a17.gif", True)
+                    CI("Vyčistit schvalování", "javascript:ContextMenu_Approve(0," & cRec.PID.ToString & ")", , "Images/clear.png", True)
                 End If
             Case BO.p31RecordState.Invoiced
                 If strMasterPrefix = "p91" Then
