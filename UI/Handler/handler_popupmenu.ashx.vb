@@ -221,6 +221,7 @@ Public Class handler_popupmenu
         If (factory.SysUser.IsApprovingPerson Or bolCanInvoice) And cRec.p28SupplierFlag <> BO.p28SupplierFlagENUM.NotClientNotSupplier Then
             Dim mq As New BO.myQueryP31
             mq.p28ID_Client = cRec.PID
+            mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
             Dim cSum As BO.p31WorksheetSum = factory.p31WorksheetBL.LoadSumRow(mq, True, True)
 
             Dim intWIPx As Integer = 0, intAPPx As Integer = 0
@@ -300,6 +301,7 @@ Public Class handler_popupmenu
 
             Dim mq As New BO.myQueryP31
             mq.p41ID = cRec.PID
+            mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
             Dim cSum As BO.p31WorksheetSum = factory.p31WorksheetBL.LoadSumRow(mq, True, True)
             Dim intWIPx As Integer = 0, intAPPx As Integer = 0
             With cSum

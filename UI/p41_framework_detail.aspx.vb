@@ -246,10 +246,10 @@
         End If
         Me.boxP30.Visible = cRecSum.p30_Exist
 
-        Dim mq As New BO.myQueryP31
-        mq.p41ID = cRec.PID
+        
 
-        If cP42.p42IsModule_p31 Then
+        If cP42.p42IsModule_p31 And boxP31Summary.Visible Then
+
             Me.linkLastInvoice.Text = cRecSum.Last_Invoice
             If cRecSum.Last_p91ID > 0 Then
                 Me.linkLastInvoice.Text = cRecSum.Last_Invoice
@@ -259,6 +259,9 @@
             End If
             Me.Last_WIP_Worksheet.Text = cRecSum.Last_Wip_Worksheet
             If cRec.p41LimitFee_Notification > 0 Or cRec.p41LimitHours_Notification > 0 Or cRecSum.p31_Wip_Time_Count > 0 Or cRecSum.p31_Wip_Expense_Count > 0 Or cRecSum.p31_Wip_Fee_Count > 0 Or cRecSum.p31_Approved_Time_Count > 0 Or cRecSum.p31_Approved_Expense_Count > 0 Then
+                Dim mq As New BO.myQueryP31
+                mq.p41ID = cRec.PID
+                mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
                 Dim cWorksheetSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, True, True)
                 If cWorksheetSum.RowsCount = 0 Then
                     boxP31Summary.Visible = False
@@ -376,10 +379,10 @@
 
 
             If cP42.p42IsModule_p31 Then
-                If Not menu1.IsExactApprovingPerson Then Me.p31summary1.DisableApprovingButton()
-
+                If Not menu1.IsExactApprovingPerson Then
+                    Me.p31summary1.Visible = False
+                End If
             Else
-
                 Me.boxP31Summary.Visible = False
             End If
 
