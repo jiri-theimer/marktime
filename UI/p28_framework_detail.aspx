@@ -257,8 +257,8 @@
             <asp:Repeater ID="rpP41" runat="server">
                 <ItemTemplate>
                     <div style="padding: 5px; float: left;">
-                        <asp:HyperLink ID="clue_project" runat="server" CssClass="reczoom" Text="i" title="Detail projektu"></asp:HyperLink>
-
+                        
+                        <asp:HyperLink ID="linkPP1" runat="server" CssClass="pp1"></asp:HyperLink>
                         <asp:HyperLink ID="aProject" runat="server" Target="_top" CssClass="value_link"></asp:HyperLink>
 
                     </div>

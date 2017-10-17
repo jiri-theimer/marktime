@@ -230,7 +230,7 @@ Public Class basUIMT
         End If
     End Sub
 
-    Public Shared Sub p56_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolShowClueTip As Boolean, Optional bolDT As Boolean = False, Optional strMobileLinkColumn As String = "")
+    Public Shared Sub p56_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolShowClueTip As Boolean, bolDT As Boolean, strMobileLinkColumn As String, strContextMenuFlag As String)
         If Not TypeOf e.Item Is GridDataItem Then Return
 
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
@@ -239,7 +239,7 @@ Public Class basUIMT
             Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
             If cRec.Item(0) Is System.DBNull.Value Then Return 'chybné SQL datového přehledu
             If bolShowClueTip Then
-                
+
             End If
             With dataItem("pm1")
                 .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('p56','" & cRec.Item("pid").ToString & "',this)" & Chr(34) & "></a>"
@@ -256,7 +256,7 @@ Public Class basUIMT
                     If .Item("b02Color_Grid") & "" <> "" Then dataItem("systemcolumn").Style.Item("background-color") = .Item("b02Color_Grid")
                 End If
                 If strMobileLinkColumn <> "" Then
-                    dataItem(strMobileLinkColumn).Text = "<a style='color:blue;text-decoration:underline;' href='javascript:re(" & cRec.Item("pid").ToString & ")'>" & dataItem(strMobileLinkColumn).Text & "</a>"                    
+                    dataItem(strMobileLinkColumn).Text = "<a style='color:blue;text-decoration:underline;' href='javascript:re(" & cRec.Item("pid").ToString & ")'>" & dataItem(strMobileLinkColumn).Text & "</a>"
                 End If
                 If Not .Item("o43ID") Is System.DBNull.Value Then
                     dataItem("systemcolumn").CssClass = "imap"
@@ -288,7 +288,7 @@ Public Class basUIMT
 
 
     End Sub
-    Public Shared Sub o23_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolShowClueTip As Boolean, Optional strMobileLinkColumn As String = "")
+    Public Shared Sub o23_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolShowClueTip As Boolean, strMobileLinkColumn As String, strContextMenuFlag As String)
         If Not TypeOf e.Item Is GridDataItem Then Return
 
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
@@ -302,7 +302,7 @@ Public Class basUIMT
         End If
         With cRec
             With dataItem("pm1")
-                .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('o23','" & cRec.Item("pid").ToString & "',this)" & Chr(34) & "></a>"
+                .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('o23','" & cRec.Item("pid").ToString & "',this,'" & strContextMenuFlag & "')" & Chr(34) & "></a>"
             End With
             If .Item("IsO27") Then
                 Dim s As String = "<a href='fileupload_preview.aspx?prefix=o23&pid=" & cRec.Item("pid").ToString & "' target='_blank' title='Dokument má přílohy'><img src='Images/attachment.png'/></a>"
@@ -327,18 +327,18 @@ Public Class basUIMT
             Else
                 If .Item("IsClosed") Then dataItem.Font.Strikeout = True
             End If
-            If strMobileLinkColumn <> "" Then
-                dataItem(strMobileLinkColumn).Text = "<a style='color:blue;text-decoration:underline;' href='javascript:re(" & cRec.Item("pid").ToString & ")'>" & dataItem(strMobileLinkColumn).Text & "</a>"
-            End If
+            'If strMobileLinkColumn <> "" Then
+            '    dataItem(strMobileLinkColumn).Text = "<a style='color:blue;text-decoration:underline;' href='javascript:re(" & cRec.Item("pid").ToString & ")'>" & dataItem(strMobileLinkColumn).Text & "</a>"
+            'End If
         End With
 
     End Sub
-    Public Shared Sub p41_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolDT As Boolean, Optional strMobileLinkColumn As String = "")
+    Public Shared Sub p41_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolDT As Boolean, strMobileLinkColumn As String, strContextMenuFlag As String)
         If Not TypeOf e.Item Is GridDataItem Then Return
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
         If bolDT Then
             Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
-          
+
             If cRec.Item(0) Is System.DBNull.Value Then Return 'chybné SQL datového přehledu
 
             If cRec.Item("IsDraft") Then dataItem("systemcolumn").CssClass = "draft"
@@ -357,8 +357,8 @@ Public Class basUIMT
                 dataItem("systemcolumn").CssClass = "recurrence"
             End If
             With dataItem("pm1")
-                '.Text = "<a class='pp1' id='p41x" & cRec.Item("pid").ToString & "' onclick=" & Chr(34) & "javascript:RCM('p41','" & cRec.Item("pid").ToString & "',this)" & Chr(34) & "></a>"
-                .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('p41','" & cRec.Item("pid").ToString & "',this)" & Chr(34) & "></a>"
+
+                .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('p41','" & cRec.Item("pid").ToString & "',this,'" & strContextMenuFlag & "')" & Chr(34) & "></a>"
             End With
 
 

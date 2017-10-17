@@ -91,7 +91,7 @@ Public Class p56_subgrid
 
 
     Private Sub gridP56_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles gridP56.ItemDataBound
-        basUIMT.p56_grid_Handle_ItemDataBound(sender, e, True, True)
+        basUIMT.p56_grid_Handle_ItemDataBound(sender, e, False, True, "", BO.BAS.GetDataPrefix(Me.x29ID))
         If _curIsExport Then
             If TypeOf e.Item Is GridHeaderItem Then
                 e.Item.BackColor = Drawing.Color.Silver

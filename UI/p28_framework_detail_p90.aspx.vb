@@ -47,7 +47,8 @@ Public Class p28_framework_detail_p90
             .ClearColumns()
             .PageSize = 20
             .radGridOrig.ShowFooter = False
-            .AddSystemColumn(20)
+            .AddSystemColumn(16)
+            .AddContextMenuColumn(16)
             .AddColumn("p90Code", "Číslo")
             .AddColumn("p82Code", "DPP", , , , , "Číslo dokladu o přijaté platbě")
             .AddColumn("p90Date", "Datum", BO.cfENUM.DateOnly)
@@ -64,6 +65,18 @@ Public Class p28_framework_detail_p90
 
     Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
         _needFilterIsChanged = True
+    End Sub
+
+    Private Sub grid1_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles grid1.ItemDataBound
+        If Not TypeOf e.Item Is GridDataItem Then Return
+        Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
+        Dim cRec As BO.p90Proforma = CType(e.Item.DataItem, BO.p90Proforma)
+        If cRec.IsClosed Then dataItem.Font.Strikeout = True
+        If cRec.p90IsDraft Then dataItem("systemcolumn").CssClass = "draft"
+
+        With dataItem("pm1")
+            .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('p90','" & cRec.PID.ToString & "',this)" & Chr(34) & "></a>"
+        End With
     End Sub
 
     

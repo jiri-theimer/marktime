@@ -326,7 +326,7 @@
 
             <asp:Panel ID="panSearch" runat="server" Style="min-height: 42px; background-color: #f7f7f7;">
                 <div class="commandcell" style="width: 40px;">
-                    <telerik:RadNavigation ID="mm1" runat="server" RenderMode="Auto"  MenuButtonPosition="Left" Skin="Metro">
+                    <telerik:RadNavigation ID="mm1" runat="server" RenderMode="Lightweight"  MenuButtonPosition="Left" Skin="Metro">
 
 
                         <Nodes>
@@ -379,9 +379,8 @@
                                         <div style="margin-top: 20px;">
                                             <asp:DropDownList ID="cbxGroupBy" runat="server" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField" onchange="context_menu_callback('cbxGroupBy')">
                                             </asp:DropDownList>
-                                        </div>
-
-                                        <span class="val">Stránkování záznamů:</span>
+                                        
+                                        <span class="val" style="margin-left:50px;">Stránkování záznamů:</span>
                                         <asp:DropDownList ID="cbxPaging" runat="server" onchange="context_menu_callback('cbxPaging')">
                                             <asp:ListItem Text="20"></asp:ListItem>
                                             <asp:ListItem Text="50" Selected="True"></asp:ListItem>
@@ -389,6 +388,7 @@
                                             <asp:ListItem Text="200"></asp:ListItem>
                                             <asp:ListItem Text="500"></asp:ListItem>
                                         </asp:DropDownList>
+                                        </div>
 
 
                                         <div style="margin-top: 20px;">

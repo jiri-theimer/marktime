@@ -177,7 +177,7 @@ Public Class entity_framework_rec_p41
     End Sub
 
     Private Sub grid1_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles grid1.ItemDataBound
-        basUIMT.p41_grid_Handle_ItemDataBound(sender, e, True)
+        basUIMT.p41_grid_Handle_ItemDataBound(sender, e, True, "", Me.hidMasterPrefix.Value)
         If _curIsExport Then
             If TypeOf e.Item Is GridHeaderItem Then
                 e.Item.BackColor = Drawing.Color.Silver

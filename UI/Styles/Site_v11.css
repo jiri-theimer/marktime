@@ -387,7 +387,7 @@ display: inline-block;
     }
 
 A.pp1 {
-    display: block;
+    display:inline-block;
     background-image: url('../Images/p1.png');
     background-repeat: no-repeat;   
      

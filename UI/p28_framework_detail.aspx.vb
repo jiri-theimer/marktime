@@ -428,7 +428,10 @@
                 
             End If
         End With
-        If e.Item.FindControl("clue_project").Visible Then CType(e.Item.FindControl("clue_project"), HyperLink).Attributes.Item("rel") = "clue_p41_record.aspx?pid=" & cRec.PID.ToString
+        With CType(e.Item.FindControl("linkPP1"), HyperLink)
+            .Attributes.Item("onclick") = "RCM('p41'," & cRec.PID.ToString & ",this)"
+        End With
+        ''CType(e.Item.FindControl("clue_project"), HyperLink).Attributes.Item("rel") = "clue_p41_record.aspx?pid=" & cRec.PID.ToString
 
 
     End Sub

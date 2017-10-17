@@ -59,6 +59,15 @@ Partial Public Class o23_subgrid
     Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''cmdFullScreen control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdFullScreen As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''hidDefaultSorting control.
     '''</summary>
     '''<remarks>

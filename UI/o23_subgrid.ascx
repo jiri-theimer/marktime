@@ -21,18 +21,9 @@
 <div class="commandcell" >
     <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" EnableRoundedCorners="false" EnableShadows="false" ClickToOpen="true" style="z-index:2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
         <Items>
-            <telerik:RadMenuItem Text="Záznam" ImageUrl="Images/menuarrow.png">
-                <Items>
-                    <telerik:RadMenuItem Text="Nový" Value="new" NavigateUrl="javascript:o23_record(0,false)"></telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Kopírovat" Value="clone" NavigateUrl="javascript:o23_clone()"></telerik:RadMenuItem>
-                </Items>
-            </telerik:RadMenuItem>
-            <telerik:RadMenuItem Text="Akce" Value="akce" ImageUrl="Images/menuarrow.png">
-                <Items>
-
-                    <telerik:RadMenuItem Text="Zobrazit na celou stránku" Value="cmdFullScreen" NavigateUrl="javascript:o23_fullscreen()"></telerik:RadMenuItem>
-                </Items>
-            </telerik:RadMenuItem>
+            <telerik:RadMenuItem Text="Nový" Value="new" NavigateUrl="javascript:o23_record(0,false)" ImageUrl="Images/new4menu.png"></telerik:RadMenuItem>
+           
+        
             <telerik:RadMenuItem Text="Další" ImageUrl="Images/menuarrow.png">
                 <ContentTemplate>
                     <div style="padding: 20px; min-width: 200px;">
@@ -48,6 +39,7 @@
                             <asp:ListItem Text="500"></asp:ListItem>
                         </asp:DropDownList>
                         </div>
+                        <asp:hyperlink Text="Zobrazit přehled na celou stránku" id="cmdFullScreen" runat="server" NavigateUrl="javascript:o23_fullscreen()"></asp:hyperlink>
                     </div>
                 </ContentTemplate>
             </telerik:RadMenuItem>

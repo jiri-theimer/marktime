@@ -27,30 +27,14 @@
 
         }
 
-        function p90_clone() {
-            var pid = document.getElementById("<%=hiddatapid_p90.ClientID%>").value;
-            if (pid == "" || pid == null) {
-                alert("Není vybrán záznam.");
-                return
-            }
-            sw_decide("p90_record.aspx?clone=1&pid=" + pid, "Images/billing_32.png", true);
-        }
+        
 
         function p90_new() {
             sw_decide("p90_record.aspx?pid=0&p28id=<%=master.datapid%>", "Images/proforma_32.png", true);
 
 
         }
-        function p90_report() {
-            var pid = document.getElementById("<%=hiddatapid_p90.ClientID%>").value;
-            if (pid == "" || pid == null) {
-                alert("Není vybrán záznam.");
-                return
-            }
-
-            sw_decide("report_modal.aspx?prefix=p90&pid=" + pid, "Images/reporting_32.png");
-
-        }
+        
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -69,16 +53,7 @@
     <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" EnableRoundedCorners="false" EnableShadows="false" ClickToOpen="true" style="z-index:2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
                 <Items>
 
-                    <telerik:RadMenuItem Text="ZÁZNAM" Value="record" PostBack="false" ImageUrl="Images/arrow_down_menu.png">
-                        <Items>
-                            <telerik:RadMenuItem Value="cmdNew" Text="Nový" NavigateUrl="javascript:p90_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdEdit" Text="Upravit" NavigateUrl="javascript:p90_edit();" ImageUrl="Images/edit.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat" NavigateUrl="javascript:p90_clone();" ImageUrl="Images/copy.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:p90_report();" ImageUrl="Images/report.png"></telerik:RadMenuItem>
-
-                        </Items>
-                    </telerik:RadMenuItem>               
+                   <telerik:RadMenuItem Value="cmdNew" Text="Nová záloha" NavigateUrl="javascript:p90_new();" ImageUrl="Images/new4menu.png"></telerik:RadMenuItem>
 
                     
                 </Items>

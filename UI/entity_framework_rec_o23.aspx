@@ -39,16 +39,7 @@
                 return (false);
 
         }
-        function o23_clone() {
-            ///volá se z gridu úkolů
-            var pid = document.getElementById("<%=hiddatapid_o23.ClientID%>").value;
-            if (pid == "" || pid == null) {
-                alert("Není vybrán záznam.");
-                return;
-            }
-            sw_decide("o23_record.aspx?clone=1&masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=Master.DataPID%>&pid=" + pid, "Images/notepad.png", true);
-
-        }
+       
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">

@@ -337,9 +337,11 @@ Public Class entity_framework
             End If
             AppendNode("Tisková sestava", "javascript:report()", "Images/report.png", "")
             AppendNode("Oštítkovat", "javascript:tags()", "Images/tag.png", "")
-            If Me.CurrentPrefix <> "p91" Then
-                AppendNode("Hromadné úpravy záznamů", "javascript:batch()", "Images/batch.png", "")
-            End If
+            Select Case Me.CurrentPrefix
+                Case "p28", "p41", "j02", "p56"
+                    AppendNode("Hromadné úpravy záznamů", "javascript:batch()", "Images/batch.png", "")
+            End Select
+           
         End With
         
 
@@ -394,13 +396,13 @@ Public Class entity_framework
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
         Select Case Me.CurrentX29ID
             Case BO.x29IdEnum.p41Project
-                basUIMT.p41_grid_Handle_ItemDataBound(sender, e, True)
+                basUIMT.p41_grid_Handle_ItemDataBound(sender, e, True, "", "")
             Case BO.x29IdEnum.p28Contact
                 basUIMT.p28_grid_Handle_ItemDataBound(sender, e, True)
             Case BO.x29IdEnum.o23Doc
-                basUIMT.o23_grid_Handle_ItemDataBound(sender, e, False)
+                basUIMT.o23_grid_Handle_ItemDataBound(sender, e, False, "", "")
             Case BO.x29IdEnum.p56Task
-                basUIMT.p56_grid_Handle_ItemDataBound(sender, e, False, True)
+                basUIMT.p56_grid_Handle_ItemDataBound(sender, e, False, True, "", "")
             Case BO.x29IdEnum.j02Person
                 basUIMT.j02_grid_Handle_ItemDataBound(sender, e)
             Case BO.x29IdEnum.p91Invoice

@@ -149,13 +149,14 @@
             'Case BO.x29IdEnum.p31Worksheet
             '    basUIMT.p31_grid_Handle_ItemDataBound(sender, e, True, Me.hidFirstLinkCol.Value)
             Case BO.x29IdEnum.p41Project
-                basUIMT.p41_grid_Handle_ItemDataBound(sender, e, True, Me.hidFirstLinkCol.Value)
+                basUIMT.p41_grid_Handle_ItemDataBound(sender, e, True, Me.hidFirstLinkCol.Value, "")
             Case BO.x29IdEnum.p28Contact
                 basUIMT.p28_grid_Handle_ItemDataBound(sender, e, True, Me.hidFirstLinkCol.Value)
             Case BO.x29IdEnum.o23Doc
-                basUIMT.o23_grid_Handle_ItemDataBound(sender, e, False, Me.hidFirstLinkCol.Value)
+                basUIMT.o23_grid_Handle_ItemDataBound(sender, e, False, Me.hidFirstLinkCol.Value, "")
+
             Case BO.x29IdEnum.p56Task
-                basUIMT.p56_grid_Handle_ItemDataBound(sender, e, False, True, Me.hidFirstLinkCol.Value)
+                basUIMT.p56_grid_Handle_ItemDataBound(sender, e, False, True, Me.hidFirstLinkCol.Value, "")
             Case BO.x29IdEnum.p91Invoice
                 basUIMT.p91_grid_Handle_ItemDataBound(sender, e, True, Me.hidFirstLinkCol.Value)
         End Select

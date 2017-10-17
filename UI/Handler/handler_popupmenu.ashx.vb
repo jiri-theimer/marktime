@@ -29,6 +29,7 @@ Public Class handler_popupmenu
             HandleAdminMenu(strPREFIX, intPID, factory) 'číselníky za administrace
             FinalRW(context, "") : Return
         End If
+        CI("flag: " & strFlag, "", True)
 
         Select Case strPREFIX
             Case "newrec"
@@ -141,7 +142,7 @@ Public Class handler_popupmenu
             Case "p31_approving_step3"  'schvalování
             Case "p91_framework_detail"    'položky faktury
         End Select
-        CI("flag: " & strFlag, "", True)
+
 
         Dim cDisp As BO.p31WorksheetDisposition = factory.p31WorksheetBL.InhaleRecordDisposition(intPID)
         If cDisp.RecordDisposition = BO.p31RecordDisposition._NoAccess Then CI("K úkonu nemáte přístup.", "", True) : Return
@@ -376,12 +377,16 @@ Public Class handler_popupmenu
         Dim cDisp As BO.o23RecordDisposition = factory.o23DocBL.InhaleDisposition(cRec)
         Dim cX18 As BO.x18EntityCategory = factory.x18EntityCategoryBL.Load(cRec.x18ID)
         If factory.SysUser.j04IsMenu_Notepad Then
-
-            If strFlag = "o23_fixwork" Then
-                REL("Přepnout do obecných přehledů", "entity_framework.aspx?prefix=o23&pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
-            Else
-                REL("Přepnout do pevných přehledů", "o23_fixwork.aspx?pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, "_top", "Images/fullscreen.png")
-            End If
+            Select Case strFlag
+                Case "o23_fixwork"
+                    REL("Přejít do obecných přehledů", "entity_framework.aspx?prefix=o23&pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
+                Case ""
+                    REL("Přejít do pevných přehledů", "o23_fixwork.aspx?pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, "_top", "Images/fullscreen.png")
+                Case Else
+                    REL("Přejít do pevných přehledů", "o23_fixwork.aspx?pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, "_top", "Images/fullscreen.png")
+                    REL("Přejít do obecných přehledů", "entity_framework.aspx?prefix=o23&pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
+            End Select
+            
 
         Else
             CI(cRec.o23Name, "", True, "Images/information.png")
