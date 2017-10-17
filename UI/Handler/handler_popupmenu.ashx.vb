@@ -172,7 +172,7 @@ Public Class handler_popupmenu
                 End If
             Case BO.p31RecordState.Invoiced
                 If strMasterPrefix = "p91" Then
-                    CI("Detail úkonu", "p31_record_AI.aspx?pid=" & intPID.ToString, , "Images/zoom.png")
+                    CI("Upravit úkon", "p31_record_AI.aspx?pid=" & intPID.ToString, , "Images/zoom.png")
                 Else
                     CI("Detail úkonu", "p31_record.aspx?pid=" & intPID.ToString, , "Images/zoom.png")
                 End If

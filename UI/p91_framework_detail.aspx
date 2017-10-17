@@ -625,19 +625,14 @@
                 <div class="commandcell">
                     <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" Style="z-index: 100;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None">
                         <Items>
-                            <telerik:RadMenuItem Text="Položka faktury" ImageUrl="Images/menuarrow.png">
+                            <telerik:RadMenuItem Text="Přidat do faktury položku" Value="new" NavigateUrl="javascript:p31_add()" ImageUrl="Images/new4menu.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Vybrané (zaškrtlé) položky" Value="akce" ImageUrl="Images/menuarrow.png">
                                 <Items>
-                                    <telerik:RadMenuItem Text="Přidat do faktury položku" Value="new" NavigateUrl="javascript:p31_add()"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem Text="Upravit vybranou položku" Value="edit" NavigateUrl="javascript:record_p31_edit()"></telerik:RadMenuItem>
-                                </Items>
-                            </telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="Akce" Value="akce" ImageUrl="Images/menuarrow.png">
-                                <Items>
-                                    <telerik:RadMenuItem Text="Označené vyjmout z faktury" Value="remove" NavigateUrl="javascript:p31_batch('cut')"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Vybrané vyjmout z faktury" Value="remove" NavigateUrl="javascript:p31_batch('cut')"></telerik:RadMenuItem>
                                     <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem Text="Označené -> zahrnout do paušálu" Value="p70-6" NavigateUrl="javascript:p31_batch('batch-6')"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem Text="Označené -> viditelný odpis" Value="p70-2" NavigateUrl="javascript:p31_batch('batch-2')"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem Text="Označené -> skrytý odpis" Value="p70-3" NavigateUrl="javascript:p31_batch('batch-3')"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Vybrané -> zahrnout do paušálu" Value="p70-6" NavigateUrl="javascript:p31_batch('batch-6')"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Vybrané -> viditelný odpis" Value="p70-2" NavigateUrl="javascript:p31_batch('batch-2')"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Vybrané -> skrytý odpis" Value="p70-3" NavigateUrl="javascript:p31_batch('batch-3')"></telerik:RadMenuItem>
                                     <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                                     <telerik:RadMenuItem Text="Zobrazit přehled na celou stránku" Value="fullscreen" Target="_top" NavigateUrl="p31_grid.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>"></telerik:RadMenuItem>
                                 </Items>

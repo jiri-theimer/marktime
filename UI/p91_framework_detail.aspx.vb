@@ -343,7 +343,7 @@ Public Class p91_framework_detail
             FNO("cmdChangeVat").Visible = .OwnerAccess
             FNO("cmdProforma").Visible = .OwnerAccess
             FNO("cmdCreditNote").Visible = .OwnerAccess
-            recmenu1.FindItemByValue("edit").Visible = .OwnerAccess
+
             recmenu1.FindItemByValue("new").Visible = .OwnerAccess
             recmenu1.FindItemByValue("akce").Visible = .OwnerAccess
         End With

@@ -48,7 +48,7 @@
 
 
 
-            If _curNow > Today.AddHours(15) And _curNow < Today.AddHours(18) And _curNow.DayOfWeek <> DayOfWeek.Sunday And _curNow.DayOfWeek <> DayOfWeek.Saturday Then
+            If _curNow > Today.AddHours(15) And _curNow < Today.AddHours(19) Then
                 If IsTime4Run(BO.j91RobotTaskFlag.CnbKurzy, 60) Then
                     Handle_CnbKurzy()
                 End If
@@ -314,7 +314,7 @@
         Dim datImport As Date = DateSerial(Year(Now), Month(Now), Day(Now))
 
         Dim lisM62 As IEnumerable(Of BO.m62ExchangeRate) = _Factory.m62ExchangeRateBL.GetList().Where(Function(p) p.m62RateType = BO.m62RateTypeENUM.InvoiceRate And p.m62Date = datImport And p.UserInsert = "robot")
-        WL(BO.j91RobotTaskFlag.CnbKurzy, "", String.Format("CNB import, Počet měn: {0}."))
+        WL(BO.j91RobotTaskFlag.CnbKurzy, "", "CNB import měnových kurzů.")
         If lisM62.Count = 0 Then
             _Factory.m62ExchangeRateBL.ImportRateList_CNB(datImport)
         End If

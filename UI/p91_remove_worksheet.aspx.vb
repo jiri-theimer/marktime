@@ -51,13 +51,30 @@ Public Class p91_remove_worksheet
     End Sub
 
     Private Sub SetupGrid()
-        With Master.Factory.j70QueryTemplateBL
-            Dim cJ70 As BO.j70QueryTemplate = .LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "p91")
-            cJ70.j70IsFilteringByColumn = False
-            basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 5000, False, False)
-        End With
+        ''With Master.Factory.j70QueryTemplateBL
+        ''    Dim cJ70 As BO.j70QueryTemplate = .LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "p91")
+        ''    cJ70.j70IsFilteringByColumn = False
+        ''    basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 5000, False, False)
+        ''End With
        
+        With Me.grid1
+            .ClearColumns()
+            .DataKeyNames = "pid"
+            .radGridOrig.ShowFooter = False
+            .PageSize = 1000
+            .AllowMultiSelect = False
+            .AllowCustomPaging = False
+            .AddSystemColumn(5)
+            .AddColumn("p31Date", "Datum", BO.cfENUM.DateOnly)
+            .AddColumn("Person", "Jméno")
+            .AddColumn("p41Name", "Projekt")
 
+            .AddColumn("p32Name", "Aktivita")
+            .AddColumn("p31Value_Invoiced", "Fakturovaná hodnota", BO.cfENUM.Numeric2)
+            .AddColumn("p31Rate_Billing_Invoiced", "Fakturovaná sazba", BO.cfENUM.Numeric2)
+            .AddColumn("p31Amount_WithoutVat_Invoiced", "Fakturováno bez DPH", BO.cfENUM.Numeric2)
+            .AddColumn("p31Text", "Text")
+        End With
 
 
     End Sub
@@ -73,7 +90,7 @@ Public Class p91_remove_worksheet
             mq.AddItemToPIDs(CInt(s))
         Next
         With mq
-            .MG_PageSize = 500
+            .MG_PageSize = 1000
             .MG_CurrentPageIndex = grid1.radGridOrig.MasterTableView.CurrentPageIndex
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
 
@@ -81,7 +98,7 @@ Public Class p91_remove_worksheet
 
         Dim lis As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq)
         grid1.DataSource = lis
-
+        
     End Sub
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
