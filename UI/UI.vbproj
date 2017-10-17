@@ -830,6 +830,7 @@
     </Compile>
     <Compile Include="bas\clsMergeDOC.vb" />
     <Compile Include="bas\clsToolBarButton.vb" />
+    <Compile Include="bas\SetupDataGrid.vb" />
     <Compile Include="billingmemo.ascx.designer.vb">
       <DependentUpon>billingmemo.ascx</DependentUpon>
     </Compile>

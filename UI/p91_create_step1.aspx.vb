@@ -263,7 +263,10 @@ Public Class p91_create_step1
     Private Sub SetupGrid()
         Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, Me.CurrentPrefix & "-approved")
         If Not cJ70 Is Nothing Then
-            basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 1000, False, False)
+            Dim cS As New UI.SetupDataGrid(Master.Factory, Me.grid1, cJ70)
+            cS.PageSize = 1000
+            cS.ContextMenuWidth = 0
+            basUIMT.PrepareDataGrid(cS)
         Else
             Master.Notify("Nelze najít šablonu přehledu pro master-prefix=" & Me.CurrentPrefix & "-approved")
             Return

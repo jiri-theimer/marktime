@@ -247,9 +247,24 @@ Public Class p31_grid
         Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
         Me.hidDefaultSorting.Value = cJ70.j70OrderBy
         Dim strAddSqlFrom As String = "", strSqlSumCols As String = ""
-        Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, Not _curIsExport, True, strFilterSetting, strFilterExpression, strSortExpression, strAddSqlFrom, , strSqlSumCols)
-        Me.hidFrom.Value = strAddSqlFrom
-        Me.hidSumCols.Value = strSqlSumCols
+        Dim cS As New SetupDataGrid(Master.Factory, grid1, cJ70)
+        With cS
+            .PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
+            .AllowCustomPaging = True
+            .AllowMultiSelect = Not _curIsExport
+            .AllowMultiSelectCheckboxSelector = True
+            .FilterSetting = strFilterSetting
+            .FilterExpression = strFilterExpression
+            .SortExpression = strSortExpression
+        End With
+        Dim cG As PreparedDataGrid = basUIMT.PrepareDataGrid(cS)
+        hidCols.Value = cG.Cols
+        Me.hidFrom.Value = cG.AdditionalFROM
+        Me.hidSumCols.Value = cG.SumCols
+
+        ''Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, Not _curIsExport, True, strFilterSetting, strFilterExpression, strSortExpression, strAddSqlFrom, , strSqlSumCols)
+        ''Me.hidFrom.Value = strAddSqlFrom
+        ''Me.hidSumCols.Value = strSqlSumCols
         
 
         With Me.cbxGroupBy.SelectedItem

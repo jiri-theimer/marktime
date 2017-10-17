@@ -366,10 +366,22 @@ Public Class entity_framework
 
         Me.hidDefaultSorting.Value = cJ70.j70OrderBy
 
-        Dim strAddtionalSqlFrom As String = "", strSumCols As String = ""
-        Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, BO.BAS.IsNullInt(CType(FindNode("groupOther").FindControl("cbxPaging"), DropDownList).SelectedValue), True, True, BO.BAS.BG(CType(FindNode("groupOther").FindControl("chkCheckboxSelector"), DropDownList).SelectedValue), strFilterSetting, strFilterExpression, , strAddtionalSqlFrom, , strSumCols)
-        Me.hidAdditionalFrom.Value = strAddtionalSqlFrom
-        Me.hidSumCols.Value = strSumCols
+        Dim cS As New UI.SetupDataGrid(Master.Factory, Me.grid1, cJ70)
+        cS.PageSize = BO.BAS.IsNullInt(CType(FindNode("groupOther").FindControl("cbxPaging"), DropDownList).SelectedValue)
+        cS.AllowCustomPaging = True
+        cS.AllowMultiSelect = True
+        cS.AllowMultiSelectCheckboxSelector = BO.BAS.BG(CType(FindNode("groupOther").FindControl("chkCheckboxSelector"), DropDownList).SelectedValue)
+        cS.FilterSetting = strFilterSetting
+        cS.FilterExpression = strFilterExpression
+
+        Dim cG As PreparedDataGrid = basUIMT.PrepareDataGrid(cS)
+        Me.hidCols.Value = cG.Cols
+        Me.hidAdditionalFrom.Value = cG.AdditionalFROM
+        Me.hidSumCols.Value = cG.SumCols
+
+        ''Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, BO.BAS.IsNullInt(CType(FindNode("groupOther").FindControl("cbxPaging"), DropDownList).SelectedValue), True, True, BO.BAS.BG(CType(FindNode("groupOther").FindControl("chkCheckboxSelector"), DropDownList).SelectedValue), strFilterSetting, strFilterExpression, , strAddtionalSqlFrom, , strSumCols)
+        ''Me.hidAdditionalFrom.Value = strAddtionalSqlFrom
+        ''Me.hidSumCols.Value = strSumCols
         If cJ70.j70ScrollingFlag > BO.j70ScrollingFlagENUM.NoScrolling Then
             navigationPane.Scrolling = SplitterPaneScrolling.None
         End If

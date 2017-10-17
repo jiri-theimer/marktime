@@ -154,6 +154,7 @@
     <Compile Include="Helpers\Roles4Notification.vb" />
     <Compile Include="Helpers\SchedulerItem.vb" />
     <Compile Include="Helpers\SearchBoxItem.vb" />
+    <Compile Include="Helpers\SetupDataGrid.vb" />
     <Compile Include="Helpers\SubjectMonitoring.vb" />
     <Compile Include="Helpers\j02PersonSum.vb" />
     <Compile Include="Helpers\p28ContactSum.vb" />

@@ -10,32 +10,35 @@ Public Class basUIMT
             Return Drawing.Color.BlueViolet
         End Get
     End Property
-   
-    Public Shared Function SetupDataGrid(factory As BL.Factory, grid As UI.datagrid, cJ70 As BO.j70QueryTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 16, Optional ByRef strGetSumCols As String = "", Optional strMasterPrefix As String = "") As String
-        If cJ70.j70ScrollingFlag = BO.j70ScrollingFlagENUM.Scrolling Then cJ70.j70ScrollingFlag = BO.j70ScrollingFlagENUM.StaticHeaders
+
+    Public Shared Function PrepareDataGrid(cS As SetupDataGrid) As PreparedDataGrid
+        If cS.cJ70.j70ScrollingFlag = BO.j70ScrollingFlagENUM.Scrolling Then cS.cJ70.j70ScrollingFlag = BO.j70ScrollingFlagENUM.StaticHeaders
         Dim lisSqlSEL As New List(Of String) 'vrací Sql SELECT syntaxi pro datový zdroj GRIDu
         Dim lisSqlSumCols As New List(Of String)
         Dim lisSqlFROM As New List(Of String)   'další nutné SQL FROM klauzule
-        With grid
+        With cS.grid
             .ClearColumns()
-            .AllowMultiSelect = bolAllowMultiSelect
+            .AllowMultiSelect = cS.AllowMultiSelect
             .DataKeyNames = "pid"
             .AllowCustomSorting = True
 
 
 
-            .AllowCustomPaging = bolCustomPaging
-            If bolAllowMultiSelect And bolMultiSelectCheckboxSelector Then .AddCheckboxSelector()
+            .AllowCustomPaging = cS.AllowCustomPaging
+            If cS.AllowMultiSelect And cS.AllowMultiSelectCheckboxSelector Then .AddCheckboxSelector()
 
 
-            .PageSize = intPageSize            
-            If intSysColumnWidth > 0 Then
-                .AddSystemColumn(intSysColumnWidth)
+            .PageSize = cS.PageSize
+            If cS.SysColumnWidth > 0 Then
+                .AddSystemColumn(cS.SysColumnWidth)
             End If
-            .AddContextMenuColumn(16)
+            If cS.ContextMenuWidth > 0 Then
+                .AddContextMenuColumn(cS.ContextMenuWidth)
+            End If
+
             .radGridOrig.PagerStyle.Mode = Telerik.Web.UI.GridPagerMode.NextPrevAndNumeric
-            .AllowFilteringByColumn = cJ70.j70IsFilteringByColumn
-            Select Case cJ70.j70ScrollingFlag
+            .AllowFilteringByColumn = cS.cJ70.j70IsFilteringByColumn
+            Select Case cS.cJ70.j70ScrollingFlag
                 Case BO.j70ScrollingFlagENUM.Scrolling
                     .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
                     .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = False
@@ -48,11 +51,11 @@ Public Class basUIMT
             End Select
 
             .radGridOrig.MasterTableView.Name = "grid"
-            If strSortExpression <> "" Then .radGridOrig.MasterTableView.SortExpressions.AddSortExpression(strSortExpression)
+            If cS.SortExpression <> "" Then .radGridOrig.MasterTableView.SortExpressions.AddSortExpression(cS.SortExpression)
 
 
-            Dim lisCols As List(Of BO.GridColumn) = factory.j70QueryTemplateBL.ColumnsPallete(cJ70.x29ID), bolMobile As Boolean = False
-            Select Case Left(strMasterPrefix, 3)
+            Dim lisCols As List(Of BO.GridColumn) = cS.factory.j70QueryTemplateBL.ColumnsPallete(cS.cJ70.x29ID), bolMobile As Boolean = False
+            Select Case Left(cS.MasterPrefix, 3)
                 Case "p41"
                     lisCols = lisCols.Where(Function(p) p.TreeGroup <> "Projekt" And p.TreeGroup <> "Project").ToList   'nezobrazovat sloupce projektu, když uživatel stojí v pod-přehledu v rámci projektu
                 Case "j02"
@@ -61,11 +64,11 @@ Public Class basUIMT
                     lisCols = lisCols.Where(Function(p) p.ColumnName <> "ClientName" And p.TreeGroup <> "Project").ToList   'nezobrazovat sloupce projektu, když uživatel stojí v pod-přehledu v rámci projektu
 
             End Select
-            If cJ70.j70MasterPrefix = "mobile_grid" Then
+            If cS.cJ70.j70MasterPrefix = "mobile_grid" Then
                 bolMobile = True
             End If
             Dim intIndex As Integer = 0
-            For Each s In Split(cJ70.j70ColumnNames, ",")
+            For Each s In Split(cS.cJ70.j70ColumnNames, ",")
                 Dim strField As String = Trim(s)
 
                 Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField)
@@ -86,10 +89,10 @@ Public Class basUIMT
                 End If
                 intIndex += 1
             Next
-            grid.SetFilterSetting(strFilterSetting, strFilterExpression)
+            cS.grid.SetFilterSetting(cS.FilterSetting, cS.FilterExpression)
 
-            If cJ70.j70OrderBy <> "" Then
-                Dim a() As String = Split(cJ70.j70OrderBy, ",")
+            If cS.cJ70.j70OrderBy <> "" Then
+                Dim a() As String = Split(cS.cJ70.j70OrderBy, ",")
                 For i As Integer = 0 To UBound(a)
                     Dim strC As String = a(i)
                     If strC.IndexOf(".") > 0 Then
@@ -103,12 +106,33 @@ Public Class basUIMT
             End If
         End With
 
+        Dim cRet As New PreparedDataGrid
 
-        If lisSqlFROM.Count > 0 Then strGetAdditionalFROM = String.Join(" ", lisSqlFROM.Distinct)
-        strGetSumCols = String.Join("|", lisSqlSumCols)
-        Return String.Join(",", lisSqlSEL)
+        If lisSqlFROM.Count > 0 Then cRet.AdditionalFROM = String.Join(" ", lisSqlFROM.Distinct)
+        cRet.SumCols = String.Join("|", lisSqlSumCols)
+        cRet.Cols = String.Join(",", lisSqlSEL)
 
+        Return cRet
 
+    End Function
+    Public Shared Function SetupDataGrid(factory As BL.Factory, grid As UI.datagrid, cJ70 As BO.j70QueryTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 16, Optional ByRef strGetSumCols As String = "", Optional strMasterPrefix As String = "") As String
+        Dim cSetup As New SetupDataGrid(factory, grid, cJ70)
+        With cSetup
+            .PageSize = intPageSize
+            .AllowCustomPaging = bolCustomPaging
+            .AllowMultiSelect = bolAllowMultiSelect
+            .AllowMultiSelectCheckboxSelector = bolAllowMultiSelect
+            .FilterSetting = strFilterSetting
+            .FilterExpression = strFilterExpression
+            .SortExpression = strSortExpression
+            .SysColumnWidth = intSysColumnWidth
+            .MasterPrefix = strMasterPrefix
+        End With
+
+        Dim cRet As PreparedDataGrid = PrepareDataGrid(cSetup)
+        strGetAdditionalFROM = cRet.AdditionalFROM
+        strGetSumCols = cRet.SumCols
+        Return cRet.Cols
     End Function
     Public Shared Sub MakeDockZonesUserFriendly(rdl As RadDockLayout, bolLockedInteractivity As Boolean)
 
