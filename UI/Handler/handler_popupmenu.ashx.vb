@@ -195,7 +195,7 @@ Public Class handler_popupmenu
                     CI("Pře-schválit", "", , "Images/approve.png")
 
                     CI("Schvalovací dialog", "p31_approving_step2.aspx?pids=" & intPID.ToString, , "Images/approve.png", True, True)
-                    ''CI("Vyčistit schvalování", "javascript:ContextMenu_Approve(7," & cRec.PID.ToString & ")", , "Images/clear.png", True)
+                    CI("Vyčistit schvalování", "javascript:ContextMenu_Approve(0," & cRec.PID.ToString & ")", , "Images/clear.png", True)
                     CI("Fakturovat", "javascript:ContextMenu_Approve(4," & cRec.PID.ToString & ")", , "Images/a14.gif", True)
                     CI("Zahrnout do paušálu", "javascript:ContextMenu_Approve(6," & cRec.PID.ToString & ")", , "Images/a16.gif", True)
                     CI("Viditelný odpis", "javascript:ContextMenu_Approve(2," & cRec.PID.ToString & ")", , "Images/a12.gif", True)

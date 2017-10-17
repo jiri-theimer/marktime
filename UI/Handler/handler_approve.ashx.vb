@@ -54,14 +54,29 @@ Public Class handler_approve
                 ''    End If
                 ''End If
             End With
-            If Not factory.p31WorksheetBL.Save_Approving(cA, False) Then
-                errs.Add("#" & x.ToString & "/" & factory.GetRecordCaption(BO.x29IdEnum.p31Worksheet, intPID) & ": " & factory.p31WorksheetBL.ErrorMessage)
-                context.Response.Write(factory.p31WorksheetBL.ErrorMessage) 'chyba
+            If cA.p72id > BO.p72IdENUM._NotSpecified Then
+                If Not factory.p31WorksheetBL.Save_Approving(cA, False) Then
+                    errs.Add("#" & x.ToString & "/" & factory.GetRecordCaption(BO.x29IdEnum.p31Worksheet, intPID) & ":\n" & factory.p31WorksheetBL.ErrorMessage)
+                End If
             Else
-                context.Response.Write("1") 'schváleno
+                Dim xx As New List(Of Integer)  'vyčistit schvalování
+                xx.Add(intPID)
+                If Not factory.p31WorksheetBL.RemoveFromApproving(xx) Then
+                    errs.Add("#" & x.ToString & "/" & factory.GetRecordCaption(BO.x29IdEnum.p31Worksheet, intPID) & ":\n" & factory.p31WorksheetBL.ErrorMessage)
+                End If
             End If
+            
         Next
+        If errs.Count = 0 Then
+            context.Response.Write("1") 'vše schváleno
+        Else
+            If errs.Count = x Then
+                context.Response.Write("_" & String.Join("\n", errs)) 'chyby v každém záznamu
+            Else
+                context.Response.Write(String.Join("\n", errs))
+            End If
 
+        End If
     End Sub
 
     Private Function ValidateBefore(context As HttpContext, factory As BL.Factory, pids As List(Of Integer)) As Boolean
@@ -72,13 +87,13 @@ Public Class handler_approve
 
             Dim cDisp As BO.p31WorksheetDisposition = factory.p31WorksheetBL.InhaleRecordDisposition(intPID)
             If cDisp.RecordDisposition = BO.p31RecordDisposition._NoAccess Then
-                context.Response.Write(String.Format("K úkonu #{0} nemáte přístup: {1}.", x, factory.GetRecordCaption(BO.x29IdEnum.p31Worksheet, intPID))) : Return False
+                context.Response.Write(String.Format("_#{0}: K úkonu nemáte přístup:\n{1}.", x, factory.GetRecordCaption(BO.x29IdEnum.p31Worksheet, intPID))) : Return False
             End If
             If cRec.p91ID <> 0 Then
-                context.Response.Write(String.Format("Úkon #{0} již byl vyfakturován: {1}.", x, factory.GetRecordCaption(BO.x29IdEnum.p31Worksheet, intPID))) : Return False
+                context.Response.Write(String.Format("_#{0}: Úkon již byl vyfakturován:\n{1}.", x, factory.GetRecordCaption(BO.x29IdEnum.p31Worksheet, intPID))) : Return False
             End If
             If Not (cDisp.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit) Then
-                context.Response.Write(String.Format("Nemáte oprávnění schvalovat úkon #{0}: {1}.", x, factory.GetRecordCaption(BO.x29IdEnum.p31Worksheet, intPID))) : Return False
+                context.Response.Write(String.Format("_#{0}: Nemáte oprávnění schvalovat úkon:\n{1}.", x, factory.GetRecordCaption(BO.x29IdEnum.p31Worksheet, intPID))) : Return False
             End If
         Next
         Return True

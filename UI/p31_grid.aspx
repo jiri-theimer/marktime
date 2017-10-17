@@ -115,7 +115,27 @@
             }
             sw_master("p31_move2project.aspx?p31ids=" + pids, "Images/cut.png");
         }
+        function batch_approve(p72id) {
+            var pids = GetAllSelectedPIDs();            
+            if (pids == "" || pids == null) {
+                $.alert("Není vybrán záznam.");
+                return
+            }
+            
+            $.post("Handler/handler_approve.ashx", { pids: pids, p72id: p72id }, function (data) {
+               
+                if (data != "1") {
+                    alert(data);                    
+                }
+                if (data.substring(0,1) == "_") {
+                    return; //v každém záznamu jsou chyby
+                }
+                //schváleno - refresh
+                hardrefresh(null, "p31-save");
 
+            });
+
+        }
         
 
 
@@ -229,7 +249,18 @@
                     <telerik:RadMenuItem Text="Vybrané (zaškrtlé)" Value="recs" ImageUrl="Images/arrow_down_menu.png">
                         <Items>
                             <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat záznamy" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdApprove" Text="Schvalovat/pře-schvalovat/fakturovat úkony" NavigateUrl="javascript:approving();" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Value="cmdApprove" Text="Schválit/pře-schválit" ImageUrl="Images/approve.png">
+                                <Items>
+                                    <telerik:RadMenuItem Value="cmdApproveDialog" NavigateUrl="javascript:approving();" Text="Schvalovací dialog" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Fakturovat" ImageUrl="Images/a14.gif" NavigateUrl="javascript:batch_approve(4);"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Zahrnout do paušálu" ImageUrl="Images/a16.gif" NavigateUrl="javascript:batch_approve(6);"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Viditelný odpis" ImageUrl="Images/a12.gif" NavigateUrl="javascript:batch_approve(2);"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Skrytý odpis" ImageUrl="Images/a13.gif" NavigateUrl="javascript:batch_approve(3);"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Vyčistit schvalování" ImageUrl="Images/clear.png" NavigateUrl="javascript:batch_approve(0);"></telerik:RadMenuItem>
+                                </Items>
+                            </telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdMove" Text="Přesunout na jiný projekt" NavigateUrl="javascript:move2project();" ImageUrl="Images/cut.png" Visible="false"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdApprove" Text="Oštítkovat" NavigateUrl="javascript:tags();" ImageUrl="Images/tag.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdSummary" Text="Statistiky" NavigateUrl="javascript:drilldown_p31ids();" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>

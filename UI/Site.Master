@@ -296,10 +296,12 @@
         }
 
         function ContextMenu_Approve(p72id,pid) {            
-            $.post("Handler/handler_approve.ashx", { pids: pid, p72id: p72id}, function (data) {
+            $.post("Handler/handler_approve.ashx", { pids: pid, p72id: p72id }, function (data) {                
                 if (data != "1") {
-                    $.alert(data);
-                    return;
+                    alert(data);
+                }
+                if (data.substring(0, 1) == "_") {
+                    return; //v každém záznamu jsou chyby
                 }
 
                 //schváleno
