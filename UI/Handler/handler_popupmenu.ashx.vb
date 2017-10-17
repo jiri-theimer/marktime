@@ -140,6 +140,22 @@ Public Class handler_popupmenu
         Dim strMasterPrefix As String = Left(strFlag, 3)
         Select Case strFlag
             Case "p31_approving_step3"  'schvalování
+                CI("Fakturovat", "javascript:ContextMenu_Batch4(" & cRec.PID.ToString & ")", , "Images/a14.gif")
+                SEP()
+                CI("Zahrnout do paušálu", "javascript:ContextMenu_Batch6(" & cRec.PID.ToString & ")", , "Images/a16.gif")
+                SEP()                
+                CI("Viditelný odpis", "javascript:ContextMenu_Batch2(" & cRec.PID.ToString & ")", , "Images/a12.gif")
+                CI("Skrytý odpis", "javascript:ContextMenu_Batch3(" & cRec.PID.ToString & ")", , "Images/a13.gif")
+                SEP()
+                CI("Fakturovat později", "javascript:ContextMenu_Batch7(" & cRec.PID.ToString & ")", , "Images/a17.gif")
+                SEP()
+                CI("Vyčistit schválování (bude rozpracováno)", "javascript:ContextMenu_BatchClear(" & cRec.PID.ToString & ")", , "Images/clear.png")
+                If cRec.p33ID = BO.p33IdENUM.Cas Then
+                    SEP()
+                    CI("Rozdělit úkon na 2 kusy", "javascript:ContextMenu_Split(" & cRec.PID.ToString & ")", , "Images/split.png")
+                End If
+
+                Return
             Case "p91_framework_detail"    'položky faktury
         End Select
 
@@ -157,7 +173,15 @@ Public Class handler_popupmenu
                     End If
                     If cDisp.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Then
                         SEP()
-                        CI("Schválit", "p31_approving_step2.aspx?pids=" & intPID.ToString, , "Images/approve.png", , True)
+                        CI("Schválit", "", , "Images/approve.png")
+                        CI("Schvalovací dialog", "p31_approving_step2.aspx?pids=" & intPID.ToString, , "Images/approve.png", True, True)
+
+                        CI("Fakturovat", "javascript:ContextMenu_Approve(4," & cRec.PID.ToString & ")", , "Images/a14.gif", True)
+                        CI("Zahrnout do paušálu", "javascript:ContextMenu_Approve(6," & cRec.PID.ToString & ")", , "Images/a16.gif", True)
+                        CI("Viditelný odpis", "javascript:ContextMenu_Approve(2," & cRec.PID.ToString & ")", , "Images/a12.gif", True)
+                        CI("Skrytý odpis", "javascript:ContextMenu_Approve(3," & cRec.PID.ToString & ")", , "Images/a13.gif", True)
+                        CI("Fakturovat později", "javascript:ContextMenu_Approve(7," & cRec.PID.ToString & ")", , "Images/a17.gif", True)
+
                     End If
                 End If
             Case BO.p31RecordState.Approved
@@ -168,7 +192,15 @@ Public Class handler_popupmenu
                 End If
                 If cDisp.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Then
                     SEP()
-                    CI("Pře-schválit", "p31_approving_step2.aspx?pids=" & intPID.ToString, , "Images/approve.png", False, True)
+                    CI("Pře-schválit", "", , "Images/approve.png")
+
+                    CI("Schvalovací dialog", "p31_approving_step2.aspx?pids=" & intPID.ToString, , "Images/approve.png", True, True)
+                    ''CI("Vyčistit schvalování", "javascript:ContextMenu_Approve(7," & cRec.PID.ToString & ")", , "Images/clear.png", True)
+                    CI("Fakturovat", "javascript:ContextMenu_Approve(4," & cRec.PID.ToString & ")", , "Images/a14.gif", True)
+                    CI("Zahrnout do paušálu", "javascript:ContextMenu_Approve(6," & cRec.PID.ToString & ")", , "Images/a16.gif", True)
+                    CI("Viditelný odpis", "javascript:ContextMenu_Approve(2," & cRec.PID.ToString & ")", , "Images/a12.gif", True)
+                    CI("Skrytý odpis", "javascript:ContextMenu_Approve(3," & cRec.PID.ToString & ")", , "Images/a13.gif", True)
+                    CI("Fakturovat později", "javascript:ContextMenu_Approve(7," & cRec.PID.ToString & ")", , "Images/a17.gif", True)
                 End If
             Case BO.p31RecordState.Invoiced
                 If strMasterPrefix = "p91" Then
@@ -235,6 +267,8 @@ Public Class handler_popupmenu
                 Dim ss As String = String.Format("Schválit rozpracované úkony ({0}x)", intWIPx)
                 If intWIPx = 0 And intAPPx > 0 Then ss = String.Format("Přes-schválit ({0}x) schválené", intAPPx)
                 If intWIPx > 0 And intAPPx > 0 Then ss = String.Format("Schválit ({0}x)/přes-schválit ({1}x)", intWIPx, intAPPx)
+
+
                 CI(ss, "entity_modal_approving.aspx?prefix=p28&pid=" & intPID.ToString, , "Images/approve.png", False, True)
 
                 If bolCanInvoice Then CI("Fakturovat", "", , "Images/invoice.png") : bolInvoicing = True
@@ -597,11 +631,16 @@ Public Class handler_popupmenu
         If Len(strText) > 35 Then strText = Left(strText, 35) & "..."
         c.Text = strText
         If strURL <> "" Then
-            If bolTopWindow Then
-                c.NavigateUrl = "javascript:contMenu(" & Chr(34) & strURL & Chr(34) & ",true)"
+            If strURL.IndexOf("javascript") >= 0 Then
+                c.NavigateUrl = strURL
             Else
-                c.NavigateUrl = "javascript:contMenu(" & Chr(34) & strURL & Chr(34) & ",false)"
+                If bolTopWindow Then
+                    c.NavigateUrl = "javascript:contMenu(" & Chr(34) & strURL & Chr(34) & ",true)"
+                Else
+                    c.NavigateUrl = "javascript:contMenu(" & Chr(34) & strURL & Chr(34) & ",false)"
+                End If
             End If
+            
         End If
         c.IsDisabled = bolDisabled
         c.ImageUrl = strImageUrl

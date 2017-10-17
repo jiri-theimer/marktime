@@ -414,6 +414,7 @@
     <Content Include="Handler\handler_default_page.ashx" />
     <Content Include="Handler\handler_p66_plan.ashx" />
     <Content Include="Handler\handler_popupmenu.ashx" />
+    <Content Include="Handler\handler_approve.ashx" />
     <None Include="Service References\SpolehlivostDPH\rozhraniCRPDPH.wsdl" />
     <Content Include="searchbox.ascx" />
     <Content Include="Service References\SpolehlivostDPH\UI.SpolehlivostDPH.InformaceOPlatciType.datasource">
@@ -1040,6 +1041,9 @@
     <Compile Include="freefields_checkboxlist.aspx.vb">
       <DependentUpon>freefields_checkboxlist.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Handler\handler_approve.ashx.vb">
+      <DependentUpon>handler_approve.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handler\handler_capacity_plan.ashx.vb">
       <DependentUpon>handler_capacity_plan.ashx</DependentUpon>

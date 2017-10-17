@@ -130,6 +130,52 @@
 
 
         }
+
+        function SelectGridRow(pid) {
+            var masterTable = $find("<%=grid1.radGridOrig.ClientID%>").get_masterTableView();
+            masterTable.clearSelectedItems();
+            var items = masterTable.get_dataItems();
+            for (var i = 0; i < items.length; i++) {
+                var row = items[i];
+                if (row.getDataKeyValue("pid") == pid) {                    
+                    document.getElementById("<%=hiddatapid.clientid%>").value = pid;
+                    masterTable.selectItem(masterTable.get_dataItems()[i].get_element());
+                    return;
+                }
+
+            }
+        }
+
+        function ContextMenu_Batch4(pid) {
+            SelectGridRow(pid);
+            document.getElementById("<%=Me.cmdBatch_4.ClientID%>").click();
+        }
+        function ContextMenu_Batch6(pid) {            
+            SelectGridRow(pid);
+            document.getElementById("<%=Me.cmdBatch_6.ClientID%>").click();
+        }
+        function ContextMenu_Batch3(pid) {
+            SelectGridRow(pid);
+            document.getElementById("<%=Me.cmdBatch_3.ClientID%>").click();
+        }
+        function ContextMenu_Batch2(pid) {
+            SelectGridRow(pid);
+            document.getElementById("<%=Me.cmdBatch_2.ClientID%>").click();
+        }
+        function ContextMenu_Batch7(pid) {
+            SelectGridRow(pid);
+            document.getElementById("<%=Me.cmdBatch_7.ClientID%>").click();
+        }
+        function ContextMenu_Split(pid) {
+            SelectGridRow(pid);
+            sw_everywhere("p31_record_split.aspx?pid="+pid+"&guid=<%=viewstate("guid")%>", "Images/split.png", true)
+            
+        }
+        function ContextMenu_BatchClear(pid) {
+            SelectGridRow(pid);
+            document.getElementById("<%=Me.cmdBatch_Clear.ClientID%>").click();
+        }
+        
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
@@ -270,7 +316,7 @@
                                     <asp:Button ID="cmdBatch_4" Text="[Fakturovat]" runat="server" CssClass="cmd" Width="280px" />
                                 </div>
                                 <div class="div6">
-                                    <asp:Button ID="cmdBatch_Clear" Text="Vyčistit schvalování - vrátit na [Nerozhodnuto]" runat="server" CssClass="cmd" Width="280px" />
+                                    <asp:Button ID="cmdBatch_Clear" Text="Vyčistit schvalování - vrátit na [Rozpracované]" runat="server" CssClass="cmd" Width="280px" />
                                 </div>
                                 <div class="div6">
                                     <asp:Button ID="cmdBatch_6" Text="[Zahrnout do paušálu]" runat="server" CssClass="cmd" Width="280px" />
