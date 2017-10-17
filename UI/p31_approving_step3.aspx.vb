@@ -330,9 +330,20 @@ Public Class p31_approving_step3
 
     Private Sub SetupGrid()
         Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
-        Dim strF As String = ""
-        Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 5000, False, True, , , , , strF)
-        Me.hidFrom.Value = strF
+        Dim cS As New SetupDataGrid(Master.Factory, grid1, cJ70)
+        With cS
+            .PageSize = 5000
+            .AllowCustomPaging = False
+            .AllowMultiSelect = True
+            .AllowMultiSelectCheckboxSelector = True
+        End With
+        Dim cG As PreparedDataGrid = basUIMT.PrepareDataGrid(cS)
+        Me.hidCols.Value = cG.Cols
+        Me.hidFrom.Value = cG.AdditionalFROM
+
+        'Dim strF As String = ""
+        'Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 5000, False, True, , , , , strF)
+        'Me.hidFrom.Value = strF
 
         ''If Not Page.IsPostBack Then
         ''    Dim intGridHeight As Integer = BO.BAS.IsNullInt(Request.Item("gridheight").Replace(".", ","))

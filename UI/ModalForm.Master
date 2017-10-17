@@ -171,6 +171,8 @@
         <asp:HiddenField ID="hidCloseAndRefreshParent_JsFunction" runat="server" Value="hardrefresh" />
         <asp:HiddenField ID="hidrecordMessage" runat="server" />
         <asp:HiddenField ID="hidHRJS" runat="server" />
+
+
     </form>
 </body>
 
@@ -235,6 +237,8 @@
     function sw_everywhere(url, iconUrl, is_maximize) {
         dialog_master(url, is_maximize,null,null);
     }
+    
+
     
 </script>
 </html>

@@ -27,7 +27,7 @@
             var h3 = new Number;
 
             h1 = $(window).height();
-           
+
             var ss = self.document.getElementById("<%=RadMultiPage1.ClientID%>");
             var offset = $(ss).offset();
 
@@ -35,10 +35,10 @@
 
             h3 = h1 - h2 - 10;
 
-            
+
             document.getElementById("<%=RadMultiPage1.ClientID%>").style.height = h3 + "px";
-            
-           
+
+
 
 
         });
@@ -73,15 +73,6 @@
             return (pids);
         }
 
-        function record_clone() {
-            var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
-            if (pid == "" || pid == null) {
-                alert("Není vybrán záznam.");
-                return
-            }
-            sw_orig("p31_record.aspx?clone=1&pid=" + pid);
-
-        }
 
         function hardrefresh(pid, flag) {
 
@@ -92,7 +83,7 @@
 
         }
 
-     
+
 
         function batch_p31text() {
 
@@ -106,21 +97,7 @@
         }
 
 
-        function sw_orig(url, is_maximize, window_width, window_height) {
-            var wnd = $find("<%=okno1.ClientID%>");
-            wnd.setUrl(url);
-            if (window_width != null)
-                wnd.setSize(window_width, window_height);
 
-            wnd.show();
-            if (is_maximize == true) {
-                wnd.maximize();
-            }
-            else {
-                wnd.center();
-            }
-
-        }
 
         function o23_record(pid) {
 
@@ -141,7 +118,7 @@
             dialog_master("tag_binding.aspx?prefix=p31&pids=" + pids, "Images/tag.png");
 
         }
-        function SaveAsSet() {            
+        function SaveAsSet() {
             var s = window.prompt("Zadejte název billing dávky.");
 
             if (s != '' && s != null) {
@@ -150,7 +127,7 @@
                 hardrefresh(0, "save_as_set");
             }
 
-            
+
 
         }
     </script>
@@ -162,7 +139,7 @@
     <div class="slidingDiv2" style="padding: 10px;">
         <div class="innerform_light">
             <div class="div6">
-                <uc:mygrid id="designer1" runat="server" prefix="p31" x36key="p31_approving_step3-j70id" masterprefix="approving_step3" MasterPrefixFlag="2" reloadurl="javascript:hardrefresh(0, 'j70')" Width="250px" ModeFlag="3"></uc:mygrid>
+                <uc:mygrid ID="designer1" runat="server" Prefix="p31" x36Key="p31_approving_step3-j70id" MasterPrefix="approving_step3" MasterPrefixFlag="2" ReloadUrl="javascript:hardrefresh(0, 'j70')" Width="250px" ModeFlag="3"></uc:mygrid>
             </div>
             <div class="div6">
                 <asp:CheckBox ID="chkAutoFilter" runat="server" Text="Nabízet nad sloupci filtrování dat" AutoPostBack="true" CssClass="chk" />
@@ -267,8 +244,8 @@
 
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
     <div style="clear: both;"></div>
-    
-    <table width="100%" cellpadding="0" cellspacing="0">
+
+    <table width="99.9%" cellpadding="0" cellspacing="0">
         <tr valign="top">
             <td style="min-width: 400px; min-height: 450px;">
                 <telerik:RadTabStrip ID="RadTabStrip1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true">
@@ -287,7 +264,7 @@
                     <telerik:RadPageView ID="selected" runat="server">
                         <p></p>
                         <div class="content-box1">
-                            <div class="title" style="text-align:center;">Operace nad vybranými (zaškrtlými) záznamy</div>
+                            <div class="title" style="text-align: center;">Operace nad vybranými (zaškrtlými) záznamy</div>
                             <div class="content">
                                 <div class="div6">
                                     <asp:Button ID="cmdBatch_4" Text="[Fakturovat]" runat="server" CssClass="cmd" Width="280px" />
@@ -299,7 +276,7 @@
                                     <asp:Button ID="cmdBatch_6" Text="[Zahrnout do paušálu]" runat="server" CssClass="cmd" Width="280px" />
 
                                 </div>
-                               
+
                                 <div class="div6">
                                     <asp:Button ID="cmdBatch_3" Text="[Skrytý odpis]" runat="server" CssClass="cmd" Width="280px" />
 
@@ -314,13 +291,13 @@
                                     <asp:Button ID="cmdBatch_7" Text="[Fakturovat později]" runat="server" CssClass="cmd" Width="280px" />
 
                                 </div>
-                                <div class="div6" style="margin-top:20px;">
+                                <div class="div6" style="margin-top: 20px;">
                                     <asp:Button ID="cmdBatch_ApprovingSet" Text="Vybrané zařadit do billing dávky:" runat="server" CssClass="cmd" Width="280px" Visible="true" />
                                     <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="300px" AllowCustomText="true" ToolTip="Název billing dávky"></telerik:RadComboBox>
                                     <asp:Button ID="cmdBatch_ApprovingSet_Clear" Text="Vybraným vyčistit přiřazení billing dávky" runat="server" CssClass="cmd" Width="280px" Visible="true" />
                                 </div>
                                 <div class="div6">
-                                    <button id="cmdTags" type="button" onclick="tags()" style="width:280px">Oštítkovat</button>
+                                    <button id="cmdTags" type="button" onclick="tags()" style="width: 280px">Oštítkovat</button>
                                 </div>
                                 <div class="div6">
                                     <asp:Button ID="cmdBatch_8" Text="Nahodit úroveň schvalování #0" runat="server" CssClass="cmd" Width="280px" />
@@ -339,7 +316,7 @@
                         <uc:billingmemo ID="bm1" runat="server" />
                     </telerik:RadPageView>
                 </telerik:RadMultiPage>
-                
+
             </td>
             <td>
                 <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
@@ -363,11 +340,152 @@
     <asp:HiddenField ID="hidApprovingLevel" runat="server" />
     <asp:HiddenField ID="hidApprovingSet_Explicit" runat="server" />
 
-    <telerik:RadWindow ID="okno1" runat="server" Modal="true" KeepInScreenBounds="true" VisibleTitlebar="true" VisibleStatusbar="false" Skin="WebBlue" ShowContentDuringLoad="false" Width="800px" Height="600px" Behaviors="Close,Move,Maximize" IconUrl="Images/window.png" Style="z-index: 9900;">
-        <Shortcuts>
-            <telerik:WindowShortcut CommandName="Close" Shortcut="Esc" />
-        </Shortcuts>
-    </telerik:RadWindow>
+
+
+    <script type="text/javascript">
+        $telerik.getViewPortSize = function () {
+            var width = 0;
+            var height = 0;
+
+            var canvas = document.body;
+
+            if ((!$telerik.quirksMode && !$telerik.isSafari) ||
+                (Telerik.Web.Browser.chrome && Telerik.Web.Browser.version >= 61)) {
+                canvas = document.documentElement;
+            }
+
+            if (window.innerWidth) {
+                // Seems there's no completely reliable way to get the viewport size in Gecko, this should be the best one
+                // Check https://bugzilla.mozilla.org/show_bug.cgi?id=189112#c7
+                width = Math.max(document.documentElement.clientWidth, document.body.clientWidth);
+                height = Math.max(document.documentElement.clientHeight, document.body.clientHeight);
+
+                if (width > window.innerWidth)
+                    width = document.documentElement.clientWidth;
+                if (height > window.innerHeight)
+                    height = document.documentElement.clientHeight;
+            }
+            else {
+                width = canvas.clientWidth;
+                height = canvas.clientHeight;
+            }
+
+            width += canvas.scrollLeft;
+            height += canvas.scrollTop;
+
+            if ($telerik.isMobileSafari) {
+                width += window.pageXOffset;
+                height += window.pageYOffset;
+            }
+
+            return { width: width - 6, height: height - 6 };
+        }
+    </script>
+    <telerik:RadContextMenu ID="RadContextMenu1" runat="server" EnableViewState="false" Skin="Metro" ExpandDelay="0" RenderMode="Lightweight" OnClientHidden="RadContextMenu1_Hidden">
+        <CollapseAnimation Type="None" />
+        <ExpandAnimation Type="None" />
+    </telerik:RadContextMenu>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
+    <script type="text/javascript">
+        function contMenu(url, isTopWindow) {
+            sw_everywhere(url, "", true);
+        }
+        function contReload(url, target) {
+            window.open(url, target);
+        }
+
+        var _lastCmClosedTime = null;
+
+        function RadContextMenu1_Hidden(menu) {
+            var d = new Date();
+            _lastCmClosedTime = d.getTime();
+
+        }
+
+        function RCM(curPREFIX, curPID, ctl, strFlag) {
+            var d = new Date();
+            var n = d.getTime();
+
+            var contextMenu = $find("<%= RadContextMenu1.ClientID %>");
+            if (n - _lastCmClosedTime < 2) {
+                return;     //menu bylo zavřeno přes link volající přímo RCM
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "Handler/handler_popupmenu.ashx",
+                beforeSend: function () {
+
+                },
+                async: true,
+                timeout: 3000,
+                data: { prefix: curPREFIX, pid: curPID, flag: strFlag },
+                success: function (data) {
+                    //alert("načítání");
+                    //$('#html5menu').html('');
+
+                    contextMenu.get_items().clear();
+
+                    var x = 180
+                    var y = 30
+
+                    if (ctl != null) {
+                        x = $(ctl).offset().left;
+                        y = $(ctl).offset().top;
+                    }
+
+
+                    var miLastRoot = null;
+
+                    for (var i in data) {
+                        var c = data[i];
+                        var mi = new Telerik.Web.UI.RadMenuItem();
+
+                        if (c.IsSeparator == true) {
+                            mi.set_isSeparator(true);
+                        }
+
+                        if (c.IsSeparator == false) {
+                            mi.set_text(c.Text);
+
+                            mi.set_navigateUrl(c.NavigateUrl);
+
+                        }
+
+                        if (c.ImageUrl != "") {
+                            mi.set_imageUrl(c.ImageUrl);
+                        }
+
+                        if (c.IsDisabled == true) {
+                            mi.disable();
+                        }
+
+                        if (c.IsChildOfPrevious == true) {
+                            miLastRoot.get_items().add(mi);
+                        }
+
+                        if (c.IsChildOfPrevious == false) {
+                            contextMenu.get_items().add(mi);
+                            miLastRoot = mi;
+                        }
+
+
+                    }
+
+                    contextMenu.showAt(x + 20, y);
+
+
+
+                },
+                complete: function () {
+                    // do the job here
+
+                }
+            });
+
+            ;
+
+        }
+    </script>
 </asp:Content>

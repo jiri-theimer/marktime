@@ -109,22 +109,22 @@
     <script type="text/javascript">
         function p31_comment_create() {
             
-            window.parent.sw_orig("b07_create.aspx?masterprefix=p31&masterpid=<%=Master.DataPID%>");
+            window.parent.sw_everywhere("b07_create.aspx?masterprefix=p31&masterpid=<%=Master.DataPID%>","Images/worksheet.png", true);
 
         }
 
         function p31_comment_reaction(b07id) {
 
-            window.parent.sw_orig("b07_create.aspx?parentpid="+b07id+"&masterprefix=p31&masterpid=<%=Master.DataPID%>");
+            window.parent.sw_everywhere("b07_create.aspx?parentpid="+b07id+"&masterprefix=p31&masterpid=<%=Master.DataPID%>","Images/worksheet.png", true);
 
 
         }
 
         function split_record() {
-            window.parent.sw_orig("p31_record_split.aspx?pid=<%=Master.DataPID%>&guid=<%=ViewState("guid")%>");
+            window.parent.sw_everywhere("p31_record_split.aspx?pid=<%=Master.DataPID%>&guid=<%=ViewState("guid")%>","Images/worksheet.png", true);
         }
         function source_record(){
-            window.parent.sw_orig("p31_record.aspx?pid=<%=Master.DataPID%>&edit_approve=1&guid_approve=<%=ViewState("guid")%>");            
+            window.parent.sw_everywhere("p31_record.aspx?pid=<%=Master.DataPID%>&edit_approve=1&guid_approve=<%=ViewState("guid")%>","Images/worksheet.png", true);            
         }
 
         <%If hidRefreshParent.Value = "1" Then%>
@@ -133,7 +133,7 @@
         <%End If%>
 
         function changelog() {
-            window.parent.sw_orig("changelog.aspx?prefix=p31&pid=<%=Master.DataPID%>", true)
+            window.parent.sw_everywhere("changelog.aspx?prefix=p31&pid=<%=Master.DataPID%>","Images/log.png", true)
         }
     </script>
 </asp:Content>
