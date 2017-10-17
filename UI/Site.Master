@@ -296,7 +296,7 @@
         }
 
         function ContextMenu_Approve(p72id,pid) {            
-            $.post("Handler/handler_approve.ashx", { pid: pid, p72id: p72id}, function (data) {
+            $.post("Handler/handler_approve.ashx", { pids: pid, p72id: p72id}, function (data) {
                 if (data != "1") {
                     $.alert(data);
                     return;

@@ -18,7 +18,7 @@
     <asp:PlaceHolder ID="placeFavicon" runat="server"></asp:PlaceHolder>
     <script src="Scripts/jquery-1.11.1.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="Scripts/jquery.qtip.min.js"></script>
-
+    
 
 
     <style type="text/css">
@@ -236,8 +236,9 @@
             sw_local(url, iconUrl, is_maximize);
         }
 
+        
         function ContextMenu_Approve(p72id, pid) {
-            $.post("Handler/handler_approve.ashx", { pid: pid, p72id: p72id }, function (data) {
+            $.post("Handler/handler_approve.ashx", { pids: pid, p72id: p72id }, function (data) {
                 if (data != "1") {
                     $.alert(data);
                     return;
@@ -250,9 +251,9 @@
 
         }
 
-        function contMenu(url,isTopWindow) {
+        function contMenu(url, isTopWindow) {
             var w = window.innerWidth;
-            
+
 
             if (w < 1100 && window.parent != null) {
                 window.parent.sw_everywhere(url, "", true);
@@ -266,7 +267,7 @@
                     return;
                 }
             }
-            
+
 
             sw_everywhere(url, "", true);
         }
@@ -368,5 +369,7 @@
 
         }
     </script>
+
+    
 </body>
 </html>
