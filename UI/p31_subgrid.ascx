@@ -26,7 +26,7 @@
     <div class="commandcell">
         <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" Style="z-index: 2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" CollapseAnimation-Duration="0" CollapseAnimation-Type="None">
             <Items>
-                <telerik:RadMenuItem Text="Nový" Value="new" NavigateUrl="javascript:p31_entry()" ImageUrl="Images/new.png"></telerik:RadMenuItem>
+                <telerik:RadMenuItem Text="Nový" Value="new" NavigateUrl="javascript:p31_entry()" ImageUrl="Images/new4menu.png"></telerik:RadMenuItem>
                 <telerik:RadMenuItem Text="Vybrané (zaškrtlé)" Value="akce" ImageUrl="Images/menuarrow.png">
                     <Items>
                         <telerik:RadMenuItem Text="Kopírovat" Value="clone" NavigateUrl="javascript:p31_clone()"></telerik:RadMenuItem>

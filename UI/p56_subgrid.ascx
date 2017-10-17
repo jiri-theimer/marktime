@@ -22,23 +22,16 @@
 <div class="commandcell" style="margin-left: 10px;">
     <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" EnableRoundedCorners="false" EnableShadows="false" Style="z-index: 2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
         <Items>
-            <telerik:RadMenuItem Text="Úkol" ImageUrl="Images/menuarrow.png">
-                <Items>
-                    <telerik:RadMenuItem Text="Posunout/doplnit" Value="workflow" NavigateUrl="javascript:p56_subgrid_workflow()"></telerik:RadMenuItem>                                        
-                    <telerik:RadMenuItem Text="Zapsat worksheet k úkolu" Value="p31new" NavigateUrl="javascript:p31_entry_p56()"></telerik:RadMenuItem>
-                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Nový úkol" Value="new" NavigateUrl="javascript:p56_record()"></telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Kopírovat úkol" Value="clone" NavigateUrl="javascript:p56_clone()"></telerik:RadMenuItem>
-                </Items>
-            </telerik:RadMenuItem>
-            <telerik:RadMenuItem Text="Vybrané úkoly" Value="akce" ImageUrl="Images/menuarrow.png">
+            <telerik:RadMenuItem Text="Nový úkol" Value="new" NavigateUrl="javascript:p56_record()" ImageUrl="Images/new4menu.png"></telerik:RadMenuItem>
+          
+            <telerik:RadMenuItem Text="Vybrané (zaškrtlé)" Value="akce" ImageUrl="Images/menuarrow.png">
                 <Items>
                     
                     <telerik:RadMenuItem Text="Schválit úkony u označených úkolů" Value="cmdApprove" NavigateUrl="javascript:approving()"></telerik:RadMenuItem>
                     
                 </Items>
             </telerik:RadMenuItem>
-            <telerik:RadMenuItem Text="Další akce" ImageUrl="Images/menuarrow.png">
+            <telerik:RadMenuItem Text="Další" ImageUrl="Images/menuarrow.png">
                 <ContentTemplate>
                     <div class="content-box3">
                         <div class="title">

@@ -229,8 +229,8 @@ Public Class entity_menu
             ami("Upravit kartu projektu", "cmdEdit", "javascript:record_edit();", "Images/edit.png", mi, "Zahrnuje i možnost přesunutí do archviu nebo nenávratného odstranění.")
         End If
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then
-            ami("Založit projekt", "cmdNew", "javascript:record_new();", "Images/new.png", mi, "Z aktuálního projektu se předvyplní klient, typ, středisko,projektové role, fakturační ceník, jazyk a typ faktury.", True)
-            ami("Založit projekt kopírováním", "cmdCopy", "javascript:record_clone();", "Images/copy.png", mi, "Nový projekt se kompletně předvyplní podle vzoru tohoto záznamu.")
+            ami("Založit projekt", "cmdNew", "javascript:record_new();", "Images/new4menu.png", mi, "Z aktuálního projektu se předvyplní klient, typ, středisko,projektové role, fakturační ceník, jazyk a typ faktury.", True)
+            ami("Kopírovat", "cmdCopy", "javascript:record_clone();", "Images/copy.png", mi, "Nový projekt se kompletně předvyplní podle vzoru tohoto záznamu.")
             ami("Založit pod-projekt", "cmdNewChild", "javascript:record_new_child();", "Images/tree.png", mi, "Nový projekt bude pod-projektem aktuálního projektu.")
         End If
         If cP42.p42IsModule_p31 Then
@@ -547,8 +547,8 @@ Public Class entity_menu
             ami("Upravit kartu klienta", "cmdEdit", "javascript:record_edit();", "Images/edit.png", mi, "Zahrnuje i možnost přesunutí do archviu nebo nenávratného odstranění.")
         End If
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator) Then
-            ami("Založit klienta", "cmdNew", "javascript:record_new();", "Images/new.png", mi, , True)
-            ami("Založit klienta kopírováním", "cmdCopy", "javascript:record_clone();", "Images/copy.png", mi, "Nový klient se kompletně předvyplní podle vzoru tohoto záznamu.")
+            ami("Založit klienta", "cmdNew", "javascript:record_new();", "Images/new4menu.png", mi, , True)
+            ami("Kopírovat", "cmdCopy", "javascript:record_clone();", "Images/copy.png", mi, "Nový klient se kompletně předvyplní podle vzoru tohoto záznamu.")
         End If
         If cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.ClientAndSupplier Or cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.ClientOnly Then
             If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then
@@ -630,8 +630,8 @@ Public Class entity_menu
         If mi.Nodes.Count > 0 Then Return 'menu už bylo dříve zpracované
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_Admin) Then
             ami("Upravit kartu osoby", "cmdEdit", "javascript:record_edit();", "Images/edit.png", mi, "Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění.")
-            ami("Založit osobu", "cmdNew", "javascript:record_new();", "Images/new.png", mi, , True)
-            ami("Založit osobu kopírováním", "cmdCopy", "javascript:record_clone();", "Images/copy.png", mi, "Nově zakládaná osoba se kompletně předvyplní z aktuálního osobního profilu.")
+            ami("Založit osobu", "cmdNew", "javascript:record_new();", "Images/new4menu.png", mi, , True)
+            ami("Kopírovat", "cmdCopy", "javascript:record_clone();", "Images/copy.png", mi, "Nově zakládaná osoba se kompletně předvyplní z aktuálního osobního profilu.")
         End If
 
         If Me.Factory.SysUser.IsApprovingPerson Then
@@ -785,8 +785,8 @@ Public Class entity_menu
             ami("Upravit kartu úkolu", "cmdEdit", "javascript:record_edit();", "Images/edit.png", mi)
         End If
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P56_Creator) Then
-            ami("Založit úkol", "cmdNew", "javascript:p56_record_new(" & cRec.p41ID.ToString & ");", "Images/new.png", mi, , True)
-            ami("Založit úkol kopírováním", "cmdCopy", "javascript:record_clone();", "Images/copy.png", mi, "Nový úkol se kompletně předvyplní podle vzoru tohoto záznamu.")
+            ami("Založit úkol", "cmdNew", "javascript:p56_record_new(" & cRec.p41ID.ToString & ");", "Images/new4menu.png", mi, , True)
+            ami("Kopírovat", "cmdCopy", "javascript:record_clone();", "Images/copy.png", mi, "Nový úkol se kompletně předvyplní podle vzoru tohoto záznamu.")
         End If
         Dim bolCanApprove As Boolean = Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver)
         Dim cDispP41 As BO.p41RecordDisposition = Me.Factory.p41ProjectBL.InhaleRecordDisposition(cP41)

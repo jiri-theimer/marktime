@@ -40,16 +40,7 @@
 
         }
 
-        function p31_entry_p56() {
-            ///volá se z gridu úkolů
-            var p56id = document.getElementById("<%=hiddatapid_p56.ClientID%>").value;
-            if (p56id == "" || p56id == null) {
-                alert("Není vybrán úkol.");
-                return;
-            }
-            sw_decide("p31_record.aspx?pid=0&p41id=<%=Master.DataPID%>&p56id=" + p56id, "Images/worksheet.png", true);
-
-        }
+       
         function p56_record(pid, bolReturnFalse) {            
             if (pid == null)
                 pid = "0";            
@@ -58,27 +49,8 @@
                 return (false)
 
         }
-        function p56_clone() {
-            ///volá se z gridu úkolů
-            var pid = document.getElementById("<%=hiddatapid_p56.ClientID%>").value;
-            if (pid == "" || pid == null) {
-                alert("Není vybrán záznam.");
-                return;
-            }
-            sw_decide("p56_record.aspx?clone=1&p41id=<%=Master.DataPID%>&pid=" + pid, "Images/task.png", true);
-
-        }
-        function p56_subgrid_workflow() {
-            ///volá se z gridu úkolů
-            var pid = document.getElementById("<%=hiddatapid_p56.ClientID%>").value;
-            if (pid == "" || pid == null) {
-                alert("Není vybrán záznam.");
-                return;
-            }
-            sw_decide("workflow_dialog.aspx?prefix=p56&pid="+pid, "Images/task.png", true);
-
-
-        }
+        
+       
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">

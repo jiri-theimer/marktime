@@ -23,7 +23,7 @@
     <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" EnableRoundedCorners="false" EnableShadows="false" ClickToOpen="true" Style="z-index: 2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
         <Items>
 
-            <telerik:RadMenuItem Text="Akce" ImageUrl="Images/menuarrow.png">
+            <telerik:RadMenuItem Text="Další" ImageUrl="Images/menuarrow.png">
                 <ContentTemplate>
                     <div class="content-box3">
                         <div class="title">
@@ -52,7 +52,7 @@
                         </div>
                         <div class="content">
                             
-                            <asp:LinkButton ID="cmdExport" runat="server" Text="Export do MS Excel" />
+                            <asp:button ID="cmdExport" runat="server" CssClass="cmd" Text="Export" />
                         </div>
                     </div>
 

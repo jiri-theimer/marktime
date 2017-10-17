@@ -41,6 +41,42 @@ Partial Public Class entity_framework
     Protected WithEvents panSearch As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
+    '''mm1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents mm1 As Global.Telerik.Web.UI.RadNavigation
+
+    '''<summary>
+    '''n0 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents n0 As Global.Telerik.Web.UI.NavigationNode
+
+    '''<summary>
+    '''n1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents n1 As Global.Telerik.Web.UI.NavigationNode
+
+    '''<summary>
+    '''n2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents n2 As Global.Telerik.Web.UI.NavigationNode
+
+    '''<summary>
     '''menu1 control.
     '''</summary>
     '''<remarks>

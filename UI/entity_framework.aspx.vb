@@ -1084,6 +1084,8 @@ Public Class entity_framework
     End Sub
 
     Private Sub entity_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        CType(mm1.Nodes(1).FindControl("txt1"), TextBox).Text = "HOVADO"
+
         designer1.ReloadUrl = GetReloadUrl()
 
         If cbxPeriodType.SelectedIndex > 0 Then
@@ -1112,7 +1114,7 @@ Public Class entity_framework
             Me.cbx1.Width = Unit.Parse("200px")
             designer1.Width = "220px"
         End If
-        
+
         If Me.cbxGroupBy.SelectedIndex > 0 Then
             chkGroupsAutoExpanded.Visible = True
         Else

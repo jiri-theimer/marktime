@@ -224,7 +224,7 @@
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" CollapseAnimation-Duration="0" CollapseAnimation-Type="None">
                 <Items>
 
-                    <telerik:RadMenuItem Value="cmdNew" Text="<%$Resources:common,Novy %>" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem Value="cmdNew" Text="<%$Resources:common,Novy %>" NavigateUrl="javascript:record_new();" ImageUrl="Images/new4menu.png"></telerik:RadMenuItem>
                         
                     <telerik:RadMenuItem Text="Vybrané (zaškrtlé)" Value="recs" ImageUrl="Images/arrow_down_menu.png">
                         <Items>

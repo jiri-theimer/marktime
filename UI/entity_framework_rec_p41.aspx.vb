@@ -77,7 +77,6 @@ Public Class entity_framework_rec_p41
             With Master.Factory
                 panExport.Visible = .TestPermission(BO.x53PermValEnum.GR_GridTools)
                 recmenu1.FindItemByValue("new").Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Creator)
-                recmenu1.FindItemByValue("clone").Visible = recmenu1.FindItemByValue("new").Visible
             End With
 
             SetupGrid()

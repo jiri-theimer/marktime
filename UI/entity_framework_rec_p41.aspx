@@ -91,20 +91,14 @@
     <div class="commandcell">
         <uc:mygrid id="designer1" runat="server" prefix="p41" MasterPrefixFlag="2"></uc:mygrid>
     </div>
+    
     <div class="commandcell" style="margin-left: 10px;">
+        
         <telerik:RadMenu ID="recmenu1" RenderMode="Auto" Skin="Metro" style="z-index:2000;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
             <Items>
-                <telerik:RadMenuItem Text="Záznam" ImageUrl="Images/menuarrow.png">
-                    <Items>
-                        <telerik:RadMenuItem Text="Detail (Dvoj-klik)" Value="detail" NavigateUrl="javascript:p41_framework()"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Text="Nový" Value="new" NavigateUrl="javascript:p41_create(false)"></telerik:RadMenuItem>                        
-                        <telerik:RadMenuItem Text="Kopírovat" Value="clone" NavigateUrl="javascript:p41_create(true)"></telerik:RadMenuItem>
-                    </Items>
-                </telerik:RadMenuItem>
-               
+                <telerik:RadMenuItem Text="Nový" Value="new" NavigateUrl="javascript:p41_create(false)" ImageUrl="Images/new4menu.png"></telerik:RadMenuItem>  
                 
-                <telerik:RadMenuItem Text="Akce" ImageUrl="Images/menuarrow.png">
+                <telerik:RadMenuItem Text="Další" ImageUrl="Images/menuarrow.png">
                     <ContentTemplate>
                         <div class="content-box3">
                             <div class="title"><img src="Images/griddesigner.png" />Nastavení přehledu</div>
@@ -133,17 +127,17 @@
                                 <span>Export záznamů aktuálního přehledu</span>
                             </div>
                             <div class="content">
-                                <img src="Images/export.png" alt="export" />
-                            <asp:LinkButton ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
+                                
+                            <asp:button ID="cmdExport" runat="server" Text="Export" CssClass="cmd" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
 
-                            <img src="Images/xls.png" alt="xls" />
-                            <asp:LinkButton ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+                            
+                            <asp:button ID="cmdXLS" runat="server" Text="XLS" CssClass="cmd" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
 
-                            <img src="Images/pdf.png" alt="pdf" />
-                            <asp:LinkButton ID="cmdPDF" runat="server" Text="PDF" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+                            
+                            <asp:button ID="cmdPDF" runat="server" Text="PDF" CssClass="cmd" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
 
-                            <img src="Images/doc.png" alt="doc" />
-                            <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+                            
+                            <asp:button ID="cmdDOC" runat="server" Text="DOC" CssClass="cmd" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
                             </div>
                             
                         </asp:Panel>

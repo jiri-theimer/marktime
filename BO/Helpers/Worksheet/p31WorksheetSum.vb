@@ -37,4 +37,6 @@
     Public Property p31Amount_Vat_Invoiced_Domestic As Double
 
     Public Property p31Amount_WithoutVat_FixedCurrency As Double
+
+    Public Property Last_p91ID As Integer
 End Class
