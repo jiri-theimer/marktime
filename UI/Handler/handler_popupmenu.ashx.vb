@@ -99,7 +99,40 @@ Public Class handler_popupmenu
             SEP()
             CI("Upravit kartu úkolu", "p56_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
             CI("Kopírovat", "p56_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
+            If strFlag = "pagemenu" Then
+                CI("Založit úkol", "p56_record.aspx?pid=0&p41id=" & cRec.p41ID.ToString & ";", , "Images/new4menu.png")
+            End If
         End If
+
+
+        Dim cDispP41 As BO.p41RecordDisposition = factory.p41ProjectBL.InhaleRecordDisposition(factory.p41ProjectBL.Load(cRec.p41ID))
+        Dim mq As New BO.myQueryP31
+        mq.p56IDs = BO.BAS.ConvertInt2List(cRec.PID)
+        mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
+        Dim cSum As BO.p31WorksheetSum = factory.p31WorksheetBL.LoadSumRow(mq, True, True)
+        Dim intWIPx As Integer = 0, intAPPx As Integer = 0
+        With cSum
+            intWIPx = .WaitingOnApproval_Hours_Count + .WaitingOnApproval_Other_Count
+            intAPPx = .WaitingOnInvoice_Hours_Count + .WaitingOnInvoice_Other_Count
+        End With
+        If intWIPx > 0 Or intAPPx > 0 Then
+            Dim bolCanApprove As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver)
+            If Not bolCanApprove And cDispP41.x67IDs.Count > 0 Then
+                Dim lisO28 As IEnumerable(Of BO.o28ProjectRole_Workload) = factory.x67EntityRoleBL.GetList_o28(cDispP41.x67IDs)
+                If lisO28.Where(Function(p) p.o28PermFlag = BO.o28PermFlagENUM.CistASchvalovatVProjektu Or p.o28PermFlag = BO.o28PermFlagENUM.CistAEditASchvalovatVProjektu).Count > 0 Then
+                    bolCanApprove = True
+                End If
+            End If
+            If bolCanApprove Then
+                SEP()
+                Dim ss As String = String.Format("Schválit rozpracované úkony ({0}x)", intWIPx)
+                If intWIPx = 0 And intAPPx > 0 Then ss = String.Format("Přes-schválit ({0}x) schválené", intAPPx)
+                If intWIPx > 0 And intAPPx > 0 Then ss = String.Format("Schválit ({0}x)/přes-schválit ({1}x)", intWIPx, intAPPx)
+                CI(ss, "entity_modal_approving.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/approve.png", False, True)
+            End If
+        End If
+
+
         If factory.SysUser.j04IsMenu_Project And cRec.p41ID > 0 Then
             SEP()
             REL(cRec.p41Name, "p41_framework.aspx?pid=" & cRec.p41ID.ToString, "_top", "Images/project.png")
@@ -110,10 +143,7 @@ Public Class handler_popupmenu
         End If
         SEP()
         CI("Tisková sestava", "report_modal.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/report.png")
-        If strFlag = "pagemenu" Then
-            SEP()
-            CI("Odeslat e-mail", "sendmail.aspx?prefix=p56&pid=" & cRec.PID.ToString, , "Images/email.png")
-        End If
+        CI("Odeslat e-mail", "sendmail.aspx?prefix=p56&pid=" & cRec.PID.ToString, , "Images/email.png")
         SEP()
         CI("Oštítkovat", "tag_binding.aspx?prefix=p56&pids=" & intPID.ToString, , "Images/tag.png")
     End Sub
@@ -346,10 +376,7 @@ Public Class handler_popupmenu
         End If
         SEP()
         CI("Tisková sestava", "report_modal.aspx?prefix=p28&pid=" & intPID.ToString, , "Images/report.png")
-        If strFlag = "pagemenu" Then
-            SEP()
-            CI("Odeslat e-mail", "sendmail.aspx?prefix=p28&pid=" & cRec.PID.ToString, , "Images/email.png")
-        End If
+        CI("Odeslat e-mail", "sendmail.aspx?prefix=p28&pid=" & cRec.PID.ToString, , "Images/email.png")
 
         SEP()
         CI("Oštítkovat", "tag_binding.aspx?prefix=p28&pids=" & intPID.ToString, , "Images/tag.png")
@@ -486,10 +513,7 @@ Public Class handler_popupmenu
         End If        
         SEP()
         CI("Tisková sestava", "report_modal.aspx?prefix=p41&pid=" & intPID.ToString, , "Images/report.png")
-        If strFlag = "pagemenu" Then
-            SEP()
-            CI("Odeslat e-mail", "sendmail.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/email.png")
-        End If
+        CI("Odeslat e-mail", "sendmail.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/email.png")
         SEP()
         CI("Oštítkovat", "tag_binding.aspx?prefix=p41&pids=" & intPID.ToString, , "Images/tag.png")
 
@@ -673,11 +697,7 @@ Public Class handler_popupmenu
                 End If
             Next
         End If
-        If strFlag = "pagemenu" Then
-            SEP()
-            CI("Odeslat e-mail", "sendmail.aspx?prefix=j02&pid=" & cRec.PID.ToString, , "Images/email.png")
-
-        End If
+        CI("Odeslat e-mail", "sendmail.aspx?prefix=j02&pid=" & cRec.PID.ToString, , "Images/email.png")
 
         If factory.SysUser.j04IsMenu_People Then
             SEP()
