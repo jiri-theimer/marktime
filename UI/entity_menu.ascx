@@ -1,6 +1,32 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="entity_menu.ascx.vb" Inherits="UI.entity_menu" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-
+<asp:Panel ID="panPM1" runat="server" style="height:42px;background-color:#F1F1F1;width:100%;border-bottom:solid 1px silver;">
+    <table style="padding:0px;width:100%;">
+        <tr>
+            <td style="width:40px;">
+                <asp:HyperLink ID="pm1" runat="server" CssClass="pp2" ></asp:HyperLink>
+            </td>
+            <td>
+                <asp:hyperlink ID="linkPM" runat="server" CssClass="value_link"></asp:hyperlink>
+            </td>
+            <td style="text-align:right;">
+                <asp:HyperLink ID="linkPageSetup" runat="server" Text="Stránka<img src='Images/arrow_down.gif'/>" onclick="RCM('pagesetup','',this,'pagemenu')" CssClass="button-link"></asp:HyperLink>
+                <button type="button" onclick="RCM('pagesetup','',this,'pagemenu')">
+                    Stránka
+                    <img src="Images/arrow_down.gif" />
+                </button>
+            </td>
+            <td style="float:right;width:40px;">
+                
+                <asp:Image ID="imgPM" runat="server" EnableViewState="false" />
+            </td>
+        </tr>
+    </table>
+    
+    
+    
+    
+</asp:Panel>
 
 <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">
     <Nodes>
@@ -24,6 +50,7 @@
 <telerik:RadTabStrip ID="tabs1" runat="server" Skin="Default" Width="100%" AutoPostBack="false" ShowBaseLine="true" EnableViewState="false">
 </telerik:RadTabStrip>
 
+<asp:HiddenField ID="hidCM" runat="server" Value="1" />
 <asp:HiddenField ID="hidIsCanApprove" runat="server" />
 <asp:HiddenField ID="hidSource" runat="server" />
 <asp:HiddenField ID="hidParentWidth" runat="server" />

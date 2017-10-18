@@ -32,6 +32,15 @@ Partial Public Class Login
     Protected WithEvents LoginUser As Global.System.Web.UI.WebControls.Login
 
     '''<summary>
+    '''imgSplashScreen control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents imgSplashScreen As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
     '''lblDomainAccount control.
     '''</summary>
     '''<remarks>

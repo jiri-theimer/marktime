@@ -540,7 +540,8 @@ Public Class p31_grid
 
     Private Sub Handle_Permissions()
         With Master.Factory
-            menu1.FindItemByValue("cmdApprove").Visible = .SysUser.IsApprovingPerson
+            ''menu1.FindItemByValue("cmdApprove").Visible = .SysUser.IsApprovingPerson
+            menu1.FindItemByValue("cmdApprove").Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Approver)
             menu1.FindItemByValue("cmdMove").Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Owner)
 
             panExport.Visible = .TestPermission(BO.x53PermValEnum.GR_GridTools)

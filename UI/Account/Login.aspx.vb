@@ -158,4 +158,10 @@
         End If
     End Sub
 
+    Private Sub Login_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        If System.IO.File.Exists(BO.ASS.GetApplicationRootFolder & "\Public\splashscreen.png") Then
+            Me.imgSplashScreen.ImageUrl = "../Public/splashscreen.png"
+            Me.imgSplashScreen.Visible = True
+        End If
+    End Sub
 End Class

@@ -14,6 +14,51 @@ Option Explicit On
 Partial Public Class entity_menu
 
     '''<summary>
+    '''panPM1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panPM1 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''pm1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pm1 As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''linkPM control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkPM As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''linkPageSetup control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkPageSetup As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''imgPM control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents imgPM As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
     '''menu1 control.
     '''</summary>
     '''<remarks>
@@ -75,6 +120,15 @@ Partial Public Class entity_menu
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents tabs1 As Global.Telerik.Web.UI.RadTabStrip
+
+    '''<summary>
+    '''hidCM control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidCM As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidIsCanApprove control.

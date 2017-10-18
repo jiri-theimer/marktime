@@ -10,6 +10,14 @@ Public Class entity_menu
             hidDataPrefix.Value = value
         End Set
     End Property
+    Public Property IsCM As Boolean
+        Get
+            Return BO.BAS.BG(hidCM.Value)
+        End Get
+        Set(value As Boolean)
+            hidCM.Value = BO.BAS.GB(value)
+        End Set
+    End Property
     Public Property DataPID As Integer
 
     Public Property CurrentTab As String
@@ -143,9 +151,10 @@ Public Class entity_menu
                
             Case "p41"
                 s = "<img src='Images/project_32.png' style='position:absolute;left:5px;top:" & strTop & ";'/>"
+                If hidCM.Value = "1" Then s = "<img src='Images/project_32.png' style='float:right;'/>"
                 cbx.WebServiceSettings.Path = "~/Services/project_service.asmx"
                 cbx.ToolTip = "Hledat projekt"
-
+                If hidCM.Value = "1" Then imgPM.ImageUrl = "Images/project_32.png"
         End Select
         If hidSource.Value = "2" Or hidSource.Value = "1" Then
             'sb1.Visible = False
@@ -154,27 +163,18 @@ Public Class entity_menu
         Else
             FNO("searchbox").Controls.Add(cbx)
         End If
-        If hidSource.Value = "2" Then
-            'panel nahoře a dole
+        If hidCM.Value = "1" Then
         Else
-            place0.Controls.Add(New LiteralControl(s))
+            If hidSource.Value = "2" Then
+                'panel nahoře a dole
+            Else
+                place0.Controls.Add(New LiteralControl(s))
+            End If
         End If
+        
 
 
-        ''FNO("begin").Controls.Add(New LiteralControl(s))
-
-
-        ''If sb1.ashx = "" Then
-        ''    If Not FNO("searchbox") Is Nothing Then menu1.Items.Remove(FNO("searchbox")) 'searchbox není
-        ''Else
-        ''    Dim strToolTip As String = sb1.TextboxLabel
-        ''    If Request.Browser.Browser = "IE" Or Request.Browser.Browser = "InternetExplorer" Then sb1.TextboxLabel = "" 'pro IE 7 - 11 nefunguje výchozí search text
-        ''    With FNO("searchbox")
-        ''        s = "<input id='search2' style='width: 100px; margin-top: 7px;' value='" & sb1.TextboxLabel & "' onfocus='search2Focus()' onblur='search2Blur()' title='" & strToolTip & "' />"
-        ''        s += "<div id='search2_result' style='position: relative;left:-150px;'></div>"
-        ''        .Controls.Add(New LiteralControl(s))
-        ''    End With
-        ''End If
+        
         Handle_PluginBellowMenu()
     End Sub
     Private Sub Handle_PluginBellowMenu()
@@ -197,8 +197,21 @@ Public Class entity_menu
         If cDisp Is Nothing Then cDisp = Me.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
         Dim cP42 As BO.p42ProjectType = Me.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
         p41_SetupTabs(cRecSum, cP42, cDisp)
-        p41_SetupMenu(cRec, cP42, cDisp)
-        SetupMenu_thePage("p41_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
+        If hidCM.Value = "1" Then
+            ''menu1.Nodes.Clear()
+            menu1.Visible = False
+
+            pm1.Attributes.Item("onclick") = "RCM('p41', " & cRec.PID.ToString & ", this, 'pagemenu')"
+            With linkPM
+                .Text = cRec.FullName & " <span class='lbl'>[" & cRec.p42Name & ": " & cRec.p41Code & "]</span>"
+                .NavigateUrl = "p41_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+            End With
+        Else
+            p41_SetupMenu(cRec, cP42, cDisp)
+            SetupMenu_thePage("p41_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
+        End If
+
+
         Me.CurrentTab = strTabValue
 
 
@@ -245,7 +258,7 @@ Public Class entity_menu
             If bolCanApproveOrInvoice Then
                 ami("Schvalovat nebo vystavit fakturu", "cmdApprove", "javascript:approve();", "Images/approve.png", mi, , True)
                 If Factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator, BO.x53PermValEnum.GR_P31_Approver) Then
-                    ami("Vystavit fakturu zrychleně bez schvalování", "cmdDraft", "javascript:menu_p41_invoice_draft();", "Images/invoice.png", mi)
+                    ami("Fakturovat bez schvalování", "cmdDraft", "javascript:menu_p41_invoice_draft();", "Images/invoice.png", mi)
                 End If
             End If
             Me.hidIsCanApprove.Value = BO.BAS.GB(bolCanApproveOrInvoice)
@@ -303,7 +316,7 @@ Public Class entity_menu
         If cP42.p42IsModule_o23 Then
             ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi, , True)
         End If
-        
+
         If cDisp.OwnerAccess Then
             ami("Nastavit jako opakovaný projekt", "cmdRecurrence", "javascript:menu_p41_recur();", "Images/recurrence.png", mi, , True)
         End If
@@ -559,7 +572,7 @@ Public Class entity_menu
             If cRec.p28SupplierFlag <> BO.p28SupplierFlagENUM.NotClientNotSupplier Then
                 ami("Schvalovat nebo vystavit fakturu", "cmdApprove", "javascript:approve();", "Images/approve.png", mi, , True)
                 If Factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator, BO.x53PermValEnum.GR_P31_Approver) Then
-                    ami("Vystavit fakturu zrychleně bez schvalování", "cmdDraft", "javascript:menu_p28_invoice_draft();", "Images/invoice.png", mi)
+                    ami("Fakturovat bez schvalování", "cmdDraft", "javascript:menu_p28_invoice_draft();", "Images/invoice.png", mi)
                 End If
             End If
 

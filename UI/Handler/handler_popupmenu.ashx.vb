@@ -318,11 +318,10 @@ Public Class handler_popupmenu
         Dim cRec As BO.p41Project = factory.p41ProjectBL.Load(intPID)
         If cRec Is Nothing Then CI("Záznam nebyl nalezen.", "", True) : Return
         If factory.SysUser.j04IsMenu_Project Then
-            REL(cRec.PrefferedName, "p41_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
-            If cRec.p41ParentID > 0 Then
-                Dim cParent As BO.p41Project = factory.p41ProjectBL.Load(cRec.p41ParentID)
-                REL(cParent.PrefferedName, "p41_framework.aspx?pid=" & cRec.p41ParentID.ToString, "_top", "Images/tree.png")
+            If strFlag <> "pagemenu" Then
+                REL(cRec.PrefferedName, "p41_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
             End If
+            
         Else
             CI(cRec.PrefferedName, "", True, "Images/information.png")
         End If
@@ -333,6 +332,7 @@ Public Class handler_popupmenu
         If Not cDisp.ReadAccess Then CI("Nemáte přístup k tomuto projektu.", "", True) : Return
         If cP42.p42IsModule_p31 Then
             If Not (cRec.IsClosed Or cRec.p41IsDraft) Then
+                SEP()
                 CI("Zapsat WORKSHEET", "", , "Images/worksheet.png")
 
                 Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(cRec.PID, cRec.p42ID, cRec.j18ID, factory.SysUser.j02ID)
@@ -398,7 +398,19 @@ Public Class handler_popupmenu
             CI("Upravit kartu projektu", "p41_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
             CI("Kopírovat", "p41_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
         End If
-
+        If strFlag = "pagemenu" And factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then
+            CI("Založit projekt", "p41_create.aspx?client_family=1&pid=" & intPID.ToString, , "Images/new4menu.png")
+            CI("Založit pod-projekt", "p41_create.aspx?client_family=1&pid=" & cRec.PID & "&create_parent=1", , "Images/tree.png")
+        End If
+        If cRec.b01ID > 0 Then
+            SEP()
+            CI("Posunout/doplnit", "cmdWorkflow", "workflow_dialog.aspx?prefix=p41&pid=" & cRec.PID.ToString, "Images/workflow.png")
+        End If
+        If cRec.p41ParentID > 0 And factory.SysUser.j04IsMenu_Project Then
+            SEP()
+            Dim cParent As BO.p41Project = factory.p41ProjectBL.Load(cRec.p41ParentID)
+            REL(cParent.PrefferedName, "p41_framework.aspx?pid=" & cRec.p41ParentID.ToString, "_top", "Images/tree.png")
+        End If
         If factory.SysUser.j04IsMenu_Contact And cRec.p28ID_Client > 0 Then
             SEP()
             REL(cRec.Client, "p28_framework.aspx?pid=" & cRec.p28ID_Client.ToString, "_top", "Images/contact.png")
@@ -411,6 +423,51 @@ Public Class handler_popupmenu
         CI("Tisková sestava", "report_modal.aspx?prefix=p41&pid=" & intPID.ToString, , "Images/report.png")
         SEP()
         CI("Oštítkovat", "tag_binding.aspx?prefix=p41&pids=" & intPID.ToString, , "Images/tag.png")
+
+        If strFlag = "pagemenu" Then
+            SEP()
+            CI("[DALŠÍ]", "", , "Images/more.png")
+            If cDisp.OwnerAccess Then
+                CI("Kontaktní osoby projektu", "p30_binding.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/person.png", True)
+            End If
+            If Not cRec.IsClosed Then
+                If cP42.p42IsModule_p56 Then CI("Vytvořit úkol", "p56_record.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/task.png", True)
+
+            End If
+            If cP42.p42IsModule_o22 Then
+                CI("Vytvořit kalendářovou událost", "o22_record.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/calendar.png", True)
+                REL("Kalendář projektu", "entity_scheduler.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "_top", "Images/calendar.png", True)
+            End If
+
+            If cP42.p42IsModule_o23 Then
+                CI("Vytvořit dokument", "o23_record.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/notepad.png", True)
+            End If
+
+            If cDisp.OwnerAccess Then
+                CI("Nastavit jako opakovaný projekt", "p41_recurrence.aspx?pid=" & cRec.PID.ToString, , "Images/recurrence.png", True)
+            End If
+            If cP42.p42IsModule_p31 Then
+                If cDisp.OwnerAccess Then
+                    CI("Definovat opakovanou odměnu/paušál/úkon", "p40_record.aspx?p41id=" & cRec.PID.ToString, , "Images/worksheet_recurrence.png", True)
+                End If
+                If cDisp.P31_RecalcRates Then CI("Přepočítat sazby rozpracovaných hodin", "p31_recalc.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/recalc.png", True)
+                If cDisp.P31_Move2Bin Then CI("Přesunout nevyfakturované úkony do/z archivu", "p31_move2bin.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/bin.png", True)
+                If cDisp.P31_MoveToOtherProject Then CI("Přesunout rozpracované na jiný projekt", "p31_move2project.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/cut.png", True)
+            End If
+
+            If cRec.b01ID = 0 Then CI("Doplnit poznámku, komentář, přílohu", "b07_create.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/comment.png", True)
+            If cP42.p42IsModule_p48 Then
+                REL("Operativní plán projektu", "p48_framework.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "_top", "Images/oplan.png", True)
+            End If
+            REL("Historie odeslané pošty", "x40_framework.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "_top", "Images/email.png", True)
+            If cDisp.OwnerAccess Then
+                CI("Historie záznamu", "entity_timeline.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/event.png", True)
+            End If
+            CI("Plugin", "plugin_modal.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/plugin.png", True)
+            CI("Čárový kód", "barcode.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/barcode.png", True)
+
+
+        End If
     End Sub
     Private Sub HandleO23(intPID As Integer, factory As BL.Factory, strFlag As String)
         Dim cRec As BO.o23Doc = factory.o23DocBL.Load(intPID)

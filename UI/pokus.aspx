@@ -87,16 +87,21 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <div style="height:100px;width:100%;">
+
+    </div>
+    <img src='Images/notepad_32.png' style="position:absolute;left:445px;float:right;"/>
+    <hr />
     <div style="position:absolute;top:200px; left:500px;">
-    <a id="cmdPP" class="pp1" onclick="RCM2('p56','9',this)"></a>
+    <a id="cmdPP" class="pp2" onclick="RCM2('p56','9',this)"></a>
     </div>
     <hr />
     <div>
-    <a id="cmdPP2" class="pp1" onclick="RCM2('p56','44',this)"></a>
+    <a id="cmdPP2" class="pp2" onclick="RCM2('p56','44',this)"></a>
     </div>
     
      <hr />
-       <a id="cmdPP3" class="pp1" href="javascript:RCM2('p56','9',event)"></a>
+       <a id="cmdPP3" class="pp2" href="javascript:RCM2('p56','9',event)"></a>
     
     
 <telerik:RadContextMenu ID="RadContextMenu1" runat="server" EnableViewState="false" Skin="Metro" ExpandDelay="0"  >

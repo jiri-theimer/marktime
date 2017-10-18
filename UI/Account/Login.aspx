@@ -94,15 +94,14 @@
                             </td>
 
                         </tr>
-                    </table>
+                    </table>                    
                 </div>
             </div>
-
-
-
-
+            
         </LayoutTemplate>
     </asp:Login>
+
+    <asp:Image ID="imgSplashScreen" runat="server" Visible="false" EnableViewState="false" />
 
     <div>
         <asp:Label ID="lblDomainAccount" runat="server"></asp:Label>

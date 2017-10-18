@@ -197,7 +197,7 @@
                     <telerik:RadMenuItem Text="Vybrané (zaškrtlé)" ImageUrl="Images/menuarrow.png">
                         <Items>
                             <telerik:RadMenuItem Text="Zahájit schvalovací/fakturační proces" Value="approve" NavigateUrl="javascript:approve_selected()" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="Vystavit faktury zrychleně bez schvalování" Value="draft" NavigateUrl="javascript:invoice_selected()" ImageUrl="Images/invoice.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Fakturovat bez schvalování" Value="draft" NavigateUrl="javascript:invoice_selected()" ImageUrl="Images/invoice.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Přesunout nevyfakturované úkony do archivu" Value="bin" NavigateUrl="javascript:p31_move2bin()" ImageUrl="Images/bin.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Tisková sestava" Value="report" NavigateUrl="javascript:report()" ImageUrl="Images/report.png"></telerik:RadMenuItem>
                         </Items>

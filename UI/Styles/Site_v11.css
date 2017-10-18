@@ -404,6 +404,25 @@ A.pp1 {
          background-color:lightskyblue;
     } 
 
+A.pp2 {
+    display:inline-block;
+    background-image: url('../Images/menu.png');
+    background-repeat: no-repeat;   
+    background-position:center;
+    width:36px;
+    height:32px;
+    border:solid 1px silver;
+    background-color:#F0F0F0;
+    cursor: pointer;
+    border-radius: 3px 3px 3px 3px;
+  
+}
+
+    A.pp2:hover {
+         
+         background-repeat: no-repeat;
+         background-color:#25a0da;
+    } 
 
 /* MISC  
 ----------------------------------------------------------*/
