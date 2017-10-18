@@ -1,38 +1,38 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="entity_menu.ascx.vb" Inherits="UI.entity_menu" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<asp:Panel ID="panPM1" runat="server" style="height:42px;background-color:#F1F1F1;width:100%;border-bottom:solid 1px silver;">
-    <table style="padding:0px;width:100%;">
+<asp:Panel ID="panPM1" runat="server" Style="height: 42px; background-color: #F7F7F7; width: 100%; border-bottom: solid 1px silver;">
+    <table style="padding: 0px; width: 100%;">
         <tr>
-            <td style="width:40px;">
-                <asp:HyperLink ID="pm1" runat="server" CssClass="pp2" ></asp:HyperLink>
+            <td style="width: 40px;">
+                <asp:HyperLink ID="pm1" runat="server" CssClass="pp2"></asp:HyperLink>
             </td>
             <td>
-                <asp:hyperlink ID="linkPM" runat="server" CssClass="value_link"></asp:hyperlink>
+                <asp:HyperLink ID="linkPM" runat="server" CssClass="value_link"></asp:HyperLink>
             </td>
-            <td style="text-align:right;">
-                <asp:HyperLink ID="linkPageSetup" runat="server" Text="Stránka<img src='Images/arrow_down.gif'/>" onclick="RCM('pagesetup','',this,'pagemenu')" CssClass="button-link"></asp:HyperLink>
-                <button type="button" onclick="RCM('pagesetup','',this,'pagemenu')">
+            <td style="text-align: right;">
+
+                <button type="button" id="cmdPageSetup" runat="server" onclick="RCM('pagesetup','',this,'pagemenu')">
                     Stránka
                     <img src="Images/arrow_down.gif" />
                 </button>
             </td>
-            <td style="float:right;width:40px;">
-                
+            <td style="float: right; width: 40px;">
+
                 <asp:Image ID="imgPM" runat="server" EnableViewState="false" />
             </td>
         </tr>
     </table>
-    
-    
-    
-    
+
+
+
+
 </asp:Panel>
 
 <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">
     <Nodes>
         <telerik:NavigationNode ID="begin" Width="40px" Enabled="false" Visible="true">
         </telerik:NavigationNode>
-        
+
         <telerik:NavigationNode ID="record"></telerik:NavigationNode>
 
         <telerik:NavigationNode ID="searchbox">
@@ -40,7 +40,7 @@
             </NodeTemplate>
         </telerik:NavigationNode>
 
-        
+
     </Nodes>
 </telerik:RadNavigation>
 
@@ -297,6 +297,30 @@
     }
     function menu_barcode() {
         sw_decide("barcode.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>", "Images/barcode.png", true);
+    }
+
+    function lockTabs(){
+        var key="<%=Me.DataPrefix%>_menu-remember-tab";
+        
+        $.post("Handler/handler_userparam.ashx", { x36value: "1", x36key: key, oper: "set" }, function (data) {
+            if (data == ' ') {
+                alert("Neznámá chyba.");
+                return;
+            }
+
+        });
+        
+        key="<%=Me.DataPrefix%>_framework_detail-tab";
+        $.post("Handler/handler_userparam.ashx", { x36value: "<%=tabs1.SelectedTab.Value%>", x36key: key, oper: "set" }, function (data) {
+            if (data == ' ') {
+                alert("Neznámá chyba.");
+                return;
+            }
+
+        });
+                  
+        location.replace("<%=Me.DataPrefix%>_framework_detail.aspx?source="+document.getElementById("<%=hidSource.ClientID%>").value);
+        
     }
     
 </script>

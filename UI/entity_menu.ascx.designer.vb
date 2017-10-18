@@ -41,13 +41,13 @@ Partial Public Class entity_menu
     Protected WithEvents linkPM As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''linkPageSetup control.
+    '''cmdPageSetup control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents linkPageSetup As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents cmdPageSetup As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''imgPM control.

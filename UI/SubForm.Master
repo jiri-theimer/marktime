@@ -289,7 +289,7 @@
         function RCM(curPREFIX, curPID, ctl, strFlag) {
             var d = new Date();
             var n = d.getTime();
-
+            
             var contextMenu = $find("<%= RadContextMenu1.ClientID %>");
             if (n - _lastCmClosedTime < 2) {
                 return;     //menu bylo zavřeno přes link volající přímo RCM
@@ -313,7 +313,7 @@
 
                     var x = 180
                     var y = 30
-
+                    
                     if (ctl != null) {
                         x = $(ctl).offset().left;
                         y = $(ctl).offset().top;
@@ -324,7 +324,7 @@
                     }
 
                     var miLastRoot = null;
-
+                   
                     for (var i in data) {
                         var c = data[i];
                         var mi = new Telerik.Web.UI.RadMenuItem();

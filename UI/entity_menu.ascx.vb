@@ -130,28 +130,27 @@ Public Class entity_menu
         Select Case Me.DataPrefix
             Case "p28"
                 s = "<img src='Images/contact_32.png' style='position:absolute;left:5px;top:" & strTop & ";'/>"
-                
                 cbx.WebServiceSettings.Path = "~/Services/contact_service.asmx"
                 cbx.ToolTip = "Hledat klienta"
+                If hidCM.Value = "1" Then imgPM.ImageUrl = "Images/contact_32.png"
             Case "j02"
                 s = "<img src='Images/person_32.png' style='position:absolute;left:5px;top:" & strTop & ";'/>"
-                
                 cbx.WebServiceSettings.Path = "~/Services/person_service.asmx"
                 cbx.ToolTip = "Hledat osobu"
+                If hidCM.Value = "1" Then imgPM.ImageUrl = "Images/person_32.png"
             Case "p56"
                 s = "<img src='Images/task_32.png' style='position:absolute;left:5px;top:" & strTop & ";'/>"
                 cbx.WebServiceSettings.Path = "~/Services/task_service.asmx"
                 cbx.ToolTip = "Hledat úkol"
-               
+                If hidCM.Value = "1" Then imgPM.ImageUrl = "Images/task_32.png"
 
             Case "o23"
                 s = "<img src='Images/notepad_32.png' style='position:absolute;left:5px;top:" & strTop & ";'/>"
                 cbx.WebServiceSettings.Path = "~/Services/doc_service.asmx"
                 cbx.ToolTip = "Hledat dokument"
-               
+                If hidCM.Value = "1" Then imgPM.ImageUrl = "Images/notepad_32.png"
             Case "p41"
                 s = "<img src='Images/project_32.png' style='position:absolute;left:5px;top:" & strTop & ";'/>"
-                If hidCM.Value = "1" Then s = "<img src='Images/project_32.png' style='float:right;'/>"
                 cbx.WebServiceSettings.Path = "~/Services/project_service.asmx"
                 cbx.ToolTip = "Hledat projekt"
                 If hidCM.Value = "1" Then imgPM.ImageUrl = "Images/project_32.png"
@@ -164,6 +163,7 @@ Public Class entity_menu
             FNO("searchbox").Controls.Add(cbx)
         End If
         If hidCM.Value = "1" Then
+            'contextové menu
         Else
             If hidSource.Value = "2" Then
                 'panel nahoře a dole
@@ -206,6 +206,7 @@ Public Class entity_menu
                 .Text = cRec.FullName & " <span class='lbl'>[" & cRec.p42Name & ": " & cRec.p41Code & "]</span>"
                 .NavigateUrl = "p41_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
             End With
+            Handle_ContextMenuBlackWhite(cRec.IsClosed)
         Else
             p41_SetupMenu(cRec, cP42, cDisp)
             SetupMenu_thePage("p41_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
@@ -217,6 +218,9 @@ Public Class entity_menu
 
         Handle_SelectedTab()
 
+    End Sub
+    Private Sub Handle_ContextMenuBlackWhite(bolRecIsClosed As Boolean)
+        If bolRecIsClosed Then panPM1.Style.Item("background-color") = "black" : linkPM.Style.Item("color") = "white"
     End Sub
 
     Private Sub HighLight_LockedTab(strTab As String)
@@ -486,9 +490,20 @@ Public Class entity_menu
         Me.DataPID = cRec.PID
         If cDisp Is Nothing Then cDisp = Me.Factory.p28ContactBL.InhaleRecordDisposition(cRec)
         p28_SetupTabs(cRecSum)
-        p28_SetupMenu(cRec, cDisp)
-        SetupMenu_thePage("p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
 
+        If hidCM.Value = "1" Then
+            menu1.Visible = False
+            pm1.Attributes.Item("onclick") = "RCM('p28', " & cRec.PID.ToString & ", this, 'pagemenu')"
+            With linkPM
+                .Text = cRec.p28Name & " <span class='lbl'>[" & cRec.p28Code & "]</span>"
+                .NavigateUrl = "p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+            End With
+            Handle_ContextMenuBlackWhite(cRec.IsClosed)
+        Else
+            p28_SetupMenu(cRec, cDisp)
+            SetupMenu_thePage("p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
+        End If
+       
         Me.CurrentTab = strTabValue
         Handle_SelectedTab()
     End Sub
@@ -622,8 +637,22 @@ Public Class entity_menu
         Me.DataPID = cRec.PID
 
         j02_SetupTabs(cRec, cRecSum)
-        j02_SetupMenu(cRec)
-        SetupMenu_thePage("j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
+
+        If hidCM.Value = "1" Then
+            ''menu1.Nodes.Clear()
+            menu1.Visible = False
+
+            pm1.Attributes.Item("onclick") = "RCM('j02'," & cRec.PID.ToString & ",this,'pagemenu')"
+            With linkPM
+                .Text = cRec.FullNameDesc & " <span class='lbl'>[" & cRec.j07Name & "]</span>"
+                .NavigateUrl = "j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+            End With
+            Handle_ContextMenuBlackWhite(cRec.IsClosed)
+        Else
+            j02_SetupMenu(cRec)
+            SetupMenu_thePage("j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
+        End If
+       
 
         Me.CurrentTab = strTabValue
         Handle_SelectedTab()
@@ -736,6 +765,7 @@ Public Class entity_menu
     Public Sub p56_RefreshRecord(cRec As BO.p56Task, crs As BO.p56TaskSum, cP41 As BO.p41Project, strTabValue As String, Optional cDisp As BO.p56RecordDisposition = Nothing)
         If cRec Is Nothing Then Return
         Me.DataPID = cRec.PID
+
         Dim cP42 As BO.p42ProjectType = Me.Factory.p42ProjectTypeBL.Load(cP41.p42ID)
 
         cti("Úkol", "board")
@@ -774,8 +804,22 @@ Public Class entity_menu
         If crs.o23_Count > 0 Then s += "<span class='badge1tab'>" & crs.o23_Count.ToString & "</span>"
         cti(s, "o23")
 
-        p56_SetupMenu(cRec, cP41, cP42, cDisp)
-        SetupMenu_thePage("p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
+        If hidCM.Value = "1" Then
+            menu1.Visible = False
+
+            pm1.Attributes.Item("onclick") = "RCM('p56'," & cRec.PID.ToString & ",this,'pagemenu')"
+            With linkPM
+                .Text = cRec.FullName
+                .NavigateUrl = "p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+            End With
+            Handle_ContextMenuBlackWhite(cRec.IsClosed)
+        Else
+            
+
+            p56_SetupMenu(cRec, cP41, cP42, cDisp)
+            SetupMenu_thePage("p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
+
+        End If
 
         Me.CurrentTab = strTabValue
         Handle_SelectedTab()

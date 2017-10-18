@@ -325,6 +325,8 @@
         <telerik:RadPane ID="navigationPane" runat="server" Width="353px" OnClientResized="AfterPaneResized" OnClientCollapsed="AfterPaneCollapsed" OnClientExpanded="AfterPaneExpanded" BackColor="white">
 
             <asp:Panel ID="panSearch" runat="server" Style="min-height: 42px; background-color: #f7f7f7;">
+               
+
                 <div class="commandcell" style="width: 40px;">
                     <telerik:RadNavigation ID="mm1" runat="server" RenderMode="Lightweight"  MenuButtonPosition="Left" Skin="Metro">
 
