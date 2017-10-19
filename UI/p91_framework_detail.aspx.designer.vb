@@ -14,6 +14,42 @@ Option Explicit On
 Partial Public Class p91_framework_detail
 
     '''<summary>
+    '''panPM1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panPM1 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''pm1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pm1 As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''linkPM control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkPM As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''Image1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Image1 As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
     '''menu1 control.
     '''</summary>
     '''<remarks>
@@ -419,6 +455,15 @@ Partial Public Class p91_framework_detail
     Protected WithEvents lblClient As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''pm1Client control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pm1Client As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''Client control.
     '''</summary>
     '''<remarks>
@@ -444,15 +489,6 @@ Partial Public Class p91_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p91ClientPerson As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''linkClientInvoices control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents linkClientInvoices As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''trSourceCode control.

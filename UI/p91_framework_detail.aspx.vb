@@ -87,6 +87,7 @@ Public Class p91_framework_detail
     End Sub
 
     Private Sub AdaptMenu()
+        If Not menu1.Visible Then Return
         Dim cbx As New RadComboBox()
         With cbx
             .DropDownWidth = Unit.Parse("400px")
@@ -108,7 +109,7 @@ Public Class p91_framework_detail
 
             menu1.Skin = "Metro"
             imgIcon32.Visible = False
-            
+
 
             FNO("reload").Visible = False
         Else
@@ -128,13 +129,32 @@ Public Class p91_framework_detail
         Dim cRec As BO.p91Invoice = Master.Factory.p91InvoiceBL.Load(Master.DataPID)
         If cRec Is Nothing Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=p91")
         Handle_Permissions(cRec)
+
+        If Master.Factory.SysUser.j03PageMenuFlag = 0 Then
+            pm1.Attributes.Item("onclick") = "RCM('p91'," & cRec.PID.ToString & ",this,'pagemenu')"
+            With linkPM
+                .Text = cRec.p92Name & ": " & cRec.p91Code & " <span class='lbl'>[" & cRec.p91Client & "]</span>"
+                .NavigateUrl = "p91_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+            End With
+            If cRec.IsClosed Then panPM1.Style.Item("background-color") = "black" : linkPM.Style.Item("color") = "white"
+            imgIcon32.Visible = False
+        Else
+
+            If cRec.IsClosed Then menu1.Skin = "Black"
+            FNO("reload").NavigateUrl = "p91_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+
+        End If
+        
+
         With cRec
             'basUIMT.RenderHeaderMenu(.IsClosed, Me.panMenuContainer, menu1)
+
+            
+
             Me.p91Code.Text = .p91Code
             Me.tabs1.Tabs(0).Text = .p92Name & ": " & .p91Code
-            FNO("reload").NavigateUrl = "p91_framework_detail.aspx?pid=" & .PID.ToString & "&source=" & Me.hidSource.Value
+            
 
-            If .IsClosed Then menu1.Skin = "Black"
 
             Me.p92Name.Text = .p92Name
             Me.clue_p92name.Attributes("rel") = "clue_p92_record.aspx?pid=" & cRec.p92ID.ToString
@@ -149,10 +169,12 @@ Public Class p91_framework_detail
                 Me.clue_client.Visible = False
                 Me.Client.NavigateUrl = ""
                 Me.Client.Text = .p91Client
-                linkClientInvoices.Visible = False
+                'linkClientInvoices.Visible = False
+                pm1Client.Visible = False
             Else
+                pm1Client.Attributes.Item("onclick") = "RCM('p28'," & cRec.p28ID.ToString & ",this)"
                 Me.clue_client.Attributes("rel") = "clue_p28_record.aspx?pid=" & .p28ID.ToString
-                linkClientInvoices.NavigateUrl = "p91_framework.aspx?masterprefix=p28&masterpid=" & .p28ID.ToString
+                'linkClientInvoices.NavigateUrl = "p91_framework.aspx?masterprefix=p28&masterpid=" & .p28ID.ToString
             End If
             Me.p91ClientPerson.Text = .p91ClientPerson
 
@@ -319,6 +341,7 @@ Public Class p91_framework_detail
 
 
     Private Sub Handle_Permissions(cRec As BO.p91Invoice)
+        If Not menu1.Visible Then Return
         FNO("cmdAboImport").Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P91_Owner)
         FNO("cmdPohoda").Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P91_Reader)
 
@@ -576,6 +599,9 @@ Public Class p91_framework_detail
         With CType(e.Item.FindControl("p41Name"), HyperLink)
             .Text = a(1)
             .NavigateUrl = "p41_framework.aspx?pid=" & a(0)
+        End With
+        With CType(e.Item.FindControl("pm1"), HyperLink)
+            .Attributes.Item("onclick") = "RCM('p41'," & a(0) & ",this)"
         End With
 
     End Sub

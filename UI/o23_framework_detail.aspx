@@ -104,31 +104,27 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Panel ID="panPM1" runat="server" CssClass="entity_menu_cm">
-    <table style="padding: 0px; width: 100%;">
-        <tr>
-            <td style="width: 40px;">
-                <asp:HyperLink ID="pm1" runat="server" CssClass="pp2"></asp:HyperLink>
-            </td>
-            <td>
-                <asp:HyperLink ID="linkPM" runat="server" CssClass="entity_menu_header"></asp:HyperLink>
-            </td>
-            
-            <td style="float: right; width: 40px;">
+        <table style="padding: 0px; width: 100%;">
+            <tr>
+                <td style="width: 40px;">
+                    <asp:HyperLink ID="pm1" runat="server" CssClass="pp2"></asp:HyperLink>
+                </td>
+                <td>
+                    <asp:HyperLink ID="linkPM" runat="server" CssClass="entity_menu_header"></asp:HyperLink>
+                </td>
 
-                <asp:image ID="imgIcon32" runat="server" ImageUrl="Images/notepad_32.png" />
-            </td>
-        </tr>
-    </table>
+                <td style="float: right; width: 40px;">
 
-
-
-
-</asp:Panel>
+                    <asp:Image ID="imgIcon32" runat="server" ImageUrl="Images/notepad_32.png" />
+                </td>
+            </tr>
+        </table>
+    </asp:Panel>
 
 
-   
 
-    
+
+
 
 
     <div style="clear: both;"></div>
@@ -147,14 +143,14 @@
 
         <uc:mytags ID="tags1" Prefix="o23" runat="server" />
     </div>
-    
+
 
     <asp:Panel ID="panUpload" runat="server" CssClass="innerform_light">
 
         <img src="Images/attachment.png" style="margin-right: 10px;" />
         <asp:HyperLink ID="filesPreview" runat="server" Text="Přílohy dokumentu"></asp:HyperLink>
         <button type="button" onclick="b07_create_upload()" runat="server" id="cmdUpload">Nahrát přílohy</button>
-        <asp:Button ID="cmdLockUnlock" runat="server" Text="Uzamknout přístup k přílohám" CssClass="cmd" style="display:none;" />
+        <asp:Button ID="cmdLockUnlock" runat="server" Text="Uzamknout přístup k přílohám" CssClass="cmd" Style="display: none;" />
     </asp:Panel>
 
     <div style="clear: both; margin-top: 20px;">

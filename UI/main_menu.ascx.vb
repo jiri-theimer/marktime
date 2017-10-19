@@ -47,9 +47,7 @@ Public Class main_menu
     End Property
 
    
-    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
-    End Sub
+    
 
     Public Sub ClearAll()
         panContainer.Controls.Remove(menu1)

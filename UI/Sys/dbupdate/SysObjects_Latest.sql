@@ -16260,13 +16260,13 @@ set @p31text='Dobropisovaná částka'
 select top 1 @c11id=c11id,@p31date=c11datefrom from c11statperiod where c11level=5 and c11datefrom<=getdate() order by c11id desc
 
 declare @amount_withoutvat decimal(18,2),@amount_withvat decimal(18,2),@vatrate decimal(18,2),@amount_vat decimal(18,2),@p41id int
-DECLARE curP31 CURSOR FOR 
+DECLARE curP31CN CURSOR FOR 
 select p41id,p31VatRate_Invoiced,-1*sum(p31Amount_WithoutVat_Invoiced),-1*sum(p31Amount_WithVat_Invoiced),-1*sum(p31Amount_Vat_Invoiced)
 from p31worksheet where p91id=@p91id_bind
 GROUP BY p41id,p31VatRate_Invoiced
 	
-OPEN curP31
-FETCH NEXT FROM curP31 
+OPEN curP31CN
+FETCH NEXT FROM curP31CN 
 INTO @p41id,@vatrate,@amount_withoutvat,@amount_withvat,@amount_vat
 WHILE @@FETCH_STATUS = 0
 BEGIN
@@ -16292,11 +16292,11 @@ BEGIN
 
   ---exec p31_save_invoice @p31id, @j03id, 4, @amount_withoutvat, @amount_withvat, @amount_vat, null, @p31text, @vatrate, @err_ret OUTPUT 
 
-  FETCH NEXT FROM curP31 
+  FETCH NEXT FROM curP31CN 
   INTO @p41id,@vatrate,@amount_withoutvat,@amount_withvat,@amount_vat
 END
-CLOSE curP31
-DEALLOCATE curP31
+CLOSE curP31CN
+DEALLOCATE curP31CN
 
 
 exec dbo.p91_recalc_amount @ret_p91id

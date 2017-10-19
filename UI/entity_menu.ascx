@@ -50,8 +50,8 @@
     <TabTemplate>
         
         <asp:HyperLink runat="server" ID="link1" CssClass="entity_menu_tablink" Text='<%# DataBinder.Eval(Container, "Text") %>' NavigateUrl='<%# DataBinder.Eval(Container, "NavigateUrl") %>'></asp:HyperLink>
+        <button type="button" onclick="lockTabs()" id="cmdLock" runat="server" style="z-index:1;width:16px;height:16px;padding:0px;" title="Ukotvit vybranou záložku"><img src="Images/lock_10.png" /></button>
         
-        <button type="button" onclick="lockTabs()" id="cmdLock" runat="server" style="width:16px;height:14px;padding:0px;" title="Ukotvit vybranou záložku"><img src="Images/lock_10.png" /></button>
     </TabTemplate>
 </telerik:RadTabStrip>
 
@@ -71,6 +71,7 @@
         var tab = eventArgs.get_tab();
         var attributes = tab.get_attributes();
         var url = attributes.getAttribute( "myurl");
+        
         location.replace(url);
     }
 
@@ -312,7 +313,11 @@
         sw_decide("barcode.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>", "Images/barcode.png", true);
     }
 
-    function lockTabs(){
+    function lockTabs(tabval){
+       
+        if (tabval ==null)
+            tabval="<%=tabs1.SelectedTab.Value%>";
+
         var key="<%=Me.DataPrefix%>_menu-remember-tab";
         
         $.post("Handler/handler_userparam.ashx", { x36value: "1", x36key: key, oper: "set" }, function (data) {
@@ -320,19 +325,23 @@
                 alert("Neznámá chyba.");
                 return;
             }
-
+            
         });
         
-        key="<%=Me.DataPrefix%>_framework_detail-tab";
-        $.post("Handler/handler_userparam.ashx", { x36value: "<%=tabs1.SelectedTab.Value%>", x36key: key, oper: "set" }, function (data) {
-            if (data == ' ') {
-                alert("Neznámá chyba.");
-                return;
-            }
+        key="<%=Me.DataPrefix%>_framework_detail-tab";        
 
+        $.ajax({
+            method: "POST",
+            url: "Handler/handler_userparam.ashx",                         
+            data: { x36value: tabval, x36key: key, oper: "set" },
+            success: function (data) {
+                //ok - uloženo
+                location.replace("<%=Me.DataPrefix%>_framework_detail.aspx?source="+document.getElementById("<%=hidSource.ClientID%>").value);
+            }          
         });
-                  
-        location.replace("<%=Me.DataPrefix%>_framework_detail.aspx?source="+document.getElementById("<%=hidSource.ClientID%>").value);
+
+            
+        
         
     }
     

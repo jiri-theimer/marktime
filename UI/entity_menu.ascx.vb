@@ -224,8 +224,14 @@ Public Class entity_menu
 
     Private Sub HighLight_LockedTab(strTab As String)
         For Each t As RadTab In tabs1.Tabs
-            t.FindControl("cmdLock").Visible = t.Selected
-            
+            If t.Selected Then
+                t.FindControl("cmdLock").Visible = True
+                CType(t.FindControl("cmdLock"), HtmlButton).Attributes.Item("onclick") = "lockTabs('" & t.Value & "')"
+            Else
+                t.FindControl("cmdLock").Visible = False
+            End If
+
+
         Next
         If strTab = "" Then Return
         Dim mytab As RadTab = tabs1.FindTabByValue(strTab)

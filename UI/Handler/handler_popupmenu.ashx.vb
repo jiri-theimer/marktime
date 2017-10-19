@@ -45,7 +45,7 @@ Public Class handler_popupmenu
             Case "p41"
                 HandleP41(intPID, factory, strFlag)
             Case "p91"
-                HandleP91(intPID, factory)
+                HandleP91(intPID, factory, strFlag)
             Case "o23"
                 HandleO23(intPID, factory, strFlag)
             Case "j02"
@@ -162,16 +162,52 @@ Public Class handler_popupmenu
 
         End If
     End Sub
-    Private Sub HandleP91(intPID As Integer, factory As BL.Factory)
+    Private Sub HandleP91(intPID As Integer, factory As BL.Factory, strFlag As String)
         Dim cRec As BO.p91Invoice = factory.p91InvoiceBL.Load(intPID)
         If cRec Is Nothing Then CI("Záznam nebyl nalezen.", "", True) : Return
 
         Dim cDisp As BO.p91RecordDisposition = factory.p91InvoiceBL.InhaleRecordDisposition(cRec)
         If cDisp.ReadAccess Then
-            REL(cRec.p92Name & ": " & cRec.p91Code, "p91_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
+            If strFlag <> "pagemenu" Then
+                REL(cRec.p92Name & ": " & cRec.p91Code, "p91_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
+            End If
+
             If cDisp.OwnerAccess Then
                 SEP()
-                CI("Upravit kartu faktury", "p91_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+                CI("Upravit kartu dokladu", "p91_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+            End If
+            If cRec.b01ID > 0 Then
+                SEP()
+                CI("Posunout/doplnit", "workflow_dialog.aspx?prefix=p91&pid=" & cRec.PID.ToString, , "Images/workflow.png")
+            End If
+            If strFlag = "pagemenu" Then
+                SEP()
+                CI("Zapsat úhradu", "p91_pay.aspx?pid=" & intPID.ToString, , "Images/payment.png")
+                SEP()
+                CI("Převést fakturu na jinou měnu", "p91_change_currency.aspx?pid=" & intPID.ToString, , "Images/recalc.png")
+                CI("Převést fakturu na jinou DPH sazbu", "p91_change_vat.aspx?pid=" & intPID.ToString, , "Images/recalc.png")
+                SEP()
+                CI("Spárovat fakturu s úhradou zálohy", "p91_proforma.aspx?pid=" & intPID.ToString, , "Images/proforma.png")
+                SEP()
+                If cRec.p92InvoiceType = BO.p92InvoiceTypeENUM.ClientInvoice Then
+                    CI("Vytvořit k faktuře opravný doklad", "p91_creditnote.aspx?pid=" & intPID.ToString, , "Images/correction_down.gif")
+                    SEP()
+                End If
+                
+
+            End If
+            If cRec.p91ID_CreditNoteBind > 0 Then
+                SEP()
+                Dim cP91 As BO.p91Invoice = factory.p91InvoiceBL.Load(cRec.p91ID_CreditNoteBind)
+                REL(cP91.p92Name & ": " & cP91.p91Code, "p91_framework.aspx?pid=" & cP91.PID.ToString, "_top", "Images/invoice.png")
+            Else
+                If cRec.p92InvoiceType = BO.p92InvoiceTypeENUM.ClientInvoice Then
+                    Dim cP91 As BO.p91Invoice = factory.p91InvoiceBL.LoadCreditNote(cRec.PID)
+                    If Not cP91 Is Nothing Then
+                        SEP()
+                        REL(cP91.p92Name & ": " & cP91.p91Code, "p91_framework.aspx?pid=" & cP91.PID.ToString, "_top", "Images/correction_down.gif")
+                    End If
+                End If
             End If
             If factory.SysUser.j04IsMenu_Contact And cRec.p28ID > 0 Then
                 SEP()
@@ -196,11 +232,32 @@ Public Class handler_popupmenu
                 End If
             End With
             CI("Tisková sestava", "report_modal.aspx?prefix=p91&pid=" & intPID.ToString, , "Images/report.png")
+            CI("Odeslat e-mail", "sendmail.aspx?prefix=p91&pid=" & cRec.PID.ToString, , "Images/email.png")
         Else
             CI(cRec.p92Name & ": " & cRec.p91Code, "", True, "Images/information.png")
         End If
         SEP()
         CI("Oštítkovat", "tag_binding.aspx?prefix=p91&pids=" & intPID.ToString, , "Images/tag.png")
+        If strFlag = "pagemenu" Then
+            SEP()
+            CI("[DALŠÍ]", "", , "Images/more.png")
+
+            If factory.SysUser.j04IsMenu_Notepad Then
+                CI("Vytvořit dokument", "o23_record.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString, , "Images/notepad.png", True)
+            End If
+
+
+            If cRec.b01ID = 0 Then CI("Doplnit poznámku, komentář, přílohu", "b07_create.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString, , "Images/comment.png", True)
+
+
+            REL("Historie odeslané pošty", "x40_framework.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString, "_top", "Images/email.png", True)
+            If cDisp.OwnerAccess Then
+                CI("Historie záznamu", "entity_timeline.aspx?prefix=p91&pid=" & cRec.PID.ToString, , "Images/event.png", True)
+            End If
+
+            CI("Plugin", "plugin_modal.aspx?prefix=p91&pid=" & cRec.PID.ToString, , "Images/plugin.png", True)
+            CI("Čárový kód", "barcode.aspx?prefix=p91&pid=" & cRec.PID.ToString, , "Images/barcode.png", True)
+        End If
     End Sub
     Private Sub HandleP31(intPID As Integer, factory As BL.Factory, strFlag As String)
         Dim cRec As BO.p31Worksheet = factory.p31WorksheetBL.Load(intPID)

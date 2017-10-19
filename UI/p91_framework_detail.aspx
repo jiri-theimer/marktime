@@ -268,6 +268,23 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:Panel ID="panPM1" runat="server" CssClass="entity_menu_cm">
+        <table style="padding: 0px; width: 100%;">
+            <tr>
+                <td style="width: 40px;">
+                    <asp:HyperLink ID="pm1" runat="server" CssClass="pp2"></asp:HyperLink>
+                </td>
+                <td>
+                    <asp:HyperLink ID="linkPM" runat="server" CssClass="entity_menu_header"></asp:HyperLink>
+                </td>
+
+                <td style="float: right; width: 40px;">
+
+                    <asp:Image ID="Image1" runat="server" ImageUrl="Images/invoice_32.png" />
+                </td>
+            </tr>
+        </table>
+    </asp:Panel>
 
     <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">       
         <Nodes>
@@ -350,7 +367,7 @@
         <Tabs>
             <telerik:RadTab Text="&nbsp;&nbsp;&nbsp;Záznam faktury" Value="detail" Selected="true" ImageUrl="Images/properties.png"></telerik:RadTab>
             <telerik:RadTab Text="&nbsp;&nbsp;&nbsp;Položky faktury" Value="p31" ImageUrl="Images/worksheet.png"></telerik:RadTab>
-            <telerik:RadTab Text="&nbsp;&nbsp;&nbsp;Ostatní " Value="other" ImageUrl="Images/more.png"></telerik:RadTab>
+            <telerik:RadTab Text="&nbsp;&nbsp;&nbsp;Další " Value="other" ImageUrl="Images/more.png"></telerik:RadTab>
 
         </Tabs>
     </telerik:RadTabStrip>
@@ -377,6 +394,7 @@
                                 <asp:Repeater ID="rpProject" runat="server">
                                     <ItemTemplate>
                                         <div>
+                                            <asp:HyperLink ID="pm1" runat="server" CssClass="pp1" ToolTip="Fakturovaný projekt"></asp:HyperLink>
                                             <asp:HyperLink ID="p41Name" runat="server" NavigateUrl="#" Target="_parent" CssClass="value_link"></asp:HyperLink>
                                             <asp:HyperLink ID="clue_project" runat="server" CssClass="reczoom" Text="i" title="Detail projektu"></asp:HyperLink>
                                         </div>
@@ -390,7 +408,7 @@
 
                         <td>
                             <asp:HyperLink ID="cmdReportInvoice" runat="server" Text="Sestava dokladu"></asp:HyperLink>
-
+                            
                         </td>
                         <td>
                             <asp:HyperLink ID="cmdReportAttachment" runat="server" Text="Sestava přílohy"></asp:HyperLink>
@@ -403,13 +421,11 @@
                             <asp:Label ID="lblClient" runat="server" Text="Klient:" CssClass="lbl"></asp:Label>
                         </td>
                         <td>
-
+                            <asp:HyperLink ID="pm1Client" runat="server" CssClass="pp1" ToolTip="Klient faktury"></asp:HyperLink>
                             <asp:HyperLink ID="Client" runat="server" NavigateUrl="#" Target="_parent" CssClass="value_link"></asp:HyperLink>
                             <asp:HyperLink ID="clue_client" runat="server" CssClass="reczoom" Text="i" title="Detail klienta"></asp:HyperLink>
                             <asp:Label ID="p91ClientPerson" runat="server" ToolTip="Kontaktní osoba klienta"></asp:Label>
-                            <div>
-                                <asp:HyperLink ID="linkClientInvoices" runat="server" Text="Faktury klienta" Target="_top"></asp:HyperLink>
-                            </div>
+                           
                         </td>
 
 
@@ -419,7 +435,8 @@
                             <asp:Label ID="lblSourceCode" runat="server" Text="Opravovaný doklad:" CssClass="lbl"></asp:Label>
                         </td>
                         <td>
-                            <asp:HyperLink ID="SourceLink" runat="server" Target="_top"></asp:HyperLink>
+
+                            <asp:HyperLink ID="SourceLink" runat="server" CssClass="value_link" Target="_top"></asp:HyperLink>
                         </td>
                         <td></td>
                         <td></td>
