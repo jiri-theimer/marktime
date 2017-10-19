@@ -188,7 +188,7 @@
         </script>
         <telerik:RadContextMenu ID="RadContextMenu1" runat="server" EnableViewState="false" Skin="Metro" ExpandDelay="0" RenderMode="Lightweight" OnClientHidden="RadContextMenu1_Hidden" OnClientShown="RadContextMenu1_Shown">
             <CollapseAnimation Type="None" />
-            <ExpandAnimation Type="None" />            
+            <ExpandAnimation Type="None" />                
         </telerik:RadContextMenu>
     </form>
 
