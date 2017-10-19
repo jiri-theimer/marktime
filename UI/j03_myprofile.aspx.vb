@@ -63,7 +63,7 @@
             End If
 
             basUI.SelectDropdownlistValue(Me.j03SiteMenuSkin, .j03SiteMenuSkin)
-            basUI.SelectDropdownlistValue(Me.j03ModalWindowsFlag, .j03ModalWindowsFlag.ToString)
+            basUI.SelectDropdownlistValue(Me.j03PageMenuFlag, .j03PageMenuFlag.ToString)
             basUI.SelectDropdownlistValue(Me.j03ProjectMaskIndex, .j03ProjectMaskIndex.ToString)
 
         End With
@@ -121,7 +121,7 @@
                 .j03IsLiveChatSupport = Me.j03IsLiveChatSupport.Checked
                 .j03IsSiteMenuOnClick = Me.j03IsSiteMenuOnClick.Checked
                 .j03SiteMenuSkin = Me.j03SiteMenuSkin.SelectedValue
-                .j03ModalWindowsFlag = CInt(Me.j03ModalWindowsFlag.SelectedValue)
+                .j03PageMenuFlag = CInt(Me.j03PageMenuFlag.SelectedValue)
                 .j03ProjectMaskIndex = CInt(Me.j03ProjectMaskIndex.SelectedValue)
             End With
 

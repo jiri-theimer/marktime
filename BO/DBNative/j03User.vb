@@ -30,6 +30,7 @@ Public Class j03User
     Protected Property _j02TitleBeforeName As String
     Protected Property _j02Email As String
     Protected Property _j02WorksheetAccessFlag As Integer
+    Public Property j03PageMenuFlag As Integer
 
     Public ReadOnly Property j04Name As String
         Get

@@ -211,6 +211,23 @@
             clickButton.click();
         }
 
+        function SelectGridRow(pid) {
+            if (document.getElementById("<%=hiddatapid.clientid%>").value == pid)
+                return; //záznam již je označen
+
+            var masterTable = $find("<%=grid1.radGridOrig.ClientID%>").get_masterTableView();
+            masterTable.clearSelectedItems();
+            var items = masterTable.get_dataItems();
+            for (var i = 0; i < items.length; i++) {
+                var row = items[i];
+                if (row.getDataKeyValue("pid") == pid) {
+                    document.getElementById("<%=hiddatapid.clientid%>").value = pid;
+                    masterTable.selectItem(masterTable.get_dataItems()[i].get_element());
+                    return;
+                }
+
+            }
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">

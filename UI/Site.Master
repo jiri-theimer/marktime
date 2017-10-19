@@ -334,6 +334,10 @@
 
        
         function RCM(curPREFIX, curPID, ctl, strFlag) {            
+            if (strFlag == "p31_grid") {
+                SelectGridRow(curPID);
+            }
+            
             if (_CmLastGuid != curPREFIX + curPID) {
                 _CmIsClosed = 1;
             }

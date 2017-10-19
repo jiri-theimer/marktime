@@ -50,7 +50,7 @@
 <telerik:RadTabStrip ID="tabs1" runat="server" Skin="Default" Width="100%" AutoPostBack="false" ShowBaseLine="true" EnableViewState="false">
 </telerik:RadTabStrip>
 
-<asp:HiddenField ID="hidCM" runat="server" Value="1" />
+
 <asp:HiddenField ID="hidIsCanApprove" runat="server" />
 <asp:HiddenField ID="hidSource" runat="server" />
 <asp:HiddenField ID="hidParentWidth" runat="server" />

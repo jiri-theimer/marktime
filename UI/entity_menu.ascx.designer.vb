@@ -122,15 +122,6 @@ Partial Public Class entity_menu
     Protected WithEvents tabs1 As Global.Telerik.Web.UI.RadTabStrip
 
     '''<summary>
-    '''hidCM control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidCM As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
     '''hidIsCanApprove control.
     '''</summary>
     '''<remarks>

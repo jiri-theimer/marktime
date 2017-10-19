@@ -4,7 +4,7 @@
     <ItemTemplate>
         <div style="padding: 5px;">
             <img src="Images/person.png" />
-            <asp:HyperLink ID="clue_j02" runat="server" CssClass="reczoom" Text="i" title="Detail"></asp:HyperLink>
+            <asp:HyperLink ID="linkPP1" runat="server" CssClass="pp1"></asp:HyperLink>
 
             
             <asp:HyperLink ID="linkPerson" runat="server" CssClass="value_link" Target="_top"></asp:HyperLink>

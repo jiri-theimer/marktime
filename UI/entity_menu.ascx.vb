@@ -10,14 +10,7 @@ Public Class entity_menu
             hidDataPrefix.Value = value
         End Set
     End Property
-    Public Property IsCM As Boolean
-        Get
-            Return BO.BAS.BG(hidCM.Value)
-        End Get
-        Set(value As Boolean)
-            hidCM.Value = BO.BAS.GB(value)
-        End Set
-    End Property
+  
     Public Property DataPID As Integer
 
     Public Property CurrentTab As String
@@ -132,28 +125,28 @@ Public Class entity_menu
                 s = "<img src='Images/contact_32.png' style='position:absolute;left:5px;top:" & strTop & ";'/>"
                 cbx.WebServiceSettings.Path = "~/Services/contact_service.asmx"
                 cbx.ToolTip = "Hledat klienta"
-                If hidCM.Value = "1" Then imgPM.ImageUrl = "Images/contact_32.png"
+                If Factory.SysUser.j03PageMenuFlag = 0 Then imgPM.ImageUrl = "Images/contact_32.png"
             Case "j02"
                 s = "<img src='Images/person_32.png' style='position:absolute;left:5px;top:" & strTop & ";'/>"
                 cbx.WebServiceSettings.Path = "~/Services/person_service.asmx"
                 cbx.ToolTip = "Hledat osobu"
-                If hidCM.Value = "1" Then imgPM.ImageUrl = "Images/person_32.png"
+                If Factory.SysUser.j03PageMenuFlag = 0 Then imgPM.ImageUrl = "Images/person_32.png"
             Case "p56"
                 s = "<img src='Images/task_32.png' style='position:absolute;left:5px;top:" & strTop & ";'/>"
                 cbx.WebServiceSettings.Path = "~/Services/task_service.asmx"
                 cbx.ToolTip = "Hledat úkol"
-                If hidCM.Value = "1" Then imgPM.ImageUrl = "Images/task_32.png"
+                If Factory.SysUser.j03PageMenuFlag = 0 Then imgPM.ImageUrl = "Images/task_32.png"
 
             Case "o23"
                 s = "<img src='Images/notepad_32.png' style='position:absolute;left:5px;top:" & strTop & ";'/>"
                 cbx.WebServiceSettings.Path = "~/Services/doc_service.asmx"
                 cbx.ToolTip = "Hledat dokument"
-                If hidCM.Value = "1" Then imgPM.ImageUrl = "Images/notepad_32.png"
+                If Factory.SysUser.j03PageMenuFlag = 0 Then imgPM.ImageUrl = "Images/notepad_32.png"
             Case "p41"
                 s = "<img src='Images/project_32.png' style='position:absolute;left:5px;top:" & strTop & ";'/>"
                 cbx.WebServiceSettings.Path = "~/Services/project_service.asmx"
                 cbx.ToolTip = "Hledat projekt"
-                If hidCM.Value = "1" Then imgPM.ImageUrl = "Images/project_32.png"
+                If Factory.SysUser.j03PageMenuFlag = 0 Then imgPM.ImageUrl = "Images/project_32.png"
         End Select
         If hidSource.Value = "2" Or hidSource.Value = "1" Then
             'sb1.Visible = False
@@ -162,14 +155,14 @@ Public Class entity_menu
         Else
             FNO("searchbox").Controls.Add(cbx)
         End If
-        If hidCM.Value = "1" Then
-            'contextové menu
-        Else
+        If Factory.SysUser.j03PageMenuFlag = 1 Then
+            'klasické menu
             If hidSource.Value = "2" Then
                 'panel nahoře a dole
             Else
                 place0.Controls.Add(New LiteralControl(s))
             End If
+
         End If
         
 
@@ -197,7 +190,7 @@ Public Class entity_menu
         If cDisp Is Nothing Then cDisp = Me.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
         Dim cP42 As BO.p42ProjectType = Me.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
         p41_SetupTabs(cRecSum, cP42, cDisp)
-        If hidCM.Value = "1" Then
+        If Factory.SysUser.j03PageMenuFlag = 0 Then
             ''menu1.Nodes.Clear()
             menu1.Visible = False
 
@@ -208,6 +201,8 @@ Public Class entity_menu
             End With
             Handle_ContextMenuBlackWhite(cRec.IsClosed)
         Else
+            panPM1.Visible = False
+            panPM1.Controls.Clear()
             p41_SetupMenu(cRec, cP42, cDisp)
             SetupMenu_thePage("p41_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
         End If
@@ -348,7 +343,8 @@ Public Class entity_menu
 
     Private Sub SetupMenu_thePage(strReloadUrl As String, strTabValue As String)
         Dim mi As NavigationNode = ami("STRÁNKA", "thePage", "", "", Nothing)
-        ami("Ukotvit vybranou záložku", "", "entity_menu_locktab.aspx?page=" & Server.UrlEncode(strReloadUrl) & "&prefix=" & hidDataPrefix.Value & "&tab=" & strTabValue, "Images/lock.png", mi)
+        'ami("Ukotvit vybranou záložku", "", "entity_menu_locktab.aspx?page=" & Server.UrlEncode(strReloadUrl) & "&prefix=" & hidDataPrefix.Value & "&tab=" & strTabValue, "Images/lock.png", mi)
+        ami("Ukotvit vybranou záložku", "", "javascript:lockTabs()", "Images/lock.png", mi)
         ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
         Select Case Me.hidSource.Value
             Case "1"
@@ -491,7 +487,7 @@ Public Class entity_menu
         If cDisp Is Nothing Then cDisp = Me.Factory.p28ContactBL.InhaleRecordDisposition(cRec)
         p28_SetupTabs(cRecSum)
 
-        If hidCM.Value = "1" Then
+        If Factory.SysUser.j03PageMenuFlag = 0 Then
             menu1.Visible = False
             pm1.Attributes.Item("onclick") = "RCM('p28', " & cRec.PID.ToString & ", this, 'pagemenu')"
             With linkPM
@@ -638,7 +634,7 @@ Public Class entity_menu
 
         j02_SetupTabs(cRec, cRecSum)
 
-        If hidCM.Value = "1" Then
+        If Factory.SysUser.j03PageMenuFlag = 0 Then
             ''menu1.Nodes.Clear()
             menu1.Visible = False
 
@@ -807,7 +803,7 @@ Public Class entity_menu
         If crs.o23_Count > 0 Then s += "<span class='badge1tab'>" & crs.o23_Count.ToString & "</span>"
         cti(s, "o23")
 
-        If hidCM.Value = "1" Then
+        If Factory.SysUser.j03PageMenuFlag = 0 Then
             menu1.Visible = False
 
             pm1.Attributes.Item("onclick") = "RCM('p56'," & cRec.PID.ToString & ",this,'pagemenu')"
@@ -817,7 +813,7 @@ Public Class entity_menu
             End With
             Handle_ContextMenuBlackWhite(cRec.IsClosed)
         Else
-            
+
 
             p56_SetupMenu(cRec, cP41, cP42, cDisp)
             SetupMenu_thePage("p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)

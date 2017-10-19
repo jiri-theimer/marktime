@@ -170,13 +170,15 @@
                     </asp:DropDownList>
 
                 </div>
-                <div class="div6" style="display:none;">
-                    <asp:DropDownList ID="j03ModalWindowsFlag" runat="server">
-                        <asp:ListItem Text="Velikost modálních dialogových oken 900 x 700" Value="0"></asp:ListItem>
-                        <asp:ListItem Text="Modální dialogová okna automaticky maximalizovat na plnou velikost" Value="1" Selected="true"></asp:ListItem>
+                <div class="div6">
+                    <span class="lbl">Typ menu nabídky na stránce vybraného záznamu:</span>
+                    <asp:DropDownList ID="j03PageMenuFlag" runat="server">
+                        <asp:ListItem Text="Kontextové menu, ve výchozím stavu sbalené" Value="0" Selected="true"></asp:ListItem>
+                        <asp:ListItem Text="Klasické popup menu" Value="1"></asp:ListItem>
                     </asp:DropDownList>
-
+                    <span class="infoInForm">Vztahuje se na stránku vybraného projektu/klienta/faktury/úkolu/osoby/dokumentu.</span>
                 </div>
+                
                 
                 <div class="div6">
                     <span>Maska ve vyhledávači projektu:</span>
@@ -188,6 +190,7 @@
                         <asp:ListItem Text="Název projektu+klient" Value="3"></asp:ListItem>
                         <asp:ListItem Text="Kód projektu" Value="4"></asp:ListItem>
                     </asp:DropDownList>
+                    <span class="infoInForm">Má dopad na všechny formuláře/obrazovky, kde se vyplňuje projekt.</span>
                 </div>
                 <div class="div6">
                     <span>Počet maximálně zobrazených záznamů ve vyhledávači projektu:</span>
@@ -197,6 +200,7 @@
                         <asp:ListItem Text="100" Value="100"></asp:ListItem>
                         <asp:ListItem Text="200" Value="200"></asp:ListItem>
                     </asp:DropDownList>
+                    <span class="infoInForm">Má dopad na všechny formuláře/obrazovky, kde se vyplňuje projekt.</span>
                 </div>
                 <table cellpadding="10">
 

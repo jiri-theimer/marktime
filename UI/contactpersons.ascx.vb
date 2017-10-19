@@ -52,9 +52,9 @@
             .Text = cRec.j02Mobile
         End With
         If Me.IsShowClueTip Then
-            CType(e.Item.FindControl("clue_j02"), HyperLink).Attributes("rel") = "clue_j02_record.aspx?pid=" & cRec.PID.ToString
+            CType(e.Item.FindControl("linkPP1"), HyperLink).Attributes("onclick") = "RCM('j02'," & cRec.PID.ToString & ",this)"
         Else
-            e.Item.FindControl("clue_j02").Visible = False
+            e.Item.FindControl("linkPP1").Visible = False
         End If
 
     End Sub

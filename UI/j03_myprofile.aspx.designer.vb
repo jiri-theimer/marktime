@@ -212,13 +212,13 @@ Partial Public Class j03_myprofile
     Protected WithEvents j03SiteMenuSkin As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''j03ModalWindowsFlag control.
+    '''j03PageMenuFlag control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j03ModalWindowsFlag As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents j03PageMenuFlag As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''j03ProjectMaskIndex control.
