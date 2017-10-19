@@ -81,13 +81,20 @@ Public Class handler_popupmenu
                 CI(cRec.FullName, "", True, "Images/information.png")
             End If
         End If
-        
+        Dim cP41 As BO.p41Project = factory.p41ProjectBL.Load(cRec.p41ID)
+
         If cDisp.P31_Create Then
             SEP()
             CI("Zapsat WORKSHEET", "p31_record.aspx?p56id=" & intPID.ToString, cRec.IsClosed, "Images/worksheet.png")
+            If Not cRec.IsClosed Then
+                Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(cP41.PID, cP41.p42ID, cP41.j18ID, factory.SysUser.j02ID)
+                For Each c In lisP34
+                    CI("[" & c.p34Name & "]", "p31_record.aspx?pid=0&p56id=" & cRec.PID.ToString & "&p34id=" + c.PID.ToString, , "Images/worksheet.png", True)
+                Next
+            End If
         End If
 
-        Dim cDispP41 As BO.p41RecordDisposition = factory.p41ProjectBL.InhaleRecordDisposition(factory.p41ProjectBL.Load(cRec.p41ID))
+        Dim cDispP41 As BO.p41RecordDisposition = factory.p41ProjectBL.InhaleRecordDisposition(cP41)
         Dim mq As New BO.myQueryP31
         mq.p56IDs = BO.BAS.ConvertInt2List(cRec.PID)
         mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
@@ -241,7 +248,12 @@ Public Class handler_popupmenu
         If strFlag = "pagemenu" Then
             SEP()
             CI("[DALŠÍ]", "", , "Images/more.png")
-
+            If cDisp.OwnerAccess Then
+                CI("Import úhrad z ABO souboru", "p91_pay_aboimport.aspx", , "Images/payment.png", True)
+            End If
+            If cDisp.ReadAccess Then
+                CI("Export do účetnictví POHODA", "p91_export2pohoda.aspx?pid=" & cRec.PID.ToString, , "Images/license.png", True)
+            End If
             If factory.SysUser.j04IsMenu_Notepad Then
                 CI("Vytvořit dokument", "o23_record.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString, , "Images/notepad.png", True)
             End If
@@ -516,7 +528,7 @@ Public Class handler_popupmenu
         If cP42.p42IsModule_p31 Then
             If Not (cRec.IsClosed Or cRec.p41IsDraft) Then
                 SEP()
-                CI("Zapsat WORKSHEET", "", , "Images/worksheet.png")
+                CI("Zapsat WORKSHEET", "p31_record.aspx?pid=0&p41id=" & cRec.PID.ToString, , "Images/worksheet.png")
 
                 Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(cRec.PID, cRec.p42ID, cRec.j18ID, factory.SysUser.j02ID)
                 For Each c In lisP34
@@ -792,7 +804,7 @@ Public Class handler_popupmenu
             If strFlag = "pagemenu" Then
                 If factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver) Then
                     SEP()
-                    If cRec.j02IsIntraPerson Then CI("Schvalovat nebo fakturovat práci osoby", "entity_modal_approving.aspx?prefix=j02&pid=" & cRec.PID.ToString, , "Images/approve.png", , True)
+                    If cRec.j02IsIntraPerson Then CI("Schvalovat práci osoby", "entity_modal_approving.aspx?prefix=j02&pid=" & cRec.PID.ToString, , "Images/approve.png", , True)
                 End If
             End If
             If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
@@ -899,8 +911,16 @@ Public Class handler_popupmenu
         With factory.SysUser
 
             If .j04IsMenu_Worksheet Then
-
                 CI("Zapsat worksheet", "p31_record.aspx?pid=0", , "Images/worksheet.png")
+                Dim lis As IEnumerable(Of BO.p34ActivityGroup) = factory.p34ActivityGroupBL.GetList_WorksheetEntry_InAllProjects(factory.SysUser.j02ID)
+                If lis.Count > 0 Then
+                    For Each c In lis
+                        CI("[" & c.p34Name & "]", "p31_record.aspx?pid=0&p34id=" + c.PID.ToString, , "Images/worksheet.png", True)
+                    Next
+                Else
+
+                End If
+                
             End If
             If .j04IsMenu_Contact Then
                 If factory.TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator) Then

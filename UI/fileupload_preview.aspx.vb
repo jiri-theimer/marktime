@@ -29,6 +29,10 @@
             Dim mq As New BO.myQueryO27
             Select Case Request.Item("prefix")
                 Case "o23"
+                    Dim cDoc As BO.o23Doc = Master.Factory.o23DocBL.Load(Master.DataPID)
+                    Dim cDisp As BO.o23RecordDisposition = Master.Factory.o23DocBL.InhaleDisposition(cDoc)
+                    If Not cDisp.ReadAccess Then Master.StopPage("Nemáte přístup k tomuto dokumentu.") : Return
+
                     Me.panList.Visible = True
                     mq.Record_x29ID = BO.x29IdEnum.o23Doc
                     mq.Record_PID = Master.DataPID

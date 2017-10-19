@@ -138,6 +138,8 @@ Public Class p91_framework_detail
             End With
             If cRec.IsClosed Then panPM1.Style.Item("background-color") = "black" : linkPM.Style.Item("color") = "white"
             imgIcon32.Visible = False
+            menu1.Nodes.Clear()
+            menu1.Visible = False
         Else
 
             If cRec.IsClosed Then menu1.Skin = "Black"
@@ -632,6 +634,9 @@ Public Class p91_framework_detail
     End Sub
 
     Private Function FNO(strValue As String) As Telerik.Web.UI.NavigationNode
+        If Not menu1.Visible Then Return New NavigationNode()
+
+
         Return menu1.GetAllNodes.First(Function(p) p.ID = strValue)
         'If menu1.GetAllNodes.Where(Function(p) p.ID = strValue).Count > 0 Then
 

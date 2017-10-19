@@ -102,7 +102,11 @@
     
      <hr />
        <a id="cmdPP3" class="pp2" href="javascript:RCM2('p56','9',event)"></a>
-    
+    <hr />
+    <a href="javascript:sw_everywhere('p31_record.aspx?p34id=1')">Hodiny</a>
+    <a href="javascript:sw_everywhere('p31_record.aspx?p34id=6')">Výdaje</a>
+    <a href="javascript:sw_everywhere('p31_record.aspx?p34id=8')">Interní hodiny</a>
+    <a href="javascript:sw_everywhere('p31_record.aspx?p34id=1011')">Paušály</a>
     
 <telerik:RadContextMenu ID="RadContextMenu1" runat="server" EnableViewState="false" Skin="Metro" ExpandDelay="0"  >
     <CollapseAnimation Type="None" />

@@ -277,7 +277,12 @@
                 <td>
                     <asp:HyperLink ID="linkPM" runat="server" CssClass="entity_menu_header"></asp:HyperLink>
                 </td>
+                <td style="text-align: right;">
 
+                    <button type="button" id="cmdPageSetup" runat="server" onclick="page_setting()">
+                        Nastavení stránky                    
+                    </button>
+                </td>
                 <td style="float: right; width: 40px;">
 
                     <asp:Image ID="Image1" runat="server" ImageUrl="Images/invoice_32.png" />
@@ -286,7 +291,7 @@
         </table>
     </asp:Panel>
 
-    <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">       
+    <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">
         <Nodes>
             <telerik:NavigationNode ID="begin" Width="50px" Enabled="false" Visible="true">
             </telerik:NavigationNode>
@@ -316,7 +321,7 @@
                     <telerik:NavigationNode ID="cmdTags" Text="Štítky" ImageUrl="Images/tag.png" NavigateUrl="javascript:tags_assign()">
                     </telerik:NavigationNode>
 
-                    
+
 
                     <telerik:NavigationNode ID="cmdPivot" Text="WORKSHEET statistika faktury" NavigateUrl="javascript:report('');" Target="_top" ImageUrl="Images/pivot.png"></telerik:NavigationNode>
 
@@ -341,10 +346,10 @@
                     </telerik:NavigationNode>
                     <telerik:NavigationNode ID="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png" Text="Otevřít v nové záložce"></telerik:NavigationNode>
 
-                    <telerik:NavigationNode ID="reload" ImageUrl="Images/refresh.png" text="Obnovit stránku"></telerik:NavigationNode>
+                    <telerik:NavigationNode ID="reload" ImageUrl="Images/refresh.png" Text="Obnovit stránku"></telerik:NavigationNode>
                 </Nodes>
             </telerik:NavigationNode>
-           
+
 
             <telerik:NavigationNode ID="searchbox">
                 <NodeTemplate></NodeTemplate>
@@ -408,7 +413,7 @@
 
                         <td>
                             <asp:HyperLink ID="cmdReportInvoice" runat="server" Text="Sestava dokladu"></asp:HyperLink>
-                            
+
                         </td>
                         <td>
                             <asp:HyperLink ID="cmdReportAttachment" runat="server" Text="Sestava přílohy"></asp:HyperLink>
@@ -425,7 +430,7 @@
                             <asp:HyperLink ID="Client" runat="server" NavigateUrl="#" Target="_parent" CssClass="value_link"></asp:HyperLink>
                             <asp:HyperLink ID="clue_client" runat="server" CssClass="reczoom" Text="i" title="Detail klienta"></asp:HyperLink>
                             <asp:Label ID="p91ClientPerson" runat="server" ToolTip="Kontaktní osoba klienta"></asp:Label>
-                           
+
                         </td>
 
 
@@ -588,7 +593,7 @@
                         <asp:Label ID="p91Text1" runat="server" CssClass="val" Style="font-family: 'Courier New'; word-wrap: break-word; display: block; font-size: 120%;"></asp:Label>
                     </div>
                 </asp:Panel>
-                             
+
 
                 <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">
                     <div class="title">
@@ -599,15 +604,15 @@
                     </div>
 
                 </asp:Panel>
-                <div class="div6" style="clear:both;">
-                <uc:mytags ID="tags1" runat="server" Prefix="p91" />
-                <asp:HyperLink ID="linkLastX40" runat="server" Visible="false" style="margin-left:40px;font-weight:bold;" ToolTip="Pokus o odeslání faktury elektronicky"></asp:HyperLink>
+                <div class="div6" style="clear: both;">
+                    <uc:mytags ID="tags1" runat="server" Prefix="p91" />
+                    <asp:HyperLink ID="linkLastX40" runat="server" Visible="false" Style="margin-left: 40px; font-weight: bold;" ToolTip="Pokus o odeslání faktury elektronicky"></asp:HyperLink>
                 </div>
 
 
                 <uc:b07_list ID="comments1" runat="server" ShowHeader="false" ShowInsertButton="false" JS_Reaction="b07_reaction" />
                 <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
-                <div class="div6" style="clear:both;">
+                <div class="div6" style="clear: both;">
                     <asp:Label ID="p92ReportConstantText" runat="server" CssClass="val"></asp:Label>
                 </div>
                 <div class="div6">
@@ -697,14 +702,14 @@
                     </tr>
 
                 </table>
-                
+
                 <div class="content-box2">
                     <div class="title">Technický text faktury</div>
                     <div class="content" style="background-color: #ffffcc;">
                         <asp:Label ID="p91Text2" runat="server" Style="font-family: 'Courier New'; word-wrap: break-word; display: block; font-size: 120%;"></asp:Label>
                     </div>
                 </div>
-                
+
 
                 <asp:Panel ID="panRoles" runat="server" CssClass="content-box1">
                     <div class="title">

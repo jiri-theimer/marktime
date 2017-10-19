@@ -132,4 +132,36 @@
 
         Return _cDB.GetList(Of BO.p34ActivityGroup)(s, pars)
     End Function
+
+    Public Function GetList_WorksheetEntry_InAllProjects(intJ02ID As Integer) As IEnumerable(Of BO.p34ActivityGroup)
+        Dim s As String = GetSQLPart1(), pars As New DbParameters, strEntryFlags As String = "1,2"
+        If intJ02ID <> _curUser.j02ID Then
+            strEntryFlags = "1,2,4"
+        End If
+
+        s += " WHERE getdate() BETWEEN a.p34ValidFrom AND a.p34ValidUntil"
+
+        If BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Creator) Then
+            'právo zapisovat worksheeet úkony do všech projektů
+            s += " ORDER BY a.p34Ordinary,a.p34Name"
+            Return _cDB.GetList(Of BO.p34ActivityGroup)(s, pars)
+        End If
+
+        s += " AND (a.p34ID IN ("
+
+        s += "SELECT a1.p34ID FROM o28ProjectRole_Workload a1 INNER JOIN x69EntityRole_Assign a2 ON a1.x67ID=a2.x67ID INNER JOIN x67EntityRole a3 ON a2.x67ID=a3.x67ID"
+        s += " WHERE a3.x29ID=141 AND a1.o28EntryFlag IN (" & strEntryFlags & ") AND (a2.j02ID=@j02id OR a2.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id))"
+        s += ") "
+
+
+        s += ")"
+
+
+        pars.Add("j02id", intJ02ID, DbType.Int32)
+
+
+        s += " ORDER BY a.p34Ordinary,a.p34Name"
+
+        Return _cDB.GetList(Of BO.p34ActivityGroup)(s, pars)
+    End Function
 End Class

@@ -14,6 +14,8 @@
     Private Sub RefreshRecord()
         Dim cRec As BO.o23Doc = Master.Factory.o23DocBL.Load(Master.DataPID)
         Dim cX18 As BO.x18EntityCategory = Master.Factory.x18EntityCategoryBL.LoadByX23ID(cRec.x23ID)
+        Dim cDisp As BO.o23RecordDisposition = Master.Factory.o23DocBL.InhaleDisposition(cRec, cX18)
+        If Not cDisp.ReadAccess Then Master.StopPage("Nemáte přístup k tomuto dokumentu.")
         ph1.Text = cX18.x18Name
 
         rec1.FillData(cRec, cX18, False)

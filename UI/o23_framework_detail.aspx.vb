@@ -49,7 +49,7 @@
         If Master.DataPID = 0 Then Return
         Dim cRec As BO.o23Doc = Master.Factory.o23DocBL.Load(Master.DataPID)
         If cRec Is Nothing Then Return
-
+       
         ''If Me.CurrentX18ID = 0 Then Me.CurrentX18ID = Master.Factory.x18EntityCategoryBL.LoadByX23ID(cRec.x23ID).PID
         Me.CurrentX18ID = cRec.x18ID
         Dim cX18 As BO.x18EntityCategory = Master.Factory.x18EntityCategoryBL.Load(Me.CurrentX18ID)
@@ -59,6 +59,9 @@
         Else
             If cX18.x18IsManyItems Then imgIcon32.ImageUrl = "Images/notepad_32.png"
         End If
+
+        Dim cDisp As BO.o23RecordDisposition = Master.Factory.o23DocBL.InhaleDisposition(cRec, cX18)
+        If Not cDisp.ReadAccess Then Master.StopPage("Nemáte přístup k tomuto dokumentu.")
 
         pm1.Attributes.Item("onclick") = "RCM('o23'," & cRec.PID.ToString & ",this,'pagemenu')"
         With linkPM
@@ -83,7 +86,7 @@
         End If
 
 
-        Dim cDisp As BO.o23RecordDisposition = Master.Factory.o23DocBL.InhaleDisposition(cRec, cX18)
+        
         ''FNO("cmdNew").Visible = cDisp.CreateItem
         ''FNO("cmdClone").Visible = cDisp.CreateItem
         ''FNO("cmdWorkflow").Visible = cDisp.UploadAndComment

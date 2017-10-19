@@ -41,6 +41,15 @@ Partial Public Class p91_framework_detail
     Protected WithEvents linkPM As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''cmdPageSetup control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdPageSetup As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
     '''Image1 control.
     '''</summary>
     '''<remarks>

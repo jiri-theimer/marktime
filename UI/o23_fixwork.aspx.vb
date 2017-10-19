@@ -39,6 +39,9 @@ Public Class o23_fixwork
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
+            If Not Master.Factory.SysUser.j04IsMenu_Notepad Then
+                Master.StopPage("Nemáte přístup do modulu [DOKUMENTY].")
+            End If
             If Request.Item("masterpid") <> "" Then
                 Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid")) : Me.CurrentMasterPrefix = Request.Item("masterprefix")
             End If

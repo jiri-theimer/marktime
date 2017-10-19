@@ -5,7 +5,7 @@
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQuery) As IEnumerable(Of BO.p34ActivityGroup)
     Function GetList_WorksheetEntryInProject(intP41ID As Integer, intP42ID As Integer, intJ18ID As Integer, intJ02ID As Integer) As IEnumerable(Of BO.p34ActivityGroup)
-    
+    Function GetList_WorksheetEntry_InAllProjects(intJ02ID As Integer) As IEnumerable(Of BO.p34ActivityGroup)
 End Interface
 Class p34ActivityGroupBL
     Inherits BLMother
@@ -43,5 +43,8 @@ Class p34ActivityGroupBL
     End Function
     Public Function GetList_WorksheetEntryInProject(intP41ID As Integer, intP42ID As Integer, intJ18ID As Integer, intJ02ID As Integer) As IEnumerable(Of BO.p34ActivityGroup) Implements Ip34ActivityGroupBL.GetList_WorksheetEntryInProject
         Return _cDL.GetList_WorksheetEntryInProject(intP41ID, intP42ID, intJ18ID, intJ02ID)
+    End Function
+    Public Function GetList_WorksheetEntry_InAllProjects(intJ02ID As Integer) As IEnumerable(Of BO.p34ActivityGroup) Implements Ip34ActivityGroupBL.GetList_WorksheetEntry_InAllProjects
+        Return _cDL.GetList_WorksheetEntry_InAllProjects(intJ02ID)
     End Function
 End Class

@@ -195,7 +195,7 @@ Public Class entity_menu
         Dim cP42 As BO.p42ProjectType = Me.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
         p41_SetupTabs(cRecSum, cP42, cDisp)
         If Factory.SysUser.j03PageMenuFlag = 0 Then
-            ''menu1.Nodes.Clear()
+            menu1.Nodes.Clear()
             menu1.Visible = False
 
             pm1.Attributes.Item("onclick") = "RCM('p41', " & cRec.PID.ToString & ", this, 'pagemenu')"
@@ -951,6 +951,7 @@ Public Class entity_menu
     End Sub
 
     Private Function FNO(strValue As String) As NavigationNode
+        If Not menu1.Visible Then Return New NavigationNode()
         Return menu1.GetAllNodes.First(Function(p) p.ID = strValue)
     End Function
 

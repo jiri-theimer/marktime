@@ -292,13 +292,14 @@ Public Class entity_framework
             Select Case Me.CurrentX29ID
                 Case BO.x29IdEnum.p41Project
                     ''img1.ImageUrl = "Images/project_32.png"
-                    If Not .Factory.SysUser.j04IsMenu_Project Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Projekty].")
+                    If Not .Factory.SysUser.j04IsMenu_Project Then .StopPage("Nemáte přístup do modulu [PROJEKTY].")
                     ''menu1.FindItemByValue("more").Text = "Akce nad projekty"
                 Case BO.x29IdEnum.p28Contact
                     ''img1.ImageUrl = "Images/contact_32.png"
-                    If Not .Factory.SysUser.j04IsMenu_Contact Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Klienti].")
+                    If Not .Factory.SysUser.j04IsMenu_Contact Then .StopPage("Nemáte přístup do modulu [KLIENTI].")
                     ''menu1.FindItemByValue("more").Text = "Akce nad klienty"
                 Case BO.x29IdEnum.o23Doc
+                    If Not .Factory.SysUser.j04IsMenu_Notepad Then .StopPage("Nemáte přístup do modulu [DOKUMENTY].")
                     ''img1.ImageUrl = "Images/notepad_32.png"
                     ''menu1.FindItemByValue("more").Text = "Akce nad dokumenty"
                     bolSummary = False
@@ -307,14 +308,15 @@ Public Class entity_framework
                     ''img1.ImageUrl = "Images/task_32.png"
 
                     ''menu1.FindItemByValue("more").Text = "Akce nad úkoly"
+                    If Not .Factory.SysUser.j04IsMenu_Task Then .StopPage("Nemáte přístup do modulu [ÚKOLY].")
                 Case BO.x29IdEnum.j02Person
                     ''menu1.FindItemByValue("more").Text = "Akce nad přehledem"
                     ''img1.ImageUrl = "Images/person_32.png"
-                    If Not .Factory.SysUser.j04IsMenu_People Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Lidé].")
+                    If Not .Factory.SysUser.j04IsMenu_People Then .StopPage("Nemáte přístup do modulu [LIDÉ].")
                 Case BO.x29IdEnum.p91Invoice
                     ''menu1.FindItemByValue("more").Text = "Akce nad fakturami"
                     ''img1.ImageUrl = "Images/invoice_32.png"
-                    If Not .Factory.SysUser.j04IsMenu_Invoice Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Faktury].")
+                    If Not .Factory.SysUser.j04IsMenu_Invoice Then .StopPage("Nemáte přístup do modulu [FAKTURY].")
             End Select
             If Not .Factory.TestPermission(BO.x53PermValEnum.GR_GridTools) Then
                 FindNode("groupExport").Nodes.Clear() : FindNode("groupExport").Visible = False
