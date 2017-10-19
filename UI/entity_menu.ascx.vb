@@ -12,6 +12,8 @@ Public Class entity_menu
     End Property
   
     Public Property DataPID As Integer
+    
+
 
     Public Property CurrentTab As String
         Get
@@ -169,6 +171,8 @@ Public Class entity_menu
 
         
         Handle_PluginBellowMenu()
+        tabs1.DataBind()
+
     End Sub
     Private Sub Handle_PluginBellowMenu()
         If Me.x31ID_Plugin = "" Then Return
@@ -219,9 +223,18 @@ Public Class entity_menu
     End Sub
 
     Private Sub HighLight_LockedTab(strTab As String)
+        For Each t As RadTab In tabs1.Tabs
+            t.FindControl("cmdLock").Visible = t.Selected
+            
+        Next
         If strTab = "" Then Return
-        If Not tabs1.FindTabByValue(strTab) Is Nothing Then
-            tabs1.FindTabByValue(strTab).ImageUrl = "Images/lock.png"
+        Dim mytab As RadTab = tabs1.FindTabByValue(strTab)
+        If Not mytab Is Nothing Then
+            mytab.ImageUrl = "Images/lock.png"
+            If mytab.Selected Then
+                CType(mytab.FindControl("cmdLock"), HtmlButton).Visible = False
+            End If
+
         End If
     End Sub
 
@@ -343,7 +356,7 @@ Public Class entity_menu
 
     Private Sub SetupMenu_thePage(strReloadUrl As String, strTabValue As String)
         Dim mi As NavigationNode = ami("STRÁNKA", "thePage", "", "", Nothing)
-        'ami("Ukotvit vybranou záložku", "", "entity_menu_locktab.aspx?page=" & Server.UrlEncode(strReloadUrl) & "&prefix=" & hidDataPrefix.Value & "&tab=" & strTabValue, "Images/lock.png", mi)
+
         ami("Ukotvit vybranou záložku", "", "javascript:lockTabs()", "Images/lock.png", mi)
         ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
         Select Case Me.hidSource.Value
@@ -393,10 +406,11 @@ Public Class entity_menu
         Dim tab As New RadTab(strName, strX61Code)
         tabs1.Tabs.Add(tab)
 
-        'tab.NavigateUrl = cX61.GetPageUrl(Me.DataPrefix, Me.DataPID, Me.hidIsCanApprove.Value) & "&tab=" & strX61Code & "&savetab=1&source=" & Me.hidSource.Value
         tab.NavigateUrl = cX61.GetPageUrl(Me.DataPrefix, Me.DataPID, Me.hidIsCanApprove.Value) & "&tab=" & strX61Code & "&source=" & Me.hidSource.Value
-
+        tab.Attributes.Item("myurl") = tab.NavigateUrl
         If tabs1.Tabs.Count = 0 Then tab.Selected = True
+
+        
     End Sub
     Private Sub p41_SetupTabs(crs As BO.p41ProjectSum, cP42 As BO.p42ProjectType, cDisp As BO.p41RecordDisposition)
         tabs1.Tabs.Clear()
@@ -469,6 +483,7 @@ Public Class entity_menu
         End With
     End Sub
     Private Sub Handle_SelectedTab()
+
         If tabs1.SelectedTab Is Nothing And tabs1.Tabs.Count > 0 Then
             'pokud není označená záložka, pak skočit na první
             Dim c As New BO.x61PageTab
@@ -932,4 +947,7 @@ Public Class entity_menu
     Private Function FNO(strValue As String) As NavigationNode
         Return menu1.GetAllNodes.First(Function(p) p.ID = strValue)
     End Function
+
+   
+  
 End Class

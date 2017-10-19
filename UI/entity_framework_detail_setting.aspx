@@ -11,7 +11,7 @@
     <div class="div6">
         <asp:CheckBox ID="chkShowLevel1" runat="server" Text="Zobrazovat v menu výrazný odkaz (název) vybraného záznamu" CssClass="chk" Visible="false" />
     </div>
-    <div class="div6">
+    <asp:panel ID="panMenuSkin" runat="server" CssClass="div6">
         <span>Vzhled (Skin) kontextového menu stránky:</span>
         <asp:DropDownList ID="skin0" runat="server">
             <asp:ListItem Text="--Výchozí--" Value="WebBlue" Selected="true"></asp:ListItem>                      
@@ -31,7 +31,7 @@
             <asp:ListItem Text="Vista" Value="Vista"></asp:ListItem>
             
         </asp:DropDownList>
-    </div>
+    </asp:panel>
 
     <asp:Panel ID="panPlugin" runat="server" CssClass="content-box2" Style="margin-top: 20px;">
         <div class="title">

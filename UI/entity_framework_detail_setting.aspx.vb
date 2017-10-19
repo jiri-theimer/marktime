@@ -81,6 +81,7 @@
                     chkScheduler.Visible = False
             End Select
 
+            If Master.Factory.SysUser.j03PageMenuFlag = 0 Then panMenuSkin.Visible = False
         End If
     End Sub
 
@@ -112,5 +113,9 @@
     Private Sub cmdClearLockedTab_Click(sender As Object, e As EventArgs) Handles cmdClearLockedTab.Click
         Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_menu-remember-tab", "0")
         Master.Notify("Vyčištěno")
+    End Sub
+
+    Private Sub entity_framework_detail_setting_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+
     End Sub
 End Class

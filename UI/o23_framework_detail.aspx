@@ -103,14 +103,14 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Panel ID="panPM1" runat="server" Style="height: 42px; background-color: #F7F7F7; width: 100%; border-bottom: solid 1px silver;">
+    <asp:Panel ID="panPM1" runat="server" CssClass="entity_menu_cm">
     <table style="padding: 0px; width: 100%;">
         <tr>
             <td style="width: 40px;">
                 <asp:HyperLink ID="pm1" runat="server" CssClass="pp2"></asp:HyperLink>
             </td>
             <td>
-                <asp:HyperLink ID="linkPM" runat="server" CssClass="value_link"></asp:HyperLink>
+                <asp:HyperLink ID="linkPM" runat="server" CssClass="entity_menu_header"></asp:HyperLink>
             </td>
             
             <td style="float: right; width: 40px;">

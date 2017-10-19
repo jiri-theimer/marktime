@@ -34,8 +34,7 @@ Public Class handler_popupmenu
         Select Case strPREFIX
             Case "newrec"
                 RenderNewRecMenu(factory)  'hlavní menu - odkazy k založení nového záznamu
-            Case "pagesetup"
-                HandlePageSettting()
+           
             Case "p31"
                 HandleP31(intPID, factory, strFlag)
 
@@ -68,13 +67,7 @@ Public Class handler_popupmenu
 
 
     End Sub
-    Private Sub HandlePageSettting()
-        CI("Ukotvit vybranou záložku", "javascript:lockTabs()", , "Images/lock.png")
-        SEP()
-        CI("Nastavení vzhledu stránky", "javascript:page_setting()", , "Images/setting.png")
-
-
-    End Sub
+   
     Private Sub HandleP56(intPID As Integer, factory As BL.Factory, strFlag As String)
         Dim cRec As BO.p56Task = factory.p56TaskBL.Load(intPID)
         If cRec Is Nothing Then CI("Záznam nebyl nalezen.", "", True) : Return

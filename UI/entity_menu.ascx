@@ -1,19 +1,18 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="entity_menu.ascx.vb" Inherits="UI.entity_menu" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<asp:Panel ID="panPM1" runat="server" Style="height: 42px; background-color: #F7F7F7; width: 100%; border-bottom: solid 1px silver;">
+<asp:Panel ID="panPM1" runat="server" CssClass="entity_menu_cm">
     <table style="padding: 0px; width: 100%;">
         <tr>
             <td style="width: 40px;">
                 <asp:HyperLink ID="pm1" runat="server" CssClass="pp2"></asp:HyperLink>
             </td>
             <td>
-                <asp:HyperLink ID="linkPM" runat="server" CssClass="value_link"></asp:HyperLink>
+                <asp:HyperLink ID="linkPM" runat="server" CssClass="entity_menu_header"></asp:HyperLink>
             </td>
             <td style="text-align: right;">
 
-                <button type="button" id="cmdPageSetup" runat="server" onclick="RCM('pagesetup','',this,'pagemenu')">
-                    Stránka
-                    <img src="Images/arrow_down.gif" />
+                <button type="button" id="cmdPageSetup" runat="server"  onclick="page_setting()">
+                    Nastavení stránky                    
                 </button>
             </td>
             <td style="float: right; width: 40px;">
@@ -47,7 +46,13 @@
 <asp:PlaceHolder ID="place0" runat="server" Visible="true"></asp:PlaceHolder>
 <asp:PlaceHolder ID="place1" runat="server" Visible="true"></asp:PlaceHolder>
 
-<telerik:RadTabStrip ID="tabs1" runat="server" Skin="Default" Width="100%" AutoPostBack="false" ShowBaseLine="true" EnableViewState="false">
+<telerik:RadTabStrip ID="tabs1" runat="server" Skin="Default" Width="100%" AutoPostBack="false" ShowBaseLine="true" EnableViewState="false" OnClientTabSelected="OnClientTabSelected">
+    <TabTemplate>
+        
+        <asp:HyperLink runat="server" ID="link1" CssClass="entity_menu_tablink" Text='<%# DataBinder.Eval(Container, "Text") %>' NavigateUrl='<%# DataBinder.Eval(Container, "NavigateUrl") %>'></asp:HyperLink>
+        
+        <button type="button" onclick="lockTabs()" id="cmdLock" runat="server" style="width:16px;height:14px;padding:0px;" title="Ukotvit vybranou záložku"><img src="Images/lock_10.png" /></button>
+    </TabTemplate>
 </telerik:RadTabStrip>
 
 
@@ -61,6 +66,14 @@
 <asp:HiddenField ID="hidLockedTab" runat="server" />
 
 <script type="text/javascript">
+    function OnClientTabSelected(sender, eventArgs)
+    {
+        var tab = eventArgs.get_tab();
+        var attributes = tab.get_attributes();
+        var url = attributes.getAttribute( "myurl");
+        location.replace(url);
+    }
+
     function cbxSearch_OnClientSelectedIndexChanged(sender, eventArgs){
         var combo = sender;
         var pid = combo.get_value();

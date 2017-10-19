@@ -50,7 +50,6 @@ A.value_link:hover {
 
 
 
-
 p {
     margin-bottom: 10px;
     line-height: 1.6em;
@@ -835,6 +834,29 @@ div.div_radiolist_default {
     background: url('rmVSprite.png') repeat;
 }
 
+
+A.entity_menu_header {
+    font-weight:bold;
+    color:#25a0da;
+    text-decoration: none;
+    font-size:120%;
+}
+
+a.entity_menu_tablink{
+    color:black;
+    text-decoration:none;
+}
+
+A.entity_menu_header:hover {
+    color: #1d60ff;    
+    text-decoration: underline;
+}
+DIV.entity_menu_cm{
+    height: 42px;
+    background-color: #F7F7F7;
+    width: 100%;
+    border-bottom: solid 1px silver;
+}
 
 div.content-box1 {
     float: left;
