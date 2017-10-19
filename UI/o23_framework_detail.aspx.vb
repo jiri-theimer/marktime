@@ -41,9 +41,9 @@
 
 
     End Sub
-    Private Function FNO(strValue As String) As Telerik.Web.UI.NavigationNode
-        Return menu1.GetAllNodes.First(Function(p) p.ID = strValue)
-    End Function
+    ''Private Function FNO(strValue As String) As Telerik.Web.UI.NavigationNode
+    ''    Return menu1.GetAllNodes.First(Function(p) p.ID = strValue)
+    ''End Function
     Private Sub RefreshRecord()
 
         If Master.DataPID = 0 Then Return
@@ -59,26 +59,34 @@
         Else
             If cX18.x18IsManyItems Then imgIcon32.ImageUrl = "Images/notepad_32.png"
         End If
-        If Not cX18.x18IsManyItems Then
-            FNO("record").Text = "ZÁZNAM KATEGORIE"
-        End If
+
+        pm1.Attributes.Item("onclick") = "RCM('o23'," & cRec.PID.ToString & ",this,'pagemenu')"
+        With linkPM
+            .Text = cRec.NameWithComboName
+            .NavigateUrl = "o23_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+        End With
+        If cRec.IsClosed Then panPM1.Style.Item("background-color") = "black" : linkPM.Style.Item("color") = "white"
+
+        ''If Not cX18.x18IsManyItems Then
+        ''    FNO("record").Text = "ZÁZNAM KATEGORIE"
+        ''End If
         If cX18.b01ID <> 0 Then
             hidB01ID.Value = cX18.b01ID.ToString
-            FNO("cmdWorkflow").Text = "Posunout stav/doplnit"
-            FNO("cmdWorkflow").ImageUrl = "Images/workflow.png"
-            FNO("cmdWorkflow").NavigateUrl = "javascript:workflow()"
+            ''FNO("cmdWorkflow").Text = "Posunout stav/doplnit"
+            ''FNO("cmdWorkflow").ImageUrl = "Images/workflow.png"
+            ''FNO("cmdWorkflow").NavigateUrl = "javascript:workflow()"
         Else
             hidB01ID.Value = ""
-            FNO("cmdWorkflow").Text = "Nahrát přílohu dokumentu, zapsat komentář"
-            FNO("cmdWorkflow").ImageUrl = "Images/comment.png"
-            FNO("cmdWorkflow").NavigateUrl = "javascript:b07_create()"
+            ''FNO("cmdWorkflow").Text = "Nahrát přílohu dokumentu, zapsat komentář"
+            ''FNO("cmdWorkflow").ImageUrl = "Images/comment.png"
+            ''FNO("cmdWorkflow").NavigateUrl = "javascript:b07_create()"
         End If
 
 
         Dim cDisp As BO.o23RecordDisposition = Master.Factory.o23DocBL.InhaleDisposition(cRec, cX18)
-        FNO("cmdNew").Visible = cDisp.CreateItem
-        FNO("cmdClone").Visible = cDisp.CreateItem
-        FNO("cmdWorkflow").Visible = cDisp.UploadAndComment
+        ''FNO("cmdNew").Visible = cDisp.CreateItem
+        ''FNO("cmdClone").Visible = cDisp.CreateItem
+        ''FNO("cmdWorkflow").Visible = cDisp.UploadAndComment
         cmdLockUnlock.Visible = cDisp.LockUnlockFiles_Flag1
         If cRec.o23LockedFlag = BO.o23LockedTypeENUM.LockAllFiles Then
             cmdLockUnlock.Text = "Odemknout přístup k přílohám"
@@ -88,7 +96,7 @@
             comments1.AttachmentIsReadonly = False
         End If
 
-        If cRec.IsClosed Then menu1.Skin = "Black"
+        ''If cRec.IsClosed Then menu1.Skin = "Black"
         Dim bolShowContent As Boolean = True
         If cRec.o23IsEncrypted Then
             If ViewState("verified") <> "1" Then
@@ -102,7 +110,8 @@
             panEncrypted.Visible = False
         Else
             rec1.Visible = False
-            menu1.Enabled = False
+            ''menu1.Enabled = False
+            linkPM.Enabled = False
         End If
 
 
@@ -111,7 +120,7 @@
         
         comments1.RefreshData(Master.Factory, BO.x29IdEnum.o23Doc, Master.DataPID)
 
-        FNO("reload").NavigateUrl = "o23_framework_detail.aspx?pid=" & Master.DataPID.ToString & "&x18id=" & Me.CurrentX18ID.ToString
+        ''FNO("reload").NavigateUrl = "o23_framework_detail.aspx?pid=" & Master.DataPID.ToString & "&x18id=" & Me.CurrentX18ID.ToString
 
 
         If cX18.x18UploadFlag = BO.x18UploadENUM.FileSystemUpload Then
@@ -140,33 +149,33 @@
 
 
     Private Sub o23_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        With FNO("fs")
-            If hidSource.Value = "3" Then
-                .ImageUrl = "Images/fullscreen.png"
-                .Text = "Přepnout do přehledu"
-                .Width = Nothing
-            Else
-                .ImageUrl = "Images/open_in_new_window.png"
-                .Text = "Otevřít v nové záložce"
-            End If
+        ''With FNO("fs")
+        ''    If hidSource.Value = "3" Then
+        ''        .ImageUrl = "Images/fullscreen.png"
+        ''        .Text = "Přepnout do přehledu"
+        ''        .Width = Nothing
+        ''    Else
+        ''        .ImageUrl = "Images/open_in_new_window.png"
+        ''        .Text = "Otevřít v nové záložce"
+        ''    End If
 
-        End With
-        If hidSource.Value = "2" Then
+        ''End With
+        'If hidSource.Value = "2" Then
 
-            menu1.Skin = "Metro"
-            imgIcon32.Visible = False
+        '    ''menu1.Skin = "Metro"
+        '    ''imgIcon32.Visible = False
 
-            FNO("reload").Visible = False
-        Else
+        '    ''FNO("reload").Visible = False
+        'Else
 
-            FNO("reload").Visible = True
-        End If
-        If hidSource.Value = "3" Then
+        '    ''FNO("reload").Visible = True
+        'End If
+        'If hidSource.Value = "3" Then
 
-            imgIcon32.Style.Item("top") = "44px"
-        Else
+        '    ''imgIcon32.Style.Item("top") = "44px"
+        'Else
 
-        End If
+        'End If
     End Sub
 
     Private Sub cmdLockUnlock_Click(sender As Object, e As EventArgs) Handles cmdLockUnlock.Click

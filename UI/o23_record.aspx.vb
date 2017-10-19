@@ -128,6 +128,7 @@ Public Class o23_record
                 Master.DataPID = 0
                 Me.o23Code.Text = ""
                 Me.o23Name.Text += " KOPIE"
+                filesPreview.Visible = False
             End If
 
             If Request.Item("guid_import") <> "" Then

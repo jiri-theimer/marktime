@@ -14,139 +14,31 @@ Option Explicit On
 Partial Public Class o23_framework_detail
 
     '''<summary>
-    '''menu1 control.
+    '''panPM1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadNavigation
+    Protected WithEvents panPM1 As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''begin control.
+    '''pm1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents begin As Global.Telerik.Web.UI.NavigationNode
+    Protected WithEvents pm1 As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''record control.
+    '''linkPM control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents record As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''cmdNew control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdNew As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''cmdEdit control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdEdit As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''cmdClone control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdClone As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''cmdWorkflow control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdWorkflow As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''cmdReport control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdReport As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''cmdEmail control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdEmail As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''cmdPlugin control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdPlugin As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''cmdTags control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdTags As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''cmdBarCode control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdBarCode As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''thePage control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents thePage As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''fs control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents fs As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''reload control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents reload As Global.Telerik.Web.UI.NavigationNode
+    Protected WithEvents linkPM As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''imgIcon32 control.

@@ -103,44 +103,32 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:Panel ID="panPM1" runat="server" Style="height: 42px; background-color: #F7F7F7; width: 100%; border-bottom: solid 1px silver;">
+    <table style="padding: 0px; width: 100%;">
+        <tr>
+            <td style="width: 40px;">
+                <asp:HyperLink ID="pm1" runat="server" CssClass="pp2"></asp:HyperLink>
+            </td>
+            <td>
+                <asp:HyperLink ID="linkPM" runat="server" CssClass="value_link"></asp:HyperLink>
+            </td>
+            
+            <td style="float: right; width: 40px;">
+
+                <asp:image ID="imgIcon32" runat="server" ImageUrl="Images/notepad_32.png" />
+            </td>
+        </tr>
+    </table>
 
 
 
-    <telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">
-        <Nodes>
-            <telerik:NavigationNode ID="begin" Width="50px" Enabled="false" Visible="true">
-            </telerik:NavigationNode>
+
+</asp:Panel>
 
 
-            <telerik:NavigationNode ID="record" Text="ZÁZNAM DOKUMENTU">
-                <Nodes>
-                    <telerik:NavigationNode ID="cmdNew" Text="Nový" NavigateUrl="javascript:record_create();" ImageUrl="Images/new.png"></telerik:NavigationNode>
-                    <telerik:NavigationNode ID="cmdEdit" Text="Upravit" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png"></telerik:NavigationNode>
-                    <telerik:NavigationNode ID="cmdClone" Text="Kopírovat" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" Visible="false"></telerik:NavigationNode>
+   
 
-                    <telerik:NavigationNode ID="cmdWorkflow" Text="Nahrát přílohu dokumentu, zapsat komentář" NavigateUrl="javascript:b07_create_upload();" ImageUrl="Images/comment.png"></telerik:NavigationNode>
-                    <telerik:NavigationNode ID="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report();" ImageUrl="Images/report.png"></telerik:NavigationNode>
-                    <telerik:NavigationNode ID="cmdEmail" Text="Odeslat e-mail" NavigateUrl="javascript:sendmail();" ImageUrl="Images/email.png"></telerik:NavigationNode>
-
-                    <telerik:NavigationNode ID="cmdPlugin" Text="Plugin" NavigateUrl="javascript:plugin();" ImageUrl="Images/plugin.png"></telerik:NavigationNode>
-                    <telerik:NavigationNode ID="cmdTags" Text="Štítky" NavigateUrl="javascript:tags_assign();" ImageUrl="Images/tag.png"></telerik:NavigationNode>
-
-
-                    <telerik:NavigationNode ID="cmdBarCode" Text="Čárový kód" NavigateUrl="javascript:barcode();" ImageUrl="Images/barcode.png"></telerik:NavigationNode>
-                </Nodes>
-            </telerik:NavigationNode>
-            <telerik:NavigationNode ID="thePage" Text="STRÁNKA">
-                <Nodes>
-                    <telerik:NavigationNode ID="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png" Text="Otevřít v nové záložce"></telerik:NavigationNode>
-
-                    <telerik:NavigationNode ID="reload" ImageUrl="Images/refresh.png" Text="Obnovit stránku"></telerik:NavigationNode>
-                </Nodes>
-            </telerik:NavigationNode>
-
-        </Nodes>
-    </telerik:RadNavigation>
-
-    <asp:Image ID="imgIcon32" runat="server" ImageUrl="Images/label_32.png" Style="position: absolute; top: 5px; left: 5px;" />
+    
 
 
     <div style="clear: both;"></div>

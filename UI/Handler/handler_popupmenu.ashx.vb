@@ -149,6 +149,25 @@ Public Class handler_popupmenu
         CI("Odeslat e-mail", "sendmail.aspx?prefix=p56&pid=" & cRec.PID.ToString, , "Images/email.png")
         SEP()
         CI("Oštítkovat", "tag_binding.aspx?prefix=p56&pids=" & intPID.ToString, , "Images/tag.png")
+
+        If strFlag = "pagemenu" Then
+            SEP()
+            CI("[DALŠÍ]", "", , "Images/more.png")
+
+            If factory.SysUser.j04IsMenu_Notepad Then
+                CI("Vytvořit dokument", "o23_record.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, , "Images/notepad.png", True)
+            End If
+
+            If cRec.b01ID = 0 Then CI("Doplnit poznámku, komentář, přílohu", "b07_create.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, , "Images/comment.png", True)
+
+            REL("Historie odeslané pošty", "x40_framework.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, "_top", "Images/email.png", True)
+            If cDisp.OwnerAccess Then
+                CI("Historie záznamu", "entity_timeline.aspx?prefix=p56&pid=" & cRec.PID.ToString, , "Images/event.png", True)
+            End If
+
+            CI("Plugin", "plugin_modal.aspx?prefix=p56&pid=" & cRec.PID.ToString, , "Images/plugin.png", True)
+
+        End If
     End Sub
     Private Sub HandleP91(intPID As Integer, factory As BL.Factory)
         Dim cRec As BO.p91Invoice = factory.p91InvoiceBL.Load(intPID)
@@ -588,22 +607,26 @@ Public Class handler_popupmenu
         Dim cRec As BO.o23Doc = factory.o23DocBL.Load(intPID)
         If cRec Is Nothing Then CI("Záznam nebyl nalezen.", "", True) : Return
         Dim cDisp As BO.o23RecordDisposition = factory.o23DocBL.InhaleDisposition(cRec)
+        If Not cDisp.ReadAccess Then CI("Nemáte přístup k tomuto dokumentu.", "", True) : Return
         Dim cX18 As BO.x18EntityCategory = factory.x18EntityCategoryBL.Load(cRec.x18ID)
-        If factory.SysUser.j04IsMenu_Notepad Then
-            Select Case strFlag
-                Case "o23_fixwork"
-                    REL("Přejít do obecných přehledů", "entity_framework.aspx?prefix=o23&pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
-                Case ""
-                    REL("Přejít do pevných přehledů", "o23_fixwork.aspx?pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, "_top", "Images/fullscreen.png")
-                Case Else
-                    REL("Přejít do pevných přehledů", "o23_fixwork.aspx?pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, "_top", "Images/fullscreen.png")
-                    REL("Přejít do obecných přehledů", "entity_framework.aspx?prefix=o23&pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
-            End Select
-            
+        If strFlag <> "pagemenu" Then
+            If factory.SysUser.j04IsMenu_Notepad Then
+                Select Case strFlag
+                    Case "o23_fixwork"
+                        REL("Přejít do obecného přehledu", "entity_framework.aspx?prefix=o23&pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
+                    Case ""
+                        REL("Přejít do pevného přehledu", "o23_fixwork.aspx?pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, "_top", "Images/fullscreen.png")
+                    Case Else
+                        REL("Přejít do pevného přehledu", "o23_fixwork.aspx?pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, "_top", "Images/fullscreen.png")
+                        REL("Přejít do obecného přehledu", "entity_framework.aspx?prefix=o23&pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
+                End Select
 
-        Else
-            CI(cRec.o23Name, "", True, "Images/information.png")
+
+            Else
+                CI(cRec.o23Name, "", True, "Images/information.png")
+            End If
         End If
+        
 
         If cDisp.OwnerAccess Then
             SEP()
@@ -615,8 +638,35 @@ Public Class handler_popupmenu
 
             CI("Kopírovat", "o23_record.aspx?clone=1&pid=" & intPID.ToString & "&x18id=" & cRec.x18ID.ToString, , "Images/copy.png")
         End If
+        If cX18.x18UploadFlag = BO.x18UploadENUM.FileSystemUpload And cRec.o23LockedFlag <> BO.o23LockedTypeENUM.LockAllFiles Then
+            Dim mq As New BO.myQueryO27
+            mq.Record_x29ID = BO.x29IdEnum.o23Doc
+            mq.Record_PID = cRec.PID
+            Dim lis As IEnumerable(Of BO.o27Attachment) = factory.o27AttachmentBL.GetList(mq)
+            If lis.Count > 0 Then
+                SEP()
+                CI(String.Format("Souborové přílohy ({0}x)", lis.Count), "fileupload_preview.aspx?prefix=o23&pid=" & cRec.PID.ToString, , "Images/attachment.png")
+            End If
+        End If
+        If cX18.b01ID <> 0 Then
+            CI("Posunout/Doplnit", "workflow_dialog.aspx?prefix=o23&pid=" & intPID.ToString, , "Images/workflow.png")
+        Else
+            CI("Nahrát přílohu, doplnit poznámku/komentář", "b07_create.aspx?masterprefix=o23&masterpid=" & cRec.PID.ToString, , "Images/comment.png")
+        End If
+
+        SEP()
+        CI("Tisková sestava", "report_modal.aspx?prefix=o23&pid=" & intPID.ToString, , "Images/report.png")
+        CI("Odeslat e-mail", "sendmail.aspx?prefix=o23&pid=" & cRec.PID.ToString, , "Images/email.png")
+
         SEP()
         CI("Oštítkovat", "tag_binding.aspx?prefix=o23&pids=" & intPID.ToString, , "Images/tag.png")
+        If strFlag = "pagemenu" Then
+            SEP()
+            CI("Plugin", "plugin_modal.aspx?prefix=o23&pid=" & cRec.PID.ToString, , "Images/plugin.png", True)
+            CI("Čárový kód", "barcode.aspx?prefix=o23&pid=" & cRec.PID.ToString, , "Images/barcode.png", True)
+        End If
+
+        
     End Sub
     Private Sub HandleX40(intPID As Integer, factory As BL.Factory)
         Dim cRec As BO.x40MailQueue = factory.x40MailQueueBL.Load(intPID)
@@ -719,8 +769,11 @@ Public Class handler_popupmenu
                 End If
             Next
         End If
-        CI("Odeslat e-mail", "sendmail.aspx?prefix=j02&pid=" & cRec.PID.ToString, , "Images/email.png")
-
+        If cRec.j02Email <> "" Then
+            SEP()
+            CI("Odeslat e-mail", "sendmail.aspx?prefix=j02&pid=" & cRec.PID.ToString, , "Images/email.png")
+        End If
+        
         If factory.SysUser.j04IsMenu_People Then
             SEP()
             CI("Oštítkovat", "tag_binding.aspx?prefix=j02&pids=" & intPID.ToString, , "Images/tag.png")

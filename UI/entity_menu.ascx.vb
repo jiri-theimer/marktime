@@ -644,7 +644,10 @@ Public Class entity_menu
 
             pm1.Attributes.Item("onclick") = "RCM('j02'," & cRec.PID.ToString & ",this,'pagemenu')"
             With linkPM
-                .Text = cRec.FullNameDesc & " <span class='lbl'>[" & cRec.j07Name & "]</span>"
+                .Text = cRec.FullNameDesc
+                If cRec.j07ID <> 0 Then .Text += " <span class='lbl'>[" & cRec.j07Name & "]</span>"
+                If cRec.j02JobTitle <> "" Then .Text += " <span class='lbl'>[" & cRec.j02JobTitle & "]</span>"
+                If Not cRec.j02IsIntraPerson Then .Font.Italic = True
                 .NavigateUrl = "j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
             End With
             Handle_ContextMenuBlackWhite(cRec.IsClosed)
