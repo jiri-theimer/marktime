@@ -105,6 +105,10 @@
         With Me.panIntraPerson
             Me.c21Name.Visible = .Visible
             Me.lblFond.Visible = .Visible
+            lblSMTP.Visible = .Visible
+            smtpAccount.Visible = .Visible
+            lblJ07Name.Visible = .Visible
+            j07Name.Visible = .Visible
         End With
 
         If cRec.j02IsIntraPerson Then

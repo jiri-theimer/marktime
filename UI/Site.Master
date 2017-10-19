@@ -186,7 +186,7 @@
                 return { width: width - 6, height: height - 6 };
             }
         </script>
-        <telerik:RadContextMenu ID="RadContextMenu1" runat="server" EnableViewState="false" Skin="Metro" ExpandDelay="0" RenderMode="Lightweight" OnClientHidden="RadContextMenu1_Hidden">
+        <telerik:RadContextMenu ID="RadContextMenu1" runat="server" EnableViewState="false" Skin="Metro" ExpandDelay="0" RenderMode="Lightweight" OnClientHidden="RadContextMenu1_Hidden" OnClientShown="RadContextMenu1_Shown">
             <CollapseAnimation Type="None" />
             <ExpandAnimation Type="None" />            
         </telerik:RadContextMenu>
@@ -319,21 +319,34 @@
         }
 
         var _lastCmClosedTime = null;
+        var _CmIsClosed = null;
+        var _CmLastGuid = null;
         
         function RadContextMenu1_Hidden(menu) {
             var d = new Date();
             _lastCmClosedTime = d.getTime();
+            _CmIsClosed = 1;
             
         }
+        function RadContextMenu1_Shown(menu) {
+            _CmIsClosed = 0;
+        }
+
        
-        function RCM(curPREFIX, curPID, ctl,strFlag) {
+        function RCM(curPREFIX, curPID, ctl, strFlag) {            
+            if (_CmLastGuid != curPREFIX + curPID) {
+                _CmIsClosed = 1;
+            }
             var d = new Date();
             var n = d.getTime();
            
             var contextMenu = $find("<%= RadContextMenu1.ClientID %>");
-            if (n - _lastCmClosedTime < 2) {
-                return;     //menu bylo zavřeno přes link volající přímo RCM
+            if (_CmIsClosed == 0 || n - _lastCmClosedTime < 2) {
+                return;     //n - _lastCmClosedTime < 2 - je tam kvůli newrec menu, které nefunguje přes onclick, ale přes href
             }
+
+            _CmIsClosed = 0;
+            _CmLastGuid = curPREFIX + curPID;
             
             $.ajax({
                 method: "POST",

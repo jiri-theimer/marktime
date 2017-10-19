@@ -93,17 +93,6 @@ Public Class handler_popupmenu
             SEP()
             CI("Zapsat WORKSHEET", "p31_record.aspx?p56id=" & intPID.ToString, cRec.IsClosed, "Images/worksheet.png")
         End If
-        SEP()
-        CI("Posunout/Doplnit", "workflow_dialog.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/workflow.png")
-        If cDisp.OwnerAccess Then
-            SEP()
-            CI("Upravit kartu úkolu", "p56_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
-            CI("Kopírovat", "p56_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
-            If strFlag = "pagemenu" Then
-                CI("Založit úkol", "p56_record.aspx?pid=0&p41id=" & cRec.p41ID.ToString & ";", , "Images/new4menu.png")
-            End If
-        End If
-
 
         Dim cDispP41 As BO.p41RecordDisposition = factory.p41ProjectBL.InhaleRecordDisposition(factory.p41ProjectBL.Load(cRec.p41ID))
         Dim mq As New BO.myQueryP31
@@ -131,6 +120,20 @@ Public Class handler_popupmenu
                 CI(ss, "entity_modal_approving.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/approve.png", False, True)
             End If
         End If
+
+        SEP()
+        CI("Posunout/Doplnit", "workflow_dialog.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/workflow.png")
+        If cDisp.OwnerAccess Then
+            SEP()
+            CI("Upravit kartu úkolu", "p56_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+            CI("Kopírovat", "p56_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
+            If strFlag = "pagemenu" Then
+                CI("Založit úkol", "p56_record.aspx?pid=0&p41id=" & cRec.p41ID.ToString & ";", , "Images/new4menu.png")
+            End If
+        End If
+
+
+        
 
 
         If factory.SysUser.j04IsMenu_Project And cRec.p41ID > 0 Then
@@ -224,7 +227,7 @@ Public Class handler_popupmenu
                     If cRec.p33ID = BO.p33IdENUM.Cas Then
                         CI("Rozdělit úkon na 2 kusy", "p31_record_split.aspx?pid=" & intPID.ToString, , "Images/split.png")
                     End If
-                    If cDisp.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Then
+                    If Not cRec.IsClosed And (cDisp.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit) Then
                         SEP()
                         CI("Schválit", "", , "Images/approve.png")
                         CI("Schvalovací dialog", "p31_approving_step2.aspx?pids=" & intPID.ToString, , "Images/approve.png", True, True)
@@ -270,6 +273,25 @@ Public Class handler_popupmenu
         End Select
 
         SEP()
+        If factory.SysUser.j04IsMenu_Notepad Then
+            Dim mqO23 As New BO.myQueryO23(0)
+            mqO23.Record_x29ID = BO.x29IdEnum.p31Worksheet
+            mqO23.RecordPID = cRec.PID
+            mqO23.MyRecordsDisponible = True
+            Dim lisO23 As IEnumerable(Of BO.o23Doc) = factory.o23DocBL.GetList(mqO23)
+            For Each c In lisO23
+                REL(c.NameWithComboName, "o23_fixwork.aspx?x18id=" & c.x18ID.ToString & "&pid=" & c.PID.ToString, "_top", "Images/notepad.png")
+            Next
+        End If
+        If cRec.j02ID_ContactPerson > 0 Then
+            Dim c As BO.j02Person = factory.j02PersonBL.Load(cRec.j02ID_ContactPerson)
+            If factory.SysUser.j04IsMenu_People Then
+                REL(c.FullNameDescWithJobTitle, "j02_framework.aspx?pid=" & cRec.j02ID_ContactPerson.ToString, "_top", "Images/contactperson.png")
+            Else
+                CI(c.FullNameDescWithJobTitle, "", True, "Images/contactperson.png")
+            End If
+        End If
+        
         If cRec.p56ID > 0 And strMasterPrefix <> "p56" Then
             If factory.SysUser.j04IsMenu_Task Then REL("Stránka úkolu", "p56_framework.aspx?pid=" & cRec.p56ID.ToString, "_top", "Images/task.png")
         End If

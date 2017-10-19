@@ -765,6 +765,7 @@ Public Class entity_framework
     End Sub
     Private Sub InhaleMyQuery_j02(ByRef mq As BO.myQueryJ02)
         With mq
+            .IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
             .MG_GridSqlColumns = Me.hidCols.Value
             .MG_GridGroupByField = CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList).SelectedValue
             .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value

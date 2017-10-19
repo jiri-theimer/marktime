@@ -139,11 +139,11 @@
                 return { width: width - 6, height: height - 6 };
             }
         </script>
-        <telerik:RadContextMenu ID="RadContextMenu1" runat="server" EnableViewState="false" Skin="Metro" ExpandDelay="0" RenderMode="Lightweight">
+        <telerik:RadContextMenu ID="RadContextMenu1" runat="server" EnableViewState="false" Skin="Metro" ExpandDelay="0" RenderMode="Lightweight" OnClientHidden="RadContextMenu1_Hidden" OnClientShown="RadContextMenu1_Shown">
             <CollapseAnimation Type="None" />
             <ExpandAnimation Type="None" />
         </telerik:RadContextMenu>
-
+        
     </form>
 
     <script type="text/javascript">
@@ -277,24 +277,31 @@
         function contReload(url, target) {
             window.open(url, target);
         }
-
-        var _lastCmClosedTime = null;
-
-        function RadContextMenu1_Hidden(menu) {
-            var d = new Date();
-            _lastCmClosedTime = d.getTime();
-
+        
+        
+        var _CmIsClosed = null;
+        var _CmLastGuid = null;
+        function RadContextMenu1_Hidden(menu) {            
+            _CmIsClosed = 1;                        
+        }
+        function RadContextMenu1_Shown(menu) {            
+            _CmIsClosed = 0;
         }
 
-        function RCM(curPREFIX, curPID, ctl, strFlag) {
-            var d = new Date();
-            var n = d.getTime();
-            
-            var contextMenu = $find("<%= RadContextMenu1.ClientID %>");
-            if (n - _lastCmClosedTime < 2) {
-                return;     //menu bylo zavřeno přes link volající přímo RCM
+        
+        function RCM(curPREFIX, curPID, ctl, strFlag) {                
+            if (_CmLastGuid != curPREFIX + curPID) {
+                _CmIsClosed = 1;
             }
-          
+            
+            var contextMenu = $find("<%= RadContextMenu1.ClientID %>");          
+            
+                        
+            if (_CmIsClosed == 0) {                
+                return;
+            }
+            _CmIsClosed = 0;
+            _CmLastGuid = curPREFIX + curPID;
 
             $.ajax({
                 method: "POST",

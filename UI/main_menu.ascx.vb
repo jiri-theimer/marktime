@@ -224,8 +224,9 @@ Public Class main_menu
                     .Nodes.Add(n)
                 End With
 
-            End If
+            End If            
             ns.Add(c.PID, n)
+          
         Next
 
         For Each n In nSeps
