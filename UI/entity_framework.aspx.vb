@@ -90,7 +90,7 @@ Public Class entity_framework
                     .Add("x18_querybuilder-text-" & Me.CurrentPrefix & "-grid")
                     .Add("o51_querybuilder-" & Me.CurrentPrefix)
                 End With
-                With CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList)
+                With cbxGroupBy
                     .DataSource = Master.Factory.j70QueryTemplateBL.GroupByPallet(Me.CurrentX29ID)
                     .DataBind()
                 End With
@@ -98,18 +98,18 @@ Public Class entity_framework
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                     If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
-                        Me.opgLayout.Value = "3" : FindNode("groupOther").FindControl("lblLayoutMessage").Visible = True
+                        Me.opgLayout.Value = "3" : lblLayoutMessage.Visible = True
 
                     Else
 
-                        FindNode("groupOther").FindControl("lblLayoutMessage").Visible = False
+                        lblLayoutMessage.Visible = False
                         opgLayout.Value = .GetUserParam(Me.CurrentPrefix + "_framework-layout", "1")
                         FindNode("layout" & opgLayout.Value).ImageUrl = "Images/checked.png"
 
                     End If
 
 
-                    basUI.SelectDropdownlistValue(CType(FindNode("groupOther").FindControl("cbxPaging"), DropDownList), .GetUserParam(Me.CurrentPrefix + "_framework-pagesize", "20"))
+                    basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam(Me.CurrentPrefix + "_framework-pagesize", "20"))
                     Dim strDefWidth As String = "435"
                     Select Case Me.CurrentPrefix
                         Case "o23", "p56", "p91" : strDefWidth = "600"
@@ -134,28 +134,28 @@ Public Class entity_framework
                     End Select
 
 
-                    basUI.SelectDropdownlistValue(CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList), .GetUserParam(Me.CurrentPrefix + "_framework-groupby"))
+                    basUI.SelectDropdownlistValue(cbxGroupBy, .GetUserParam(Me.CurrentPrefix + "_framework-groupby"))
 
                     ''Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_framework-groups-autoexpanded", "1"))
-                    CType(FindNode("groupOther").FindControl("chkCheckboxSelector"), DropDownList).SelectedValue = .GetUserParam(Me.CurrentPrefix + "_framework-checkbox_selector", "1")
+                    chkCheckboxSelector.SelectedValue = .GetUserParam(Me.CurrentPrefix + "_framework-checkbox_selector", "1")
                     If .GetUserParam(Me.CurrentPrefix + "_framework-sort") <> "" Then
                         grid1.radGridOrig.MasterTableView.SortExpressions.AddSortExpression(.GetUserParam(Me.CurrentPrefix + "_framework-sort"))
                     End If
                     strDefWidth = ""
                     If Me.CurrentPrefix = "p91" Then strDefWidth = "p91DateSupply"
-                    basUI.SelectDropdownlistValue(CType(FindNode("groupOther").FindControl("cbxPeriodType"), DropDownList), .GetUserParam(Me.CurrentPrefix + "_framework-periodtype", strDefWidth))
+                    basUI.SelectDropdownlistValue(cbxPeriodType, .GetUserParam(Me.CurrentPrefix + "_framework-periodtype", strDefWidth))
                     ''If Me.cbxQueryFlag.Visible Then basUI.SelectDropdownlistValue(Me.cbxQueryFlag, .GetUserParam(Me.CurrentPrefix + "_framework-queryflag"))
 
-                    If CType(FindNode("groupOther").FindControl("cbxPeriodType"), DropDownList).SelectedIndex > 0 Then
+                    If cbxPeriodType.SelectedIndex > 0 Then
                         period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                         period1.SelectedValue = .GetUserParam(Me.CurrentPrefix + "_framework-period")
                     End If
                     hidX18_value.Value = .GetUserParam("x18_querybuilder-value-" & Me.CurrentPrefix & "-grid")
-                    CType(FindNode("groupOther").FindControl("x18_querybuilder_info"), Label).Text = .GetUserParam("x18_querybuilder-text-" & Me.CurrentPrefix & "-grid")
+                    x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-" & Me.CurrentPrefix & "-grid")
 
                     Dim cPT As BO.QueryByTags = Master.Factory.o51TagBL.ParseQueryByTags(Me.CurrentPrefix, .GetUserParam("o51_querybuilder-" & Me.CurrentPrefix))
                     hidO51IDs.Value = cPT.o51IDsInline
-                    CType(FindNode("groupOther").FindControl("o51_querybuilder_info"), Label).Text = cPT.HtmlInline
+                    o51_querybuilder_info.Text = cPT.HtmlInline
                 End With
             End With
 
@@ -247,7 +247,7 @@ Public Class entity_framework
 
     Private Sub SetupPeriodQuery()
         ''Me.cbxQueryFlag.Visible = False
-        With CType(FindNode("groupOther").FindControl("cbxPeriodType"), DropDownList).Items
+        With cbxPeriodType.Items
             If .Count > 0 Then .Clear()
             .Add(New ListItem("--Nefiltrovat--", ""))
             Select Case Me.CurrentX29ID
@@ -319,7 +319,7 @@ Public Class entity_framework
                     If Not .Factory.SysUser.j04IsMenu_Invoice Then .StopPage("Nemáte přístup do modulu [FAKTURY].")
             End Select
             If Not .Factory.TestPermission(BO.x53PermValEnum.GR_GridTools) Then
-                FindNode("groupExport").Nodes.Clear() : FindNode("groupExport").Visible = False
+                FindNode("groupExport").Items.Clear() : FindNode("groupExport").Visible = False
             End If
             If opgLayout.Value = "3" Then
                 bolCanApprove = False
@@ -348,18 +348,16 @@ Public Class entity_framework
         
 
     End Sub
-    Private Function FindNode(strID As String) As NavigationNode
-        For Each n In mm1.GetAllNodes
-            If n.ID = strID Then Return n
-        Next
-        Return Nothing
+    Private Function FindNode(strValue As String) As RadMenuItem
+        Return menu1.FindItemByValue(strValue)
+
     End Function
-    Private Sub AppendNode(strText As String, strNavigateUrl As String, strImageUrl As String, strID As String)
-        Dim n As New NavigationNode(strText, strNavigateUrl)
+    Private Sub AppendNode(strText As String, strNavigateUrl As String, strImageUrl As String, strValue As String)
+        Dim n As New RadMenuItem(strText, strNavigateUrl)
         n.ImageUrl = strImageUrl
-        n.ID = strID
+        n.Value = strValue
         With FindNode("groupBatch")
-            .Nodes.Add(n)
+            .Items.Add(n)
         End With
     End Sub
 
@@ -369,10 +367,10 @@ Public Class entity_framework
         Me.hidDefaultSorting.Value = cJ70.j70OrderBy
 
         Dim cS As New UI.SetupDataGrid(Master.Factory, Me.grid1, cJ70)
-        cS.PageSize = BO.BAS.IsNullInt(CType(FindNode("groupOther").FindControl("cbxPaging"), DropDownList).SelectedValue)
+        cS.PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedValue)
         cS.AllowCustomPaging = True
         cS.AllowMultiSelect = True
-        cS.AllowMultiSelectCheckboxSelector = BO.BAS.BG(CType(FindNode("groupOther").FindControl("chkCheckboxSelector"), DropDownList).SelectedValue)
+        cS.AllowMultiSelectCheckboxSelector = BO.BAS.BG(chkCheckboxSelector.SelectedValue)
         cS.FilterSetting = strFilterSetting
         cS.FilterExpression = strFilterExpression
 
@@ -395,7 +393,7 @@ Public Class entity_framework
                 .radGridOrig.ShowFooter = True
             End If
         End With
-        With CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList).SelectedItem
+        With cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
         End With
     End Sub
@@ -447,7 +445,7 @@ Public Class entity_framework
             Case BO.x29IdEnum.p41Project
                 Dim mq As New BO.myQueryP41
                 With mq
-                    .MG_PageSize = BO.BAS.IsNullInt(CType(FindNode("groupOther").FindControl("cbxPaging"), DropDownList).SelectedValue)
+                    .MG_PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedValue)
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
                 End With
                 InhaleMyQuery_p41(mq)
@@ -462,7 +460,7 @@ Public Class entity_framework
             Case BO.x29IdEnum.p28Contact
                 Dim mq As New BO.myQueryP28
                 With mq
-                    .MG_PageSize = BO.BAS.IsNullInt(CType(FindNode("groupOther").FindControl("cbxPaging"), DropDownList).SelectedValue)
+                    .MG_PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedValue)
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
 
                 End With
@@ -479,7 +477,7 @@ Public Class entity_framework
             Case BO.x29IdEnum.p56Task
                 Dim mq As New BO.myQueryP56
                 With mq
-                    .MG_PageSize = BO.BAS.IsNullInt(CType(FindNode("groupOther").FindControl("cbxPaging"), DropDownList).SelectedValue)
+                    .MG_PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedValue)
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
 
                 End With
@@ -496,7 +494,7 @@ Public Class entity_framework
             Case BO.x29IdEnum.o23Doc
                 Dim mq As New BO.myQueryO23(0)
                 With mq
-                    .MG_PageSize = BO.BAS.IsNullInt(CType(FindNode("groupOther").FindControl("cbxPaging"), DropDownList).SelectedValue)
+                    .MG_PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedValue)
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
                 End With
                 InhaleMyQuery_o23(mq)
@@ -512,7 +510,7 @@ Public Class entity_framework
             Case BO.x29IdEnum.j02Person
                 Dim mq As New BO.myQueryJ02
                 With mq
-                    .MG_PageSize = BO.BAS.IsNullInt(CType(FindNode("groupOther").FindControl("cbxPaging"), DropDownList).SelectedValue)
+                    .MG_PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedValue)
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
                 End With
                 InhaleMyQuery_j02(mq)
@@ -528,7 +526,7 @@ Public Class entity_framework
             Case BO.x29IdEnum.p91Invoice
                 Dim mq As New BO.myQueryP91
                 With mq
-                    .MG_PageSize = BO.BAS.IsNullInt(CType(FindNode("groupOther").FindControl("cbxPaging"), DropDownList).SelectedValue)
+                    .MG_PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedValue)
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
                 End With
                 InhaleMyQuery_p91(mq)
@@ -555,7 +553,7 @@ Public Class entity_framework
     Private Sub InhaleMyQuery_p91(ByRef mq As BO.myQueryP91)
         With mq
             .MG_GridSqlColumns = Me.hidCols.Value
-            .MG_GridGroupByField = CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList).SelectedValue
+            .MG_GridGroupByField = cbxGroupBy.SelectedValue
             .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value
             .SpecificQuery = BO.myQueryP91_SpecificQuery.AllowedForRead
             .Closed = BO.BooleanQueryMode.NoQuery
@@ -563,9 +561,9 @@ Public Class entity_framework
                 Case "p41" : .p41ID = Me.CurrentMasterPID
                 Case "j02" : .j02ID = Me.CurrentMasterPID
                 Case "p28" : .p28ID = Me.CurrentMasterPID
-            End Select
+            End Select        
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
-            Select Case CType(FindNode("groupOther").FindControl("cbxPeriodType"), DropDownList).SelectedValue
+            Select Case cbxPeriodType.SelectedValue
                 Case "p91DateSupply" : .PeriodType = BO.myQueryP91_PeriodType.p91DateSupply
                 Case "p91DateMaturity" : .PeriodType = BO.myQueryP91_PeriodType.p91DateMaturity
                 Case "p91Date" : .PeriodType = BO.myQueryP91_PeriodType.p91Date
@@ -574,7 +572,7 @@ Public Class entity_framework
                 Case "p31Date"
                     .p31Date_D1 = period1.DateFrom : .p31Date_D2 = period1.DateUntil
             End Select
-            If CType(FindNode("groupOther").FindControl("cbxPeriodType"), DropDownList).SelectedValue <> "DateInsert" Then
+            If cbxPeriodType.SelectedValue <> "DateInsert" Then
                 .DateFrom = period1.DateFrom
                 .DateUntil = period1.DateUntil
             End If
@@ -589,8 +587,8 @@ Public Class entity_framework
                     .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
                 End If
             End If
-            If CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList).SelectedValue <> "" Then
-                Dim strPrimarySortField As String = CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList).SelectedValue
+            If cbxGroupBy.SelectedValue <> "" Then
+                Dim strPrimarySortField As String = cbxGroupBy.SelectedValue
                 If .MG_SortString = "" Then
                     .MG_SortString = strPrimarySortField
                 Else
@@ -608,7 +606,7 @@ Public Class entity_framework
     Private Sub InhaleMyQuery_o23(ByRef mq As BO.myQueryO23)
         With mq
             .MG_GridSqlColumns = Me.hidCols.Value
-            .MG_GridGroupByField = CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList).SelectedValue
+            .MG_GridGroupByField = cbxGroupBy.SelectedValue
             .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             Select Case Me.CurrentMasterPrefix
@@ -625,14 +623,14 @@ Public Class entity_framework
                     .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
                 End If
             End If
-            If CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList).SelectedValue <> "" Then
+            If cbxGroupBy.SelectedValue <> "" Then
                 If .MG_SortString = "" Then
-                    .MG_SortString = CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList).SelectedValue
+                    .MG_SortString = cbxGroupBy.SelectedValue
                 Else
-                    .MG_SortString = CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList).SelectedValue & "," & .MG_SortString
+                    .MG_SortString = cbxGroupBy.SelectedValue & "," & .MG_SortString
                 End If
             End If
-            Select Case CType(FindNode("groupOther").FindControl("cbxPeriodType"), DropDownList).SelectedValue
+            Select Case cbxPeriodType.SelectedValue
                 Case "DateInsert"
                     .DateInsertFrom = period1.DateFrom : .DateInsertUntil = period1.DateUntil
                 Case "o23Date"
@@ -653,7 +651,7 @@ Public Class entity_framework
     Private Sub InhaleMyQuery_p56(ByRef mq As BO.myQueryP56)
         With mq
             .MG_GridSqlColumns = Me.hidCols.Value
-            .MG_GridGroupByField = CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList).SelectedValue
+            .MG_GridGroupByField = cbxGroupBy.SelectedValue
             .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             Select Case Me.CurrentMasterPrefix
@@ -670,7 +668,7 @@ Public Class entity_framework
                 End If
             End If
 
-            Select Case CType(FindNode("groupOther").FindControl("cbxPeriodType"), DropDownList).SelectedValue
+            Select Case cbxPeriodType.SelectedValue
                 Case "DateInsert"
                     .DateInsertFrom = period1.DateFrom : .DateInsertUntil = period1.DateUntil
                 Case "p56PlanFrom"
@@ -693,7 +691,7 @@ Public Class entity_framework
     Private Sub InhaleMyQuery_p41(ByRef mq As BO.myQueryP41)
         With mq
             .MG_GridSqlColumns = Me.hidCols.Value
-            .MG_GridGroupByField = CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList).SelectedValue
+            .MG_GridGroupByField = cbxGroupBy.SelectedValue
             .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             Select Case Me.CurrentMasterPrefix
@@ -710,7 +708,7 @@ Public Class entity_framework
                 End If
             End If
 
-            Select Case CType(FindNode("groupOther").FindControl("cbxPeriodType"), DropDownList).SelectedValue
+            Select Case cbxPeriodType.SelectedValue
                 Case "DateInsert"
                     .DateInsertFrom = period1.DateFrom : .DateInsertUntil = period1.DateUntil
                 Case "p41PlanFrom"
@@ -733,7 +731,7 @@ Public Class entity_framework
     Private Sub InhaleMyQuery_p28(ByRef mq As BO.myQueryP28)
         With mq
             .MG_GridSqlColumns = Me.hidCols.Value
-            .MG_GridGroupByField = CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList).SelectedValue
+            .MG_GridGroupByField = cbxGroupBy.SelectedValue
             .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
@@ -749,7 +747,7 @@ Public Class entity_framework
                 .p28ParentID = Me.CurrentMasterPID
             End If
 
-            Select Case CType(FindNode("groupOther").FindControl("cbxPeriodType"), DropDownList).SelectedValue
+            Select Case cbxPeriodType.SelectedValue
                 Case "DateInsert"
                     .DateInsertFrom = period1.DateFrom : .DateInsertUntil = period1.DateUntil
                 Case "p31Date"
@@ -769,7 +767,7 @@ Public Class entity_framework
         With mq
             .IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
             .MG_GridSqlColumns = Me.hidCols.Value
-            .MG_GridGroupByField = CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList).SelectedValue
+            .MG_GridGroupByField = cbxGroupBy.SelectedValue
             .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             Select Case Me.CurrentMasterPrefix
@@ -784,14 +782,14 @@ Public Class entity_framework
                     .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
                 End If
             End If
-            If CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList).SelectedValue <> "" Then
+            If cbxGroupBy.SelectedValue <> "" Then
                 If .MG_SortString = "" Then
-                    .MG_SortString = CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList).SelectedValue
+                    .MG_SortString = cbxGroupBy.SelectedValue
                 Else
-                    .MG_SortString = CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList).SelectedValue & "," & .MG_SortString
+                    .MG_SortString = cbxGroupBy.SelectedValue & "," & .MG_SortString
                 End If
             End If
-            Select Case CType(FindNode("groupOther").FindControl("cbxPeriodType"), DropDownList).SelectedValue
+            Select Case cbxPeriodType.SelectedValue
                 Case "DateInsert"
                     .DateInsertFrom = period1.DateFrom : .DateInsertUntil = period1.DateUntil
                 Case "p31Date"
@@ -1110,13 +1108,13 @@ Public Class entity_framework
     Private Sub entity_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         designer1.ReloadUrl = GetReloadUrl()
 
-        If CType(FindNode("groupOther").FindControl("cbxPeriodType"), DropDownList).SelectedIndex > 0 Then
+        If cbxPeriodType.SelectedIndex > 0 Then
 
             With Me.period1
                 .Visible = True
                 If .SelectedValue <> "" Then
                     .BackColor = basUI.ColorQueryRGB
-                    
+
 
                 Else
                     .BackColor = Nothing
@@ -1143,10 +1141,10 @@ Public Class entity_framework
         ''    If opgLayout.SelectedValue = "1" Then Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & designer1.CurrentName
         ''End If
         If hidX18_value.Value <> "" Then
-            Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/><img src='Images/label.png'/>" & CType(FindNode("groupOther").FindControl("x18_querybuilder_info"), Label).Text & "<a href='javascript:clear_x18()' title='Zrušit filtr kategorií'><img src='Images/delete.png'></a>"
+            Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/><img src='Images/label.png'/>" & x18_querybuilder_info.Text & "<a href='javascript:clear_x18()' title='Zrušit filtr kategorií'><img src='Images/delete.png'></a>"
         End If
         If hidO51IDs.Value <> "" Then
-            Me.CurrentQuery.Text += CType(FindNode("groupOther").FindControl("o51_querybuilder_info"), Label).Text & "<a href='javascript:clear_o51()' title='Zrušit filtr štítků'><img src='Images/delete.png'></a>"
+            Me.CurrentQuery.Text += o51_querybuilder_info.Text & "<a href='javascript:clear_o51()' title='Zrušit filtr štítků'><img src='Images/delete.png'></a>"
 
         End If
         If panSearchbox.Visible Then
@@ -1216,13 +1214,13 @@ Public Class entity_framework
             Case "export"
                 Handle_Export()
             Case "chkCheckboxSelector"
-                Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-checkbox_selector", CType(FindNode("groupOther").FindControl("chkCheckboxSelector"), DropDownList).SelectedValue)
+                Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-checkbox_selector", chkCheckboxSelector.SelectedValue)
                 ReloadPage()
             Case "cbxGroupBy"
-                Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-groupby", CType(FindNode("groupOther").FindControl("cbxGroupBy"), DropDownList).SelectedValue)
+                Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-groupby", cbxGroupBy.SelectedValue)
                 ReloadPage()
             Case "cbxPaging"
-                Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-pagesize", CType(FindNode("groupOther").FindControl("cbxPaging"), DropDownList).SelectedValue)
+                Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-pagesize", cbxPaging.SelectedValue)
                 ReloadPage()
             Case "layout1", "layout2", "layout3"
                 Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-layout", Right(hidContextMenuFlag.Value, 1))
@@ -1235,7 +1233,7 @@ Public Class entity_framework
                     ''    period1.SelectedValue = .GetUserParam(Me.CurrentPrefix + "_framework-period")
                     ''End If
 
-                    .SetUserParam(Me.CurrentPrefix + "_framework-periodtype", CType(FindNode("groupOther").FindControl("cbxPeriodType"), DropDownList).SelectedValue)
+                    .SetUserParam(Me.CurrentPrefix + "_framework-periodtype", cbxPeriodType.SelectedValue)
                 End With
                 ReloadPage()
             Case "clear_o51"

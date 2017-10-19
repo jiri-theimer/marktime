@@ -302,7 +302,7 @@
         }
         function clear_o51() {
             context_menu_callback("clear_o51");
-            
+
         }
         function clear_x18() {
             context_menu_callback("clear_x18");
@@ -317,6 +317,30 @@
             sw_master("tag_binding.aspx?prefix=<%=me.CurrentPrefix%>&pids=" + pids, "Images/tag.png");
 
         }
+
+        var _lastMenuTime = null;
+
+        function menu1_Hidden(menu) {
+            var d = new Date();
+            _lastMenuTime = d.getTime();
+        }
+        function menu1_Shown(menu) {
+            //nic
+        }
+        function menu1_handle() {
+            var d = new Date();
+            var n = d.getTime();
+            var contextMenu = $find("<%= menu1.ClientID %>");
+
+            if (n - _lastMenuTime < 2) {
+                return;
+            }
+
+            var x = 0;
+            var y = 70;
+            contextMenu.showAt(x, y);
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -325,90 +349,12 @@
         <telerik:RadPane ID="navigationPane" runat="server" Width="353px" OnClientResized="AfterPaneResized" OnClientCollapsed="AfterPaneCollapsed" OnClientExpanded="AfterPaneExpanded" BackColor="white">
 
             <asp:Panel ID="panSearch" runat="server" Style="min-height: 42px; background-color: #f7f7f7;">
-               
-
-                <div class="commandcell" style="width: 40px;">
-                    <telerik:RadNavigation ID="mm1" runat="server" RenderMode="Lightweight"  MenuButtonPosition="Left" Skin="Metro">
-
-
-                        <Nodes>
-
-                            <telerik:NavigationNode Text="Rozvržení panelů" ImageUrl="Images/form.png" ID="groupLayout">
-                                <Nodes>
-                                    <telerik:NavigationNode Text="Levý panel (přehled) + pravý panel (detail)" NavigateUrl="javascript:context_menu_callback('layout1')" ID="layout1" ImageUrl="Images/unchecked.png"></telerik:NavigationNode>
-                                    <telerik:NavigationNode Text="Pouze jeden panel (přechod mezi přehledem a detailem)" NavigateUrl="javascript:context_menu_callback('layout3')" ID="layout3" ImageUrl="Images/unchecked.png"></telerik:NavigationNode>
-                                    <telerik:NavigationNode Text="Horní panel (přehled) + spodní panel (detail)" NavigateUrl="javascript:context_menu_callback('layout2')" ID="layout2" ImageUrl="Images/unchecked.png"></telerik:NavigationNode>
-                                </Nodes>
-                            </telerik:NavigationNode>
-
-                            <telerik:NavigationNode Text="Export záznamů v aktuálním přehledu" ImageUrl="Images/export.png" ID="groupExport">
-                                <Nodes>
-                                    <telerik:NavigationNode Text="Export" ID="export" NavigateUrl="javascript:context_menu_callback('export')" ImageUrl="Images/export.png" ToolTip="Export do MS EXCEL, plný počet záznamů"></telerik:NavigationNode>
-                                    <telerik:NavigationNode Text="XLS" ID="xls" ImageUrl="Images/xls.png" NavigateUrl="javascript:context_menu_callback('xls')" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů"></telerik:NavigationNode>
-                                    <telerik:NavigationNode Text="PDF" ID="pdf" ImageUrl="Images/pdf.png" NavigateUrl="javascript:context_menu_callback('pdf')" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů"></telerik:NavigationNode>
-                                    <telerik:NavigationNode Text="DOC" ID="doc" ImageUrl="Images/doc.png" NavigateUrl="javascript:context_menu_callback('doc')" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů"></telerik:NavigationNode>
-
-
-                                </Nodes>
-                            </telerik:NavigationNode>
-                            <telerik:NavigationNode Text="Operace nad vybranými (zaškrtlými) záznamy" ImageUrl="Images/batch.png" ID="groupBatch">
-                            </telerik:NavigationNode>
-                            <telerik:NavigationNode Text="Nastavení přehledu" ImageUrl="Images/griddesigner.png" ID="groupOther">
-                                <NodeTemplate>
-                                    <hr />
-                                    <div style="width: 400px; padding: 10px;">
-                                        <div>
-                                            <asp:Label ID="lblLayoutMessage" runat="server" CssClass="infoNotificationRed" Text="Z důvodu malého rozlišení displeje (pod 1280px) se automaticky zapnul režim jediného panelu s datovým přehledem." Visible="false"></asp:Label>
-                                        </div>
-                                        <div style="margin-top: 20px;">
-                                            <span>Filtrovat přehled podle období:</span>
-                                            <asp:DropDownList ID="cbxPeriodType" onchange="context_menu_callback('cbxPeriodType')" runat="server" ToolTip="Druh filtrovaného období">
-                                            </asp:DropDownList>
-                                        </div>
-                                        <div style="margin-top: 10px;">
-                                            <button type="button" onclick="o51_querybuilder()" style="width: 90px;">
-                                                <img src="Images/query.png" />Štítky</button>
-
-                                            <asp:Label ID="o51_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
-                                        </div>
-                                        <div>
-                                            <button type="button" onclick="x18_querybuilder()" style="width: 90px;">
-                                                <img src="Images/query.png" />Kategorie</button>
-
-                                            <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
-                                        </div>
-
-                                        <div style="margin-top: 20px;">
-                                            <asp:DropDownList ID="cbxGroupBy" runat="server" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField" onchange="context_menu_callback('cbxGroupBy')">
-                                            </asp:DropDownList>
-                                        
-                                        <span class="val" style="margin-left:50px;">Stránkování záznamů:</span>
-                                        <asp:DropDownList ID="cbxPaging" runat="server" onchange="context_menu_callback('cbxPaging')">
-                                            <asp:ListItem Text="20"></asp:ListItem>
-                                            <asp:ListItem Text="50" Selected="True"></asp:ListItem>
-                                            <asp:ListItem Text="100"></asp:ListItem>
-                                            <asp:ListItem Text="200"></asp:ListItem>
-                                            <asp:ListItem Text="500"></asp:ListItem>
-                                        </asp:DropDownList>
-                                        </div>
-
-
-                                        <div style="margin-top: 20px;">
-                                            <asp:DropDownList ID="chkCheckboxSelector" runat="server" onchange="context_menu_callback('chkCheckboxSelector')">
-                                                <asp:ListItem Text="Pro výběr (označení) záznamů nabízet i zaškrátávací checkbox" Value="1"></asp:ListItem>
-                                                <asp:ListItem Text="Výběr záznamů pouze myší a klávesami CTRL+SHFT" Value="0"></asp:ListItem>
-                                            </asp:DropDownList>
-
-                                        </div>
-                                        
-                                    </div>
-                                </NodeTemplate>
-                            </telerik:NavigationNode>
-                        </Nodes>
-                    </telerik:RadNavigation>
-                </div>
-
                 
+                <div style="float:left;padding-top:1px;padding-left:1px;">
+                    <a id="linkMenu" href="javascript:menu1_handle()" class="pp2"></a>
+
+                </div>                
+
                 <asp:Panel ID="panSearchbox" runat="server" CssClass="commandcell" Style="padding-left: 5px;">
                     <telerik:RadComboBox ID="cbx1" runat="server" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="100px" OnClientSelectedIndexChanged="cbx1_OnClientSelectedIndexChanged" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
                         <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
@@ -422,10 +368,10 @@
                 <div class="commandcell" style="padding-left: 4px;">
                     <uc:periodcombo ID="period1" runat="server" Width="160px"></uc:periodcombo>
                     <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
-                    
-                
+
+
                 </div>
-                
+
             </asp:Panel>
 
             <div style="clear: both; width: 100%;"></div>
@@ -463,6 +409,81 @@
             <asp:HiddenField ID="hidX18_value" runat="server" />
             <asp:HiddenField ID="hidO51IDs" runat="server" />
             <asp:HiddenField ID="opgLayout" runat="server" Value="1" />
+            <telerik:RadContextMenu ID="menu1" runat="server" Skin="Metro" ExpandDelay="0" RenderMode="Lightweight" OnClientHidden="menu1_Hidden" OnClientShown="menu1_Shown">
+                <CollapseAnimation Type="None" />
+                <ExpandAnimation Type="None" />
+                <Items>
+                    <telerik:RadMenuItem Text="Rozvržení panelů" ImageUrl="Images/form.png" Value="groupLayout">
+                        <Items>
+                            <telerik:RadMenuItem Text="Levý panel (přehled) + pravý panel (detail)" NavigateUrl="javascript:context_menu_callback('layout1')" Value="layout1" ImageUrl="Images/unchecked.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Pouze jeden panel (přechod mezi přehledem a detailem)" NavigateUrl="javascript:context_menu_callback('layout3')" Value="layout3" ImageUrl="Images/unchecked.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Horní panel (přehled) + spodní panel (detail)" NavigateUrl="javascript:context_menu_callback('layout2')" Value="layout2" ImageUrl="Images/unchecked.png"></telerik:RadMenuItem>
+                        </Items>
+                    </telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="Export záznamů v aktuálním přehledu" ImageUrl="Images/export.png" Value="groupExport">
+                        <Items>
+                            <telerik:RadMenuItem Text="Export" Value="export" NavigateUrl="javascript:context_menu_callback('export')" ImageUrl="Images/export.png" ToolTip="Export do MS EXCEL, plný počet záznamů"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="XLS" Value="xls" ImageUrl="Images/xls.png" NavigateUrl="javascript:context_menu_callback('xls')" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="PDF" Value="pdf" ImageUrl="Images/pdf.png" NavigateUrl="javascript:context_menu_callback('pdf')" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="DOC" Value="doc" ImageUrl="Images/doc.png" NavigateUrl="javascript:context_menu_callback('doc')" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů"></telerik:RadMenuItem>
+
+                        </Items>
+                    </telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="Operace nad vybranými (zaškrtlými) záznamy" ImageUrl="Images/batch.png" Value="groupBatch">
+                    </telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="Nastavení přehledu" ImageUrl="Images/griddesigner.png" value="groupOther">
+                        <ContentTemplate>
+                            <div style="width: 400px; padding: 10px;background-color:#f0f8ff;border:solid 1px gray;">
+                                        <div>
+                                            <asp:Label ID="lblLayoutMessage" runat="server" CssClass="infoNotificationRed" Text="Z důvodu malého rozlišení displeje (pod 1280px) se automaticky zapnul režim jediného panelu s datovým přehledem." Visible="false"></asp:Label>
+                                        </div>
+                                        <div style="margin-top: 20px;">
+                                            <span>Filtrovat přehled podle období:</span>
+                                            <asp:DropDownList ID="cbxPeriodType" onchange="context_menu_callback('cbxPeriodType')" runat="server" ToolTip="Druh filtrovaného období">
+                                            </asp:DropDownList>
+                                        </div>
+                                        <div style="margin-top: 10px;">
+                                            <button type="button" onclick="o51_querybuilder()" style="width: 90px;">
+                                                <img src="Images/query.png" />Štítky</button>
+
+                                            <asp:Label ID="o51_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
+                                        </div>
+                                        <div>
+                                            <button type="button" onclick="x18_querybuilder()" style="width: 90px;">
+                                                <img src="Images/query.png" />Kategorie</button>
+
+                                            <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
+                                        </div>
+
+                                        <div style="margin-top: 20px;">
+                                            <asp:DropDownList ID="cbxGroupBy" runat="server" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField" onchange="context_menu_callback('cbxGroupBy')">
+                                            </asp:DropDownList>
+
+                                            <span class="val" style="margin-left: 50px;">Stránkování záznamů:</span>
+                                            <asp:DropDownList ID="cbxPaging" runat="server" onchange="context_menu_callback('cbxPaging')">
+                                                <asp:ListItem Text="20"></asp:ListItem>
+                                                <asp:ListItem Text="50" Selected="True"></asp:ListItem>
+                                                <asp:ListItem Text="100"></asp:ListItem>
+                                                <asp:ListItem Text="200"></asp:ListItem>
+                                                <asp:ListItem Text="500"></asp:ListItem>
+                                            </asp:DropDownList>
+                                        </div>
+
+
+                                        <div style="margin-top: 20px;">
+                                            <asp:DropDownList ID="chkCheckboxSelector" runat="server" onchange="context_menu_callback('chkCheckboxSelector')">
+                                                <asp:ListItem Text="Pro výběr (označení) záznamů nabízet i zaškrátávací checkbox" Value="1"></asp:ListItem>
+                                                <asp:ListItem Text="Výběr záznamů pouze myší a klávesami CTRL+SHFT" Value="0"></asp:ListItem>
+                                            </asp:DropDownList>
+
+                                        </div>
+
+                                    </div>
+                        </ContentTemplate>
+                    </telerik:RadMenuItem>
+                </Items>
+            </telerik:RadContextMenu>
         </telerik:RadPane>
         <telerik:RadSplitBar ID="RadSplitbar1" runat="server" CollapseMode="Forward">
         </telerik:RadSplitBar>

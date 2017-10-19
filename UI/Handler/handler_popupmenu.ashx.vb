@@ -913,7 +913,7 @@ Public Class handler_popupmenu
             If .j04IsMenu_Worksheet Then
                 CI("Zapsat worksheet", "p31_record.aspx?pid=0", , "Images/worksheet.png")
                 Dim lis As IEnumerable(Of BO.p34ActivityGroup) = factory.p34ActivityGroupBL.GetList_WorksheetEntry_InAllProjects(factory.SysUser.j02ID)
-                If lis.Count > 0 Then
+                If lis.Count > 0 And lis.Count <= 10 Then
                     For Each c In lis
                         CI("[" & c.p34Name & "]", "p31_record.aspx?pid=0&p34id=" + c.PID.ToString, , "Images/worksheet.png", True)
                     Next

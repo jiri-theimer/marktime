@@ -41,114 +41,6 @@ Partial Public Class entity_framework
     Protected WithEvents panSearch As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''mm1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents mm1 As Global.Telerik.Web.UI.RadNavigation
-
-    '''<summary>
-    '''groupLayout control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents groupLayout As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''layout1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents layout1 As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''layout3 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents layout3 As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''layout2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents layout2 As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''groupExport control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents groupExport As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''export control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents export As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''xls control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents xls As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''pdf control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents pdf As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''doc control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents doc As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''groupBatch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents groupBatch As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
-    '''groupOther control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents groupOther As Global.Telerik.Web.UI.NavigationNode
-
-    '''<summary>
     '''panSearchbox control.
     '''</summary>
     '''<remarks>
@@ -390,6 +282,78 @@ Partial Public Class entity_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents opgLayout As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''menu1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadContextMenu
+
+    '''<summary>
+    '''lblLayoutMessage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblLayoutMessage As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cbxPeriodType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxPeriodType As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''o51_querybuilder_info control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o51_querybuilder_info As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x18_querybuilder_info control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18_querybuilder_info As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cbxGroupBy control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxGroupBy As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cbxPaging control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''chkCheckboxSelector control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkCheckboxSelector As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''RadSplitbar1 control.
