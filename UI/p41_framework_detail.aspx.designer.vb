@@ -95,6 +95,15 @@ Partial Public Class p41_framework_detail
     Protected WithEvents lblClient As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''pmClient control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pmClient As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''Client control.
     '''</summary>
     '''<remarks>

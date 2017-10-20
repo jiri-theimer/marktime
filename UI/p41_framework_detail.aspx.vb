@@ -138,9 +138,10 @@
                     Me.Client.NavigateUrl = "p28_framework.aspx?pid=" & .p28ID_Client.ToString
                 End If
                 cClient = Master.Factory.p28ContactBL.Load(.p28ID_Client)
+                Me.pmClient.Attributes.Item("onclick") = "RCM('p28'," & .p28ID_Client.ToString & ",this)"
                 Me.clue_client.Attributes("rel") = "clue_p28_record.aspx?pid=" & .p28ID_Client.ToString
             Else
-                Me.clue_client.Visible = False : Me.Client.Visible = False
+                Me.clue_client.Visible = False : Me.Client.Visible = False : pmClient.Visible = False
             End If
             If .p28ID_Billing > 0 Then
                 lblClientBilling.Visible = True : Me.ClientBilling.Visible = True

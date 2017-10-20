@@ -32,8 +32,8 @@
                 </div>
                 <div class="content">
                     <asp:RadioButtonList ID="j02IsIntraPerson" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
-                        <asp:ListItem Text="<%$ Resources:j02_record, j02IsIntraPerson_1 %>" Value="1" Selected="true"></asp:ListItem>
-                        <asp:ListItem Text="<%$ Resources:j02_record, j02IsIntraPerson_0 %>" Value="0"></asp:ListItem>
+                        <asp:ListItem Text="Interní osoba - možnost svázat s uživatelským účtem" Value="1" Selected="true"></asp:ListItem>
+                        <asp:ListItem Text="Kontaktní osoba u klienta nebo u projektu" Value="0"></asp:ListItem>
                     </asp:RadioButtonList>
 
                 </div>

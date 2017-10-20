@@ -81,6 +81,16 @@ Public Class handler_popupmenu
                 CI(cRec.FullName, "", True, "Images/information.png")
             End If
         End If
+
+        If cDisp.OwnerAccess Then
+            SEP()
+            CI("Upravit kartu úkolu", "p56_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+            CI("Kopírovat", "p56_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
+            If strFlag = "pagemenu" Then
+                CI("Založit úkol", "p56_record.aspx?pid=0&p41id=" & cRec.p41ID.ToString & ";", , "Images/new4menu.png")
+            End If
+        End If
+
         Dim cP41 As BO.p41Project = factory.p41ProjectBL.Load(cRec.p41ID)
 
         If cDisp.P31_Create Then
@@ -123,14 +133,7 @@ Public Class handler_popupmenu
 
         SEP()
         CI("Posunout/Doplnit", "workflow_dialog.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/workflow.png")
-        If cDisp.OwnerAccess Then
-            SEP()
-            CI("Upravit kartu úkolu", "p56_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
-            CI("Kopírovat", "p56_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
-            If strFlag = "pagemenu" Then
-                CI("Založit úkol", "p56_record.aspx?pid=0&p41id=" & cRec.p41ID.ToString & ";", , "Images/new4menu.png")
-            End If
-        End If
+        
 
 
         
@@ -338,6 +341,12 @@ Public Class handler_popupmenu
                     CI("Skrytý odpis", "javascript:ContextMenu_Approve(3," & cRec.PID.ToString & ")", , "Images/a13.gif", True)
                     CI("Fakturovat později", "javascript:ContextMenu_Approve(7," & cRec.PID.ToString & ")", , "Images/a17.gif", True)
                     CI("Vyčistit schvalování", "javascript:ContextMenu_Approve(0," & cRec.PID.ToString & ")", , "Images/clear.png", True)
+
+                    If factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator) Then
+                        SEP()
+                        CI("Fakturovat", "p91_create_step1.aspx?nogateway=1&prefix=p31&pid=" & intPID.ToString, , "Images/billing.png", False, True)
+                    End If
+
                 End If
             Case BO.p31RecordState.Invoiced
                 If strMasterPrefix = "p91" Then
@@ -408,6 +417,23 @@ Public Class handler_popupmenu
         Else
             CI(cRec.p28Name, "", True, "Images/information.png")
         End If
+
+        If cDisp.OwnerAccess Then
+            SEP()
+            CI("Upravit kartu klienta", "p28_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+            CI("Kopírovat", "p28_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
+        End If
+        If strFlag = "pagemenu" Then
+            If factory.TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator) Then
+                CI("Založit klienta", "javascript:record_new();", , "Images/new4menu.png")
+            End If
+            If cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.ClientAndSupplier Or cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.ClientOnly Then
+                If factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then
+                    CI("Založit pro klienta nový projekt", "p41_create.aspx?p28id=" & cRec.PID.ToString, , "Images/new4menu.png")
+                End If
+            End If
+        End If
+
         Dim bolCanInvoice As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator), bolInvoicing As Boolean = False
 
         If (factory.SysUser.IsApprovingPerson Or bolCanInvoice) And cRec.p28SupplierFlag <> BO.p28SupplierFlagENUM.NotClientNotSupplier Then
@@ -430,12 +456,12 @@ Public Class handler_popupmenu
 
                 CI(ss, "entity_modal_approving.aspx?prefix=p28&pid=" & intPID.ToString, , "Images/approve.png", False, True)
 
-                If bolCanInvoice Then CI("Fakturovat", "", , "Images/invoice.png") : bolInvoicing = True
+                If bolCanInvoice Then CI("Fakturovat", "", , "Images/billing.png") : bolInvoicing = True
                 If bolCanInvoice And intAPPx > 0 Then
-                    CI(String.Format("Fakturovat schválené úkony ({0}x)", intAPPx.ToString), "p91_create_step1.aspx?nogateway=1&prefix=p28&pid=" & intPID.ToString, , "Images/invoice.png", True, True)
+                    CI(String.Format("Fakturovat schválené úkony ({0}x)", intAPPx.ToString), "p91_create_step1.aspx?nogateway=1&prefix=p28&pid=" & intPID.ToString, , "Images/billing.png", True, True)
                 End If
                 If bolCanInvoice And intAPPx = 0 And intWIPx > 0 Then
-                    CI(String.Format("Fakturovat bez schvalování ({0}x+{1}x)", intWIPx, intAPPx), "entity_modal_invoicing.aspx?prefix=p28&pids=" & intPID.ToString, , "Images/invoice.png", True, True)
+                    CI(String.Format("Fakturovat bez schvalování ({0}x+{1}x)", intWIPx, intAPPx), "entity_modal_invoicing.aspx?prefix=p28&pids=" & intPID.ToString, , "Images/billing_blue.png", True, True)
                 End If
                 If factory.SysUser.j04IsMenu_Invoice Then
                     If cSum.Last_p91ID > 0 Then
@@ -449,24 +475,10 @@ Public Class handler_popupmenu
         End If
         If bolCanInvoice Then
             If Not bolInvoicing Then CI("Fakturovat", "", , "Images/invoice.png")
-            CI("Fakturovat jednou částkou bez úkonů", "p91_create_step1.aspx?quick=1&prefix=p28&pid=" & intPID.ToString, , "Images/invoice.png", True, True)
+            CI("Fakturovat jednou částkou bez úkonů", "p91_create_step1.aspx?quick=1&prefix=p28&pid=" & intPID.ToString, , "Images/billing_green.png", True, True)
         End If
 
-        If cDisp.OwnerAccess Then
-            SEP()
-            CI("Upravit kartu klienta", "p28_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
-            CI("Kopírovat", "p28_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
-        End If
-        If strFlag = "pagemenu" Then
-            If factory.TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator) Then
-                CI("Založit klienta", "javascript:record_new();", , "Images/new4menu.png")
-            End If
-            If cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.ClientAndSupplier Or cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.ClientOnly Then
-                If factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then
-                    CI("Založit pro klienta nový projekt", "p41_create.aspx?p28id=" & cRec.PID.ToString, , "Images/new4menu.png")
-                End If
-            End If
-        End If
+        
         If cRec.b02ID > 0 Then
             SEP()
             CI("Posunout/doplnit", "workflow_dialog.aspx?prefix=p28&pid=" & cRec.PID.ToString, , "Images/workflow.png")
@@ -521,9 +533,20 @@ Public Class handler_popupmenu
             CI(cRec.PrefferedName, "", True, "Images/information.png")
         End If
 
+        Dim cDisp As BO.p41RecordDisposition = factory.p41ProjectBL.InhaleRecordDisposition(cRec)
+
+        If cDisp.OwnerAccess Then
+            SEP()
+            CI("Upravit kartu projektu", "p41_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
+            CI("Kopírovat", "p41_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
+        End If
+        If strFlag = "pagemenu" And factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then
+            CI("Založit projekt", "p41_create.aspx?client_family=1&pid=" & intPID.ToString, , "Images/new4menu.png")
+            CI("Založit pod-projekt", "p41_create.aspx?client_family=1&pid=" & cRec.PID & "&create_parent=1", , "Images/tree.png")
+        End If
+
 
         Dim cP42 As BO.p42ProjectType = factory.p42ProjectTypeBL.Load(cRec.p42ID)
-        Dim cDisp As BO.p41RecordDisposition = factory.p41ProjectBL.InhaleRecordDisposition(cRec)
         If Not cDisp.ReadAccess Then CI("Nemáte přístup k tomuto projektu.", "", True) : Return
         If cP42.p42IsModule_p31 Then
             If Not (cRec.IsClosed Or cRec.p41IsDraft) Then
@@ -562,12 +585,12 @@ Public Class handler_popupmenu
                     If intWIPx > 0 And intAPPx > 0 Then ss = String.Format("Schválit ({0}x)/přes-schválit ({1}x)", intWIPx, intAPPx)
                     CI(ss, "entity_modal_approving.aspx?prefix=p41&pid=" & intPID.ToString, , "Images/approve.png", False, True)
                 End If
-                If bolCanInvoice Then CI("Fakturovat", "", , "Images/invoice.png") : bolInvoicing = True
+                If bolCanInvoice Then CI("Fakturovat", "", , "Images/billing.png") : bolInvoicing = True
                 If bolCanInvoice And intAPPx > 0 Then
-                    CI(String.Format("Fakturovat schválené úkony ({0}x)", intAPPx.ToString), "p91_create_step1.aspx?nogateway=1&prefix=p41&pid=" & intPID.ToString, , "Images/invoice.png", True) : bolInvoicing = True
+                    CI(String.Format("Fakturovat schválené úkony ({0}x)", intAPPx.ToString), "p91_create_step1.aspx?nogateway=1&prefix=p41&pid=" & intPID.ToString, , "Images/billing.png", True) : bolInvoicing = True
                 End If
                 If bolCanInvoice And intAPPx = 0 And intWIPx > 0 Then
-                    CI(String.Format("Fakturovat bez schvalování ({0}x+{1}x)", intWIPx, intAPPx), "entity_modal_invoicing.aspx?prefix=p41&pids=" & intPID.ToString, , "Images/invoice.png", True) : bolInvoicing = True
+                    CI(String.Format("Fakturovat bez schvalování ({0}x+{1}x)", intWIPx, intAPPx), "entity_modal_invoicing.aspx?prefix=p41&pids=" & intPID.ToString, , "Images/billing_blue.png", True) : bolInvoicing = True
                 End If
 
                 If factory.SysUser.j04IsMenu_Invoice Then
@@ -580,23 +603,15 @@ Public Class handler_popupmenu
                 End If
             End If
             If bolCanInvoice Then
-                If Not bolInvoicing Then CI("Fakturovat", "", , "Images/invoice.png")
-                CI("Fakturovat jednou částkou bez úkonů", "p91_create_step1.aspx?quick=1&prefix=p41&pid=" & intPID.ToString, , "Images/invoice.png", True)
+                If Not bolInvoicing Then CI("Fakturovat", "", , "Images/billing.png")
+                CI("Fakturovat jednou částkou bez úkonů", "p91_create_step1.aspx?quick=1&prefix=p41&pid=" & intPID.ToString, , "Images/billing_green.png", True)
             End If
             
 
         End If
         
 
-        If cDisp.OwnerAccess Then
-            SEP()
-            CI("Upravit kartu projektu", "p41_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
-            CI("Kopírovat", "p41_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
-        End If
-        If strFlag = "pagemenu" And factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then
-            CI("Založit projekt", "p41_create.aspx?client_family=1&pid=" & intPID.ToString, , "Images/new4menu.png")
-            CI("Založit pod-projekt", "p41_create.aspx?client_family=1&pid=" & cRec.PID & "&create_parent=1", , "Images/tree.png")
-        End If
+        
         If cRec.b01ID > 0 Then
             SEP()
             CI("Posunout/doplnit", "cmdWorkflow", "workflow_dialog.aspx?prefix=p41&pid=" & cRec.PID.ToString, "Images/workflow.png")

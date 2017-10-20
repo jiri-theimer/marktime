@@ -132,7 +132,7 @@
 
                     </td>
                     <td>
-
+                        <asp:HyperLink ID="pmClient" runat="server" NavigateUrl="#" CssClass="pp1"></asp:HyperLink>
                         <asp:HyperLink ID="Client" runat="server" NavigateUrl="#" Target="_top" CssClass="value_link"></asp:HyperLink>
                         <asp:HyperLink ID="clue_client" runat="server" CssClass="reczoom" Text="i" title="Detail klienta"></asp:HyperLink>
                         <asp:Image ID="imgFlag_Client" runat="server" />

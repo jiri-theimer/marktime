@@ -211,10 +211,10 @@
     }
 
     function batch_approve(p72id) {
-        var pids = GetAllSelectedPIDs();
-        if (pids == "" || pids == null) {
-            $.alert("Není vybrán záznam.");
-            return
+        var pids = GetAllSelectedPIDs();        
+        if (pids == "") {
+            alert("Není vybrán záznam.");
+            return;
         }
 
         $.post("Handler/handler_approve.ashx", { pids: pids, p72id: p72id }, function (data) {
