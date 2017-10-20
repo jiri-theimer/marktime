@@ -391,10 +391,23 @@ Public Class p91_framework_detail
     Private Sub SetupGrid()
         With Master.Factory.j70QueryTemplateBL
             Dim cJ70 As BO.j70QueryTemplate = .Load(designer1.CurrentJ70ID)
+            Dim cS As New SetupDataGrid(Master.Factory, grid1, cJ70)
+            With cS
+                .PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
+                .AllowCustomPaging = True
+                .AllowMultiSelect = True
+                .AllowMultiSelectCheckboxSelector = True
+                .MasterPrefix = "p91"
+            End With
+            Dim cG As PreparedDataGrid = basUIMT.PrepareDataGrid(cS)
+            hidCols.Value = cG.Cols
+            Me.hidFrom.Value = cG.AdditionalFROM
 
-            Dim strF As String = ""
-            Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, CInt(Me.cbxPaging.SelectedValue), True, True, , , , , strF, , , "p91")
-            Me.hidFrom.Value = strF
+
+
+            ''Dim strF As String = ""
+            ''Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, CInt(Me.cbxPaging.SelectedValue), True, True, , , , , strF, , , "p91")
+            ''Me.hidFrom.Value = strF
         End With
 
 

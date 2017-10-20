@@ -62,12 +62,23 @@ Public Class p91_subgrid
         
 
         Dim cJ70 As BO.j70QueryTemplate = Me.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
-      
-
         Me.hidDefaultSorting.Value = cJ70.j70OrderBy
-        Dim strAddSqlFrom As String = ""
-        Me.hidCols.Value = basUIMT.SetupDataGrid(Me.Factory, Me.gridP91, cJ70, CInt(Me.cbxPaging.SelectedValue), False, False, False, , , , strAddSqlFrom)
-        Me.hidFrom.Value = strAddSqlFrom
+
+        Dim cS As New SetupDataGrid(Me.Factory, gridP91, cJ70)
+        With cS
+            .PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
+            .AllowCustomPaging = False
+            .AllowMultiSelect = False
+            .AllowMultiSelectCheckboxSelector = False
+        End With
+        Dim cG As PreparedDataGrid = basUIMT.PrepareDataGrid(cS)
+        hidCols.Value = cG.Cols
+        Me.hidFrom.Value = cG.AdditionalFROM
+        
+        ''Me.hidDefaultSorting.Value = cJ70.j70OrderBy
+        ''Dim strAddSqlFrom As String = ""
+        'Me.hidCols.Value = basUIMT.SetupDataGrid(Me.Factory, Me.gridP91, cJ70, CInt(Me.cbxPaging.SelectedValue), False, False, False, , , , strAddSqlFrom)
+        ''Me.hidFrom.Value = strAddSqlFrom
        
     End Sub
 

@@ -77,10 +77,23 @@ Public Class p56_subgrid
         If cJ70.j70ColumnNames.IndexOf("ReceiversInLine") > 0 Then Me.hidReceiversInLine.Value = "1" Else Me.hidReceiversInLine.Value = ""
         If cJ70.j70ColumnNames.IndexOf("Hours_Orig") > 0 Or cJ70.j70ColumnNames.IndexOf("Expenses_Orig") > 0 Then Me.hidTasksWorksheetColumns.Value = "1" Else Me.hidTasksWorksheetColumns.Value = ""
         Me.hidDefaultSorting.Value = cJ70.j70OrderBy
-        Dim strAddSqlFrom As String = "", strSqlSumCols As String = ""
-        Me.hidCols.Value = basUIMT.SetupDataGrid(Me.Factory, Me.gridP56, cJ70, CInt(Me.cbxPaging.SelectedValue), True, Not _curIsExport, True, , , , strAddSqlFrom, , strSqlSumCols)
-        Me.hidFrom.Value = strAddSqlFrom
-        Me.hidSumCols.Value = strSqlSumCols
+
+        Dim cS As New SetupDataGrid(Me.Factory, gridP56, cJ70)
+        With cS
+            .PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
+            .AllowCustomPaging = True
+            .AllowMultiSelect = Not _curIsExport
+            .AllowMultiSelectCheckboxSelector = True
+        End With
+        Dim cG As PreparedDataGrid = basUIMT.PrepareDataGrid(cS)
+        hidCols.Value = cG.Cols
+        Me.hidFrom.Value = cG.AdditionalFROM
+        Me.hidSumCols.Value = cG.SumCols
+
+        ''Dim strAddSqlFrom As String = "", strSqlSumCols As String = ""
+        ''Me.hidCols.Value = basUIMT.SetupDataGrid(Me.Factory, Me.gridP56, cJ70, CInt(Me.cbxPaging.SelectedValue), True, Not _curIsExport, True, , , , strAddSqlFrom, , strSqlSumCols)
+        ''Me.hidFrom.Value = strAddSqlFrom
+        ''Me.hidSumCols.Value = strSqlSumCols
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
         End With

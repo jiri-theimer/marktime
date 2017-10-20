@@ -194,6 +194,8 @@ Public Class entity_menu
         If cDisp Is Nothing Then cDisp = Me.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
         Dim cP42 As BO.p42ProjectType = Me.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
         p41_SetupTabs(cRecSum, cP42, cDisp)
+        Handle_TestIfCanApproveOrInvoice(cRec, cP42, cDisp)
+
         If Factory.SysUser.j03PageMenuFlag = 0 Then
             menu1.Nodes.Clear()
             menu1.Visible = False
@@ -244,7 +246,20 @@ Public Class entity_menu
         End If
     End Sub
 
-
+    Private Sub Handle_TestIfCanApproveOrInvoice(cRec As BO.p41Project, cP42 As BO.p42ProjectType, cDisp As BO.p41RecordDisposition)
+        Dim bolCanApproveOrInvoice As Boolean = Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver, BO.x53PermValEnum.GR_P91_Creator)
+        If cP42.p42IsModule_p31 Then
+            If Not bolCanApproveOrInvoice Then bolCanApproveOrInvoice = Me.Factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator)
+            If bolCanApproveOrInvoice = False And cDisp.x67IDs.Count > 0 Then
+                Dim lisO28 As IEnumerable(Of BO.o28ProjectRole_Workload) = Me.Factory.x67EntityRoleBL.GetList_o28(cDisp.x67IDs)
+                If lisO28.Where(Function(p) p.o28PermFlag = BO.o28PermFlagENUM.CistASchvalovatVProjektu Or p.o28PermFlag = BO.o28PermFlagENUM.CistAEditASchvalovatVProjektu).Count > 0 Then
+                    bolCanApproveOrInvoice = True
+                End If
+            End If
+            
+        End If
+        hidIsCanApprove.Value = BO.BAS.GB(bolCanApproveOrInvoice)
+    End Sub
 
     Private Sub p41_SetupMenu(cRec As BO.p41Project, cP42 As BO.p42ProjectType, cDisp As BO.p41RecordDisposition)
         If cRec.IsClosed Then menu1.Skin = "Black"
@@ -264,23 +279,14 @@ Public Class entity_menu
             ami("Kopírovat", "cmdCopy", "javascript:record_clone();", "Images/copy.png", mi, "Nový projekt se kompletně předvyplní podle vzoru tohoto záznamu.")
             ami("Založit pod-projekt", "cmdNewChild", "javascript:record_new_child();", "Images/tree.png", mi, "Nový projekt bude pod-projektem aktuálního projektu.")
         End If
-        If cP42.p42IsModule_p31 Then
-            Dim bolCanApproveOrInvoice As Boolean = Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver, BO.x53PermValEnum.GR_P91_Creator)
-            If Not bolCanApproveOrInvoice Then bolCanApproveOrInvoice = Me.Factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator)
-            If bolCanApproveOrInvoice = False And cDisp.x67IDs.Count > 0 Then
-                Dim lisO28 As IEnumerable(Of BO.o28ProjectRole_Workload) = Me.Factory.x67EntityRoleBL.GetList_o28(cDisp.x67IDs)
-                If lisO28.Where(Function(p) p.o28PermFlag = BO.o28PermFlagENUM.CistASchvalovatVProjektu Or p.o28PermFlag = BO.o28PermFlagENUM.CistAEditASchvalovatVProjektu).Count > 0 Then
-                    bolCanApproveOrInvoice = True
-                End If
+        
+        If Me.IsExactApprovingPerson Then
+            ami("Schvalovat nebo vystavit fakturu", "cmdApprove", "javascript:approve();", "Images/approve.png", mi, , True)
+            If Factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator, BO.x53PermValEnum.GR_P31_Approver) Then
+                ami("Fakturovat bez schvalování", "cmdDraft", "javascript:menu_p41_invoice_draft();", "Images/invoice.png", mi)
             End If
-            If bolCanApproveOrInvoice Then
-                ami("Schvalovat nebo vystavit fakturu", "cmdApprove", "javascript:approve();", "Images/approve.png", mi, , True)
-                If Factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator, BO.x53PermValEnum.GR_P31_Approver) Then
-                    ami("Fakturovat bez schvalování", "cmdDraft", "javascript:menu_p41_invoice_draft();", "Images/invoice.png", mi)
-                End If
-            End If
-            Me.hidIsCanApprove.Value = BO.BAS.GB(bolCanApproveOrInvoice)
         End If
+        
         If cRec.b01ID > 0 Then
             ami("Posunout/doplnit", "cmdWorkflow", "javascript:workflow();", "Images/workflow.png", mi, , True)
         End If

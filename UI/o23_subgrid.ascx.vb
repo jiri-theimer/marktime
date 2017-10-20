@@ -52,12 +52,21 @@ Public Class o23_subgrid
 
     Private Sub SetupgridO23()
         Dim cJ70 As BO.j70QueryTemplate = Me.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
-       
-
         Me.hidDefaultSorting.Value = cJ70.j70OrderBy
-        Dim strAddSqlFrom As String = ""
-        Me.hidCols.Value = basUIMT.SetupDataGrid(Me.Factory, Me.gridO23, cJ70, CInt(Me.cbxPaging.SelectedValue), False, Not _curIsExport, True, , , , strAddSqlFrom)
-        Me.hidFrom.Value = strAddSqlFrom
+        Dim cS As New SetupDataGrid(Me.Factory, gridO23, cJ70)
+        With cS
+            .PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
+            .AllowCustomPaging = False
+            .AllowMultiSelect = Not _curIsExport
+            .AllowMultiSelectCheckboxSelector = True
+        End With
+        Dim cG As PreparedDataGrid = basUIMT.PrepareDataGrid(cS)
+        hidCols.Value = cG.Cols
+        Me.hidFrom.Value = cG.AdditionalFROM
+       
+        ''Dim strAddSqlFrom As String = ""
+        ''Me.hidCols.Value = basUIMT.SetupDataGrid(Me.Factory, Me.gridO23, cJ70, CInt(Me.cbxPaging.SelectedValue), False, Not _curIsExport, True, , , , strAddSqlFrom)
+        ''Me.hidFrom.Value = strAddSqlFrom
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
         End With
