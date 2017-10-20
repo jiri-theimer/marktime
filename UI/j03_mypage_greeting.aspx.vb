@@ -52,7 +52,7 @@
                 chkO23.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkO23", "0"))
                 chkP56.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkP56", "0"))
                 chkJ02.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkJ02", "0"))
-                chkSearch.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkSearch", "0"))
+                chkSearch.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkSearch", "1"))
                 chkShowCharts.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkShowCharts", "1"))
                 chkScheduler.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkScheduler", "1"))
                 cal1.MaxTopRecs = BO.BAS.IsNullInt(.j03UserBL.GetUserParam("myscheduler-maxtoprecs-j02", "10"))
@@ -79,6 +79,8 @@
                 If chkSearch.Visible Then
 
                     panSearch.Visible = chkSearch.Checked
+                Else
+                    chkSearch.Checked = False
                 End If
 
 

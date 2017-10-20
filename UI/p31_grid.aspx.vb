@@ -246,7 +246,7 @@ Public Class p31_grid
     Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String, strSortExpression As String)
         Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
         Me.hidDefaultSorting.Value = cJ70.j70OrderBy
-        Dim strAddSqlFrom As String = "", strSqlSumCols As String = ""
+        ''Dim strAddSqlFrom As String = "", strSqlSumCols As String = ""
         Dim cS As New SetupDataGrid(Master.Factory, grid1, cJ70)
         With cS
             .PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)

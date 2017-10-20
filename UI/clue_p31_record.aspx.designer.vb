@@ -50,15 +50,6 @@ Partial Public Class clue_p31_record
     Protected WithEvents cmdClone As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''imgEdit control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents imgEdit As Global.System.Web.UI.WebControls.Image
-
-    '''<summary>
     '''cmdEdit control.
     '''</summary>
     '''<remarks>
@@ -104,6 +95,15 @@ Partial Public Class clue_p31_record
     Protected WithEvents Person As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''ContactPerson control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ContactPerson As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''Client control.
     '''</summary>
     '''<remarks>
@@ -122,24 +122,6 @@ Partial Public Class clue_p31_record
     Protected WithEvents Project As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Task control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Task As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p34name control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p34name As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''p32Name control.
     '''</summary>
     '''<remarks>
@@ -147,6 +129,24 @@ Partial Public Class clue_p31_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p32Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p57Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p57Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Task control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Task As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''panFiles control.

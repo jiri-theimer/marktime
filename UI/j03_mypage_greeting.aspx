@@ -8,11 +8,21 @@
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
     <script type="text/javascript">
+        $(document).ready(function () {
+            $("#slidingDiv1").hide();
+            $("#show_hide1").show();
+
+            $('#show_hide1').click(function () {
+                $("#slidingDiv1").slideToggle();
+            });
+
+        });
+
         function sw_local(url, img, is_maximize) {
             sw_master(url, img, is_maximize);
         }
 
-        
+
         function report() {
             sw_master("report_modal.aspx?prefix=j02&pid=<%=Master.Factory.SysUser.j02ID%>", "Images/reporting.png", true);
 
@@ -61,20 +71,30 @@
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <div style="padding: 10px; background-color: white;">
-        <div style="float: left;">
+        <div>
+            <a id="show_hide1" class="pp2"></a>
             <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span" Style="font-size: 200%;" Text="Vítejte v systému"></asp:Label>
-
+            <img src="Images/logo_transparent.png" style="margin-left: 10px;" alt="MARKTIME" />
 
         </div>
-        <div style="float: left; margin-top: 7px; padding-left: 10px;">
-            <img src="Images/logo_transparent.png" />
-        </div>
-        <div style="float: right;">
-            <asp:CheckBox ID="chkX18" runat="server" Text="Vybrané typy dokumentů" AutoPostBack="true" CssClass="chk" Checked="false" Visible="false" />
-            <asp:CheckBox ID="chkScheduler" runat="server" Text="Úkoly a termíny" AutoPostBack="true" CssClass="chk" Checked="true" />
-            <asp:CheckBox ID="chkSearch" runat="server" Text="Vyhledávání" AutoPostBack="true" CssClass="chk" Checked="false" />
-            <asp:CheckBox ID="chkLog" runat="server" Text="Poslední významnější akce" AutoPostBack="true" CssClass="chk" Checked="true" Style="margin-left: 20px;" />
-            <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Grafy z mých hodin" Checked="true" CssClass="chk" Style="margin-left: 20px;" />
+
+        <div id="slidingDiv1" style="display:none;">
+            <div class="div6">
+            <asp:CheckBox ID="chkScheduler" runat="server" Text="Úkoly a termíny v mém kalendáři" AutoPostBack="true" CssClass="chk" Checked="true" />
+                </div>
+            <div class="div6">
+                <asp:CheckBox ID="chkSearch" runat="server" Text="Vyhledávání" AutoPostBack="true" CssClass="chk" Checked="false" />
+            </div>
+            <div class="div6">
+                <asp:CheckBox ID="chkLog" runat="server" Text="Poslední významnější akce" AutoPostBack="true" CssClass="chk" Checked="true" />
+            </div>
+            <div class="div6">
+                <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Grafy z mých hodin" Checked="true" CssClass="chk"  />
+            </div>
+            <div class="div6">
+                <asp:CheckBox ID="chkX18" runat="server" Text="Typy dokumentů určené pro domovské stránky uživatelů" AutoPostBack="true" CssClass="chk" Checked="false" Visible="false" />
+            </div>
+            
         </div>
         <div style="clear: both;"></div>
         <asp:PlaceHolder ID="place_j04DashboardHtml" runat="server"></asp:PlaceHolder>
@@ -160,7 +180,7 @@
                                             <img src="Images/new.png" />Nový</button>
                                     </td>
                                     <td>
-                                        <asp:HyperLink ID="linkFramework" runat="server" text="Přehled" NavigateUrl="#"></asp:HyperLink>
+                                        <asp:HyperLink ID="linkFramework" runat="server" Text="Přehled" NavigateUrl="#"></asp:HyperLink>
                                     </td>
                                     <td>
                                         <asp:HyperLink ID="linkCalendar" runat="server" Text="Kalendář" NavigateUrl="#"></asp:HyperLink>
@@ -178,17 +198,17 @@
                 <div class="title">
                     <img src="Images/article.png" />
                     <asp:Label ID="lblNoticeBoardHeader" runat="server"></asp:Label>
-                    
+
                 </div>
                 <div class="content" style="">
-                    
-                    <div style="clear:both;"></div>
+
+                    <div style="clear: both;"></div>
                     <table>
                         <tr valign="top">
                             <td style="max-width: 250px;">
                                 <asp:Repeater ID="rpArticle" runat="server">
                                     <ItemTemplate>
-                                        <div style="min-width:200px;margin-bottom:10px;">
+                                        <div style="min-width: 200px; margin-bottom: 10px;">
                                             <div>
                                                 <asp:Label ID="timestamp" runat="server" CssClass="timestamp"></asp:Label>
                                             </div>
@@ -199,8 +219,9 @@
                             </td>
                             <td style="max-width: 600px;" id="tdRecO23" runat="server" visible="false">
                                 <div style="overflow: auto; max-height: 300px;">
-                                    <div style="float:right;">
-                                        <button type="button" title="Plný detail" class="button-link"><img src="Images/fullscreen.png" onclick="o23_fullscreen()" /></button>
+                                    <div style="float: right;">
+                                        <button type="button" title="Plný detail" class="button-link">
+                                            <img src="Images/fullscreen.png" onclick="o23_fullscreen()" /></button>
                                     </div>
                                     <uc:o23_record_readonly ID="rec1" runat="server" />
 
@@ -278,7 +299,7 @@
                                     <td>
                                         <asp:Image ID="img1" runat="server" />
                                         <asp:Label ID="lbl1" runat="server" CssClass="timestamp"></asp:Label>
-                                        
+
                                     </td>
                                     <td>
                                         <asp:HyperLink ID="linkPP1" runat="server" CssClass="pp1"></asp:HyperLink>
@@ -311,7 +332,7 @@
                 </div>
             </asp:Panel>
 
-           
+
 
             <asp:Panel ID="panChart1" runat="server" Style="float: right;" Visible="false">
                 <telerik:RadHtmlChart runat="server" ID="chart1" Width="600px" Font-Size="Small">
@@ -393,7 +414,7 @@
                 <asp:Label ID="lblBuild" runat="server" Style="color: gray;" />
                 <a href="about.aspx" style="margin-left: 20px;">O aplikaci</a>
 
-                
+
                 <span style="padding-left: 30px;">&nbsp</span>
                 <asp:HyperLink ID="cmdReadUpgradeInfo" runat="server" NavigateUrl="log_app_update.aspx" ImageUrl="Images/upgraded_32.png" ToolTip="Nedávno proběhla aktualizace MARKTIME. Přečti si informace o novinkách a změnách v systému."></asp:HyperLink>
 
@@ -403,31 +424,31 @@
             </div>
         </div>
 
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            handleSAW();
+
+        });
 
 
-        <script type="text/javascript">
-            $(document).ready(function () {
 
-                handleSAW();
+        function contact_OnClientSelectedIndexChanged(sender, eventArgs) {
+            var combo = sender;
+            location.replace("p28_framework.aspx?pid=" + combo.get_value());
+        }
+        function contact_OnClientItemsRequesting(sender, eventArgs) {
+            var context = eventArgs.get_context();
+            var combo = sender;
 
-            });
+            if (combo.get_value() == "")
+                context["filterstring"] = eventArgs.get_text();
+            else
+                context["filterstring"] = "";
 
-
-
-            function contact_OnClientSelectedIndexChanged(sender, eventArgs) {
-                var combo = sender;
-                location.replace("p28_framework.aspx?pid=" + combo.get_value());
-            }
-            function contact_OnClientItemsRequesting(sender, eventArgs) {
-                var context = eventArgs.get_context();
-                var combo = sender;
-
-                if (combo.get_value() == "")
-                    context["filterstring"] = eventArgs.get_text();
-                else
-                    context["filterstring"] = "";
-
-                context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
+            context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
                 context["flag"] = "searchbox";
             }
             function invoice_OnClientSelectedIndexChanged(sender, eventArgs) {
@@ -495,6 +516,6 @@
                 context["j02id_explicit"] = "<%=Master.Factory.SysUser.j02ID%>";
                 context["flag"] = "searchbox";
             }
-        </script>
+    </script>
 </asp:Content>
 

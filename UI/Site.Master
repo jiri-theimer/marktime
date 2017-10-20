@@ -314,7 +314,19 @@
         function contMenu(url, isTopWindow) {
             sw_everywhere(url, "", true);
         }
-        function contReload(url, target) {            
+        function contReload(url, target) {
+            if (target == "_self") {
+                location.href = url;
+                return;
+            }
+            if (target == "_top") {
+                var isInIFrame = (window.location != window.parent.location);
+                if (isInIFrame == false) {                    
+                    location.href=url;  //stránka není ve frame
+                    return;
+                }
+            }
+            
             window.open(url, target);
         }
 

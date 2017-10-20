@@ -362,9 +362,11 @@
                 <TimelineView UserSelectable="false" />
                 <AgendaView UserSelectable="true" NumberOfDays="5" />
                 <AppointmentTemplate>
+                    <a class="pp1" onclick="RCM('p31',<%# Eval("ID")%>,this)"></a>
                     <a class="reczoom" rel="<%# Eval("Description")%>">i</a>
                     <a href="javascript:re(<%# Eval("ID")%>)"><%# Eval("Subject")%></a>
-
+                    
+                    
 
                 </AppointmentTemplate>
 

@@ -279,7 +279,7 @@
                 </td>
                 <td style="text-align: right;">
 
-                    <button type="button" id="cmdPageSetup" runat="server" onclick="page_setting()">
+                    <button type="button" id="cmdPageSetup" runat="server" onclick="page_setting()" style="font-size:10px;">
                         Nastavení stránky                    
                     </button>
                 </td>

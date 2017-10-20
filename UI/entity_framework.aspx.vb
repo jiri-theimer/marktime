@@ -293,12 +293,15 @@ Public Class entity_framework
                 Case BO.x29IdEnum.p41Project
                     ''img1.ImageUrl = "Images/project_32.png"
                     If Not .Factory.SysUser.j04IsMenu_Project Then .StopPage("Nemáte přístup do modulu [PROJEKTY].")
+                    FindNode("groupLayout").Text = "Rozvržení panelů v modulu [PROJEKTY]"
                     ''menu1.FindItemByValue("more").Text = "Akce nad projekty"
                 Case BO.x29IdEnum.p28Contact
+                    FindNode("groupLayout").Text = "Rozvržení panelů v modulu [KLIENTI]"
                     ''img1.ImageUrl = "Images/contact_32.png"
                     If Not .Factory.SysUser.j04IsMenu_Contact Then .StopPage("Nemáte přístup do modulu [KLIENTI].")
                     ''menu1.FindItemByValue("more").Text = "Akce nad klienty"
                 Case BO.x29IdEnum.o23Doc
+                    FindNode("groupLayout").Text = "Rozvržení panelů v modulu [DOKUMENTU]"
                     If Not .Factory.SysUser.j04IsMenu_Notepad Then .StopPage("Nemáte přístup do modulu [DOKUMENTY].")
                     ''img1.ImageUrl = "Images/notepad_32.png"
                     ''menu1.FindItemByValue("more").Text = "Akce nad dokumenty"
@@ -306,14 +309,16 @@ Public Class entity_framework
                     bolCanInvoice = False
                 Case BO.x29IdEnum.p56Task
                     ''img1.ImageUrl = "Images/task_32.png"
-
+                    FindNode("groupLayout").Text = "Rozvržení panelů v modulu [ÚKOLY]"
                     ''menu1.FindItemByValue("more").Text = "Akce nad úkoly"
                     If Not .Factory.SysUser.j04IsMenu_Task Then .StopPage("Nemáte přístup do modulu [ÚKOLY].")
                 Case BO.x29IdEnum.j02Person
+                    FindNode("groupLayout").Text = "Rozvržení panelů v modulu [LIDÉ]"
                     ''menu1.FindItemByValue("more").Text = "Akce nad přehledem"
                     ''img1.ImageUrl = "Images/person_32.png"
                     If Not .Factory.SysUser.j04IsMenu_People Then .StopPage("Nemáte přístup do modulu [LIDÉ].")
                 Case BO.x29IdEnum.p91Invoice
+                    FindNode("groupLayout").Text = "Rozvržení panelů v modulu [FAKTURY]"
                     ''menu1.FindItemByValue("more").Text = "Akce nad fakturami"
                     ''img1.ImageUrl = "Images/invoice_32.png"
                     If Not .Factory.SysUser.j04IsMenu_Invoice Then .StopPage("Nemáte přístup do modulu [FAKTURY].")

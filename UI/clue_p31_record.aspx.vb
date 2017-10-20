@@ -16,12 +16,8 @@
             End If
             RefreshRecord()
 
-            If Request.Item("js_clone") <> "" Then
-                imgClone.Visible = True : cmdClone.Visible = True : cmdClone.NavigateUrl = "javascript: parent.window." & Request.Item("js_clone")
-            End If
-            If Request.Item("js_edit") <> "" Then
-                imgEdit.Visible = True : cmdEdit.Visible = True : cmdEdit.NavigateUrl = "javascript: parent.window." & Request.Item("js_clone")
-            End If
+            
+            cmdEdit.NavigateUrl = "javascript: parent.sw_everywhere('p31_record.aspx?pid=" & Master.DataPID.ToString & "','Images/worksheet.png',true)"
         End If
     End Sub
     Private Sub RefreshRecord()
@@ -29,11 +25,16 @@
 
         Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.Load(Master.DataPID)
         If cRec Is Nothing Then Master.StopPage("record not found")
+        Dim cDisp As BO.p31WorksheetDisposition = Master.Factory.p31WorksheetBL.InhaleRecordDisposition(Master.DataPID)
+        If cDisp.RecordDisposition = BO.p31RecordDisposition._NoAccess Then Master.StopPage("K úkonu nemáte přístup.", "", True) : Return
+        If cDisp.RecordDisposition = BO.p31RecordDisposition.CanEdit Or cRec.j02ID = Master.Factory.SysUser.j02ID Then
+            imgClone.Visible = True : cmdClone.Visible = True : cmdClone.NavigateUrl = "javascript: parent.sw_everywhere('p31_record.aspx?clone=1&pid=" & Master.DataPID.ToString & "','Images/copy.png',true)"
+        End If
         With cRec
             Me.Project.Text = .p41Name
             Me.Client.Text = .ClientName
             Me.p32Name.Text = .p32Name
-            Me.p34name.Text = .p34Name
+            Me.ph1.Text = .p34Name
             Me.Person.Text = .Person
             Me.p31Date.Text = BO.BAS.FD(.p31Date)
             Me.p31Value_Orig.Text = BO.BAS.FN(.p31Value_Orig)
@@ -48,7 +49,11 @@
             Me.p31Text.Text = BO.BAS.CrLfText2Html(.p31Text)
             If .p56ID <> 0 Then
                 Dim cTask As BO.p56Task = Master.Factory.p56TaskBL.Load(.p56ID)
-                Me.Task.Text = "<img src='Images/task.png'/>" & cTask.p57Name & ": " & cTask.p56Code & " - " & cTask.p56Name
+                Me.Task.Text = cTask.p56Code & " - " & cTask.p56Name
+                Me.p57Name.Text = cTask.p57Name & ":"
+            End If
+            If .j02ID_ContactPerson > 0 Then
+                Me.ContactPerson.Text = Master.Factory.j02PersonBL.Load(.j02ID_ContactPerson).FullNameDescWithJobTitle
             End If
             Me.Timestamp.Text = .Timestamp
         End With

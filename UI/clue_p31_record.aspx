@@ -14,15 +14,18 @@
             <asp:Image ID="imgClone" runat="server" ImageUrl="Images/copy.png" style="margin-left:20px;" Visible="false"/>
             <asp:HyperLink ID="cmdClone" runat="server" Text="Kopírovat" NavigateUrl="#" visible="false"></asp:HyperLink>
 
-            <asp:Image ID="imgEdit" runat="server" ImageUrl="Images/edit.png" style="margin-left:20px;" Visible="false"/>
-            <asp:HyperLink ID="cmdEdit" runat="server" Text="Upravit" NavigateUrl="#" visible="false"></asp:HyperLink>
+            <img src="Images/edit.png" style="margin-left:20px;" />
+            
+            <asp:HyperLink ID="cmdEdit" runat="server" Text="Otevřít" NavigateUrl="#"></asp:HyperLink>
         </div>
         
         <table cellpadding="10" cellspacing="2">
             <tr>
                 <td>Datum:</td>
                 <td>
-                    <asp:Label ID="p31Date" runat="server" CssClass="valbold"></asp:Label></td>
+                    <asp:Label ID="p31Date" runat="server" CssClass="valbold"></asp:Label>
+
+                </td>
                 <td>Vykázaná hodnota:</td>
                 <td>
                     <asp:Label ID="p31Value_Orig" runat="server" CssClass="valbold"></asp:Label>
@@ -30,12 +33,17 @@
                 </td>
             </tr>
             <tr>
-                <td>Osoba:</td>
-                <td colspan="3">
+                <td>Jméno:</td>
+                <td>
                     <asp:Label ID="Person" runat="server" CssClass="valbold"></asp:Label>
 
                 </td>
-
+                <td>
+                    Kontaktní osoba:
+                </td>
+                <td>
+                    <asp:Label ID="ContactPerson" runat="server" CssClass="valbold"></asp:Label>
+                </td>
             </tr>
             <tr>
                 <td>Klient:</td>
@@ -48,17 +56,20 @@
                 <td colspan="3">
                     <asp:Label ID="Project" runat="server" CssClass="valbold"></asp:Label>
                     
-                    <asp:Label ID="Task" runat="server" CssClass="valbold"></asp:Label>
+                    
                 </td>
             </tr>
+            
             <tr>
-                <td>Sešit:</td>
-                <td>
-                    <asp:Label ID="p34name" runat="server" CssClass="valbold"></asp:Label></td>
+               
                 <td>Aktivita:</td>
                 <td>
                     <asp:Label ID="p32Name" runat="server" CssClass="valbold"></asp:Label>
 
+                </td>
+                <td><asp:Label ID="p57Name" runat="server"></asp:Label></td>
+                <td>
+                    <asp:Label ID="Task" runat="server" CssClass="valbold"></asp:Label>
                 </td>
             </tr>
             

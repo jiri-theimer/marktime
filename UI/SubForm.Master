@@ -275,6 +275,10 @@
         }
 
         function contReload(url, target) {
+            if (target == "_self") {
+                location.href = url;
+                return;
+            }
             window.open(url, target);
         }
         
