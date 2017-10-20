@@ -294,11 +294,8 @@
         
 
         If cRecSum.is_My_Favourite Then
-            cmdFavourite.ImageUrl = "Images/favourite.png"
-            cmdFavourite.ToolTip = "Vyřadit z mých oblíbených projektů"
-        Else
-            cmdFavourite.ImageUrl = "Images/not_favourite.png"
-            cmdFavourite.ToolTip = "Zařadit do mých oblíbených projektů"
+            imgFavourite.ImageUrl = "Images/favourite.png"
+            imgFavourite.Visible = True
         End If
 
         RefreshP40(cRecSum)
@@ -479,11 +476,6 @@
     End Sub
 
 
-    Private Sub cmdFavourite_Click(sender As Object, e As ImageClickEventArgs) Handles cmdFavourite.Click
-        Master.Factory.j03UserBL.AppendOrRemoveFavouriteProject(Master.Factory.SysUser.PID, BO.BAS.ConvertPIDs2List(Master.DataPID), Master.Factory.p41ProjectBL.IsMyFavouriteProject(Master.DataPID))
-        ReloadPage()
-        ''ClientScript.RegisterStartupScript(Me.GetType, "hash", "window.open('p41_framework.aspx','_top');", True)
-    End Sub
 
     Private Sub ReloadPage()
         Response.Redirect("p41_framework_detail.aspx?pid=" & Master.DataPID.ToString & "&source=" & menu1.PageSource)

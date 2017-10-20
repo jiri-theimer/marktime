@@ -25,7 +25,8 @@ Public Class basUIMT
 
 
             .AllowCustomPaging = cS.AllowCustomPaging
-            If cS.AllowMultiSelect And cS.AllowMultiSelectCheckboxSelector Then .AddCheckboxSelector()
+            'If cS.AllowMultiSelect And cS.AllowMultiSelectCheckboxSelector Then .AddCheckboxSelector()
+            If cS.AllowMultiSelectCheckboxSelector Then .AddCheckboxSelector()
 
 
             .PageSize = cS.PageSize

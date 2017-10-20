@@ -414,6 +414,7 @@
     <Content Include="Handler\handler_p66_plan.ashx" />
     <Content Include="Handler\handler_popupmenu.ashx" />
     <Content Include="Handler\handler_approve.ashx" />
+    <Content Include="Handler\handler_project.ashx" />
     <None Include="Service References\SpolehlivostDPH\rozhraniCRPDPH.wsdl" />
     <Content Include="searchbox.ascx" />
     <Content Include="Service References\SpolehlivostDPH\UI.SpolehlivostDPH.InformaceOPlatciType.datasource">
@@ -1051,6 +1052,9 @@
     </Compile>
     <Compile Include="Handler\handler_popupmenu.ashx.vb">
       <DependentUpon>handler_popupmenu.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\handler_project.ashx.vb">
+      <DependentUpon>handler_project.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handler\handler_search_task.ashx.vb">
       <DependentUpon>handler_search_task.ashx</DependentUpon>

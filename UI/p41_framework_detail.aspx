@@ -98,8 +98,8 @@
             <asp:Image ID="imgRecord" runat="server" Style="margin-right: 10px;" ImageUrl="Images/properties.png" />
 
             <asp:Label ID="boxCoreTitle" Text="Záznam projektu" runat="server" meta:resourcekey="boxCoreTitle"></asp:Label>
-
-            <asp:ImageButton ID="cmdFavourite" runat="server" ImageUrl="Images/not_favourite.png" ToolTip="Zařadit do mých oblíbených projektů" CssClass="button-link" Style="float: right;" />
+            <asp:Image ID="imgFavourite" runat="server" ImageUrl="Images/favourite.png" ToolTip="Můj oblíbený projekt" style="float:right;" Visible="false" />
+            
             
 
         </div>

@@ -41,13 +41,13 @@ Partial Public Class p41_framework_detail
     Protected WithEvents boxCoreTitle As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdFavourite control.
+    '''imgFavourite control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdFavourite As Global.System.Web.UI.WebControls.ImageButton
+    Protected WithEvents imgFavourite As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
     '''Project control.

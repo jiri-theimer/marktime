@@ -295,6 +295,18 @@
             sw_master(url, iconUrl, is_maximize);
         }
 
+        function Handle_Project_Favourite(p41id) {
+            $.post("Handler/handler_project.ashx", { pid: p41id, oper: "favourite" }, function (data) {
+                if (data = "1") {
+                    hardrefresh(p41id, "p41-save");
+                    return;
+                }
+
+
+            });
+
+        }
+
         function ContextMenu_Approve(p72id,pid) {            
             $.post("Handler/handler_approve.ashx", { pids: pid, p72id: p72id }, function (data) {                
                 if (data != "1") {

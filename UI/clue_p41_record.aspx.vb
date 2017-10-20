@@ -51,11 +51,8 @@
             End If
         End With
         If Master.Factory.p41ProjectBL.IsMyFavouriteProject(cRec.PID) Then
-            cmdFavourite.ImageUrl = "Images/favourite.png"
-            cmdFavourite.ToolTip = "Odstranit z mých oblíbených projektů"
-        Else
-            cmdFavourite.ImageUrl = "Images/not_favourite.png"
-            cmdFavourite.ToolTip = "Zařadit do mých oblíbených projektů"
+            imgFavourite.ImageUrl = "Images/favourite.png"
+            
         End If
 
         Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(0, Master.DataPID, 0)
@@ -70,8 +67,5 @@
         tags1.RefreshData(cRec.PID)
     End Sub
 
-    Private Sub cmdFavourite_Click(sender As Object, e As ImageClickEventArgs) Handles cmdFavourite.Click
-        Master.Factory.j03UserBL.AppendOrRemoveFavouriteProject(Master.Factory.SysUser.PID, BO.BAS.ConvertPIDs2List(Master.DataPID), Master.Factory.p41ProjectBL.IsMyFavouriteProject(Master.DataPID))
-        RefreshRecord()
-    End Sub
+    
 End Class

@@ -171,14 +171,27 @@ Public Class p31_framework
 
     Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String)
         Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
+        Dim cS As New SetupDataGrid(Master.Factory, grid1, cJ70)
+        With cS
+            .AllowCustomPaging = True
+            .AllowMultiSelect = False
+            .AllowMultiSelectCheckboxSelector = False
+            .FilterSetting = strFilterSetting
+            .FilterExpression = strFilterExpression
+        End With
+        Dim cG As PreparedDataGrid = basUIMT.PrepareDataGrid(cS)
+        hidCols.Value = cG.Cols
+        Me.hidFrom.Value = cG.AdditionalFROM
 
-        Dim strAddSqlFrom As String = ""
         If tabs1.SelectedIndex = 0 Then
-            Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom)
+            cS.PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
+            ''Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom)
         Else
-            Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 100, False, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom)
+            cS.PageSize = 100
+            cS.AllowCustomPaging = False
+            ''Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 100, False, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom)
         End If
-        hidFrom.Value = strAddSqlFrom
+
         If cJ70.j70ScrollingFlag > BO.j70ScrollingFlagENUM.NoScrolling Then
             navigationPane.Scrolling = SplitterPaneScrolling.None
         End If
@@ -212,12 +225,13 @@ Public Class p31_framework
             '    .Text = "<a class='reczoom' title='Detail projektu' rel='clue_p41_myworksheet.aspx?parent_url_reload=p31_framework.aspx&pid=" & cRec.Item("pid").ToString & "&j02id=" & Me.CurrentJ02ID.ToString & "' style='margin-left:-10px;'>i</a>" & .Text
             'End With
         Else
-            With dataItem("systemcolumn")
-                .Text = "<a class='reczoom' title='Detail úkolu' rel='clue_p56_record.aspx?&pid=" & cRec.Item("pid").ToString & "' style='margin-left:-10px;'>i</a>"
-            End With
-            If Not cRec.Item("p56PlanUntil_Grid") Is System.DBNull.Value Then
-                If Now > cRec.Item("p56PlanUntil_Grid") Then dataItem.ForeColor = Drawing.Color.DarkRed
-            End If
+            basUIMT.p56_grid_Handle_ItemDataBound(sender, e, False, True, "", "p31_framework")
+            ''With dataItem("systemcolumn")
+            ''    .Text = "<a class='reczoom' title='Detail úkolu' rel='clue_p56_record.aspx?&pid=" & cRec.Item("pid").ToString & "' style='margin-left:-10px;'>i</a>"
+            ''End With
+            ''If Not cRec.Item("p56PlanUntil_Grid") Is System.DBNull.Value Then
+            ''    If Now > cRec.Item("p56PlanUntil_Grid") Then dataItem.ForeColor = Drawing.Color.DarkRed
+            ''End If
         End If
 
 

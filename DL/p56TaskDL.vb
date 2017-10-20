@@ -233,18 +233,21 @@
                 End If
             End If
 
+            Dim strInnerW As String = ""
+            If .p41ID > 0 Then
+                strInnerW = " AND x69.x69RecordPID=@p41id"
+            End If
             Select Case .SpecificQuery
                 Case BO.myQueryP56_SpecificQuery.AllowedForWorksheetEntry
-                    s.Append(" AND a.p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID INNER JOIN x68EntityRole_Permission x68 ON x67.x67ID=x68.x67ID WHERE x67.x29ID=356 AND x68.x53ID=63 AND (x69.j02ID=@j02id_query OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_query)))")          'Zapisovat k úkolu worksheet úkony
+                    s.Append(" AND (")
+                    s.Append("a.p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID INNER JOIN x68EntityRole_Permission x68 ON x67.x67ID=x68.x67ID WHERE x67.x29ID=356 AND x68.x53ID=63 AND (x69.j02ID=@j02id_query OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_query)))")          'Zapisovat k úkolu worksheet úkony
+                    s.Append(" OR a.p41ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID INNER JOIN x68EntityRole_Permission x68 ON x67.x67ID=x68.x67ID WHERE x67.x29ID=141 AND x68.x53ID=9" & strInnerW & " AND (x69.j02ID=@j02id_query OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_query)))")    'Oprávnění vlastníka e všem úkolům v projektu
+                    s.Append(")")
                 Case BO.myQueryP56_SpecificQuery.AllowedForRead
                     If Not (BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P41_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P41_Owner)) Then
                         'pokud má právo číst nebo vlastnit všechny projekty, vztahuje se to i na úkoly
                         s.Append(" AND (a.j02ID_Owner=@j02id_query")
 
-                        Dim strInnerW As String = ""
-                        If .p41ID > 0 Then
-                            strInnerW = " AND x69.x69RecordPID=@p41id"
-                        End If
                         s.Append(" OR a.p41ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID INNER JOIN x68EntityRole_Permission x68 ON x67.x67ID=x68.x67ID WHERE x67.x29ID=141 AND x68.x53ID IN (3,9)" & strInnerW & " AND (x69.j02ID=@j02id_query OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_query)))")    'Oprávnění vlastníka nebo uzavíratele ke všem úkolům v projektu
 
                         s.Append(" OR a.p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356 AND (x69.j02ID=@j02id_query OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_query)))")   'obdržel nějakou (jakoukoliv) roli v úkolu

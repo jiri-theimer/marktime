@@ -344,7 +344,9 @@ Public Class handler_popupmenu
 
                     If factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator) Then
                         SEP()
-                        CI("Fakturovat", "p91_create_step1.aspx?nogateway=1&prefix=p31&pid=" & intPID.ToString, , "Images/billing.png", False, True)
+                        CI("Fakturovat", "", , "Images/billing.png")
+                        CI("Fakturovat (nová faktura)", "p91_create_step1.aspx?nogateway=1&prefix=p31&pid=" & intPID.ToString, , , True, True)
+                        CI("Přidat do existující faktury", "p91_add_worksheet.aspx?p31ids=" & intPID.ToString, , , True, True)
                     End If
 
                 End If
@@ -634,6 +636,12 @@ Public Class handler_popupmenu
         CI("Odeslat e-mail", "sendmail.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/email.png")
         SEP()
         CI("Oštítkovat", "tag_binding.aspx?prefix=p41&pids=" & intPID.ToString, , "Images/tag.png")
+        If factory.p41ProjectBL.IsMyFavouriteProject(cRec.PID) Then
+            CI("Vyřadit z mých oblíbených projektů", "javascript:Handle_Project_Favourite(" & cRec.PID.ToString & ")", , "Images/favourite_clear.png")
+        Else
+            CI("Zařadit mezi mé oblíbené projekty", "javascript:Handle_Project_Favourite(" & cRec.PID.ToString & ")", , "Images/favourite_add.png")
+        End If
+
 
         If strFlag = "pagemenu" Then
             SEP()
@@ -653,6 +661,7 @@ Public Class handler_popupmenu
             If cP42.p42IsModule_o23 Then
                 CI("Vytvořit dokument", "o23_record.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/notepad.png", True)
             End If
+            
 
             If cDisp.OwnerAccess Then
                 CI("Nastavit jako opakovaný projekt", "p41_recurrence.aspx?pid=" & cRec.PID.ToString, , "Images/recurrence.png", True)

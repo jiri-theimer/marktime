@@ -7,25 +7,53 @@
         Master.HelpTopicID = "p91_add_worksheet"
     End Sub
 
+    Private ReadOnly Property CurrentP41ID As Integer
+        Get
+            Return BO.BAS.IsNullInt(hidP41ID.Value)
+        End Get
+    End Property
+    Private ReadOnly Property CurrentP28ID As Integer
+        Get
+            Return BO.BAS.IsNullInt(hidP28ID.Value)
+        End Get
+    End Property
+    Private ReadOnly Property CurrentP31IDs As List(Of Integer)
+        Get
+            If hidP31IDs.Value = "" Then
+                Return New List(Of Integer)
+            Else
+                Return BO.BAS.ConvertPIDs2List(hidP31IDs.Value)
+            End If
+
+        End Get
+    End Property
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
-                ViewState("p41id") = BO.BAS.IsNullInt(Request.Item("p41id"))
-                ViewState("p28id") = BO.BAS.IsNullInt(Request.Item("p28id"))
-                If ViewState("p41id") = 0 And ViewState("p28id") = 0 Then
-                    .StopPage("p41id or p28id missing.")
+                hidP41ID.Value = Request.Item("p41id")
+                hidP28ID.Value = Request.Item("p28id")
+                hidP31IDs.Value = Request.Item("p31ids")
+
+                If Me.CurrentP41ID = 0 And Me.CurrentP28ID = 0 And Me.CurrentP31IDs.Count = 0 Then
+                    .StopPage("p41id, p31ids and p28id missing.")
                 End If
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-                If .DataPID = 0 Then .StopPage("pid missing")
-                .HeaderIcon = "Images/worksheet_32.png"
-                If ViewState("p41id") > 0 Then
-                    imgEntity.ImageUrl = "Images/project_32.png"
-                    lblEntityHeader.Text = .Factory.GetRecordCaption(BO.x29IdEnum.p41Project, ViewState("p41id"))
+                If .DataPID = 0 Then
+                    panSearchInvoice.Visible = True
+
                 End If
-                If ViewState("p28id") > 0 Then
+                .HeaderIcon = "Images/worksheet_32.png"
+                If Me.CurrentP41ID > 0 Then
+                    imgEntity.ImageUrl = "Images/project_32.png"
+                    lblEntityHeader.Text = .Factory.GetRecordCaption(BO.x29IdEnum.p41Project, Me.CurrentP41ID)
+                End If
+                If Me.CurrentP28ID > 0 Then
                     imgEntity.ImageUrl = "Images/contact_32.png"
-                    lblEntityHeader.Text = .Factory.GetRecordCaption(BO.x29IdEnum.p28Contact, ViewState("p28id"))
+                    lblEntityHeader.Text = .Factory.GetRecordCaption(BO.x29IdEnum.p28Contact, Me.CurrentP28ID)
+                End If
+                If Me.CurrentP31IDs.Count > 0 Then
+                    Me.period1.Visible = False
                 End If
 
                 .AddToolbarButton("Potvrdit", "ok", , "Images/save.png")
@@ -45,14 +73,29 @@
             End With
             RecalcVirtualRowCount()
             SetupGrid()
+
+            
         End If
     End Sub
 
     Private Sub SetupGrid()
 
         Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "p41-approved")
-      
-        basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 500, False, True)
+        Dim cS As New SetupDataGrid(Master.Factory, grid1, cJ70)
+        With cS
+            .PageSize = 500
+            .AllowCustomPaging = False
+            If Me.CurrentP31IDs.Count = 0 Then
+                .AllowMultiSelect = True
+                .AllowMultiSelectCheckboxSelector = True
+            End If
+            
+            .ContextMenuWidth = 0
+        End With
+        Dim cG As PreparedDataGrid = basUIMT.PrepareDataGrid(cS)
+        
+
+        ''basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 500, False, True)
 
         
     End Sub
@@ -79,12 +122,15 @@
         grid1.DataSource = Master.Factory.p31WorksheetBL.GetList(mq)
     End Sub
     Private Sub InhaleMyQuery(ByRef mq As BO.myQueryP31)
-        If ViewState("p28id") <> 0 Then mq.p28ID_Client = ViewState("p28id")
-        If ViewState("p41id") <> 0 Then mq.p41ID = ViewState("p41id")
+        mq.p28ID_Client = Me.CurrentP28ID
+        mq.p41ID = Me.CurrentP41ID
+        If Me.hidP31IDs.Value <> "" Then mq.PIDs = Me.CurrentP31IDs
 
-
-        mq.DateFrom = period1.DateFrom
-        mq.DateUntil = period1.DateUntil
+        If period1.Visible Then
+            mq.DateFrom = period1.DateFrom
+            mq.DateUntil = period1.DateUntil
+        End If
+        
         mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForCreateInvoice
 
     End Sub
@@ -121,7 +167,14 @@
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
         If strButtonValue = "ok" Then
+            If Master.DataPID = 0 Then Master.DataPID = BO.BAS.IsNullInt(Me.p91id_search.Value)
+            If Master.DataPID = 0 Then
+                Master.Notify("Musíte vybrat fakturu.") : Return
+            End If
             Dim pids As List(Of Integer) = grid1.GetSelectedPIDs()
+            If Me.CurrentP31IDs.Count > 0 Then
+                pids = Me.CurrentP31IDs
+            End If
             If pids.Count = 0 Then
                 Master.Notify("Musíte zaškrtnout alespoň jeden záznam.", NotifyLevel.WarningMessage) : Return
             End If

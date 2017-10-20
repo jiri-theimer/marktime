@@ -14,6 +14,24 @@ Option Explicit On
 Partial Public Class p91_add_worksheet
 
     '''<summary>
+    '''panSearchInvoice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panSearchInvoice As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''p91id_search control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p91id_search As Global.UI.invoice
+
+    '''<summary>
     '''imgEntity control.
     '''</summary>
     '''<remarks>
@@ -48,6 +66,33 @@ Partial Public Class p91_add_worksheet
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents grid1 As Global.UI.datagrid
+
+    '''<summary>
+    '''hidP41ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidP41ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidP28ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidP28ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidP31IDs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidP31IDs As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

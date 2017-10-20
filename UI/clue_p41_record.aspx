@@ -19,7 +19,7 @@
             <div class="title">
                 Záznam projektu
                 <asp:Label ID="b02Name" runat="server" CssClass="valboldred" style="margin-left:10px;"></asp:Label>
-                <asp:ImageButton ID="cmdFavourite" runat="server" ImageUrl="Images/not_favourite.png" ToolTip="Zařadit do mých oblíbených projektů" CssClass="button-link" />
+                <asp:Image ID="imgFavourite" runat="server" Visible="false" />
                 
             </div>
             <div class="content">
