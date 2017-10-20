@@ -85,7 +85,10 @@
         With cS
             .PageSize = 500
             .AllowCustomPaging = False
-            If Me.CurrentP31IDs.Count = 0 Then
+            If Me.CurrentP31IDs.Count > 0 Then
+                .AllowMultiSelect = False
+                .AllowMultiSelectCheckboxSelector = False
+            Else
                 .AllowMultiSelect = True
                 .AllowMultiSelectCheckboxSelector = True
             End If
