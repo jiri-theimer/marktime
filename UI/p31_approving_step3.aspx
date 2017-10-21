@@ -248,8 +248,8 @@
             <asp:Button ID="cmdBatch_10" Text="Nahodit úroveň schvalování #2" runat="server" CssClass="cmd" Width="280px" />
         </div>
     </div>
-    <div class="slidingDiv3" style="padding: 10px;">
-        <div class="innerform_light">
+    <div class="slidingDiv3" style="padding: 10px;background-color: #F0F8FF;"">
+        
             <div class="div6">
                 <uc:mygrid ID="designer1" runat="server" Prefix="p31" x36Key="p31_approving_step3-j70id" MasterPrefix="approving_step3" MasterPrefixFlag="2" ReloadUrl="javascript:hardrefresh(0, 'j70')" Width="250px" ModeFlag="3"></uc:mygrid>
             </div>
@@ -275,7 +275,7 @@
                     </asp:RadioButtonList>
                 </div>
             </fieldset>
-        </div>
+        
     </div>
 
 
