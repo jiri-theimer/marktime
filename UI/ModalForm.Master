@@ -109,15 +109,21 @@
             window.open("help.aspx?page=" + page, "_blank");
         }
 
-        function clicked(sender, args) {
+        function button_clicked(sender, args) {
             var button = args.get_item();
-
-            if (button.get_attributes().getAttribute("postback") == "1")
+            
+            
+            if (button.get_attributes().getAttribute("postback") == "1"){
                 button.disable();
+                
+            }
+               
 
 
-            if (button.get_attributes().getAttribute("showloading") == "1")
+            if (button.get_attributes().getAttribute("showloading") == "1"){
                 showloading();
+            }
+                
 
         }
         
@@ -131,7 +137,7 @@
         <asp:ContentPlaceHolder ID="OverMainContent" runat="server">
         </asp:ContentPlaceHolder>
         <div>            
-            <telerik:RadToolBar ID="toolbar1" runat="server" Width="100%" Skin="Bootstrap" AutoPostBack="true" RenderMode="Auto" OnClientButtonClicked="clicked">
+            <telerik:RadToolBar ID="toolbar1" runat="server" Width="100%" Skin="Bootstrap" AutoPostBack="true" RenderMode="Auto" OnClientButtonClicked="button_clicked">
                 <Items>
 
                     <telerik:RadToolBarButton Text="<%$ Resources:common, close %>" Value="close" ImageUrl="Images/close.png" PostBack="false" NavigateUrl="javascript:CloseOnly()"></telerik:RadToolBarButton>
@@ -144,7 +150,7 @@
             <asp:Label ID="lblRecordMessage" runat="server" style="color:red;position:absolute;top:50px;left:400px;z-index:9000;"></asp:Label>
             <asp:Label ID="spanHelp" runat="server" CssClass="formInfoStatic" Style="position: absolute; left: 85%; top: 40px;" Visible="false"></asp:Label>
             <asp:Image runat="server" ID="icon1" Style="position: absolute; left: 93%; top: 40px;z-index:9000;" Visible="false" />
-            <img id="loading1" src="Images/loading.gif" style="display:none;position:absolute;z-index:9000;left:700px;top:10px;" />
+            <img id="loading1" src="Images/loading.gif" style="display:none;position:absolute;z-index:9000;left:700px;top:10px;" alt="Loading..." />
             <div>
                 <asp:ContentPlaceHolder ID="MainContent" runat="server">
                 </asp:ContentPlaceHolder>
@@ -183,11 +189,10 @@
 
     function showloading() {
         //zatím nefunguje
-        return
-
-        var wnd = $find("<%=okno_dialog.ClientID%>");
-        wnd.show();
-        return (true);
+        return;
+        document.getElementById("loading1").style.display = "block";
+        
+        
 
     }
 

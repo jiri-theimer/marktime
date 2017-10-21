@@ -97,6 +97,7 @@
 
                     </td>
                     <td>
+                        <asp:HyperLink ID="pmProject" runat="server" NavigateUrl="#" CssClass="pp1"></asp:HyperLink>
                         <asp:HyperLink ID="Project" runat="server" NavigateUrl="#" Target="_parent" CssClass="value_link"></asp:HyperLink>
                         <asp:HyperLink ID="clue_project" runat="server" CssClass="reczoom" Text="i" title="Detail projektu"></asp:HyperLink>
                     </td>

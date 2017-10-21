@@ -239,7 +239,7 @@ Public Class handler_popupmenu
                     CI("Sestava přílohy", "report_modal.aspx?x31id=" & .x31ID_Attachment.ToString & "&prefix=p91&pid=" & intPID.ToString, , "Images/report.png")
                 End If
             End With
-            CI("Všechny tiskové sestavy", "report_modal.aspx?prefix=p91&pid=" & intPID.ToString, , "Images/report.png")
+            CI("Tisková sestava", "report_modal.aspx?prefix=p91&pid=" & intPID.ToString, , "Images/report.png")
             CI("Odeslat e-mail", "sendmail.aspx?prefix=p91&pid=" & cRec.PID.ToString, , "Images/email.png")
         Else
             CI(cRec.p92Name & ": " & cRec.p91Code, "", True, "Images/information.png")

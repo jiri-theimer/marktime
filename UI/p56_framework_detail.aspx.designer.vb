@@ -104,6 +104,15 @@ Partial Public Class p56_framework_detail
     Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''pmProject control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pmProject As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''Project control.
     '''</summary>
     '''<remarks>

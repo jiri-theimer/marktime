@@ -76,11 +76,17 @@ Public Class report_modal
                     .AddToolbarButton(Resources.report_modal.NastaveniSablony, "setting", "0", "Images/setting.png", False, "javascript:x31_record()")
                 End If
                 .AddToolbarButton("PDF merge", "merge", 0, "Images/merge.png", False)
-                .AddToolbarButton("PDF náhled", "pdf", 0, "Images/pdf.png")
+
+                If Me.MultiPIDs = "" Then
+                    .AddToolbarButton("PDF náhled", "pdf", 0, "Images/pdf.png", True)
+                Else
+                    .AddToolbarButton("PDF export", "pdf-export", 0, "Images/pdf.png", True)
+                End If
+
                 .AddToolbarButton(Resources.report_modal.OdeslatPostou, "mail", 0, "Images/email.png")
                 .AddToolbarButton(Resources.report_modal.Tisk, "print", 0, "Images/report.png", False, "javascript:rvprint()")
                 .RadToolbar.FindItemByValue("merge").CssClass = "show_hide1"
-                .ChangeToolbarButtonAttribute("pdf", "postback", "0")
+
             End With
             Dim lisPars As New List(Of String)
             With lisPars
@@ -119,7 +125,7 @@ Public Class report_modal
                 period1.Visible = True
                 Master.HideShowToolbarButton("mail", False) 'hromadný tisk nemá poštu
                 Master.HideShowToolbarButton("print", False)    'hromadný tisk nemá tisk
-                Master.RenameToolbarButton("pdf", "PDF export")
+
 
                 Select Case Me.CurrentX29ID
                     Case BO.x29IdEnum.p28Contact
@@ -164,6 +170,7 @@ Public Class report_modal
             doc1.Append(Master.Factory.x35GlobalParam.TempFolder & "\" & strPdfFileName)
         Next
         Master.DataPID = 0
+
         doc1.DrawToWeb(Master.Factory.GetRecordFileName(BO.x29IdEnum._NotSpecified, 0, "pdf", False, Me.CurrentX31ID), True)
         ''doc1.DrawToWeb("MARKTIME_REPORT_MULTIPLE.pdf", True)
 
@@ -247,7 +254,8 @@ Public Class report_modal
         If cRec.x31FormatFlag = BO.x31FormatFlagENUM.DOCX Then
             'DOCX
             rv1.Visible = False
-            Master.HideShowToolbarButton("pdf", False)
+            If Me.MultiPIDs = "" Then Master.HideShowToolbarButton("pdf", False)
+            If Me.MultiPIDs <> "" Then Master.HideShowToolbarButton("pdf-export", False)
             Master.HideShowToolbarButton("merge", False)
             Dim cDoc As New clsMergeDOC(Master.Factory)
             If Trim(cRec.x31DocSqlSourceTabs) <> "" Then
@@ -270,7 +278,8 @@ Public Class report_modal
         If cRec.x31FormatFlag = BO.x31FormatFlagENUM.XLSX Then
             'XLSX
             rv1.Visible = False
-            Master.HideShowToolbarButton("pdf", False)
+            If Me.MultiPIDs = "" Then Master.HideShowToolbarButton("pdf", False)
+            If Me.MultiPIDs <> "" Then Master.HideShowToolbarButton("pdf-export", False)
             Master.HideShowToolbarButton("merge", False)
             period1.Visible = cRec.x31IsPeriodRequired
             Dim strRet As String = GenerateXLS(strRepFullPath)
@@ -279,7 +288,8 @@ Public Class report_modal
             End If
             Return
         End If
-        Master.HideShowToolbarButton("pdf", True)
+        If Me.MultiPIDs = "" Then Master.HideShowToolbarButton("pdf", True)
+        If Me.MultiPIDs <> "" Then Master.HideShowToolbarButton("pdf-export", True)
         Master.HideShowToolbarButton("merge", True)
         rv1.Visible = True
         
@@ -375,17 +385,14 @@ Public Class report_modal
                     strURL += "&datfrom=" & BO.BAS.FD(period1.DateFrom) & "&datuntil=" & BO.BAS.FD(period1.DateUntil)
                 End If
                 Server.Transfer(strURL)
+            Case "pdf-export"
+                MultiPidsGeneratePDF()
+                
+                
             Case "pdf"
-                If Me.MultiPIDs <> "" Then
-                    MultiPidsGeneratePDF()
-                    Return
-                End If
-
                 Dim strOutputFileName As String = Master.Factory.GetRecordFileName(Me.CurrentX29ID, Master.DataPID, "pdf", False, Me.CurrentX31ID)
 
                 hidOutputFullPathPdf.Value = GenerateOnePDF2Temp(Me.CurrentX31ID, GenerateOnePDF2Temp(Me.CurrentX31ID, strOutputFileName))
-
-                
 
         End Select
     End Sub

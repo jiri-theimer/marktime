@@ -3,8 +3,9 @@
     <ItemTemplate>
         <asp:PlaceHolder ID="place1" runat="server"></asp:PlaceHolder>
         <asp:Label ID="_x67name" runat="server" CssClass="valbold"></asp:Label>
-        <asp:hyperlink ID="role_clue" runat="server" CssClass="reczoom" Text="i" title="Detail projektové role"></asp:hyperlink>
+        
         <asp:Label ID="_subject" runat="server"></asp:Label>
+        <asp:hyperlink ID="role_clue" runat="server" CssClass="reczoom" Text="i" title="Detail projektové role"></asp:hyperlink>
        <asp:PlaceHolder ID="place2" runat="server"></asp:PlaceHolder>
     </ItemTemplate>
 </asp:repeater>

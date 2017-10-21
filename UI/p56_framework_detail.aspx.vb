@@ -104,6 +104,7 @@
             If Master.Factory.SysUser.j04IsMenu_Project Then
                 Me.Project.NavigateUrl = "p41_framework.aspx?pid=" & .p41ID.ToString
             End If
+            Me.pmProject.Attributes.Item("onclick") = "RCM('p41'," & .p41ID.ToString & ",this)"
             Me.clue_project.Attributes("rel") = "clue_p41_record.aspx?pid=" & .p41ID.ToString
 
             Me.p57Name.Text = .p57Name
