@@ -24,8 +24,8 @@
         If BO.BAS.IsNullInt(Request.Item("j11id")) > 0 Then
             Dim c As BO.j11Team = Master.Factory.j11TeamBL.Load(BO.BAS.IsNullInt(Request.Item("j11id")))
             If Not c.j11IsAllPersons Then
-                Me.Team.Text = String.Join("&nbsp;&nbsp;", Master.Factory.j11TeamBL.GetList_BoundJ12(BO.BAS.IsNullInt(Request.Item("j11id"))).Select(Function(p) p.FullNameDesc))
-                Me.Team.Text = "<b>" & c.j11Name & "</b>: " & Me.Team.Text
+                Me.Team.Text = String.Join("<br>", Master.Factory.j11TeamBL.GetList_BoundJ12(BO.BAS.IsNullInt(Request.Item("j11id"))).Select(Function(p) p.FullNameDesc))
+                Me.Team.Text = "<b>" & c.j11Name & "</b>:<br>" & Me.Team.Text
             Else
                 Me.Team.Text = c.j11Name
             End If
