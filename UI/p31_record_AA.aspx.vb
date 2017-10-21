@@ -69,6 +69,9 @@
                 cmdApprove.Visible = False
                 Master.RadToolbar.Skin = "BlackMetroTouch"
             End If
+            If cmdApprove.Visible Then
+                cmdApprove.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_ApprovingDialog)
+            End If
 
             ''lblReadonlyReason.Text = .ReadOnlyMessage
 
