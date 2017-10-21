@@ -363,7 +363,7 @@
                 <telerik:RadTabStrip ID="RadTabStrip1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true">
                     <Tabs>
                         <telerik:RadTab Text="Aktuální záznam" Selected="true" Value="one"></telerik:RadTab>
-                        <telerik:RadTab Text="Hromadné operace" Value="selected"></telerik:RadTab>
+                        
                         <telerik:RadTab Text="Fakt.poznámka" Value="memo"></telerik:RadTab>
                     </Tabs>
                 </telerik:RadTabStrip>
@@ -373,11 +373,7 @@
 
                         <iframe id="fraSubform" runat="server" width="100%" height="460px" frameborder="0" src=""></iframe>
                     </telerik:RadPageView>
-                    <telerik:RadPageView ID="selected" runat="server">
-                        <p></p>
-
-
-                    </telerik:RadPageView>
+                  
                     <telerik:RadPageView ID="memo" runat="server">
                         <uc:billingmemo ID="bm1" runat="server" />
                     </telerik:RadPageView>
