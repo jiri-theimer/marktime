@@ -29,7 +29,7 @@
     End Sub
 
     Private Sub RefreshRecord()
-        Me.cmdSourceRecord.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approve_Rates)
+        Me.cmdSourceRecord.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approve_SourceRecord)
         Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.LoadTempRecord(Master.DataPID, ViewState("guid"))
         approve1.InhaleRecord(cRec, False)
 

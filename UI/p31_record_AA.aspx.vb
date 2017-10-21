@@ -235,7 +235,7 @@
         approve1.InhaleRecord(Master.Factory.p31WorksheetBL.Load(Master.DataPID))
         cmdApprove.Visible = False
         Me.panP31Text.Visible = False
-        cmdSourceRecord.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approve_Rates)
+        cmdSourceRecord.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_ApprovingDialog)
     End Sub
 
     Private Sub approve1_AfterSave(ByRef strErr As String) Handles approve1.AfterSave

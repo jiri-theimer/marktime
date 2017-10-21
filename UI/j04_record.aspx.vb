@@ -55,8 +55,6 @@
                     .FindByValue(lis.Where(Function(p) p.x53Value = BO.x53PermValEnum.GR_P31_EditAsNonOwner)(0).PID.ToString).Selected = True
                     .FindByValue(lis.Where(Function(p) p.x53Value = BO.x53PermValEnum.GR_P31_AllowRates)(0).PID.ToString).Selected = True
                     .FindByValue(lis.Where(Function(p) p.x53Value = BO.x53PermValEnum.GR_P31_Approve_P72)(0).PID.ToString).Selected = True
-                    .FindByValue(lis.Where(Function(p) p.x53Value = BO.x53PermValEnum.GR_P31_Approve_Rates)(0).PID.ToString).Selected = True
-                    .FindByValue(lis.Where(Function(p) p.x53Value = BO.x53PermValEnum.GR_P31_Approve_Text)(0).PID.ToString).Selected = True
                 End With
 
 

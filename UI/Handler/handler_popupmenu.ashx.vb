@@ -308,18 +308,20 @@ Public Class handler_popupmenu
                     If cRec.p33ID = BO.p33IdENUM.Cas Then
                         CI("Rozdělit úkon na 2 kusy", "p31_record_split.aspx?pid=" & intPID.ToString, , "Images/split.png")
                     End If
-                    If Not cRec.IsClosed And (cDisp.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit) Then
-                        SEP()
-                        CI("[SCHVÁLIT]", "", , "Images/approve.png")
-                        CI("Schvalovací dialog", "p31_approving_step2.aspx?pids=" & intPID.ToString, , "Images/approve.png", True, True)
+                   
+                End If
+                ''Dim bolCanApproveAll As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver)
+                If Not cRec.IsClosed And (cDisp.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit) Then
+                    SEP()
+                    CI("[SCHVÁLIT]", "", , "Images/approve.png")
+                    CI("Schvalovací dialog", "p31_approving_step2.aspx?pids=" & intPID.ToString, , "Images/approve.png", True, True)
 
-                        CI("Fakturovat", "javascript:ContextMenu_Approve(4," & cRec.PID.ToString & ")", , "Images/a14.gif", True)
-                        CI("Zahrnout do paušálu", "javascript:ContextMenu_Approve(6," & cRec.PID.ToString & ")", , "Images/a16.gif", True)
-                        CI("Viditelný odpis", "javascript:ContextMenu_Approve(2," & cRec.PID.ToString & ")", , "Images/a12.gif", True)
-                        CI("Skrytý odpis", "javascript:ContextMenu_Approve(3," & cRec.PID.ToString & ")", , "Images/a13.gif", True)
-                        CI("Fakturovat později", "javascript:ContextMenu_Approve(7," & cRec.PID.ToString & ")", , "Images/a17.gif", True)
+                    CI("Fakturovat", "javascript:ContextMenu_Approve(4," & cRec.PID.ToString & ")", , "Images/a14.gif", True)
+                    CI("Zahrnout do paušálu", "javascript:ContextMenu_Approve(6," & cRec.PID.ToString & ")", , "Images/a16.gif", True)
+                    CI("Viditelný odpis", "javascript:ContextMenu_Approve(2," & cRec.PID.ToString & ")", , "Images/a12.gif", True)
+                    CI("Skrytý odpis", "javascript:ContextMenu_Approve(3," & cRec.PID.ToString & ")", , "Images/a13.gif", True)
+                    CI("Fakturovat později", "javascript:ContextMenu_Approve(7," & cRec.PID.ToString & ")", , "Images/a17.gif", True)
 
-                    End If
                 End If
             Case BO.p31RecordState.Approved
                 CI("Detail úkonu", "p31_record.aspx?pid=" & intPID.ToString, , "Images/zoom.png")
@@ -330,8 +332,7 @@ Public Class handler_popupmenu
                 If cDisp.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Then
                     SEP()
                     CI("[PŘE-SCHVÁLIT]", "", , "Images/approve.png")
-
-                    CI("Schvalovací dialog", "p31_approving_step2.aspx?pids=" & intPID.ToString, , "Images/approve.png", True, True)                    
+                    CI("Schvalovací dialog", "p31_approving_step2.aspx?pids=" & intPID.ToString, , "Images/approve.png", True, True)
                     CI("Fakturovat", "javascript:ContextMenu_Approve(4," & cRec.PID.ToString & ")", , "Images/a14.gif", True)
                     CI("Zahrnout do paušálu", "javascript:ContextMenu_Approve(6," & cRec.PID.ToString & ")", , "Images/a16.gif", True)
                     CI("Viditelný odpis", "javascript:ContextMenu_Approve(2," & cRec.PID.ToString & ")", , "Images/a12.gif", True)

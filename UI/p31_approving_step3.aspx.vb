@@ -3,10 +3,12 @@
 Public Class p31_approving_step3
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As ModalForm
+    Private _IsShowSubform As Boolean = False
 
     Private Sub p31_approving_step3_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
         Master.HelpTopicID = "p31_approving_dialog"
+        _IsShowSubform = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_ApprovingDialog)
     End Sub
     
     Public ReadOnly Property CurrentMasterPrefix As String
@@ -65,7 +67,7 @@ Public Class p31_approving_step3
                 .AddToolbarButton(cB)
                 ' .AddToolbarButton("Uložit a zavřít", "save_close", , "Images/save.png")
 
-                
+
 
                 .AddToolbarButton("Sestava", "report", 1, "Images/report.png", False, "javascript:report()")
 
@@ -74,7 +76,11 @@ Public Class p31_approving_step3
                 .AddToolbarButton("Nastavení", "setting", 1, "Images/arrow_down.gif", False)
                 ''.AddToolbarButton("Fakturační poznámka", "o23", 1, "Images/arrow_down.gif", False)
 
-                .AddToolbarButton("Editovatelná tabulka", "", 1, , False, "javascript:batch_p31text()")
+                If _IsShowSubform Then
+                    .AddToolbarButton("Editovatelná tabulka", "", 1, , False, "javascript:batch_p31text()")
+                End If
+                
+                .AddToolbarButton("Hromadné operace", "batchoper", 1, "Images/batch.png", False)
 
                 If .Factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator) Or .Factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator) Then
                     '.AddToolbarButton("Uložit a pokračovat fakturací", "save_invoice", 1, "Images/save.png")
@@ -91,6 +97,7 @@ Public Class p31_approving_step3
                 End If
 
                 .RadToolbar.FindItemByValue("setting").CssClass = "show_hide2"
+                .RadToolbar.FindItemByValue("batchoper").CssClass = "show_hide1"
                 ''.RadToolbar.FindItemByValue("o23").CssClass = "show_hide3"
 
                 cB = New clsToolBarButton("Uložit jako billing dávku", "save_set")
@@ -441,7 +448,7 @@ Public Class p31_approving_step3
 
     
     Private Sub RefreshSubform(strPID As String)
-        If strPID = "" Then Return
+        If strPID = "" Or _IsShowSubform = False Then Return
 
         Me.fraSubform.Attributes.Item("src") = "p31_approving_step3_subform.aspx?pid=" & strPID & "&guid=" & ViewState("guid")
 
@@ -701,6 +708,11 @@ Public Class p31_approving_step3
     End Function
 
     Private Sub p31_approving_step3_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        If Not _IsShowSubform Then
+            td1.Style.Clear()   'uživatel nemá právo provádět korekce
+            td1.Visible = False
+        End If
+
         If Not Page.IsPostBack Then
             If Request.Item("clearapprove") = "1" Then
                 'Žádost z aplikace o hromadné vyčištění

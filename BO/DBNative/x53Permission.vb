@@ -12,9 +12,9 @@
     GR_P91_Reader = 10                  'Čtenář všech faktur
     GR_P31_Pivot = 11                 'Worksheet PIVOT
     GR_P31_Approve_P72 = 12             'Jako schvalovatel může navrhovat fakturační status úkonu
-    GR_P31_Approve_Text = 13            'Jako schvalovatel může upravovat popis úkonu
+    GR_P31_Approve_SourceRecord = 13    'Jako schvalovatel může upravovat zdrojový úkon
     GR_P36_Admin = 14                   'Uzamykat worksheet období
-    GR_P31_Approve_Rates = 15           'Jako schvalovatel může upravovat sazby/ceny úkonů nebo upravovat v rámci schvalování zdrojový záznam schvalovaného úkonu
+    GR_P31_ApprovingDialog = 15           'Jako schvalovatel přístup do schvalovacího dialogu
     GR_P31_Trimm = 16                   'Navrhovat fakturační korekce v úkonu
     GR_P31_AllowRates = 17              'Přístup k billing informacím o worksheet úkonu (sazby a fakturační údaje)
     GR_P90_Create = 18                  'vytvářet zálohové faktury
