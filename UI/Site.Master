@@ -343,10 +343,20 @@
             
             window.open(url, target);
         }
+        
 
         var _lastCmClosedTime = null;
         var _CmIsClosed = null;
         var _CmLastGuid = null;
+
+        function Handle_Click_From_SubForm() {
+            if (_CmIsClosed == 0) {
+                var contextMenu = $find("<%= RadContextMenu1.ClientID %>");
+                contextMenu.get_items().clear();                
+            }
+            
+
+        }
         
         function RadContextMenu1_Hidden(menu) {
             var d = new Date();

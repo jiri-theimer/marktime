@@ -225,7 +225,7 @@
 
             try {
                 window.parent.MainMenuClose();
-                
+                window.parent.Handle_Click_From_SubForm();
             }
             catch (err) {
                 //nic

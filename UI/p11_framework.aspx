@@ -130,10 +130,11 @@
                         </td>
                         <td>
                             <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Rozhraní docházky"></asp:Label>
-
-                            <button type="button" class="button-link" onclick="report()" title="Osobní tiskové sestavy">
-                                <img src="Images/report.png" />
-                            </button>
+                            <div>
+                                <asp:HyperLink ID="cmdReport" runat="server" Text="Tisková sestava" NavigateUrl="javascript:report()" meta:resourcekey="cmdReport"></asp:HyperLink>
+                            </div>
+                            
+                            
                             
                         </td>
                       
@@ -168,7 +169,7 @@
 
 
                     </tr>
-                    <tr>
+                    <tr valign="top">
                         <td>
                             
                         </td>
