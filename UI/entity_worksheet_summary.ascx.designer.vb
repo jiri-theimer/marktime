@@ -86,15 +86,6 @@ Partial Public Class entity_worksheet_summary
     Protected WithEvents trWait4Approval As Global.System.Web.UI.HtmlControls.HtmlTableRow
 
     '''<summary>
-    '''cmdApproving control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdApproving As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''WaitingOnApproval_Hours_Sum control.
     '''</summary>
     '''<remarks>

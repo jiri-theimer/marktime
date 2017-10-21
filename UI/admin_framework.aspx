@@ -108,7 +108,7 @@
         <div class="commandcell" style="margin-left: 20px;">
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
                 <Items>
-                    <telerik:RadMenuItem Text="Nový" ImageUrl="Images/new.png" NavigateUrl="javascript:NewRecord(true);" Value="new"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="Nový" ImageUrl="Images/new4menu.png" NavigateUrl="javascript:NewRecord(true);" Value="new"></telerik:RadMenuItem>
                     
                     <telerik:RadMenuItem Text="Export" Value="export" ImageUrl="Images/export.png" PostBack="true"></telerik:RadMenuItem>
                     <telerik:RadMenuItem Text="Obnovit" ImageUrl="Images/refresh.png" Value="refresh"></telerik:RadMenuItem>

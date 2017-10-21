@@ -329,19 +329,19 @@ Public Class basUIMT
             With dataItem("pm1")
                 .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('o23','" & cRec.Item("pid").ToString & "',this,'" & strContextMenuFlag & "')" & Chr(34) & "></a>"
             End With
-            If .Item("IsO27") Then
-                Dim s As String = "<a href='fileupload_preview.aspx?prefix=o23&pid=" & cRec.Item("pid").ToString & "' target='_blank' title='Dokument má přílohy'><img src='Images/attachment.png'/></a>"
-                If bolShowClueTip Then
-                    With dataItem.Cells
-                        If .Count >= 5 Then
-                            .Item(4).Text = s & .Item(4).Text
-                        End If
-                    End With
-                Else
-                    dataItem("systemcolumn").Text += s
-                End If
+            ''If .Item("IsO27") Then
+            ''    Dim s As String = "<a href='fileupload_preview.aspx?prefix=o23&pid=" & cRec.Item("pid").ToString & "' target='_blank' title='Dokument má přílohy'><img src='Images/attachment.png'/></a>"
+            ''    If bolShowClueTip Then
+            ''        With dataItem.Cells
+            ''            If .Count >= 5 Then
+            ''                .Item(4).Text = s & .Item(4).Text
+            ''            End If
+            ''        End With
+            ''    Else
+            ''        dataItem("systemcolumn").Text += s
+            ''    End If
 
-            End If
+            ''End If
             If .Item("IsDraft") Then dataItem("systemcolumn").CssClass = "draft"
             If .Item("o23IsEncrypted") Then dataItem("systemcolumn").CssClass = "spy"
             If CType(BO.BAS.IsNullInt(.Item("o23LockedFlag")), BO.o23LockedTypeENUM) > BO.o23LockedTypeENUM._NotSpecified Then dataItem("systemcolumn").CssClass = "locked"

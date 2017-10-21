@@ -6,10 +6,10 @@
 
     End Sub
 
-    Public Sub DisableApprovingButton()
-        cmdApproving.NavigateUrl = ""
-        cmdApproving.Enabled = False
-    End Sub
+    ''Public Sub DisableApprovingButton()
+    ''    cmdApproving.NavigateUrl = ""
+    ''    cmdApproving.Enabled = False
+    ''End Sub
     
     Public Sub RefreshData(cWorksheetSum As BO.p31WorksheetSum, strPrefix As String, intRecordPID As Integer, bolAllowHonorar As Boolean, dblLimitHours_Notification As Double, dblLImitFee_Notification As Double)
         If Not bolAllowHonorar Then dblLImitFee_Notification = 0
@@ -19,10 +19,10 @@
             If .WaitingOnApproval_Hours_Count > 0 Then
                 Me.WaitingOnApproval_Hours_Sum.Text = "<span class='badgebox1red'>" & .WaitingOnApproval_Hours_Count.ToString & "x</span> " & BO.BAS.FN(.WaitingOnApproval_Hours_Sum)
 
-                If Me.Factory.SysUser.IsApprovingPerson Then
-                    'cmdApproving.NavigateUrl = "entity_framework_detail_approving.aspx?prefix=" & strPrefix & "&pid=" & intRecordPID.ToString
-                    cmdApproving.NavigateUrl = "javascript:approve()"
-                End If
+                ''If Me.Factory.SysUser.IsApprovingPerson Then
+                ''    'cmdApproving.NavigateUrl = "entity_framework_detail_approving.aspx?prefix=" & strPrefix & "&pid=" & intRecordPID.ToString
+                ''    cmdApproving.NavigateUrl = "javascript:approve()"
+                ''End If
 
                 b = True
 

@@ -375,13 +375,9 @@
 
         With Master.Factory
 
-
-            If cP42.p42IsModule_p31 Then
-                If Not menu1.IsExactApprovingPerson Then
-                    Me.p31summary1.Visible = False
-                End If
-            Else
-                Me.boxP31Summary.Visible = False
+            Me.p31summary1.Visible = False
+            If Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
+                If cP42.p42IsModule_p31 And menu1.IsExactApprovingPerson Then Me.p31summary1.Visible = True
             End If
 
             aP48.Visible = cP42.p42IsModule_p48

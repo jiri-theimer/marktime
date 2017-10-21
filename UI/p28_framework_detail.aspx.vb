@@ -202,19 +202,22 @@
         
 
         Me.Last_WIP_Worksheet.Text = cRecSum.Last_Wip_Worksheet
-        If cRecSum.p31_Approved_Time_Count > 0 Or cRecSum.p31_Wip_Time_Count > 0 Or cRecSum.p31_Wip_Expense_Count > 0 Or cRecSum.p31_Wip_Fee_Count > 0 Or cRecSum.p31_Approved_Expense_Count > 0 Then
-            Dim mq As New BO.myQueryP31
-            mq.p28ID_Client = cRec.PID
-            Dim cWorksheetSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, True, True)
-            If cWorksheetSum.RowsCount = 0 Then
-                boxP31Summary.Visible = False
+        If p31summary1.Visible Then
+            If cRecSum.p31_Approved_Time_Count > 0 Or cRecSum.p31_Wip_Time_Count > 0 Or cRecSum.p31_Wip_Expense_Count > 0 Or cRecSum.p31_Wip_Fee_Count > 0 Or cRecSum.p31_Approved_Expense_Count > 0 Then
+                Dim mq As New BO.myQueryP31
+                mq.p28ID_Client = cRec.PID
+                Dim cWorksheetSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, True, True)
+                If cWorksheetSum.RowsCount = 0 Then
+                    boxP31Summary.Visible = False
+                Else
+                    p31summary1.RefreshData(cWorksheetSum, "p28", Master.DataPID, Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates), 0, 0)
+                End If
             Else
-                p31summary1.RefreshData(cWorksheetSum, "p28", Master.DataPID, Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates), 0, 0)
+                p31summary1.Visible = False
+                If cRecSum.Last_Invoice = "" And cRecSum.Last_Wip_Worksheet = "" Then Me.boxP31Summary.Visible = False
             End If
-        Else
-            p31summary1.Visible = False
-            If cRecSum.Last_Invoice = "" And cRecSum.Last_Wip_Worksheet = "" Then Me.boxP31Summary.Visible = False
         End If
+        
 
         If cRec.b02ID > 0 Then
             Me.trWorkflow.Visible = True
@@ -297,6 +300,10 @@
             Master.StopPage("Nedisponujete přístupovým oprávněním ke klientovi.")
         End If
 
+        Me.p31summary1.Visible = False
+        If Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
+            If menu1.IsExactApprovingPerson Then Me.p31summary1.Visible = True
+        End If
 
 
 

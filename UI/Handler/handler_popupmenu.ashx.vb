@@ -85,21 +85,29 @@ Public Class handler_popupmenu
         If cDisp.OwnerAccess Then
             SEP()
             CI("Upravit kartu úkolu", "p56_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
-            CI("Kopírovat", "p56_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
-            If strFlag = "pagemenu" Then
-                CI("Založit úkol", "p56_record.aspx?pid=0&p41id=" & cRec.p41ID.ToString & ";", , "Images/new4menu.png")
-            End If
+            
+        End If
+        SEP()
+        CI("[NOVÝ]", "", , "Images/new4menu.png")
+        If cDisp.OwnerAccess Then
+            CI("Kopírovat", "p56_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png", True)    'pod nový
+        End If
+
+        CI("Založit úkol", "p56_record.aspx?pid=0&masterprefix=p41&masterpid=0", , "Images/new4menu.png", True)   'pod nový
+
+        If factory.SysUser.j04IsMenu_Notepad Then
+            CI("Vytvořit dokument", "o23_record.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, , "Images/notepad.png", True)    'pod nový
         End If
 
         Dim cP41 As BO.p41Project = factory.p41ProjectBL.Load(cRec.p41ID)
 
         If cDisp.P31_Create Then
             SEP()
-            CI("Zapsat WORKSHEET", "p31_record.aspx?p56id=" & intPID.ToString, cRec.IsClosed, "Images/worksheet.png")
+            CI("[ZAPSAT WORKSHEET]", "p31_record.aspx?p56id=" & intPID.ToString, cRec.IsClosed, "Images/worksheet.png")
             If Not cRec.IsClosed Then
                 Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(cP41.PID, cP41.p42ID, cP41.j18ID, factory.SysUser.j02ID)
                 For Each c In lisP34
-                    CI("[" & c.p34Name & "]", "p31_record.aspx?pid=0&p56id=" & cRec.PID.ToString & "&p34id=" + c.PID.ToString, , "Images/worksheet.png", True)
+                    CI(c.p34Name, "p31_record.aspx?pid=0&p56id=" & cRec.PID.ToString & "&p34id=" + c.PID.ToString, , "Images/worksheet.png", True)
                 Next
             End If
         End If
@@ -133,15 +141,15 @@ Public Class handler_popupmenu
 
         SEP()
         CI("Posunout/Doplnit", "workflow_dialog.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/workflow.png")
-        
-
-
-        
 
 
         If factory.SysUser.j04IsMenu_Project And cRec.p41ID > 0 Then
-            SEP()
-            REL(cRec.p41Name, "p41_framework.aspx?pid=" & cRec.p41ID.ToString, "_top", "Images/project.png")
+            CI("[ODKAZ]", "", , "Images/link.png")
+
+            REL(cP41.PrefferedName, "p41_framework.aspx?pid=" & cRec.p41ID.ToString, "_top", "Images/project.png", True)
+            If cP41.p28ID_Client > 0 And factory.SysUser.j04IsMenu_Contact Then
+                REL(cP41.Client, "p28_framework.aspx?pid=" & cP41.p28ID_Client.ToString, "_top", "Images/contact.png", True)
+            End If
         End If
         If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
             SEP()
@@ -150,27 +158,22 @@ Public Class handler_popupmenu
         SEP()
         CI("Tisková sestava", "report_modal.aspx?prefix=p56&pid=" & intPID.ToString, , "Images/report.png")
         CI("Odeslat e-mail", "sendmail.aspx?prefix=p56&pid=" & cRec.PID.ToString, , "Images/email.png")
+
         SEP()
-        CI("Oštítkovat", "tag_binding.aspx?prefix=p56&pids=" & intPID.ToString, , "Images/tag.png")
+        CI("[DALŠÍ]", "", , "Images/more.png")
+        CI("Oštítkovat", "tag_binding.aspx?prefix=p56&pids=" & intPID.ToString, , "Images/tag.png", True)
 
-        If strFlag = "pagemenu" Then
-            SEP()
-            CI("[DALŠÍ]", "", , "Images/more.png")
 
-            If factory.SysUser.j04IsMenu_Notepad Then
-                CI("Vytvořit dokument", "o23_record.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, , "Images/notepad.png", True)
-            End If
+        If cRec.b01ID = 0 Then CI("Doplnit poznámku, komentář, přílohu", "b07_create.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, , "Images/comment.png", True)
 
-            If cRec.b01ID = 0 Then CI("Doplnit poznámku, komentář, přílohu", "b07_create.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, , "Images/comment.png", True)
-
-            REL("Historie odeslané pošty", "x40_framework.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, "_top", "Images/email.png", True)
-            If cDisp.OwnerAccess Then
-                CI("Historie záznamu", "entity_timeline.aspx?prefix=p56&pid=" & cRec.PID.ToString, , "Images/event.png", True)
-            End If
-
-            CI("Plugin", "plugin_modal.aspx?prefix=p56&pid=" & cRec.PID.ToString, , "Images/plugin.png", True)
-
+        REL("Historie odeslané pošty", "x40_framework.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, "_top", "Images/email.png", True)
+        If cDisp.OwnerAccess Then
+            CI("Historie záznamu", "entity_timeline.aspx?prefix=p56&pid=" & cRec.PID.ToString, , "Images/event.png", True)
         End If
+
+        CI("Plugin", "plugin_modal.aspx?prefix=p56&pid=" & cRec.PID.ToString, , "Images/plugin.png", True)
+
+
     End Sub
     Private Sub HandleP91(intPID As Integer, factory As BL.Factory, strFlag As String)
         Dim cRec As BO.p91Invoice = factory.p91InvoiceBL.Load(intPID)
@@ -190,42 +193,37 @@ Public Class handler_popupmenu
                 SEP()
                 CI("Posunout/doplnit", "workflow_dialog.aspx?prefix=p91&pid=" & cRec.PID.ToString, , "Images/workflow.png")
             End If
-            If strFlag = "pagemenu" Then
-                SEP()
-                CI("Zapsat úhradu", "p91_pay.aspx?pid=" & intPID.ToString, , "Images/payment.png")
-                SEP()
-                CI("Převést fakturu na jinou měnu", "p91_change_currency.aspx?pid=" & intPID.ToString, , "Images/recalc.png")
-                CI("Převést fakturu na jinou DPH sazbu", "p91_change_vat.aspx?pid=" & intPID.ToString, , "Images/recalc.png")
-                SEP()
-                CI("Spárovat fakturu s úhradou zálohy", "p91_proforma.aspx?pid=" & intPID.ToString, , "Images/proforma.png")
-                SEP()
-                If cRec.p92InvoiceType = BO.p92InvoiceTypeENUM.ClientInvoice Then
-                    CI("Vytvořit k faktuře opravný doklad", "p91_creditnote.aspx?pid=" & intPID.ToString, , "Images/correction_down.gif")
-                    SEP()
-                End If
-                
 
+            SEP()
+            CI("[AKCE]", "", , "Images/wizard.png")
+            CI("Zapsat úhradu", "p91_pay.aspx?pid=" & intPID.ToString, , "Images/payment.png", True)
+            CI("Převést fakturu na jinou měnu", "p91_change_currency.aspx?pid=" & intPID.ToString, , "Images/recalc.png", True)
+            CI("Převést fakturu na jinou DPH sazbu", "p91_change_vat.aspx?pid=" & intPID.ToString, , "Images/recalc.png", True)            
+            CI("Spárovat fakturu s úhradou zálohy", "p91_proforma.aspx?pid=" & intPID.ToString, , "Images/proforma.png", True)            
+            If cRec.p92InvoiceType = BO.p92InvoiceTypeENUM.ClientInvoice Then
+                CI("Vytvořit k faktuře opravný doklad", "p91_creditnote.aspx?pid=" & intPID.ToString, , "Images/correction_down.gif", True)
             End If
-            If cRec.p91ID_CreditNoteBind > 0 Then
-                SEP()
+
+
+            SEP()
+            CI("[ODKAZ]", "", , "Images/link.png")
+            If cRec.p91ID_CreditNoteBind > 0 Then                
                 Dim cP91 As BO.p91Invoice = factory.p91InvoiceBL.Load(cRec.p91ID_CreditNoteBind)
-                REL(cP91.p92Name & ": " & cP91.p91Code, "p91_framework.aspx?pid=" & cP91.PID.ToString, "_top", "Images/invoice.png")
+                REL(cP91.p92Name & ": " & cP91.p91Code, "p91_framework.aspx?pid=" & cP91.PID.ToString, "_top", "Images/invoice.png", True)   'pod odkaz
             Else
                 If cRec.p92InvoiceType = BO.p92InvoiceTypeENUM.ClientInvoice Then
                     Dim cP91 As BO.p91Invoice = factory.p91InvoiceBL.LoadCreditNote(cRec.PID)
-                    If Not cP91 Is Nothing Then
-                        SEP()
-                        REL(cP91.p92Name & ": " & cP91.p91Code, "p91_framework.aspx?pid=" & cP91.PID.ToString, "_top", "Images/correction_down.gif")
+                    If Not cP91 Is Nothing Then                        
+                        REL(cP91.p92Name & ": " & cP91.p91Code, "p91_framework.aspx?pid=" & cP91.PID.ToString, "_top", "Images/correction_down.gif", True)   'pod odkaz
                     End If
                 End If
             End If
+            
             If factory.SysUser.j04IsMenu_Contact And cRec.p28ID > 0 Then
-                SEP()
-                REL(cRec.p28Name, "p28_framework.aspx?pid=" & cRec.p28ID.ToString, "_top", "Images/contact.png")
+                REL(cRec.p28Name, "p28_framework.aspx?pid=" & cRec.p28ID.ToString, "_top", "Images/contact.png", True)   'pod odkaz
             End If
             If factory.SysUser.j04IsMenu_Project And cRec.p41ID_First > 0 Then
-
-                REL(cRec.p41Name, "p41_framework.aspx?pid=" & cRec.p41ID_First.ToString, "_top", "Images/project.png")
+                REL(cRec.p41Name, "p41_framework.aspx?pid=" & cRec.p41ID_First.ToString, "_top", "Images/project.png", True) 'pod odkaz
             End If
             If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
                 SEP()
@@ -241,38 +239,37 @@ Public Class handler_popupmenu
                     CI("Sestava přílohy", "report_modal.aspx?x31id=" & .x31ID_Attachment.ToString & "&prefix=p91&pid=" & intPID.ToString, , "Images/report.png")
                 End If
             End With
-            CI("Tisková sestava", "report_modal.aspx?prefix=p91&pid=" & intPID.ToString, , "Images/report.png")
+            CI("Všechny tiskové sestavy", "report_modal.aspx?prefix=p91&pid=" & intPID.ToString, , "Images/report.png")
             CI("Odeslat e-mail", "sendmail.aspx?prefix=p91&pid=" & cRec.PID.ToString, , "Images/email.png")
         Else
             CI(cRec.p92Name & ": " & cRec.p91Code, "", True, "Images/information.png")
         End If
+
         SEP()
-        CI("Oštítkovat", "tag_binding.aspx?prefix=p91&pids=" & intPID.ToString, , "Images/tag.png")
-        If strFlag = "pagemenu" Then
-            SEP()
-            CI("[DALŠÍ]", "", , "Images/more.png")
-            If cDisp.OwnerAccess Then
-                CI("Import úhrad z ABO souboru", "p91_pay_aboimport.aspx", , "Images/payment.png", True)
-            End If
-            If cDisp.ReadAccess Then
-                CI("Export do účetnictví POHODA", "p91_export2pohoda.aspx?pid=" & cRec.PID.ToString, , "Images/license.png", True)
-            End If
-            If factory.SysUser.j04IsMenu_Notepad Then
-                CI("Vytvořit dokument", "o23_record.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString, , "Images/notepad.png", True)
-            End If
-
-
-            If cRec.b01ID = 0 Then CI("Doplnit poznámku, komentář, přílohu", "b07_create.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString, , "Images/comment.png", True)
-
-
-            REL("Historie odeslané pošty", "x40_framework.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString, "_top", "Images/email.png", True)
-            If cDisp.OwnerAccess Then
-                CI("Historie záznamu", "entity_timeline.aspx?prefix=p91&pid=" & cRec.PID.ToString, , "Images/event.png", True)
-            End If
-
-            CI("Plugin", "plugin_modal.aspx?prefix=p91&pid=" & cRec.PID.ToString, , "Images/plugin.png", True)
-            CI("Čárový kód", "barcode.aspx?prefix=p91&pid=" & cRec.PID.ToString, , "Images/barcode.png", True)
+        CI("[DALŠÍ]", "", , "Images/more.png")
+        CI("Oštítkovat", "tag_binding.aspx?prefix=p91&pids=" & intPID.ToString, , "Images/tag.png", True)
+        If cDisp.OwnerAccess Then
+            CI("Import úhrad z ABO souboru", "p91_pay_aboimport.aspx", , "Images/payment.png", True)
         End If
+        If cDisp.ReadAccess Then
+            CI("Export do účetnictví POHODA", "p91_export2pohoda.aspx?pid=" & cRec.PID.ToString, , "Images/license.png", True)
+        End If
+        If factory.SysUser.j04IsMenu_Notepad Then
+            CI("Vytvořit dokument", "o23_record.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString, , "Images/notepad.png", True)
+        End If
+
+
+        If cRec.b01ID = 0 Then CI("Doplnit poznámku, komentář, přílohu", "b07_create.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString, , "Images/comment.png", True)
+
+
+        REL("Historie odeslané pošty", "x40_framework.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString, "_top", "Images/email.png", True)
+        If cDisp.OwnerAccess Then
+            CI("Historie záznamu", "entity_timeline.aspx?prefix=p91&pid=" & cRec.PID.ToString, , "Images/event.png", True)
+        End If
+
+        CI("Plugin", "plugin_modal.aspx?prefix=p91&pid=" & cRec.PID.ToString, , "Images/plugin.png", True)
+        CI("Čárový kód", "barcode.aspx?prefix=p91&pid=" & cRec.PID.ToString, , "Images/barcode.png", True)
+
     End Sub
     Private Sub HandleP31(intPID As Integer, factory As BL.Factory, strFlag As String)
         Dim cRec As BO.p31Worksheet = factory.p31WorksheetBL.Load(intPID)
@@ -313,7 +310,7 @@ Public Class handler_popupmenu
                     End If
                     If Not cRec.IsClosed And (cDisp.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit) Then
                         SEP()
-                        CI("Schválit", "", , "Images/approve.png")
+                        CI("[SCHVÁLIT]", "", , "Images/approve.png")
                         CI("Schvalovací dialog", "p31_approving_step2.aspx?pids=" & intPID.ToString, , "Images/approve.png", True, True)
 
                         CI("Fakturovat", "javascript:ContextMenu_Approve(4," & cRec.PID.ToString & ")", , "Images/a14.gif", True)
@@ -332,7 +329,7 @@ Public Class handler_popupmenu
                 End If
                 If cDisp.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cDisp.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Then
                     SEP()
-                    CI("Pře-schválit", "", , "Images/approve.png")
+                    CI("[PŘE-SCHVÁLIT]", "", , "Images/approve.png")
 
                     CI("Schvalovací dialog", "p31_approving_step2.aspx?pids=" & intPID.ToString, , "Images/approve.png", True, True)                    
                     CI("Fakturovat", "javascript:ContextMenu_Approve(4," & cRec.PID.ToString & ")", , "Images/a14.gif", True)
@@ -344,7 +341,7 @@ Public Class handler_popupmenu
 
                     If factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator) Then
                         SEP()
-                        CI("Fakturovat", "", , "Images/billing.png")
+                        CI("[FAKTUROVAT]", "", , "Images/billing.png")
                         CI("Fakturovat (nová faktura)", "p91_create_step1.aspx?nogateway=1&prefix=p31&pid=" & intPID.ToString, , , True, True)
                         CI("Přidat do existující faktury", "p91_add_worksheet.aspx?p31ids=" & intPID.ToString, , , True, True)
                     End If
@@ -365,6 +362,15 @@ Public Class handler_popupmenu
         End Select
 
         SEP()
+        CI("[ODKAZ]", "", , "Images/link.png")
+        If cRec.j02ID_ContactPerson > 0 Then
+            Dim c As BO.j02Person = factory.j02PersonBL.Load(cRec.j02ID_ContactPerson)
+            If factory.SysUser.j04IsMenu_People Then
+                REL(c.FullNameDescWithJobTitle, "j02_framework.aspx?pid=" & cRec.j02ID_ContactPerson.ToString, "_top", "Images/contactperson.png", True)
+            Else
+                CI(c.FullNameDescWithJobTitle, "", True, "Images/contactperson.png", True)
+            End If
+        End If
         If factory.SysUser.j04IsMenu_Notepad Then
             Dim mqO23 As New BO.myQueryO23(0)
             mqO23.Record_x29ID = BO.x29IdEnum.p31Worksheet
@@ -372,31 +378,29 @@ Public Class handler_popupmenu
             mqO23.MyRecordsDisponible = True
             Dim lisO23 As IEnumerable(Of BO.o23Doc) = factory.o23DocBL.GetList(mqO23)
             For Each c In lisO23
-                REL(c.NameWithComboName, "o23_fixwork.aspx?x18id=" & c.x18ID.ToString & "&pid=" & c.PID.ToString, "_top", "Images/notepad.png")
+                REL(c.NameWithComboName, "o23_fixwork.aspx?x18id=" & c.x18ID.ToString & "&pid=" & c.PID.ToString, "_top", "Images/notepad.png", True)
             Next
         End If
-        If cRec.j02ID_ContactPerson > 0 Then
-            Dim c As BO.j02Person = factory.j02PersonBL.Load(cRec.j02ID_ContactPerson)
-            If factory.SysUser.j04IsMenu_People Then
-                REL(c.FullNameDescWithJobTitle, "j02_framework.aspx?pid=" & cRec.j02ID_ContactPerson.ToString, "_top", "Images/contactperson.png")
-            Else
-                CI(c.FullNameDescWithJobTitle, "", True, "Images/contactperson.png")
-            End If
+
+        If cRec.p56ID > 0 Then
+            If factory.SysUser.j04IsMenu_Task Then REL(cRec.p56Name, "p56_framework.aspx?pid=" & cRec.p56ID.ToString, "_top", "Images/task.png", True) 'pod odkaz
         End If
-        
-        If cRec.p56ID > 0 And strMasterPrefix <> "p56" Then
-            If factory.SysUser.j04IsMenu_Task Then REL("Stránka úkolu", "p56_framework.aspx?pid=" & cRec.p56ID.ToString, "_top", "Images/task.png")
-        End If
-        If factory.SysUser.j04IsMenu_Project And strMasterPrefix <> "p41" Then
+        If factory.SysUser.j04IsMenu_Project Then
             Dim ss As String = cRec.p41NameShort
             If ss = "" Then ss = cRec.p41Name
             If cRec.p28ID_Client > 0 Then ss = cRec.ClientName & " - " & ss
-            REL(ss, "p41_framework.aspx?pid=" & cRec.p41ID.ToString, "_top", "Images/project.png")
+            REL(ss, "p41_framework.aspx?pid=" & cRec.p41ID.ToString, "_top", "Images/project.png", True) 'pod odkaz
         End If
-        If factory.SysUser.j04IsMenu_Invoice And cRec.p91ID > 0 And strMasterPrefix <> "p91" Then
-            SEP()
+        If factory.SysUser.j04IsMenu_Contact And cRec.p28ID_Client > 0 Then
+            REL(cRec.ClientName, "p28_framework.aspx?pid=" & cRec.p28ID_Client.ToString, "_top", "Images/contact.png", True) 'pod odkaz
+        End If
+
+        If factory.SysUser.j04IsMenu_Invoice And cRec.p91ID > 0 Then
             Dim cP91 As BO.p91Invoice = factory.p91InvoiceBL.Load(cRec.p91ID)
-            REL(cP91.p92Name & ": " & cP91.p91Code, "p91_framework.aspx?pid=" & cRec.p91ID.ToString, "_top", "Images/invoice.png")
+            REL(cP91.p92Name & ": " & cP91.p91Code, "p91_framework.aspx?pid=" & cRec.p91ID.ToString, "_top", "Images/invoice.png", True)  'odkaz
+        End If
+        If factory.SysUser.j04IsMenu_People Then
+            REL(cRec.Person, "j02_framework.aspx?pid=" & cRec.j02ID.ToString, "_top", "Images/person.png", True) 'pod odkaz
         End If
         SEP()
         CI("Oštítkovat", "tag_binding.aspx?prefix=p31&pids=" & intPID.ToString, , "Images/tag.png")
@@ -411,11 +415,6 @@ Public Class handler_popupmenu
             If strFlag <> "pagemenu" Then
                 REL(cRec.p28Name, "p28_framework.aspx?pid=" & intPID.ToString, "_top", "Images/fullscreen.png")
             End If
-
-            If cRec.p28ParentID > 0 Then
-                Dim cParent As BO.p28Contact = factory.p28ContactBL.Load(cRec.p28ParentID)
-                REL(cParent.p28Name, "p28_framework.aspx?pid=" & cRec.p28ParentID.ToString, "_top", "Images/tree.png")
-            End If
         Else
             CI(cRec.p28Name, "", True, "Images/information.png")
         End If
@@ -423,18 +422,26 @@ Public Class handler_popupmenu
         If cDisp.OwnerAccess Then
             SEP()
             CI("Upravit kartu klienta", "p28_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
-            CI("Kopírovat", "p28_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
+
         End If
-        If strFlag = "pagemenu" Then
-            If factory.TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator) Then
-                CI("Založit klienta", "javascript:record_new();", , "Images/new4menu.png")
-            End If
-            If cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.ClientAndSupplier Or cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.ClientOnly Then
-                If factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then
-                    CI("Založit pro klienta nový projekt", "p41_create.aspx?p28id=" & cRec.PID.ToString, , "Images/new4menu.png")
-                End If
+        SEP()
+        CI("[NOVÝ]", "", , "Images/new4menu.png")
+        If cDisp.OwnerAccess Then CI("Kopírovat klienta", "p28_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png", True) 'pod nový
+        If factory.TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator) Then
+            CI("Založit klienta", "javascript:record_new();", , "Images/contact.png", True)  'pod nový
+        End If
+        If cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.ClientAndSupplier Or cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.ClientOnly Then
+            If factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then
+                CI("Založit pro klienta nový projekt", "p41_create.aspx?p28id=" & cRec.PID.ToString, , "Images/project.png", True)   'pod nový
             End If
         End If
+        If factory.SysUser.j04IsMenu_Notepad Then
+            CI("Vytvořit dokument", "o23_record.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, , "Images/notepad.png", True)    'pod nový
+        End If
+        If Not cRec.IsClosed Then CI("Vytvořit kalendářovou událost", "o22_record.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, , "Images/calendar.png", True) 'pod nový
+        If cRec.b02ID = 0 Then CI("Doplnit přílohu, komentář, poznámku", "b07_create.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, , "Images/comment.png", True) 'pod nový
+
+        
 
         Dim bolCanInvoice As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator), bolInvoicing As Boolean = False
 
@@ -458,7 +465,7 @@ Public Class handler_popupmenu
 
                 CI(ss, "entity_modal_approving.aspx?prefix=p28&pid=" & intPID.ToString, , "Images/approve.png", False, True)
 
-                If bolCanInvoice Then CI("Fakturovat", "", , "Images/billing.png") : bolInvoicing = True
+                If bolCanInvoice Then CI("[FAKTUROVAT]", "", , "Images/billing.png") : bolInvoicing = True
                 If bolCanInvoice And intAPPx > 0 Then
                     CI(String.Format("Fakturovat schválené úkony ({0}x)", intAPPx.ToString), "p91_create_step1.aspx?nogateway=1&prefix=p28&pid=" & intPID.ToString, , "Images/billing.png", True, True)
                 End If
@@ -467,7 +474,7 @@ Public Class handler_popupmenu
                 End If
                 If factory.SysUser.j04IsMenu_Invoice Then
                     If cSum.Last_p91ID > 0 Then
-                        REL(String.Format("Poslední faktura: {0}", factory.p91InvoiceBL.Load(cSum.Last_p91ID).p91Code), "p91_framework.aspx?pid=" & cSum.Last_p91ID.ToString, "_top", "Images/invoice.png", True)
+                        REL(String.Format("Poslední faktura: {0}", factory.p91InvoiceBL.Load(cSum.Last_p91ID).p91Code), "p91_framework.aspx?pid=" & cSum.Last_p91ID.ToString, "_top", "Images/link.png", True)
                     Else
                         CI("Klient zatím nefakturován", "", True, , True)
                     End If
@@ -476,7 +483,7 @@ Public Class handler_popupmenu
             End If
         End If
         If bolCanInvoice Then
-            If Not bolInvoicing Then CI("Fakturovat", "", , "Images/invoice.png")
+            If Not bolInvoicing Then CI("[FAKTUROVAT]", "", , "Images/invoice.png")
             CI("Fakturovat jednou částkou bez úkonů", "p91_create_step1.aspx?quick=1&prefix=p28&pid=" & intPID.ToString, , "Images/billing_green.png", True, True)
         End If
 
@@ -487,6 +494,12 @@ Public Class handler_popupmenu
         End If
 
 
+        If cRec.p28ParentID > 0 Then
+            CI("[ODKAZ]", "", , "Images/link.png")
+            Dim cParent As BO.p28Contact = factory.p28ContactBL.Load(cRec.p28ParentID)
+            REL(cParent.p28Name, "p28_framework.aspx?pid=" & cRec.p28ParentID.ToString, "_top", "Images/tree.png", True)
+        End If
+
         If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
             SEP()
             REL("Statistiky klienta", "p31_sumgrid.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "_top", "Images/pivot.png")
@@ -495,33 +508,26 @@ Public Class handler_popupmenu
         CI("Tisková sestava", "report_modal.aspx?prefix=p28&pid=" & intPID.ToString, , "Images/report.png")
         CI("Odeslat e-mail", "sendmail.aspx?prefix=p28&pid=" & cRec.PID.ToString, , "Images/email.png")
 
+     
+
         SEP()
-        CI("Oštítkovat", "tag_binding.aspx?prefix=p28&pids=" & intPID.ToString, , "Images/tag.png")
+        CI("[DALŠÍ]", "", , "Images/more.png")
+        CI("Oštítkovat", "tag_binding.aspx?prefix=p28&pids=" & intPID.ToString, , "Images/tag.png", True)
 
-        If strFlag = "pagemenu" Then
-            SEP()
-            CI("[DALŠÍ]", "", , "Images/more.png")
-
-            If factory.SysUser.j04IsMenu_Notepad Then
-                CI("Vytvořit dokument", "o23_record.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, , "Images/notepad.png", True)
-            End If
+        REL("Kalendář klienta", "entity_scheduler.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "_top", "Images/calendar.png", True)
 
 
-            If Not cRec.IsClosed Then CI("Vytvořit kalendářovou událost", "o22_record.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, , "Images/calendar.png", True)
-            REL("Kalendář klienta", "entity_scheduler.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "_top", "Images/calendar.png", True)
-
-            If cRec.b02ID = 0 Then CI("Doplnit poznámku, komentář, přílohu", "b07_create.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, , "Images/comment.png", True)
 
 
-            REL("Historie odeslané pošty", "x40_framework.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "_top", "Images/email.png", True)
-            If cDisp.OwnerAccess Then
-                CI("Historie záznamu", "entity_timeline.aspx?prefix=p28&pid=" & cRec.PID.ToString, , "Images/event.png", True)
-            End If
-
-            CI("Plugin", "plugin_modal.aspx?prefix=p28&pid=" & cRec.PID.ToString, , "Images/plugin.png", True)
-            CI("Čárový kód", "barcode.aspx?prefix=p28&pid=" & cRec.PID.ToString, , "Images/barcode.png", True)
+        REL("Historie odeslané pošty", "x40_framework.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "_top", "Images/email.png", True)
+        If cDisp.OwnerAccess Then
+            CI("Historie záznamu", "entity_timeline.aspx?prefix=p28&pid=" & cRec.PID.ToString, , "Images/event.png", True)
         End If
-        
+
+        CI("Plugin", "plugin_modal.aspx?prefix=p28&pid=" & cRec.PID.ToString, , "Images/plugin.png", True)
+        CI("Čárový kód", "barcode.aspx?prefix=p28&pid=" & cRec.PID.ToString, , "Images/barcode.png", True)
+
+
     End Sub
     Private Sub HandleP41(intPID As Integer, factory As BL.Factory, strFlag As String)
         Dim cRec As BO.p41Project = factory.p41ProjectBL.Load(intPID)
@@ -536,28 +542,40 @@ Public Class handler_popupmenu
         End If
 
         Dim cDisp As BO.p41RecordDisposition = factory.p41ProjectBL.InhaleRecordDisposition(cRec)
+        Dim cP42 As BO.p42ProjectType = factory.p42ProjectTypeBL.Load(cRec.p42ID)
 
         If cDisp.OwnerAccess Then
             SEP()
             CI("Upravit kartu projektu", "p41_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
-            CI("Kopírovat", "p41_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
+
         End If
-        If strFlag = "pagemenu" And factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then
-            CI("Založit projekt", "p41_create.aspx?client_family=1&pid=" & intPID.ToString, , "Images/new4menu.png")
-            CI("Založit pod-projekt", "p41_create.aspx?client_family=1&pid=" & cRec.PID & "&create_parent=1", , "Images/tree.png")
+        SEP()
+        CI("[NOVÝ]", "", , "Images/new4menu.png")
+        If cDisp.OwnerAccess Then CI("Kopírovat projekt", "p41_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png", True)
+        If factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then
+            CI("Založit projekt", "p41_create.aspx?client_family=1&pid=" & intPID.ToString, , "Images/project.png", True) 'pod NOVÝ
+            CI("Založit pod-projekt", "p41_create.aspx?client_family=1&pid=" & cRec.PID & "&create_parent=1", , "Images/tree.png", True)    'pod nový
         End If
+        If cP42.p42IsModule_o23 Then
+            CI("Vytvořit dokument", "o23_record.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/notepad.png", True)    'pod nový
+        End If
+        If Not cRec.IsClosed Then
+            If cP42.p42IsModule_p56 Then CI("Vytvořit úkol", "p56_record.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/task.png", True) 'pod nový
+            If cP42.p42IsModule_o22 Then CI("Vytvořit kalendářovou událost", "o22_record.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/calendar.png", True) 'pod nový
+        End If
+        
+        If cRec.b01ID = 0 Then CI("Doplnit přílohu, poznámku, komentář", "b07_create.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/comment.png", True) 'pod nový
 
 
-        Dim cP42 As BO.p42ProjectType = factory.p42ProjectTypeBL.Load(cRec.p42ID)
         If Not cDisp.ReadAccess Then CI("Nemáte přístup k tomuto projektu.", "", True) : Return
         If cP42.p42IsModule_p31 Then
             If Not (cRec.IsClosed Or cRec.p41IsDraft) Then
                 SEP()
-                CI("Zapsat WORKSHEET", "p31_record.aspx?pid=0&p41id=" & cRec.PID.ToString, , "Images/worksheet.png")
+                CI("[ZAPSAT WORKSHEET]", "p31_record.aspx?pid=0&p41id=" & cRec.PID.ToString, , "Images/worksheet.png")
 
                 Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(cRec.PID, cRec.p42ID, cRec.j18ID, factory.SysUser.j02ID)
                 For Each c In lisP34
-                    CI("[" & c.p34Name & "]", "p31_record.aspx?pid=0&p41id=" & cRec.PID.ToString & "&p34id=" + c.PID.ToString, , "Images/worksheet.png", True)
+                    CI(c.p34Name, "p31_record.aspx?pid=0&p41id=" & cRec.PID.ToString & "&p34id=" + c.PID.ToString, , "Images/worksheet.png", True)
                 Next
             End If
 
@@ -587,7 +605,7 @@ Public Class handler_popupmenu
                     If intWIPx > 0 And intAPPx > 0 Then ss = String.Format("Schválit ({0}x)/přes-schválit ({1}x)", intWIPx, intAPPx)
                     CI(ss, "entity_modal_approving.aspx?prefix=p41&pid=" & intPID.ToString, , "Images/approve.png", False, True)
                 End If
-                If bolCanInvoice Then CI("Fakturovat", "", , "Images/billing.png") : bolInvoicing = True
+                If bolCanInvoice Then CI("[FAKTUROVAT", "", , "Images/billing.png") : bolInvoicing = True
                 If bolCanInvoice And intAPPx > 0 Then
                     CI(String.Format("Fakturovat schválené úkony ({0}x)", intAPPx.ToString), "p91_create_step1.aspx?nogateway=1&prefix=p41&pid=" & intPID.ToString, , "Images/billing.png", True) : bolInvoicing = True
                 End If
@@ -597,7 +615,7 @@ Public Class handler_popupmenu
 
                 If factory.SysUser.j04IsMenu_Invoice Then
                     If cSum.Last_p91ID > 0 Then
-                        REL(String.Format("Poslední faktura: {0}", factory.p91InvoiceBL.Load(cSum.Last_p91ID).p91Code), "p91_framework.aspx?pid=" & cSum.Last_p91ID.ToString, "_top", "Images/invoice.png", True)
+                        REL(String.Format("Poslední faktura: {0}", factory.p91InvoiceBL.Load(cSum.Last_p91ID).p91Code), "p91_framework.aspx?pid=" & cSum.Last_p91ID.ToString, "_top", "Images/link.png", True)
                     Else
                         CI("Projekt zatím nefakturován", "", True, , True)
                     End If
@@ -608,7 +626,7 @@ Public Class handler_popupmenu
                 If Not bolInvoicing Then CI("Fakturovat", "", , "Images/billing.png")
                 CI("Fakturovat jednou částkou bez úkonů", "p91_create_step1.aspx?quick=1&prefix=p41&pid=" & intPID.ToString, , "Images/billing_green.png", True)
             End If
-            
+
 
         End If
         
@@ -618,15 +636,16 @@ Public Class handler_popupmenu
             SEP()
             CI("Posunout/doplnit", "cmdWorkflow", "workflow_dialog.aspx?prefix=p41&pid=" & cRec.PID.ToString, "Images/workflow.png")
         End If
-        If cRec.p41ParentID > 0 And factory.SysUser.j04IsMenu_Project Then
-            SEP()
+        SEP()
+        CI("[ODKAZ]", "", , "Images/link.png")
+        If cRec.p41ParentID > 0 And factory.SysUser.j04IsMenu_Project Then        
             Dim cParent As BO.p41Project = factory.p41ProjectBL.Load(cRec.p41ParentID)
-            REL(cParent.PrefferedName, "p41_framework.aspx?pid=" & cRec.p41ParentID.ToString, "_top", "Images/tree.png")
+            REL(cParent.PrefferedName, "p41_framework.aspx?pid=" & cRec.p41ParentID.ToString, "_top", "Images/tree.png", True)   'pod odkaz
         End If
         If factory.SysUser.j04IsMenu_Contact And cRec.p28ID_Client > 0 Then
-            SEP()
-            REL(cRec.Client, "p28_framework.aspx?pid=" & cRec.p28ID_Client.ToString, "_top", "Images/contact.png")
+            REL(cRec.Client, "p28_framework.aspx?pid=" & cRec.p28ID_Client.ToString, "_top", "Images/contact.png", True) 'pod odkaz
         End If
+        
         If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
             SEP()
             REL("Statistiky projektu", "p31_sumgrid.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "_top", "Images/pivot.png")
@@ -634,60 +653,50 @@ Public Class handler_popupmenu
         SEP()
         CI("Tisková sestava", "report_modal.aspx?prefix=p41&pid=" & intPID.ToString, , "Images/report.png")
         CI("Odeslat e-mail", "sendmail.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/email.png")
+        
+        
+
+        'If strFlag = "pagemenu" Then
         SEP()
-        CI("Oštítkovat", "tag_binding.aspx?prefix=p41&pids=" & intPID.ToString, , "Images/tag.png")
+        CI("[DALŠÍ]", "", , "Images/more.png")
+        CI("Oštítkovat", "tag_binding.aspx?prefix=p41&pids=" & intPID.ToString, , "Images/tag.png", True)
+        If cDisp.OwnerAccess Then
+            CI("Kontaktní osoby projektu", "p30_binding.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/person.png", True)
+        End If
+
         If factory.p41ProjectBL.IsMyFavouriteProject(cRec.PID) Then
-            CI("Vyřadit z mých oblíbených projektů", "javascript:Handle_Project_Favourite(" & cRec.PID.ToString & ")", , "Images/favourite_clear.png")
+            CI("Vyřadit z mých oblíbených projektů", "javascript:Handle_Project_Favourite(" & cRec.PID.ToString & ")", , "Images/favourite_clear.png", True)
         Else
-            CI("Zařadit mezi mé oblíbené projekty", "javascript:Handle_Project_Favourite(" & cRec.PID.ToString & ")", , "Images/favourite_add.png")
+            CI("Zařadit mezi mé oblíbené projekty", "javascript:Handle_Project_Favourite(" & cRec.PID.ToString & ")", , "Images/favourite_add.png", True)
         End If
 
-
-        If strFlag = "pagemenu" Then
-            SEP()
-            CI("[DALŠÍ]", "", , "Images/more.png")
-            If cDisp.OwnerAccess Then
-                CI("Kontaktní osoby projektu", "p30_binding.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/person.png", True)
-            End If
-            If Not cRec.IsClosed Then
-                If cP42.p42IsModule_p56 Then CI("Vytvořit úkol", "p56_record.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/task.png", True)
-
-            End If
-            If cP42.p42IsModule_o22 Then
-                CI("Vytvořit kalendářovou událost", "o22_record.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/calendar.png", True)
-                REL("Kalendář projektu", "entity_scheduler.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "_top", "Images/calendar.png", True)
-            End If
-
-            If cP42.p42IsModule_o23 Then
-                CI("Vytvořit dokument", "o23_record.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/notepad.png", True)
-            End If
-            
-
-            If cDisp.OwnerAccess Then
-                CI("Nastavit jako opakovaný projekt", "p41_recurrence.aspx?pid=" & cRec.PID.ToString, , "Images/recurrence.png", True)
-            End If
-            If cP42.p42IsModule_p31 Then
-                If cDisp.OwnerAccess Then
-                    CI("Definovat opakovanou odměnu/paušál/úkon", "p40_record.aspx?p41id=" & cRec.PID.ToString, , "Images/worksheet_recurrence.png", True)
-                End If
-                If cDisp.P31_RecalcRates Then CI("Přepočítat sazby rozpracovaných hodin", "p31_recalc.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/recalc.png", True)
-                If cDisp.P31_Move2Bin Then CI("Přesunout nevyfakturované úkony do/z archivu", "p31_move2bin.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/bin.png", True)
-                If cDisp.P31_MoveToOtherProject Then CI("Přesunout rozpracované na jiný projekt", "p31_move2project.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/cut.png", True)
-            End If
-
-            If cRec.b01ID = 0 Then CI("Doplnit poznámku, komentář, přílohu", "b07_create.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/comment.png", True)
-            If cP42.p42IsModule_p48 Then
-                REL("Operativní plán projektu", "p48_framework.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "_top", "Images/oplan.png", True)
-            End If
-            REL("Historie odeslané pošty", "x40_framework.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "_top", "Images/email.png", True)
-            If cDisp.OwnerAccess Then
-                CI("Historie záznamu", "entity_timeline.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/event.png", True)
-            End If
-            CI("Plugin", "plugin_modal.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/plugin.png", True)
-            CI("Čárový kód", "barcode.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/barcode.png", True)
-
-
+        If cDisp.OwnerAccess Then
+            CI("Nastavit jako opakovaný projekt", "p41_recurrence.aspx?pid=" & cRec.PID.ToString, , "Images/recurrence.png", True)
         End If
+        If cP42.p42IsModule_p31 Then
+            If cDisp.OwnerAccess Then
+                CI("Definovat opakovanou odměnu/paušál/úkon", "p40_record.aspx?p41id=" & cRec.PID.ToString, , "Images/worksheet_recurrence.png", True)
+            End If
+            If cDisp.P31_RecalcRates Then CI("Přepočítat sazby rozpracovaných hodin", "p31_recalc.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/recalc.png", True)
+            If cDisp.P31_Move2Bin Then CI("Přesunout nevyfakturované úkony do/z archivu", "p31_move2bin.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/bin.png", True)
+            If cDisp.P31_MoveToOtherProject Then CI("Přesunout rozpracované na jiný projekt", "p31_move2project.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/cut.png", True)
+        End If
+
+        If cP42.p42IsModule_o22 Then
+            REL("Kalendář projektu", "entity_scheduler.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "_top", "Images/calendar.png", True)
+        End If
+        If cP42.p42IsModule_p48 Then
+            REL("Operativní plán projektu", "p48_framework.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "_top", "Images/oplan.png", True)
+        End If
+        REL("Historie odeslané pošty", "x40_framework.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "_top", "Images/email.png", True)
+        If cDisp.OwnerAccess Then
+            CI("Historie záznamu", "entity_timeline.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/event.png", True)
+        End If
+        CI("Plugin", "plugin_modal.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/plugin.png", True)
+        CI("Čárový kód", "barcode.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/barcode.png", True)
+
+
+        'End If
     End Sub
     Private Sub HandleO23(intPID As Integer, factory As BL.Factory, strFlag As String)
         Dim cRec As BO.o23Doc = factory.o23DocBL.Load(intPID)
@@ -818,18 +827,24 @@ Public Class handler_popupmenu
         If factory.TestPermission(BO.x53PermValEnum.GR_Admin) Then
             SEP()
             CI("Upravit kartu osoby", "j02_record.aspx?pid=" & intPID.ToString, , "Images/edit.png")
-            CI("Kopírovat", "j02_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png")
-            If strFlag = "pagemenu" Then
-                CI("Založit osobu", "j02_record.aspx?pid=0", , "Images/new4menu.png")
-            End If
+
+           
         End If
+        CI("[NOVÝ]", "", , "Images/new4menu.png")
+        If factory.TestPermission(BO.x53PermValEnum.GR_Admin) Then
+            CI("Kopírovat osobu", "j02_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png", True) 'pod nový
+            CI("Založit osobu", "j02_record.aspx?pid=0", , "Images/person.png", True)
+        End If
+        If factory.SysUser.j04IsMenu_Notepad Then
+            CI("Vytvořit dokument", "o23_record.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, , "Images/notepad.png", True)    'pod nový
+        End If
+        If Not cRec.IsClosed Then CI("Vytvořit kalendářovou událost", "o22_record.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, , "Images/calendar.png", True) 'pod nový
+        CI("Doplnit přílohu, komentář, poznámku", "b07_create.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, , "Images/comment.png", True)  'pod nový
 
         If cRec.j02IsIntraPerson Then
-            If strFlag = "pagemenu" Then
-                If factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver) Then
-                    SEP()
-                    If cRec.j02IsIntraPerson Then CI("Schvalovat práci osoby", "entity_modal_approving.aspx?prefix=j02&pid=" & cRec.PID.ToString, , "Images/approve.png", , True)
-                End If
+            If factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver) Then
+                SEP()
+                If cRec.j02IsIntraPerson Then CI("Schvalovat práci osoby", "entity_modal_approving.aspx?prefix=j02&pid=" & cRec.PID.ToString, , "Images/approve.png", , True)
             End If
             If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
                 SEP()
@@ -859,26 +874,23 @@ Public Class handler_popupmenu
             SEP()
             CI("Odeslat e-mail", "sendmail.aspx?prefix=j02&pid=" & cRec.PID.ToString, , "Images/email.png")
         End If
-        
-        If factory.SysUser.j04IsMenu_People Then
-            SEP()
-            CI("Oštítkovat", "tag_binding.aspx?prefix=j02&pids=" & intPID.ToString, , "Images/tag.png")
-        End If
+
+
 
 
         If cRec.j02IsIntraPerson And strFlag = "pagemenu" Then
             CI("[DALŠÍ]", "", , "Images/more.png")
+            If factory.SysUser.j04IsMenu_People Then
+                CI("Oštítkovat", "tag_binding.aspx?prefix=j02&pids=" & intPID.ToString, , "Images/tag.png", True)
+            End If
 
             If factory.TestPermission(BO.x53PermValEnum.GR_Admin) Then
                 CI("Přepočítat sazby rozpracovaných hodin", "p31_recalc.aspx?prefix=j02&pid=" & cRec.PID.ToString, , "Images/recalc.png", True)
             End If
 
-            If factory.SysUser.j04IsMenu_Notepad Then
-                CI("Vytvořit dokument", "o23_record.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, , "Images/notepad.png", True)
-            End If
-            If Not cRec.IsClosed Then CI("Vytvořit kalendářovou událost", "o22_record.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, , "Images/calendar.png", True)
+
             REL("Kalendář osoby", "entity_scheduler.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "_top", "Images/calendar.png", True)
-            CI("Doplnit poznámku, komentář, přílohu", "b07_create.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, , "Images/comment.png", True)
+
 
             If factory.TestPermission(BO.x53PermValEnum.GR_P48_Creator) Then
                 REL("Operativní plán osoby", "cmdP48", "p48_framework.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "Images/oplan.png", True)
@@ -935,14 +947,12 @@ Public Class handler_popupmenu
         With factory.SysUser
 
             If .j04IsMenu_Worksheet Then
-                CI("Zapsat worksheet", "p31_record.aspx?pid=0", , "Images/worksheet.png")
+                CI("[ZAPSAT WORKSHEET]", "p31_record.aspx?pid=0", , "Images/worksheet.png")
                 Dim lis As IEnumerable(Of BO.p34ActivityGroup) = factory.p34ActivityGroupBL.GetList_WorksheetEntry_InAllProjects(factory.SysUser.j02ID)
                 If lis.Count > 0 And lis.Count <= 10 Then
                     For Each c In lis
-                        CI("[" & c.p34Name & "]", "p31_record.aspx?pid=0&p34id=" + c.PID.ToString, , "Images/worksheet.png", True)
+                        CI(c.p34Name, "p31_record.aspx?pid=0&p34id=" + c.PID.ToString, , "Images/worksheet.png", True)
                     Next
-                Else
-
                 End If
                 
             End If
