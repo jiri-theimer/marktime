@@ -197,7 +197,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="slidingDiv1" style="padding: 10px;">
+    <div class="slidingDiv1">
         <div class="content-box2">
             <div class="title" style="text-align: center;">Hromadně nahodit fakturační status vybraným úkonům</div>
             <div class="content" style="background-color: #F0F8FF;">
@@ -230,9 +230,9 @@
             </div>
         </div>
     </div>
-    <div class="slidingDiv3" style="padding: 10px; background-color: #F0F8FF;">
+    <div class="slidingDiv2" style="padding: 10px; background-color: #F0F8FF;">
        
-        <div class="div6" style="margin-top: 20px;">
+        <div class="div6" style="margin-top: 5px;">
             <asp:Button ID="cmdBatch_ApprovingSet" Text="Vybrané zařadit do billing dávky:" runat="server" CssClass="cmd" Width="280px" Visible="true" />
             <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="200px" AllowCustomText="true" ToolTip="Název billing dávky"></telerik:RadComboBox>
             <asp:Button ID="cmdBatch_ApprovingSet_Clear" Text="Vybraným vyčistit přiřazení billing dávky" runat="server" CssClass="cmd" Width="280px" Visible="true" />
@@ -248,7 +248,7 @@
             <asp:Button ID="cmdBatch_10" Text="Nahodit úroveň schvalování #2" runat="server" CssClass="cmd" Width="280px" />
         </div>
     </div>
-    <div class="slidingDiv2" style="padding: 10px;">
+    <div class="slidingDiv3" style="padding: 10px;">
         <div class="innerform_light">
             <div class="div6">
                 <uc:mygrid ID="designer1" runat="server" Prefix="p31" x36Key="p31_approving_step3-j70id" MasterPrefix="approving_step3" MasterPrefixFlag="2" ReloadUrl="javascript:hardrefresh(0, 'j70')" Width="250px" ModeFlag="3"></uc:mygrid>

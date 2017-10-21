@@ -96,9 +96,10 @@ Public Class p31_approving_step3
                     .AddToolbarButton(cB)
                 End If
 
-                .RadToolbar.FindItemByValue("setting").CssClass = "show_hide2"
-                .RadToolbar.FindItemByValue("batchoper").CssClass = "show_hide1"
-                .RadToolbar.FindItemByValue("approvebatch").CssClass = "show_hide3"
+                .RadToolbar.FindItemByValue("approvebatch").CssClass = "show_hide1"
+                .RadToolbar.FindItemByValue("batchoper").CssClass = "show_hide2"
+                .RadToolbar.FindItemByValue("setting").CssClass = "show_hide3"
+
 
                 cB = New clsToolBarButton("Uložit jako billing dávku", "save_set")
                 cB.NavigateURL = "javascript:SaveAsSet()"
