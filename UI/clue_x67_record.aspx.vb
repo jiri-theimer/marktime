@@ -18,6 +18,21 @@
 
 
         End With
+        If BO.BAS.IsNullInt(Request.Item("j02id")) > 0 Then
+            Me.Person.Text = Master.Factory.j02PersonBL.Load(BO.BAS.IsNullInt(Request.Item("j02id"))).FullNameDesc
+        End If
+        If BO.BAS.IsNullInt(Request.Item("j11id")) > 0 Then
+            Dim c As BO.j11Team = Master.Factory.j11TeamBL.Load(BO.BAS.IsNullInt(Request.Item("j11id")))
+            If Not c.j11IsAllPersons Then
+                Me.Team.Text = String.Join("&nbsp;&nbsp;", Master.Factory.j11TeamBL.GetList_BoundJ12(BO.BAS.IsNullInt(Request.Item("j11id"))).Select(Function(p) p.FullNameDesc))
+                Me.Team.Text = "<b>" & c.j11Name & "</b>: " & Me.Team.Text
+            Else
+                Me.Team.Text = c.j11Name
+            End If
+
+
+
+        End If
 
         If cRec.x29ID = BO.x29IdEnum.p41Project Or cRec.x29ID = BO.x29IdEnum.j18Region Then
             Dim lisO28 As IEnumerable(Of BO.o28ProjectRole_Workload) = Master.Factory.x67EntityRoleBL.GetList_o28(BO.BAS.ConvertInt2List(intPID))

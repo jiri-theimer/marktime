@@ -23,6 +23,24 @@ Partial Public Class clue_x67_record
     Protected WithEvents ph1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''Person control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Person As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Team control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Team As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''panWorksheet control.
     '''</summary>
     '''<remarks>

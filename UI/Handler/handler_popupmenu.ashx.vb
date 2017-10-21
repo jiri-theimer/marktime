@@ -563,6 +563,9 @@ Public Class handler_popupmenu
             If cP42.p42IsModule_p56 Then CI("Vytvořit úkol", "p56_record.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/task.png", True) 'pod nový
             If cP42.p42IsModule_o22 Then CI("Vytvořit kalendářovou událost", "o22_record.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/calendar.png", True) 'pod nový
         End If
+        If cDisp.OwnerAccess Then
+            CI("Vytvořit předpis opakované odměny/úkonu", "p40_record.aspx?p41id=" & cRec.PID.ToString, , "Images/worksheet_recurrence.png", True)
+        End If
         
         If cRec.b01ID = 0 Then CI("Doplnit přílohu, poznámku, komentář", "b07_create.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, , "Images/comment.png", True) 'pod nový
 
@@ -636,6 +639,16 @@ Public Class handler_popupmenu
             SEP()
             CI("Posunout/doplnit", "cmdWorkflow", "workflow_dialog.aspx?prefix=p41&pid=" & cRec.PID.ToString, "Images/workflow.png")
         End If
+
+
+        If cP42.p42IsModule_p31 Then
+            SEP()
+            CI("[AKCE]", "", , "Images/wizard.png")
+            If cDisp.P31_RecalcRates Then CI("Přepočítat sazby rozpr. hodin", "p31_recalc.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/recalc.png", True)
+            If cDisp.P31_Move2Bin Then CI("Přesunout do/z archivu nevyfakturované úkony", "p31_move2bin.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/bin.png", True)
+            If cDisp.P31_MoveToOtherProject Then CI("Přesunout rozpr. na jiný projekt", "p31_move2project.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/cut.png", True)
+        End If
+
         SEP()
         CI("[ODKAZ]", "", , "Images/link.png")
         If cRec.p41ParentID > 0 And factory.SysUser.j04IsMenu_Project Then        
@@ -673,14 +686,7 @@ Public Class handler_popupmenu
         If cDisp.OwnerAccess Then
             CI("Nastavit jako opakovaný projekt", "p41_recurrence.aspx?pid=" & cRec.PID.ToString, , "Images/recurrence.png", True)
         End If
-        If cP42.p42IsModule_p31 Then
-            If cDisp.OwnerAccess Then
-                CI("Definovat opakovanou odměnu/paušál/úkon", "p40_record.aspx?p41id=" & cRec.PID.ToString, , "Images/worksheet_recurrence.png", True)
-            End If
-            If cDisp.P31_RecalcRates Then CI("Přepočítat sazby rozpracovaných hodin", "p31_recalc.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/recalc.png", True)
-            If cDisp.P31_Move2Bin Then CI("Přesunout nevyfakturované úkony do/z archivu", "p31_move2bin.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/bin.png", True)
-            If cDisp.P31_MoveToOtherProject Then CI("Přesunout rozpracované na jiný projekt", "p31_move2project.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/cut.png", True)
-        End If
+        
 
         If cP42.p42IsModule_o22 Then
             REL("Kalendář projektu", "entity_scheduler.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "_top", "Images/calendar.png", True)

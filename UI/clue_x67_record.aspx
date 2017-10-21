@@ -12,7 +12,12 @@
             <img src="Images/projectrole_32.png" />
             <asp:Label ID="ph1" runat="server" CssClass="clue_header_span"></asp:Label>
         </div>
-
+        <div>
+            <asp:Label ID="Person" runat="server"></asp:Label>
+        </div>
+        <div>
+            <asp:Label ID="Team" runat="server"></asp:Label>
+        </div>
         <asp:Panel ID="panWorksheet" runat="server" CssClass="content-box2">
             <div class="title">
                 Oprávnění projektové role k worksheet úkonům projektu

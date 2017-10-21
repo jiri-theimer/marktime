@@ -22,6 +22,8 @@
 
 
     <style type="text/css">
+      
+
         html .RadNavigation_Windows7 .rnvRootGroupWrapper {
             background-color: #25a0da;
             background-image: none;
@@ -186,7 +188,7 @@
                 return { width: width - 6, height: height - 6 };
             }
         </script>
-        <telerik:RadContextMenu ID="RadContextMenu1" runat="server" EnableViewState="false" Skin="Metro" ExpandDelay="0" RenderMode="Lightweight" OnClientHidden="RadContextMenu1_Hidden" OnClientShown="RadContextMenu1_Shown">
+        <telerik:RadContextMenu ID="RadContextMenu1" runat="server" EnableViewState="false" Skin="Metro" ExpandDelay="0" RenderMode="Lightweight" OnClientHidden="RadContextMenu1_Hidden" OnClientShown="RadContextMenu1_Shown">            
             <CollapseAnimation Type="None" />
             <ExpandAnimation Type="None" />                
         </telerik:RadContextMenu>
@@ -405,6 +407,7 @@
                     for (var i in data) {
                         var c = data[i];
                         var mi = new Telerik.Web.UI.RadMenuItem();
+                        
 
                         if (c.IsSeparator == true) {
                             mi.set_isSeparator(true);
