@@ -44,7 +44,6 @@ Public Class p31_approving_step3
                     .HeaderText = s
                 End If
 
-                .HeaderIcon = "Images/approve_32.png"
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add(designer1.x36Key)
@@ -71,7 +70,7 @@ Public Class p31_approving_step3
 
                 .AddToolbarButton("Sestava", "report", 1, "Images/report.png", False, "javascript:report()")
 
-                .AddToolbarButton("Zapsat nový úkon", "p31_create", 1, "Images/worksheet.png", False, "javascript:p31_create('" & Me.CurrentMasterPrefix & "id'," & Me.CurrentMasterPID.ToString & ")")
+                .AddToolbarButton("Nový úkon", "p31_create", 1, "Images/worksheet.png", False, "javascript:p31_create('" & Me.CurrentMasterPrefix & "id'," & Me.CurrentMasterPID.ToString & ")")
 
                 .AddToolbarButton("Nastavení", "setting", 1, "Images/arrow_down.gif", False)
                 ''.AddToolbarButton("Fakturační poznámka", "o23", 1, "Images/arrow_down.gif", False)
@@ -79,8 +78,9 @@ Public Class p31_approving_step3
                 If _IsShowSubform Then
                     .AddToolbarButton("Editovatelná tabulka", "", 1, , False, "javascript:batch_p31text()")
                 End If
-                
-                .AddToolbarButton("Hromadné operace", "batchoper", 1, "Images/batch.png", False)
+                .AddToolbarButton("Další hromadné operace", "batchoper", 1, "Images/batch.png", False)
+                .AddToolbarButton("Hromadné schvalování", "approvebatch", 1, "Images/approve.png", False)
+
 
                 If .Factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator) Or .Factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator) Then
                     '.AddToolbarButton("Uložit a pokračovat fakturací", "save_invoice", 1, "Images/save.png")
@@ -98,7 +98,7 @@ Public Class p31_approving_step3
 
                 .RadToolbar.FindItemByValue("setting").CssClass = "show_hide2"
                 .RadToolbar.FindItemByValue("batchoper").CssClass = "show_hide1"
-                ''.RadToolbar.FindItemByValue("o23").CssClass = "show_hide3"
+                .RadToolbar.FindItemByValue("approvebatch").CssClass = "show_hide3"
 
                 cB = New clsToolBarButton("Uložit jako billing dávku", "save_set")
                 cB.NavigateURL = "javascript:SaveAsSet()"

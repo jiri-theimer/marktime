@@ -23,15 +23,6 @@ Partial Public Class p31_approving_step3
     Protected WithEvents cmdBatch_4 As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''cmdBatch_Clear control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdBatch_Clear As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
     '''cmdBatch_6 control.
     '''</summary>
     '''<remarks>
@@ -66,6 +57,15 @@ Partial Public Class p31_approving_step3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdBatch_7 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdBatch_Clear control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdBatch_Clear As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''cmdBatch_ApprovingSet control.

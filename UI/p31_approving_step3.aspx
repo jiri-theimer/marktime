@@ -15,6 +15,7 @@
 
             $('.show_hide1').click(function () {
                 $(".slidingDiv2").hide();
+                $(".slidingDiv3").hide();
                 $(".slidingDiv1").slideToggle();
             });
 
@@ -23,9 +24,17 @@
 
             $('.show_hide2').click(function () {
                 $(".slidingDiv1").hide();
+                $(".slidingDiv3").hide();
                 $(".slidingDiv2").slideToggle();
             });
 
+            $(".slidingDiv3").hide();
+
+            $('.show_hide3').click(function () {
+                $(".slidingDiv1").hide();
+                $(".slidingDiv2").hide();
+                $(".slidingDiv3").slideToggle();
+            });
 
 
             var h1 = new Number;
@@ -189,52 +198,54 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <div class="slidingDiv1" style="padding: 10px;">
-        <div class="content-box1">
-            <div class="title" style="text-align: center;">Operace nad vybranými (zaškrtlými) záznamy</div>
-            <div class="content">
-                <div class="div6">
-                    <asp:Button ID="cmdBatch_4" Text="[Fakturovat]" runat="server" CssClass="cmd" Width="280px" />
-                </div>
-                <div class="div6">
-                    <asp:Button ID="cmdBatch_Clear" Text="Vyčistit schvalování - vrátit na [Rozpracované]" runat="server" CssClass="cmd" Width="280px" />
-                </div>
-                <div class="div6">
-                    <asp:Button ID="cmdBatch_6" Text="[Zahrnout do paušálu]" runat="server" CssClass="cmd" Width="280px" />
-
-                </div>
-
-                <div class="div6">
-                    <asp:Button ID="cmdBatch_3" Text="[Skrytý odpis]" runat="server" CssClass="cmd" Width="280px" />
+        <div class="content-box2">
+            <div class="title" style="text-align: center;">Hromadně nahodit fakturační status vybraným úkonům</div>
+            <div class="content" style="background-color: #F0F8FF;">
+                <div>
+                    <asp:Button ID="cmdBatch_4" Text="[Fakturovat]" runat="server" CssClass="cmd" Width="150px" Style="background-image: url('Images/a14.gif'); background-repeat: no-repeat" />
 
 
-                </div>
-                <div class="div6">
-                    <asp:Button ID="cmdBatch_2" Text="[Viditelný odpis]" runat="server" CssClass="cmd" Width="280px" />
+
+                    <asp:Button ID="cmdBatch_6" Text="[Zahrnout do paušálu]" runat="server" CssClass="cmd" Width="150px" Style="background-image: url('Images/a16.gif'); background-repeat: no-repeat" />
 
 
-                </div>
-                <div class="div6">
-                    <asp:Button ID="cmdBatch_7" Text="[Fakturovat později]" runat="server" CssClass="cmd" Width="280px" />
 
+
+                    <asp:Button ID="cmdBatch_3" Text="[Skrytý odpis]" runat="server" CssClass="cmd" Width="150px" Style="background-image: url('Images/a13.gif'); background-repeat: no-repeat" />
+
+
+                    <asp:Button ID="cmdBatch_2" Text="[Viditelný odpis]" runat="server" CssClass="cmd" Width="150px" Style="background-image: url('Images/a12.gif'); background-repeat: no-repeat" />
+
+
+
+
+                    <asp:Button ID="cmdBatch_7" Text="[Fakturovat později]" runat="server" CssClass="cmd" Width="150px" Style="background-image: url('Images/a17.gif'); background-repeat: no-repeat" />
+
+                    <asp:Button ID="cmdBatch_Clear" Text="Vyčistit schvalování - vrátit na [Rozpracované]" runat="server" CssClass="cmd" Width="320px" Style="background-image: url('Images/clear.png'); background-repeat: no-repeat" />
+
+                    
                 </div>
-                <div class="div6" style="margin-top: 20px;">
-                    <asp:Button ID="cmdBatch_ApprovingSet" Text="Vybrané zařadit do billing dávky:" runat="server" CssClass="cmd" Width="280px" Visible="true" />
-                    <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="300px" AllowCustomText="true" ToolTip="Název billing dávky"></telerik:RadComboBox>
-                    <asp:Button ID="cmdBatch_ApprovingSet_Clear" Text="Vybraným vyčistit přiřazení billing dávky" runat="server" CssClass="cmd" Width="280px" Visible="true" />
-                </div>
-                <div class="div6">
-                    <button id="cmdTags" type="button" onclick="tags()" style="width: 280px">Oštítkovat</button>
-                </div>
-                <div class="div6">
-                    <asp:Button ID="cmdBatch_8" Text="Nahodit úroveň schvalování #0" runat="server" CssClass="cmd" Width="280px" />
-                </div>
-                <div class="div6">
-                    <asp:Button ID="cmdBatch_9" Text="Nahodit úroveň schvalování #1" runat="server" CssClass="cmd" Width="280px" />
-                </div>
-                <div class="div6">
-                    <asp:Button ID="cmdBatch_10" Text="Nahodit úroveň schvalování #2" runat="server" CssClass="cmd" Width="280px" />
-                </div>
+
+
             </div>
+        </div>
+    </div>
+    <div class="slidingDiv3" style="padding: 10px; background-color: #F0F8FF;">
+       
+        <div class="div6" style="margin-top: 20px;">
+            <asp:Button ID="cmdBatch_ApprovingSet" Text="Vybrané zařadit do billing dávky:" runat="server" CssClass="cmd" Width="280px" Visible="true" />
+            <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="200px" AllowCustomText="true" ToolTip="Název billing dávky"></telerik:RadComboBox>
+            <asp:Button ID="cmdBatch_ApprovingSet_Clear" Text="Vybraným vyčistit přiřazení billing dávky" runat="server" CssClass="cmd" Width="280px" Visible="true" />
+
+            <button id="cmdTags" type="button" onclick="tags()" style="width: 100px; background-image: url('Images/tag.png'); background-repeat: no-repeat;float:right;">Oštítkovat</button>
+        </div>
+
+        <div>
+            <asp:Button ID="cmdBatch_8" Text="Nahodit úroveň schvalování #0" runat="server" CssClass="cmd" Width="280px" />
+
+            <asp:Button ID="cmdBatch_9" Text="Nahodit úroveň schvalování #1" runat="server" CssClass="cmd" Width="280px" />
+
+            <asp:Button ID="cmdBatch_10" Text="Nahodit úroveň schvalování #2" runat="server" CssClass="cmd" Width="280px" />
         </div>
     </div>
     <div class="slidingDiv2" style="padding: 10px;">
