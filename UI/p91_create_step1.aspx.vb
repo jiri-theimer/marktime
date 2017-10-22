@@ -76,7 +76,7 @@ Public Class p91_create_step1
     Private Sub RefreshRecord()
         If Master.DataPID = 0 Then Return
         lblEntityHeader.Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Left(Me.CurrentPrefix, 3)), Master.DataPID)
-
+        
         bm1.RefreshData(Master.Factory, Me.CurrentPrefix, Master.DataPID)
 
     End Sub
@@ -137,6 +137,8 @@ Public Class p91_create_step1
                 imgEntity.ImageUrl = "Images/person_32.png"
             Case "p56", "p56-draft"
                 imgEntity.ImageUrl = "Images/task_32.png"
+            Case "p31"
+                imgEntity.ImageUrl = "Images/worksheet_p32.png"
             Case "quick"
                 Me.panQuick.Visible = True
                 RefreshQuickEnvironment()
@@ -144,9 +146,9 @@ Public Class p91_create_step1
 
         If Master.DataPID > 0 Then
             panSelectedEntity.Visible = True
-            Master.HeaderText = "Vytvořit klientskou fakturu | " & lblEntityHeader.Text
+            Master.HeaderText = "Vytvořit fakturu | " & lblEntityHeader.Text
         Else
-            Master.HeaderText = "Vytvořit klientskou fakturu"
+            Master.HeaderText = "Vytvořit fakturu"
             panSelectedEntity.Visible = False
         End If
         panComment.Visible = panSelectedEntity.Visible
@@ -227,7 +229,7 @@ Public Class p91_create_step1
 
             End If
             If Master.DataPID = 0 And ViewState("masterpids") = "" Then
-                Master.Notify("Musíte vybrat klienta, projekt nebo osobu!", NotifyLevel.WarningMessage) : Return
+                Master.Notify("Musíte vybrat klienta, projekt, osobu nebo ručně alespoň jeden úkon.", NotifyLevel.WarningMessage) : Return
             End If
             ''If ViewState("rows") = 0 Then
             ''    Master.Notify("Na vstupu nejsou žádné worksheet úkony!", NotifyLevel.WarningMessage) : Return
@@ -255,6 +257,11 @@ Public Class p91_create_step1
                 Me.CurrentPrefix = "p41"
                 Master.DataPID = Master.Factory.p31WorksheetBL.Load(Master.DataPID).p41ID
             End If
+            If Me.CurrentPrefix = "p31" Then
+                Me.CurrentPrefix = "p41"
+                Master.DataPID = lisP31(0).p41ID    'pokud se fakturují ručně vybrané úkony, pak vzít jako projekt první z úkonů
+            End If
+            
             Server.Transfer("p91_create_step2.aspx?guid=" & strGUID & "&prefix=" & Me.CurrentPrefix & "&pid=" & Master.DataPID.ToString, False)
         End If
     End Sub
@@ -265,6 +272,8 @@ Public Class p91_create_step1
         If Not cJ70 Is Nothing Then
             Dim cS As New UI.SetupDataGrid(Master.Factory, Me.grid1, cJ70)
             cS.PageSize = 1000
+            cS.AllowMultiSelect = False
+            cS.AllowMultiSelectCheckboxSelector = False
             cS.ContextMenuWidth = 0
             basUIMT.PrepareDataGrid(cS)
         Else
@@ -338,6 +347,9 @@ Public Class p91_create_step1
             masterpids.Add(Master.DataPID)
         End If
         Select Case Me.CurrentPrefix
+            Case "p31"
+                mq.PIDs = masterpids
+                mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForCreateInvoice
             Case "p28"
                 ''mq.p28ID_Client = intPID
                 mq.p28IDs_Client = masterpids

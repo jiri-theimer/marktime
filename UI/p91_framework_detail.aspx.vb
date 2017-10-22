@@ -134,7 +134,8 @@ Public Class p91_framework_detail
             pm1.Attributes.Item("onclick") = "RCM('p91'," & cRec.PID.ToString & ",this,'pagemenu')"
             With linkPM
                 .Text = cRec.p92Name & ": " & cRec.p91Code & " <span class='lbl'>[" & cRec.p91Client & "]</span>"
-                .NavigateUrl = "p91_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+                ''.NavigateUrl = "p91_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+                .Attributes.Item("onclick") = "RCM('p91', " & cRec.PID.ToString & ", this, 'pagemenu')"
             End With
             If cRec.IsClosed Then panPM1.Style.Item("background-color") = "black" : linkPM.Style.Item("color") = "white"
             imgIcon32.Visible = False

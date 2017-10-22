@@ -14,13 +14,17 @@
     End Property
     Public Sub RefreshData(factory As BL.Factory, strPrefix As String, intRecordPID As Integer)
         If intRecordPID = 0 Or strPrefix = "" Then Return
+        If strPrefix = "p31" Then
+            intRecordPID = factory.p31WorksheetBL.Load(intRecordPID).p41ID
+            strPrefix = "p41"
+        End If
 
         Select strPrefix
             Case "p28"
                 Me.BillingMemo.Text = LoadTheRightBillingMemo(factory, strPrefix, intRecordPID)
             Case "p41"
                 Me.BillingMemo.Text = LoadTheRightBillingMemo(factory, strPrefix, intRecordPID)
-            Case "j02"
+            Case Else
         End Select
 
     End Sub

@@ -145,12 +145,12 @@
 
                         </td>
                         <td>
-                            <asp:HyperLink ID="linkIC" runat="server" Target="_blank" ToolTip="JUSTICE.cz" Visible="false" CssClass="value_link"></asp:HyperLink>
-                            <asp:HyperLink ID="linkARES" runat="server" Text="ARES" Target="_blank" Visible="false"></asp:HyperLink>
+                            <asp:HyperLink ID="linkIC" runat="server" Target="_blank" ToolTip="JUSTICE.cz" Visible="false"></asp:HyperLink>
+                            <asp:HyperLink ID="linkARES" runat="server" Text="[ARES]" Target="_blank" Visible="false"></asp:HyperLink>
 
                             <asp:Label ID="lblDIC" runat="server" Text="DIČ:" meta:resourcekey="lblDIC" style="margin-left: 20px;"></asp:Label>
                             
-                            <asp:HyperLink ID="linkDIC" runat="server" ToolTip="Ověření subjektu v DPH registrech" Visible="false" CssClass="value_link"></asp:HyperLink>
+                            <asp:HyperLink ID="linkDIC" runat="server" ToolTip="Ověření subjektu v DPH registrech" Visible="false"></asp:HyperLink>
 
 
 
@@ -173,9 +173,9 @@
             <div style="float: left;">
                 <uc:freefields_readonly ID="ff1" runat="server" />
 
-                <asp:HyperLink ID="linkISIR" runat="server" Text="ISIR" Target="_blank" Visible="false" ToolTip="Insolvenční restřík | JUSTICE.cz"></asp:HyperLink>
+                <asp:HyperLink ID="linkISIR" runat="server" Text="[ISIR]" Target="_blank" Visible="false" CssClass="wake_link" ToolTip="Insolvenční restřík | JUSTICE.cz"></asp:HyperLink>
                 +Monitoring:
-                            <asp:HyperLink ID="linkISIR_Monitoring" runat="server" Text="NE" NavigateUrl="javascript:o48_edit()" ToolTip="Zapnout monitoring klienta v insolvenčním rejstříku"></asp:HyperLink>
+                            <asp:HyperLink ID="linkISIR_Monitoring" runat="server" Text="NE" CssClass="wake_link" NavigateUrl="javascript:o48_edit()" ToolTip="Zapnout monitoring klienta v insolvenčním rejstříku"></asp:HyperLink>
             </div>
 
 

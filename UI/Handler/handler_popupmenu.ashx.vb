@@ -988,14 +988,14 @@ Public Class handler_popupmenu
             End If
             CI("Událost v kalendáři", "o22_record.aspx?hrjs=hardrefresh_menu", , "Images/event.png")
 
-            If .j04IsMenu_Invoice Then
-                If factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator) Then
-                    CI(Resources.common.Faktura, "p91_create_step1.aspx?prefix=p28&hrjs=hardrefresh_menu", , "Images/invoice.png")
-                End If
-            End If
-            If factory.TestPermission(BO.x53PermValEnum.GR_P90_Create) Then
-                CI(Resources.common.ZalohovaFaktura, "p90_record.aspx?pid=0&hrjs=hardrefresh_menu", , "Images/proforma.png")
-            End If
+            ''If .j04IsMenu_Invoice Then
+            ''    If factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator) Then
+            ''        CI(Resources.common.Faktura, "p91_create_step1.aspx?prefix=p28&hrjs=hardrefresh_menu", , "Images/invoice.png")
+            ''    End If
+            ''End If
+            ''If factory.TestPermission(BO.x53PermValEnum.GR_P90_Create) Then
+            ''    CI(Resources.common.ZalohovaFaktura, "p90_record.aspx?pid=0&hrjs=hardrefresh_menu", , "Images/proforma.png")
+            ''End If
 
             If factory.SysUser.IsAdmin Or factory.SysUser.j04IsMenu_People Then
                 If factory.SysUser.IsAdmin Then

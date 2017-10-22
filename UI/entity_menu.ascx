@@ -7,10 +7,12 @@
                 <asp:HyperLink ID="pm1" runat="server" CssClass="pp2"></asp:HyperLink>
             </td>
             <td>
-                <asp:HyperLink ID="linkPM" runat="server" CssClass="entity_menu_header"></asp:HyperLink>
+                <asp:HyperLink ID="linkPM" runat="server" CssClass="entity_menu_header" NavigateUrl="#"></asp:HyperLink>
             </td>
             <td style="text-align: right;">
-
+                <button type="button" onclick="entity_menu_reload()" style="font-size:10px;">
+                    Obnovit stránku
+                </button>
                 <button type="button" id="cmdPageSetup" runat="server"  onclick="page_setting()" style="font-size:10px;">
                     Nastavení stránky                    
                 </button>
@@ -48,9 +50,9 @@
 
 <telerik:RadTabStrip ID="tabs1" runat="server" Skin="Default" Width="100%" AutoPostBack="false" ShowBaseLine="true" EnableViewState="false" OnClientTabSelected="OnClientTabSelected">
     <TabTemplate>
-        
-        <asp:HyperLink runat="server" ID="link1" CssClass="entity_menu_tablink" Text='<%# DataBinder.Eval(Container, "Text") %>' NavigateUrl='<%# DataBinder.Eval(Container, "NavigateUrl") %>'></asp:HyperLink>
         <button type="button" onclick="lockTabs()" id="cmdLock" runat="server" style="z-index:1;width:16px;height:16px;padding:0px;" title="Ukotvit vybranou záložku"><img src="Images/lock_10.png" /></button>
+        <asp:HyperLink runat="server" ID="link1" CssClass="entity_menu_tablink" Text='<%# DataBinder.Eval(Container, "Text") %>' NavigateUrl='<%# DataBinder.Eval(Container, "NavigateUrl") %>'></asp:HyperLink>
+        
         
     </TabTemplate>
 </telerik:RadTabStrip>
@@ -66,6 +68,9 @@
 <asp:HiddenField ID="hidLockedTab" runat="server" />
 
 <script type="text/javascript">
+    function entity_menu_reload(){
+        location.replace("<%=Me.DataPrefix%>_framework_detail.aspx?pid=" + pid+"&source="+source);
+    }
     function OnClientTabSelected(sender, eventArgs)
     {
         var tab = eventArgs.get_tab();

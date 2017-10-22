@@ -55,9 +55,9 @@
 
         rp1.DataBind()
         If rp1.Items.Count > 0 Then
-            cmdTags.Text = "Štítky"
+            cmdTags.Text = "[Štítky]"
         Else
-            cmdTags.Text = "Zatím žádné štítky"
+            cmdTags.Text = "[Zatím žádné štítky]"
         End If
 
     End Sub

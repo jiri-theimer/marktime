@@ -62,11 +62,12 @@
                         <legend>Postup fakturace</legend>
                         <asp:RadioButtonList ID="opgPrefix" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
                             <asp:ListItem Text="Vyfakturovat schválené úkony klienta" Value="p28" Selected="true"></asp:ListItem>
-                            <asp:ListItem Text="Vyfakturovat úkony klienta zrychleně bez schvalování" Value="p28-draft"></asp:ListItem>
+                            <asp:ListItem Text="Vyfakturovat klienta zrychleně bez schvalování" Value="p28-draft"></asp:ListItem>
                             <asp:ListItem Text="Vyfakturovat schválené úkony projektu" Value="p41"></asp:ListItem>
-                            <asp:ListItem Text="Vyfakturovat úkony projektu zrychleně bez schvalování" Value="p41-draft"></asp:ListItem>
+                            <asp:ListItem Text="Vyfakturovat projekt zrychleně bez schvalování" Value="p41-draft"></asp:ListItem>
                             <asp:ListItem Text="Vyfakturovat schválené úkony osoby" Value="j02"></asp:ListItem>
                             <asp:ListItem Text="Vyfakturovat schválené úkony úkolu" Value="p56"></asp:ListItem>
+                            <asp:ListItem Text="Vyfakturovat ručně vybrané úkony" Value="p31"></asp:ListItem>
                             
                             <asp:ListItem Text="Nejrychlejší fakturace jednou částkou" Value="quick" style="color: blue;"></asp:ListItem>
                         </asp:RadioButtonList>

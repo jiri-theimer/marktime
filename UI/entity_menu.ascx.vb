@@ -203,7 +203,8 @@ Public Class entity_menu
             pm1.Attributes.Item("onclick") = "RCM('p41', " & cRec.PID.ToString & ", this, 'pagemenu')"
             With linkPM
                 .Text = cRec.FullName & " <span class='lbl'>[" & cRec.p42Name & ": " & cRec.p41Code & "]</span>"
-                .NavigateUrl = "p41_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+                '.NavigateUrl = "p41_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+                .Attributes.Item("onclick") = "RCM('p41', " & cRec.PID.ToString & ", this, 'pagemenu')"
             End With
             Handle_ContextMenuBlackWhite(cRec.IsClosed)
         Else
@@ -519,7 +520,8 @@ Public Class entity_menu
             pm1.Attributes.Item("onclick") = "RCM('p28', " & cRec.PID.ToString & ", this, 'pagemenu')"
             With linkPM
                 .Text = cRec.p28Name & " <span class='lbl'>[" & cRec.p28Code & "]</span>"
-                .NavigateUrl = "p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+                ''.NavigateUrl = "p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+                .Attributes.Item("onclick") = "RCM('p28', " & cRec.PID.ToString & ", this, 'pagemenu')"
             End With
             Handle_ContextMenuBlackWhite(cRec.IsClosed)
         Else
@@ -671,7 +673,8 @@ Public Class entity_menu
                 If cRec.j07ID <> 0 Then .Text += " <span class='lbl'>[" & cRec.j07Name & "]</span>"
                 If cRec.j02JobTitle <> "" Then .Text += " <span class='lbl'>[" & cRec.j02JobTitle & "]</span>"
                 If Not cRec.j02IsIntraPerson Then .Font.Italic = True
-                .NavigateUrl = "j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+                ''.NavigateUrl = "j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+                .Attributes.Item("onclick") = "RCM('j02', " & cRec.PID.ToString & ", this, 'pagemenu')"
             End With
             Handle_ContextMenuBlackWhite(cRec.IsClosed)
         Else
@@ -836,7 +839,8 @@ Public Class entity_menu
             pm1.Attributes.Item("onclick") = "RCM('p56'," & cRec.PID.ToString & ",this,'pagemenu')"
             With linkPM
                 .Text = cRec.FullName
-                .NavigateUrl = "p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+                ''.NavigateUrl = "p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+                .Attributes.Item("onclick") = "RCM('p56', " & cRec.PID.ToString & ", this, 'pagemenu')"
             End With
             Handle_ContextMenuBlackWhite(cRec.IsClosed)
         Else

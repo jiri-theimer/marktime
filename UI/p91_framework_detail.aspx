@@ -275,7 +275,7 @@
                     <asp:HyperLink ID="pm1" runat="server" CssClass="pp2"></asp:HyperLink>
                 </td>
                 <td>
-                    <asp:HyperLink ID="linkPM" runat="server" CssClass="entity_menu_header"></asp:HyperLink>
+                    <asp:HyperLink ID="linkPM" runat="server" CssClass="entity_menu_header" NavigateUrl="#"></asp:HyperLink>
                 </td>
                 <td style="text-align: right;">
 

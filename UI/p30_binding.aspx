@@ -90,7 +90,7 @@
                                 </td>
 
                                 <td>
-                                    <img src="Images/edit.png" />
+                                    
                                     <asp:HyperLink ID="cmdJ02" runat="server" Text="Upravit/odstranit osobní profil"></asp:HyperLink>
                                     <asp:HiddenField ID="p30id" runat="server" />
                                 </td>

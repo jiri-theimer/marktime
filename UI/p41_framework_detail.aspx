@@ -245,7 +245,7 @@
         <div class="title">
             <img src="Images/person.png" style="margin-right: 10px;" />
             <asp:Label ID="boxP30Title" runat="server" Text="Kontaktní osoby projektu" meta:resourcekey="boxP30Title"></asp:Label>
-            <asp:HyperLink ID="cmdEditP30" runat="server" NavigateUrl="javascript:p30_binding()" Text="Upravit" Style="margin-left: 20px;" meta:resourcekey="cmdEditP30"></asp:HyperLink>
+            <asp:HyperLink ID="cmdEditP30" runat="server" NavigateUrl="javascript:p30_binding()" CssClass="wake_link" Text="[Upravit]" Style="margin-left: 20px;"></asp:HyperLink>
         </div>
         <div class="content">
             <uc:contactpersons ID="persons1" runat="server"></uc:contactpersons>

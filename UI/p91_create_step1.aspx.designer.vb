@@ -203,15 +203,6 @@ Partial Public Class p91_create_step1
     Protected WithEvents TotalAmount As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''bm1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents bm1 As Global.UI.billingmemo
-
-    '''<summary>
     '''opgGroupBy control.
     '''</summary>
     '''<remarks>
@@ -219,6 +210,15 @@ Partial Public Class p91_create_step1
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents opgGroupBy As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
+    '''bm1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents bm1 As Global.UI.billingmemo
 
     '''<summary>
     '''grid1 control.

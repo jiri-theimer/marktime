@@ -7,7 +7,7 @@
         </asp:panel>
     </ItemTemplate>
 </asp:Repeater>
-<asp:HyperLink ID="cmdTags" runat="server" Text="Zatím žádné štítky" NavigateUrl="javascript:tags_assign()" CssClass="wake_link"></asp:HyperLink>
+<asp:HyperLink ID="cmdTags" runat="server" Text="[Zatím žádné štítky]" NavigateUrl="javascript:tags_assign()" CssClass="wake_link"></asp:HyperLink>
 <asp:HiddenField ID="hidPrefix" runat="server" />
 <asp:HiddenField ID="hidRecordPID" runat="server" Value="0" />
 <asp:HiddenField ID="hidMode" runat="server" Value="0" />

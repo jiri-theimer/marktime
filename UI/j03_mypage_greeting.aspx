@@ -328,7 +328,7 @@
                     <asp:CheckBox ID="chkP91" runat="server" Text="Faktury" AutoPostBack="true" Checked="false" Visible="false" />
                     <asp:CheckBox ID="chkP56" runat="server" Text="Úkoly" AutoPostBack="true" Checked="false" Visible="false" />
                     <asp:CheckBox ID="chkO23" runat="server" Text="Dokumenty" AutoPostBack="true" Checked="false" Visible="false" />
-                    <asp:CheckBox ID="chkJ02" runat="server" Text="Osoby" AutoPostBack="true" Checked="false" Visible="false" />
+                    <asp:CheckBox ID="chkJ02" runat="server" Text="Kontaktní osoby" AutoPostBack="true" Checked="false" Visible="false" />
                 </div>
             </asp:Panel>
 
