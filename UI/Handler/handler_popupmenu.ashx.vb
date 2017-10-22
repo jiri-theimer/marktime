@@ -494,11 +494,17 @@ Public Class handler_popupmenu
             CI("Posunout/doplnit", "workflow_dialog.aspx?prefix=p28&pid=" & cRec.PID.ToString, , "Images/workflow.png")
         End If
 
-
-        If cRec.p28ParentID > 0 Then
+        Dim lisJ02 As IEnumerable(Of BO.j02Person) = factory.p30Contact_PersonBL.GetList_J02(cRec.PID, 0, True)
+        If cRec.p28ParentID > 0 Or lisJ02.Count > 0 Then
             CI("[ODKAZ]", "", , "Images/link.png")
-            Dim cParent As BO.p28Contact = factory.p28ContactBL.Load(cRec.p28ParentID)
-            REL(cParent.p28Name, "p28_framework.aspx?pid=" & cRec.p28ParentID.ToString, "_top", "Images/tree.png", True)
+            If cRec.p28ParentID > 0 Then
+                Dim cParent As BO.p28Contact = factory.p28ContactBL.Load(cRec.p28ParentID)
+                REL(cParent.p28Name, "p28_framework.aspx?pid=" & cRec.p28ParentID.ToString, "_top", "Images/tree.png", True)
+            End If
+            Dim intTOP As Integer = lisJ02.Count : If intTOP > 10 Then intTOP = 10
+            For Each c In lisJ02.Take(intTOP)
+                REL(c.FullNameDescWithJobTitle, "j02_framework.aspx?pid=" & c.PID.ToString, "_top", "Images/contactperson.png", True)
+            Next
         End If
 
         If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
@@ -659,6 +665,11 @@ Public Class handler_popupmenu
         If factory.SysUser.j04IsMenu_Contact And cRec.p28ID_Client > 0 Then
             REL(cRec.Client, "p28_framework.aspx?pid=" & cRec.p28ID_Client.ToString, "_top", "Images/contact.png", True) 'pod odkaz
         End If
+        Dim lisJ02 As IEnumerable(Of BO.j02Person) = factory.p30Contact_PersonBL.GetList_J02(0, cRec.PID, True)
+        Dim intTOP As Integer = lisJ02.Count : If intTOP > 10 Then intTOP = 10
+        For Each c In lisJ02.Take(intTOP)
+            REL(c.FullNameDescWithJobTitle, "j02_framework.aspx?pid=" & c.PID.ToString, "_top", "Images/contactperson.png", True)
+        Next
         
         If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
             SEP()
@@ -991,9 +1002,16 @@ Public Class handler_popupmenu
                 CI(Resources.common.ZalohovaFaktura, "p90_record.aspx?pid=0&hrjs=hardrefresh_menu", , "Images/proforma.png")
             End If
 
-            If factory.SysUser.IsAdmin Then
-                CI(Resources.common.Osoba, "j02_record.aspx?pid=0&hrjs=hardrefresh_menu", , "Images/person.png")
+            If factory.SysUser.IsAdmin Or factory.SysUser.j04IsMenu_People Then
+                If factory.SysUser.IsAdmin Then
+                    CI(Resources.common.Osoba, "", , "Images/person.png")
+                End If
+                If factory.SysUser.IsAdmin Then
+                    CI("Interní osoba (uživatel)", "j02_record.aspx?pid=0&hrjs=hardrefresh_menu", , "Images/person.png", True)
+                End If
+                CI("Kontaktní osoba klienta/projektu", "j02_record.aspx?pid=0&hrjs=hardrefresh_menu&iscontact=1", , "Images/contactperson.png", True)
             End If
+            
         End With
 
 

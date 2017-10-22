@@ -258,13 +258,14 @@
         <div class="title">
             <img src="Images/contact.png" />
             <img src="Images/project.png" style="margin-right: 10px;" />
-            <asp:Localize ID="locContactPersons" runat="server" Text="Kontaktní osoba pro klienty/projekty" meta:resourcekey="locContactPersons"></asp:Localize>
+            <asp:Localize ID="locContactPersons" runat="server" Text="Kontaktní osoba klienta/projektu" meta:resourcekey="locContactPersons"></asp:Localize>
             
         </div>
         <div class="content">
             <asp:Repeater ID="rpP30" runat="server">
                 <ItemTemplate>
                     <div class="div6">
+                        <asp:HyperLink ID="pm1" runat="server" CssClass="pp1"></asp:HyperLink>
                         <asp:HyperLink ID="ContactLink" runat="server" Target="_top" CssClass="value_link"></asp:HyperLink>
 
 

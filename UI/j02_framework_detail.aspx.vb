@@ -299,5 +299,13 @@
                 .NavigateUrl = "p41_framework.aspx?pid=" & cRec.p41ID.ToString
             End If
         End With
+        With CType(e.Item.FindControl("pm1"), HyperLink)
+            If cRec.p28ID <> 0 Then
+                .Attributes.Item("onclick") = "RCM('p28'," & cRec.p28ID.ToString & ",this)"
+            End If
+            If cRec.p41ID <> 0 Then
+                .Attributes.Item("onclick") = "RCM('p41'," & cRec.p41ID.ToString & ",this)"
+            End If
+        End With
     End Sub
 End Class

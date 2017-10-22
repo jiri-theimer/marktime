@@ -8,11 +8,6 @@
 
 
     End Sub
-    ''Protected Overrides Sub InitializeCulture()
-    ''    System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US")
-    ''    System.Threading.Thread.CurrentThread.CurrentUICulture = New System.Globalization.CultureInfo("en-US")
-    ''    MyBase.InitializeCulture()
-    ''End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         ff1.Factory = Master.Factory
@@ -24,8 +19,7 @@
                 'režim zakládání kontaktní osoby
                 Me.j02IsIntraPerson.SelectedValue = "0"
                 Me.j02IsIntraPerson.Enabled = False
-
-                ''RadTabStrip1.Tabs.FindTabByValue("other").Style.Item("display") = "none"
+                
             Else
                 Master.neededPermission = BO.x53PermValEnum.GR_Admin
             End If
@@ -46,13 +40,8 @@
                 Me.j02TimesheetEntryDaysBackLimit_p34IDs.DataBind()
             End With
 
-
             RefreshRecord()
 
-            ''If System.Threading.Thread.CurrentThread.CurrentUICulture.Name.IndexOf("en") >= 0 Then
-            ''    upload1.Localization.Remove = ""
-            ''    upload1.Localization.Add = ""
-            ''End If
             If Master.IsRecordClone Then
                 Master.DataPID = 0
 
@@ -141,6 +130,14 @@
     End Sub
 
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
+        If Master.DataPID = 0 And panCreateContactPerson.Visible And Me.j02IsIntraPerson.SelectedValue = "0" And hidGUID.Value = "" Then
+            If Me.p28ID.Value = "" And Me.p41ID.Value = "" Then
+                Master.Notify("Pro kontaktní osobu musíte vybrat klienta nebo projekt.", NotifyLevel.WarningMessage) : Return
+            End If
+            If Me.p28ID.Value <> "" And Me.p41ID.Value <> "" Then
+                Master.Notify("Vyberte buď klienta nebo projekt, ale nikoliv obojí dohromady.", NotifyLevel.WarningMessage) : Return
+            End If
+        End If
         With Master.Factory.j02PersonBL
             Dim cRec As BO.j02Person = IIf(Master.DataPID <> 0, .Load(Master.DataPID), New BO.j02Person)
             With cRec
@@ -173,7 +170,7 @@
                 .j02IsInvoiceEmail = Me.j02IsInvoiceEmail.Checked
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil
-                
+
             End With
 
             Dim lisFF As List(Of BO.FreeField) = Me.ff1.GetValues()
@@ -190,6 +187,20 @@
                     cTemp.p85DataPID = Master.DataPID
                     cTemp.p85FreeText01 = c.FullNameAsc
                     Master.Factory.p85TempBoxBL.Save(cTemp)
+                End If
+                If cRec.PID = 0 And panCreateContactPerson.Visible And cRec.j02IsIntraPerson = False And hidGUID.Value = "" Then
+                    'kontaktní osoba
+                    Dim cP30 As New BO.p30Contact_Person
+                    cP30.j02ID = Master.DataPID
+                    If BO.BAS.IsNullInt(Me.p28ID.Value, 0) > 0 Then
+                        cP30.p28ID = CInt(Me.p28ID.Value)
+                    End If
+                    If BO.BAS.IsNullInt(Me.p41ID.Value, 0) > 0 Then
+                        cP30.p41ID = CInt(Me.p41ID.Value)
+                    End If
+                    Master.Factory.p30Contact_PersonBL.Save(cP30)
+                    Master.CloseAndRefreshParent("j02-save")
+                    Return
                 End If
                 If cRec.PID = 0 And cRec.j02IsIntraPerson = True Then
                     Server.Transfer("j03_create.aspx?j02id=" & Master.DataPID.ToString)
@@ -231,8 +242,13 @@
         lblC21ID.Visible = b : Me.c21ID.Visible = b
         trJ17ID.Visible = b
         trO40.Visible = b
-        If b Then lblj02Email.CssClass = "lblReq" Else lblj02Email.CssClass = "lbl"
         lblj02EmailSignature.Visible = b : Me.j02EmailSignature.Visible = b
+
+        Me.panCreateContactPerson.Visible = False
+        If Not b And hidGUID.Value = "" And Master.DataPID = 0 Then
+            Me.panCreateContactPerson.Visible = True
+        End If
+
 
         trJobTitle.Visible = Not b
         j02IsInvoiceEmail.Visible = Not b

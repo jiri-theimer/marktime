@@ -226,7 +226,6 @@
     <Content Include="ErrorPage.aspx" />
     <Content Include="f01folder.ascx" />
     <Content Include="fileupload_preview.aspx" />
-    <Content Include="flexibee.aspx" />
     <Content Include="freefields_checkboxlist.aspx" />
     <Content Include="imap_record.ascx" />
     <Content Include="import_object.aspx" />
@@ -1019,13 +1018,6 @@
     </Compile>
     <Compile Include="fileupload_preview.aspx.vb">
       <DependentUpon>fileupload_preview.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="flexibee.aspx.designer.vb">
-      <DependentUpon>flexibee.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="flexibee.aspx.vb">
-      <DependentUpon>flexibee.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="freefields_checkboxlist.aspx.designer.vb">

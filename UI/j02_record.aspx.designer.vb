@@ -86,6 +86,51 @@ Partial Public Class j02_record
     Protected WithEvents j02IsIntraPerson As Global.System.Web.UI.WebControls.RadioButtonList
 
     '''<summary>
+    '''panCreateContactPerson control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panCreateContactPerson As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''lbl1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbl1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p28ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p28ID As Global.UI.contact
+
+    '''<summary>
+    '''lbl2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbl2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p41ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p41ID As Global.UI.project
+
+    '''<summary>
     '''lblTitulJmenoPrijmeni control.
     '''</summary>
     '''<remarks>

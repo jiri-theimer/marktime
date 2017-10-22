@@ -90,24 +90,24 @@
 
     function hardrefresh_menu(pid, flag) {
         if (flag == "p41-create" || flag == "p41-save") {
-            location.replace("p41_framework.aspx?pid=" + pid);
+            location.href="p41_framework.aspx?pid=" + pid;
             return;
         }
         if (flag == "p56-save" || flag == "p56-create") {
-            location.replace("p56_framework.aspx?pid=" + pid);
+            location.href="p56_framework.aspx?pid=" + pid;
             return;
         }
         if (flag == "p91-create" || flag == "p91-save") {
-            location.replace("p91_framework.aspx?pid=" + pid);
+            location.href="p91_framework.aspx?pid=" + pid;
             return;
         }
 
         if (flag == "p28-save" || flag == "p28-create") {
-            location.replace("p28_framework.aspx?pid=" + pid);
+            location.href="p28_framework.aspx?pid=" + pid;
 
         }
         if (flag == "o23-save" || flag == "o23-create") {
-            location.replace("o23_framework.aspx?pid=" + pid);
+            location.href="o23_framework.aspx?pid=" + pid;
 
         }
         if (flag == "j03_myprofile_defaultpage") {
@@ -115,10 +115,13 @@
 
         }
         if (flag == "o22-save" || flag == "o22-create") {
-            location.replace("entity_scheduler.aspx");
+            location.href="entity_scheduler.aspx";
 
         }
+        if (flag == "j02-save" || flag == "j02-create") {
+            location.href="j02_framework.aspx?pid="+pid;
 
+        }
 
     }
 

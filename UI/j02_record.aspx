@@ -6,6 +6,8 @@
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
 <%@ Register TagPrefix="uc" TagName="mytags" Src="~/mytags.ascx" %>
+<%@ Register TagPrefix="uc" TagName="project" Src="~/project.ascx" %>
+<%@ Register TagPrefix="uc" TagName="contact" Src="~/contact.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
@@ -38,9 +40,31 @@
 
                 </div>
             </div>
-            <div class="div6">
-            </div>
-
+            <asp:Panel ID="panCreateContactPerson" runat="server" Visible="false" CssClass="content-box2">
+                <div class="title">Vyberte klienta nebo projekt</div>
+                <div class="content">
+                    <table cellpadding="6px">
+                    <tr>
+                        <td>
+                            <asp:Label ID="lbl1" text="Klient:" runat="server" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td>
+                            <uc:contact ID="p28ID" runat="server" Width="300px" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Label ID="lbl2" runat="server" Text="Projekt:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td>
+                            <uc:project ID="p41ID" runat="server" Width="300px" />
+                        </td>
+                    </tr>
+                </table>                  
+                </div>
+                 
+            </asp:Panel>
+            
             <table cellpadding="5" cellspacing="2">
                 <tr>
                     <td>
