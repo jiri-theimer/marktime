@@ -139,7 +139,7 @@
             strEntryFlags = "1,2,4"
         End If
 
-        s += " WHERE getdate() BETWEEN a.p34ValidFrom AND a.p34ValidUntil"
+        s += " WHERE getdate() BETWEEN a.p34ValidFrom AND a.p34ValidUntil AND a.p34ID IN (select p34ID FROM p43ProjectType_Workload)"
 
         If BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Creator) Then
             'právo zapisovat worksheeet úkony do všech projektů
@@ -151,7 +151,7 @@
 
         s += "SELECT a1.p34ID FROM o28ProjectRole_Workload a1 INNER JOIN x69EntityRole_Assign a2 ON a1.x67ID=a2.x67ID INNER JOIN x67EntityRole a3 ON a2.x67ID=a3.x67ID"
         s += " WHERE a3.x29ID=141 AND a1.o28EntryFlag IN (" & strEntryFlags & ") AND (a2.j02ID=@j02id OR a2.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id))"
-        s += ") "
+        s += ")"
 
 
         s += ")"

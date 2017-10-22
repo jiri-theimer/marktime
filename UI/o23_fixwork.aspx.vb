@@ -491,11 +491,11 @@ Public Class o23_fixwork
         Else
             If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
         End If
-        With dataItem.Item("systemcolumn")
-            If cRec.Item("IsO27") Then
-                dataItem("systemcolumn").Text += "<a href='fileupload_preview.aspx?prefix=o23&pid=" & cRec.Item("pid").ToString & "' target='_blank' title='Dokument má přílohy'><img src='Images/attachment.png'/></a>"
-            End If
-        End With
+        ''With dataItem.Item("systemcolumn")
+        ''    If cRec.Item("IsO27") Then
+        ''        dataItem("systemcolumn").Text += "<a href='fileupload_preview.aspx?prefix=o23&pid=" & cRec.Item("pid").ToString & "' target='_blank' title='Dokument má přílohy'><img src='Images/attachment.png'/></a>"
+        ''    End If
+        ''End With
         With dataItem.Item("pm1")
             .Text = "<a class='pp1' onclick=" & Chr(34) & "RCM('o23','" & cRec.Item("pid").ToString & "',this,'o23_fixwork')" & Chr(34) & "></a>"
         End With

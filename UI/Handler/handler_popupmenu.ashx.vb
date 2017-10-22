@@ -632,7 +632,7 @@ Public Class handler_popupmenu
 
                 End If
             End If
-            If bolCanInvoice Then
+            If bolCanInvoice And Not cRec.p41IsDraft Then
                 If Not bolInvoicing Then CI("Fakturovat", "", , "Images/billing.png")
                 CI("Fakturovat jednou částkou bez úkonů", "p91_create_step1.aspx?quick=1&prefix=p41&pid=" & intPID.ToString, , "Images/billing_green.png", True)
             End If
@@ -908,7 +908,7 @@ Public Class handler_popupmenu
             If factory.TestPermission(BO.x53PermValEnum.GR_P48_Creator) Then
                 REL("Operativní plán osoby", "cmdP48", "p48_framework.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "Images/oplan.png", True)
             End If
-            CI("Osobní plány", "j02_personalplan.aspx?j02id=" & cRec.PID.ToString, , "Images/plan.png", True)
+            CI("Osobní plány", "j02_personalplan.aspx?j02id=" & cRec.PID.ToString, , "Images/plan.png", True, True)
 
             REL("Historie odeslané pošty", "x40_framework.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "_top", "Images/email.png", True)
             CI("Historie záznamu", "entity_timeline.aspx?prefix=j02&pid=" & cRec.PID.ToString, , "Images/event.png", True)

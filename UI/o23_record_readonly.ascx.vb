@@ -218,7 +218,10 @@
             End Select
             If .Text = "" Then .Text = cRec.RecordAlias
         End With
+        With CType(e.Item.FindControl("pm1"), HyperLink)
+            .Attributes("onclick") = "RCM('" & BO.BAS.GetDataPrefix(cRec.x29ID) & "'," & cRec.x19RecordPID.ToString & ",this)"
 
+        End With
         If strClue <> "" Then
             With CType(e.Item.FindControl("clue1"), HyperLink)
                 .Attributes("rel") = strClue

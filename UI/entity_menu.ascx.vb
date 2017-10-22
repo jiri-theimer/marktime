@@ -202,7 +202,9 @@ Public Class entity_menu
 
             pm1.Attributes.Item("onclick") = "RCM('p41', " & cRec.PID.ToString & ", this, 'pagemenu')"
             With linkPM
-                .Text = cRec.FullName & " <span class='lbl'>[" & cRec.p42Name & ": " & cRec.p41Code & "]</span>"
+                .Text = cRec.FullName
+                If Len(.Text) > 70 Then .Text = Left(.Text, 70) & "..."
+                .Text += " <span class='lbl'>[" & cRec.p42Name & ": " & cRec.p41Code & "]</span>"
                 '.NavigateUrl = "p41_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
                 .Attributes.Item("onclick") = "RCM('p41', " & cRec.PID.ToString & ", this, 'pagemenu')"
             End With
