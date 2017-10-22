@@ -31,7 +31,7 @@
                     <Items>
                         <telerik:RadMenuItem Text="Kopírovat" Value="clone" NavigateUrl="javascript:p31_clone()"></telerik:RadMenuItem>                        
 
-                        <telerik:RadMenuItem Value="cmdApprove" Text="Schválit/pře-schválit">
+                        <telerik:RadMenuItem Value="cmdApprove" Text="[SCHVÁLIT/PŘE-SCHVÁLIT]">
                                 <Items>
                                     <telerik:RadMenuItem Value="cmdApproveDialog" NavigateUrl="javascript:approving();" Text="Schvalovací dialog" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
                                     <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
@@ -43,7 +43,12 @@
                                     <telerik:RadMenuItem Text="Vyčistit schvalování" ImageUrl="Images/clear.png" NavigateUrl="javascript:batch_approve(0);"></telerik:RadMenuItem>
                                 </Items>
                             </telerik:RadMenuItem>
-
+                        <telerik:RadMenuItem Value="cmdInvoice" Text="[FAKTUROVAT]">
+                                <Items>
+                                    <telerik:RadMenuItem Text="Fakturovat schválené (nová faktura)" NavigateUrl="javascript:batch_invoice(false);"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Přidat schválené do existující faktury" NavigateUrl="javascript:batch_invoice(true);"></telerik:RadMenuItem>
+                                </Items>
+                            </telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdMove" Text="Přesunout na jiný projekt" NavigateUrl="javascript:move2project_p31ids();" Visible="false"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdSummary" Text="Statistiky" NavigateUrl="javascript:drilldown_p31ids();"></telerik:RadMenuItem>
 
@@ -230,6 +235,19 @@
 
         });
 
+    }
+
+    function batch_invoice(is_append) {
+        var pids = GetAllSelectedPIDs();
+        if (pids == "" || pids == null) {
+            $.alert("Není vybrán záznam.");
+            return
+        }
+        if (is_append == true)
+            sw_decide("p91_add_worksheet.aspx?p31ids=" + pids, "Images/billing.png");
+
+        if (is_append == false)
+            sw_decide("p91_create_step1.aspx?nogateway=1&prefix=p31&masterpids=" + pids, "Images/billing.png");
     }
 
     function GetAllSelectedPIDs() {

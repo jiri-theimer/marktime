@@ -121,8 +121,13 @@
             .MG_SortString = strSort
 
         End With
-
-        grid1.DataSource = Master.Factory.p31WorksheetBL.GetList(mq)
+        Dim lis As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq)
+        If hidP31IDs.Value <> "" Then
+            If Me.CurrentP31IDs.Count > lis.Count Then
+                Master.Notify("Do faktury lze vložit pouze schválené a dosud nevyfakturované úkony.")
+            End If
+        End If
+        grid1.DataSource = lis
     End Sub
     Private Sub InhaleMyQuery(ByRef mq As BO.myQueryP31)
         mq.p28ID_Client = Me.CurrentP28ID
@@ -175,11 +180,12 @@
                 Master.Notify("Musíte vybrat fakturu.") : Return
             End If
             Dim pids As List(Of Integer) = grid1.GetSelectedPIDs()
+
             If Me.CurrentP31IDs.Count > 0 Then
-                pids = Me.CurrentP31IDs
+                pids = grid1.GetAllPIDs()
             End If
             If pids.Count = 0 Then
-                Master.Notify("Musíte zaškrtnout alespoň jeden záznam.", NotifyLevel.WarningMessage) : Return
+                Master.Notify("Na vstupu musí být alespoň jeden úkon.", NotifyLevel.WarningMessage) : Return
             End If
             With Master.Factory.p31WorksheetBL
                 If .AppendToInvoice(Master.DataPID, pids) Then

@@ -342,7 +342,7 @@ Public Class handler_popupmenu
 
                     If factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator) Then
                         SEP()
-                        CI("[FAKTUROVAT]", "", , "Images/billing.png")
+                        CI("[FAKTUROVAT schválené]", "", , "Images/billing.png")
                         CI("Fakturovat (nová faktura)", "p91_create_step1.aspx?nogateway=1&prefix=p31&pid=" & intPID.ToString, , , True, True)
                         CI("Přidat do existující faktury", "p91_add_worksheet.aspx?p31ids=" & intPID.ToString, , , True, True)
                     End If

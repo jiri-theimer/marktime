@@ -219,7 +219,8 @@ Public Class p91_create_step2
             cS.PageSize = CInt(Me.cbxPaging.SelectedValue)
             cS.ContextMenuWidth = 0
             cS.AllowCustomPaging = True
-            cS.AllowMultiSelect = True
+            cS.AllowMultiSelect = False
+            cS.AllowMultiSelectCheckboxSelector = False
             basUIMT.PrepareDataGrid(cS)
 
             ''basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, CInt(Me.cbxPaging.SelectedValue), True, True)
@@ -326,6 +327,10 @@ Public Class p91_create_step2
         Dim lis As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq)
         grid1.DataSource = lis
 
+        If lis.Count = 0 Then
+            Master.Notify("Fakturovat je možné pouze schválené a dosud nevyfakturované úkony.")
+        End If
+
         If Me.p91Datep31_From.IsEmpty Then
             Me.p91Datep31_From.SelectedDate = lis.Min(Function(p) p.p31Date)
         End If
@@ -354,20 +359,20 @@ Public Class p91_create_step2
         Master.HeaderText = "Vytvořit klientskou fakturu | " & Me.p28id.Text
     End Sub
 
-    Private Sub cmdRemovePIDs_Click(sender As Object, e As EventArgs) Handles cmdRemovePIDs.Click
-        Dim pids As List(Of Integer) = grid1.GetSelectedPIDs()
-        If pids.Count = 0 Then
-            Master.Notify("Není vybraný žádný záznam.", NotifyLevel.WarningMessage) : Return
-        End If
-        Dim lisTemp As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
-        For Each intP31ID As Integer In pids
-            If lisTemp.Where(Function(p) p.p85DataPID = intP31ID).Count > 0 Then
-                Master.Factory.p85TempBoxBL.Delete(lisTemp.Where(Function(p) p.p85DataPID = intP31ID)(0))
-            End If
-        Next
-        RecalcVirtualRowCount()
-        grid1.Rebind(False)
-    End Sub
+    ''Private Sub cmdRemovePIDs_Click(sender As Object, e As EventArgs) Handles cmdRemovePIDs.Click
+    ''    Dim pids As List(Of Integer) = grid1.GetSelectedPIDs()
+    ''    If pids.Count = 0 Then
+    ''        Master.Notify("Není vybraný žádný záznam.", NotifyLevel.WarningMessage) : Return
+    ''    End If
+    ''    Dim lisTemp As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
+    ''    For Each intP31ID As Integer In pids
+    ''        If lisTemp.Where(Function(p) p.p85DataPID = intP31ID).Count > 0 Then
+    ''            Master.Factory.p85TempBoxBL.Delete(lisTemp.Where(Function(p) p.p85DataPID = intP31ID)(0))
+    ''        End If
+    ''    Next
+    ''    RecalcVirtualRowCount()
+    ''    grid1.Rebind(False)
+    ''End Sub
 
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
         RefreshRecord()

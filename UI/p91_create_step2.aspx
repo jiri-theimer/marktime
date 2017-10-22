@@ -265,7 +265,7 @@
                 </asp:RadioButtonList>
             </td>
             <td>
-                <asp:Button ID="cmdRemovePIDs" runat="server" Text="Označené (zaškrtlé) úkony vyjmout z fakturace" CssClass="cmd" />
+                <asp:Button ID="cmdRemovePIDs" runat="server" Text="Označené (zaškrtlé) úkony vyjmout z fakturace" CssClass="cmd" Visible="false" />
             </td>
         </tr>
     </table>

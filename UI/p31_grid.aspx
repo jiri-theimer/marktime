@@ -116,18 +116,18 @@
             sw_master("p31_move2project.aspx?p31ids=" + pids, "Images/cut.png");
         }
         function batch_approve(p72id) {
-            var pids = GetAllSelectedPIDs();            
+            var pids = GetAllSelectedPIDs();
             if (pids == "" || pids == null) {
                 $.alert("Není vybrán záznam.");
                 return
             }
-            
+
             $.post("Handler/handler_approve.ashx", { pids: pids, p72id: p72id }, function (data) {
-               
+
                 if (data != "1") {
-                    alert(data);                    
+                    alert(data);
                 }
-                if (data.substring(0,1) == "_") {
+                if (data.substring(0, 1) == "_") {
                     return; //v každém záznamu jsou chyby
                 }
                 //schváleno - refresh
@@ -136,7 +136,19 @@
             });
 
         }
-        
+        function batch_invoice(is_append) {
+            var pids = GetAllSelectedPIDs();
+            if (pids == "" || pids == null) {
+                $.alert("Není vybrán záznam.");
+                return
+            }
+            if (is_append == true)
+                sw_master("p91_add_worksheet.aspx?p31ids=" + pids, "Images/billing.png");
+
+            if (is_append == false)
+                sw_master("p91_create_step1.aspx?nogateway=1&prefix=p31&masterpids=" + pids, "Images/billing.png");
+        }
+
 
 
         function hardrefresh(pid, flag) {
@@ -144,7 +156,10 @@
                 location.replace("p31_grid.aspx");
                 return;
             }
-
+            if (flag == "p91-create") {
+                location.replace("p91_framework.aspx?pid=" + pid);
+                return;
+            }
             document.getElementById("<%=Me.hidHardRefreshPID.ClientID%>").value = pid;
             document.getElementById("<%=Me.hidHardRefreshFlag.ClientID%>").value = flag;
 
@@ -262,11 +277,11 @@
                 <Items>
 
                     <telerik:RadMenuItem Value="cmdNew" Text="<%$Resources:common,Novy %>" NavigateUrl="javascript:record_new();" ImageUrl="Images/new4menu.png"></telerik:RadMenuItem>
-                        
+
                     <telerik:RadMenuItem Text="Vybrané (zaškrtlé)" Value="recs" ImageUrl="Images/arrow_down_menu.png">
                         <Items>
                             <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat záznamy" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdApprove" Text="Schválit/pře-schválit" ImageUrl="Images/approve.png">
+                            <telerik:RadMenuItem Value="cmdApprove" Text="[SCHVÁLIT/PŘE-SCHVÁLIT]" ImageUrl="Images/approve.png">
                                 <Items>
                                     <telerik:RadMenuItem Value="cmdApproveDialog" NavigateUrl="javascript:approving();" Text="Schvalovací dialog" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
                                     <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
@@ -276,6 +291,12 @@
                                     <telerik:RadMenuItem Text="Skrytý odpis" ImageUrl="Images/a13.gif" NavigateUrl="javascript:batch_approve(3);"></telerik:RadMenuItem>
                                     <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                                     <telerik:RadMenuItem Text="Vyčistit schvalování" ImageUrl="Images/clear.png" NavigateUrl="javascript:batch_approve(0);"></telerik:RadMenuItem>
+                                </Items>
+                            </telerik:RadMenuItem>
+                            <telerik:RadMenuItem Value="cmdInvoice" Text="[FAKTUROVAT]" ImageUrl="Images/billing.png">
+                                <Items>
+                                    <telerik:RadMenuItem Text="Fakturovat schválené (nová faktura)" NavigateUrl="javascript:batch_invoice(false);"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Přidat schválené do existující faktury" NavigateUrl="javascript:batch_invoice(true);"></telerik:RadMenuItem>
                                 </Items>
                             </telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdMove" Text="Přesunout na jiný projekt" NavigateUrl="javascript:move2project();" ImageUrl="Images/cut.png" Visible="false"></telerik:RadMenuItem>
@@ -325,10 +346,10 @@
                                     Export záznamů aktuálního přehledu
                                 </div>
                                 <div class="content">
-                                    <asp:button ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" CssClass="cmd" />                                                                                       
-                                            <asp:button ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" CssClass="cmd" />                                                                                       
-                                            <asp:Button ID="cmdPDF" runat="server" Text="PDF" CssClass="cmd" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />                                                                                      
-                                            <asp:button ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" CssClass="cmd" />
+                                    <asp:Button ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" CssClass="cmd" />
+                                    <asp:Button ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" CssClass="cmd" />
+                                    <asp:Button ID="cmdPDF" runat="server" Text="PDF" CssClass="cmd" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+                                    <asp:Button ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" CssClass="cmd" />
                                 </div>
                             </asp:Panel>
                             <div class="content-box3" style="margin-top: 20px;">
@@ -387,12 +408,12 @@
 
         <div style="clear: both;"></div>
         <asp:Panel ID="panAdditionalQuery" runat="server" CssClass="div6" Visible="false">
-            
-                <asp:Image ID="imgEntity" runat="server" />
-                <asp:HyperLink ID="MasterRecord" runat="server"></asp:HyperLink>
-          
-            
-            <asp:Label ID="lblDrillDown" runat="server" CssClass="valboldred" style="margin-left:20px;"></asp:Label>
+
+            <asp:Image ID="imgEntity" runat="server" />
+            <asp:HyperLink ID="MasterRecord" runat="server"></asp:HyperLink>
+
+
+            <asp:Label ID="lblDrillDown" runat="server" CssClass="valboldred" Style="margin-left: 20px;"></asp:Label>
             <asp:HyperLink ID="linkDrillDown" runat="server"></asp:HyperLink>
             <asp:ImageButton ID="cmdDrillDownClear" runat="server" ToolTip="Zrušit filtr pro statistiku" ImageUrl="Images/delete.png" Visible="false" />
         </asp:Panel>

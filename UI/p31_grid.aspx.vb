@@ -543,7 +543,7 @@ Public Class p31_grid
             ''menu1.FindItemByValue("cmdApprove").Visible = .SysUser.IsApprovingPerson
             menu1.FindItemByValue("cmdApprove").Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Approver)
             menu1.FindItemByValue("cmdMove").Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Owner)
-
+            menu1.FindItemByValue("cmdInvoice").Visible = .TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)
             panExport.Visible = .TestPermission(BO.x53PermValEnum.GR_GridTools)
             designer1.AllowSettingButton = panExport.Visible
 

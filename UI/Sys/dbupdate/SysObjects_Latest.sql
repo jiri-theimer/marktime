@@ -17557,7 +17557,6 @@ if @isdraft=1
 if left(@p91code,4)='TEMP' OR @p91code is null
  begin
 
-
   set @p91code=dbo.x38_get_freecode(@x38id,391,@p91id,@isdraft,1)
   if @p91code<>''
    UPDATE p91Invoice SET p91Code=@p91code WHERE p91ID=@p91id 
