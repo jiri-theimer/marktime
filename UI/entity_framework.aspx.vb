@@ -7,6 +7,7 @@ Public Class entity_framework
     Private Property _needFilterIsChanged As Boolean = False
     Private Property _CurFilterDbField As String = ""
     Public Property _curIsExport As Boolean
+  
 
     Public Property CurrentX29ID As BO.x29IdEnum
         Get
@@ -204,6 +205,7 @@ Public Class entity_framework
         End If
     
     End Sub
+    
     Private Sub AdaptSplitterLayout()
         Select Case Me.opgLayout.Value
             Case "1"
@@ -389,6 +391,12 @@ Public Class entity_framework
         ''Me.hidSumCols.Value = strSumCols
         If cJ70.j70ScrollingFlag > BO.j70ScrollingFlagENUM.NoScrolling Then
             navigationPane.Scrolling = SplitterPaneScrolling.None
+        End If
+        If cJ70.j70PageLayoutFlag > BO.j70PageLayoutFlagENUM._None Then
+            Me.opgLayout.Value = CInt(cJ70.j70PageLayoutFlag).ToString
+            FindNode("groupLayout").Enabled = False
+        Else
+            FindNode("groupLayout").Enabled = True
         End If
 
         With grid1
@@ -1132,10 +1140,10 @@ Public Class entity_framework
         End If
         If opgLayout.Value = "2" Or opgLayout.Value = "3" Then
             Me.cbx1.Width = Unit.Parse("200px")
-            designer1.Width = "220px"
+            designer1.Width = "220px"            
         End If
 
-      
+
         If grid1.GetFilterExpression <> "" Then
             cmdCĺearFilter.Visible = True
         Else

@@ -427,17 +427,17 @@ A.pp2 {
 ----------------------------------------------------------*/
 
 .failureNotification {
-    font-size: 110%;
+    font-size: 100%;
     color: Red;
 }
 
 .infoNotification {
-    font-size: 110%;
+    font-size: 100%;
     color: blue;
 }
 
 .infoNotificationRed {
-    font-size: 110%;
+    font-size: 100%;
     color: red;
 }
 

@@ -41,6 +41,15 @@ Partial Public Class entity_menu
     Protected WithEvents linkPM As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''cmdGo2Grid control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdGo2Grid As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
     '''cmdPageSetup control.
     '''</summary>
     '''<remarks>

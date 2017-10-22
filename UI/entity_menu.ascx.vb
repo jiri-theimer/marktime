@@ -150,6 +150,11 @@ Public Class entity_menu
                 cbx.ToolTip = "Hledat projekt"
                 If Factory.SysUser.j03PageMenuFlag = 0 Then imgPM.ImageUrl = "Images/project_32.png"
         End Select
+        If hidSource.Value = "3" Then
+            cmdGo2Grid.Visible = True
+        Else
+            cmdGo2Grid.Visible = False
+        End If
         If hidSource.Value = "2" Or hidSource.Value = "1" Then
             'sb1.Visible = False
             'sb1.ashx = ""
@@ -196,25 +201,35 @@ Public Class entity_menu
         p41_SetupTabs(cRecSum, cP42, cDisp)
         Handle_TestIfCanApproveOrInvoice(cRec, cP42, cDisp)
 
-        If Factory.SysUser.j03PageMenuFlag = 0 Then
-            menu1.Nodes.Clear()
-            menu1.Visible = False
-
-            pm1.Attributes.Item("onclick") = "RCM('p41', " & cRec.PID.ToString & ", this, 'pagemenu')"
-            With linkPM
-                .Text = cRec.FullName
-                If Len(.Text) > 70 Then .Text = Left(.Text, 70) & "..."
-                .Text += " <span class='lbl'>[" & cRec.p42Name & ": " & cRec.p41Code & "]</span>"
-                '.NavigateUrl = "p41_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
-                .Attributes.Item("onclick") = "RCM('p41', " & cRec.PID.ToString & ", this, 'pagemenu')"
-            End With
-            Handle_ContextMenuBlackWhite(cRec.IsClosed)
-        Else
+        If hidSource.Value = "2" Then
             panPM1.Visible = False
-            panPM1.Controls.Clear()
-            p41_SetupMenu(cRec, cP42, cDisp)
-            SetupMenu_thePage("p41_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
+        Else
+
+            If Factory.SysUser.j03PageMenuFlag = 0 Then
+                menu1.Nodes.Clear()
+                menu1.Visible = False
+
+                pm1.Attributes.Item("onclick") = "RCM('p41', " & cRec.PID.ToString & ", this, 'pagemenu')"
+                With linkPM
+                    .Text = cRec.FullName
+                    If Len(.Text) > 70 Then
+                        .ToolTip = cRec.FullName
+                        .Text = Left(.Text, 70) & "..."
+                    End If
+                    .Text += " <span class='lbl'>[" & cRec.p42Name & ": " & cRec.p41Code & "]</span>"
+                    '.NavigateUrl = "p41_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+                    .Attributes.Item("onclick") = "RCM('p41', " & cRec.PID.ToString & ", this, 'pagemenu')"
+                End With
+                Handle_ContextMenuBlackWhite(cRec.IsClosed)
+            Else
+                menu1.Visible = True
+                panPM1.Visible = False
+                panPM1.Controls.Clear()
+                p41_SetupMenu(cRec, cP42, cDisp)
+                SetupMenu_thePage("p41_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
+            End If
         End If
+        
 
 
         Me.CurrentTab = strTabValue

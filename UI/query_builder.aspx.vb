@@ -833,6 +833,7 @@
         End If
 
         basUI.SelectDropdownlistValue(Me.opgBin, cRec.j70BinFlag.ToString)
+        basUI.SelectRadiolistValue(Me.j70PageLayoutFlag, CInt(cRec.j70PageLayoutFlag).ToString)
         Master.Factory.j70QueryTemplateBL.Setupj71TempList(Master.DataPID, ViewState("guid"))
         RefreshJ71TempList()
 
@@ -923,6 +924,7 @@
             .j70OrderBy = GetOrderBy()
             .j70IsFilteringByColumn = Me.j70IsFilteringByColumn.Checked
             .j70ScrollingFlag = BO.BAS.IsNullInt(Me.j70ScrollingFlag.SelectedValue)
+            .j70PageLayoutFlag = BO.BAS.IsNullInt(Me.j70PageLayoutFlag.SelectedValue)
         End With
 
         Dim lisJ71 As List(Of BO.j71QueryTemplate_Item) = GetList_j71()

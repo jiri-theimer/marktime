@@ -8,6 +8,9 @@
             </td>
             <td>
                 <asp:HyperLink ID="linkPM" runat="server" CssClass="entity_menu_header" NavigateUrl="#"></asp:HyperLink>
+                <button type="button" id="cmdGo2Grid" runat="server"  onclick="go2grid()" style="font-size:10px;">
+                    Zpět do přehledu
+                </button>
             </td>
             <td style="text-align: right;">
                 <button type="button" onclick="entity_menu_reload()" style="font-size:10px;">
@@ -29,7 +32,7 @@
 
 </asp:Panel>
 
-<telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false">
+<telerik:RadNavigation ID="menu1" runat="server" MenuButtonPosition="Right" Skin="Metro" EnableViewState="false" Visible="false">
     <Nodes>
         <telerik:NavigationNode ID="begin" Width="40px" Enabled="false" Visible="true">
         </telerik:NavigationNode>
@@ -71,6 +74,10 @@
     function entity_menu_reload(){
         var source=document.getElementById("<%=hidSource.ClientID%>").value;
         location.replace("<%=Me.DataPrefix%>_framework_detail.aspx?pid=<%=Me.DataPID%>&source="+source);
+    }
+    function go2grid(){
+        var source=document.getElementById("<%=hidSource.ClientID%>").value;
+        location.replace("<%=Me.DataPrefix%>_framework.aspx?pid=<%=Me.DataPID%>&source="+source);
     }
     function OnClientTabSelected(sender, eventArgs)
     {

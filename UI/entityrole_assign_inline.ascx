@@ -9,7 +9,7 @@
        <asp:PlaceHolder ID="place2" runat="server"></asp:PlaceHolder>
     </ItemTemplate>
 </asp:repeater>
-<asp:Label ID="noData" runat="server" CssClass="infoInForm"></asp:Label>
+<asp:Label ID="noData" runat="server" CssClass="infoNotificationRed"></asp:Label>
 <asp:HiddenField ID="hidX29ID" runat="server" />
 <asp:HiddenField ID="hidInhaledDataPID" runat="server" />
 <asp:HiddenField ID="hidIsShowClueTip" Value="1" runat="server" />

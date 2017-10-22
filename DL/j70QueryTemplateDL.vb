@@ -46,7 +46,7 @@
             pars.Add("j70IsFilteringByColumn", .j70IsFilteringByColumn, DbType.Boolean)
             pars.Add("j70ScrollingFlag", CInt(.j70ScrollingFlag), DbType.Int32)
             pars.Add("j70MasterPrefix", .j70MasterPrefix, DbType.String)
-
+            pars.Add("j70PageLayoutFlag", CInt(.j70PageLayoutFlag), DbType.Int32)
             pars.Add("j70validfrom", cRec.ValidFrom, DbType.DateTime)
             pars.Add("j70validuntil", cRec.ValidUntil, DbType.DateTime)
 

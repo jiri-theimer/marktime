@@ -203,6 +203,19 @@
                     </asp:DropDownList>
                 </div>
 
+
+                <div style="margin-top: 20px;">
+                    <div>
+                        Rozvržení panelů tohoto přehledu:
+                    </div>
+                    <asp:RadioButtonList ID="j70PageLayoutFlag" runat="server" RepeatDirection="Vertical">
+                        <asp:ListItem Text="Výchozí nastavení uživatele" Value="0"></asp:ListItem>
+                        <asp:ListItem Text="Levý + pravý panel" Value="1"></asp:ListItem>
+                        <asp:ListItem Text="Pouze jeden panel -> Přehled na celou stránku" Value="3"></asp:ListItem>
+                        <asp:ListItem Text="Horní + spodní panel -> Přehled na celou šířku stránky" Value="2"></asp:ListItem>
+                    </asp:RadioButtonList>
+
+                </div>
                
             </div>
             <div style="clear:both;"></div>
