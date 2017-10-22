@@ -6,8 +6,8 @@
     <img src="Images/comment.png" />
     <img src="Images/attachment.png" />
     <asp:Label ID="lblHeader" runat="server" Text="Poznámky/komentáře/přílohy"></asp:Label>
-    <button type="button" style="margin-left: 20px;" onclick="javascript:comment()" runat="server" id="cmdAdd" title="Přidat" class="button-link">
-        <img src="Images/new.png" /></button>
+    <asp:HyperLink ID="linkAdd" runat="server" NavigateUrl="javascript:comment()" Text="[Přidat]" CssClass="wake_link"></asp:HyperLink>
+  
 </asp:Panel>
 
 <asp:Repeater ID="rp1" runat="server">
@@ -53,8 +53,8 @@
 
                         <div style="padding-top: 8px;">
 
-                            <asp:HyperLink ID="aAnswer" runat="server" Text="<img src='Images/comment.png'/>Reagovat"></asp:HyperLink>
-                            <asp:HyperLink ID="aDelete" runat="server" Text="<img src='Images/delete.png'/>Odstranit" Visible="false"></asp:HyperLink>
+                            <asp:HyperLink ID="aAnswer" runat="server" CssClass="wake_link" Text="<img src='Images/comment.png'/>Reagovat"></asp:HyperLink>
+                            <asp:HyperLink ID="aDelete" runat="server" CssClass="wake_link" Text="<img src='Images/delete.png'/>Odstranit" Visible="false"></asp:HyperLink>
 
 
                         </div>

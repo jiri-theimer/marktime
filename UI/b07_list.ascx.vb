@@ -8,10 +8,10 @@
 
     Public Property ShowInsertButton As Boolean
         Get
-            Return cmdAdd.Visible
+            Return linkAdd.Visible
         End Get
         Set(value As Boolean)
-            cmdAdd.Visible = value
+            linkAdd.Visible = value
         End Set
     End Property
     Public Property AttachmentIsReadonly As Boolean
@@ -61,7 +61,7 @@
     End Property
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        cmdAdd.Attributes.Item("onclick") = Me.JS_Create
+        linkAdd.NavigateUrl = "javascript:" & Me.JS_Create
     End Sub
 
     Public Sub RefreshOneCommentRecord(factory As BL.Factory, intB07ID As Integer)
@@ -108,7 +108,7 @@
         rp1.DataSource = lisB07
         rp1.DataBind()
 
-        If cmdAdd.Visible = False And rp1.Items.Count = 0 Then
+        If linkAdd.Visible = False And rp1.Items.Count = 0 Then
             panHeader.Visible = False
         End If
 

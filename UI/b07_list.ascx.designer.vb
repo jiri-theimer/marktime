@@ -32,13 +32,13 @@ Partial Public Class b07_list
     Protected WithEvents lblHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdAdd control.
+    '''linkAdd control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdAdd As Global.System.Web.UI.HtmlControls.HtmlButton
+    Protected WithEvents linkAdd As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''rp1 control.
