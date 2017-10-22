@@ -163,8 +163,7 @@
                
                 <td>
                     <span>K fakturaci bez DPH:</span>
-                    <asp:Label ID="TotalAmount" runat="server" CssClass="valbold" ForeColor="Green"></asp:Label>
-                    <uc:billingmemo ID="bm1" runat="server" />
+                    <asp:Label ID="TotalAmount" runat="server" CssClass="valbold" ForeColor="Green"></asp:Label>                    
                 </td>
              
             </tr>
@@ -182,7 +181,7 @@
 
 
     </asp:Panel>
-
+    <uc:billingmemo ID="bm1" runat="server" />
 
     <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid"></uc:datagrid>
 

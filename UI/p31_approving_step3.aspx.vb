@@ -79,7 +79,7 @@ Public Class p31_approving_step3
                     .AddToolbarButton("Editovatelná tabulka", "", 1, , False, "javascript:batch_p31text()")
                 End If
                 .AddToolbarButton("Další hromadné operace", "batchoper", 1, "Images/batch.png", False)
-                .AddToolbarButton("Hromadné schvalování", "approvebatch", 1, "Images/approve.png", False)
+                .AddToolbarButton("Hromadně nahodit status", "approvebatch", 1, "Images/approve.png", False)
 
 
                 If .Factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator) Or .Factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator) Then
@@ -123,16 +123,16 @@ Public Class p31_approving_step3
     End Sub
 
     Private Sub RefreshRecord()
-        bm1.RefreshData(Master.Factory, Me.CurrentMasterPrefix, BO.BAS.IsNullInt(Me.CurrentMasterPID))
+        If Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
+            bm1.RefreshData(Master.Factory, Me.CurrentMasterPrefix, BO.BAS.IsNullInt(Me.CurrentMasterPID))
 
-        If Not bm1.IsEmpty Then
-            RadTabStrip1.FindTabByValue("memo").BackColor = System.Drawing.Color.FromArgb(255, 255, 204)
-            RadTabStrip1.FindTabByValue("memo").Font.Bold = True
-            ''Master.RenameToolbarButton("o23", "<strong style='color:blue;'>Fakturační poznámka</strong>")
-            ''If bm1.o23Rows() > 0 Then
-            ''    Master.RenameToolbarButton("o23", String.Format("Fakturační poznámky ({0})", bm1.o23Rows().ToString))
-            ''End If
+            If bm1.IsEmpty Then
+                cmdBillingMemo.Style.Item("display") = "none"
+            Else
+                cmdBillingMemo.Style.Item("display") = "block"
+            End If
         End If
+        
     End Sub
 
     Private Sub BatchOper_P72(p71id As BO.p71IdENUM, explicit_p72id As BO.p72IdENUM)

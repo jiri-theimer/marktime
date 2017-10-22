@@ -16,6 +16,7 @@
             $('.show_hide1').click(function () {
                 $(".slidingDiv2").hide();
                 $(".slidingDiv3").hide();
+                $(".slidingDiv4").hide();
                 $(".slidingDiv1").slideToggle();
             });
 
@@ -25,6 +26,7 @@
             $('.show_hide2').click(function () {
                 $(".slidingDiv1").hide();
                 $(".slidingDiv3").hide();
+                $(".slidingDiv4").hide();
                 $(".slidingDiv2").slideToggle();
             });
 
@@ -33,26 +35,36 @@
             $('.show_hide3').click(function () {
                 $(".slidingDiv1").hide();
                 $(".slidingDiv2").hide();
+                $(".slidingDiv4").hide();
                 $(".slidingDiv3").slideToggle();
             });
 
+            $(".slidingDiv4").hide();
 
+            $('.show_hide4').click(function () {
+                $(".slidingDiv1").hide();
+                $(".slidingDiv2").hide();
+                $(".slidingDiv3").hide();
+                $(".slidingDiv4").slideToggle();
+            });
+
+            <%if td1.Visible then%>
             var h1 = new Number;
             var h2 = new Number;
             var h3 = new Number;
 
             h1 = $(window).height();
 
-            var ss = self.document.getElementById("<%=RadMultiPage1.ClientID%>");
+            var ss = self.document.getElementById("<%=fraSubform.ClientID%>");
             var offset = $(ss).offset();
 
             h2 = offset.top;
 
-            h3 = h1 - h2 - 10;
+            h3 = h1 - h2 - 40;
 
 
-            document.getElementById("<%=RadMultiPage1.ClientID%>").style.height = h3 + "px";
-
+            document.getElementById("<%=fraSubform.ClientID%>").style.height = h3 + "px";
+            <%End If%>
 
 
 
@@ -197,7 +209,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="slidingDiv1">
+    <div class="slidingDiv1" style="display:none;">
         <div class="content-box2">
             <div class="title" style="text-align: center;">Hromadně nahodit fakturační status vybraným úkonům</div>
             <div class="content" style="background-color: #F0F8FF;">
@@ -230,7 +242,7 @@
             </div>
         </div>
     </div>
-    <div class="slidingDiv2" style="padding: 10px; background-color: #F0F8FF;">
+    <div class="slidingDiv2" style="padding: 10px; background-color: #F0F8FF;display:none;">
        
         <div class="div6" style="margin-top: 5px;">
             <asp:Button ID="cmdBatch_ApprovingSet" Text="Vybrané zařadit do billing dávky:" runat="server" CssClass="cmd" Width="280px" Visible="true" />
@@ -248,7 +260,7 @@
             <asp:Button ID="cmdBatch_10" Text="Nahodit úroveň schvalování #2" runat="server" CssClass="cmd" Width="280px" />
         </div>
     </div>
-    <div class="slidingDiv3" style="padding: 10px;background-color: #F0F8FF;"">
+    <div class="slidingDiv3" style="padding: 10px;background-color: #F0F8FF;display:none;">
         
             <div class="div6">
                 <uc:mygrid ID="designer1" runat="server" Prefix="p31" x36Key="p31_approving_step3-j70id" MasterPrefix="approving_step3" MasterPrefixFlag="2" ReloadUrl="javascript:hardrefresh(0, 'j70')" Width="250px" ModeFlag="3"></uc:mygrid>
@@ -311,7 +323,10 @@
                 <td align="right">
                     <asp:Label ID="hours_2" runat="server" CssClass="valbold"></asp:Label>h.
                 </td>
-                <td></td>
+                <td>
+                    <button type="button" class="show_hide4" id="cmdBillingMemo" runat="server" style="background-color:#ffffcc;"><img src="Images/arrow_down.gif" />Fakturační poznámka</button>
+                    
+                </td>
                 <td></td>
                 <td></td>
             </tr>
@@ -356,28 +371,17 @@
 
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
     <div style="clear: both;"></div>
-
+    <div class="slidingDiv4" style="display:none;">
+    <uc:billingmemo ID="bm1" runat="server" />
+    </div>
     <table width="99.9%" cellpadding="0" cellspacing="0">
         <tr valign="top">
             <td style="min-width: 400px; min-height: 450px;" id="td1" runat="server">
-                <telerik:RadTabStrip ID="RadTabStrip1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true">
-                    <Tabs>
-                        <telerik:RadTab Text="Aktuální záznam" Selected="true" Value="one"></telerik:RadTab>
-                        
-                        <telerik:RadTab Text="Fakt.poznámka" Value="memo"></telerik:RadTab>
-                    </Tabs>
-                </telerik:RadTabStrip>
-                <telerik:RadMultiPage ID="RadMultiPage1" runat="server">
-                    <telerik:RadPageView ID="one" runat="server" Selected="true">
+                
 
 
                         <iframe id="fraSubform" runat="server" width="100%" height="460px" frameborder="0" src=""></iframe>
-                    </telerik:RadPageView>
-                  
-                    <telerik:RadPageView ID="memo" runat="server">
-                        <uc:billingmemo ID="bm1" runat="server" />
-                    </telerik:RadPageView>
-                </telerik:RadMultiPage>
+                    
 
             </td>
             <td>

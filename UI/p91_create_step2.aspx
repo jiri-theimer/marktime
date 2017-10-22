@@ -140,14 +140,14 @@
                     <asp:Label ID="TotalHours" runat="server" CssClass="valboldblue" Style="margin-left: 20px;"></asp:Label>
                     <asp:Label ID="TotalCount" runat="server" CssClass="valbold" Style="margin-left: 20px;"></asp:Label>
 
-                    <uc:billingmemo ID="bm1" runat="server" />
+                    
                 </td>
             </tr>
         </table>
        
 
     </asp:Panel>
-
+    <uc:billingmemo ID="bm1" runat="server" />
 
     <div class="content-box2">
         <div class="title">Výchozí nastavení dokladu faktury</div>

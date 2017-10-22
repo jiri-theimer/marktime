@@ -1,9 +1,9 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="billingmemo.ascx.vb" Inherits="UI.billingmemo" %>
 
 
-<asp:Image ID="img1" ImageUrl="Images/billing.png" runat="server" Visible="false" />
-<asp:Label ID="BillingMemo" runat="server" CssClass="infoNotification" Font-Italic="true"></asp:Label>
-
+<div style="background-color:#ffffcc;">
+<asp:Label ID="BillingMemo" runat="server" Font-Italic="true" Font-Size="Larger" ForeColor="Black"></asp:Label>
+</div>
 
 <script type="text/javascript">
    
