@@ -871,22 +871,30 @@ Public Class handler_popupmenu
             SEP()
             CI("Tisková sestava", "report_modal.aspx?prefix=p28&pid=" & intPID.ToString, , "Images/report.png")
         Else
-            Dim mqP28 As New BO.myQueryP28, b As Boolean = False
-            mqP28.j02ID = intPID
-            Dim lisP28 As IEnumerable(Of BO.p28Contact) = factory.p28ContactBL.GetList(mqP28)
-            For Each c In lisP28
-                If Not b Then SEP() : b = True
-                REL(c.p28Name, "p28_framework.aspx?pid=" & c.PID.ToString, "_top", "Images/contact.png")
-            Next
-            Dim mqP41 As New BO.myQueryP41
-            mqP41.j02ID_ContactPerson = intPID
-            Dim lisP41 As IEnumerable(Of BO.p41Project) = factory.p41ProjectBL.GetList(mqP41)
-            For Each c In lisP41
-                If lisP28.Where(Function(p) p.PID = c.p28ID_Client).Count = 0 Then
-                    If Not b Then SEP() : b = True
-                    REL(c.FullName, "p41_framework.aspx?pid=" & c.PID.ToString, "_top", "Images/project.png")
+            CI("[ODKAZ]", "", , "Images/link.png")
+            Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = factory.p30Contact_PersonBL.GetList(0, 0, intPID)
+            For Each c In lisP30
+                If c.p41ID <> 0 Then
+                    REL(c.Project, "p41_framework.aspx?pid=" & c.p41ID.ToString, "_top", "Images/project.png", True)
+                End If
+                If c.p28ID <> 0 Then
+                    REL(c.p28Name, "p28_framework.aspx?pid=" & c.p28ID.ToString, "_top", "Images/contact.png", True)
                 End If
             Next
+            ''Dim mqP28 As New BO.myQueryP28
+            ''mqP28.j02ID = intPID
+            ''Dim lisP28 As IEnumerable(Of BO.p28Contact) = factory.p28ContactBL.GetList(mqP28)
+            ''For Each c In lisP28
+            ''    REL(c.p28Name, "p28_framework.aspx?pid=" & c.PID.ToString, "_top", "Images/contact.png", True)
+            ''Next
+            ''Dim mqP41 As New BO.myQueryP41
+            ''mqP41.j02ID_ContactPerson = intPID
+            ''Dim lisP41 As IEnumerable(Of BO.p41Project) = factory.p41ProjectBL.GetList(mqP41)
+            ''For Each c In lisP41
+            ''    If lisP28.Where(Function(p) p.PID = c.p28ID_Client).Count = 0 Then
+            ''        REL(c.FullName, "p41_framework.aspx?pid=" & c.PID.ToString, "_top", "Images/project.png", True)
+            ''    End If
+            ''Next
         End If
         If cRec.j02Email <> "" Then
             SEP()
