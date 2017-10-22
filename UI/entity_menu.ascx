@@ -69,6 +69,7 @@
 
 <script type="text/javascript">
     function entity_menu_reload(){
+        var source=document.getElementById("<%=hidSource.ClientID%>").value;
         location.replace("<%=Me.DataPrefix%>_framework_detail.aspx?pid=" + pid+"&source="+source);
     }
     function OnClientTabSelected(sender, eventArgs)

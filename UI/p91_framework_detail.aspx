@@ -264,6 +264,9 @@
         function changelog() {
             window.top.sw_everywhere("changelog.aspx?prefix=p91&pid=<%=Master.DataPID%>", "Images/log.png")        
         }
+        function reload(){
+            location.replace("p91_framework_detail.aspx?pid=<%=Master.DataPID%>&source=<%=hidSource.Value%>","_blank");
+        }
     </script>
 
 </asp:Content>
@@ -278,7 +281,9 @@
                     <asp:HyperLink ID="linkPM" runat="server" CssClass="entity_menu_header" NavigateUrl="#"></asp:HyperLink>
                 </td>
                 <td style="text-align: right;">
-
+                    <button type="button" onclick="reload()" style="font-size:10px;">
+                    Obnovit stránku
+                </button>
                     <button type="button" id="cmdPageSetup" runat="server" onclick="page_setting()" style="font-size:10px;">
                         Nastavení stránky                    
                     </button>
