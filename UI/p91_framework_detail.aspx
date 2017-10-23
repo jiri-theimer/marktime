@@ -283,7 +283,7 @@
                 </td>
                 <td>
                     <asp:HyperLink ID="linkPM" runat="server" CssClass="entity_menu_header" NavigateUrl="#"></asp:HyperLink>
-                    <button type="button" id="cmdGo2Grid" runat="server" onclick="go2grid()" style="font-size: 10px;">
+                    <button type="button" id="cmdGo2Grid" runat="server" onclick="go2grid()" style="font-size: 10px;" visible="false">
                         Zpět do přehledu
                     </button>
                 </td>
