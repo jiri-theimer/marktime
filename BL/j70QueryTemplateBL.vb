@@ -757,12 +757,16 @@ Class j70QueryTemplateBL
             If Not bolHideRatesColumns Then
                 .Add(AGC(My.Resources.common.VychoziSazba, "p31Rate_Billing_Orig", BO.cfENUM.Numeric2, , , , , "Vykázáno", "p31Rate_Billing_Orig", "p31Rate_Billing_Orig"))
                 .Add(AGC(My.Resources.common.CastkaBezDPH, "p31Amount_WithoutVat_Orig", BO.cfENUM.Numeric2, , , True, , "Vykázáno"))
+
                 .Add(AGC("Částka vč. DPH", "p31Amount_WithVat_Orig", BO.cfENUM.Numeric2, , , True, , "Vykázáno"))
                 .Add(AGC(My.Resources.common.NakladovaSazba, "p31Rate_Internal_Orig", BO.cfENUM.Numeric2, , , , , "Nákladová cena", "p31Rate_Internal_Orig", "p31Rate_Internal_Orig"))
                 .Add(AGC(My.Resources.common.NakladovaCastka, "p31Amount_Internal", BO.cfENUM.Numeric2, , , True, , "Nákladová cena"))
 
                 .Add(AGC("Bez DPH dle fixního kurzu", "p31Amount_WithoutVat_FixedCurrency", BO.cfENUM.Numeric2, , , True, , "Vykázáno"))
 
+                .Add(AGC("Náklad VYK", "Vykazano_Naklad", BO.cfENUM.Numeric2, , "p31_ocas.Vykazano_Naklad", True, "LEFT OUTER JOIN dbo.view_p31_ocas p31_ocas ON a.p31ID=p31_ocas.p31ID", "Výsledovka"))
+                .Add(AGC("Výnos VYK", "Vykazano_Vynos", BO.cfENUM.Numeric2, , "p31_ocas.Vykazano_Vynos", True, "LEFT OUTER JOIN dbo.view_p31_ocas p31_ocas ON a.p31ID=p31_ocas.p31ID", "Výsledovka"))
+                .Add(AGC("Zisk VYK", "Vykazano_Zisk", BO.cfENUM.Numeric2, , "p31_ocas.Vykazano_Zisk", True, "LEFT OUTER JOIN dbo.view_p31_ocas p31_ocas ON a.p31ID=p31_ocas.p31ID", "Výsledovka"))
             End If
 
             .Add(AGC("Číslo faktury", "p91Code", , , , , , "Vyfakturováno", "min(p91Code)", "a.p91ID"))
