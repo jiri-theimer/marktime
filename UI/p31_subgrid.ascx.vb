@@ -340,7 +340,7 @@ Public Class p31_subgrid
     End Sub
 
     Private Sub grid2_NeedFooterSource(footerItem As Telerik.Web.UI.GridFooterItem, footerDatasource As Object) Handles grid2.NeedFooterSource
-        footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
+        ''footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
         If Me.hidFooterString.Value = "" And grid2.radGridOrig.PageCount > 1 Then
             RecalcVirtualRowCount()
         End If

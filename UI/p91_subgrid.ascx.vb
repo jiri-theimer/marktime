@@ -173,7 +173,7 @@ Public Class p91_subgrid
     End Sub
 
     Private Sub gridP91_NeedFooterSource(footerItem As GridFooterItem, footerDatasource As Object) Handles gridP91.NeedFooterSource
-        footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
+        ''footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
 
         gridP91.ParseFooterItemString(footerItem, ViewState("p91_footersum"))
     End Sub

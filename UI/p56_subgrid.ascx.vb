@@ -289,7 +289,7 @@ Public Class p56_subgrid
     End Sub
 
     Private Sub gridP56_NeedFooterSource(footerItem As GridFooterItem, footerDatasource As Object) Handles gridP56.NeedFooterSource
-        footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
+        ''footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
         If Me.hidFooterString.Value = "" And gridP56.radGridOrig.PageCount > 1 Then
             RecalcVirtualRowCount()
         End If

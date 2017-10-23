@@ -597,18 +597,20 @@ Public Class datagrid
     End Sub
 
     Public Function GenerateFooterItemString(cSum As Object) As String
-        Dim s As String = ""
+        Dim lis As New List(Of String)
         For Each col In grid1.MasterTableView.Columns
             If TypeOf col Is GridBoundColumn Then
                 If col.Aggregate = GridAggregateFunction.Sum Then
                     Dim o As Object = BO.BAS.GetPropertyValue(cSum, col.DataField)
                     If Not o Is Nothing Then
-                        s += "|" & col.DataField & ";" & BO.BAS.FN(o)
+                        lis.Add(col.DataField & ";" & BO.BAS.FN(o))
+                        ''s += "|" & col.DataField & ";" & BO.BAS.FN(o)
                     End If
                 End If
             End If
         Next
-        Return BO.BAS.OM1(s)
+        'Return BO.BAS.OM1(s)
+        Return String.Join("|", lis)
     End Function
     Public Function CompleteFooterString(dt As DataTable, strSumFields As String, Optional intFirstSumColZeroIndex As Integer = 1) As String
         Dim lis As New List(Of String)

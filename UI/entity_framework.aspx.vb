@@ -1030,7 +1030,7 @@ Public Class entity_framework
 
     Private Sub grid1_NeedFooterSource(footerItem As GridFooterItem, footerDatasource As Object) Handles grid1.NeedFooterSource
         If hidFooterSum.Value = "" Then Return
-        footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
+        ''footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
 
         grid1.ParseFooterItemString(footerItem, hidFooterSum.Value)
     End Sub

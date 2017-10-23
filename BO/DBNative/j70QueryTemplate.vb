@@ -37,7 +37,14 @@ Public Class j70QueryTemplate
     Private Property _Mark As String
     Public ReadOnly Property NameWithMark As String
         Get
-            Return Trim(j70Name & " " & _Mark)
+            ''Return Trim(j70Name & " " & _Mark)
+
+            Select Case Me.j70PageLayoutFlag
+                Case j70PageLayoutFlagENUM.OnlyOne, j70PageLayoutFlagENUM.TopBottom
+                    Return RTrim("[" & j70Name & "] " & _Mark)
+                Case Else
+                    Return RTrim(j70Name & " " & _Mark)
+            End Select
         End Get
     End Property
     Public ReadOnly Property NameWithCreator As String
@@ -45,4 +52,6 @@ Public Class j70QueryTemplate
             Return j70Name & " (" & Me.UserInsert & ")"
         End Get
     End Property
+
+    
 End Class

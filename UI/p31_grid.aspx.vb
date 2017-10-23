@@ -509,7 +509,7 @@ Public Class p31_grid
 
 
     Private Sub grid1_NeedFooterSource(footerItem As GridFooterItem, footerDatasource As Object) Handles grid1.NeedFooterSource
-        footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
+        ''footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
 
 
         grid1.ParseFooterItemString(footerItem, Me.hidFooterString.Value)

@@ -73,8 +73,8 @@
             End If
             With Master
                 .AddToolbarButton("Nastavení", "setting", 0, "Images/arrow_down_menu.png", False)
-                .AddToolbarButton("Vystavit fakturu", "continue_invoice", , "Images/continue.png", False, "javascript:invoice()")
-                .AddToolbarButton("Přejít do schvalování", "continue", , "Images/continue.png", False, "javascript:approve_all()")
+                .AddToolbarButton("Vystavit fakturu", "continue_invoice", , "Images/continue.png", False, "javascript:invoice()", , True)
+                .AddToolbarButton("Přejít do schvalování", "continue", , "Images/continue.png", False, "javascript:approve_all()", , True)
                 .RadToolbar.FindItemByValue("setting").CssClass = "show_hide1"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If Request.Item("pids") <> "" Then
