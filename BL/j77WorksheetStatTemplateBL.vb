@@ -120,6 +120,7 @@ Class j77WorksheetStatTemplateBL
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Value_FixPrice))
 
         If Not bolHideRatesColumns Then
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.SI_Income1))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.SI_Profit1))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.SI_Profit2))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.SI_Profit3))

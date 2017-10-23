@@ -764,9 +764,13 @@ Class j70QueryTemplateBL
 
                 .Add(AGC("Bez DPH dle fixního kurzu", "p31Amount_WithoutVat_FixedCurrency", BO.cfENUM.Numeric2, , , True, , "Vykázáno"))
 
-                .Add(AGC("Náklad VYK", "Vykazano_Naklad", BO.cfENUM.Numeric2, , "p31_ocas.Vykazano_Naklad", True, "LEFT OUTER JOIN dbo.view_p31_ocas p31_ocas ON a.p31ID=p31_ocas.p31ID", "Výsledovka"))
-                .Add(AGC("Výnos VYK", "Vykazano_Vynos", BO.cfENUM.Numeric2, , "p31_ocas.Vykazano_Vynos", True, "LEFT OUTER JOIN dbo.view_p31_ocas p31_ocas ON a.p31ID=p31_ocas.p31ID", "Výsledovka"))
-                .Add(AGC("Zisk VYK", "Vykazano_Zisk", BO.cfENUM.Numeric2, , "p31_ocas.Vykazano_Zisk", True, "LEFT OUTER JOIN dbo.view_p31_ocas p31_ocas ON a.p31ID=p31_ocas.p31ID", "Výsledovka"))
+                .Add(AGC("Náklad", "Vykazano_Naklad", BO.cfENUM.Numeric2, , "p31_ocas.Vykazano_Naklad", True, "LEFT OUTER JOIN dbo.view_p31_ocas p31_ocas ON a.p31ID=p31_ocas.p31ID", "Výsledovka"))
+                .Add(AGC("Odhad výnosu", "Vykazano_Vynos", BO.cfENUM.Numeric2, , "p31_ocas.Vykazano_Vynos", True, "LEFT OUTER JOIN dbo.view_p31_ocas p31_ocas ON a.p31ID=p31_ocas.p31ID", "Výsledovka"))
+                .Add(AGC("Odhad zisku", "Vykazano_Zisk", BO.cfENUM.Numeric2, , "p31_ocas.Vykazano_Zisk", True, "LEFT OUTER JOIN dbo.view_p31_ocas p31_ocas ON a.p31ID=p31_ocas.p31ID", "Výsledovka"))
+
+                .Add(AGC("Vyfakturovaný výnos", "Vyfakturovano_Vynos", BO.cfENUM.Numeric2, , "p31_ocas.Vyfakturovano_Vynos", True, "LEFT OUTER JOIN dbo.view_p31_ocas p31_ocas ON a.p31ID=p31_ocas.p31ID", "Výsledovka"))
+                .Add(AGC("Vyfakturovaný výnos x Kurz", "Vyfakturovano_Vynos_Domestic", BO.cfENUM.Numeric2, , "p31_ocas.Vyfakturovano_Vynos_Domestic", True, "LEFT OUTER JOIN dbo.view_p31_ocas p31_ocas ON a.p31ID=p31_ocas.p31ID", "Výsledovka"))
+                .Add(AGC("Zisk po fakturaci", "Vyfakturovano_Zisk", BO.cfENUM.Numeric2, , "p31_ocas.Vyfakturovano_Zisk", True, "LEFT OUTER JOIN dbo.view_p31_ocas p31_ocas ON a.p31ID=p31_ocas.p31ID", "Výsledovka"))
             End If
 
             .Add(AGC("Číslo faktury", "p91Code", , , , , , "Vyfakturováno", "min(p91Code)", "a.p91ID"))
