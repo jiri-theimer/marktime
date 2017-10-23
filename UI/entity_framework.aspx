@@ -43,10 +43,11 @@
 
             sender.set_height(h3);
 
+            <%If opgLayout.Value <> "3" Then%>
             var pane = sender.getPaneById("<%=contentPane.ClientID%>");
             document.getElementById("<%=Me.hidContentPaneWidth.ClientID%>").value = pane.get_width();
             pane.set_contentUrl(document.getElementById("<%=Me.hidContentPaneDefUrl.ClientID%>").value);
-
+            <%End if%>
             
             <%If grid1.radGridOrig.ClientSettings.Scrolling.UseStaticHeaders Then%>
             pane = sender.getPaneById("<%=navigationPane.ClientID%>");

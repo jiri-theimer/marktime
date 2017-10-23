@@ -267,6 +267,10 @@
         function reload(){
             location.replace("p91_framework_detail.aspx?pid=<%=Master.DataPID%>&source=<%=hidSource.Value%>","_blank");
         }
+        function go2grid(){
+            
+            location.replace("p91_framework.aspx?pid=<%=Master.DataPID%>");
+        }
     </script>
 
 </asp:Content>
@@ -279,12 +283,16 @@
                 </td>
                 <td>
                     <asp:HyperLink ID="linkPM" runat="server" CssClass="entity_menu_header" NavigateUrl="#"></asp:HyperLink>
+                    <button type="button" id="cmdGo2Grid" runat="server" onclick="go2grid()" style="font-size: 10px;">
+                        Zpět do přehledu
+                    </button>
                 </td>
                 <td style="text-align: right;">
-                    <button type="button" onclick="reload()" style="font-size:10px;">
-                    Obnovit stránku
-                </button>
-                    <button type="button" id="cmdPageSetup" runat="server" onclick="page_setting()" style="font-size:10px;">
+                    <button type="button" onclick="reload()" style="font-size: 10px;">
+                        Obnovit stránku
+                    </button>
+
+                    <button type="button" id="cmdPageSetup" runat="server" onclick="page_setting()" style="font-size: 10px;">
                         Nastavení stránky                    
                     </button>
                 </td>

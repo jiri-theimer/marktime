@@ -202,12 +202,13 @@ Public Class entity_menu
         Handle_TestIfCanApproveOrInvoice(cRec, cP42, cDisp)
 
         If hidSource.Value = "2" Then
+            panPM1.Controls.Clear()
             panPM1.Visible = False
+            ShowHideMenu(False, False)
         Else
 
             If Factory.SysUser.j03PageMenuFlag = 0 Then
-                menu1.Nodes.Clear()
-                menu1.Visible = False
+                ShowHideMenu(False, True)
 
                 pm1.Attributes.Item("onclick") = "RCM('p41', " & cRec.PID.ToString & ", this, 'pagemenu')"
                 With linkPM
@@ -217,12 +218,11 @@ Public Class entity_menu
                         .Text = Left(.Text, 70) & "..."
                     End If
                     .Text += " <span class='lbl'>[" & cRec.p42Name & ": " & cRec.p41Code & "]</span>"
-                    '.NavigateUrl = "p41_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
                     .Attributes.Item("onclick") = "RCM('p41', " & cRec.PID.ToString & ", this, 'pagemenu')"
                 End With
                 Handle_ContextMenuBlackWhite(cRec.IsClosed)
             Else
-                menu1.Visible = True
+                ShowHideMenu(True, False)
                 panPM1.Visible = False
                 panPM1.Controls.Clear()
                 p41_SetupMenu(cRec, cP42, cDisp)
@@ -525,27 +525,48 @@ Public Class entity_menu
             tabs1.SelectedTab.Style.Item("cursor") = "default"
         End If
     End Sub
-
+    Private Sub ShowHideMenu(bolPopupMenu As Boolean, bolContextMenu As Boolean)
+        If bolPopupMenu Then
+            menu1.Visible = True
+        Else
+            menu1.Nodes.Clear()
+            menu1.Visible = False
+        End If
+        If bolContextMenu Then
+            panPM1.Visible = True
+        Else
+            panPM1.Controls.Clear()
+            panPM1.Visible = False
+        End If
+    End Sub
     Public Sub p28_RefreshRecord(cRec As BO.p28Contact, cRecSum As BO.p28ContactSum, strTabValue As String, Optional cDisp As BO.p28RecordDisposition = Nothing)
         If cRec Is Nothing Then Return
         Me.DataPID = cRec.PID
         If cDisp Is Nothing Then cDisp = Me.Factory.p28ContactBL.InhaleRecordDisposition(cRec)
         p28_SetupTabs(cRecSum)
 
-        If Factory.SysUser.j03PageMenuFlag = 0 Then
-            menu1.Visible = False
-            pm1.Attributes.Item("onclick") = "RCM('p28', " & cRec.PID.ToString & ", this, 'pagemenu')"
-            With linkPM
-                .Text = cRec.p28Name & " <span class='lbl'>[" & cRec.p28Code & "]</span>"
-                ''.NavigateUrl = "p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
-                .Attributes.Item("onclick") = "RCM('p28', " & cRec.PID.ToString & ", this, 'pagemenu')"
-            End With
-            Handle_ContextMenuBlackWhite(cRec.IsClosed)
+        If hidSource.Value = "2" Then
+            ShowHideMenu(False, False)
         Else
-            p28_SetupMenu(cRec, cDisp)
-            SetupMenu_thePage("p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
+            If Factory.SysUser.j03PageMenuFlag = 0 Then
+                ShowHideMenu(False, True)
+                pm1.Attributes.Item("onclick") = "RCM('p28', " & cRec.PID.ToString & ", this, 'pagemenu')"
+                With linkPM
+                    .Text = cRec.p28Name & " <span class='lbl'>[" & cRec.p28Code & "]</span>"
+                    ''.NavigateUrl = "p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+                    .Attributes.Item("onclick") = "RCM('p28', " & cRec.PID.ToString & ", this, 'pagemenu')"
+                End With
+                Handle_ContextMenuBlackWhite(cRec.IsClosed)
+            Else
+                ShowHideMenu(True, False)
+                p28_SetupMenu(cRec, cDisp)
+                SetupMenu_thePage("p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
+            End If
         End If
-       
+
+
+        
+
         Me.CurrentTab = strTabValue
         Handle_SelectedTab()
     End Sub
@@ -679,26 +700,33 @@ Public Class entity_menu
         Me.DataPID = cRec.PID
 
         j02_SetupTabs(cRec, cRecSum)
-
-        If Factory.SysUser.j03PageMenuFlag = 0 Then
-            ''menu1.Nodes.Clear()
-            menu1.Visible = False
-
-            pm1.Attributes.Item("onclick") = "RCM('j02'," & cRec.PID.ToString & ",this,'pagemenu')"
-            With linkPM
-                .Text = cRec.FullNameDesc
-                If cRec.j07ID <> 0 Then .Text += " <span class='lbl'>[" & cRec.j07Name & "]</span>"
-                If cRec.j02JobTitle <> "" Then .Text += " <span class='lbl'>[" & cRec.j02JobTitle & "]</span>"
-                If Not cRec.j02IsIntraPerson Then .Font.Italic = True
-                ''.NavigateUrl = "j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
-                .Attributes.Item("onclick") = "RCM('j02', " & cRec.PID.ToString & ", this, 'pagemenu')"
-            End With
-            Handle_ContextMenuBlackWhite(cRec.IsClosed)
+        If hidSource.Value = "2" Then
+            panPM1.Controls.Clear()
+            panPM1.Visible = False
+            ShowHideMenu(False, False)
         Else
-            j02_SetupMenu(cRec)
-            SetupMenu_thePage("j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
+            If Factory.SysUser.j03PageMenuFlag = 0 Then
+                ShowHideMenu(False, True)
+
+                pm1.Attributes.Item("onclick") = "RCM('j02'," & cRec.PID.ToString & ",this,'pagemenu')"
+                With linkPM
+                    .Text = cRec.FullNameDesc
+                    If cRec.j07ID <> 0 Then .Text += " <span class='lbl'>[" & cRec.j07Name & "]</span>"
+                    If cRec.j02JobTitle <> "" Then .Text += " <span class='lbl'>[" & cRec.j02JobTitle & "]</span>"
+                    If Not cRec.j02IsIntraPerson Then .Font.Italic = True
+                    ''.NavigateUrl = "j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+                    .Attributes.Item("onclick") = "RCM('j02', " & cRec.PID.ToString & ", this, 'pagemenu')"
+                End With
+                Handle_ContextMenuBlackWhite(cRec.IsClosed)
+            Else
+                ShowHideMenu(True, False)
+                j02_SetupMenu(cRec)
+                SetupMenu_thePage("j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
+            End If
         End If
-       
+
+        
+
 
         Me.CurrentTab = strTabValue
         Handle_SelectedTab()
@@ -850,23 +878,29 @@ Public Class entity_menu
         If crs.o23_Count > 0 Then s += "<span class='badge1tab'>" & crs.o23_Count.ToString & "</span>"
         cti(s, "o23")
 
-        If Factory.SysUser.j03PageMenuFlag = 0 Then
-            menu1.Visible = False
-
-            pm1.Attributes.Item("onclick") = "RCM('p56'," & cRec.PID.ToString & ",this,'pagemenu')"
-            With linkPM
-                .Text = cRec.FullName
-                ''.NavigateUrl = "p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
-                .Attributes.Item("onclick") = "RCM('p56', " & cRec.PID.ToString & ", this, 'pagemenu')"
-            End With
-            Handle_ContextMenuBlackWhite(cRec.IsClosed)
+        If hidSource.Value = "2" Then
+            ShowHideMenu(False, False)
         Else
+            If Factory.SysUser.j03PageMenuFlag = 0 Then
+                ShowHideMenu(False, True)
 
+                pm1.Attributes.Item("onclick") = "RCM('p56'," & cRec.PID.ToString & ",this,'pagemenu')"
+                With linkPM
+                    .Text = cRec.FullName
+                    ''.NavigateUrl = "p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+                    .Attributes.Item("onclick") = "RCM('p56', " & cRec.PID.ToString & ", this, 'pagemenu')"
+                End With
+                Handle_ContextMenuBlackWhite(cRec.IsClosed)
+            Else
+                ShowHideMenu(True, False)
 
-            p56_SetupMenu(cRec, cP41, cP42, cDisp)
-            SetupMenu_thePage("p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
+                p56_SetupMenu(cRec, cP41, cP42, cDisp)
+                SetupMenu_thePage("p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, strTabValue)
 
+            End If
         End If
+
+        
 
         Me.CurrentTab = strTabValue
         Handle_SelectedTab()

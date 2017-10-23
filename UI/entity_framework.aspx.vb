@@ -208,10 +208,10 @@ Public Class entity_framework
     
     Private Sub AdaptSplitterLayout()
         Select Case Me.opgLayout.Value
-            Case "1"
+            Case "1"    'levý+pravý panel
                 RadSplitter1.Orientation = Orientation.Vertical
 
-            Case "2"
+            Case "2"    'horní a dolní panel
                 RadSplitter1.Orientation = Orientation.Horizontal
                 With navigationPane
                     .OnClientResized = ""
@@ -224,7 +224,7 @@ Public Class entity_framework
                     .OnClientExpanded = "AfterPaneExpanded"
                 End With
 
-            Case "3"
+            Case "3"    'pouze jeden panel
                 RadSplitter1.Orientation = Orientation.Horizontal
                 With navigationPane
                     .Collapsed = False
@@ -234,10 +234,12 @@ Public Class entity_framework
                     .OnClientCollapsed = ""
                     .OnClientExpanded = ""
                 End With
-                Me.contentPane.Collapsed = True
                 grid1.OnRowDblClick = "RowDoubleClick"
+                Me.contentPane.Collapsed = True
                 Me.contentPane.Visible = False
                 Me.RadSplitbar1.Visible = False
+                
+
         End Select
         
 

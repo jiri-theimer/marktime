@@ -119,34 +119,53 @@ Public Class p91_framework_detail
         If hidSource.Value = "3" Then
             FNO("searchbox").Controls.Add(cbx)
             imgIcon32.Style.Item("top") = "44px"
+            cmdGo2Grid.Visible = True
         Else
             FNO("searchbox").Visible = False
+            cmdGo2Grid.Visible = False
         End If
     End Sub
 
-
+    Private Sub ShowHideMenu(bolPopupMenu As Boolean, bolContextMenu As Boolean)
+        If bolPopupMenu Then
+            menu1.Visible = True
+        Else
+            menu1.Nodes.Clear()
+            menu1.Visible = False
+        End If
+        If bolContextMenu Then
+            panPM1.Visible = True
+        Else
+            panPM1.Controls.Clear()
+            panPM1.Visible = False
+        End If
+    End Sub
     Private Sub RefreshRecord()
         Dim cRec As BO.p91Invoice = Master.Factory.p91InvoiceBL.Load(Master.DataPID)
         If cRec Is Nothing Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=p91")
         Handle_Permissions(cRec)
 
-        If Master.Factory.SysUser.j03PageMenuFlag = 0 Then
-            pm1.Attributes.Item("onclick") = "RCM('p91'," & cRec.PID.ToString & ",this,'pagemenu')"
-            With linkPM
-                .Text = cRec.p92Name & ": " & cRec.p91Code & " <span class='lbl'>[" & cRec.p91Client & "]</span>"
-                ''.NavigateUrl = "p91_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
-                .Attributes.Item("onclick") = "RCM('p91', " & cRec.PID.ToString & ", this, 'pagemenu')"
-            End With
-            If cRec.IsClosed Then panPM1.Style.Item("background-color") = "black" : linkPM.Style.Item("color") = "white"
-            imgIcon32.Visible = False
-            menu1.Nodes.Clear()
-            menu1.Visible = False
+        If hidSource.Value = "2" Then
+            ShowHideMenu(False, False)
         Else
+            If Master.Factory.SysUser.j03PageMenuFlag = 0 Then
+                pm1.Attributes.Item("onclick") = "RCM('p91'," & cRec.PID.ToString & ",this,'pagemenu')"
+                With linkPM
+                    .Text = cRec.p92Name & ": " & cRec.p91Code & " <span class='lbl'>[" & cRec.p91Client & "]</span>"
+                    ''.NavigateUrl = "p91_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
+                    .Attributes.Item("onclick") = "RCM('p91', " & cRec.PID.ToString & ", this, 'pagemenu')"
+                End With
+                If cRec.IsClosed Then panPM1.Style.Item("background-color") = "black" : linkPM.Style.Item("color") = "white"
+                imgIcon32.Visible = False
+                ShowHideMenu(False, True)
+            Else
+                ShowHideMenu(True, False)
+                If cRec.IsClosed Then menu1.Skin = "Black"
+                FNO("reload").NavigateUrl = "p91_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
 
-            If cRec.IsClosed Then menu1.Skin = "Black"
-            FNO("reload").NavigateUrl = "p91_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
-
+            End If
         End If
+        
         
 
         With cRec
