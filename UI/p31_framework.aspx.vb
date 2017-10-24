@@ -179,9 +179,6 @@ Public Class p31_framework
             .FilterSetting = strFilterSetting
             .FilterExpression = strFilterExpression
         End With
-        Dim cG As PreparedDataGrid = basUIMT.PrepareDataGrid(cS)
-        hidCols.Value = cG.Cols
-        Me.hidFrom.Value = cG.AdditionalFROM
 
         If tabs1.SelectedIndex = 0 Then
             cS.PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
@@ -191,6 +188,9 @@ Public Class p31_framework
             cS.AllowCustomPaging = False
             ''Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 100, False, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom)
         End If
+        Dim cG As PreparedDataGrid = basUIMT.PrepareDataGrid(cS)
+        hidCols.Value = cG.Cols
+        Me.hidFrom.Value = cG.AdditionalFROM
 
         If cJ70.j70ScrollingFlag > BO.j70ScrollingFlagENUM.NoScrolling Then
             navigationPane.Scrolling = SplitterPaneScrolling.None

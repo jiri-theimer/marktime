@@ -629,6 +629,7 @@
         CreateQuery("Přiřazena kontaktní osoba", BO.x29IdEnum.p31Worksheet, 0, strColumnNames, "_other", 6)
         CreateQuery("Štítky", BO.x29IdEnum.p31Worksheet, 0, "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Text,TagsHtml")
         CreateQuery("Přesunuto do archivu", BO.x29IdEnum.p31Worksheet, 0, strColumnNames, "_other", 4)
+        CreateQuery("Výsledovka", BO.x29IdEnum.p31Worksheet, 0, "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,j27Code_Billing_Orig,p31Text,Vykazano_Naklad,Vykazano_Vynos,Vykazano_Zisk,Vyfakturovano_Vynos,Vyfakturovano_Zisk")
         CreateQuery("Vyfakturováno", BO.x29IdEnum.p31Worksheet, 0, "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Invoiced,p31Amount_WithoutVat_Invoiced,p31Text,p91Code", "_other", 3)
         CreateQuery("Schváleno, čeká na fakturaci", BO.x29IdEnum.p31Worksheet, 0, "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Hours_Approved_Billing,p31Amount_WithoutVat_Approved,j27Code_Billing_Orig,p31Text", "_other", 2)
         CreateQuery("Rozpracovanost, čeká na schvalování", BO.x29IdEnum.p31Worksheet, 0, "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text", "_other", 1)

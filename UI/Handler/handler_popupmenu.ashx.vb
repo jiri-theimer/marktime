@@ -644,7 +644,7 @@ Public Class handler_popupmenu
         
         If cRec.b01ID > 0 Then
             SEP()
-            CI("Posunout/doplnit", "cmdWorkflow", "workflow_dialog.aspx?prefix=p41&pid=" & cRec.PID.ToString, "Images/workflow.png")
+            CI("Posunout/doplnit", "workflow_dialog.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/workflow.png")
         End If
 
 

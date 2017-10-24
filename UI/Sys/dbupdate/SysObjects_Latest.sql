@@ -19430,6 +19430,33 @@ FROM  rst
 
 GO
 
+----------V---------------view_p31_ocas-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('view_p31_ocas') and type = 'V')
+ drop view view_p31_ocas
+GO
+
+
+
+
+
+CREATE VIEW [dbo].[view_p31_ocas]
+as
+SELECT a.p31ID
+,case when p32.p32IsBillable=1 then a.p31Amount_WithoutVat_Orig end as Vykazano_Vynos
+,case when p34.p34IncomeStatementFlag=1 and p34.p33ID IN (2,5) then a.p31Amount_WithoutVat_Orig when p34.p33ID=1 THEN p31Rate_Internal_Orig*p31Hours_Orig end as Vykazano_Naklad
+,isnull(case when p32.p32IsBillable=1 then a.p31Amount_WithoutVat_Orig end,0)-isnull(case when p34.p34IncomeStatementFlag=1 and p34.p33ID IN (2,5) then a.p31Amount_WithoutVat_Orig when p34.p33ID=1 THEN p31Rate_Internal_Orig*p31Hours_Orig end,0) as Vykazano_Zisk
+,case when a.p91ID IS NOT NULL THEN a.p31Amount_WithoutVat_Invoiced END as Vyfakturovano_Vynos
+,case when a.p91ID IS NOT NULL THEN a.p31Amount_WithoutVat_Invoiced_Domestic END as Vyfakturovano_Vynos_Domestic
+,case when a.p91ID IS NOT NULL THEN isnull(a.p31Amount_WithoutVat_Invoiced_Domestic,0)-isnull(case when p34.p34IncomeStatementFlag=1 and p34.p33ID IN (2,5) then a.p31Amount_WithoutVat_Orig when p34.p33ID=1 THEN p31Rate_Internal_Orig*p31Hours_Orig end,0) END as Vyfakturovano_Zisk
+FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+
+
+
+
+
+GO
+
 ----------V---------------view_p41_tree_recalc-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('view_p41_tree_recalc') and type = 'V')
