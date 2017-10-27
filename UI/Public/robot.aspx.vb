@@ -39,6 +39,8 @@
 
             Handle_SqlTasks()
 
+            Handle_AutoWorkflowSteps()
+
             If IsTime4Run(BO.j91RobotTaskFlag.RecurrenceP41, 60) Or Request.Item("recur") = "1" Or bolNowExplicit Then   'opakované worksheet úkony, projekty a úkoly stačí jednou za hodinu
                 Handle_Recurrence_p41()
                 Handle_Recurrence_p56()
@@ -574,4 +576,55 @@
         End If
         Return True
     End Function
+
+    Private Sub Handle_AutoWorkflowSteps()
+        WL(BO.j91RobotTaskFlag.AutoWorkflowSteps, "", "Handle_AutoWorkflowSteps")
+        For Each c In _Factory.b01WorkflowTemplateBL.GetList(New BO.myQuery)
+            Handle_AutoWorkflowSteps_OneTemplate(c)
+        Next
+    End Sub
+    Private Sub Handle_AutoWorkflowSteps_OneTemplate(cB01 As BO.b01WorkflowTemplate)
+        Dim lisB06 As IEnumerable(Of BO.b06WorkflowStep) = _Factory.b06WorkflowStepBL.GetList(cB01.PID).Where(Function(p) p.b06ValidateAutoMoveSQL <> "")
+        For Each cB06 In lisB06
+            Dim pids As New List(Of Integer)
+            Select Case cB01.x29ID
+                Case BO.x29IdEnum.p56Task
+                    Dim mq As New BO.myQueryP56
+                    mq.b02ID = cB06.b02ID
+                    mq.MG_SelectPidFieldOnly = True
+                    pids = _Factory.p56TaskBL.GetList(mq).Select(Function(p) p.PID).ToList
+                Case BO.x29IdEnum.p41Project
+                    Dim mq As New BO.myQueryP41
+                    mq.b02ID = cB06.b02ID
+                    mq.MG_SelectPidFieldOnly = True
+                    pids = _Factory.p41ProjectBL.GetList(mq).Select(Function(p) p.PID).ToList
+                Case BO.x29IdEnum.p91Invoice
+                    Dim mq As New BO.myQueryP91
+                    mq.b02ID = cB06.b02ID
+                    mq.MG_SelectPidFieldOnly = True
+                    pids = _Factory.p91InvoiceBL.GetList(mq).Select(Function(p) p.PID).ToList
+                Case BO.x29IdEnum.p28Contact
+                    Dim mq As New BO.myQueryP28
+                    mq.b02ID = cB06.b02ID
+                    mq.MG_SelectPidFieldOnly = True
+                    pids = _Factory.p28ContactBL.GetList(mq).Select(Function(p) p.PID).ToList
+                Case BO.x29IdEnum.o23Doc
+                    Dim mq As New BO.myQueryO23(0)
+                    mq.b02IDs = BO.BAS.ConvertInt2List(cB06.b02ID)
+                    mq.MG_SelectPidFieldOnly = True
+                    pids = _Factory.o23DocBL.GetList(mq).Select(Function(p) p.PID).ToList
+            End Select
+            If pids.Count > 0 Then
+                For Each intPID As Integer In pids
+                    If _Factory.b06WorkflowStepBL.GetAutoWorkflowSQLResult(intPID, cB06) = 1 Then
+                        'podmínka automaticky spuštěného kroku splněna
+                        WL(BO.j91RobotTaskFlag.AutoWorkflowSteps, "", String.Format("Handle_AutoWorkflowSteps: RecordPID={0}, b06Name={1}", intPID, cB06.b06Name))
+                        _Factory.b06WorkflowStepBL.RunWorkflowStep(cB06, intPID, cB06.x29id, "", "", False, Nothing)
+                    End If
+                Next
+            End If
+
+        Next
+
+    End Sub
 End Class

@@ -11,6 +11,7 @@
     RecurrenceP41 = 9
     RecurrenceP56 = 10
     ClearTemp = 11
+    AutoWorkflowSteps = 12
 End Enum
 Public Class j91RobotLog
     Public Property j91ID As Integer

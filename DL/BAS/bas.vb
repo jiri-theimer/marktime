@@ -77,6 +77,7 @@
 
     Shared Function ParseMergeSQL(strSQL As String, strPIDValue As String) As String
         strSQL = Replace(strSQL, "#pid#", strPIDValue, , , CompareMethod.Text)
+        strSQL = Replace(strSQL, "@pid", strPIDValue, , , CompareMethod.Text)
         strSQL = Replace(strSQL, "drop ", "", , , CompareMethod.Text)
 
         Return strSQL

@@ -14,6 +14,7 @@
 
     Function RunWorkflowStep(cB06 As BO.b06WorkflowStep, intRecordPID As Integer, x29id As BO.x29IdEnum, strComment As String, strUploadGUID As String, bolManualStep As Boolean, lisNominee As List(Of BO.x69EntityRole_Assign)) As Boolean
 
+    Function GetAutoWorkflowSQLResult(intRecordPID As Integer, cB06 As BO.b06WorkflowStep) As Integer
 End Interface
 Class b06WorkflowStepBL
     Inherits BLMother
@@ -154,6 +155,7 @@ Class b06WorkflowStepBL
 
 
     Function RunWorkflowStep(cB06 As BO.b06WorkflowStep, intRecordPID As Integer, x29id As BO.x29IdEnum, strComment As String, strUploadGUID As String, bolManualStep As Boolean, lisNominee As List(Of BO.x69EntityRole_Assign)) As Boolean Implements Ib06WorkflowStepBL.RunWorkflowStep
+        _Error = ""
         If Not ValidateWorkflowStepBeforeRun(intRecordPID, x29id, cB06, strComment, strUploadGUID, bolManualStep, lisNominee) Then
             Return False
         End If
@@ -218,7 +220,7 @@ Class b06WorkflowStepBL
                 If Not lisNominee Is Nothing Then
                     Me.Factory.p28ContactBL.Save(cRec, Nothing, Nothing, Nothing, lisNominee, Nothing)
                 End If
-            
+
             Case BO.x29IdEnum.o23Doc
                 Dim cRec As BO.o23Doc = Me.Factory.o23DocBL.Load(intRecordPID)
                 intCurB02ID = cRec.b02ID
@@ -290,8 +292,8 @@ Class b06WorkflowStepBL
             'založit složku
             Factory.f01FolderBL.CreateUpdateFolder(intRecordPID, cB06.f02ID)
         End If
-        
 
+        If Not bolManualStep Then bolStopAutoNotification = False 'u kroků na pozadí potlačit nastavení vypnuté notifikace v úkolu
         If Not bolStopAutoNotification Then
             'test případné mailové notifikace
             Dim objects As List(Of Object) = GetObjects(intRecordPID, x29id, intP41ID_Ref)
@@ -517,5 +519,8 @@ Class b06WorkflowStepBL
         Next
         Return ret
     End Function
-    
+
+    Public Function GetAutoWorkflowSQLResult(intRecordPID As Integer, cB06 As BO.b06WorkflowStep) As Integer Implements Ib06WorkflowStepBL.GetAutoWorkflowSQLResult
+        Return _cDL.GetAutoWorkflowSQLResult(intRecordPID, cB06)
+    End Function
 End Class

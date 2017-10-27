@@ -263,4 +263,10 @@
 
         Return lis
     End Function
+
+    Public Function GetAutoWorkflowSQLResult(intRecordPID As Integer, cB06 As BO.b06WorkflowStep) As Integer
+        Dim strSQL As String = bas.ParseMergeSQL(cB06.b06ValidateAutoMoveSQL, intRecordPID.ToString)
+        Return _cDB.GetIntegerValueFROMSQL(strSQL)
+
+    End Function
 End Class
