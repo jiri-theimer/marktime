@@ -108,6 +108,7 @@
             End If
         End If
         If Request.Item("clone") = "1" And Request.Item("pid") <> "" Then
+            hidCloneP41ID.Value = Request.Item("pid")
             Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(BO.BAS.IsNullInt(hidCloneP41ID.Value))
             If cRec Is Nothing Then Return
             With cRec
@@ -183,15 +184,19 @@
 
     Private Sub RefreshTasks()
         Dim mq As New BO.myQueryP56
-
         mq.p41ID = BO.BAS.IsNullInt(hidCloneP41ID.Value)
         Dim lis As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList(mq, True)
+        lis = lis.OrderByDescending(Function(p) p.p65ID).ThenByDescending(Function(p) p.PID)
+        If lis.Count = 0 Then
+            panCloneTasks.Visible = False
+        Else
+            panCloneTasks.Visible = True
+        End If
         If chkShowMothersOnly.Checked Then lis = lis.Where(Function(p) p.p65ID <> 0)
+
         rpP56IDs.DataSource = lis
         rpP56IDs.DataBind()
-        If rpP56IDs.Items.Count = 0 Then
-            panCloneTasks.Visible = False
-        End If
+        
     End Sub
 
     Private Sub cmdHardRefresh_Click(sender As Object, e As EventArgs) Handles cmdHardRefresh.Click
@@ -424,7 +429,11 @@
         Dim cRec As BO.p56Task = CType(e.Item.DataItem, BO.p56Task)
         CType(e.Item.FindControl("p56ID"), HiddenField).Value = cRec.PID.ToString
         CType(e.Item.FindControl("Receivers"), Label).Text = cRec.ReceiversInLine
-
+        If cRec.p65ID > 0 Then
+            e.Item.FindControl("img1").Visible = True
+        Else
+            e.Item.FindControl("img1").Visible = False
+        End If
 
     End Sub
 

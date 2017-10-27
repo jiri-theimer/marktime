@@ -178,20 +178,25 @@
                     <table>
                     <asp:Repeater ID="rpP56IDs" runat="server">
                        <ItemTemplate>
-                           <tr>
+                           <tr class="trHover">
                                <td>
                                    <asp:CheckBox ID="chkSelect" runat="server" Text="Vybrat:" />
                                </td>
+                               
                                <td>
-                                   <%# Eval("p57Name")%>
+                                   <b><%# Eval("p57Name")%></b>
                                    <asp:HiddenField ID="p56ID" runat="server" />
                                </td>
                                <td>
-                                   <i><%# Eval("p56Name")%></i>
+                                   <i style="color:blue;"><%# Eval("p56Name")%></i>
+                               </td>
+                               <td style="width:30px;">
+                                   <asp:Image ID="img1" runat="server" ImageUrl="Images/recurrence.png" />
                                </td>
                                <td>
                                    <asp:Label ID="Receivers" runat="server"></asp:Label>
                                </td>
+                               
                            </tr>
                        </ItemTemplate>
                     </asp:Repeater>
