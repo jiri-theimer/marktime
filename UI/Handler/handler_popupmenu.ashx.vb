@@ -558,7 +558,7 @@ Public Class handler_popupmenu
         End If
         SEP()
         CI("[NOVÝ]", "", , "Images/new4menu.png")
-        If cDisp.OwnerAccess Then CI("Kopírovat projekt", "p41_record.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png", True)
+        If cDisp.OwnerAccess Then CI("Kopírovat projekt", "p41_create.aspx?clone=1&pid=" & intPID.ToString, , "Images/copy.png", True)
         If factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then
             CI("Založit projekt", "p41_create.aspx?client_family=1&pid=" & intPID.ToString, , "Images/project.png", True) 'pod NOVÝ
             CI("Založit pod-projekt", "p41_create.aspx?client_family=1&pid=" & cRec.PID & "&create_parent=1", , "Images/tree.png", True)    'pod nový
@@ -891,7 +891,7 @@ Public Class handler_popupmenu
 
 
 
-        If cRec.j02IsIntraPerson And strFlag = "pagemenu" Then
+        If cRec.j02IsIntraPerson Then
             CI("[DALŠÍ]", "", , "Images/more.png")
             If factory.SysUser.j04IsMenu_People Then
                 CI("Oštítkovat", "tag_binding.aspx?prefix=j02&pids=" & intPID.ToString, , "Images/tag.png", True)

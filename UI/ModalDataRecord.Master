@@ -19,60 +19,9 @@
 
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
     </asp:ContentPlaceHolder>
-    <script type="text/javascript">
-        $(document).ready(function () {
+    <script type="text/javascript">        
 
-            var iframeWidth = '100%';
-            var iframeHeight = '270';
-
-
-            $("a.reczoom").each(function () {
-
-                // Extract your variables here:
-                var $this = $(this);
-                var myurl = $this.attr('rel');
-
-                var mytitle = $this.attr('title');
-                if (mytitle == null)
-                    mytitle = 'Detail';
-
-                $this.qtip({
-                    content: {
-                        text: '<iframe src="' + myurl + '"' + ' width=' + iframeWidth + '"' + ' height=' + '"' + iframeHeight + '"  frameborder="0"><p>Your browser does not support iframes.</p></iframe>',
-                        title: {
-                            text: mytitle
-                        },
-
-                    },
-                    position: {
-                        my: 'top center',  // Position my top left...
-                        at: 'bottom center', // at the bottom right of...
-                        viewport: $(window)
-                    },
-
-                    hide: {
-
-                        fixed: true,
-                        delay: 100
-
-                    },
-                    style: {
-                        classes: 'qtip-tipped',
-                        width: 700,
-                        height: 300
-
-                    }
-                });
-            });
-
-
-            $("#form1").submit(function () {
-
-                document.getElementById("loading1").style.display = "block";
-            });
-
-
-        });
+        
 
 
        
@@ -143,7 +92,7 @@
 
         }
 
-       
+        
 
     </script>
 </head>
@@ -175,7 +124,8 @@
                     <telerik:RadToolBarButton Text="<%$ Resources:common, help %>" Value="help" ImageUrl="Images/help.png" PostBack="false" NavigateUrl="http://www.marktime.net/doc/html/index.html" Target="_blank"></telerik:RadToolBarButton>
                 </Items>
             </telerik:RadToolBar>
-
+            <asp:Label ID="need2SaveMessage" runat="server" style="position:absolute;top:10px;left:700px;z-index:10;"></asp:Label>
+            <asp:HiddenField ID="hidNeed2SaveMessage" runat="server" Value="" />
             <asp:Image runat="server" ID="icon1" Style="position: absolute; left: 93%; top: 40px; z-index: 5000;" Visible="false" />
             <img id="loading1" src="Images/loading.gif" style="display:none;z-index:9000;position:absolute;left:700px;top:10px;" />
             <div style="padding: 6px;">
@@ -221,6 +171,70 @@
 </body>
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        $("form").change(function () {
+            //$(this).data("changed", "true");
+            if (document.getElementById("<%=hidNeed2SaveMessage.clientid%>").value == "") {
+                document.getElementById("<%=hidNeed2SaveMessage.clientid%>").value = "Změny je třeba uložit tlačítkem [Uložit změny]."
+                document.getElementById("<%=need2SaveMessage.clientid%>").innerText = "Změny je třeba uložit tlačítkem [Uložit změny]."
+                GetRadWindow().argument = "need2save";
+            }
+            
+        });
+
+        var iframeWidth = '100%';
+        var iframeHeight = '270';
+
+
+        $("a.reczoom").each(function () {
+
+            // Extract your variables here:
+            var $this = $(this);
+            var myurl = $this.attr('rel');
+
+            var mytitle = $this.attr('title');
+            if (mytitle == null)
+                mytitle = 'Detail';
+
+            $this.qtip({
+                content: {
+                    text: '<iframe src="' + myurl + '"' + ' width=' + iframeWidth + '"' + ' height=' + '"' + iframeHeight + '"  frameborder="0"><p>Your browser does not support iframes.</p></iframe>',
+                    title: {
+                        text: mytitle
+                    },
+
+                },
+                position: {
+                    my: 'top center',  // Position my top left...
+                    at: 'bottom center', // at the bottom right of...
+                    viewport: $(window)
+                },
+
+                hide: {
+
+                    fixed: true,
+                    delay: 100
+
+                },
+                style: {
+                    classes: 'qtip-tipped',
+                    width: 700,
+                    height: 300
+
+                }
+            });
+        });
+
+
+        $("#form1").submit(function () {
+
+            document.getElementById("loading1").style.display = "block";
+        });
+
+
+    });
+
+
     function trydelete() {
 
         if (confirm("Opravdu odstranit záznam?")) {
@@ -283,5 +297,7 @@
     function sw_everywhere(url, iconUrl, is_maximize) {
         dialog_master(url, is_maximize,null,null);
     }
+
+    
 </script>
 </html>

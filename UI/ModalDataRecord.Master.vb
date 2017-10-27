@@ -268,7 +268,7 @@
             hidForceOperation.Value = ""
             RaiseEvent Master_OnDelete()
         End If
-
+        need2SaveMessage.Text = hidNeed2SaveMessage.Value
     End Sub
 
     
@@ -286,6 +286,7 @@
     End Sub
 
     Private Sub toolbar1_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles toolbar1.ButtonClick
+        hidNeed2SaveMessage.Value = "" : need2SaveMessage.Text = ""
         Select Case e.Item.Value
             Case "save"
                 RaiseEvent Master_OnSave()

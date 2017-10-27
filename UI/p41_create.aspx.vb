@@ -84,7 +84,8 @@
 
     Private Sub TryInhaleInitialData()
         If Request.Item("client_family") = "1" And Request.Item("pid") <> "" Then
-            Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(BO.BAS.IsNullInt(Request.Item("pid")))
+            hidCloneP41ID.Value = Request.Item("pid")
+            Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(BO.BAS.IsNullInt(hidCloneP41ID.Value))
             If cRec Is Nothing Then Return
             With cRec
                 Me.p42ID.SelectedValue = .p42ID.ToString
@@ -94,7 +95,7 @@
                     Me.p28ID_Client.Text = .Client
                 End If
                 Handle_ShowPriceListReference(False, .p51ID_Billing)
-                
+
 
                 Me.p87ID.SelectedValue = .p87ID.ToString
                 Me.p92id.SelectedValue = .p92ID.ToString
@@ -107,7 +108,7 @@
             End If
         End If
         If Request.Item("clone") = "1" And Request.Item("pid") <> "" Then
-            Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(BO.BAS.IsNullInt(Request.Item("pid")))
+            Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(BO.BAS.IsNullInt(hidCloneP41ID.Value))
             If cRec Is Nothing Then Return
             With cRec
                 Me.p41Name.Text = .p41Name
@@ -146,6 +147,10 @@
             Master.DataPID = cRec.PID
             Handle_FF()
             tags1.RefreshData(cRec.PID)
+
+            RefreshTasks()
+
+
             Master.DataPID = 0
             Return
         End If
@@ -176,7 +181,18 @@
 
     End Sub
 
-    
+    Private Sub RefreshTasks()
+        Dim mq As New BO.myQueryP56
+
+        mq.p41ID = BO.BAS.IsNullInt(hidCloneP41ID.Value)
+        Dim lis As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList(mq, True)
+        If chkShowMothersOnly.Checked Then lis = lis.Where(Function(p) p.p65ID <> 0)
+        rpP56IDs.DataSource = lis
+        rpP56IDs.DataBind()
+        If rpP56IDs.Items.Count = 0 Then
+            panCloneTasks.Visible = False
+        End If
+    End Sub
 
     Private Sub cmdHardRefresh_Click(sender As Object, e As EventArgs) Handles cmdHardRefresh.Click
         Dim strPID As String = Me.HardRefreshPID.Value
@@ -355,6 +371,10 @@
                     Master.DataPID = .LastSavedPID
                     Master.Factory.o51TagBL.SaveBinding("p41", Master.DataPID, tags1.Geto51IDs())
                     If ff1.GetTags.Count > 0 Then Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p41Project, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs)
+                    If rpP56IDs.Items.Count > 0 Then
+                        CreateTasks(Master.DataPID)
+                    End If
+
                     Master.CloseAndRefreshParent("p41-create")
                 Else
                     Master.Notify(.ErrorMessage, 2)
@@ -363,7 +383,52 @@
         End If
     End Sub
 
+    Private Sub CreateTasks(intNewP41ID As Integer)
+        For Each ri As RepeaterItem In rpP56IDs.Items
+            If CType(ri.FindControl("chkSelect"), CheckBox).Checked Then
+                Dim cTask As BO.p56Task = Master.Factory.p56TaskBL.Load(CInt(CType(ri.FindControl("p56ID"), HiddenField).Value))
+                Dim c As New BO.p56Task
+                With cTask
+                    c.p41ID = intNewP41ID
+                    c.p57ID = .p57ID
+                    c.p56Name = .p56Name
+                    c.p56NameShort = .p56NameShort
+                    c.p56Description = .p56Description
+
+                    c.p56IsNoNotify = True
+                    c.p65ID = .p65ID
+                    c.p56RecurNameMask = .p56RecurNameMask
+                    c.p56RecurBaseDate = .p56RecurBaseDate
+                    c.p56PlanFrom = .p56PlanFrom
+                    c.p56PlanUntil = .p56PlanUntil
+
+                    c.p56Plan_Hours = .p56Plan_Hours
+                    c.p56Plan_Expenses = .p56Plan_Expenses
+                    c.p56IsPlan_Hours_Ceiling = .p56IsPlan_Hours_Ceiling
+                    c.p56IsPlan_Expenses_Ceiling = .p56IsPlan_Expenses_Ceiling
+
+
+                End With
+                Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p56Task, cTask.PID)
+                Dim ffs As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p56Task, Master.DataPID, c.p57ID)
+                Master.Factory.p56TaskBL.Save(c, lisX69, ffs, "")
+            End If
+        Next
+    End Sub
+
     Private Sub p42ID_SelectedIndexChanged(OldValue As String, OldText As String, CurValue As String, CurText As String) Handles p42ID.SelectedIndexChanged
         Handle_FF()
+    End Sub
+
+    Private Sub rpP56IDs_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP56IDs.ItemDataBound
+        Dim cRec As BO.p56Task = CType(e.Item.DataItem, BO.p56Task)
+        CType(e.Item.FindControl("p56ID"), HiddenField).Value = cRec.PID.ToString
+        CType(e.Item.FindControl("Receivers"), Label).Text = cRec.ReceiversInLine
+
+
+    End Sub
+
+    Private Sub chkShowMothersOnly_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowMothersOnly.CheckedChanged
+        RefreshTasks()
     End Sub
 End Class

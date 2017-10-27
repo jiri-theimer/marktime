@@ -168,6 +168,37 @@
                  <uc:project ID="p41ParentID" runat="server" Width="400px" />
             </div>
             
+            <asp:Panel ID="panCloneTasks" runat="server" CssClass="content-box2">
+                <div class="title">
+                    <img src="Images/task.png" />
+                    Zaškrtněte úkoly, které se mají naklonovat do nového projektu
+                    <asp:CheckBox ID="chkShowMothersOnly" runat="server" AutoPostBack="true" Text="Pouze matky opakovaných úkolů" />
+                </div>
+                <div class="content">
+                    <table>
+                    <asp:Repeater ID="rpP56IDs" runat="server">
+                       <ItemTemplate>
+                           <tr>
+                               <td>
+                                   <asp:CheckBox ID="chkSelect" runat="server" Text="Vybrat:" />
+                               </td>
+                               <td>
+                                   <%# Eval("p57Name")%>
+                                   <asp:HiddenField ID="p56ID" runat="server" />
+                               </td>
+                               <td>
+                                   <i><%# Eval("p56Name")%></i>
+                               </td>
+                               <td>
+                                   <asp:Label ID="Receivers" runat="server"></asp:Label>
+                               </td>
+                           </tr>
+                       </ItemTemplate>
+                    </asp:Repeater>
+                    </table>
+                </div>
+            </asp:Panel>
+            
         </telerik:RadPageView>
 
         <telerik:RadPageView ID="billing" runat="server">
@@ -378,6 +409,7 @@
     <asp:HiddenField ID="HardRefreshWindow" runat="server" />
     <asp:Button ID="cmdHardRefresh" runat="server" Style="display: none;" />
     <asp:HiddenField ID="hidP51ID_Tailor" runat="server" />
+    <asp:HiddenField ID="hidCloneP41ID" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

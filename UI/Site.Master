@@ -124,7 +124,20 @@
             return null;
         }
 
+        function okno1_OnClientBeforeClose(sender, args) {                        
+            if (sender.argument == "need2save") {
+                if (confirm("Chcete zavřít formulář bez uložení změn?")) {
+                    sender.argument = null;
+                    //args.set_cancel(false);  //zavřít formulář
+                }
+                else {
+                    args.set_cancel(true);  //zrušit zavření formuláře
+                }
+            }
+            
 
+            
+        }
     </script>
 
 </head>
@@ -148,7 +161,7 @@
         <asp:HiddenField ID="hidSiteMenuValue" runat="server" />
         <asp:HiddenField ID="hidPageTitle" runat="server" Value="MARKTIME 5.0" />
         
-
+       
         <script type="text/javascript">
             $telerik.getViewPortSize = function () {
                 var width = 0;
@@ -259,6 +272,7 @@
 
         function sw_master(url, iconUrl, is_maximize) {
             var wnd = $find("<%=okno1.clientid%>");
+            wnd.argument = null;
             wnd.setUrl(url);
             if (iconUrl != null)
                 wnd.set_iconUrl(iconUrl);
@@ -275,6 +289,7 @@
 
         function sw_master_more(url, iconUrl, window_width, window_height, is_modal) {
             var wnd = $find("<%=okno1.ClientID%>");
+            wnd.argument = null;
             wnd.setUrl(url);
             if (iconUrl != null)
                 wnd.set_iconUrl(iconUrl);

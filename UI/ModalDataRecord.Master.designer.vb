@@ -77,6 +77,24 @@ Partial Public Class ModalDataRecord
     Protected WithEvents toolbar1 As Global.Telerik.Web.UI.RadToolBar
 
     '''<summary>
+    '''need2SaveMessage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents need2SaveMessage As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''hidNeed2SaveMessage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidNeed2SaveMessage As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''icon1 control.
     '''</summary>
     '''<remarks>

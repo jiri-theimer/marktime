@@ -320,6 +320,33 @@ Partial Public Class p41_create
     Protected WithEvents p41ParentID As Global.UI.project
 
     '''<summary>
+    '''panCloneTasks control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panCloneTasks As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''chkShowMothersOnly control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkShowMothersOnly As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''rpP56IDs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rpP56IDs As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
     '''billing control.
     '''</summary>
     '''<remarks>
@@ -678,6 +705,15 @@ Partial Public Class p41_create
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidP51ID_Tailor As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidCloneP41ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidCloneP41ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.
