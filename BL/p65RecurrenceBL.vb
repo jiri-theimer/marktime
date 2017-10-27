@@ -54,6 +54,7 @@ Class p65RecurrenceBL
                 Case 1, 2, 3 : c.DatBase = DateSerial(Year(datNow), 1, 1)
                 Case 4, 5, 6 : c.DatBase = DateSerial(Year(datNow), 4, 1)
                 Case 7, 8, 9 : c.DatBase = DateSerial(Year(datNow), 7, 1)
+                Case 10, 11, 12 : c.DatBase = DateSerial(Year(datNow), 10, 1)
                 Case Else : c.DatBase = DateSerial(Year(datNow), Month(datNow), 1)
             End Select
 

@@ -96,7 +96,7 @@ Class p56TaskBL
                 If cP65.p65RecurFlag = BO.RecurrenceType.Year Then
                     .p56RecurBaseDate = DateSerial(Year(.p56RecurBaseDate), 1, 1)
                 End If
-                If cP65.p65RecurFlag = BO.RecurrenceType.Quarter And intM <> 1 And intM <> 4 And intM <> 7 And intM <> 9 Then
+                If cP65.p65RecurFlag = BO.RecurrenceType.Quarter And intM <> 1 And intM <> 4 And intM <> 7 And intM <> 10 Then
                     _Error = "Chybně zadané rozhodné datum." : Return False
                 End If
             End If

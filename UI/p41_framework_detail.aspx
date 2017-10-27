@@ -216,7 +216,7 @@
             <uc:folder ID="folder1" Prefix="p41" runat="server" />
 
             <uc:treemenu ID="tree1" runat="server" Visible="false" />
-            <asp:HyperLink ID="linkBatchUpdateChilds" runat="server" Text="Aktualizovat nastavení pod-projektů" NavigateUrl="javascript:batch_update_childs()" Visible="false"></asp:HyperLink>
+            <asp:HyperLink ID="linkBatchUpdateChilds" runat="server" Text="[Aktualizovat nastavení pod-projektů]" NavigateUrl="javascript:batch_update_childs()" CssClass="wake_link" Visible="false"></asp:HyperLink>
         </div>
     </div>
 

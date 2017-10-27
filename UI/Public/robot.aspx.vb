@@ -120,7 +120,7 @@
 
         For Each c In lisMothers
             Dim cP65 As BO.p65Recurrence = lisP65.First(Function(p) p.PID = c.p65ID)
-            Dim cRD As BO.RecurrenceCalculation = _Factory.p65RecurrenceBL.CalculateDates(cP65, Now)
+            Dim cRD As BO.RecurrenceCalculation = _Factory.p65RecurrenceBL.CalculateDates(cP65, _curNow)
             'Dim datBase As Date = DateSerial(Year(Now), Month(Now), 1), bolNeed2Gen As Boolean = False
             'If cP65.p65RecurFlag = BO.RecurrenceType.Year Then
             '    datBase = DateSerial(Year(Now), 1, 1)
@@ -135,7 +135,7 @@
 
             'End If
             'Dim datGen As Date = datBase.AddMonths(cP65.p65RecurGenToBase_M).AddDays(cP65.p65RecurGenToBase_D)
-            If lisChilds.Where(Function(p) p.p41RecurMotherID = c.PID And p.p41RecurBaseDate = cRD.DatBase).Count = 0 And cRD.DatGen <= _curNow Then
+            If lisChilds.Where(Function(p) p.p41RecurMotherID = c.PID And p.p41RecurBaseDate = cRD.DatBase).Count = 0 And cRD.DatGen <= _curNow And cRD.DatBase > c.p41RecurBaseDate Then
                 'potomek ještě neexistuje a nastal čas ho vygenerovat
                 'Dim datPlanUntil As Date = Nothing
                 'If cP65.p65IsPlanUntil Then datPlanUntil = cRD.DatBase.AddMonths(cP65.p65RecurPlanUntilToBase_M).AddDays(cP65.p65RecurPlanUntilToBase_D)
@@ -181,25 +181,11 @@
 
         For Each c In lisMothers
             Dim cP65 As BO.p65Recurrence = lisP65.First(Function(p) p.PID = c.p65ID)
-            Dim cRD As BO.RecurrenceCalculation = _Factory.p65RecurrenceBL.CalculateDates(cP65, Now)
-            'Dim datBase As Date = DateSerial(Year(Now), Month(Now), 1), bolNeed2Gen As Boolean = False
-            'If cP65.p65RecurFlag = BO.RecurrenceType.Year Then
-            '    datBase = DateSerial(Year(Now), 1, 1)
-            'End If
-            'If cP65.p65RecurFlag = BO.RecurrenceType.Quarter Then
-            '    Select Case Month(Now)
-            '        Case 1, 2, 3 : datBase = DateSerial(Year(Now), 1, 1)
-            '        Case 4, 5, 6 : datBase = DateSerial(Year(Now), 4, 1)
-            '        Case 7, 8, 9 : datBase = DateSerial(Year(Now), 7, 1)
-            '        Case Else : datBase = DateSerial(Year(Now), 12, 1)
-            '    End Select
-
-            'End If
-            'Dim datGen As Date = datBase.AddMonths(cP65.p65RecurGenToBase_M).AddDays(cP65.p65RecurGenToBase_D)
-            If lisChilds.Where(Function(p) p.p56RecurMotherID = c.PID And p.p56RecurBaseDate = cRD.DatBase).Count = 0 And cRD.DatGen <= _curNow Then
+            Dim cRD As BO.RecurrenceCalculation = _Factory.p65RecurrenceBL.CalculateDates(cP65, _curNow)
+            
+            If lisChilds.Where(Function(p) p.p56RecurMotherID = c.PID And p.p56RecurBaseDate = cRD.DatBase).Count = 0 And cRD.DatGen <= _curNow And cRD.DatBase > c.p56RecurBaseDate Then
                 'potomek ještě neexistuje a nastal čas ho vygenerovat
-                'Dim datPlanUntil As Date = Nothing
-                'If cP65.p65IsPlanUntil Then datPlanUntil = datBase.AddMonths(cP65.p65RecurPlanUntilToBase_M).AddDays(cP65.p65RecurPlanUntilToBase_D)
+                'ještě musí platit, že rozhodné datum potomka je větší než rozhodné datum matky
 
                 Dim cNew As New BO.p56Task, intMotherPID As Integer = c.PID
                 cNew = c
@@ -211,16 +197,7 @@
                     .p56PlanUntil = cRD.DatPlanUntil
                     .p56PlanFrom = cRD.DatPlanFrom
                     .SetPID(0)
-                    'If cP65.p65IsPlanUntil Or cP65.p65IsPlanFrom Then
-                    '    .p56PlanUntil = datBase.AddMonths(cP65.p65RecurPlanUntilToBase_M).AddDays(cP65.p65RecurPlanUntilToBase_D)
-                    'Else
-                    '    .p56PlanUntil = Nothing
-                    'End If
-                    'If cP65.p65IsPlanFrom Or cP65.p65IsPlanUntil Then
-                    '    .p56PlanFrom = datBase.AddMonths(cP65.p65RecurPlanFromToBase_M).AddDays(cP65.p65RecurPlanFromToBase_D)
-                    'Else
-                    '    .p56PlanFrom = Nothing
-                    'End If
+
 
                 End With
                 Dim lisFF As List(Of BO.FreeField) = _Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p56Task, intMotherPID, c.p57ID)

@@ -262,7 +262,7 @@
                                 <i>U měsíčního opakování musí být datum vždy první den v měsíci.</i>
                             </div>
                             <div>
-                                <i>U čtvrtletního opakování musí být datum první den kvartálu, tedy jedno z následujících: 1.1., 1.4., 1.7., 1.9.</i>
+                                <i>U čtvrtletního opakování musí být datum první den kvartálu, tedy jedno z následujících: 1.1., 1.4., 1.7., 1.10.</i>
                             </div>
                             <div>
                                 <i>U ročního opakování musí být datum vždy první den v roce.</i>

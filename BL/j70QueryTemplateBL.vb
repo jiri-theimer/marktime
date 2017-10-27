@@ -506,6 +506,7 @@ Class j70QueryTemplateBL
 
             .Add(AGC("Stromový název", "p41TreePath", , True, "a.p41TreePath", , , "Strom"))
             .Add(AGC("Odkaz na pod-projekty", "ChildProjectsInline", , , "dbo.p41_get_childs_inline_html(a.p41ID)", , , "Strom"))
+            .Add(AGC("Nadřízený projekt", "ParentProject", , True, "parent.ParentName", , "LEFT OUTER JOIN (select p41ID as ParentPID,isnull(p41NameShort,p41Name) as ParentName FROM p41Project) parent ON a.p41ParentID=parent.ParentPID", "Strom"))
             .Add(AGC("Strom index", "p41TreeIndex", , True, "a.p41TreeIndex", , , "Strom"))
             .Add(AGC("Strom level", "p41TreeLevel", , True, "a.p41TreeLevel", , , "Strom"))
             .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName", , , "Záznam"))
