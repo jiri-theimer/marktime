@@ -293,7 +293,12 @@ Class b06WorkflowStepBL
             Factory.f01FolderBL.CreateUpdateFolder(intRecordPID, cB06.f02ID)
         End If
 
-        If Not bolManualStep Then bolStopAutoNotification = False 'u kroků na pozadí potlačit nastavení vypnuté notifikace v úkolu
+      
+        If bolStopAutoNotification Then
+            If Not cB06.b06IsManualStep Then bolStopAutoNotification = False 'automatické kroky musí mít vždy zapnutou notifikaci
+            If cB06.b06IsKickOffStep Then bolStopAutoNotification = True
+        End If
+
         If Not bolStopAutoNotification Then
             'test případné mailové notifikace
             Dim objects As List(Of Object) = GetObjects(intRecordPID, x29id, intP41ID_Ref)
