@@ -222,8 +222,12 @@
             End If
             Dim c As BO.RecurrenceCalculation = Master.Factory.p65RecurrenceBL.CalculateDates(cP65, datNextBaseDate)
             
-            lblNextGen.Text = BO.BAS.FD(c.DatGen, , True) & "<span style='color:green;' title='Rozhodné datum'> " & Format(c.DatBase, "dd.MM.yyyy") & "</span>"
+            lblNextGen.Text = BO.BAS.FD(c.DatGen, , True) & "<span style='color:#FF8C00;' title='Rozhodné datum'> " & Format(c.DatBase, "dd.MM.yyyy") & "</span>"
+            If Year(c.DatPlanUntil) > 2000 Then
+                lblNextGen.Text += "<span style='color:green;' title='Plánovaný termín dokončení'> " & Format(c.DatPlanUntil, "dd.MM.yyyy") & "</span>"
+            End If
             If c.DatGen <= Now Then lblNextGen.Text += " - > " & BO.BAS.FD(Now)
+
         End With
 
     End Sub

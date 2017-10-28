@@ -15,7 +15,7 @@
         <asp:Panel ID="panHeader" runat="server">
             <img src="Images/project_32.png" />
             <asp:Label ID="ph1" runat="server" CssClass="clue_header_span"></asp:Label>
-            <asp:ImageButton ID="cmdFavourite" runat="server" ImageUrl="Images/not_favourite.png" ToolTip="Zařadit do mých oblíbených projektů" CssClass="button-link" />
+            
         </asp:Panel>
         <div class="title">
          

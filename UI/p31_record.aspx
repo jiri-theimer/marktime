@@ -326,12 +326,13 @@
                 <asp:HyperLink ID="clue_project" runat="server" CssClass="reczoom" Text="i" Visible="false"></asp:HyperLink>
             </td>
         </tr>
-        <tr style="height:30px;" id="trTask" runat="server">
+        <tr style="height:30px;" id="trTask" runat="server" visible="false">
             <td>
                 <asp:Label ID="lblP56ID" runat="server" Text="Úkol v projektu:" CssClass="lbl"></asp:Label>
             </td>
             <td>
-                <uc:datacombo ID="p56ID" runat="server" Width="400px" DataTextField="NameWithTypeAndCode" DataValueField="pid" IsFirstEmptyRow="true" AutoPostBack="false" Filter="Contains" />
+                <uc:datacombo ID="p56ID" runat="server" Width="400px" DataTextField="NameWithTypeAndCode" DataValueField="pid" IsFirstEmptyRow="true" AutoPostBack="false" Filter="Contains" BackgroundColor="#F0F8FF" />
+                
             </td>
         </tr>
         <tr>

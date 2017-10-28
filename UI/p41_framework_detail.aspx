@@ -320,7 +320,7 @@
             </div>
             <div class="div6">
                 <span>Rozhodné datum:</span>                
-                <asp:Label ID="p41RecurBaseDate" runat="server" CssClass="valbold"></asp:Label>
+                <asp:Label ID="p41RecurBaseDate" runat="server" CssClass="valbold" ForeColor="DarkOrange"></asp:Label>
             </div>
             <div class="div6">
                 <span>Naposledy vygenerovaný potomek:</span>

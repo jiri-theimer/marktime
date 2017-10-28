@@ -36,13 +36,7 @@
         With cRec
             ph1.Text = .FullName
         End With
-        If Master.Factory.p41ProjectBL.IsMyFavouriteProject(cRec.PID) Then
-            cmdFavourite.ImageUrl = "Images/favourite.png"
-            cmdFavourite.ToolTip = "Odstranit z mých oblíbených projektů"
-        Else
-            cmdFavourite.ImageUrl = "Images/not_favourite.png"
-            cmdFavourite.ToolTip = "Zařadit do mých oblíbených projektů"
-        End If
+        
 
         Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(0, Master.DataPID, 0)
         If lisP30.Count > 0 Then
@@ -75,16 +69,7 @@
     End Sub
 
 
-    Private Sub cmdFavourite_Click(sender As Object, e As ImageClickEventArgs) Handles cmdFavourite.Click
-        Master.Factory.j03UserBL.AppendOrRemoveFavouriteProject(Master.Factory.SysUser.PID, BO.BAS.ConvertPIDs2List(Master.DataPID), Master.Factory.p41ProjectBL.IsMyFavouriteProject(Master.DataPID))
-        If ViewState("parent_url_reload") <> "" Then
-            ClientScript.RegisterStartupScript(Me.GetType, "hash", "window.open('" & ViewState("parent_url_reload") & "','_top');", True)
-        Else
-            RefreshRecord()
-        End If
-
-    End Sub
-
+ 
     Private Sub RefreshData()
         Dim d1 As Date = ViewState("d1")
         Dim s As New System.Text.StringBuilder
