@@ -28,6 +28,7 @@
         With crec
             Me.p41RecurNameMask.Text = .p41RecurNameMask
             basUI.SelectDropdownlistValue(Me.p65ID, .p65ID.ToString)
+            Me.p41IsStopRecurrence.Checked = .p41IsStopRecurrence
             If Not .p41RecurBaseDate Is Nothing Then Me.p41RecurBaseDate.SelectedDate = .p41RecurBaseDate
         End With
     End Sub
@@ -39,6 +40,7 @@
                 If .p65ID <> 0 Then
                     .p41RecurBaseDate = Me.p41RecurBaseDate.SelectedDate
                     .p41RecurNameMask = Me.p41RecurNameMask.Text
+                    .p41IsStopRecurrence = Me.p41IsStopRecurrence.Checked
                 End If
             End With
 

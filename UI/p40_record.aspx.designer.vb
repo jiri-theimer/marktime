@@ -140,6 +140,51 @@ Partial Public Class p40_record
     Protected WithEvents p40Value As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
+    '''opgGenType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents opgGenType As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
+    '''panTask control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panTask As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''lblP56ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblP56ID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p56ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p56ID As Global.UI.datacombo
+
+    '''<summary>
+    '''panDateSettings control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panDateSettings As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''lblp40FirstSupplyDate control.
     '''</summary>
     '''<remarks>
@@ -203,6 +248,15 @@ Partial Public Class p40_record
     Protected WithEvents p40GenerateDayAfterSupply As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
+    '''SharedCalendar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SharedCalendar As Global.Telerik.Web.UI.RadCalendar
+
+    '''<summary>
     '''lblp40Text control.
     '''</summary>
     '''<remarks>
@@ -228,15 +282,6 @@ Partial Public Class p40_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidP41ID As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''SharedCalendar control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents SharedCalendar As Global.Telerik.Web.UI.RadCalendar
 
     '''<summary>
     '''Master property.

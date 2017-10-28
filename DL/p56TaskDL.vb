@@ -77,6 +77,7 @@
                 pars.Add("p56RecurNameMask", .p56RecurNameMask, DbType.String)
                 pars.Add("p56RecurBaseDate", .p56RecurBaseDate, DbType.DateTime)
                 pars.Add("p56RecurMotherID", BO.BAS.IsNullDBKey(.p56RecurMotherID), DbType.Int32)
+                pars.Add("p56IsStopRecurrence", .p56IsStopRecurrence, DbType.Boolean)
 
                 pars.Add("p56validfrom", .ValidFrom, DbType.DateTime)
                 pars.Add("p56validuntil", .ValidUntil, DbType.DateTime)
@@ -492,7 +493,7 @@
         s.Append(bas.RecTail("p56", "a"))
         s.Append(",a.p41ID,a.o22ID,a.p57ID,a.j02ID_Owner,a.b02ID,a.p59ID_Submitter,a.p59ID_Receiver,a.o43ID,a.p56Name,a.p56NameShort,a.p56Code,a.p56Description,a.p56Ordinary,a.p56PlanFrom,a.p56PlanUntil,a.p56ReminderDate,a.p56Plan_Hours,a.p56Plan_Expenses,a.p56RatingValue,a.p56CompletePercent,a.p56ExternalPID,a.p56IsPlan_Hours_Ceiling,a.p56IsPlan_Expenses_Ceiling,a.p56IsHtml,a.p56IsNoNotify")
         s.Append(",p28client.p28Name as _Client,p57.p57Name as _p57Name,p59submitter.p59Name as _p59NameSubmitter,isnull(p41.p41NameShort,p41.p41Name) as _p41Name,p41.p41Code as _p41Code,o22.o22Name as _o22Name,b02.b02Name as _b02Name,b02.b02Color as _b02Color,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p57.p57IsHelpdesk as _p57IsHelpdesk,p57.b01ID as _b01ID,p57.p57PlanDatesEntryFlag as _p57PlanDatesEntryFlag")
-        s.Append(",a.p65ID,a.p56RecurNameMask,a.p56RecurBaseDate,a.p56RecurMotherID")
+        s.Append(",a.p65ID,a.p56RecurNameMask,a.p56RecurBaseDate,a.p56RecurMotherID,a.p56IsStopRecurrence")
         If bolIncludeTags Then
             s.Append(",dbo.tag_values_inline_html(356,a.p56ID) as TagsInlineHtml")
         Else

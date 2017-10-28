@@ -212,6 +212,7 @@
         imgRecord.ImageUrl = "Images/recurrence.png"
         With cRec
             Me.RecurrenceType.Text = Master.Factory.p65RecurrenceBL.Load(.p65ID).p65Name
+            If .p56IsStopRecurrence Then Me.RecurrenceType.Text += " <img src='Images/exclaim.png'/>" Else Me.RecurrenceType.Text += " <img src='Images/flame.png'/>"
             Me.p56RecurNameMask.Text = .p56RecurNameMask
             Me.p56RecurBaseDate.Text = BO.BAS.FD(.p56RecurBaseDate)
             Dim mq As New BO.myQueryP56

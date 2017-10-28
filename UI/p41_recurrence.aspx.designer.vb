@@ -23,6 +23,15 @@ Partial Public Class p41_recurrence
     Protected WithEvents p65ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''p41IsStopRecurrence control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p41IsStopRecurrence As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''panRecurrence control.
     '''</summary>
     '''<remarks>

@@ -42,6 +42,14 @@
         Me.p34ID.FillData(Master.Factory.p34ActivityGroupBL.GetList(New BO.myQuery), True)
         Me.x15ID.FillData(Master.Factory.ftBL.GetList_X15(New BO.myQuery), False)
         Me.j27ID.FillData(Master.Factory.ftBL.GetList_J27(New BO.myQuery), True)
+
+        Dim mq As New BO.myQueryP56
+        mq.p41ID = Me.CurrentP41ID
+        mq.Closed = BO.BooleanQueryMode.NoQuery
+        mq.IsRecurrenceMother = BO.BooleanQueryMode.TrueQuery
+        Me.p56ID.DataSource = Master.Factory.p56TaskBL.GetList(mq)
+        Me.p56ID.DataBind()
+
         If Master.DataPID = 0 Then
             Me.j02ID.Value = Master.Factory.SysUser.j02ID.ToString
             Me.j02ID.Text = Master.Factory.SysUser.Person
@@ -65,6 +73,12 @@
             Me.x15ID.SelectedValue = CInt(.x15ID).ToString
             Me.j27ID.SelectedValue = .j27ID.ToString
             Me.j02ID.Value = .j02ID.ToString
+            Me.p56ID.SelectedValue = .p56ID.ToString
+            If .p56ID > 0 Then
+                opgGenType.SelectedValue = "2"
+            Else
+                opgGenType.SelectedValue = "1"
+            End If
             Me.j02ID.Text = .Person
             Me.p40FirstSupplyDate.SelectedDate = .p40FirstSupplyDate
             Me.p40LastSupplyDate.SelectedDate = .p40LastSupplyDate
@@ -108,6 +122,7 @@
                 .x15ID = BO.BAS.IsNullInt(Me.x15ID.SelectedValue)
                 .j27ID = BO.BAS.IsNullInt(Me.j27ID.SelectedValue)
                 .j02ID = BO.BAS.IsNullInt(Me.j02ID.Value)
+                .p56ID = BO.BAS.IsNullInt(Me.p56ID.SelectedValue)
                 .p40RecurrenceType = CType(CInt(Me.p40RecurrenceType.SelectedValue), BO.RecurrenceType)
                 .p40FirstSupplyDate = BO.BAS.IsNullDBDate(Me.p40FirstSupplyDate.SelectedDate)
                 .p40LastSupplyDate = BO.BAS.IsNullDBDate(Me.p40LastSupplyDate.SelectedDate)
@@ -140,5 +155,21 @@
         mq.p34ID = intP34ID
         Me.p32ID.DataSource = Master.Factory.p32ActivityBL.GetList(mq)
         Me.p32ID.DataBind()
+    End Sub
+
+    Private Sub p56ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p56ID.NeedMissingItem
+        Dim cRec As BO.p56Task = Master.Factory.p56TaskBL.Load(BO.BAS.IsNullInt(strFoundedMissingItemValue))
+        If Not cRec Is Nothing Then
+            strAddMissingItemText = cRec.NameWithTypeAndCode
+        End If
+    End Sub
+
+    Private Sub p40_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        If opgGenType.SelectedValue = "1" Then
+            panDateSettings.Visible = True
+        Else
+            panDateSettings.Visible = False
+        End If
+        panTask.Visible = Not panDateSettings.Visible
     End Sub
 End Class

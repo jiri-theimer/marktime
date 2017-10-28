@@ -17,6 +17,7 @@
             <div class="div6">
                 <span>Typ opakování:</span>
                 <asp:DropDownList ID="p65ID" runat="server" DataTextField="NameWithFlag" DataValueField="pid" AutoPostBack="true"></asp:DropDownList>
+                <asp:CheckBox ID="p41IsStopRecurrence" Text="Automatika pozastavena" runat="server" />
             </div>
             <asp:Panel ID="panRecurrence" runat="server">
                 <div class="div6">

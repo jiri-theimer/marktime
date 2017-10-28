@@ -110,7 +110,8 @@
     Private Sub Handle_Recurrence_p41()
         Dim mq As New BO.myQueryP41
         mq.IsRecurrenceMother = BO.BooleanQueryMode.TrueQuery
-        Dim lisMothers As IEnumerable(Of BO.p41Project) = _Factory.p41ProjectBL.GetList(mq)
+        mq.Closed = BO.BooleanQueryMode.NoQuery
+        Dim lisMothers As IEnumerable(Of BO.p41Project) = _Factory.p41ProjectBL.GetList(mq).Where(Function(p) p.p41IsStopRecurrence = False)
         WL(BO.j91RobotTaskFlag.RecurrenceP41, "", String.Format("Počet projektů (matek): {0}", lisMothers.Count))
         If lisMothers.Count = 0 Then Return
         mq = New BO.myQueryP41
@@ -171,7 +172,8 @@
     Private Sub Handle_Recurrence_p56()
         Dim mq As New BO.myQueryP56
         mq.IsRecurrenceMother = BO.BooleanQueryMode.TrueQuery
-        Dim lisMothers As IEnumerable(Of BO.p56Task) = _Factory.p56TaskBL.GetList(mq)
+        mq.Closed = BO.BooleanQueryMode.NoQuery
+        Dim lisMothers As IEnumerable(Of BO.p56Task) = _Factory.p56TaskBL.GetList(mq).Where(Function(p) p.p56IsStopRecurrence = False)
         WL(BO.j91RobotTaskFlag.RecurrenceP56, "", String.Format("Počet úkolů (matek): {0}", lisMothers.Count))
         If lisMothers.Count = 0 Then Return
         mq = New BO.myQueryP56

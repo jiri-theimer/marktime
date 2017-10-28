@@ -35,7 +35,7 @@ Public Class p41Project
     Public Property p41RecurNameMask As String
     Public Property p41RecurBaseDate As Date?
     Public Property p41RecurMotherID As Integer
-
+    Public Property p41IsStopRecurrence As Boolean
 
     Protected Property _p41Code As String
     Public Property p41Code As String

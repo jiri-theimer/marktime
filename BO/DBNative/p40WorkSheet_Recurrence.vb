@@ -11,8 +11,10 @@ Public Class p40WorkSheet_Recurrence
     Public Property j02ID As Integer
     Public Property p34ID As Integer
     Public Property p32ID As Integer
+
     Public Property j27ID As Integer
     Public Property x15ID As x15IdEnum
+    Public Property p56ID As Integer
     Public Property p40RecurrenceType As RecurrenceType
     Public Property p40Name As String
     Public Property p40FirstSupplyDate As Date?

@@ -36,6 +36,8 @@
     Public Property p56RecurNameMask As String
     Public Property p56RecurBaseDate As Date?
     Public Property p56RecurMotherID As Integer
+    Public Property p56IsStopRecurrence As Boolean
+
 
     Public Property TagsInlineHtml As String
     Friend Property _ReceiversInLine As String

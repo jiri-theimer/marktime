@@ -455,6 +455,15 @@ Partial Public Class p56_record
     Protected WithEvents p65ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''p56IsStopRecurrence control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p56IsStopRecurrence As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''panRecurrence control.
     '''</summary>
     '''<remarks>

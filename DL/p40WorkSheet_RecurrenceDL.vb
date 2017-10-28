@@ -24,6 +24,7 @@
                 pars.Add("j02ID", BO.BAS.IsNullDBKey(.j02ID), DbType.Int32)
                 pars.Add("p34ID", BO.BAS.IsNullDBKey(.p34ID), DbType.Int32)
                 pars.Add("p32ID", BO.BAS.IsNullDBKey(.p32ID), DbType.Int32)
+                pars.Add("p56ID", BO.BAS.IsNullDBKey(.p56ID), DbType.Int32)
                 pars.Add("j27ID", BO.BAS.IsNullDBKey(.j27ID), DbType.Int32)
                 pars.Add("x15ID", BO.BAS.IsNullDBKey(.x15ID), DbType.Int32)
                 pars.Add("p40Name", .p40Name, DbType.String, , , True, "Název")

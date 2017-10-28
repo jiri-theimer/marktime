@@ -244,11 +244,13 @@
             <div class="content-box2" style="margin-top: 20px;">
                 <div class="title">
                     Matka (šablona), která opakovaně rodí instance tohoto úkolu
+                    
                 </div>
                 <div class="content">
                     <div class="div6">
                         <span>Typ opakování:</span>
                         <asp:DropDownList ID="p65ID" runat="server" DataTextField="NameWithFlag" DataValueField="pid" AutoPostBack="true"></asp:DropDownList>
+                        <asp:CheckBox ID="p56IsStopRecurrence" Text="Automatika pozastavena" runat="server" />
                     </div>
                     <asp:Panel ID="panRecurrence" runat="server">
                         <div class="div6">

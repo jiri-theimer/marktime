@@ -153,6 +153,7 @@
             If .p65ID > 0 Then
                 chkMore.Checked = True
             End If
+            Me.p56IsStopRecurrence.Checked = .p56IsStopRecurrence
         End With
         roles1.InhaleInitialData(cRec.PID)
         tags1.RefreshData(cRec.PID)
@@ -342,7 +343,7 @@
                     .p56RecurBaseDate = Me.p56RecurBaseDate.SelectedDate
                     .p56RecurNameMask = Me.p56RecurNameMask.Text
                 End If
-
+                .p56IsStopRecurrence = Me.p56IsStopRecurrence.Checked
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil
             End With

@@ -135,18 +135,16 @@
 
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="2">
-                        <asp:HyperLink ID="linkMother" runat="server" CssClass="value_link" Visible="false" ToolTip="Matka úkolu" Target="_top"></asp:HyperLink>
-                    </td>
-                </tr>
+             
             </table>
             <div class="div6">
                 <uc:entityrole_assign_inline ID="roles_task" runat="server" EntityX29ID="p56Task" NoDataText=""></uc:entityrole_assign_inline>
             </div>
             <div>
                 <uc:mytags ID="tags1" runat="server" Prefix="p56" />
+                <asp:HyperLink ID="linkMother" runat="server" CssClass="value_link" Visible="false" ToolTip="Matka úkolu" Target="_top"></asp:HyperLink>
             </div>
+           
         </div>
     </div>
     <asp:Panel ID="boxX18" runat="server" CssClass="content-box1" Style="clear: both;">

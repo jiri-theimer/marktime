@@ -95,7 +95,7 @@
                 pars.Add("p41PlanFrom", BO.BAS.IsNullDBDate(.p41PlanFrom), DbType.DateTime)
                 pars.Add("p41PlanUntil", BO.BAS.IsNullDBDate(.p41PlanUntil), DbType.DateTime)
                 pars.Add("p41IsNoNotify", .p41IsNoNotify, DbType.Boolean)
-                ''pars.Add("p41IsEntryP31ByStranger", .p41IsEntryP31ByStranger, DbType.Boolean)
+                pars.Add("p41IsStopRecurrence", .p41IsStopRecurrence, DbType.Boolean)
 
                 pars.Add("p41validfrom", .ValidFrom, DbType.DateTime)
                 pars.Add("p41validuntil", .ValidUntil, DbType.DateTime)
@@ -555,7 +555,7 @@
         s.Append("a.p42ID,a.j02ID_Owner,a.p41Name,a.p41NameShort,a.p41Code as _p41Code,a.p41IsDraft,a.p28ID_Client,a.p28ID_Billing,a.p87ID,a.p51ID_Billing,a.p51ID_Internal,a.p92ID,a.b02ID,a.j18ID,a.p61ID,a.p41InvoiceDefaultText1,a.p41InvoiceDefaultText2,a.p41InvoiceMaturityDays,a.p41WorksheetOperFlag,a.p41PlanFrom,a.p41PlanUntil,a.p41LimitHours_Notification,a.p41LimitFee_Notification")
         s.Append(",p28client.p28Name as _Client,p51billing.p51Name as _p51Name_Billing")
         s.Append(",a.p41TreeLevel as _p41TreeLevel,a.p41TreeIndex as _p41TreeIndex,a.p41TreePrev as _p41TreePrev,a.p41TreeNext as _p41TreeNext,a.p41TreePath as _p41TreePath")
-        s.Append(",a.p65ID,a.p41RecurNameMask,a.p41RecurBaseDate,a.p41RecurMotherID")
+        s.Append(",a.p65ID,a.p41RecurNameMask,a.p41RecurBaseDate,a.p41RecurMotherID,a.p41IsStopRecurrence")
         s.Append(",p42.p42Name as _p42Name,p92.p92Name as _p92Name,b02.b02Name as _b02Name,j18.j18Name as _j18Name,a.p41ExternalPID,a.p41ParentID,a.p41BillingMemo," & bas.RecTail("p41", "a"))
         s.Append(",j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p28client.p87ID as _p87ID_Client,p42.b01ID as _b01ID,a.p41IsNoNotify,a.p41RobotAddress,a.p72ID_NonBillable,a.p72ID_BillableHours,a.j02ID_ContactPerson_DefaultInWorksheet,a.j02ID_ContactPerson_DefaultInInvoice")
         Return s.ToString
