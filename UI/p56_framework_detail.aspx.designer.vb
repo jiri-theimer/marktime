@@ -203,6 +203,15 @@ Partial Public Class p56_framework_detail
     Protected WithEvents linkTimestamp As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''linkMother control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkMother As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''roles_task control.
     '''</summary>
     '''<remarks>

@@ -88,6 +88,11 @@
                 RenderRecurrence(cRec)
             Else
                 panRecurrence.Controls.Clear()
+                If .p56RecurMotherID > 0 Then
+                    linkMother.Visible = True
+                    linkMother.NavigateUrl = "p56_framework.aspx?pid=" & .p56RecurMotherID.ToString
+                    linkMother.Text = "<img src='Images/recurrence.png'/>" & Master.Factory.p56TaskBL.Load(.p56RecurMotherID).NameWithTypeAndCode
+                End If
             End If
             Me.boxCoreTitle.Text = .p57Name & " (" & .p56Code & ")"
             If .b02ID <> 0 Then
