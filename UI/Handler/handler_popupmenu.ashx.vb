@@ -649,11 +649,13 @@ Public Class handler_popupmenu
 
 
         If cP42.p42IsModule_p31 Then
-            SEP()
-            CI("[AKCE]", "", , "Images/wizard.png")
-            If cDisp.P31_RecalcRates Then CI("Přepočítat sazby rozpr. hodin", "p31_recalc.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/recalc.png", True)
-            If cDisp.P31_Move2Bin Then CI("Přesunout do/z archivu nevyfakturované úkony", "p31_move2bin.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/bin.png", True)
-            If cDisp.P31_MoveToOtherProject Then CI("Přesunout rozpr. na jiný projekt", "p31_move2project.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/cut.png", True)
+            If cDisp.P31_RecalcRates Or cDisp.P31_Move2Bin Or cDisp.P31_MoveToOtherProject Then
+                SEP()
+                CI("[AKCE]", "", , "Images/wizard.png")
+                If cDisp.P31_RecalcRates Then CI("Přepočítat sazby rozpr. hodin", "p31_recalc.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/recalc.png", True)
+                If cDisp.P31_Move2Bin Then CI("Přesunout do/z archivu nevyfakturované úkony", "p31_move2bin.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/bin.png", True)
+                If cDisp.P31_MoveToOtherProject Then CI("Přesunout rozpr. na jiný projekt", "p31_move2project.aspx?prefix=p41&pid=" & cRec.PID.ToString, , "Images/cut.png", True)
+            End If
         End If
 
         SEP()

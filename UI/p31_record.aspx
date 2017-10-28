@@ -319,10 +319,19 @@
         <tr>
             <td>
                 <asp:Label ID="lblP41ID" runat="server" Text="Projekt:" CssClass="lblReq" meta:resourcekey="lblP41ID"></asp:Label>
-                <asp:HyperLink ID="clue_project" runat="server" CssClass="reczoom" Text="i" Visible="false"></asp:HyperLink>
+                
             </td>
             <td>
                 <uc:project ID="p41ID" runat="server" Width="400px" AutoPostBack="true" Flag="p31_entry" />
+                <asp:HyperLink ID="clue_project" runat="server" CssClass="reczoom" Text="i" Visible="false"></asp:HyperLink>
+            </td>
+        </tr>
+        <tr style="height:30px;" id="trTask" runat="server">
+            <td>
+                <asp:Label ID="lblP56ID" runat="server" Text="Úkol v projektu:" CssClass="lbl"></asp:Label>
+            </td>
+            <td>
+                <uc:datacombo ID="p56ID" runat="server" Width="400px" DataTextField="NameWithTypeAndCode" DataValueField="pid" IsFirstEmptyRow="true" AutoPostBack="false" Filter="Contains" />
             </td>
         </tr>
         <tr>
@@ -486,17 +495,7 @@
         <asp:TextBox ID="p31Text" runat="server" Style="height: 90px; width: 99%;" TextMode="MultiLine"></asp:TextBox>
         <uc:freefields ID="ff1" runat="server" />
     </div>
-    <asp:panel ID="panP56" runat="server" CssClass="content-box1" style="min-width:50px;">
-        <div class="title">
-            <img src="Images/task.png" alt="Úkol" />
-            <asp:CheckBox ID="chkBindToP56" runat="server" Text="Projektový úkol" AutoPostBack="true" meta:resourcekey="chkBindToP56" />
-        </div>
-        <div class="content">
-            
-            <uc:datacombo ID="p56ID" runat="server" Width="400px" DataTextField="NameWithTypeAndCode" DataValueField="pid" IsFirstEmptyRow="true" Visible="false" AutoPostBack="false" Filter="Contains" />
-        </div>
-
-    </asp:panel>
+    
     <div class="content-box1" style="min-width:50px;">
         <div class="title">
             <img src="Images/contactperson.png" alt="Kontaktní osoba" />

@@ -41,6 +41,15 @@ Partial Public Class p31_record
     Protected WithEvents lblP41ID As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''p41ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p41ID As Global.UI.project
+
+    '''<summary>
     '''clue_project control.
     '''</summary>
     '''<remarks>
@@ -50,13 +59,31 @@ Partial Public Class p31_record
     Protected WithEvents clue_project As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''p41ID control.
+    '''trTask control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p41ID As Global.UI.project
+    Protected WithEvents trTask As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''lblP56ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblP56ID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p56ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p56ID As Global.UI.datacombo
 
     '''<summary>
     '''lblP34ID control.
@@ -444,33 +471,6 @@ Partial Public Class p31_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ff1 As Global.UI.freefields
-
-    '''<summary>
-    '''panP56 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panP56 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''chkBindToP56 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkBindToP56 As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''p56ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p56ID As Global.UI.datacombo
 
     '''<summary>
     '''chkBindToContactPerson control.

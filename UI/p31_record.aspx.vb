@@ -234,7 +234,7 @@
                 Me.p31Text.Text = cP48.p48Text
                 Me.p41ID.Value = cP48.p41ID.ToString
                 Me.p41ID.Text = cP48.ClientAndProject
-                Handle_ChangeP41(False)
+                Handle_ChangeP41(False, 0)
                 If cP48.p34ID <> 0 Then
                     Me.p34ID.SelectedValue = cP48.p34ID.ToString
                     Handle_ChangeP34()
@@ -332,7 +332,7 @@
             With cP49
                 Me.p41ID.Value = .p41ID
                 Me.p41ID.Text = .Client & " - " & .Project
-                Handle_ChangeP41(False)
+                Handle_ChangeP41(False, 0)
                 Me.p34ID.SelectedValue = .p34ID.ToString
                 Handle_ChangeP34()
                 Me.p32ID.SelectedValue = .p32ID.ToString
@@ -364,16 +364,13 @@
 
             If intDefP41ID > 0 Then
                 Me.p41ID.Value = intDefP41ID.ToString
-                Handle_ChangeP41(True)
+                Handle_ChangeP41(True, intDefP56ID)
                 If Not _Project Is Nothing Then
                     ''p41ID.Text = _Project.FullName
                     p41ID.Text = _Project.ProjectWithMask(Master.Factory.SysUser.j03ProjectMaskIndex)
                 End If
             End If
-            If intDefP56ID > 0 Then
-                Me.chkBindToP56.Checked = True
-                SetupP56Combo(False, intDefP56ID)
-            End If
+           
             If Request.Item("t1") <> "" And Request.Item("t2") <> "" Then Me.CurrentIsScheduler = True
             If Master.DataPID = 0 And Me.CurrentIsScheduler Then
                 Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.PresnyCasOdDo   'požadavek na zápis hodin z denního kalendáře, přepnout na čas od/do
@@ -514,11 +511,13 @@
 
             If .p41ID <> Me.CurrentP41ID Then
                 Me.p41ID.Value = .p41ID.ToString
-                Handle_ChangeP41(False)
+                Handle_ChangeP41(False, .p56ID)
                 If Not _Project Is Nothing Then
                     Me.p41ID.Text = _Project.ProjectWithMask(Master.Factory.SysUser.j03ProjectMaskIndex)
                 End If
-
+            Else
+                Me.p56ID.SelectedValue = .p56ID.ToString
+                
             End If
             If .p34ID <> Me.CurrentP34ID Then
                 Me.CurrentP34ID = .p34ID
@@ -598,10 +597,7 @@
                 If Me.j19ID.Items.Count = 0 Then SetupJ19Combo()
                 basUI.SelectDropdownlistValue(Me.j19ID, .j19ID.ToString)
             End If
-            If .p56ID > 0 Then
-                Me.chkBindToP56.Checked = True
-                SetupP56Combo(True, .p56ID)
-            End If
+            
             If .p49ID > 0 Then
                 Me.p49ID.Value = .p49ID.ToString
                 Me.p49_record.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p49FinancialPlan, .p49ID) & "</br>"
@@ -626,7 +622,7 @@
 
     End Sub
 
-    Private Sub Handle_ChangeP41(bolTryRun_Handle_P34 As Boolean)
+    Private Sub Handle_ChangeP41(bolTryRun_Handle_P34 As Boolean, intDefP56ID As Integer)
         imgFlag.Visible = False
         If Me.CurrentP41ID = 0 Then
             _Project = Nothing
@@ -682,11 +678,18 @@
                     End Select
                     For Each c In lisP34
                         If Not Me.p34ID.RadCombo.Items.FindItemByValue(c.PID.ToString) Is Nothing Then intDefP34ID = c.PID : Exit For
-                    Next                
+                    Next
                 End If
                 If intDefP34ID = 0 And lisP34.Count > 0 Then
                     intDefP34ID = lisP34(0).PID
                 End If
+            End If
+
+            SetupP56Combo(_Project.PID, True, intDefP56ID)
+            If _Project.p41WorksheetOperFlag = BO.p41WorksheetOperFlagEnum.WithTaskOnly Then
+                Me.lblP56ID.CssClass = "lblReq"  'v projektu je povinnost zapisovat přes úkol
+            Else
+                Me.lblP56ID.CssClass = "lbl"
             End If
 
             If Not bolTryRun_Handle_P34 Then Return 'dál už se nemá pokračovat
@@ -747,15 +750,12 @@
                 End If
                 If intDefj02ID <> 0 Then Me.chkBindToContactPerson.Checked = True
                 RefreshContactPersonCombo(True, intDefj02ID)
-            
-            End If
-            If _Project.p41WorksheetOperFlag = BO.p41WorksheetOperFlagEnum.WithTaskOnly Then
-                Me.chkBindToP56.Checked = True  'v projektu je povinnost zapisovat přes úkol
+
             End If
 
-            If Me.chkBindToP56.Checked Then
-                SetupP56Combo(True, BO.BAS.IsNullInt(Me.p56ID.SelectedValue))
-            End If
+            
+
+            
         End If
     End Sub
     Private Sub Handle_ChangeP34()
@@ -858,7 +858,7 @@
    
 
     Private Sub p41ID_AutoPostBack_SelectedIndexChanged(NewValue As String, OldValue As String) Handles p41ID.AutoPostBack_SelectedIndexChanged
-        Handle_ChangeP41(True)
+        Handle_ChangeP41(True, 0)
     End Sub
 
     Private Sub p34ID_ItemDataBound(sender As Object, e As Telerik.Web.UI.RadComboBoxItemEventArgs) Handles p34ID.ItemDataBound
@@ -917,7 +917,7 @@
                 .p41ID = Me.CurrentP41ID
                 .p34ID = BO.BAS.IsNullInt(Me.p34ID.SelectedValue)
                 .p32ID = BO.BAS.IsNullInt(Me.p32ID.SelectedValue)
-                If Me.chkBindToP56.Checked Then .p56ID = BO.BAS.IsNullInt(Me.p56ID.SelectedValue)
+                If trTask.Visible Then .p56ID = BO.BAS.IsNullInt(Me.p56ID.SelectedValue)
                 .p48ID = Me.CurrentP48ID
                 .p28ID_Supplier = BO.BAS.IsNullInt(Me.p28ID_Supplier.Value)
                 If Me.chkBindToContactPerson.Checked Then
@@ -1130,7 +1130,7 @@
     End Sub
 
     Private Sub Handle_ChangeJ02()
-        Handle_ChangeP41(True)
+        Handle_ChangeP41(True, BO.BAS.IsNullInt(Me.p56ID.SelectedValue))
 
     End Sub
 
@@ -1147,7 +1147,7 @@
     End Sub
 
     Private Sub p31_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        If Me.p56ID.Rows <= 1 Or Me.chkBindToP56.Checked = False Then Me.p56ID.Visible = False Else Me.p56ID.Visible = True
+
         Me.panTrimming.Visible = panT.Visible
         If Not _Sheet Is Nothing And panM.Visible Then
             Dim bolVydaj As Boolean = False
@@ -1159,16 +1159,7 @@
         If _Project Is Nothing And p41ID.Value <> "" Then _Project = Master.Factory.p41ProjectBL.Load(BO.BAS.IsNullInt(Me.p41ID.Value))
         If Not _Project Is Nothing Then
             Dim cP42 As BO.p42ProjectType = Master.Factory.p42ProjectTypeBL.Load(_Project.p42ID)
-            If Me.chkBindToP56.Checked Then
-                panP56.Visible = True
-            Else
-                panP56.Visible = cP42.p42IsModule_p56
-            End If
-            ''If notepad1.RowsCount > 0 Then
-            ''    panO23.Visible = True
-            ''Else
-            ''    panO23.Visible = cP42.p42IsModule_o23
-            ''End If
+           
             If panM.Visible Then
                 panP49.Visible = cP42.p42IsModule_p45
             Else
@@ -1180,42 +1171,32 @@
         End If
     End Sub
 
-    Private Sub chkBindToP56_CheckedChanged(sender As Object, e As EventArgs) Handles chkBindToP56.CheckedChanged
-        If Me.chkBindToP56.Checked Then
-            SetupP56Combo(False, BO.BAS.IsNullInt(Me.p56ID.SelectedValue))
-            
-        End If
-    End Sub
+    
 
-    Private Sub SetupP56Combo(bolSilent As Boolean, intDefP56ID As Integer)
-        Me.p56ID.Visible = False
-        If Me.CurrentP41ID = 0 And Not bolSilent Then
+    Private Sub SetupP56Combo(intP41ID As Integer, bolSilent As Boolean, intDefP56ID As Integer)
+        Me.trTask.Visible = False
+        If intP41ID = 0 And Not bolSilent Then
             Master.Notify("Seznam úkolů je možné zobrazit až po výběru projektu.")
             Return
         End If
         Dim mq As New BO.myQueryP56
-        mq.p41ID = Me.CurrentP41ID
+        mq.p41ID = intP41ID
         mq.Closed = BO.BooleanQueryMode.FalseQuery
         mq.SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForWorksheetEntry
         mq.j02ID_ExplicitQueryFor = Me.CurrentJ02ID
 
         Me.p56ID.DataSource = Master.Factory.p56TaskBL.GetList(mq)
         Me.p56ID.DataBind()
-        'Me.p56ID.Items.Insert(0, "")
 
-        'If intDefP56ID > 0 Then basUI.SelectDropdownlistValue(Me.p56ID, intDefP56ID.ToString)
         If intDefP56ID > 0 Then Me.p56ID.SelectedValue = intDefP56ID.ToString
 
-        If intDefP56ID > 0 And Me.p56ID.SelectedValue <> intDefP56ID.ToString And bolSilent Then
-            Dim cRec As BO.p56Task = Master.Factory.p56TaskBL.Load(intDefP56ID)
-            If Not cRec Is Nothing Then
-                'Me.p56ID.Items.Add(New ListItem(cRec.NameWithTypeAndCode, cRec.PID.ToString))
-                Me.p56ID.AddOneComboItem(cRec.PID.ToString, cRec.NameWithTypeAndCode)
-            End If
+      
+        If Me.p56ID.Rows > 1 Then
+            trTask.Visible = True
         End If
 
         If Me.p56ID.Rows <= 1 And Not bolSilent Then
-            Master.Notify("Pro vybranou osobu a projekt není dostupný ani jeden otevřený úkol k vykazování.")
+            Master.Notify(String.Format("Pro [{0}] a projekt [{1}] není dostupný ani jeden otevřený úkol k vykazování.", Master.Factory.SysUser.Person, _Project.FullName))
         End If
 
     End Sub
@@ -1387,5 +1368,15 @@
         Me.j19ID.DataSource = Master.Factory.ftBL.GetList_j19(New BO.myQuery)
         Me.j19ID.DataBind()
         Me.j19ID.Items.Insert(0, "")
+    End Sub
+
+    Private Sub p56ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p56ID.NeedMissingItem
+
+        Dim cRec As BO.p56Task = Master.Factory.p56TaskBL.Load(BO.BAS.IsNullInt(strFoundedMissingItemValue))
+        If Not cRec Is Nothing Then
+            strAddMissingItemText = cRec.NameWithTypeAndCode
+        End If
+
+       
     End Sub
 End Class
