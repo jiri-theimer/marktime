@@ -221,6 +221,6 @@ Public Class FtDL
             .Add("d", dat, DbType.DateTime)
             .Add("index", intPeriodIndex, DbType.Int32)
         End With
-        Return _cDB.GetValueFromSQL("SELECT dbo.get_parsed_text_with_period(@expr,@d,@index)", pars)
+        Return _cDB.GetValueFromSQL("SELECT dbo.get_parsed_text_with_period(@expr,@d,@index) as Value", pars)
     End Function
 End Class

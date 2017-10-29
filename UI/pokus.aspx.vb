@@ -31,4 +31,7 @@ Public Class pokus
     
 
     
+    Private Sub cmdPokus_Click(sender As Object, e As EventArgs) Handles cmdPokus.Click
+        Master.Notify(Master.Factory.ftBL.get_ParsedText_With_Period("Měsíční DPH [YYYY]/[MM]", DateSerial(2017, 10, 1), 0))
+    End Sub
 End Class

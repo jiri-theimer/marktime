@@ -5861,6 +5861,9 @@ BEGIN TRY
 	 begin		
 		DELETE FROM j77WorksheetStatTemplate WHERE j02ID_Owner=@pid
 	 end
+
+	 if exists(select p52ID FROM p52PriceList_Item WHERE j02ID=@pid)
+	  DELETE FROM p52PriceList_Item WHERE j02ID=@pid
 	
 
 	DELETE FROM j02Person WHERE j02ID=@pid
@@ -11974,10 +11977,16 @@ if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND p41WorksheetOperFl
  set @err='V projektu platí zákaz zapisovat úkony.'
 
 if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND p41WorksheetOperFlag=3) AND isnull(@p56id,0)=0
- set @err='V projektu lze vykazovat úkony pouze přes úkol.'
+ set @err='V projektu je povoleno vykazovat úkony pouze přes úkol.'
 
-if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND (p41ValidFrom>getdate() OR p41ValidUntil<getdate()))
- set @err='Projekt byl přesunut do koše, nelze do něj zapisovat worksheet úkony.'
+if isnull(@p56id,0)<>0 and isnull(@p31id,0)=0
+ begin
+  if exists(select p56ID FROM p56Task WHERE p56ID=@p56id AND getdate() not between p56ValidFrom AND p56ValidUntil)
+   set @err='Úkol je již uzavřen, nelze do něj vykazovat nové úkony.'
+ end
+
+if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND getdate() not between p41ValidFrom AND p41ValidUntil)
+ set @err='Projekt byl přesunut do archivu, nelze do něj zapisovat úkony.'
 
 if @p48id is not null
  begin	---test operativního plánu

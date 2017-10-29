@@ -205,11 +205,14 @@
                 Dim lisFF As List(Of BO.FreeField) = _Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p56Task, intMotherPID, c.p57ID)
                 If _Factory.p56TaskBL.Save(cNew, _Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p56Task, intMotherPID).ToList, lisFF, "") Then
                     Dim intP56ID As Integer = _Factory.p56TaskBL.LastSavedPID
-                    Dim lisP40 As IEnumerable(Of BO.p40WorkSheet_Recurrence) = _Factory.p40WorkSheet_RecurrenceBL.GetList(c.p41ID, intP56ID).Where(Function(p) p.IsClosed = False)
+                    Dim lisP40 As IEnumerable(Of BO.p40WorkSheet_Recurrence) = _Factory.p40WorkSheet_RecurrenceBL.GetList(c.p41ID, c.PID).Where(Function(p) p.IsClosed = False)
                     If lisP40.Count > 0 Then
                         'K potomkům matky se má vygenerovat worksheet úkon
                         For Each cP40 In lisP40
-                            SaveP31OrigRecord(cP40, Now, "", c)
+                            Dim intP31ID As Integer = SaveP31OrigRecord(cP40, Now, "", _Factory.p56TaskBL.Load(intP56ID))
+                            If intP31ID = 0 Then
+                                WL(BO.j91RobotTaskFlag.RecurrenceP56, "", "SaveP31OrigRecord,p56ID=" & intP56ID.ToString & ", ERROR=" & _Factory.p31WorksheetBL.ErrorMessage)
+                            End If
                         Next
                     End If
 
@@ -233,6 +236,7 @@
                 .p31Text = strText
                 .p31Date = p31Date
             Else
+                .p56ID = cTask.PID
                 .p31Date = cTask.p56RecurBaseDate
                 .p31Text = _Factory.ftBL.get_ParsedText_With_Period(cRec.p40Text, .p31Date, 0)
             End If
