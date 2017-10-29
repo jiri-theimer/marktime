@@ -80,7 +80,7 @@
     </div>
     <asp:Panel ID="panTask" runat="server">
         <asp:Label ID="lblP56ID" runat="server" Text="Matka opakovaných úkolů:" CssClass="lbl"></asp:Label>
-        <uc:datacombo ID="p56ID" runat="server" Width="400px" DataTextField="NameWithTypeAndCode" DataValueField="pid" IsFirstEmptyRow="true" AutoPostBack="true" />
+        <uc:datacombo ID="p56ID" runat="server" Width="400px" DataTextField="RecurNameMaskWIthTypeAndCode" DataValueField="pid" IsFirstEmptyRow="true" AutoPostBack="true" />
         
     </asp:Panel>
     <asp:Panel ID="panDateSettings" runat="server">

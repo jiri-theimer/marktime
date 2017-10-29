@@ -147,5 +147,9 @@
             Return _p57Name & ": " & Me.p56Name & " (" & Me.p56Code & ")"
         End Get
     End Property
-
+    Public ReadOnly Property RecurNameMaskWIthTypeAndCode As String
+        Get
+            Return _p57Name & ": " & Me.p56RecurNameMask & " (" & Me.p56Code & ")"
+        End Get
+    End Property
 End Class
