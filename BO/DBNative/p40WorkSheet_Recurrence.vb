@@ -42,8 +42,12 @@ Public Class p40WorkSheet_Recurrence
             Return _Person
         End Get
     End Property
-
-
+    Private Property _Task As String
+    Public ReadOnly Property Task As String
+        Get
+            Return _Task
+        End Get
+    End Property
 
 
 End Class

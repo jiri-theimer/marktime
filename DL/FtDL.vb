@@ -213,4 +213,14 @@ Public Class FtDL
         Dim ds As DataSet = _cDB.GetDataSet("exec dbo." & strPrefix & "_changelog @" & strPrefix & "id", , pars.Convert2PluginDbParameters())
         If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
     End Function
+
+    Public Function get_ParsedText_With_Period(strExpression As String, dat As Date, intPeriodIndex As Integer) As String
+        Dim pars As New DbParameters()
+        With pars
+            .Add("expr", strExpression, DbType.String)
+            .Add("d", dat, DbType.DateTime)
+            .Add("index", intPeriodIndex, DbType.Int32)
+        End With
+        Return _cDB.GetValueFromSQL("SELECT dbo.get_parsed_text_with_period(@expr,@d,@index)", pars)
+    End Function
 End Class

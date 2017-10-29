@@ -3,7 +3,7 @@
     Private Property _Factory As BL.Factory
     Private Property _BatchGuid As String = ""
     Private Property _curNow As Date = Now
-
+    Private _lisP53 As IEnumerable(Of BO.p53VatRate) = Nothing
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         _BatchGuid = Format(Now, "dd.MM.yyyy HH:mm:ss")
@@ -204,7 +204,16 @@
                 End With
                 Dim lisFF As List(Of BO.FreeField) = _Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p56Task, intMotherPID, c.p57ID)
                 If _Factory.p56TaskBL.Save(cNew, _Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p56Task, intMotherPID).ToList, lisFF, "") Then
-                    WL(BO.j91RobotTaskFlag.RecurrenceP56, "", "Mother: " & c.FullName & ", child: " & _Factory.p56TaskBL.LastSavedPID.ToString & "/" & cNew.p41Name)
+                    Dim intP56ID As Integer = _Factory.p56TaskBL.LastSavedPID
+                    Dim lisP40 As IEnumerable(Of BO.p40WorkSheet_Recurrence) = _Factory.p40WorkSheet_RecurrenceBL.GetList(c.p41ID, intP56ID).Where(Function(p) p.IsClosed = False)
+                    If lisP40.Count > 0 Then
+                        'K potomkům matky se má vygenerovat worksheet úkon
+                        For Each cP40 In lisP40
+                            SaveP31OrigRecord(cP40, Now, "", c)
+                        Next
+                    End If
+
+                    WL(BO.j91RobotTaskFlag.RecurrenceP56, "", "Mother: " & c.FullName & ", child: " & intP56ID.ToString & "/" & cNew.p41Name)
                 Else
                     WL(BO.j91RobotTaskFlag.RecurrenceP56, "Mother: " & c.FullName & ", child: " & cNew.p56Name & ": " & _Factory.p56TaskBL.ErrorMessage, "")
                 End If
@@ -213,54 +222,95 @@
         Next
     End Sub
 
-    Private Sub Handle_p40Queue()
+    Private Function SaveP31OrigRecord(cRec As BO.p40WorkSheet_Recurrence, p31Date As Date, strText As String, cTask As BO.p56Task) As Integer
+        If _lisP53 Is Nothing Then
+            _lisP53 = _Factory.p53VatRateBL.GetList(New BO.myQuery)
+        End If
+        Dim cP34 As BO.p34ActivityGroup = _Factory.p34ActivityGroupBL.Load(cRec.p34ID)
+        Dim cP31 As New BO.p31WorksheetEntryInput
+        With cP31
+            If cTask Is Nothing Then
+                .p31Text = strText
+                .p31Date = p31Date
+            Else
+                .p31Date = cTask.p56RecurBaseDate
+                .p31Text = _Factory.ftBL.get_ParsedText_With_Period(cRec.p40Text, .p31Date, 0)
+            End If
+            .j02ID = cRec.j02ID
+            .p41ID = cRec.p41ID
+            .p34ID = cRec.p34ID
+            .p32ID = cRec.p32ID
+            .Value_Orig = CStr(cRec.p40Value)
+            .Value_Orig_Entried = CStr(cRec.p40Value)
+            If cP34.p33ID = BO.p33IdENUM.PenizeBezDPH Or cP34.p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu Then
+                .j27ID_Billing_Orig = cRec.j27ID
+                If cRec.x15ID > BO.x15IdEnum.BezDPH Then
+                    Dim lisVR As IEnumerable(Of BO.p53VatRate) = _lisP53.Where(Function(p) p.j27ID = cRec.j27ID And p.x15ID = cRec.x15ID)
+                    If lisVR.Count > 0 Then
+                        .VatRate_Orig = lisVR(0).p53Value
+                    End If
+                End If
 
+                .Amount_WithoutVat_Orig = cRec.p40Value
+                If cP34.p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu Then
+                    .Amount_Vat_Orig = .VatRate_Orig / 100 * cRec.p40Value
+                    .Amount_WithVat_Orig = .Amount_Vat_Orig + .Amount_WithoutVat_Orig
+                End If
+
+            End If
+
+        End With
+        Dim bol As Boolean = _Factory.p31WorksheetBL.SaveOrigRecord(cP31, Nothing)
+        If bol Then
+            Return _Factory.p31WorksheetBL.LastSavedPID
+        Else
+            Return 0
+        End If
+    End Function
+    Private Sub Handle_p40Queue()
         Dim lisP40 As IEnumerable(Of BO.p40WorkSheet_Recurrence) = _Factory.p40WorkSheet_RecurrenceBL.GetList_WaitingForGenerate(_curNow)
         WL(BO.j91RobotTaskFlag.p40, "", String.Format("Počet p40 záznamů :{0}", lisP40.Count))
         If lisP40.Count = 0 Then Return
-
-
-
-        Dim lisP53 As IEnumerable(Of BO.p53VatRate) = _Factory.p53VatRateBL.GetList(New BO.myQuery)
 
         For Each cRec In lisP40
             Dim cP39 As BO.p39WorkSheet_Recurrence_Plan = _Factory.p40WorkSheet_RecurrenceBL.LoadP39_FirstWaiting(cRec.PID, _curNow)
             If Not cP39 Is Nothing Then
                 'vygenerovat úkon
-                Dim cP34 As BO.p34ActivityGroup = _Factory.p34ActivityGroupBL.Load(cRec.p34ID)
-                Dim cP31 As New BO.p31WorksheetEntryInput
-                With cP31
-                    .j02ID = cRec.j02ID
-                    .p41ID = cRec.p41ID
-                    .p34ID = cRec.p34ID
-                    .p32ID = cRec.p32ID
-                    .p31Text = cP39.p39Text
-                    .p31Date = cP39.p39Date
-                    .Value_Orig = CStr(cRec.p40Value)
-                    .Value_Orig_Entried = CStr(cRec.p40Value)
-                    If cP34.p33ID = BO.p33IdENUM.PenizeBezDPH Or cP34.p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu Then
-                        .j27ID_Billing_Orig = cRec.j27ID
-                        If cRec.x15ID > BO.x15IdEnum.BezDPH Then
-                            Dim lisVR As IEnumerable(Of BO.p53VatRate) = lisP53.Where(Function(p) p.j27ID = cRec.j27ID And p.x15ID = cRec.x15ID)
-                            If lisVR.Count > 0 Then
-                                .VatRate_Orig = lisVR(0).p53Value
-                            End If
-                        End If
+                Dim intP31ID As Integer = SaveP31OrigRecord(cRec, cP39.p39Date, cP39.p39Text, Nothing)
+                ''Dim cP34 As BO.p34ActivityGroup = _Factory.p34ActivityGroupBL.Load(cRec.p34ID)
+                ''Dim cP31 As New BO.p31WorksheetEntryInput
+                ''With cP31
+                ''    .j02ID = cRec.j02ID
+                ''    .p41ID = cRec.p41ID
+                ''    .p34ID = cRec.p34ID
+                ''    .p32ID = cRec.p32ID
+                ''    .p31Text = cP39.p39Text
+                ''    .p31Date = cP39.p39Date
+                ''    .Value_Orig = CStr(cRec.p40Value)
+                ''    .Value_Orig_Entried = CStr(cRec.p40Value)
+                ''    If cP34.p33ID = BO.p33IdENUM.PenizeBezDPH Or cP34.p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu Then
+                ''        .j27ID_Billing_Orig = cRec.j27ID
+                ''        If cRec.x15ID > BO.x15IdEnum.BezDPH Then
+                ''            Dim lisVR As IEnumerable(Of BO.p53VatRate) = lisP53.Where(Function(p) p.j27ID = cRec.j27ID And p.x15ID = cRec.x15ID)
+                ''            If lisVR.Count > 0 Then
+                ''                .VatRate_Orig = lisVR(0).p53Value
+                ''            End If
+                ''        End If
 
-                        .Amount_WithoutVat_Orig = cRec.p40Value
-                        If cP34.p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu Then
-                            .Amount_Vat_Orig = .VatRate_Orig / 100 * cRec.p40Value
-                            .Amount_WithVat_Orig = .Amount_Vat_Orig + .Amount_WithoutVat_Orig
-                        End If
+                ''        .Amount_WithoutVat_Orig = cRec.p40Value
+                ''        If cP34.p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu Then
+                ''            .Amount_Vat_Orig = .VatRate_Orig / 100 * cRec.p40Value
+                ''            .Amount_WithVat_Orig = .Amount_Vat_Orig + .Amount_WithoutVat_Orig
+                ''        End If
 
-                    End If
+                ''    End If
 
-                End With
-                Dim bol As Boolean = _Factory.p31WorksheetBL.SaveOrigRecord(cP31, Nothing)
-                If bol Then
-                    WL(BO.j91RobotTaskFlag.p40, "", "p40-new robot worksheet record,p39ID=" & cP39.p39ID.ToString & ", p31ID=" & _Factory.p31WorksheetBL.LastSavedPID.ToString)
+                ''End With
+                ''Dim bol As Boolean = _Factory.p31WorksheetBL.SaveOrigRecord(cP31, Nothing)
+                If intP31ID > 0 Then
+                    WL(BO.j91RobotTaskFlag.p40, "", "p40-new robot worksheet record,p39ID=" & cP39.p39ID.ToString & ", p31ID=" & intP31ID.ToString)
 
-                    _Factory.p40WorkSheet_RecurrenceBL.Update_p31Instance(cP39.p39ID, _Factory.p31WorksheetBL.LastSavedPID, "")
+                    _Factory.p40WorkSheet_RecurrenceBL.Update_p31Instance(cP39.p39ID, intP31ID, "")
                 Else
                     WL(BO.j91RobotTaskFlag.p40, "", "p40-new robot worksheet record,p39ID=" & cP39.p39ID.ToString & ", ERROR=" & _Factory.p31WorksheetBL.ErrorMessage)
 

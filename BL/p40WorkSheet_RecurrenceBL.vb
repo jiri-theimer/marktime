@@ -4,7 +4,7 @@ Public Interface Ip40WorkSheet_RecurrenceBL
     Function Save(cRec As BO.p40WorkSheet_Recurrence) As Boolean
     Function Load(intPID As Integer) As BO.p40WorkSheet_Recurrence
     Function Delete(intPID As Integer) As Boolean
-    Function GetList(intP41ID As Integer) As IEnumerable(Of BO.p40WorkSheet_Recurrence)
+    Function GetList(intP41ID As Integer, intP56ID As Integer) As IEnumerable(Of BO.p40WorkSheet_Recurrence)
     Function GetList_WaitingForGenerate(datNow As Date) As IEnumerable(Of BO.p40WorkSheet_Recurrence)
     Function LoadP39_FirstWaiting(intP40ID As Integer, datNow As DateTime) As BO.p39WorkSheet_Recurrence_Plan
     Function GetList_p39(intPID As Integer) As IEnumerable(Of BO.p39WorkSheet_Recurrence_Plan)
@@ -82,8 +82,8 @@ Class p40WorkSheet_RecurrenceBL
             Return False
         End If
     End Function
-    Public Function GetList(intP41ID As Integer) As IEnumerable(Of BO.p40WorkSheet_Recurrence) Implements Ip40WorkSheet_RecurrenceBL.GetList
-        Return _cDL.GetList(intP41ID)
+    Public Function GetList(intP41ID As Integer, intP56ID As Integer) As IEnumerable(Of BO.p40WorkSheet_Recurrence) Implements Ip40WorkSheet_RecurrenceBL.GetList
+        Return _cDL.GetList(intP41ID, intP56ID)
     End Function
     Public Function GetList_WaitingForGenerate(datNow As Date) As IEnumerable(Of BO.p40WorkSheet_Recurrence) Implements Ip40WorkSheet_RecurrenceBL.GetList_WaitingForGenerate
         Return _cDL.GetList_WaitingForGenerate(datNow)

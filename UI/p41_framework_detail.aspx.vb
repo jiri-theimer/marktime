@@ -365,7 +365,7 @@
 
     Private Sub RefreshP40(cRecSum As BO.p41ProjectSum)
         If cRecSum.p40_Exist Then
-            Dim lisP40 As IEnumerable(Of BO.p40WorkSheet_Recurrence) = Master.Factory.p40WorkSheet_RecurrenceBL.GetList(Master.DataPID)
+            Dim lisP40 As IEnumerable(Of BO.p40WorkSheet_Recurrence) = Master.Factory.p40WorkSheet_RecurrenceBL.GetList(Master.DataPID, 0)
             rpP40.DataSource = lisP40
             rpP40.DataBind()
         Else
@@ -468,10 +468,24 @@
             .NavigateUrl = "javascript:p40_record(" & cRec.PID.ToString & ")"
         End With
         With CType(e.Item.FindControl("clue_p40"), HyperLink)
-            .Attributes("rel") = "clue_p40_record.aspx?pid=" & cRec.PID.ToString
+            If cRec.p56ID = 0 Then
+                .Attributes("rel") = "clue_p40_record.aspx?pid=" & cRec.PID.ToString
+            Else
+                .Visible = False
+            End If
+
         End With
         With CType(e.Item.FindControl("linkChrono"), HyperLink)
-            .NavigateUrl = "javascript:p40_chrono(" & cRec.PID.ToString & ")"
+            If cRec.p56ID = 0 Then
+                .NavigateUrl = "javascript:p40_chrono(" & cRec.PID.ToString & ")"
+            Else
+                '.NavigateUrl = "javascript:contMenu('p56_record.aspx?pid=" & cRec.p56ID.ToString & "',false)"
+                .NavigateUrl = "p56_framework.aspx?pid=" & cRec.p56ID.ToString
+                .Target = "_top"
+                .CssClass = "value_link"
+                .Text = cRec.Task
+            End If
+
         End With
     End Sub
 

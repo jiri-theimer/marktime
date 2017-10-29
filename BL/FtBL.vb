@@ -27,6 +27,7 @@
     Function AppendRobotLog(cRec As BO.j91RobotLog) As Boolean
     Function GetLastRobotRun(TaskFlag As BO.j91RobotTaskFlag) As BO.j91RobotLog
     Function GetChangeLog(strPrefix As String, intRecordPID As Integer) As DataTable
+    Function get_ParsedText_With_Period(strExpression As String, dat As Date, intPeriodIndex As Integer) As String
 End Interface
 Class FtBL
     Inherits BLMother
@@ -178,5 +179,8 @@ Class FtBL
     End Function
     Public Function GetChangeLog(strPrefix As String, intRecordPID As Integer) As DataTable Implements IFtBL.GetChangeLog
         Return _cDL.GetChangeLog(strPrefix, intRecordPID)
+    End Function
+    Public Function get_ParsedText_With_Period(strExpression As String, dat As Date, intPeriodIndex As Integer) As String Implements IFtBL.get_ParsedText_With_Period
+        Return _cDL.get_ParsedText_With_Period(strExpression, dat, intPeriodIndex)
     End Function
 End Class

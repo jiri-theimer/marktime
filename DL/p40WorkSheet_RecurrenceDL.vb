@@ -70,12 +70,15 @@
         Return _cDB.RunSP("p40_delete", pars)
     End Function
 
-
-    Public Function GetList(intP41ID As Integer) As IEnumerable(Of BO.p40WorkSheet_Recurrence)
+    
+    Public Function GetList(intP41ID As Integer, intP56ID As Integer) As IEnumerable(Of BO.p40WorkSheet_Recurrence)
         Dim s As String = GetSQLPart1()
         Dim strW As String = "a.p41ID=@p41id", pars As New DbParameters
         pars.Add("p41id", intP41ID, DbType.Int32)
-
+        If intP56ID <> 0 Then
+            pars.Add("p56id", intP56ID, DbType.Int32)
+            strW += " AND a.p56ID=@p56id"
+        End If
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
 
         Return _cDB.GetList(Of BO.p40WorkSheet_Recurrence)(s, pars)
@@ -84,7 +87,7 @@
 
     Public Function GetList_WaitingForGenerate(datNow As Date) As IEnumerable(Of BO.p40WorkSheet_Recurrence)
         Dim s As String = GetSQLPart1(), pars As New DbParameters
-        Dim strW As String = "getdate() BETWEEN a.p40ValidFrom AND a.p40ValidUntil AND a.p40ID IN (select p40ID FROM p39WorkSheet_Recurrence_Plan WHERE p31ID_NewInstance IS NULL AND p39DateCreate BETWEEN dateadd(day,-2,@dat) AND @dat)"
+        Dim strW As String = "getdate() BETWEEN a.p40ValidFrom AND a.p40ValidUntil AND a.p56ID IS NULL AND a.p40ID IN (select p40ID FROM p39WorkSheet_Recurrence_Plan WHERE p31ID_NewInstance IS NULL AND p39DateCreate BETWEEN dateadd(day,-2,@dat) AND @dat)"
         pars.Add("dat", datNow, DbType.DateTime)
 
         s += " WHERE " & bas.TrimWHERE(strW)
@@ -102,9 +105,9 @@
 
 
     Private Function GetSQLPart1() As String
-        Dim s As String = "SELECT a.*,p34.p34Name as _p34Name,p32.p32Name as _p32Name,j02.j02LastName+' '+j02.j02FirstName as _Person," & bas.RecTail("p40", "a")
+        Dim s As String = "SELECT a.*,p34.p34Name as _p34Name,p32.p32Name as _p32Name,j02.j02LastName+' '+j02.j02FirstName as _Person,p57.p57Name+': '+p56.p56RecurNameMask as _Task," & bas.RecTail("p40", "a")
         s += " FROM p40WorkSheet_Recurrence a INNER JOIN p34ActivityGroup p34 ON a.p34ID=p34.p34ID"
-        s += " INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID"
+        s += " INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID LEFT OUTER JOIN p56Task p56 ON a.p56ID=p56.p56ID LEFT OUTER JOIN p57TaskType p57 ON p56.p57ID=p57.p57ID"
         Return s
     End Function
 

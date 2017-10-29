@@ -109,6 +109,9 @@
     End Sub
 
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
+        If Me.opgGenType.SelectedValue = "2" And Me.p56ID.SelectedValue = "" Then
+            Master.Notify("Chybí vybrat úkol.", NotifyLevel.ErrorMessage) : Return
+        End If
         With Master.Factory.p40WorkSheet_RecurrenceBL
             Dim cRec As BO.p40WorkSheet_Recurrence = IIf(Master.DataPID <> 0, .Load(Master.DataPID), New BO.p40WorkSheet_Recurrence)
             With cRec
