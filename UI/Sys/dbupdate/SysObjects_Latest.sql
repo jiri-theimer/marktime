@@ -8800,12 +8800,12 @@ set @x45ids=''
 declare @p31date datetime,@p32id int,@p41id int,@p34id int,@p71id int,@p70id int,@c11id int,@p33id int,@j02id_rec int
 declare @j27id_billing_orig int,@j27id_internal int,@p31rate_billing_orig float,@p31rate_internal_orig float
 declare @p31value_orig float,@p31amount_withoutvat_orig float,@p31vatrate_orig float,@p31amount_withvat_orig float
-declare @p31amount_internal float,@p31amount_vat_orig float,@p91id int
+declare @p31amount_internal float,@p31amount_vat_orig float,@p91id int,@p32ManualFeeFlag int
 
 
 select @c11id=a.c11ID,@p32id=a.p32ID,@p34id=p32.p34ID,@p71id=a.p71ID,@p70id=a.p70ID
 ,@p33id=p34.p33ID,@j02id_rec=a.j02ID,@p31date=a.p31date,@p41id=a.p41ID
-,@p31value_orig=a.p31value_orig,@p91id=a.p91ID
+,@p31value_orig=a.p31value_orig,@p91id=a.p91ID,@p32ManualFeeFlag=isnull(p32.p32ManualFeeFlag,0)
 FROM
 p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
 INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
@@ -8841,13 +8841,26 @@ if @c11id is null OR @c11id_find is null OR isnull(@c11id_find,0)<>isnull(@c11id
 
 if @p33id=1 or @p33id=3	---1 - čas, 3 - kusovník
  BEGIN
-	exec p31_getrate_tu @p31date,1, @p41id, @j02id_rec, @p32id, @j27id_billing_orig OUTPUT , @p31rate_billing_orig OUTPUT
+    if @p32ManualFeeFlag=0
+     exec p31_getrate_tu @p31date,1, @p41id, @j02id_rec, @p32id, @j27id_billing_orig OUTPUT , @p31rate_billing_orig OUTPUT
 
 	exec p31_getrate_tu @p31date,2, @p41id, @j02id_rec, @p32id, @j27id_internal OUTPUT , @p31rate_internal_orig OUTPUT  
 	
 	select @p31vatrate_orig=dbo.p32_get_vatrate(@p32id,@p41id,@p31date)
 	
-	set @p31amount_withoutvat_orig=@p31value_orig*@p31rate_billing_orig
+	if @p32ManualFeeFlag=1
+	 begin
+	  select @p31amount_withoutvat_orig=p31amount_withoutvat_orig FROM p31Worksheet where p31ID=@p31id	---částka pevného honoráře byla zadána ručně v úkonu
+
+	  select @j27id_billing_orig=convert(int,x35Value) FROM x35GlobalParam WHERE x35Key LIKE 'j27ID_Domestic'
+	  
+	  set @p31rate_billing_orig=null
+	 end
+	
+	if @p32ManualFeeFlag=0
+	 set @p31amount_withoutvat_orig=@p31value_orig*@p31rate_billing_orig
+
+
 	set @p31amount_vat_orig=@p31amount_withoutvat_orig*@p31vatrate_orig/100
 	set @p31amount_withvat_orig=@p31amount_withoutvat_orig+@p31amount_vat_orig
 	set @p31amount_internal=@p31value_orig*@p31rate_internal_orig	
@@ -9606,7 +9619,7 @@ BEGIN
 	select @rate=p31Rate_Billing_Orig,@vat_rate=p31VatRate_Orig from p31Worksheet where p31ID=@p31id_new
 
 	if isnull(@p72id,0)>0	--automaticky úkon schválit	
-	 exec dbo.p31_save_approving @p31id_new,@j03id_sys,1,@p72id,null,@value,@value,@rate,@rate,@p31text,@vat_rate,@p31date,0,0,null	  
+	 exec dbo.p31_save_approving @p31id_new,@j03id_sys,1,@p72id,null,@value,@value,@rate,@rate,@p31text,@vat_rate,@p31date,0,0,null,null	  
 
 	if @record_prefix='o23'	---dokument
 	 begin	---vložit odkaz na nový p31 záznam do x19EntityCategory_Binding
@@ -9965,6 +9978,7 @@ AS
 ---p31VatRate_Invoiced - p85FreeFloat03  (explicitní sazba DPH)
 ---p85FreeText01 - do stringu převedeno FixPriceValue
 ---p85FreeBoolean01 - p31IsInvoiceManual
+---p85FreeNumber02 - @manualfee
 
 set @err_ret=''
 set @j03id_sys=isnull(@j03id_sys,0)
@@ -10002,16 +10016,16 @@ where p91ID=@p91id
 
 declare @p31id int,@p70id_edit int,@vatrate_edit float,@value_edit float,@text_edit nvarchar(2000),@rate_edit float
 declare @p33id int
-declare @p31amount_withoutvat_invoiced float,@p31amount_vat_invoiced float,@p31amount_withvat_invoiced float,@p31IsInvoiceManual bit
+declare @p31amount_withoutvat_invoiced float,@p31amount_vat_invoiced float,@p31amount_withvat_invoiced float,@p31IsInvoiceManual bit,@manualfee float,@p32ManualFeeFlag int
 
 DECLARE curP31 CURSOR FOR 
-select p85DataPID,p85OtherKey1,p85Message,p85FreeFloat01,p85FreeFloat02,p85FreeFloat03,convert(float,p85FreeNumber01)/10000000,isnull(p85FreeBoolean01,0) from p85TempBox WHERE p85GUID=@guid AND p85Prefix='p31'
+select p85DataPID,p85OtherKey1,p85Message,p85FreeFloat01,p85FreeFloat02,p85FreeFloat03,convert(float,p85FreeNumber01)/10000000,isnull(p85FreeBoolean01,0),convert(float,p85FreeNumber02)/10000000 from p85TempBox WHERE p85GUID=@guid AND p85Prefix='p31'
 OPEN curP31
-FETCH NEXT FROM curP31  INTO @p31id,@p70id_edit,@text_edit,@value_edit,@rate_edit,@vatrate_edit,@p31value_fixprice,@p31IsInvoiceManual
+FETCH NEXT FROM curP31  INTO @p31id,@p70id_edit,@text_edit,@value_edit,@rate_edit,@vatrate_edit,@p31value_fixprice,@p31IsInvoiceManual,@manualfee
 WHILE @@FETCH_STATUS = 0
 BEGIN
 
- select @p33id=c.p33ID FROM p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID INNER JOIN p34ActivityGroup c ON b.p34ID=c.p34ID
+ select @p33id=c.p33ID,@p32ManualFeeFlag=isnull(b.p32ManualFeeFlag,0) FROM p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID INNER JOIN p34ActivityGroup c ON b.p34ID=c.p34ID
  WHERE a.p31ID=@p31id
 
 
@@ -10030,7 +10044,7 @@ if @x15id is not null and @vatrate_edit is null
 
  if @p33id=1	---čas
   begin
-    UPDATE p31Worksheet set p31Value_Invoiced=@value_edit,p31Rate_Billing_Invoiced=@rate_edit
+    UPDATE p31Worksheet set p31Value_Invoiced=@value_edit,p31Rate_Billing_Invoiced=case when @p32ManualFeeFlag=0 then @rate_edit end
 	,p31Hours_Invoiced=@value_edit,p31Minutes_Invoiced=@value_edit*60,p31HHMM_Invoiced=dbo.get_hours_to_hhmm(@value_edit)
 	WHERE p31ID=@p31id
   end
@@ -10049,10 +10063,14 @@ if @x15id is not null and @vatrate_edit is null
 
  if @p33id=1 OR @p33id=3
   begin
-   set @p31amount_withoutvat_invoiced=@rate_edit*@value_edit
+   if @p32ManualFeeFlag=0
+    set @p31amount_withoutvat_invoiced=@rate_edit*@value_edit
 
-   if @x15id is null
-	 select @vatrate_edit=p31VatRate_Approved FROM p31Worksheet WHERE p31ID=@p31id	---pokud DPH není ve faktuře fixní, pak to brát z úkonu
+   if @p32ManualFeeFlag=1
+    set @p31amount_withoutvat_invoiced=@manualfee
+
+   --if @x15id is null
+	 --select @vatrate_edit=p31VatRate_Approved FROM p31Worksheet WHERE p31ID=@p31id	---pokud DPH není ve faktuře fixní, pak to brát z úkonu
   end
   
   
@@ -10074,7 +10092,7 @@ if @x15id is not null and @vatrate_edit is null
   if @text_edit is not null
    UPDATE p31Worksheet set p31Text=@text_edit WHERE p31ID=@p31id
 
-FETCH NEXT FROM curP31 INTO @p31id,@p70id_edit,@text_edit,@value_edit,@rate_edit,@vatrate_edit,@p31value_fixprice,@p31IsInvoiceManual
+FETCH NEXT FROM curP31 INTO @p31id,@p70id_edit,@text_edit,@value_edit,@rate_edit,@vatrate_edit,@p31value_fixprice,@p31IsInvoiceManual,@manualfee
 END
 
 CLOSE curP31
@@ -10696,6 +10714,7 @@ CREATE  procedure [dbo].[p31_save_approving]
 ,@dat_p31date datetime
 ,@approving_level int
 ,@value_fixprice float
+,@manualfee_approved float
 ,@err_ret varchar(1000) OUTPUT
 
 AS
@@ -10711,11 +10730,11 @@ set @vatrate_approved=isnull(@vatrate_approved,0)
 set @approving_level=isnull(@approving_level,0)
 
 ----validace sazby dph------------------
-declare @vatisok bit,@p31date datetime,@p33code varchar(10),@p41id int,@j27id_orig int,@j02id_sys int,@p32id int
+declare @vatisok bit,@p31date datetime,@p33code varchar(10),@p41id int,@j27id_orig int,@j02id_sys int,@p32id int,@p32ManualFeeFlag int
 
 select @j02id_sys=j02ID FROM j03User WHERE j03ID=@j03id_sys
 
-select @p31date=p31date,@p33code=p33Code,@p41id=a.p41id,@j27id_orig=a.j27ID_Billing_Orig,@p32id=p32.p32ID
+select @p31date=p31date,@p33code=p33Code,@p41id=a.p41id,@j27id_orig=a.j27ID_Billing_Orig,@p32id=p32.p32ID,@p32ManualFeeFlag=isnull(p32.p32ManualFeeFlag,0)
 from p31worksheet a inner join p41project b on a.p41id=b.p41id
 left outer join p32activity p32 on a.p32id=p32.p32id
 left outer join p34activitygroup p34 on p32.p34id=p34.p34id
@@ -10794,7 +10813,7 @@ if @p71id=2 or @p71id=3
 
 if @p71id is not null
  begin
-   if @p33code='T'
+   if @p33code='T' and @p32ManualFeeFlag=0	----hodinová sazba
  	update p31worksheet set p31Minutes_Approved_Billing=case when p72ID_AfterApprove IN (6,3,2) then 0 else @minutes end
 	,p31HHMM_Approved_Billing=case when p72ID_AfterApprove IN (6,3,2) then null else dbo.Minutes2HHMM(@minutes) end
 	,p31Rate_Billing_Approved=case when p72ID_AfterApprove IN (6,3,2) then 0 else @rate_billing_approved end
@@ -10804,6 +10823,23 @@ if @p71id is not null
 	,p31vatrate_approved=@vatrate_approved
 	,p31amount_vat_approved=case when p72ID_AfterApprove IN (6,3,2) then 0 else @rate_billing_approved*@hours*@vatrate_approved/100 end
 	,p31amount_withvat_approved=case when p72ID_AfterApprove IN (6,3,2) then 0 else @rate_billing_approved*@hours+@rate_billing_approved*@hours*@vatrate_approved/100 end
+	,p31Minutes_Approved_Internal=@minutes_internal,p31HHMM_Approved_Internal=dbo.Minutes2HHMM(@minutes_internal)
+	,p31value_approved_internal=@value_approved_internal
+	,p31Value_Approved_Billing=case when p72ID_AfterApprove IN (6,3,2) then 0 else @hours end
+	,p31Hours_Approved_Billing=case when p72ID_AfterApprove IN (6,3,2) then 0 else @hours end
+	,p31Hours_Approved_Internal=@hours_internal
+	where p31id=@p31id
+
+   if @p33code='T' and @p32ManualFeeFlag=1	---pevný honorář
+ 	update p31worksheet set p31Minutes_Approved_Billing=case when p72ID_AfterApprove IN (6,3,2) then 0 else @minutes end
+	,p31HHMM_Approved_Billing=case when p72ID_AfterApprove IN (6,3,2) then null else dbo.Minutes2HHMM(@minutes) end
+	,p31Rate_Billing_Approved=null
+	,p31rate_internal_approved=@rate_internal_approved
+	,p31amount_internal_approved=@rate_internal_approved*@hours_internal
+	,p31amount_withoutvat_approved=case when p72ID_AfterApprove IN (6,3,2) then 0 else @manualfee_approved end
+	,p31vatrate_approved=@vatrate_approved
+	,p31amount_vat_approved=case when p72ID_AfterApprove IN (6,3,2) then 0 else @manualfee_approved*@vatrate_approved/100 end
+	,p31amount_withvat_approved=case when p72ID_AfterApprove IN (6,3,2) then 0 else @manualfee_approved+@manualfee_approved*@vatrate_approved/100 end
 	,p31Minutes_Approved_Internal=@minutes_internal,p31HHMM_Approved_Internal=dbo.Minutes2HHMM(@minutes_internal)
 	,p31value_approved_internal=@value_approved_internal
 	,p31Value_Approved_Billing=case when p72ID_AfterApprove IN (6,3,2) then 0 else @hours end
@@ -10940,6 +10976,7 @@ CREATE  procedure [dbo].[p31_save_approving_temp]
 ,@dat_p31date datetime
 ,@approving_level int
 ,@value_fixprice float
+,@manualfee_approved float
 ,@err_ret varchar(1000) OUTPUT
 
 AS
@@ -10958,11 +10995,11 @@ set @vatrate_approved=isnull(@vatrate_approved,0)
 set @approving_level=isnull(@approving_level,0)
 
 ----validace sazby dph------------------
-declare @vatisok bit,@p31date datetime,@p33code varchar(10),@p41id int,@j27id_orig int,@j02id_sys int,@p32id int
+declare @vatisok bit,@p31date datetime,@p33code varchar(10),@p41id int,@j27id_orig int,@j02id_sys int,@p32id int,@p32ManualFeeFlag int
 
 select @j02id_sys=j02ID FROM j03User WHERE j03ID=@j03id_sys
 
-select @p31date=p31date,@p33code=p33Code,@p41id=a.p41id,@j27id_orig=a.j27ID_Billing_Orig,@p32id=p32.p32ID
+select @p31date=p31date,@p33code=p33Code,@p41id=a.p41id,@j27id_orig=a.j27ID_Billing_Orig,@p32id=p32.p32ID,@p32ManualFeeFlag=isnull(p32.p32ManualFeeFlag,0)
 from p31worksheet a inner join p41project b on a.p41id=b.p41id
 left outer join p32activity p32 on a.p32id=p32.p32id
 left outer join p34activitygroup p34 on p32.p34id=p34.p34id
@@ -11042,11 +11079,22 @@ if @p71id=2 or @p71id=3
 
 if @p71id is not null
  begin
-   if @p33code='T'
+   if @p33code='T' and @p32ManualFeeFlag=0
  	update p31worksheet_Temp set p31Minutes_Approved_Billing=@minutes,p31HHMM_Approved_Billing=dbo.Minutes2HHMM(@minutes),p31Rate_Billing_Approved=@rate_billing_approved,p31rate_internal_approved=@rate_internal_approved
 	,p31amount_internal_approved=@rate_internal_approved*@hours_internal
 	,p31amount_withoutvat_approved=@rate_billing_approved*@hours,p31vatrate_approved=@vatrate_approved,p31amount_vat_approved=@rate_billing_approved*@hours*@vatrate_approved/100
 	,p31amount_withvat_approved=@rate_billing_approved*@hours+@rate_billing_approved*@hours*@vatrate_approved/100
+	,p31Minutes_Approved_Internal=@minutes_internal,p31HHMM_Approved_Internal=dbo.Minutes2HHMM(@minutes_internal)
+	,p31value_approved_internal=@value_approved_internal
+	,p31Value_Approved_Billing=case when @p72id IN (4,7) then @hours else 0 end
+	,p31Hours_Approved_Billing=@hours,p31Hours_Approved_Internal=@hours_internal
+	where p31GUID=@guid AND p31id=@p31id
+
+   if @p33code='T' and @p32ManualFeeFlag=1
+ 	update p31worksheet_Temp set p31Minutes_Approved_Billing=@minutes,p31HHMM_Approved_Billing=dbo.Minutes2HHMM(@minutes),p31Rate_Billing_Approved=null,p31rate_internal_approved=@rate_internal_approved
+	,p31amount_internal_approved=@rate_internal_approved*@hours_internal
+	,p31amount_withoutvat_approved=@manualfee_approved,p31vatrate_approved=@vatrate_approved,p31amount_vat_approved=@manualfee_approved*@vatrate_approved/100
+	,p31amount_withvat_approved=@manualfee_approved+@rate_billing_approved*@hours*@vatrate_approved/100
 	,p31Minutes_Approved_Internal=@minutes_internal,p31HHMM_Approved_Internal=dbo.Minutes2HHMM(@minutes_internal)
 	,p31value_approved_internal=@value_approved_internal
 	,p31Value_Approved_Billing=case when @p72id IN (4,7) then @hours else 0 end
@@ -11947,6 +11995,7 @@ CREATE procedure [dbo].[p31_test_beforesave]
 ,@j27id_explicit int
 ,@p31text nvarchar(2000)
 ,@value_orig float
+,@manualfee float
 ,@err varchar(1000) OUTPUT
 ,@round2minutes int OUTPUT
 ,@j27id_domestic int OUTPUT
@@ -12006,13 +12055,13 @@ FROM x35GlobalParam WHERE x35Key LIKE 'j27ID_Domestic' AND ISNUMERIC(x35Value)=1
 
 
 declare @islocked bit,@p34id int,@isplan bit,@person nvarchar(300),@j07id_rec int,@p32IsTextRequired bit,@p32name nvarchar(200),@p34IncomeStatementFlag int
-declare @p32Value_Maximum float,@p32Value_Minimum float
+declare @p32Value_Maximum float,@p32Value_Minimum float,@p32ManualFeeFlag int
 
 select @person=j02LastName+' '+isnull(j02FirstName,''),@j07id_rec=isnull(j07id,-1) from j02Person where j02ID=@j02id_rec
 
 
 select @p34id=a.p34id,@p33id=b.p33id,@isplan=b.p34iscapacityplan,@p32IsTextRequired=a.p32IsTextRequired,@p32name=a.p32Name,@p34IncomeStatementFlag=b.p34IncomeStatementFlag
-,@p32Value_Maximum=isnull(a.p32Value_Maximum,0),@p32Value_Minimum=isnull(a.p32Value_Minimum,0)
+,@p32Value_Maximum=isnull(a.p32Value_Maximum,0),@p32Value_Minimum=isnull(a.p32Value_Minimum,0),@p32ManualFeeFlag=isnull(a.p32ManualFeeFlag,0)
 from p32Activity a inner join p34ActivityGroup b on a.p34ID=b.p34id
 where a.p32ID=@p32id
 
@@ -12031,6 +12080,7 @@ if @p32Value_Minimum<>0 and @value_orig<=@p32Value_Minimum
   return
  end
 
+
 if @p32Value_Maximum<>0 and @value_orig>=@p32Value_Maximum
  begin
   set @err='Pro aktivitu ['+@p32name+'] musí být vykázaná hodnota menší než: '+convert(varchar(10),@p32Value_Maximum)
@@ -12043,6 +12093,12 @@ if @p32Value_Maximum<>0 and @value_orig>=@p32Value_Maximum
 if @p48id is not null and @p33id<>1
  begin
   set @err='Operativní plán může být překlopen pouze do časového úkonu.'
+  return
+ end
+
+if @p33id=1 and @p32ManualFeeFlag=1 and isnull(@manualfee,0)=0
+ begin
+  set @err='Aktivita ['+@p32name+'] vyžaduje zadat částku pevného honoráře.'
   return
  end
 
@@ -16287,8 +16343,7 @@ BEGIN
   set @guid=convert(varchar(10),@ret_p91id)+'-'+convert(varchar(10),@p31id)+'-'+convert(varchar(50),getdate())
   insert into p85TempBox(p85GUID,p85DataPID,p85Prefix) values(@guid,@p31id,'p31')
 
-  ---exec p31_save_approving @p31id,@j03id_sys,1,4,null,@amount_withoutvat,null,null,@p31text,@vatrate,@err_ret OUTPUT
-  exec p31_save_approving @p31id,@j03id_sys,1,4,null,@amount_withoutvat,@amount_withoutvat,null,null,@p31text,@vatrate,@p31date,0,null,@err_ret OUTPUT
+  exec p31_save_approving @p31id,@j03id_sys,1,4,null,@amount_withoutvat,@amount_withoutvat,null,null,@p31text,@vatrate,@p31date,0,null,@amount_withoutvat,@err_ret OUTPUT
 
   print 'p31_save_approving, p31id: '+convert(varchar(10),@p31id)+', error: '+@err_ret
   
@@ -16297,9 +16352,7 @@ BEGIN
 
   print 'p31_append_invoice, p31id: '+convert(varchar(10),@p31id)+', error: '+@err_ret
 
-  ---exec p31_save_approving @p31id, @j03id, 1, 4, null, null, null,null, @amount_withoutvat, null, null, null, @vatrate, @err_ret OUTPUT 
 
-  ---exec p31_save_invoice @p31id, @j03id, 4, @amount_withoutvat, @amount_withvat, @amount_vat, null, @p31text, @vatrate, @err_ret OUTPUT 
 
   FETCH NEXT FROM curP31CN 
   INTO @p41id,@vatrate,@amount_withoutvat,@amount_withvat,@amount_vat
