@@ -135,12 +135,17 @@
                 .ValidUntil = Master.RecordValidUntil
                 .p32ExternalPID = Me.p32ExternalPID.Text
                 .p32AttendanceFlag = BO.BAS.IsNullInt(Me.p32AttendanceFlag.SelectedValue)
-                .p32ManualFeeFlag = CInt(Me.p32ManualFeeFlag.SelectedValue)
-                If .p32ManualFeeFlag = 1 Then
-                    .p32ManualFeeDefAmount = BO.BAS.IsNullNum(Me.p32ManualFeeDefAmount.Value)
+                If Me.p32ManualFeeFlag.Visible Then
+                    .p32ManualFeeFlag = CInt(Me.p32ManualFeeFlag.SelectedValue)
+                    If .p32ManualFeeFlag = 1 Then
+                        .p32ManualFeeDefAmount = BO.BAS.IsNullNum(Me.p32ManualFeeDefAmount.Value)
+                    Else
+                        .p32ManualFeeDefAmount = 0
+                    End If
                 Else
-                    .p32ManualFeeDefAmount = 0
+                    .p32ManualFeeFlag = 0 : .p32ManualFeeDefAmount = 0
                 End If
+                
             End With
             
 
@@ -160,19 +165,27 @@
 
     Private Sub p32_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         Me.lblp35id.Visible = False : Me.p35id.Visible = False
+        p32ManualFeeFlag.Visible = False : p32ManualFeeDefAmount.Visible = False
+
         Dim intP34ID As Integer = BO.BAS.IsNullInt(Me.p34ID.SelectedValue)
         If intP34ID > 0 Then
             Dim cP34 As BO.p34ActivityGroup = Master.Factory.p34ActivityGroupBL.Load(intP34ID)
             If cP34.p33ID = BO.p33IdENUM.Kusovnik Then
                 lblp35id.Visible = True : Me.p35id.Visible = True
             End If
+
+            If cP34.p33ID = BO.p33IdENUM.Cas Then
+                Me.p32ManualFeeFlag.Visible = True
+                Dim b As Boolean = False
+                If Me.p32ManualFeeFlag.SelectedValue = "1" Then
+                    b = True
+                End If
+                lblp32ManualFeeDefAmount.Visible = b
+                p32ManualFeeDefAmount.Visible = b
+            End If
         End If
-        Dim b As Boolean = False
-        If Me.p32ManualFeeFlag.SelectedValue = "1" Then
-            b = True
-        End If
-        lblp32ManualFeeDefAmount.Visible = b
-        p32ManualFeeDefAmount.Visible = b
+
+        
 
     End Sub
 End Class

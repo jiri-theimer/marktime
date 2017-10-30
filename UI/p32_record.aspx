@@ -36,7 +36,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <asp:DropDownList ID="p32ManualFeeFlag" runat="server" AutoPostBack="true">
+                <asp:DropDownList ID="p32ManualFeeFlag" runat="server" AutoPostBack="true" BackColor="Aquamarine">
                     <asp:ListItem Value="0" Text="Honorář časového úkonu se počítá násobkem hodin a fakturační hodinové sazby" Selected="true"></asp:ListItem>
                     <asp:ListItem Value="1" Text="Výši honoráře zadává uživatel ručně ve formuláři časového úkonu jako [Pevný honorář]"></asp:ListItem>
                 </asp:DropDownList>
