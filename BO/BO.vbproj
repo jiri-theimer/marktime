@@ -190,6 +190,7 @@
     <Compile Include="Helpers\EasyStringColletion.vb" />
     <Compile Include="Helpers\Sys\SysDbObject.vb" />
     <Compile Include="Helpers\WebService\p56TaskWsExtended.vb" />
+    <Compile Include="Helpers\Worksheet\ActivityHandler.vb" />
     <Compile Include="Helpers\Worksheet\ApprovingFramework.vb" />
     <Compile Include="Helpers\Worksheet\HoursInMonth.vb" />
     <Compile Include="Helpers\Worksheet\p31HoursPerPersonAndDay.vb" />

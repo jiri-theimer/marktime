@@ -36,11 +36,16 @@ Public Class handler_approve
                 .p71id = BO.p71IdENUM.Schvaleno
                 .p72id = p72ID
                 .p31ApprovingSet = cRec.p31ApprovingSet
+                .p32ID = cRec.p32ID
+                .p32ManualFeeFlag = cRec.p32ManualFeeFlag
+
                 If p72ID = BO.p72IdENUM.Fakturovat Or p72ID = BO.p72IdENUM.FakturovatPozdeji Then
                     Select Case cRec.p33ID
                         Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
                             .Rate_Billing_Approved = cRec.p31Rate_Billing_Orig
-
+                            If cRec.p32ManualFeeFlag = 1 Then
+                                .ManualFee_Approved = cRec.p31Amount_WithoutVat_Orig
+                            End If
                     End Select
                     .Value_Approved_Billing = cRec.p31Value_Orig
 

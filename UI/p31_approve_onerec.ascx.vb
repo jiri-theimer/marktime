@@ -174,6 +174,7 @@
             SetValue(.p31Value_Approved_Billing, False)
 
             If .p32IsBillable Then isbillable.Value = "1" Else isbillable.Value = "0"
+            Me.p32ManualFeeFlag.Value = .p32ManualFeeFlag.ToString
             Me.VatRate_Approved.Value = .p31VatRate_Approved
             Me.Rate_Billing_Approved.Value = .p31Rate_Billing_Approved
             Me.Rate_Internal_Approved.Value = .p31Rate_Internal_Approved
@@ -182,6 +183,9 @@
             Me.j27Code.Text = .j27Code_Billing_Orig
             basUI.SelectRadiolistValue(Me.p31ApprovingLevel, .p31ApprovingLevel.ToString)
 
+            If .p32ManualFeeFlag = 1 Then
+                Me.ManualFee.Value = .p31Amount_WithVat_Approved
+            End If
 
             If .p72ID_AfterApprove > BO.p72IdENUM._NotSpecified Then
                 p72id.SelectedValue = CInt(.p72ID_AfterApprove).ToString
@@ -267,6 +271,13 @@
                 End If
                 lblVatRate_Approved.Visible = False
                 VatRate_Approved.Visible = False
+                If Me.p32ManualFeeFlag.Value = "1" Then
+                    lblRate_Billing_Approved.Text = "Pevný honorář:"
+                    Rate_Billing_Approved.Visible = False
+                    Me.ManualFee.Visible = True
+                Else
+                    Me.ManualFee.Visible = False
+                End If
             Case Else
                 Me.j27Code.Visible = False
                 lblRate_Billing_Approved.Visible = False
@@ -286,6 +297,7 @@
             lblRate_Billing_Approved.Visible = False
             Rate_Billing_Approved.Visible = False
             Me.j27Code.Visible = False
+            Me.ManualFee.Visible = False
         End If
         If Me.CurrentP71ID = BO.p71IdENUM.Schvaleno And Me.CurrentP72ID = BO.p72IdENUM.ZahrnoutDoPausalu Then
             lblValue_FixPrice.Visible = True : Me.value_fixprice.Visible = True
@@ -358,6 +370,8 @@
             .p31Date = Me.p31Date.SelectedDate
             .p31ApprovingSet = Me.p31ApprovingSet.Text
             .p31ApprovingLevel = CInt(Me.p31ApprovingLevel.SelectedValue)
+            .p32ManualFeeFlag = CInt(Me.p32ManualFeeFlag.Value)
+            .ManualFee_Approved = BO.BAS.IsNullNum(Me.ManualFee.Value)
             If .p72id = BO.p72IdENUM.ZahrnoutDoPausalu Then
                 If Me.CurrentP33ID = BO.p33IdENUM.Cas Then
                     .p31Value_FixPrice = BO.BAS.ConvertTimeToHours(Me.value_fixprice.Text)

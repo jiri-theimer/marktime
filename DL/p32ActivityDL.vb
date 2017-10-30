@@ -62,6 +62,7 @@
             pars.Add("p32validuntil", .ValidUntil, DbType.DateTime)
             pars.Add("p32ExternalPID", .p32ExternalPID, DbType.String)
             pars.Add("p32AttendanceFlag", CInt(.p32AttendanceFlag), DbType.Int32)
+            pars.Add("p32ManualFeeFlag", .p32ManualFeeFlag, DbType.Int32)
         End With
 
         If _cDB.SaveRecord("p32Activity", pars, bolINSERT, strW, True, _curUser.j03Login) Then

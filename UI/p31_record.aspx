@@ -161,52 +161,63 @@
             j27id_pid = "<%=j27ID_Orig.SelectedValue%>";
             <%end If%>
             
-            $.post("Handler/handler_activity.ashx", { pid: p32id, p41id: p41id_pid, j27id: j27id_pid, oper: "profile" }, function (data) {
-               
-                if (data == ' ') {                    
+            $.post("Handler/handler_activity.ashx", { pid: p32id, p41id: p41id_pid, j27id: j27id_pid }, function (data) {
+                if (data == null) {
+                    alert("Neznámá chyba");
+                    return;
+                }
+                if (data.ErrorMessage != "") {
+                    alert(data.ErrorMessage);
                     return;
                 }                
-                var s = data.split("|");
                 
-
+                
                 <%If panT.Visible Then%>
-                if (s[0] != "" && self.document.getElementById("<%=p31Value_Orig.ClientID%>").value == "") {
-                    self.document.getElementById("<%=p31Value_Orig.ClientID%>").value = s[0];
+                if (Number(data.Default_p31Value) != 0 && self.document.getElementById("<%=p31Value_Orig.ClientID%>").value == "") {                    
+                    self.document.getElementById("<%=p31Value_Orig.ClientID%>").value = data.Default_p31Value_String;
+
+                }
+                if (data.p32ManualFeeFlag == 1) {
+                    document.getElementById("<%=tdManulFee.ClientID%>").style.display = "block";
+                }
+                else {
+                    document.getElementById("<%=tdManulFee.ClientID%>").style.display = "none";
                 }
                 <%End If%>
                 <%If panU.Visible Then%>
                 var ctl = $find("<%= Units_Orig.ClientID%>");
-                if (s[0] != "" && ctl.get_value() == "") {
-                    ctl.set_value(s[0]);
+                if (data.Default_p31Value_String != "" && ctl.get_value() == "") {
+                    ctl.set_value(data.Default_p31Value_String);
                 }
 
                 <%End If%>
                 <%If panM.Visible Then%>
-                if (Number(s[0]) != 0) {
-                    $find("<%= p31Calc_PieceAmount.ClientID%>").set_value(s[0]);
+                if (Number(data.Default_p31Value) != 0) {
+                    $find("<%= p31Calc_PieceAmount.ClientID%>").set_value(data.Default_p31Value);
                     $find("<%= p31Calc_Pieces.ClientID%>").set_value(1);                   
                     RecalcAmount_ByPieces();
                 }
                 <%End If%>
-                if (s[1] != "") {
+                if (data.Default_p31Text != "" && data.Default_p31Text !=null) {
+                    
                     if (self.document.getElementById("<%=p31text.ClientID%>").value == "")
-                        self.document.getElementById("<%=p31text.ClientID%>").value = s[1];
+                        self.document.getElementById("<%=p31text.ClientID%>").value = data.Default_p31Text;
                     else {
                         <%If Master.DataPID = 0 Then%>
-                        self.document.getElementById("<%=p31text.ClientID%>").value = s[1] + "\n\r" + self.document.getElementById("<%=p31text.ClientID%>").value;
+                        self.document.getElementById("<%=p31text.ClientID%>").value = data.Default_p31Text + "\n\r" + self.document.getElementById("<%=p31text.ClientID%>").value;
                         <%End If%>
                         //nebo nic 
                     }
                 }
 
-                if (s[2] == "1")
+                if (data.IsTextRequired==true)
                     document.getElementById("<%=Me.lblP31Text.ClientID%>").className = "lblReq";
                 else
                     document.getElementById("<%=Me.lblP31Text.ClientID%>").className = "lbl";
                 
-                if (s[3] != "") {
+                if (data.IsDefaultVatRate==true) {
                     var combo = $find("<%= p31VatRate_Orig.RadCombo.ClientID%>");                     
-                    combo.set_text(s[3]);
+                    combo.set_text(data.DefaultVatRate);
                 }
                 
 
@@ -390,10 +401,16 @@
                     <asp:TextBox ID="TimeUntil" runat="server" Style="width: 50px;"></asp:TextBox>
                     
                 </td>
+                <td id="tdManulFee" runat="server" style="display:none;">
+                    <span class="lblReq">Pevný honorář:</span>
+                    <telerik:RadNumericTextBox ID="ManualFee" runat="server" Width="70px" NumberFormat-ZeroPattern="n"></telerik:RadNumericTextBox>
+                </td>
                 <td>
                     <asp:Label ID="HandlerMessage" runat="server" Style="color: navy; font-size: 90%;"></asp:Label>
                 </td>
+               
             </tr>
+          
         </table>
     </asp:Panel>
     <asp:Panel ID="panU" runat="server" Visible="false">

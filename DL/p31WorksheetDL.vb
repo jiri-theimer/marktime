@@ -62,6 +62,7 @@
             .Add("p31text", cRecTU.p31Text, DbType.String)
 
             .Add("value_orig", cRecTU.p31Value_Orig, DbType.Double)
+            .Add("manualfee", cRecTU.ManualFee, DbType.Double)
 
             .Add("err", , DbType.String, ParameterDirection.Output, 500)
             .Add("round2minutes", , DbType.Int32, ParameterDirection.Output)
@@ -116,29 +117,31 @@
         pars.Add("val", dbValue)
         Return _cDB.RunSQL("UPDATE p31Worksheet_Temp SET " & strField & "=@val WHERE p31GUID=@guid AND p31ID=@pid", pars)
     End Function
-    Public Function Save_Approving(strGUID_TempData As String, intPID As Integer, p71id As BO.p71IdENUM, p72id As BO.p72IdENUM, dblValue_Approved_Billing As Double, dblRate_Billing_Approved As Double, dblValue_Approved_Internal As Double, dblRate_Internal_Approved As Double, strP31Text As String, dblVatRate_Approved As Double, strApprovingSet As String, datDate As Date?, intApprovingLevel As Integer, dblValue_FixPrice As Double) As Boolean
+    Public Function Save_Approving(cA As BO.p31WorksheetApproveInput) As Boolean
+        'strGUID_TempData As String, intPID As Integer, p71id As BO.p71IdENUM, p72id As BO.p72IdENUM, dblValue_Approved_Billing As Double, dblRate_Billing_Approved As Double, dblValue_Approved_Internal As Double, dblRate_Internal_Approved As Double, strP31Text As String, dblVatRate_Approved As Double, strApprovingSet As String, datDate As Date?, intApprovingLevel As Integer, dblValue_FixPrice As Double
         Dim pars As New DbParameters
         With pars
-            If strGUID_TempData <> "" Then
-                .Add("guid", strGUID_TempData, DbType.String)   'TEMP - dočasná data
+            If cA.GUID_TempData <> "" Then
+                .Add("guid", cA.GUID_TempData, DbType.String)   'TEMP - dočasná data
             End If
-            .Add("p31id", intPID, DbType.Int32)
+            .Add("p31id", cA.p31ID, DbType.Int32)
             .Add("j03id_sys", _curUser.PID, DbType.Int32)
-            .Add("p71id", BO.BAS.IsNullDBKey(p71id), DbType.Int32)
-            .Add("p72id", BO.BAS.IsNullDBKey(p72id), DbType.Int32)
-            .Add("approvingset", strApprovingSet, DbType.String)
-            .Add("value_approved_internal", dblValue_Approved_Internal, DbType.Double)
-            .Add("value_approved_billing", dblValue_Approved_Billing, DbType.Double)
-            .Add("rate_billing_approved", dblRate_Billing_Approved, DbType.Double)
-            .Add("rate_internal_approved", dblRate_Internal_Approved, DbType.Double)
-            .Add("p31Text", strP31Text, DbType.String)
-            .Add("vatrate_approved", dblVatRate_Approved, DbType.Double)
-            .Add("dat_p31date", datDate, DbType.DateTime)
-            .Add("approving_level", intApprovingLevel, DbType.Int32)
-            .Add("value_fixprice", dblValue_FixPrice, DbType.Double)
+            .Add("p71id", BO.BAS.IsNullDBKey(cA.p71id), DbType.Int32)
+            .Add("p72id", BO.BAS.IsNullDBKey(cA.p72id), DbType.Int32)
+            .Add("approvingset", cA.p31ApprovingSet, DbType.String)
+            .Add("value_approved_internal", cA.Value_Approved_Internal, DbType.Double)
+            .Add("value_approved_billing", cA.Value_Approved_Billing, DbType.Double)
+            .Add("rate_billing_approved", cA.Rate_Billing_Approved, DbType.Double)
+            .Add("rate_internal_approved", cA.Rate_Internal_Approved, DbType.Double)
+            .Add("p31Text", cA.p31Text, DbType.String)
+            .Add("vatrate_approved", cA.VatRate_Approved, DbType.Double)
+            .Add("dat_p31date", cA.p31Date, DbType.DateTime)
+            .Add("approving_level", cA.p31ApprovingLevel, DbType.Int32)
+            .Add("value_fixprice", cA.p31Value_FixPrice, DbType.Double)
+            .Add("manualfee_approved", cA.ManualFee_Approved, DbType.Double)
             .Add("err_ret", , DbType.String, ParameterDirection.Output, 500)
         End With
-        If strGUID_TempData <> "" Then
+        If cA.GUID_TempData <> "" Then
             'TEMP - dočasná data
             Return _cDB.RunSP("p31_save_approving_temp", pars)
         Else
@@ -215,6 +218,10 @@
                     pars.Add("p35ID", BO.BAS.IsNullDBKey(.p35ID), DbType.Int32)
                     pars.Add("p49ID", BO.BAS.IsNullDBKey(.p49ID), DbType.Int32)
                     pars.Add("j19ID", BO.BAS.IsNullDBKey(.j19ID), DbType.Int32)
+                End If
+                If (p33ID = BO.p33IdENUM.Cas Or p33ID = BO.p33IdENUM.Kusovnik) And cRec.ManualFee <> 0 Then
+                    'pevný honorář
+                    pars.Add("p31Amount_WithoutVat_Orig", .ManualFee, DbType.Double)
                 End If
             End With
 
@@ -698,8 +705,7 @@
         s.Append(",a.p31Value_Trimmed,a.p31Value_Approved_Billing,a.p31Value_Approved_Internal,a.p31Value_Invoiced,a.p31Amount_WithoutVat_Orig,a.p31Amount_WithVat_Orig,a.p31Amount_Vat_Orig,a.p31VatRate_Orig,a.p31Amount_WithoutVat_FixedCurrency,a.p31Amount_WithoutVat_Invoiced,a.p31Amount_WithVat_Invoiced,a.p31Amount_Vat_Invoiced,a.p31VatRate_Invoiced,a.p31Amount_WithoutVat_Invoiced_Domestic,a.p31Amount_WithVat_Invoiced_Domestic,a.p31Amount_Vat_Invoiced_Domestic,a.p31Minutes_Orig,a.p31Minutes_Trimmed,a.p31Minutes_Approved_Billing,a.p31Minutes_Approved_Internal,a.p31Minutes_Invoiced")
         s.Append(",a.p31Hours_Orig,a.p31Hours_Trimmed,a.p31Hours_Approved_Billing,a.p31Hours_Approved_Internal,a.p31Hours_Invoiced,a.p31HHMM_Orig,a.p31HHMM_Trimmed,a.p31HHMM_Approved_Billing,a.p31HHMM_Approved_Internal,a.p31HHMM_Invoiced,a.p31Rate_Billing_Orig,a.p31Rate_Internal_Orig,a.p31Rate_Billing_Approved,a.p31Rate_Internal_Approved,a.p31Rate_Billing_Invoiced,a.p31Amount_WithoutVat_Approved,a.p31Amount_WithVat_Approved,a.p31Amount_Vat_Approved,a.p31VatRate_Approved,a.p31ExchangeRate_Domestic,a.p31ExchangeRate_Invoice,a.p31Amount_Internal")
         s.Append(",a.p31DateTimeFrom_Orig,a.p31DateTimeUntil_Orig,a.p31Value_Orig_Entried,a.p31Calc_Pieces,a.p31Calc_PieceAmount,a.p35ID,a.j19ID")
-        ''s.Append(",p31free.*")
-        s.Append(",j02.j02LastName+' '+j02.j02FirstName as Person,p32.p32Name,p32.p34ID,p32.p32IsBillable,p34.p33ID,p34.p34Name,p34.p34IncomeStatementFlag,isnull(p41.p41NameShort,p41.p41Name) as p41Name,p41.p28ID_Client,p28Client.p28Name as ClientName,p28Client.p28CompanyShortName,p56.p56Name,p56.p56Code,j02owner.j02LastName+' '+j02owner.j02FirstName as Owner")
+        s.Append(",j02.j02LastName+' '+j02.j02FirstName as Person,p32.p32Name,p32.p34ID,p32.p32IsBillable,p32.p32ManualFeeFlag,p34.p33ID,p34.p34Name,p34.p34IncomeStatementFlag,isnull(p41.p41NameShort,p41.p41Name) as p41Name,p41.p28ID_Client,p28Client.p28Name as ClientName,p28Client.p28CompanyShortName,p56.p56Name,p56.p56Code,j02owner.j02LastName+' '+j02owner.j02FirstName as Owner")
         s.Append(",p91.p91Code,p70.p70Name,p71.p71Name,p72trim.p72Name as trim_p72Name,p72approve.p72Name as approve_p72Name,j27billing_orig.j27Code as j27Code_Billing_Orig,p32.p95ID,p95.p95Name,a.p31ApprovingSet,a.p31ApprovingLevel,a.p31Value_FixPrice,a.o23ID_First,a.p28ID_Supplier,supplier.p28Name as SupplierName,a.p49ID,a.j02ID_ContactPerson,cp.j02LastName+' '+cp.j02FirstName as ContactPerson,a.p31IsInvoiceManual," & bas.RecTail("p31", "a"))
         Return s.ToString
     End Function

@@ -21,7 +21,7 @@ Public Class p31WorksheetEntryInput
     Public Property VatRate_Orig As Double
 
     Public Property Value_Orig_Entried As String
-
+    Public Property ManualFee As Double
     Public Property p31Calc_Pieces As Double
     Public Property p31Calc_PieceAmount As Double
     Public Property p35ID As Integer

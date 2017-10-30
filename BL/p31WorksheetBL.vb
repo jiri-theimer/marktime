@@ -279,7 +279,7 @@ Class p31WorksheetBL
             End If
             Select Case .p33ID
                 Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
-                    If .p72id = BO.p72IdENUM.Fakturovat And .Rate_Billing_Approved = 0 Then
+                    If .p72id = BO.p72IdENUM.Fakturovat And .Rate_Billing_Approved = 0 And .p32ManualFeeFlag = 0 Then
                         _Error = "U statusu [Fakturovat] nesmí být nulová fakturační sazba." : Return False
                     End If
                     If (.p72id = BO.p72IdENUM.Fakturovat Or .p72id = BO.p72IdENUM.FakturovatPozdeji) And .Value_Approved_Billing = 0 And .p33ID = BO.p33IdENUM.Kusovnik Then
@@ -291,6 +291,7 @@ Class p31WorksheetBL
                     If .p72id = BO.p72IdENUM.FakturovatPozdeji And .Value_Approved_Billing = 0 And .p33ID = BO.p33IdENUM.Cas Then
                         _Error = "U statusu [Fakturovat později] nesmí být nulové hodiny." : Return False
                     End If
+
                 Case BO.p33IdENUM.PenizeBezDPH, BO.p33IdENUM.PenizeVcDPHRozpisu
                     If .p72id = BO.p72IdENUM.Fakturovat And .Value_Approved_Billing = 0 Then
                         _Error = "U statusu [Fakturovat] nesmí být nulová částka úkonu." : Return False
@@ -302,14 +303,19 @@ Class p31WorksheetBL
     Public Function Save_Approving(cApproveInput As BO.p31WorksheetApproveInput, bolTempData As Boolean) As Boolean Implements Ip31WorksheetBL.Save_Approving
         If Not Validate_Before_Save_Approving(cApproveInput, bolTempData) Then Return False
 
-        With cApproveInput            
+        With cApproveInput
+            Return _cDL.Save_Approving(cApproveInput)
             Select Case .p33ID
                 Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
-                    Return _cDL.Save_Approving(.GUID_TempData, .p31ID, .p71id, .p72id, .Value_Approved_Billing, .Rate_Billing_Approved, .Value_Approved_Internal, .Rate_Internal_Approved, .p31Text, .VatRate_Approved, .p31ApprovingSet, .p31Date, .p31ApprovingLevel, .p31Value_FixPrice)
-                Case BO.p33IdENUM.PenizeBezDPH
-                    Return _cDL.Save_Approving(.GUID_TempData, .p31ID, .p71id, .p72id, .Value_Approved_Billing, Nothing, .Value_Approved_Internal, Nothing, .p31Text, Nothing, .p31ApprovingSet, .p31Date, .p31ApprovingLevel, .p31Value_FixPrice)
-                Case BO.p33IdENUM.PenizeVcDPHRozpisu
-                    Return _cDL.Save_Approving(.GUID_TempData, .p31ID, .p71id, .p72id, .Value_Approved_Billing, Nothing, .Value_Approved_Internal, Nothing, .p31Text, .VatRate_Approved, .p31ApprovingSet, .p31Date, .p31ApprovingLevel, .p31Value_FixPrice)
+                    'Return _cDL.Save_Approving(.GUID_TempData, .p31ID, .p71id, .p72id, .Value_Approved_
+                    'Return _cDL.Save_Approving(.GUID_TempData, .p31ID, .p71id, .p72id, .Value_Approved_Billing, Nothing, .Value_Approved_Internal, Nothing, .p31Text, Nothing, .p31ApprovingSet, .p31Date, .p31ApprovingLevel, .p31Value_FixPrice)
+                    Return _cDL.Save_Approving(cApproveInput)
+                Case BO.p33IdENUM.PenizeVcDPHRozpisu, BO.p33IdENUM.PenizeBezDPH
+                    cApproveInput.Rate_Billing_Approved = 0
+                    cApproveInput.Rate_Internal_Approved = 0
+
+                    Return _cDL.Save_Approving(cApproveInput)
+                    'Return _cDL.Save_Approving(.GUID_TempData, .p31ID, .p71id, .p72id, .Value_Approved_Billing, Nothing, .Value_Approved_Internal, Nothing, .p31Text, .VatRate_Approved, .p31ApprovingSet, .p31Date, .p31ApprovingLevel, .p31Value_FixPrice)
                 Case Else
                     _Error = "unknown p33id input"
                     Return False

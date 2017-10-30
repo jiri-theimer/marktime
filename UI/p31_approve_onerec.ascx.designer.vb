@@ -104,6 +104,15 @@ Partial Public Class p31_approve_onerec
     Protected WithEvents Rate_Billing_Approved As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
+    '''ManualFee control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ManualFee As Global.Telerik.Web.UI.RadNumericTextBox
+
+    '''<summary>
     '''j27Code control.
     '''</summary>
     '''<remarks>
@@ -282,6 +291,15 @@ Partial Public Class p31_approve_onerec
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents isbillable As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''p32ManualFeeFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p32ManualFeeFlag As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidIsVertical control.

@@ -212,6 +212,24 @@ Partial Public Class p31_record
     Protected WithEvents TimeUntil As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''tdManulFee control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tdManulFee As Global.System.Web.UI.HtmlControls.HtmlTableCell
+
+    '''<summary>
+    '''ManualFee control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ManualFee As Global.Telerik.Web.UI.RadNumericTextBox
+
+    '''<summary>
     '''HandlerMessage control.
     '''</summary>
     '''<remarks>

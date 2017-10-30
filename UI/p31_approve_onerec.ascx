@@ -53,6 +53,8 @@
 
                                 <telerik:RadNumericTextBox ID="Rate_Billing_Approved" runat="server" NumberFormat-DecimalDigits="2" Width="80px" Value="0">
                                 </telerik:RadNumericTextBox>
+                                <telerik:RadNumericTextBox ID="ManualFee" runat="server" NumberFormat-DecimalDigits="2" Width="120px" Visible="false">
+                                </telerik:RadNumericTextBox>
                                 <asp:Label ID="j27Code" runat="server"></asp:Label>
                             </td>
                         </tr>
@@ -136,6 +138,7 @@
 <asp:HiddenField ID="j03id" runat="server" />
 <asp:HiddenField ID="p31id" runat="server" />
 <asp:HiddenField ID="isbillable" runat="server" />
+<asp:HiddenField ID="p32ManualFeeFlag" runat="server" Value="0" />
 <asp:HiddenField ID="hidIsVertical" runat="server" Value="0" />
 <asp:HiddenField ID="hidGUID_TempData" runat="server" />
 <asp:HiddenField ID="hidP41ID" runat="server" />

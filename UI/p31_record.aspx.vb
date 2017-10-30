@@ -266,6 +266,7 @@
                     Me.MyDefault_p34ID = .p34ID
                     If Master.Factory.j03UserBL.GetUserParam("p31_PreFillP32ID", "1") Then
                         Me.MyDefault_p32ID = .p32ID 'načítat aktivitu z posledního úkonu
+                        If .p32ManualFeeFlag = 1 Then tdManulFee.Style.Item("display") = "block"
                     End If
 
                     
@@ -524,7 +525,9 @@
                 Handle_ChangeP34()
             End If
             Me.CurrentP32ID = .p32ID
-
+            If .p32ManualFeeFlag = 1 Then
+                tdManulFee.Style.Item("display") = "block" : Me.ManualFee.Value = .p31Amount_WithoutVat_Orig    'pevný honorář
+            End If
 
             Me.p31Text.Text = .p31Text
             Me.p31Date.SelectedDate = .p31Date
@@ -566,11 +569,6 @@
                             Else
                                 Me.p31Value_Orig.Text = .p31Value_Orig.ToString
                             End If
-                            ''If .p31Value_Orig_Entried > "" Then
-                            ''    If .p31Value_Orig_Entried.IndexOf(":") > 0 Then Me.p31Value_Orig.Text = .p31HHMM_Orig Else Me.p31Value_Orig.Text = .p31Value_Orig.ToString
-                            ''Else
-                            ''    Me.p31Value_Orig.Text = .p31Value_Orig.ToString
-                            ''End If
 
                     End Select
                 Case BO.p33IdENUM.Kusovnik
@@ -948,7 +946,6 @@
                                 Return
                             End If
                         End If
-
                         If Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.PresnyCasOdDo Or (TimeFrom.Visible And TimeUntil.Visible) Then
                             .TimeFrom = Me.TimeFrom.Text
                             .TimeUntil = Me.TimeUntil.Text
@@ -958,6 +955,8 @@
                             Master.Notify(.ErrorMessage, 2)
                             Return
                         End If
+                        .ManualFee = BO.BAS.IsNullNum(Me.ManualFee.Value)
+
                     Case BO.p33IdENUM.Kusovnik
                         .Value_Orig = BO.BAS.IsNullNum(Me.Units_Orig.Value)
                         .Value_Orig_Entried = .Value_Orig

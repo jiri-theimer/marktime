@@ -85,7 +85,7 @@
     Private Sub Handle_ChangeP34()
         Dim mq As New BO.myQueryP32
         mq.p34id = BO.BAS.IsNullInt(Me.p34ID.SelectedValue)
-        Me.p32ID.DataSource = Master.Factory.p32ActivityBL.GetList(mq)
+        Me.p32ID.DataSource = Master.Factory.p32ActivityBL.GetList(mq).Where(Function(p) p.p32ManualFeeFlag = 0)
         Me.p32ID.DataBind()
         Dim cRec As BO.p34ActivityGroup = Master.Factory.p34ActivityGroupBL.Load(mq.p34ID)
         If cRec.p33ID = BO.p33IdENUM.Cas Then
