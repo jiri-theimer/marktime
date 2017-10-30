@@ -320,22 +320,22 @@ Partial Public Class p31_record_AA
     Protected WithEvents rate_approved As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''j07Code_Approved control.
+    '''j27Code_Approved control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j07Code_Approved As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents j27Code_Approved As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Datalabel3 control.
+    '''trInternal control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Datalabel3 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents trInternal As Global.System.Web.UI.HtmlControls.HtmlTableRow
 
     '''<summary>
     '''value_approved_internal control.

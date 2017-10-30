@@ -152,22 +152,35 @@
                     End If
                 End If
                 If .p33ID = BO.p33IdENUM.Cas Or .p33ID = BO.p33IdENUM.Kusovnik Then
-                    rate_approved.Text = BO.BAS.FN(.p31Rate_Billing_Approved)
-                    j07Code_Approved.Text = .j27Code_Billing_Orig
+                    If .p32ManualFeeFlag = 0 Then
+                        rate_approved.Text = BO.BAS.FN(.p31Rate_Billing_Approved)
+                    End If
+                    If .p32ManualFeeFlag = 1 Then
+                        rate_approved.Text = BO.BAS.FN(.p31Amount_WithoutVat_Approved)
+                        lblFakturacniSazba_Approved.Text = "Schválený pevný honorář:"
+                    End If
+
+                    j27Code_Approved.Text = .j27Code_Billing_Orig
                 Else
                     lblFakturacniSazba_Approved.Visible = False
                 End If
-                value_approved_internal.Text = BO.BAS.FN(.p31Value_Approved_Internal)
-                If .p31Value_Approved_Internal <> .p31Value_Orig Then
-                    imgKorekceInternal.Visible = True
-                    If .p31Value_Orig > .p31Value_Approved_Internal Then
-                        imgKorekceInternal.ImageUrl = "Images/correction_down.gif"
+                If .p33ID = BO.p33IdENUM.Cas Then
+                    trInternal.Visible = True
+                    value_approved_internal.Text = BO.BAS.FN(.p31Value_Approved_Internal)
+                    If .p31Value_Approved_Internal <> .p31Value_Orig Then
+                        imgKorekceInternal.Visible = True
+                        If .p31Value_Orig > .p31Value_Approved_Internal Then
+                            imgKorekceInternal.ImageUrl = "Images/correction_down.gif"
+                        Else
+                            imgKorekceInternal.ImageUrl = "Images/correction_up.gif"
+                        End If
                     Else
-                        imgKorekceInternal.ImageUrl = "Images/correction_up.gif"
+                        imgKorekceInternal.Visible = False
                     End If
                 Else
-                    imgKorekceInternal.Visible = False
+                    trInternal.Visible = False
                 End If
+
                 If .j02ID_ApprovedBy > 0 Then
 
                 End If

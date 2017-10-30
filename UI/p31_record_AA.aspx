@@ -173,7 +173,7 @@
                             <td>
                                 <asp:Label ID="value_approved_billing" runat="server" CssClass="valbold"></asp:Label>
 
-                                <asp:Label ID="lblKorekceCaption" runat="server" Text="Korekce:" Visible="false" GLX="1160"></asp:Label>
+                                <asp:Label ID="lblKorekceCaption" runat="server" Text="Korekce:" Visible="false" ></asp:Label>
                                 <asp:Image ID="imgKorekce" runat="server" ImageUrl="./images/correction.png" Visible="false" />
                                 <asp:Label ID="value_korekce" runat="server" CssClass="valbold"></asp:Label>
 
@@ -186,13 +186,13 @@
                             </td>
                             <td>
                                 <asp:Label ID="rate_approved" runat="server" CssClass="valbold"></asp:Label>
-                                <asp:Label ID="j07Code_Approved" runat="server" />
+                                <asp:Label ID="j27Code_Approved" runat="server" />
                             </td>
                         </tr>
                        
-                        <tr>
+                        <tr id="trInternal" runat="server">
                             <td>
-                                <asp:Label ID="Datalabel3" runat="server" Text="Hodnota pro interní schvalování:" CssClass="lbl"></asp:Label>
+                                <span class="lbl">Hodnota pro interní schvalování:</span>
                             </td>
                             <td>
                                 <asp:Label ID="value_approved_internal" runat="server" CssClass="valbold"></asp:Label>
