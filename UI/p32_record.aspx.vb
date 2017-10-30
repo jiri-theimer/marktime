@@ -74,7 +74,7 @@
             Me.p32FreeText02.Text = .p32FreeText02
             Me.p32FreeText03.Text = .p32FreeText03
             basUI.SelectDropdownlistValue(Me.p32AttendanceFlag, CInt(.p32AttendanceFlag).ToString)
-            basUI.SelectDropdownlistValue(Me.p32ManualFeeFlag, .p32ManualFeeFlag.ToString)
+            basUI.SelectRadiolistValue(Me.p32ManualFeeFlag, .p32ManualFeeFlag.ToString)
             Me.p32ManualFeeDefAmount.Value = .p32ManualFeeDefAmount
 
             basUI.SetColorToPicker(Me.p32Color, .p32Color)
@@ -165,7 +165,7 @@
 
     Private Sub p32_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         Me.lblp35id.Visible = False : Me.p35id.Visible = False
-        p32ManualFeeFlag.Visible = False : p32ManualFeeDefAmount.Visible = False
+        trManualFlag.Visible = False : p32ManualFeeDefAmount.Visible = False
 
         Dim intP34ID As Integer = BO.BAS.IsNullInt(Me.p34ID.SelectedValue)
         If intP34ID > 0 Then
@@ -175,7 +175,7 @@
             End If
 
             If cP34.p33ID = BO.p33IdENUM.Cas Then
-                Me.p32ManualFeeFlag.Visible = True
+                Me.trManualFlag.Visible = True
                 Dim b As Boolean = False
                 If Me.p32ManualFeeFlag.SelectedValue = "1" Then
                     b = True

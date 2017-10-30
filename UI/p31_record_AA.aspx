@@ -192,7 +192,7 @@
                        
                         <tr id="trInternal" runat="server">
                             <td>
-                                <span class="lbl">Hodnota pro interní schvalování:</span>
+                                <span class="lbl">Interně schválené hodiny:</span>
                             </td>
                             <td>
                                 <asp:Label ID="value_approved_internal" runat="server" CssClass="valbold"></asp:Label>

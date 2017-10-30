@@ -86,13 +86,22 @@ Partial Public Class p32_record
     Protected WithEvents p32Ordinary As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
+    '''trManualFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents trManualFlag As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
     '''p32ManualFeeFlag control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p32ManualFeeFlag As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents p32ManualFeeFlag As Global.System.Web.UI.WebControls.RadioButtonList
 
     '''<summary>
     '''lblp32ManualFeeDefAmount control.

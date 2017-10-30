@@ -95,6 +95,60 @@ Partial Public Class dbupdate
     Protected WithEvents txtScript As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''panMultiDbs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panMultiDbs As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''dbs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents dbs As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cmdCheckDbs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdCheckDbs As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdRunDbs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdRunDbs As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdRunSpDbs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdRunSpDbs As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''lblDbsMessage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblDbsMessage As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

@@ -26,6 +26,18 @@
             </div>
         </div>
         <asp:TextBox ID="txtScript" runat="server" Width="100%" Height="200px" TextMode="MultiLine" ReadOnly="true"></asp:TextBox>
+
+        <asp:panel ID="panMultiDbs" runat="server" CssClass="content-box2" Visible="false">
+            <div class="title">MULTIPLE db UPDATE</div>
+            <div class="content">
+                <asp:DropDownList ID="dbs" runat="server" AutoPostBack="true"></asp:DropDownList>
+                <asp:Button ID="cmdCheckDbs" runat="server" CssClass="cmd" Text="Otestovat" />
+                <asp:Button ID="cmdRunDbs" runat="server" CssClass="cmd" Text="Spustit aktualizaci" Visible="false" />
+                <asp:Button ID="cmdRunSpDbs" runat="server" CssClass="cmd" Text="Uložené procedury" Visible="false" />
+                <asp:Label ID="lblDbsMessage" runat="server" CssClass="infoNotificationRed"></asp:Label>
+            </div>
+           
+        </asp:panel>
     </div>
 
 </asp:Content>

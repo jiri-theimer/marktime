@@ -34,12 +34,14 @@
                 <telerik:RadNumericTextBox ID="p32Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
             </td>
         </tr>
-        <tr>
+        <tr id="trManualFlag" runat="server">
             <td colspan="2">
-                <asp:DropDownList ID="p32ManualFeeFlag" runat="server" AutoPostBack="true" BackColor="Aquamarine">
-                    <asp:ListItem Value="0" Text="Honorář časového úkonu se počítá násobkem hodin a fakturační hodinové sazby" Selected="true"></asp:ListItem>
-                    <asp:ListItem Value="1" Text="Výši honoráře zadává uživatel ručně ve formuláři časového úkonu jako [Pevný honorář]"></asp:ListItem>
-                </asp:DropDownList>
+                <div class="innerform_light">
+                    <asp:RadioButtonList ID="p32ManualFeeFlag" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
+                        <asp:ListItem Value="0" Text="Honorář časového úkonu se počítá násobkem hodin a fakturační hodinové sazby" Selected="true"></asp:ListItem>
+                        <asp:ListItem Value="1" Text="Výši honoráře zadává uživatel ručně ve formuláři časového úkonu jako [Pevný honorář]"></asp:ListItem>
+                    </asp:RadioButtonList>
+                </div>
                 <asp:Label ID="lblp32ManualFeeDefAmount" runat="server" Text="Výchozí částka pevného honoráře:" CssClass="lbl"></asp:Label>
                 <telerik:RadNumericTextBox ID="p32ManualFeeDefAmount" runat="server" Width="120px"></telerik:RadNumericTextBox>
             </td>
