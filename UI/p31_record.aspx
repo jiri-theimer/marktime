@@ -179,6 +179,9 @@
                 }
                 if (data.p32ManualFeeFlag == 1) {
                     document.getElementById("<%=tdManulFee.ClientID%>").style.display = "block";
+                    var ctl = $find("<%= ManualFee.ClientID%>");
+                    if (data.p32ManualFeeDefAmount !=0)
+                        ctl.set_value(data.p32ManualFeeDefAmount);
                 }
                 else {
                     document.getElementById("<%=tdManulFee.ClientID%>").style.display = "none";

@@ -36,6 +36,7 @@ Public Class handler_activity
             _ret.Default_p31Value_String = cRec.p32Value_Default.ToString
         End If
         _ret.p32ManualFeeFlag = cRec.p32ManualFeeFlag
+        _ret.p32ManualFeeDefAmount = cRec.p32ManualFeeDefAmount
 
         If cRec Is Nothing Then
             _ret.ErrorMessage = "cRec is missing"

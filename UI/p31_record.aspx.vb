@@ -265,8 +265,12 @@
                 With cRecLast
                     Me.MyDefault_p34ID = .p34ID
                     If Master.Factory.j03UserBL.GetUserParam("p31_PreFillP32ID", "1") Then
-                        Me.MyDefault_p32ID = .p32ID 'načítat aktivitu z posledního úkonu
-                        If .p32ManualFeeFlag = 1 Then tdManulFee.Style.Item("display") = "block"
+                        Me.MyDefault_p32ID = .p32ID 'načítat aktivitu z posledního úkonu                    
+                        If .p32ManualFeeFlag = 1 Then
+                            tdManulFee.Style.Item("display") = "block"  'pevný honorář
+                            Dim cP32 As BO.p32Activity = Master.Factory.p32ActivityBL.Load(.p32ID)
+                            Me.ManualFee.Value = cP32.p32ManualFeeDefAmount
+                        End If
                     End If
 
                     

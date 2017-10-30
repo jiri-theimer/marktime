@@ -86,22 +86,31 @@ Partial Public Class p32_record
     Protected WithEvents p32Ordinary As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
-    '''Label3 control.
+    '''p32ManualFeeFlag control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents p32ManualFeeFlag As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''p32Color control.
+    '''lblp32ManualFeeDefAmount control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p32Color As Global.Telerik.Web.UI.RadColorPicker
+    Protected WithEvents lblp32ManualFeeDefAmount As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p32ManualFeeDefAmount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p32ManualFeeDefAmount As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
     '''p32IsBillable control.
@@ -390,6 +399,24 @@ Partial Public Class p32_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p32FreeText03 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Label3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p32Color control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p32Color As Global.Telerik.Web.UI.RadColorPicker
 
     '''<summary>
     '''Page3 control.

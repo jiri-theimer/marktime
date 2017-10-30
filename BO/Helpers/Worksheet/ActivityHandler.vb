@@ -8,4 +8,5 @@
     Public Property ErrorMessage As String = ""
 
     Public Property p32ManualFeeFlag As Integer = 0
+    Public Property p32ManualFeeDefAmount As Double
 End Class

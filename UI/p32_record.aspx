@@ -12,7 +12,7 @@
     <table cellpadding="5" cellspacing="2">
         <tr>
             <td>
-                
+
                 <asp:Label runat="server" ID="Label5" Text="Sešit:" CssClass="lblReq" meta:resourcekey="lblP34ID"></asp:Label>
             </td>
             <td>
@@ -26,7 +26,7 @@
         <tr>
             <td>
                 <asp:Label runat="server" ID="Label4" Text="Název aktivity:" CssClass="lblReq"></asp:Label>
-                
+
             </td>
             <td>
                 <asp:TextBox ID="p32name" runat="server" Style="width: 400px;"></asp:TextBox>
@@ -34,17 +34,17 @@
                 <telerik:RadNumericTextBox ID="p32Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
             </td>
         </tr>
-       
-        <tr valign="top">
-            <td>
-                <asp:Label runat="server" ID="Label3" Text="Barva:"></asp:Label>
-            </td>
-            <td>
-                <telerik:RadColorPicker ID="p32Color" runat="server" CurrentColorText="Vybraná barva" NoColorText="Bez barvy" ShowIcon="true" Preset="Default">
-                </telerik:RadColorPicker>
-                <span class="infoInForm">Barva pro odlišení aktivity v DAYLINE zobrazení a v operativním plánování.</span>
+        <tr>
+            <td colspan="2">
+                <asp:DropDownList ID="p32ManualFeeFlag" runat="server" AutoPostBack="true">
+                    <asp:ListItem Value="0" Text="Honorář časového úkonu se počítá násobkem hodin a fakturační hodinové sazby" Selected="true"></asp:ListItem>
+                    <asp:ListItem Value="1" Text="Výši honoráře zadává uživatel ručně ve formuláři časového úkonu jako [Pevný honorář]"></asp:ListItem>
+                </asp:DropDownList>
+                <asp:Label ID="lblp32ManualFeeDefAmount" runat="server" Text="Výchozí částka pevného honoráře:" CssClass="lbl"></asp:Label>
+                <telerik:RadNumericTextBox ID="p32ManualFeeDefAmount" runat="server" Width="120px"></telerik:RadNumericTextBox>
             </td>
         </tr>
+
         <tr>
             <td colspan="2">
 
@@ -68,7 +68,7 @@
         <telerik:RadPageView ID="Page1" runat="server">
             <table cellpadding="5" cellspacing="2">
                 <tr valign="top">
-                    <td>                        
+                    <td>
                         <asp:Label runat="server" ID="Label6" Text="Výchozí obsah popisu úkonu:"></asp:Label>
                     </td>
                     <td>
@@ -77,9 +77,9 @@
                 </tr>
                 <tr valign="top">
                     <td>
-                        
+
                         <asp:Label runat="server" ID="Label7" Text="Nápověda pro zapisování úkonu:"></asp:Label>
-                        
+
                     </td>
                     <td>
                         <asp:TextBox ID="p32HelpText" runat="server" Style="width: 500px; height: 140px;" TextMode="MultiLine"></asp:TextBox>
@@ -172,7 +172,16 @@
                         <asp:TextBox ID="p32FreeText03" runat="server"></asp:TextBox>
                     </td>
                 </tr>
-
+                <tr valign="top">
+                    <td>
+                        <asp:Label runat="server" ID="Label3" Text="Barva:"></asp:Label>
+                    </td>
+                    <td>
+                        <telerik:RadColorPicker ID="p32Color" runat="server" CurrentColorText="Vybraná barva" NoColorText="Bez barvy" ShowIcon="true" Preset="Default">
+                        </telerik:RadColorPicker>
+                        <span class="infoInForm">Barva pro odlišení aktivity v DAYLINE zobrazení a v operativním plánování.</span>
+                    </td>
+                </tr>
             </table>
 
         </telerik:RadPageView>

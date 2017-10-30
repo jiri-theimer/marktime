@@ -607,11 +607,36 @@ Public Class admin_framework
                 If cRec.p34Color <> "" Then
                     dataItem("p34Color").Style.Item("background-color") = cRec.p34Color
                 End If
+                Select Case cRec.p33ID
+                    Case BO.p33IdENUM.PenizeBezDPH, BO.p33IdENUM.PenizeVcDPHRozpisu
+                        If cRec.p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Prijem Then
+                            dataItem.ForeColor = Drawing.Color.Blue
+                        Else
+                            dataItem.ForeColor = Drawing.Color.Brown
+                        End If
+                    Case BO.p33IdENUM.Kusovnik
+                        dataItem.ForeColor = Drawing.Color.Green
+                End Select
             Case "p32"
                 Dim cRec As BO.p32Activity = CType(e.Item.DataItem, BO.p32Activity)
                 If cRec.p32Color <> "" Then
                     dataItem("p32Color").Style.Item("background-color") = cRec.p32Color
                 End If
+                Select Case cRec.p33ID
+                    Case 1
+                        If cRec.p32ManualFeeFlag = 1 Then
+                            dataItem.Font.Italic = True
+                        End If
+                    Case 3
+                        dataItem.ForeColor = Drawing.Color.Green
+                    Case 2, 5
+                        If cRec.p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Prijem Then
+                            dataItem.ForeColor = Drawing.Color.Blue
+                        Else
+                            dataItem.ForeColor = Drawing.Color.Brown
+                        End If
+                End Select
+                
             Case "o40"
                 Dim cRec As BO.o40SmtpAccount = CType(e.Item.DataItem, BO.o40SmtpAccount)
                 If cRec.o40IsGlobalDefault Then

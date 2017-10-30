@@ -44,6 +44,7 @@ Public Class p32Activity
     Public Property p32ExternalPID As String
     Public Property p32AttendanceFlag As p32AttendanceFlagENUM = p32AttendanceFlagENUM._None
     Public Property p32ManualFeeFlag As Integer
+    Public Property p32ManualFeeDefAmount As Double
     Private Property _p34Name As String
     Public ReadOnly Property p34Name As String
         Get

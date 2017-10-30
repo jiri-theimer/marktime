@@ -262,9 +262,14 @@ Public Class p31_approving_step3
                                     Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
                                         .Rate_Billing_Approved = cRec.p31Rate_Billing_Orig
                                         .VatRate_Approved = cRec.p31VatRate_Orig
-                                        If cRec.p31Rate_Billing_Orig = 0 Then
+                                        If (cRec.p31Rate_Billing_Orig = 0 And cRec.p32ManualFeeFlag = 0) Or (cRec.p31Amount_WithoutVat_Orig = 0 And cRec.p32ManualFeeFlag = 1) Then
                                             .p72id = BO.p72IdENUM.ZahrnoutDoPausalu
                                         End If
+                                        If cRec.p32ManualFeeFlag = 1 Then
+                                            .p32ManualFeeFlag = 1
+                                            .ManualFee_Approved = cRec.p31Amount_WithoutVat_Orig
+                                        End If
+                                        
                                         If cRec.p72ID_AfterTrimming > BO.p72IdENUM._NotSpecified Then
                                             'uživatel zadal v úkonu výchozí korekci pro schvalování
                                             .p72id = cRec.p72ID_AfterTrimming
@@ -314,6 +319,10 @@ Public Class p31_approving_step3
                         .VatRate_Approved = cRec.p31VatRate_Approved
                         .Rate_Billing_Approved = cRec.p31Rate_Billing_Approved
                         .Rate_Internal_Approved = cRec.p31Rate_Internal_Approved
+                        .p32ManualFeeFlag = cRec.p32ManualFeeFlag
+                        If cRec.p32ManualFeeFlag = 1 Then
+                            .ManualFee_Approved = cRec.p31Amount_WithoutVat_Approved
+                        End If
                         If .p72id = BO.p72IdENUM.ZahrnoutDoPausalu Then
                             .p31Value_FixPrice = cRec.p31Value_FixPrice
                         End If
@@ -682,13 +691,18 @@ Public Class p31_approving_step3
                 .Value_Approved_Internal = cRec.p31Value_Approved_Internal
                 Select Case cRec.p33ID
                     Case BO.p33IdENUM.Kusovnik, BO.p33IdENUM.Cas
-                        .Rate_Billing_Approved = cRec.p31Rate_Billing_Approved
                         .Rate_Internal_Approved = cRec.p31Rate_Internal_Approved
                         .VatRate_Approved = cRec.p31VatRate_Approved
                         If .p72id = BO.p72IdENUM.ZahrnoutDoPausalu Then
                             .p31Value_FixPrice = cRec.p31Value_FixPrice
                         Else
                             .p31Value_FixPrice = 0
+                        End If
+                        If cRec.p32ManualFeeFlag = 1 Then
+                            .p32ManualFeeFlag = 1
+                            .ManualFee_Approved = cRec.p31Amount_WithoutVat_Approved
+                        Else
+                            .Rate_Billing_Approved = cRec.p31Rate_Billing_Approved
                         End If
                     Case BO.p33IdENUM.PenizeBezDPH, BO.p33IdENUM.PenizeVcDPHRozpisu
                         .VatRate_Approved = cRec.p31VatRate_Approved

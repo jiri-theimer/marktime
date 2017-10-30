@@ -74,6 +74,8 @@
             Me.p32FreeText02.Text = .p32FreeText02
             Me.p32FreeText03.Text = .p32FreeText03
             basUI.SelectDropdownlistValue(Me.p32AttendanceFlag, CInt(.p32AttendanceFlag).ToString)
+            basUI.SelectDropdownlistValue(Me.p32ManualFeeFlag, .p32ManualFeeFlag.ToString)
+            Me.p32ManualFeeDefAmount.Value = .p32ManualFeeDefAmount
 
             basUI.SetColorToPicker(Me.p32Color, .p32Color)
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -98,40 +100,50 @@
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
         With Master.Factory.p32ActivityBL
             Dim cRec As BO.p32Activity = IIf(Master.DataPID <> 0, .Load(Master.DataPID), New BO.p32Activity)
-            cRec.p32Name = Me.p32name.Text
-            cRec.p34ID = BO.BAS.IsNullInt(Me.p34ID.SelectedValue)
-            cRec.x15ID = BO.BAS.IsNullInt(Me.x15id.SelectedValue)
-            cRec.p95ID = BO.BAS.IsNullInt(Me.p95id.SelectedValue)
-            If Me.p35id.Visible Then cRec.p35ID = BO.BAS.IsNullInt(Me.p35id.SelectedValue)
+            With cRec
+                .p32Name = Me.p32name.Text
+                .p34ID = BO.BAS.IsNullInt(Me.p34ID.SelectedValue)
+                .x15ID = BO.BAS.IsNullInt(Me.x15id.SelectedValue)
+                .p95ID = BO.BAS.IsNullInt(Me.p95id.SelectedValue)
+                If Me.p35id.Visible Then .p35ID = BO.BAS.IsNullInt(Me.p35id.SelectedValue)
 
-            cRec.p32Code = Me.p32Code.Text
-            cRec.p32IsBillable = Me.p32IsBillable.Checked
-            cRec.p32IsTextRequired = Me.p32IsTextRequired.Checked
-            cRec.p32Ordinary = BO.BAS.IsNullInt(Me.p32Ordinary.Value)
-            cRec.p32Value_Default = BO.BAS.IsNullNum(Me.p32Value_Default.Value)
-            cRec.p32Value_Maximum = BO.BAS.IsNullNum(Me.p32Value_Maximum.Value)
-            cRec.p32Value_Minimum = BO.BAS.IsNullNum(Me.p32Value_Minimum.Value)
-            cRec.p32DefaultWorksheetText = Me.p32DefaultWorksheetText.Text
-            cRec.p32HelpText = Me.p32HelpText.Text
+                .p32Code = Me.p32Code.Text
+                .p32IsBillable = Me.p32IsBillable.Checked
+                .p32IsTextRequired = Me.p32IsTextRequired.Checked
+                .p32Ordinary = BO.BAS.IsNullInt(Me.p32Ordinary.Value)
+                .p32Value_Default = BO.BAS.IsNullNum(Me.p32Value_Default.Value)
+                .p32Value_Maximum = BO.BAS.IsNullNum(Me.p32Value_Maximum.Value)
+                .p32Value_Minimum = BO.BAS.IsNullNum(Me.p32Value_Minimum.Value)
+                .p32DefaultWorksheetText = Me.p32DefaultWorksheetText.Text
+                .p32HelpText = Me.p32HelpText.Text
 
-            cRec.p32Name_BillingLang1 = Me.p32Name_BillingLang1.Text
-            cRec.p32Name_BillingLang2 = Me.p32Name_BillingLang2.Text
-            cRec.p32Name_BillingLang3 = Me.p32Name_BillingLang3.Text
-            cRec.p32Name_BillingLang4 = Me.p32Name_BillingLang4.Text
+                .p32Name_BillingLang1 = Me.p32Name_BillingLang1.Text
+                .p32Name_BillingLang2 = Me.p32Name_BillingLang2.Text
+                .p32Name_BillingLang3 = Me.p32Name_BillingLang3.Text
+                .p32Name_BillingLang4 = Me.p32Name_BillingLang4.Text
 
-            cRec.p32DefaultWorksheetText_Lang1 = Me.p32DefaultWorksheetText_Lang1.Text
-            cRec.p32DefaultWorksheetText_Lang2 = Me.p32DefaultWorksheetText_Lang2.Text
-            cRec.p32DefaultWorksheetText_Lang3 = Me.p32DefaultWorksheetText_Lang3.Text
-            cRec.p32DefaultWorksheetText_Lang4 = Me.p32DefaultWorksheetText_Lang4.Text
-            cRec.p32FreeText01 = Me.p32FreeText01.Text
-            cRec.p32FreeText02 = Me.p32FreeText02.Text
-            cRec.p32FreeText03 = Me.p32FreeText03.Text
+                .p32DefaultWorksheetText_Lang1 = Me.p32DefaultWorksheetText_Lang1.Text
+                .p32DefaultWorksheetText_Lang2 = Me.p32DefaultWorksheetText_Lang2.Text
+                .p32DefaultWorksheetText_Lang3 = Me.p32DefaultWorksheetText_Lang3.Text
+                .p32DefaultWorksheetText_Lang4 = Me.p32DefaultWorksheetText_Lang4.Text
+                .p32FreeText01 = Me.p32FreeText01.Text
+                .p32FreeText02 = Me.p32FreeText02.Text
+                .p32FreeText03 = Me.p32FreeText03.Text
 
-            cRec.p32Color = basUI.GetColorFromPicker(Me.p32Color)
-            cRec.ValidFrom = Master.RecordValidFrom
-            cRec.ValidUntil = Master.RecordValidUntil
-            cRec.p32ExternalPID = Me.p32ExternalPID.Text
-            cRec.p32AttendanceFlag = BO.BAS.IsNullInt(Me.p32AttendanceFlag.SelectedValue)
+                .p32Color = basUI.GetColorFromPicker(Me.p32Color)
+                .ValidFrom = Master.RecordValidFrom
+                .ValidUntil = Master.RecordValidUntil
+                .p32ExternalPID = Me.p32ExternalPID.Text
+                .p32AttendanceFlag = BO.BAS.IsNullInt(Me.p32AttendanceFlag.SelectedValue)
+                .p32ManualFeeFlag = CInt(Me.p32ManualFeeFlag.SelectedValue)
+                If .p32ManualFeeFlag = 1 Then
+                    .p32ManualFeeDefAmount = BO.BAS.IsNullNum(Me.p32ManualFeeDefAmount.Value)
+                Else
+                    .p32ManualFeeDefAmount = 0
+                End If
+            End With
+            
+
 
             If .Save(cRec) Then
                 Master.DataPID = .LastSavedPID
@@ -155,6 +167,12 @@
                 lblp35id.Visible = True : Me.p35id.Visible = True
             End If
         End If
+        Dim b As Boolean = False
+        If Me.p32ManualFeeFlag.SelectedValue = "1" Then
+            b = True
+        End If
+        lblp32ManualFeeDefAmount.Visible = b
+        p32ManualFeeDefAmount.Visible = b
 
     End Sub
 End Class

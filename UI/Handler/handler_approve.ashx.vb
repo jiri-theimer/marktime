@@ -39,6 +39,7 @@ Public Class handler_approve
                 .p32ID = cRec.p32ID
                 .p32ManualFeeFlag = cRec.p32ManualFeeFlag
 
+
                 If p72ID = BO.p72IdENUM.Fakturovat Or p72ID = BO.p72IdENUM.FakturovatPozdeji Then
                     Select Case cRec.p33ID
                         Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
