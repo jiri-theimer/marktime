@@ -191,11 +191,20 @@
             Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
                 If cRec.p33ID = BO.p33IdENUM.Cas Then
                     Me.lblEdit_Value.Text = "Fakturované hodiny:"
-                    lblEdit_Rate.Text = "Fakturovaná hodinová sazba:"
+                    If cRec.p32ManualFeeFlag = 0 Then
+                        lblEdit_Rate.Text = "Fakturovaná hodinová sazba:"
+                    End If
+                    If cRec.p32ManualFeeFlag = 1 Then
+                        lblEdit_Rate.Text = "Pevný honorář:"
+                        Me.Edit_ManualFee.Visible = True
+                        Me.Edit_ManualFee.Value = cRec.p31Amount_WithoutVat_Invoiced
+                        Me.Edit_p31Rate_Billing_Invoiced.Visible = False
+                    End If
                 Else
                     lblEdit_Value.Text = "Fakturovat počet:"
                     lblEdit_Rate.Text = "Fakturovaná sazba:"
                 End If
+                
                 Edit_p31Rate_Billing_Invoiced.Value = cRec.p31Rate_Billing_Invoiced
                 Me.rate_j27code.Text = cP91.j27Code
                 ''Me.lblEdit_VatRate.Visible = False : Me.Edit_p31VatRate_Invoiced.Visible = False
@@ -279,6 +288,7 @@
             With c
                 .p31ID = cRec.PID
                 .p33ID = cRec.p33ID
+                .p32ManualFeeFlag = cRec.p32ManualFeeFlag
                 .p70ID = CType(CInt(Me.Edit_p70ID.SelectedValue), BO.p70IdENUM)
                 .TextUpdate = Trim(Me.Edit_p31Text.Text)
                 Select Case cRec.p33ID
@@ -299,6 +309,10 @@
                     Dim cT As New BO.clsTime
                     .InvoiceValue = cT.ShowAsDec(Me.Edit_p31Value_Invoiced.Text)
                     If .p70ID = BO.p70IdENUM.ZahrnutoDoPausalu Then .FixPriceValue = cT.ShowAsDec(Me.Edit_p31Value_FixPrice.Text)
+
+                    If cRec.p32ManualFeeFlag = 1 Then
+                        .ManualFee = Me.Edit_ManualFee.Value
+                    End If
                 Else
                     .InvoiceValue = BO.BAS.IsNullNum(Me.Edit_p31Value_Invoiced.Text)
                     If .p70ID = BO.p70IdENUM.ZahrnutoDoPausalu Then .FixPriceValue = BO.BAS.IsNullNum(Me.Edit_p31Value_FixPrice.Text)

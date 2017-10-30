@@ -393,8 +393,11 @@ Class p31WorksheetBL
             _Error = "Na vstupu je minimálně jeden úkon, který postrádá fakturační status." : Return False
         End If
       
-        If lis.Where(Function(p) p.p70ID = BO.p70IdENUM.Vyfakturovano And (p.p33ID = BO.p33IdENUM.Cas Or p.p33ID = BO.p33IdENUM.Kusovnik) And (p.InvoiceRate = 0 Or p.InvoiceValue = 0)).Count > 0 Then
+        If lis.Where(Function(p) p.p70ID = BO.p70IdENUM.Vyfakturovano And p.p32ManualFeeFlag = 0 And (p.p33ID = BO.p33IdENUM.Cas Or p.p33ID = BO.p33IdENUM.Kusovnik) And (p.InvoiceRate = 0 Or p.InvoiceValue = 0)).Count > 0 Then
             _Error = "Na vstupu je minimálně jeden časový úkon pro fakturaci s nulovou sazbou nebo nulovým počtem hodin." : Return False
+        End If
+        If lis.Where(Function(p) p.p70ID = BO.p70IdENUM.Vyfakturovano And p.p32ManualFeeFlag = 1 And p.p33ID = BO.p33IdENUM.Cas And (p.ManualFee = 0 Or p.InvoiceValue = 0)).Count > 0 Then
+            _Error = "Na vstupu je minimálně jeden časový úkon pro fakturaci s nulovým pevným honorářem nebo s nulovým počtem hodin." : Return False
         End If
         If lis.Where(Function(p) p.p70ID = BO.p70IdENUM.Vyfakturovano And (p.p33ID = BO.p33IdENUM.PenizeBezDPH Or p.p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu) And p.InvoiceValue = 0).Count > 0 Then
             _Error = "Na vstupu je minimálně jeden peněžní úkon pro fakturaci s nulovou částkou." : Return False

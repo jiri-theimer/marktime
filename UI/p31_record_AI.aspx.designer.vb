@@ -77,6 +77,15 @@ Partial Public Class p31_record_AI
     Protected WithEvents Edit_p31Rate_Billing_Invoiced As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
+    '''Edit_ManualFee control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Edit_ManualFee As Global.Telerik.Web.UI.RadNumericTextBox
+
+    '''<summary>
     '''rate_j27code control.
     '''</summary>
     '''<remarks>

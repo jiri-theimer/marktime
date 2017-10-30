@@ -8,5 +8,6 @@
     Public Property TextUpdate As String
     Public Property FixPriceValue As Double
     Public Property p31IsInvoiceManual As Boolean
-
+    Public Property ManualFee As Double
+    Public Property p32ManualFeeFlag As Integer = 0
 End Class
