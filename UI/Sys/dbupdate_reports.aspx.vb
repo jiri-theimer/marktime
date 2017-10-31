@@ -42,6 +42,19 @@ Public Class dbupdate_reports
 
             rp1.DataSource = lis
             rp1.DataBind()
+
+
+            If BO.ASS.GetConfigVal("dbupdate-dbs") <> "" Then
+                Dim names As List(Of String) = BO.BAS.ConvertDelimitedString2List(BO.ASS.GetConfigVal("dbupdate-dbs"), ";")
+                If names.Count > 0 Then
+                    panMultiDbs.Visible = True
+                    For Each s In names
+                        Me.dbs.Items.Add(s)
+                    Next
+                End If
+
+
+            End If
         End If
     End Sub
 
@@ -215,5 +228,20 @@ Public Class dbupdate_reports
 
     Private Sub cmdDefPage_Click(sender As Object, e As EventArgs) Handles cmdDefPage.Click
         Response.Redirect("../default.aspx")
+    End Sub
+
+    
+    Private Sub cmdGoDbs_Click(sender As Object, e As EventArgs) Handles cmdGoDbs.Click
+        Dim s As String = String.Format("server=Sql.mycorecloud.net\MARKTIME;database={0};uid=MARKTIME;pwd=58PMapN2jhBvdblxqnIB;", Me.dbs.SelectedItem.Text)
+        Master.Factory.ChangeConnectString(s)
+        HandleImport()
+        With Master.Factory.x31ReportBL.GetList(New BO.myQuery).OrderByDescending(Function(p) p.PID)(0)
+            lblDbsMessage.Text = .x31Name & " (" & .DateInsert.ToString & ")"
+        End With
+
+    End Sub
+
+    Private Sub dbs_SelectedIndexChanged(sender As Object, e As EventArgs) Handles dbs.SelectedIndexChanged
+        lblDbsMessage.Text = ""
     End Sub
 End Class

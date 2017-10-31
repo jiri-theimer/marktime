@@ -59,6 +59,42 @@ Partial Public Class dbupdate_reports
     Protected WithEvents rp1 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
+    '''panMultiDbs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panMultiDbs As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''dbs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents dbs As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cmdGoDbs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdGoDbs As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''lblDbsMessage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblDbsMessage As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>
