@@ -1027,6 +1027,7 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.GridGroupByColumn(My.Resources.common.Faktura, "p91Code", "a.p91ID", "min(p91.p91Code)"))
                 lis.Add(New BO.GridGroupByColumn(My.Resources.common.Schvaleno, "p71Name", "a.p71ID", "min(p71.p71Name)"))
                 lis.Add(New BO.GridGroupByColumn(My.Resources.common.FakturacniStatus, "p70Name", "a.p70ID", "min(p70.p70Name)"))
+                lis.Add(New BO.GridGroupByColumn("Úkol", "p56Name", "a.p56ID", "min(p56.p56Name+' ('+p41.p41Name+')')"))
                 lis.Add(New BO.GridGroupByColumn(My.Resources.common.Dodavatel, "SupplierName", "a.p28ID_Supplier", "min(supplier.p28Name)"))
                 lis.Add(New BO.GridGroupByColumn("Billing dávka", "p31ApprovingSet", "a.p31ApprovingSet", "min(a.p31ApprovingSet)"))
             Case BO.x29IdEnum.p56Task

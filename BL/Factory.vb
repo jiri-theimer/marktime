@@ -104,6 +104,16 @@
             Return _cUser
         End Get
     End Property
+    Public Sub ChangeConnectString(strNewConstring As String)
+        Dim objType As Type = Me.GetType()
+        For Each pInfo In objType.GetProperties(Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.IgnoreCase)
+            If Left(pInfo.Name, 1) = "_" And pInfo.Name <> "_cUser" Then
+                pInfo.SetValue(Me, Nothing, Nothing)
+            End If
+        Next
+        _cUser.ExplicitConnectString = strNewConstring
+        
+    End Sub
 
     Public Overloads Function TestPermission(intNeededPermissionValue As BO.x53PermValEnum) As Boolean
         If _cUser Is Nothing Then Return False

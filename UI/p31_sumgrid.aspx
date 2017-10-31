@@ -238,7 +238,8 @@
             if (p31ids != "") {
                 url = url + "&drilldown_p31ids=" + p31ids;
             }
-            location.replace(url);
+            //location.replace(url);
+            location.href=url;
         }
 
        
