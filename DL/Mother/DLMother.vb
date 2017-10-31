@@ -22,7 +22,9 @@
             Return _cDB.LastSavedRecordPID
         End Get
     End Property
-    Public Sub New()
+    Public Sub New(ServiceUser As BO.j03UserSYS)
+        _curUser = ServiceUser
+
         _cDB = New DL.DbHandler()
     End Sub
 
@@ -35,5 +37,8 @@
         RaiseEvent OnSaveRecord(intLastSavedPID)
     End Sub
 
+    Public Sub ChangeConnectString(strConString As String)
+        _cDB.ChangeConString(strConString)
+    End Sub
     
 End Class

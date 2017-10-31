@@ -15,6 +15,7 @@
             Return _LastSavedPID
         End Get
     End Property
+    
 
     Friend ReadOnly Property Factory As BL.Factory
         Get

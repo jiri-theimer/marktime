@@ -16,7 +16,7 @@ Class DataCopyManagerBL
     End Sub
 
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _cDL = New DL.SysDbObjectDL()
+        _cDL = New DL.SysDbObjectDL(ServiceUser)
         _cUser = ServiceUser
     End Sub
 

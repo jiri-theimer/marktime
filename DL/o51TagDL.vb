@@ -1,7 +1,7 @@
 ﻿Public Class o51TagDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.o51Tag
         Dim s As String = "select a.*," & bas.RecTail("o51", "a") & ",j02.j02LastName+' '+j02.j02FirstName as _Owner FROM o51Tag a INNER JOIN j02Person j02 ON a.j02ID_Owner=j02.J02ID WHERE a.o51id=@o51id"

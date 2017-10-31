@@ -1,7 +1,7 @@
 ﻿Public Class b06WorkflowStepDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.b06WorkflowStep
         Dim s As String = GetSQLPart1() & " WHERE a.b06ID=@b06id"

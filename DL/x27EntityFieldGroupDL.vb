@@ -1,7 +1,7 @@
 ﻿Public Class x27EntityFieldGroupDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.x27EntityFieldGroup
         Dim s As String = "select *," & bas.RecTail("x27") & " FROM x27EntityFieldGroup WHERE x27ID=@pid"

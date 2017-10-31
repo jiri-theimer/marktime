@@ -1,7 +1,7 @@
 ﻿Public Class p47CapacityPlanDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
 
     Public Function GetList(mq As BO.myQueryP47) As IEnumerable(Of BO.p47CapacityPlan)

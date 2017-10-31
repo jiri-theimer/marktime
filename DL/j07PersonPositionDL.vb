@@ -1,7 +1,7 @@
 ﻿Public Class j07PersonPositionDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.j07PersonPosition
         Dim s As String = "select *," & bas.RecTail("j07") & " FROM j07PersonPosition WHERE j07ID=@pid"

@@ -1,7 +1,7 @@
 ﻿Public Class p65RecurrenceDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.p65Recurrence
         Dim s As String = "select a.*," & bas.RecTail("p65", "a") & " FROM p65Recurrence a WHERE a.p65ID=@pid"

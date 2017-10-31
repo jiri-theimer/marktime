@@ -1,7 +1,7 @@
 ﻿Public Class c21FondCalendarDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.c21FondCalendar
         Dim s As String = "select *," & bas.RecTail("c21") & " FROM c21FondCalendar WHERE c21ID=@pid"

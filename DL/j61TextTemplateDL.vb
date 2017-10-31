@@ -1,7 +1,7 @@
 ﻿Public Class j61TextTemplateDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.j61TextTemplate
         Dim s As String = "select a.*,x29.x29Name as _x29Name,j02.j02LastName+' '+j02.j02FirstName as _Owner," & bas.RecTail("j61", "a") & " FROM j61TextTemplate a INNER JOIN j02Person j02 ON a.j02ID_Owner=j02.j02ID LEFT OUTER JOIN x29Entity x29 ON a.x29ID=x29.x29ID WHERE a.j61ID=@pid"

@@ -30,6 +30,8 @@ Public Class j03UserSYS
     Private Property _MessagesCount As Integer  'počet zpráv, na které systém upozorňuje uživatele
     Private Property _j11IDs As String          'seznam týmů osoby
 
+    Public Property ExplicitConnectString   'pro předávání jiného db connect stringu
+
    
     Public ReadOnly Property IsApprovingPerson As Boolean
         Get

@@ -1,8 +1,10 @@
 ﻿Public Class p50OfficePriceListDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
+    
+
     Public Function Load(intPID As Integer) As BO.p50OfficePriceList
         Dim s As String = "select a.*," & bas.RecTail("p50", "a", True, False) & " FROM p50OfficePriceList a INNER JOIN p51PriceList p51 ON a.p51ID=p51.p51ID WHERE a.p50ID=@pid"
         Return _cDB.GetRecord(Of BO.p50OfficePriceList)(s, New With {.pid = intPID})

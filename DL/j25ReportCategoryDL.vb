@@ -1,7 +1,7 @@
 ﻿Public Class j25ReportCategoryDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.j25ReportCategory
         Dim s As String = "select *," & bas.RecTail("j25") & " FROM j25ReportCategory WHERE j25ID=@pid"

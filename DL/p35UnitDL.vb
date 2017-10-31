@@ -1,7 +1,7 @@
 ﻿Public Class p35UnitDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.p35Unit
         Dim s As String = "select *," & bas.RecTail("p35", , True, False) & " FROM p35Unit WHERE p35ID=@pid"

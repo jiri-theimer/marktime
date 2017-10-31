@@ -1,7 +1,7 @@
 ﻿Public Class j11TeamDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.j11Team
         Dim s As String = "select *," & bas.RecTail("j11") & " FROM j11team WHERE j11id=@pid"

@@ -1,7 +1,7 @@
 ﻿Public Class o21MilestoneTypeDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.o21MilestoneType
         Dim s As String = "select *," & bas.RecTail("o21") & " FROM o21MilestoneType WHERE o21ID=@pid"

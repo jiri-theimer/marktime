@@ -1,7 +1,7 @@
 ﻿Public Class j04UserRoleDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.j04UserRole
         Dim s As String = "select a.*," & bas.RecTail("j04", "a") & ",x67.x67RoleValue as _x67RoleValue FROM j04userrole a INNER JOIN x67EntityRole x67 ON a.x67ID=x67.x67ID WHERE a.j04id=@j04id"

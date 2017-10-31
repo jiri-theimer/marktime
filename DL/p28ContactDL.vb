@@ -2,7 +2,7 @@
     Inherits DLMother
 
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Overloads Function Load(intPID As Integer) As BO.p28Contact
         Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing)

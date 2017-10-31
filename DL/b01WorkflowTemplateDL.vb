@@ -1,7 +1,7 @@
 ﻿Public Class b01WorkflowTemplateDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.b01WorkflowTemplate
         Dim s As String = GetSQLPart1() & " WHERE b01ID=@b01id"

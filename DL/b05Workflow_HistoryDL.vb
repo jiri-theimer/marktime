@@ -1,7 +1,7 @@
 ﻿Public Class b05Workflow_HistoryDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
 
     Public Function Load(intPID) As BO.b05Workflow_History

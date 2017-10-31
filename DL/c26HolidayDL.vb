@@ -1,7 +1,7 @@
 ﻿Public Class c26HolidayDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.c26Holiday
         Dim s As String = "select a.*,j17Name as _j17Name," & bas.RecTail("c26", "a") & " FROM c26Holiday a LEFT OUTER JOIN j17Country j17 ON a.j17ID=j17.j17ID WHERE a.c26ID=@pid"

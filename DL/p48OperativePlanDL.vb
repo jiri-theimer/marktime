@@ -1,7 +1,7 @@
 ﻿Public Class p48OperativePlanDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.p48OperativePlan
         Dim s As String = GetSQLPart1()

@@ -2,7 +2,7 @@
     Inherits DLMother
 
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
 
     Private Function GetSQLPart1() As String

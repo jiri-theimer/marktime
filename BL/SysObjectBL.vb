@@ -3,7 +3,7 @@
     Private _factory As BL.Factory
 
     Public Sub New()
-        _cDL = New DL.SysDbObjectDL()
+        _cDL = New DL.SysDbObjectDL(Nothing)
         _factory = New BL.Factory(Nothing)
     End Sub
 

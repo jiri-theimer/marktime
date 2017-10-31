@@ -3,7 +3,7 @@
 Public Class o27AttachmentDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.o27Attachment
         Dim s As String = GetSQLPart1()

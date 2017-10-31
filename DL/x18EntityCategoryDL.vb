@@ -1,7 +1,7 @@
 ﻿Public Class x18EntityCategoryDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.x18EntityCategory
         Dim s As String = GetSQLPart1(False) & " WHERE a.x18ID=@x18id"

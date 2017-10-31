@@ -1,12 +1,12 @@
 ﻿Public Class p49FinancialPlanDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.p49FinancialPlan
         Dim s As String = GetSQLPart1(0, False)
         s += " WHERE a.p49ID=@p49id"
-
+        
         Return _cDB.GetRecord(Of BO.p49FinancialPlan)(s, New With {.p49id = intPID})
     End Function
     Public Function LoadExtended(intPID As Integer) As BO.p49FinancialPlanExtended

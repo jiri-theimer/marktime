@@ -2,7 +2,7 @@
     Inherits DLMother
 
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function FindDefaultP41ID() As Integer
         Return _cDB.GetIntegerValueFROMSQL("select dbo.p11_find_p41id_default(" & _curUser.j02ID.ToString & ")")

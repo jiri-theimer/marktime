@@ -3,7 +3,7 @@
     Public Event NeedHandleAppEvents(strX45IDs As String, intP41ID As Integer)
 
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.p31Worksheet
         Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2()

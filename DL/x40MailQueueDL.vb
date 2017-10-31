@@ -3,7 +3,7 @@
     ''Private _cB65 As BO.b65WorkflowMessage = Nothing
 
     Public Sub New(ServiceUser As BO.j03User)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.x40MailQueue
         Dim s As String = GetSQLPart1() & " WHERE a.x40ID=@pid"

@@ -27,7 +27,7 @@
     End Property
 
     Public Sub New()
-        _cDL = New DL.SysDbObjectDL()
+        _cDL = New DL.SysDbObjectDL(Nothing)
         _factory = New BL.Factory(Nothing)
         _result = New System.Text.StringBuilder
     End Sub

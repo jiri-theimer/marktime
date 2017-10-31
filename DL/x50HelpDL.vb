@@ -1,7 +1,7 @@
 ﻿Public Class x50HelpDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.x50Help
        Dim s As String = "select *," & bas.RecTail("x50") & " FROM x50Help WHERE x50ID=@x50id"

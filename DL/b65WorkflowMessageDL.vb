@@ -1,7 +1,7 @@
 ﻿Public Class b65WorkflowMessageDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.b65WorkflowMessage
         Dim s As String = "select a.*,b01.b01Name as _b01Name," & bas.RecTail("b65", "a") & " FROM b65WorkflowMessage a LEFT OUTER JOIN b01WorkflowTemplate b01 ON a.b01ID=b01.b01ID WHERE a.b65ID=@b65id"

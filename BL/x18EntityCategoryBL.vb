@@ -34,6 +34,7 @@ Class x18EntityCategoryBL
 
     Public Sub New(ServiceUser As BO.j03UserSYS)
         _cDL = New DL.x18EntityCategoryDL(ServiceUser)
+
         _cUser = ServiceUser
     End Sub
 

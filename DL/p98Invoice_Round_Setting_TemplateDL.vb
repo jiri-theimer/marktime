@@ -1,7 +1,7 @@
 ﻿Public Class p98Invoice_Round_Setting_TemplateDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.p98Invoice_Round_Setting_Template
         Dim s As String = "select *," & bas.RecTail("p98") & " FROM p98Invoice_Round_Setting_Template WHERE p98ID=@pid"

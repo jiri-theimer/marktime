@@ -94,6 +94,7 @@
         If sysUser Is Nothing And strLogin <> "" Then
             Dim cBL As BL.Ij03UserBL = New BL.j03UserBL(Nothing)
             sysUser = cBL.LoadSysProfile(strLogin)
+
         End If
         _cUser = sysUser
     End Sub

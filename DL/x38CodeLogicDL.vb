@@ -1,7 +1,7 @@
 ﻿Public Class x38CodeLogicDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.x38CodeLogic
         Dim s As String = "select *," & bas.RecTail("x38") & " FROM x38CodeLogic WHERE x38ID=@pid"

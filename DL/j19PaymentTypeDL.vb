@@ -1,7 +1,7 @@
 ﻿Public Class j19PaymentTypeDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.j19PaymentType
         Dim s As String = "select *," & bas.RecTail("j19") & " FROM j19PaymentType WHERE j19ID=@pid"

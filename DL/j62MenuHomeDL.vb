@@ -1,7 +1,7 @@
 ﻿Public Class j62MenuHomeDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
     Public Function Load(intPID As Integer) As BO.j62MenuHome
         Dim s As String = GetSqlPart1() & " WHERE a.j62ID=@pid"

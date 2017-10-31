@@ -1,7 +1,7 @@
 ﻿Public Class PluginSupportDL
     Inherits DLMother
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _curUser = ServiceUser
+        MyBase.New(ServiceUser)
     End Sub
 
     Public Function GetDataset(strSQL As String, Optional ByRef intRetRows As Integer = 0, Optional dbPars As List(Of BO.PluginDbParameter) = Nothing) As DataSet
