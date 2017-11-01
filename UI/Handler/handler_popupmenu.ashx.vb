@@ -871,7 +871,7 @@ Public Class handler_popupmenu
                 REL("Statistiky osoby", "p31_sumgrid.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "_top", "Images/pivot.png")
             End If
             SEP()
-            CI("Tisková sestava", "report_modal.aspx?prefix=p28&pid=" & intPID.ToString, , "Images/report.png")
+            CI("Tisková sestava", "report_modal.aspx?prefix=j02&pid=" & intPID.ToString, , "Images/report.png")
         Else
             CI("[ODKAZ]", "", , "Images/link.png")
             Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = factory.p30Contact_PersonBL.GetList(0, 0, intPID)
